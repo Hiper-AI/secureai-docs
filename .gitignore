@@ -1,0 +1,11 @@
+﻿# Dependencies
+node_modules/
+.mintlify/
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log

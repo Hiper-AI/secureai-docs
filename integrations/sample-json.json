@@ -1,0 +1,58 @@
+[
+  {
+    "time": "2025-08-30T21:34:29.013Z",
+    "level": "Info",
+    "message": "SecureAI platform started successfully",
+    "component": "SystemService",
+    "correlationId": "test-001"
+  },
+  {
+    "time": "2025-08-30T21:34:30.013Z",
+    "level": "Warning",
+    "message": "High memory usage detected on server",
+    "component": "MonitoringService",
+    "correlationId": "test-002"
+  },
+  {
+    "time": "2025-08-30T21:34:31.013Z",
+    "level": "Error",
+    "message": "Database connection timeout after 30 seconds",
+    "component": "DatabaseService",
+    "correlationId": "test-003"
+  },
+  {
+    "time": "2025-08-30T21:34:32.013Z",
+    "level": "Info",
+    "message": "User admin@secureai.com logged in successfully",
+    "component": "AuthService",
+    "correlationId": "test-004"
+  },
+  {
+    "time": "2025-08-30T21:34:33.013Z",
+    "level": "Warning",
+    "message": "API rate limit approaching threshold",
+    "component": "APIGateway",
+    "correlationId": "test-005"
+  },
+  {
+    "time": "2025-08-30T21:34:34.013Z",
+    "level": "Info",
+    "message": "Security scan completed - 0 threats found",
+    "component": "SecurityScanner",
+    "correlationId": "test-006"
+  },
+  {
+    "time": "2025-08-30T21:34:35.013Z",
+    "level": "Error",
+    "message": "Failed to sync with external SIEM system",
+    "component": "SIEMSync",
+    "correlationId": "test-007"
+  },
+  {
+    "time": "2025-08-30T21:34:36.013Z",
+    "level": "Info",
+    "message": "Backup job completed successfully",
+    "component": "BackupService",
+    "correlationId": "test-008"
+  }
+]

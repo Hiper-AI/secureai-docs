@@ -1,0 +1,222 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "SecureAI",
+  "colors": {
+    "primary": "#0066FF",
+    "light": "#0066FF",
+    "dark": "#0066FF"
+  },
+  "favicon": "/img/HiperAI-logo-dark.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Primeros Pasos",
+            "pages": [
+              "intro",
+              "quickstart",
+              "models/index",
+              "chat/document-processing",
+              "indexes/overview"
+            ]
+          },
+          {
+            "group": "Seguridad, SMLTP & DLP",
+            "pages": [
+              "security/overview",
+              "security/smltp",
+              "threat-defense/overview",
+              "data-protection/overview",
+              "security/immutable-logs"
+            ]
+          },
+          {
+            "group": "AI Gateway",
+            "pages": [
+              "ai-gateway/overview",
+              "ai-gateway/remote-endpoints"
+            ]
+          },
+          {
+            "group": "Identidad & Acceso (SSO)",
+            "pages": [
+              "users/overview",
+              "iam/google-workspace",
+              "iam/microsoft-entra-id",
+              "iam/basic-auth"
+            ]
+          },
+          {
+            "group": "AI Discovery (Shadow AI)",
+            "pages": [
+              "discovery/overview",
+              "discovery/cloud-sensors",
+              "discovery/network-sources",
+              "discovery/nhi-inventory",
+              "discovery/agent-registry"
+            ]
+          },
+          {
+            "group": "Endpoint Agent",
+            "pages": [
+              "agent/overview",
+              "agent/installation",
+              "agent/enrollment-and-packages",
+              "agent/policies-and-groups",
+              "agent/egress-enforcement",
+              "agent/quarantine-and-fleet-ops",
+              "agent/transparent-proxy"
+            ]
+          },
+          {
+            "group": "Integraciones: Cloud AI & IDEs",
+            "pages": [
+              "integrations/ide-claude-code",
+              "integrations/cloud/overview",
+              "integrations/cloud/openai-platform",
+              "integrations/cloud/anthropic-console",
+              "integrations/cloud/azure-ai-foundry",
+              "integrations/cloud/gcp-vertex-ai"
+            ]
+          },
+          {
+            "group": "Integraciones: SIEMs, Red & MCP",
+            "pages": [
+              "integrations/splunk-security",
+              "integrations/microsoft-sentinel",
+              "integrations/elastic-security",
+              "integrations/custom-siem-webhook",
+              "integrations/casb/overview",
+              "integrations/casb/cisco-umbrella",
+              "integrations/mcp/overview",
+              "integrations/mcp/remote-oauth-dcr"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Primeros Pasos & Setup",
+            "pages": [
+              "api",
+              "api/auth/overview",
+              "api/system/health"
+            ]
+          },
+          {
+            "group": "Modelos & Generación AI",
+            "pages": [
+              "api/chat/completions",
+              "api/chat/openai-compatible",
+              "api/redundancy",
+              "api/images/generations",
+              "api/images/edits",
+              "api/speech/webrtc",
+              "api/speech/status",
+              "api/speech/log-session",
+              "api/discovery/models"
+            ]
+          },
+          {
+            "group": "Knowledge Base & RAG",
+            "pages": [
+              "api/indexes/list",
+              "api/indexes/create",
+              "api/indexes/update",
+              "api/indexes/search",
+              "api/indexes/train",
+              "api/discovery/indexes"
+            ]
+          },
+          {
+            "group": "Seguridad, Guardrails & Auditoría",
+            "pages": [
+              "api/policy-check",
+              "api/threat-defense/prompt-shield",
+              "api/smltp/policies",
+              "api/smltp/active",
+              "api/smltp/create",
+              "api/receipts",
+              "api/smltp/audit-logs",
+              "api/discovery/smltp-policies"
+            ]
+          },
+          {
+            "group": "Usuarios & Acceso (IAM)",
+            "pages": [
+              "api/users/list",
+              "api/users/create",
+              "api/users/update",
+              "api/roles/list",
+              "api/roles/create",
+              "api/groups/list",
+              "api/groups/create",
+              "api/groups/update"
+            ]
+          },
+          {
+            "group": "Facturación, Cuotas & Webhooks",
+            "pages": [
+              "api/usage",
+              "api/billing-modes",
+              "api/billing-modes/quick-reference",
+              "api/billing-modes/licenses-availability",
+              "api/webhooks/overview",
+              "api/webhooks/events"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/img/hiper_ai_official.png",
+    "dark": "/img/logo-darkmode.png"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "https://hiperai.com/contacts"
+      }
+    ]
+  },
+  "api": {
+    "openapi": "openapi.yaml",
+    "playground": {
+      "display": "interactive"
+    },
+    "examples": {
+      "languages": [
+        "bash",
+        "python",
+        "javascript"
+      ]
+    }
+  },
+  "integrations": {
+    "ga4": {
+      "measurementId": "G-XXXXXXXXXX"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://twitter.com/hiperai",
+      "github": "https://github.com/hiperai",
+      "linkedin": "https://linkedin.com/company/hiperai"
+    }
+  }
+}
