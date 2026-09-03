@@ -36,26 +36,29 @@ Esta guía te acompañará paso a paso para acceder a la instancia de SecureAI d
   <Step title="Configurar preferencias del Asistente">
     Al ingresar por primera vez, verás un asistente de bienvenida (**Startup Setup**) que te permite calibrar cómo interactuará la IA contigo:
 
-    * **Temperatura (`Temperature`)**: Ajusta el balance entre precisión analítica (valores bajos) y creatividad en las respuestas (valores altos).
-    * **Longitud de Respuesta (`Response Length`)**: Define el tamaño predeterminado de los mensajes generados.
-    * **Tema de Interfaz (`Theme`)**: Selecciona entre modo claro, modo oscuro o sincronización con el sistema.
-    * **Avatar con IA**: Con licencias premium, puedes generar un avatar personalizado mediante un prompt de texto.
+    - **Temperatura (`Temperature`)**: Ajusta el balance entre precisión analítica (valores bajos) y creatividad en las respuestas (valores altos).
+    - **Longitud de Respuesta (`Response Length`)**: Define el tamaño predeterminado de los mensajes generados.
+    - **Tema de Interfaz (`Theme`)**: Selecciona entre modo claro, modo oscuro o sincronización con el sistema.
+    - **Avatar con IA**: Con licencias premium, puedes generar un avatar personalizado mediante un prompt de texto.
+
   </Step>
 
   <Step title="Crear tu primer índice RAG (Knowledge Base)">
     Durante la configuración inicial, podrás desplegar tu propio **índice RAG (Retrieval-Augmented Generation)**:
 
-    * **Despliegue Multi-Nube**: Selecciona la región y el proveedor de nube de tu preferencia.
-    * **Cifrado Extremo a Extremo**: Toda la información y documentos vectorizados se cifran con claves exclusivas.
-    * **Base de Conocimiento Personal o de Equipo**: Permite subir documentos (PDFs, docs, código) para que los modelos respondan con el contexto exacto de tu negocio.
+    - **Despliegue Multi-Nube**: Selecciona la región y el proveedor de nube de tu preferencia.
+    - **Cifrado Extremo a Extremo**: Toda la información y documentos vectorizados se cifran con claves exclusivas.
+    - **Base de Conocimiento Personal o de Equipo**: Permite subir documentos (PDFs, docs, código) para que los modelos respondan con el contexto exacto de tu negocio.
+
   </Step>
 
   <Step title="Conectar fuentes de descubrimiento y visibilidad (Cloud, CASB y Agente)">
     Para obtener visibilidad completa y auditar el uso de IA en tu organización, recomendamos habilitar las tres fuentes principales de descubrimiento:
 
-    * **Integrar Nubes y Proveedores de AI (Inventario de NHIs)**: Conecta consolas como OpenAI, Anthropic, AWS o Azure AI en [Cloud Providers](/integrations/cloud/overview). Esto permite rastrear automáticamente **Identidades No Humanas (NHIs)**, claves de API huérfanas y consumo en la nube.
-    * **Integrar CASB & Seguridad de Red (SWG)**: Conecta [Cisco Umbrella](/integrations/casb/overview) u otros proxies para monitorear el tráfico corporativo hacia servicios externos de IA.
-    * **Desplegar el SecureAI Agent en dispositivos**: Instala el [SecureAI Endpoint Agent](/agent/installation) en las computadoras de tu equipo para auditar aplicaciones locales, detectar servidores y conectores **MCP (Model Context Protocol)**, agentes autónomos y aplicar políticas de control de salida (*egress enforcement*).
+    - **Integrar Nubes y Proveedores de AI (Inventario de NHIs)**: Conecta consolas como OpenAI, Anthropic, AWS o Azure AI en [Cloud Providers](/integrations/cloud/overview). Esto permite rastrear automáticamente **Identidades No Humanas (NHIs)**, claves de API huérfanas y consumo en la nube.
+    - **Integrar CASB & Seguridad de Red (SWG)**: Conecta [Cisco Umbrella](/integrations/casb/overview) u otros proxies para monitorear el tráfico corporativo hacia servicios externos de IA.
+    - **Desplegar el SecureAI Agent en dispositivos**: Instala el [SecureAI Endpoint Agent](/agent/installation) en las computadoras de tu equipo para auditar aplicaciones locales, detectar servidores y conectores **MCP (Model Context Protocol)**, agentes autónomos y aplicar políticas de control de salida (*egress enforcement*).
+
   </Step>
 
   <Step title="¡Listo! Comienza a interactuar y gobernar">
