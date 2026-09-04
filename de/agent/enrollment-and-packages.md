@@ -18,13 +18,13 @@ Erstellen Sie unter **Admin → Agent Registry → OS Agents** ein Paket mit:
 | **Plattform** | Windows / Linux / macOS. |
 | **Pakettyp** | `standalone`. |
 | **Endpunkt-Tags** | Etiketten, die auf Geräte angewendet werden, die bei diesem Paket registriert sind. |
-| **Anmeldegruppe** | Die [Gruppe](/de/en/agent/policies-and-groups), an die ein Gerät bei der ersten Registrierung angeheftet wird. |
+| **Anmeldegruppe** | Die [Gruppe](/de/agent/policies-and-groups), an die ein Gerät bei der ersten Registrierung angeheftet wird. |
 
 Beim Speichern generiert SecureAI automatisch einen dedizierten API-Schlüssel mit dem Gültigkeitsbereich `agent:enroll`** und speichert ihn als Registrierungsschlüssel des Pakets, sodass für den Installationsbefehl keine separaten Anmeldeinformationen erforderlich sind. Durch das Löschen des Pakets wird dieser Schlüssel deaktiviert.
 
 ## Registrierungsgruppen (automatische Anheftung)
 
-Die **Registrierungsgruppe** des Pakets ist ein fester Pin: Ein Gerät, das sich beim Paket registriert, wird beim ersten Kontakt an diese Gruppe gebunden. Die Gruppenmitgliedschaft bestimmt dann, welche [Richtlinie](/de/en/agent/policies-and-groups) das Gerät auflöst.
+Die **Registrierungsgruppe** des Pakets ist ein fester Pin: Ein Gerät, das sich beim Paket registriert, wird beim ersten Kontakt an diese Gruppe gebunden. Die Gruppenmitgliedschaft bestimmt dann, welche [Richtlinie](/de/agent/policies-and-groups) das Gerät auflöst.
 
 ## Der Registrierungs-Handschlag
 
@@ -46,6 +46,6 @@ Auf der Registerkarte „OS-Agenten“ können Sie pro Gerät Folgendes tun: ein
 
 ## Verwandte
 
-- [Installation des Agenten](/de/en/agent/installation)
-- [Richtlinien & Gruppen](/de/en/agent/richtlinien-und-gruppen)
-- [Selbstupdate & Anti-Tamper](/de/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper)
+- [Installation des Agenten](/de/agent/installation)
+- [Richtlinien & Gruppen](/de/agent/richtlinien-und-gruppen)
+- [Selbstupdate & Anti-Tamper](/de/agent/quarantine-and-fleet-ops#self-update--anti-tamper)

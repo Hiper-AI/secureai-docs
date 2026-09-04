@@ -11,7 +11,7 @@ OpenAI 組織を接続すると、SecureAI がプロジェクト、モデル、�
 ## SecureAI がインポートするもの
 
 - **プロジェクト、モデル、メンバー、役割、およびグループ**
-- **NHI** — API キーとサービス アカウント (取り消し可能 — [NHI インベントリ](/ja/en/discovery/nhi-inventory) を参照)
+- **NHI** — API キーとサービス アカウント (取り消し可能 — [NHI インベントリ](/ja/discovery/nhi-inventory) を参照)
 - **支出アラート、レート制限、証明書、およびデータ保持設定**
 - **監査ログ**
 - 過去 30 日間の **使用量と費用** (ユーザーごとの支出を含む)
@@ -44,13 +44,13 @@ OpenAI 組織を接続すると、SecureAI がプロジェクト、モデル、�
 
 ## 確認する
 
-最初の同期後、[Cloud Sensors](/ja/ja/discovery/cloud-sensors) を開いて検出されたモデル/アシスタントを確認し、[NHI Inventory](/ja/ja/discovery/nhi-inventory) を開いてキーとサービス アカウントを確認します。プロバイダーごとの **インサイト** には、使用状況、コスト、ユーザーごとの支出が表示されます。
+最初の同期後、[Cloud Sensors](/ja/discovery/cloud-sensors) を開いて検出されたモデル/アシスタントを確認し、[NHI Inventory](/ja/discovery/nhi-inventory) を開いてキーとサービス アカウントを確認します。プロバイダーごとの **インサイト** には、使用状況、コスト、ユーザーごとの支出が表示されます。
 
 ## 失効
 
-OpenAI API キーは [NHI Inventory](/ja/en/discovery/nhi-inventory) から **取り消し可能**: SecureAI はソースでキーを無効にすることができます。 (サービス アカウントの場合、OpenAI ID はモニター専用です。)
+OpenAI API キーは [NHI Inventory](/ja/discovery/nhi-inventory) から **取り消し可能**: SecureAI はソースでキーを無効にすることができます。 (サービス アカウントの場合、OpenAI ID はモニター専用です。)
 
 ## 関連
 
-- [クラウド AI プロバイダーの概要](/ja/ja/integrations/cloud/overview)
-- [国民健康保険の目録](/ja/ja/discovery/nhi-inventory)
+- [クラウド AI プロバイダーの概要](/ja/integrations/cloud/overview)
+- [国民健康保険の目録](/ja/discovery/nhi-inventory)

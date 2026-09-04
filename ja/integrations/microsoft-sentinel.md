@@ -199,7 +199,7 @@ Azure の検索バーで、**データ コレクション エンドポイント*
 
 **サンプル ファイルのダウンロード**: 完全なサンプル JSON ファイルをダウンロードして直接使用することもできます。
 
-<a href="/ja/en/sample-json.json" download>📥サンプル.json</a>
+<a href="/ja/sample-json.json" download>📥サンプル.json</a>
 
 #### 5. 変換を適用する
 

@@ -1,54 +1,52 @@
 ---
 id: list
-title: "List Groups"
-sidebar_label: "List Groups"
-description: "Retrieve all user groups"
+title: "列出组"
+sidebar_label: "列出组"
+description: "检索所有用户组"
 openapi: "GET /groups"
 ---
+# 列出组
 
+使用分页和过滤选项检索系统中所有用户组的列表。
 
-# List Groups
-
-Retrieve a list of all user groups in the system with pagination and filtering options.
-
-## Endpoint
+## 端点
 
 ```
 GET /groups
 ```
 
-## Description
+## 说明
 
-This endpoint returns all user groups available in the SecureAI system. It provides detailed information about each group including members, permissions, and metadata. This is useful for managing user access and organizational structure.
+该端点返回 SecureAI 系统中可用的所有用户组。它提供有关每个组的详细信息，包括成员、权限和元数据。这对于管理用户访问和组织结构很有用。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## 查询参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `page` | integer | No | 1 | Page number for pagination |
-| `limit` | integer | No | 20 | Number of groups per page (1-100) |
-| `search` | string | No | - | Search term for group name or description |
-| `status` | string | No | - | Filter by group status |
-| `sortBy` | string | No | createdAt | Field to sort by |
-| `sortOrder` | string | No | desc | Sort order (asc, desc) |
+|参数|类型 |必填 |描述 |
+|------------|------|----------|----------|
+| `page` |整数 |没有 | 1 |分页页码|
+| `limit` |整数 |没有 | 20 | 20每页组数 (1-100) |
+| `search` |字符串|没有 | - |群组名称或描述的搜索词|
+| `status` |字符串|没有 | - |按群组状态过滤 |
+| `sortBy` |字符串|没有 |创建于 |排序依据的字段 |
+| `sortOrder` |字符串|没有 |描述 |排序顺序（升序、降序）|
 
-## Example Request
+## 请求示例
 
 ```bash
 GET /groups?search=engineering&limit=20&page=1&sortBy=createdAt&sortOrder=desc
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `200 OK`
+**状态代码**：`200 OK`
 
 ```json
 {
@@ -79,25 +77,25 @@ GET /groups?search=engineering&limit=20&page=1&sortBy=createdAt&sortOrder=desc
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `groups[]` | array | Array of group objects |
-| `groups[].id` | string | Unique group identifier |
-| `groups[].name` | string | Group name |
-| `groups[].description` | string | Group description |
-| `groups[].status` | string | Group status |
-| `groups[].userCount` | integer | Number of users in the group |
-| `groups[].users` | array | Array of user objects in the group |
-| `groups[].users[].id` | string | User ID |
-| `groups[].users[].name` | string | User name |
-| `groups[].users[].email` | string | User email |
-| `groups[].createdAt` | string | Creation timestamp |
-| `pagination` | object | Pagination information |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `groups[]` |数组|组对象数组 |
+| `groups[].id` |字符串|唯一的组标识符 |
+| `groups[].name` |字符串|团体名称|
+| `groups[].description` |字符串|集团简介|
+| `groups[].status` |字符串|集团状态 |
+| `groups[].userCount` |整数 |群组中的用户数量|
+| `groups[].users` |数组|组中的用户对象数组 |
+| `groups[].users[].id` |字符串|用户名 |
+| `groups[].users[].name` |字符串|用户名 |
+| `groups[].users[].email` |字符串|用户邮箱 |
+| `groups[].createdAt` |字符串|创建时间戳 |
+| `pagination` |对象|分页信息|
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -127,7 +125,7 @@ const result = await listGroups({
 console.log(result.groups);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -154,16 +152,16 @@ result = list_groups(params)
 print(result["groups"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engineering&limit=10&page=1&sortBy=createdAt&sortOrder=desc" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -175,7 +173,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engin
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -187,7 +185,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engin
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -200,9 +198,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engin
 }
 ```
 
-## Filtering Examples
+## 过滤示例
 
-### Search Groups
+### 搜索组
 
 ```bash
 # Search by name
@@ -212,7 +210,7 @@ GET /groups?search=engineering
 GET /groups?search=development
 ```
 
-### Sort Options
+### 排序选项
 
 ```bash
 # Sort by name ascending
@@ -225,7 +223,7 @@ GET /groups?sortBy=userCount&sortOrder=desc
 GET /groups?sortBy=createdAt&sortOrder=desc
 ```
 
-### Pagination
+### 分页
 
 ```bash
 # Get first 20 groups
@@ -235,26 +233,26 @@ GET /groups?limit=20&page=1
 GET /groups?limit=20&page=2
 ```
 
-## Use Cases
+## 用例
 
-- **Group Management**: List all groups for administrative purposes
-- **User Organization**: Discover available groups for user assignment
-- **Access Control**: Review group permissions and member counts
-- **Reporting**: Generate reports on group structure and membership
-- **Integration**: Discover groups for application integration
+- **组管理**：出于管理目的列出所有组
+- **用户组织**：发现可用于用户分配的组
+- **访问控制**：查看组权限和成员计数
+- **报告**：生成有关团体结构和成员资格的报告
+- **集成**：发现应用程序集成组
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **默认**：每分钟 100 个请求
+- **每日**：每天 10,000 个请求
+- **每月**：每月 300,000 个请求
 
-## Notes
+## 注释
 
-- This endpoint is only accessible by administrators
-- Pagination: Uses page parameter, not offset
-- Flat Response: Response is not nested under data object
-- User Details: Includes full user information for each group member
-- Status Filter: Can filter by group status
-- Search functionality works across group names and descriptions
-- Sorting options help organize results by different criteria 
+- 该端点只能由管理员访问
+- 分页：使用页面参数，而不是偏移量
+- 扁平响应：响应未嵌套在数据对象下
+- 用户详细信息：包括每个群组成员的完整用户信息
+- 状态过滤器：可以按组状态过滤
+- 搜索功能适用于群组名称和描述
+- 排序选项有助于按不同标准组织结果

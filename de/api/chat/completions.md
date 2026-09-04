@@ -18,7 +18,7 @@ POST /chat/completions
 Der Hauptendpunkt für KI-Chat-Abschlüsse mit optionalem Wissensdatenbankabruf (RAG). Es unterstützt:
 
 - **Zwei Eingabeformulare** – eine einzelne `prompt`-Zeichenfolge (Legacy) **oder** ein `messages`-Array im OpenAI-Stil.
-- **Modellredundanz** – eine vom Aufrufer definierte Failover-Kette (primär + bis zu 2 Fallbacks). Siehe [Redundanz & Failover](/de/en/api/redundancy).
+- **Modellredundanz** – eine vom Aufrufer definierte Failover-Kette (primär + bis zu 2 Fallbacks). Siehe [Redundanz & Failover](/de/api/redundancy).
 - **Sicherheit pro Anruf** – SMLTP-Richtlinienauswahl und eine Inline-Prompt-Shield-Überschreibung.
 - **Streaming** – Vom Server gesendete Ereignisse (SSE).
 - **Signierte Quittungen** – eine SMLTP-Compliance-Quittungsreferenz für über das Gateway weitergeleitete Antworten.
@@ -26,7 +26,7 @@ Der Hauptendpunkt für KI-Chat-Abschlüsse mit optionalem Wissensdatenbankabruf 
 <Tip>
 **OpenAI SDK-Kompatibilität**
 
-Wenn Sie SecureAI mit **null Codeänderungen** in eine bestehende OpenAI-Integration integrieren möchten, verwenden Sie stattdessen den [OpenAI-kompatiblen Endpunkt](/de/en/api/chat/openai-kompatibel) unter `/api/external/v1/chat/completions`. Dieser klassische Endpunkt ist der einzige, der RAG unterstützt.
+Wenn Sie SecureAI mit **null Codeänderungen** in eine bestehende OpenAI-Integration integrieren möchten, verwenden Sie stattdessen den [OpenAI-kompatiblen Endpunkt](/de/api/chat/openai-kompatibel) unter `/api/external/v1/chat/completions`. Dieser klassische Endpunkt ist der einzige, der RAG unterstützt.
 </Tip>
 
 ## Authentifizierung
@@ -64,7 +64,7 @@ Geben Sie **entweder** `prompt` **oder** `messages` an – nicht beides.
 | `model` | Zeichenfolge | Bedingt | KI-Modell (z. B. `"openai/gpt-5-nano"`). Erforderlich, sofern nicht `models` angegeben wird. |
 | `models` | Array | Nein | Explizite Failover-Kette (überschreibt `model`). Bis zu 3 verschiedene Einträge; Jeder Eintrag ist eine Modellzeichenfolge oder `{ model, timeout_ms, first_token_timeout_ms }`. |
 | `fallback_models` | Array | Nein | Nach `model` angehängte Fallbacks. Nicht kombinierbar mit `models`. |
-| `redundancy` | Objekt | Nein | Kettenweite Optionen: `{ timeout_ms, first_token_timeout_ms, on: [...] }`. Siehe [Redundanz & Failover](/de/en/api/redundancy). |
+| `redundancy` | Objekt | Nein | Kettenweite Optionen: `{ timeout_ms, first_token_timeout_ms, on: [...] }`. Siehe [Redundanz & Failover](/de/api/redundancy). |
 
 ### Parameter zum Abrufen und Generieren
 
@@ -73,12 +73,12 @@ Geben Sie **entweder** `prompt` **oder** `messages` an – nicht beides.
 | `index` | Zeichenfolge | **Ja** | Name der abzufragenden Wissensdatenbank. Verwenden Sie `"Zero-Knowledge"` für direkte KI ohne RAG. Dieses Feld ist erforderlich – eine Anfrage ohne `index` gibt `400 "Index required"` zurück. |
 | `use_rag` | boolescher Wert | Nein | Wissensabruf aktivieren (Standard: `true`). Durch die Einstellung von `use_rag: false` wird die Anforderung `index` **nicht** aufgehoben – senden Sie `index: "Zero-Knowledge"`. |
 | `smltp_policy` | Zeichenfolge | Nein | Sicherheitsrichtlinie (`"internal"`, `"public"`, `"confidential"` oder eine benutzerdefinierte Mandantenrichtlinie). |
-| `prompt_shield` | Objekt | Nein | Prompt Shield-Steuerung pro Anruf: `{ enabled?: boolean, policy?: string }`. Siehe [Prompt Shield API](/de/en/api/threat-defense/prompt-shield#per-call-control-on-completions). |
+| `prompt_shield` | Objekt | Nein | Prompt Shield-Steuerung pro Anruf: `{ enabled?: boolean, policy?: string }`. Siehe [Prompt Shield API](/de/api/threat-defense/prompt-shield#per-call-control-on-completions). |
 | `temperature` | Zahl | Nein | Zufälligkeitskontrolle (0–2, Standard: 0,7). |
 | `max_tokens` | Ganzzahl | Nein | Maximale Antworttokens (Standard: 1000, begrenzt auf 4000). |
 | `stream` | boolescher Wert | Nein | Streamen Sie die Antwort als SSE (Standard: `false`). |
 | `conversation_id` | Zeichenfolge | Nein | Optionale Konversations-ID zur Nachverfolgung. |
-| `user_id` | Zeichenfolge | Nein | MongoDB ObjectId des Benutzers, dem diese Anfrage in Rechnung gestellt werden soll (admin-gated; siehe [Billing Modes](/de/en/api/billing-modes)). |
+| `user_id` | Zeichenfolge | Nein | MongoDB ObjectId des Benutzers, dem diese Anfrage in Rechnung gestellt werden soll (admin-gated; siehe [Billing Modes](/de/api/billing-modes)). |
 
 ## Beispiel für Anfrage
 
@@ -158,8 +158,8 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 | `prompt_shield_policy` | Objekt \| null | Sofern vorhanden, gilt für diesen Anruf die Prompt Shield-Richtlinie. |
 | `served_model` | Zeichenfolge | Modell, das tatsächlich die Antwort lieferte. |
 | `requested_model` | Zeichenfolge | Erstes Modell in der gewünschten Kette. |
-| `failover` | Objekt | **Nur vorhanden, wenn eine Multi-Modell-Kette ausgeführt wurde.** `{ occurred, attempts[] }` – siehe [Redundancy & Failover](/de/en/api/redundancy). |
-| `smltp` | Objekt | Vorhanden, wenn eine SMLTP-Berechtigung für den Anruf erstellt wird. `{ bundle_id, receipt_url }`. Der `bundle_id` (eine Berechtigungs-ID, z. B. `jti-…`) wird auch bei nativen/direkten Bereitstellungen zurückgegeben; Die signierte Quittung unter `receipt_url` ist nur abrufbar, wenn der Datenverkehr über das SMLTP-Gateway geleitet wird (andernfalls gibt [Receipts](/de/en/api/receipts) `404` zurück). |
+| `failover` | Objekt | **Nur vorhanden, wenn eine Multi-Modell-Kette ausgeführt wurde.** `{ occurred, attempts[] }` – siehe [Redundancy & Failover](/de/api/redundancy). |
+| `smltp` | Objekt | Vorhanden, wenn eine SMLTP-Berechtigung für den Anruf erstellt wird. `{ bundle_id, receipt_url }`. Der `bundle_id` (eine Berechtigungs-ID, z. B. `jti-…`) wird auch bei nativen/direkten Bereitstellungen zurückgegeben; Die signierte Quittung unter `receipt_url` ist nur abrufbar, wenn der Datenverkehr über das SMLTP-Gateway geleitet wird (andernfalls gibt [Receipts](/de/api/receipts) `404` zurück). |
 | `rag_enabled` | boolescher Wert | Ob RAG verwendet wurde. |
 | `documents_retrieved` | Ganzzahl | Anzahl der abgerufenen Dokumente. |
 | `sources` | Array | Bis zu 3 abgerufene Dokumentquellen `{ source, score }`. |
@@ -300,5 +300,5 @@ print("Response:", result["choices"][0]["message"]["content"])
 - `index` ist erforderlich. Senden Sie `index: "Zero-Knowledge"` für direkte KI-Antworten ohne RAG.
 – Der Parameter `user_id` rechnet die Anfrage einem anderen Benutzerkonto (administriert) zu.
 - Die Temperatur wird auf 0–2 gehalten; `max_tokens` ist auf 4000 begrenzt.
-- Um eine Anfrage anhand jeder Richtlinie zu validieren, **ohne** ein Modell aufzurufen oder Punkte auszugeben, verwenden Sie [Policy Check](/de/en/api/policy-check).
-- Zur Semantik der Failover-Kette (Trigger, Timeouts, Streaming-Verhalten, Erschöpfungsstatuscodes) siehe [Redundancy & Failover](/de/en/api/redundancy).
+- Um eine Anfrage anhand jeder Richtlinie zu validieren, **ohne** ein Modell aufzurufen oder Punkte auszugeben, verwenden Sie [Policy Check](/de/api/policy-check).
+- Zur Semantik der Failover-Kette (Trigger, Timeouts, Streaming-Verhalten, Erschöpfungsstatuscodes) siehe [Redundancy & Failover](/de/api/redundancy).

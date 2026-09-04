@@ -1,71 +1,69 @@
 ---
 sidebar_position: 1
-title: "Knowledge Bases & RAG"
+title: "知识库和 RAG"
 ---
+# 知识库和 RAG 系统
 
-
-# Knowledge Bases & RAG System
-
-SecureAI uses **Retrieval-Augmented Generation (RAG)** to connect AI models with your private data and documents, ensuring secure, accurate, and context-aware responses.
-
----
-
-## What is RAG?
-
-**Retrieval-Augmented Generation (RAG)** is an AI technique that combines language models with external knowledge sources. Instead of relying solely on the model's pre-trained data:
-
-1. **Query Processing**: The system analyzes the user prompt to identify relevant knowledge requirements.
-2. **Knowledge Retrieval**: Semantic search retrieves relevant document chunks from your index.
-3. **Context Augmentation**: Retrieved context is injected into the model prompt.
-4. **Response Generation**: The AI generates a factual, grounded response citing your documents.
+SecureAI 使用 **检索增强生成 (RAG)** 将 AI 模型与您的私人数据和文档连接起来，确保安全、准确和上下文感知的响应。
 
 ---
 
-## Index Types in SecureAI
+## RAG 是什么？
 
-Indexes are structured knowledge bases categorized by accessibility:
+**检索增强生成（RAG）**是一种将语言模型与外部知识源相结合的人工智能技术。而不是仅仅依赖模型的预训练数据：
 
-| Index Type | Scope | Access & Privacy | Best For |
+1. **查询处理**：系统分析用户提示，识别相关知识需求。
+2. **知识检索**：语义搜索从索引中检索相关文档块。
+3. **上下文增强**：检索到的上下文被注入到模型提示中。
+4. **响应生成**：人工智能引用您的文档生成事实、有依据的响应。
+
+---
+
+## SecureAI 中的索引类型
+
+索引是按可访问性分类的结构化知识库：
+
+|指数类型|范围 |访问和隐私 |最适合 |
 |---|---|---|---|
-| **Personal Indexes** | Individual user | End-to-end encrypted; zero-knowledge storage (even admins cannot read contents) | Personal notes, private research, individual project documents |
-| **Group Indexes** | Teams / Departments | Role-based access controlled by group membership | Department wikis, team project documentation, shared SOPs |
-| **Global Indexes** | Organization-wide | Read access for all company users | Company policies, HR guidelines, company-wide manuals |
+| **个人索引** |个人用户|端到端加密；零知识存储（即使管理员也无法读取内容）|个人笔记、私人研究、个人项目文件 |
+| **组索引** |团队/部门|由组成员身份控制的基于角色的访问 |部门 wiki、团队项目文档、共享 SOP |
+| **全球指数** |组织范围 |所有公司用户的读取权限 |公司政策、人力资源指南、全公司手册 |
 
-### 1. Personal Indexes
-- **Zero-Knowledge Privacy**: Your files and conversations are encrypted with tenant/user keys.
-- **Creation**: 
-  - **Users**: Open the chat interface, click the index selector next to the model picker, switch to the *Personal* tab, and click **+**.
-  - **Admins**: Go to **Admin ? Index Management ? Create Index** and assign it to a specific user.
+### 1. 个人索引
+- **零知识隐私**：您的文件和对话均使用租户/用户密钥进行加密。
+- **创作**： 
+  - **用户**：打开聊天界面，单击模型选择器旁边的索引选择器，切换到*个人*选项卡，然后单击**+**。
+  - **管理员**：转到**管理员？指数管理 ?创建索引**并将其分配给特定用户。
 
-### 2. Group Indexes
-- **Collaboration**: Multiple team members can query and contribute documents to the same knowledge base.
-- **Creation**:
-  - Go to **Admin ? Group Management ? Create Group**, assign members, and link a shared Group Index.
+### 2. 组索引
+- **协作**：多个团队成员可以查询文档并将其贡献到同一知识库。
+- **创作**：
+  - 转到**管理员？集团管理 ?创建组**、分配成员并链接共享组索引。
 
-### 3. Global Indexes
-- **Company-wide Standards**: Centralized repositories for enterprise compliance, legal terms, and operational guidelines.
-- **Creation**: Go to **Admin ? Index Management ? Create Index** and set scope to **Global**.
-
----
-
-## How Indexing Works
-
-When you upload files (PDFs, Word docs, CSV, JSON, Markdown, or plain text):
-
-`
-Raw Document  --?  Text Extraction  --?  Semantic Chunking  --?  Vector Embeddings  --?  Vector Storage (Index)
-`
-
-1. **Document Processing**: Text and metadata (timestamps, file names) are extracted and cleaned.
-2. **Chunking**: Content is split into optimized semantic chunks with overlap to maintain contextual continuity.
-3. **Embedding Generation**: Chunks are converted into high-dimensional vector embeddings.
-4. **Vector Storage**: Embeddings are stored in high-performance vector databases for instant similarity retrieval.
+### 3. 全球指数
+- **公司范围的标准**：企业合规性、法律术语和操作指南的集中存储库。
+- **创建**：转到**管理？指数管理 ?创建索引**并将范围设置为**全局**。
 
 ---
 
-## Best Practices
+## 索引如何工作
 
-- **Naming**: Use clear, descriptive names for indexes and uploaded files (e.g., HR-Policy-2026 instead of doc1).
-- **File Preparation**: Ensure uploaded documents are clear text; clean up low-quality scans before uploading.
-- **File Limits**: Standard uploads support files up to 10MB per batch.
-- **Scope Appropriately**: Keep sensitive personal notes in Personal Indexes; move team resources into Group Indexes.
+当您上传文件（PDF、Word 文档、CSV、JSON、Markdown 或纯文本）时：
+
+`
+原始文件——？  文本提取——？  语义分块——？  向量嵌入——？  向量存储（索引）
+`
+
+1. **文档处理**：提取和清理文本和元数据（时间戳、文件名）。
+2. **分块**：内容被分割成重叠的优化语义块，以保持上下文连续性。
+3. **嵌入生成**：块被转换为高维向量嵌入。
+4. **矢量存储**：嵌入存储在高性能矢量数据库中，用于即时相似性检索。
+
+---
+
+## 最佳实践
+
+- **命名**：为索引和上传的文件使用清晰的描述性名称（例如，HR-Policy-2026 而不是 doc1）。
+- **文件准备**：确保上传的文件是明文；上传前清理低质量扫描。
+- **文件限制**：标准上传支持每批最大 10MB 的文件。
+- **适当范围**：将敏感的个人笔记保留在个人索引中；将团队资源移至组索引中。

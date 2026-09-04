@@ -6,7 +6,7 @@ openapi: "POST /policy-check"
 ---
 # 정책 확인(모의 실행)
 
-모델을 호출하거나 비용을 청구하지 않고 완료 페이로드를 위해 **전체 보안 파이프라인**을 실행하세요. 정책 확인은 [채팅 완료](/ko/en/api/chat/completions)와 동일한 본문을 허용하고 입력 유효성 검사, 모델 허용 목록(전체 [중복 체인](/ko/en/api/redundancy)에 대한), SMLTP 정책 해결/승인, Prompt Shield 승인 및 보고서 전용 스캔 판정, 포인트 할당량 미리 보기 등 확인별 보고서를 반환합니다.
+모델을 호출하거나 비용을 청구하지 않고 완료 페이로드를 위해 **전체 보안 파이프라인**을 실행하세요. 정책 확인은 [채팅 완료](/ko/api/chat/completions)와 동일한 본문을 허용하고 입력 유효성 검사, 모델 허용 목록(전체 [중복 체인](/ko/api/redundancy)에 대한), SMLTP 정책 해결/승인, Prompt Shield 승인 및 보고서 전용 스캔 판정, 포인트 할당량 미리 보기 등 확인별 보고서를 반환합니다.
 
 비행 전 요청에 사용하여 "이것이 허용됩니까?" UI 또는 정책 구성을 안전하게 테스트합니다.
 
@@ -24,7 +24,7 @@ Authorization: Bearer sk-your-api-key-here
 
 ## 요청 본문
 
-[채팅 완료](/ko/en/api/chat/completions)와 동일한 스키마(`prompt` 또는 `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index` 등). 아무것도 생성되지 않으며 비용도 청구되지 않습니다.
+[채팅 완료](/ko/api/chat/completions)와 동일한 스키마(`prompt` 또는 `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index` 등). 아무것도 생성되지 않으며 비용도 청구되지 않습니다.
 
 ## 요청 예시
 
@@ -111,6 +111,6 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/policy-check" \
 
 ## 관련
 
-- [채팅 완료](/ko/ko/api/chat/completions)
-- [이중화 및 장애 조치](/ko/ko/api/redundancy)
-- [사용법](/ko/ko/api/usage)
+- [채팅 완료](/ko/api/chat/completions)
+- [이중화 및 장애 조치](/ko/api/redundancy)
+- [사용법](/ko/api/usage)

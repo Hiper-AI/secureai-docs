@@ -1,47 +1,45 @@
 ---
 id: create
-title: "Create Role"
-sidebar_label: "Create Role"
-description: "Create a new user role"
+title: "创建角色"
+sidebar_label: "创建角色"
+description: "创建新用户角色"
 openapi: "POST /roles"
 ---
+# 创建角色
 
+创建具有特定权限的新自定义用户角色。
 
-# Create Role
-
-Create a new custom user role with specific permissions.
-
-## Endpoint
+## 端点
 
 ```
 POST /roles
 ```
 
-## Description
+## 说明
 
-This endpoint allows administrators to create new custom user roles. Custom roles can have specific permissions tailored to your organization's needs. You can specify the role name, description, and permissions during creation.
+该端点允许管理员创建新的自定义用户角色。自定义角色可以具有根据您的组织需求定制的特定权限。您可以在创建过程中指定角色名称、描述和权限。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## 请求正文
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | Yes | Role name (system identifier) |
-| `displayName` | string | Yes | Human-readable role name |
-| `description` | string | Yes | Description of the role purpose |
-| `hasAdminPanelAccess` | boolean | No | Whether role has admin panel access (default: false) |
-| `permissions` | array | No | Array of permission objects |
-| `canInteractWithAI` | boolean | No | Whether role can interact with AI (default: true) |
-| `canUseChat` | boolean | No | Whether role can use chat (default: true) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `name` |字符串|是的 |角色名称（系统标识符）|
+| `displayName` |字符串|是的 |人类可读的角色名称 |
+| `description` |字符串|是的 |角色目的描述|
+| `hasAdminPanelAccess` |布尔 |没有 |角色是否具有管理面板访问权限（默认：false）|
+| `permissions` |数组|没有 |权限对象数组 |
+| `canInteractWithAI` |布尔 |没有 |角色是否可以与AI交互（默认：true）|
+| `canUseChat` |布尔 |没有 |角色是否可以使用聊天（默认：true）|
 
-## Example Request
+## 请求示例
 
 ```json
 {
@@ -64,9 +62,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `201 Created`
+**状态代码**：`201 Created`
 
 ```json
 {
@@ -102,32 +100,32 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `role` | object | Created role object |
-| `role.id` | string | Unique role identifier |
-| `role.name` | string | Role name |
-| `role.displayName` | string | Display name for the role |
-| `role.description` | string | Role description |
-| `role.isSystem` | boolean | Whether this is a system role |
-| `role.hasAdminPanelAccess` | boolean | Whether role has admin panel access |
-| `role.permissions` | array | Array of permission objects |
-| `role.permissions[].section` | string | Permission section |
-| `role.permissions[].level` | string | Permission level |
-| `role.canInteractWithAI` | boolean | Whether role can interact with AI |
-| `role.canUseChat` | boolean | Whether role can use chat |
-| `role.userCount` | integer | Number of users with this role |
-| `role.createdBy` | object | User who created the role |
-| `role.createdBy.id` | string | Creator user ID |
-| `role.createdBy.name` | string | Creator name |
-| `role.createdBy.email` | string | Creator email |
-| `role.createdAt` | string | Creation timestamp |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `message` |字符串|成功留言|
+| `role` |对象|创建角色对象 |
+| `role.id` |字符串|唯一的角色标识符 |
+| `role.name` |字符串|角色名称|
+| `role.displayName` |字符串|角色的显示名称 |
+| `role.description` |字符串|角色描述|
+| `role.isSystem` |布尔 |这是否是系统角色 |
+| `role.hasAdminPanelAccess` |布尔 |角色是否具有管理面板访问权限 |
+| `role.permissions` |数组|权限对象数组 |
+| `role.permissions[].section` |字符串|权限部分|
+| `role.permissions[].level` |字符串|权限级别 |
+| `role.canInteractWithAI` |布尔 |角色是否可以与AI交互 |
+| `role.canUseChat` |布尔 |角色是否可以使用聊天 |
+| `role.userCount` |整数 |具有此角色的用户数量 |
+| `role.createdBy` |对象|创建角色的用户 |
+| `role.createdBy.id` |字符串|创建者用户 ID |
+| `role.createdBy.name` |字符串|创建者姓名|
+| `role.createdBy.email` |字符串|创建者电子邮件 |
+| `role.createdAt` |字符串|创建时间戳 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -169,7 +167,7 @@ const result = await createRole(roleData);
 console.log('Created role:', result.role.id);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -208,7 +206,7 @@ result = create_role(role_data)
 print("Created role:", result["role"]["id"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
@@ -234,9 +232,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
   }'
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -252,7 +250,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -264,7 +262,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -276,7 +274,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 409 Conflict
+### 409 冲突
 
 ```json
 {
@@ -288,7 +286,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -301,51 +299,51 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-## Available Permission Sections
+## 可用的权限部分
 
-| Section | Description |
+|部分|描述 |
 |---------|-------------|
-| `home` | Home dashboard access |
-| `user-management` | User management operations |
-| `index-management` | Index management operations |
-| `analytics` | Analytics and reporting |
-| `group-management` | Group management operations |
-| `integrations` | Integration management |
-| `services-status` | Services status monitoring |
-| `settings` | System settings |
-| `announcements` | Announcement management |
-| `smltp-security` | SMLTP security features |
+| `home` |主页仪表板访问 |
+| `user-management` |用户管理操作|
+| `index-management` |指数管理操作|
+| `analytics` |分析和报告 |
+| `group-management` |集团管理运营|
+| `integrations` |一体化管理|
+| `services-status` |服务状态监控|
+| `settings` |系统设置|
+| `announcements` |公告管理 |
+| `smltp-security` | SMLTP 安全功能 |
 
-## Available Permission Levels
+## 可用的权限级别
 
-| Level | Description |
-|-------|-------------|
-| `none` | No access to the section |
-| `reader` | Read-only access to the section |
-| `admin` | Full administrative access to the section |
+|水平|描述 |
+|--------|-------------|
+| `none` |无法访问该部分 |
+| `reader` |对该部分的只读访问权限 |
+| `admin` |对该部分的完全管理访问权限 |
 
-## Use Cases
+## 用例
 
-- **Custom Roles**: Create roles tailored to your organization's needs
-- **Access Control**: Define specific permissions for different user types
-- **Security**: Implement least-privilege access principles
-- **Compliance**: Create roles that meet regulatory requirements
-- **Integration**: Define roles for third-party system integration
+- **自定义角色**：创建适合您组织需求的角色
+- **访问控制**：为不同用户类型定义特定权限
+- **安全**：实施最低权限访问原则
+- **合规性**：创建满足监管要求的角色
+- **集成**：定义第三方系统集成的角色
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **默认**：每分钟 50 个请求
+- **每日**：每天 5,000 个请求
+- **每月**：每月 150,000 个请求
 
-## Notes
+## 注释
 
-- **Admin Only**: This endpoint requires admin privileges
-- **Required Fields**: name, displayName, and description are required
-- **Permission Structure**: Permissions are objects with section and level properties
-- **System Roles**: Custom roles are never system roles
-- **Flat Response**: Response is not nested under data object
-- **Creator Info**: Shows who created the role
-- **User Count**: Starts at 0 for new roles
-- Role names must be unique within the system
-- The role is immediately available for user assignment 
+- **仅限管理员**：此端点需要管理员权限
+- **必填字段**：名称、显示名称和描述为必填项
+- **权限结构**：权限是具有部分和级别属性的对象
+- **系统角色**：自定义角色永远不是系统角色
+- **平面响应**：响应未嵌套在数据对象下
+- **创建者信息**：显示角色的创建者
+- **用户计数**：新角色从 0 开始
+- 角色名称在系统内必须是唯一的
+- 该角色立即可供用户分配

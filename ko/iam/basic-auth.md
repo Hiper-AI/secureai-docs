@@ -98,6 +98,6 @@ title: "기본 인증"
 
 ## 다음 단계
 
-- [Google Workspace](/ko/en/iam/google-workspace) - Google Workspace와 통합
-- [마이크로소프트 엔트라 아이디](/ko/ko/iam/microsoft-entra-id) - 마이크로소프트 엔트라 아이디로 접속
-- [IAM 개요](/ko/en/iam/overview) - ID 관리에 대해 알아보기
+- [Google Workspace](/ko/iam/google-workspace) - Google Workspace와 통합
+- [마이크로소프트 엔트라 아이디](/ko/iam/microsoft-entra-id) - 마이크로소프트 엔트라 아이디로 접속
+- [IAM 개요](/ko/iam/overview) - ID 관리에 대해 알아보기

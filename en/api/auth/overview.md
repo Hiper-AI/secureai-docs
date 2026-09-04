@@ -82,7 +82,7 @@ Default ceilings (configurable per key):
 - **Daily**: 100 requests
 - **Monthly**: 10,000 requests
 
-A key holder can read its own live quota and limits via [`GET /usage`](/api/usage).
+A key holder can read its own live quota and limits via [`GET /usage`](/en/api/usage).
 
 ## Security features
 

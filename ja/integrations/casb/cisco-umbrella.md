@@ -48,9 +48,9 @@ SecureAI は `POST https://api.umbrella.com/auth/v2/token` (基本 `apiKey:apiSe
 
 ## 確認する
 
-最初の同期後、[ネットワーク ソース](/ja/ja/discovery/network-sources) を開きます。AI ドメインを解決したソースが、プロバイダー、コール数、重大度とともに表示されます。
+最初の同期後、[ネットワーク ソース](/ja/discovery/network-sources) を開きます。AI ドメインを解決したソースが、プロバイダー、コール数、重大度とともに表示されます。
 
 ## 関連
 
-- [CASB とネットワークの概要](/ja/ja/integrations/casb/overview)
-- [ネットワークソース](/ja/ja/discovery/network-sources)
+- [CASB とネットワークの概要](/ja/integrations/casb/overview)
+- [ネットワークソース](/ja/discovery/network-sources)

@@ -82,4 +82,4 @@ SecureAI vous permet de télécharger et de traiter divers types de documents po
 ## Prochaines étapes
 
 
-- [Index](/fr/en/indexes/overview) - Gérez vos bases de connaissances
+- [Index](/fr/indexes/overview) - Gérez vos bases de connaissances

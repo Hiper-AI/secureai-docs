@@ -1,14 +1,13 @@
 ---
 sidebar_position: 3
-title: "Log S2S Session Duration"
+title: "Registrar Sesión Speech-to-Speech"
 openapi: "POST /speech/s2s/log-session"
+sidebar_label: "Log de Sesión S2S"
 ---
 
+# Registrar duración de la sesión S2S
 
-
-# Log S2S Session Duration
-
-Log the duration of a completed Speech-to-Speech session and deduct the time from the user's S2S time quota.
+Registre la duración de una sesión de voz a voz completa y deduzca el tiempo de la cuota de tiempo S2S del usuario.
 
 ## Endpoint
 
@@ -16,33 +15,33 @@ Log the duration of a completed Speech-to-Speech session and deduct the time fro
 POST /speech/s2s/log-session
 ```
 
-## Description
+## Descripción
 
-Log the duration of a completed Speech-to-Speech session and deduct the time from the user's S2S time quota. This should be called after a session ends to track usage accurately.
+Registre la duración de una sesión de voz a voz completa y deduzca el tiempo de la cuota de tiempo S2S del usuario. Esto debe llamarse después de que finalice una sesión para realizar un seguimiento del uso con precisión.
 
-### Usage Tracking
+### Seguimiento de uso
 
-- Duration is specified in milliseconds
-- Automatically converted to minutes and deducted from user's quota
-- Time is tracked per-user based on license tier
-- Activity logs are created for audit purposes
+- La duración se especifica en milisegundos.
+- Convertido automáticamente a minutos y deducido de la cuota del usuario.
+- El tiempo se rastrea por usuario según el nivel de licencia
+- Los registros de actividad se crean con fines de auditoría.
 
-## Authentication
+## Autenticación
 
-Required: API Key
+Requerido: Clave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Cuerpo de solicitud
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `durationMs` | integer | Yes | Session duration in milliseconds (minimum: 0) |
-| `user_id` | string | No | User ID to bill this session to (defaults to API key owner) |
+| `durationMs` | entero | Sí | Duración de la sesión en milisegundos (mínimo: 0) |
+| `user_id` | cadena | No | ID de usuario al que facturar esta sesión (el valor predeterminado es el propietario de la clave API) |
 
-## Request Example
+## Ejemplo de solicitud
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/speech/s2s/log-session" \
@@ -79,7 +78,7 @@ const data = await response.json();
 console.log('Session logged:', data.message);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -106,9 +105,9 @@ result = response.json()
 print('Session logged:', result['message'])
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -118,17 +117,17 @@ print('Session logged:', result['message'])
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `message` | string | Success message |
-| `request_id` | string | Request ID for tracking |
+| `success` | booleano | Siempre es cierto para solicitudes exitosas |
+| `message` | cadena | Mensaje de éxito |
+| `request_id` | cadena | Solicitar ID para seguimiento |
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -139,7 +138,7 @@ print('Session logged:', result['message'])
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -149,7 +148,7 @@ print('Session logged:', result['message'])
 }
 ```
 
-### 500 Internal Server Error
+### 500 Error interno del servidor
 
 ```json
 {
@@ -160,12 +159,11 @@ print('Session logged:', result['message'])
 }
 ```
 
-## Notes
+## Notas
 
-- Call this endpoint after each S2S session ends to accurately track usage
-- Duration should be calculated from when the WebRTC connection is established until it's closed
-- Time is automatically converted from milliseconds to minutes and deducted from the user's quota
-- The `user_id` parameter allows billing to a different user account
-- Activity logs are automatically created for audit purposes
-- Ensure you have sufficient remaining time before starting a session (check with `/speech/s2s/status`)
-
+- Llame a este endpoint después de que finalice cada sesión S2S para realizar un seguimiento preciso del uso.
+- La duración debe calcularse desde que se establece la conexión WebRTC hasta que se cierra
+- El tiempo se convierte automáticamente de milisegundos a minutos y se deduce de la cuota del usuario.
+- El parámetro `user_id` permite facturar a una cuenta de usuario diferente
+- Los registros de actividad se crean automáticamente con fines de auditoría.
+- Asegúrese de tener suficiente tiempo restante antes de iniciar una sesión (consulte con `/speech/s2s/status`)

@@ -6,7 +6,7 @@ description: "Shadow-AI-Erkennung – welche Unternehmens-Quell-IPs und Benutzer
 ---
 # Netzwerkquellen
 
-**Netzwerkquellen** (Admin → Agent Registry → **Netzwerk**) zeigt die in Ihren CASB/SWG-Protokollen gefundene Schatten-KI an: Welche Unternehmens-Quell-IPs und Benutzer rufen LLM-APIs auf, auch wenn kein SDK oder kein [Endpunkt-Agent] (/de/en/agent/overview) bereitgestellt ist. Es wird von den [CASB- und Netzwerkanschlüssen] (/de/en/integrations/casb/overview) gespeist – Cisco Umbrella, Zscaler und anderen.
+**Netzwerkquellen** (Admin → Agent Registry → **Netzwerk**) zeigt die in Ihren CASB/SWG-Protokollen gefundene Schatten-KI an: Welche Unternehmens-Quell-IPs und Benutzer rufen LLM-APIs auf, auch wenn kein SDK oder kein [Endpunkt-Agent] (/en/agent/overview) bereitgestellt ist. Es wird von den [CASB- und Netzwerkanschlüssen] (/en/integrations/casb/overview) gespeist – Cisco Umbrella, Zscaler und anderen.
 
 ## Das Entdeckungsfenster
 
@@ -40,6 +40,6 @@ Führen Sie **Sync** pro Connector oder **Sync All** aus; Connectors werden auch
 
 ## Verwandte
 
-- [CASB & Netzwerk (SWG) Integrationen](/de/en/integrations/casb/overview) – verbinden Sie die Protokollquellen.
-- [Endpoint Agent](/de/en/agent/overview) — für Endpunkte, die Sie direkt verwalten können.
-- [AI Discovery & Inventory Overview](/de/en/discovery/overview)
+- [CASB & Netzwerk (SWG) Integrationen](/de/integrations/casb/overview) – verbinden Sie die Protokollquellen.
+- [Endpoint Agent](/de/agent/overview) — für Endpunkte, die Sie direkt verwalten können.
+- [AI Discovery & Inventory Overview](/de/discovery/overview)

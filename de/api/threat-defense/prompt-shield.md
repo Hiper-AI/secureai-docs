@@ -8,7 +8,7 @@ Mit der Prompt Shield-API können Sie Eingabeaufforderungen und Antworten aus je
 Prompt Shield kann auf zwei Arten verwendet werden:
 
 1. **Eigenständige Scan-API** – die unten dokumentierten Endpunkte `/scan`, `/scan-output` und `/scan-conversation` für Ihre eigene LLM-Pipeline.
-2. **Inline bei Vervollständigungen** – wenn Sie [Chat Completion](/de/en/api/chat/completions) oder den [OpenAI-kompatiblen Endpunkt](/de/en/api/chat/openai-kompatibel) aufrufen, wird Prompt Shield automatisch ausgeführt und kann pro Aufruf optimiert werden. Siehe [Kontrolle pro Anruf bei Abschlüssen](#per-call-control-on-completions).
+2. **Inline bei Vervollständigungen** – wenn Sie [Chat Completion](/de/api/chat/completions) oder den [OpenAI-kompatiblen Endpunkt](/de/api/chat/openai-kompatibel) aufrufen, wird Prompt Shield automatisch ausgeführt und kann pro Aufruf optimiert werden. Siehe [Kontrolle pro Anruf bei Abschlüssen](#per-call-control-on-completions).
 
 ## Kontrolle pro Anruf bei Abschlüssen
 
@@ -28,7 +28,7 @@ Abschlussanforderungen scannen Eingabe (und Ausgabe) automatisch über Prompt Sh
 | `enabled` | Legen Sie `false` fest, um diesen Anruf vom Scannen auszuschließen. Opt-out ist **fail-closed**: Es wird nur berücksichtigt, wenn der API-Schlüssel zum Opt-out berechtigt ist; andernfalls wird der Anruf abgewiesen. |
 | `policy` | Wählen Sie aus den zulässigen Richtlinien des Schlüssels eine bestimmte Prompt Shield-Richtlinie (ID oder Name) für diesen Anruf aus. |
 
-Sie können `policy` nicht mit `enabled: false` kombinieren. Die angewendete Richtlinie wird in der Antwort zurückgegeben (`metadata.prompt_shield_policy` auf dem klassischen Endpunkt, `secureai.prompt_shield_policy` auf dem `/v1`-Endpunkt). Um eine Vorschau des Urteils eines Anrufs anzuzeigen, ohne das Modell auszuführen, verwenden Sie [Policy Check](/de/en/api/policy-check).
+Sie können `policy` nicht mit `enabled: false` kombinieren. Die angewendete Richtlinie wird in der Antwort zurückgegeben (`metadata.prompt_shield_policy` auf dem klassischen Endpunkt, `secureai.prompt_shield_policy` auf dem `/v1`-Endpunkt). Um eine Vorschau des Urteils eines Anrufs anzuzeigen, ohne das Modell auszuführen, verwenden Sie [Policy Check](/de/api/policy-check).
 
 ## Authentifizierung
 

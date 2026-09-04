@@ -1,49 +1,47 @@
 ---
 sidebar_position: 5
-title: "Egress Enforcement"
-sidebar_label: "Egress Enforcement"
-description: "Control or block outbound AI traffic from endpoints with the SecureAI OS Agent"
+title: "Control y Cumplimiento de Salida (Egress Enforcement)"
+sidebar_label: "Control de Salida (Egress)"
+description: "Controle o bloquee el tráfico de IA saliente desde endpoints con SecureAI OS Agent"
 ---
 
+# Control de salida
 
+La aplicación de la salida controla lo que un endpoint puede enviar **hacia fuera** a proveedores de IA y servidores MCP. Se configura según [política](/agent/policies-and-groups) y el agente lo aplica localmente.
 
-# Egress Enforcement
+## Modos
 
-Egress enforcement controls what an endpoint is allowed to send **out** to AI providers and MCP servers. It's configured per [policy](/en/agent/policies-and-groups) and enforced locally by the agent.
-
-## Modes
-
-| Mode | Behavior |
+| Modo | Comportamiento |
 |------|----------|
-| **off** | No egress enforcement — discovery/monitoring only. |
-| **kill** | Terminate the offending process when it makes a disallowed AI call (legacy default). |
-| **block** | Durable network block of the connection (Windows Filtering Platform), leaving the process running. |
-| **lockdown** | Default-deny: everything is blocked except destinations on an explicit **allow list**. |
+| **apagado** | Sin control de salida: solo descubrimiento/monitoreo. |
+| **matar** | Finalice el proceso infractor cuando realice una llamada de IA no permitida (predeterminado heredado). |
+| **bloque** | Bloqueo de red duradero de la conexión (Plataforma de filtrado de Windows), dejando el proceso en ejecución. |
+| **bloqueo** | Denegación predeterminada: todo está bloqueado excepto los destinos en una **lista permitida** explícita. |
 
-## Additional controls
+## Controles adicionales
 
-| Control | Description |
+| Controlar | Descripción |
 |---------|-------------|
-| **Allow list** | In `lockdown`, the set of destinations that remain permitted. |
-| **Block remote MCP** | Blocks the endpoint from reaching remote MCP servers. |
+| **Lista de permitidos** | En `lockdown`, el conjunto de destinos que permanecen permitidos. |
+| **Bloquear MCP remoto** | Bloquea el endpoint para que no llegue a servidores MCP remotos. |
 
-The resolved configuration is delivered to each device as `egressEnforcement: { mode, allowList, blockRemoteMcp }` and re-evaluated on every heartbeat.
+La configuración resuelta se entrega a cada dispositivo como `egressEnforcement: { mode, allowList, blockRemoteMcp }` y se reevalúa en cada latido.
 
-## Choosing a mode
+## Elegir un modo
 
-- Start in **off** (or a **monitor**-mode policy) to build an accurate picture of what the endpoint actually calls — visible in the device drawer and in [AI Discovery](/en/discovery/overview).
-- Move to **block** to durably stop disallowed AI egress without disrupting the rest of the process's networking.
-- Use **kill** where you want the offending program stopped outright.
-- Use **lockdown** for the strictest posture — only your sanctioned AI endpoints (the allow list) are reachable.
+- Comience en **desactivado** (o una política de modo **monitor**) para crear una imagen precisa de lo que realmente llama el endpoint, visible en el cajón del dispositivo y en [AI Discovery](/discovery/overview).
+- Muévase a **bloquear** para detener de forma duradera la salida de IA no permitida sin interrumpir el resto de la red del proceso.
+- Utilice **kill** donde desee que el programa infractor se detenga por completo.
+- Utilice **bloqueo** para la postura más estricta: solo se puede acceder a sus endpoints de IA autorizados (la lista de permitidos).
 
-Egress modes are also bundled into the [protection presets](/en/agent/policies-and-groups#protection-presets) (Passive / Normal / Aggressive), so you can set a whole-posture level in one click and fine-tune from there.
+Los modos de salida también están incluidos en los [ajustes preestablecidos de protección](/agent/policies-and-groups#protection-presets) (Pasivo / Normal / Agresivo), por lo que puede establecer un nivel de postura completo con un solo clic y ajustarlo desde allí.
 
 <Warning>
-`kill`, `block`, and `lockdown` actively interrupt endpoint traffic. Validate a change with **dry-run simulate** and staged **rollout rings** ([Policies & Groups](/en/agent/policies-and-groups#safe-rollouts)) before applying it fleet-wide.
+`kill`, `block` y `lockdown` interrumpen activamente el tráfico del endpoint. Valide un cambio con **simulación de prueba** y **anillos de implementación** por etapas ([Policies & Groups](/agent/policies-and-groups#safe-rollouts)) antes de aplicarlo en toda la flota.
 </Warning>
 
-## Related
+## Relacionado
 
-- [Policies & Groups](/en/agent/policies-and-groups)
-- [Transparent Proxy](/en/agent/transparent-proxy) — route allowed AI traffic through the gateway instead of blocking it.
-- [Quarantine & Fleet Ops](/en/agent/quarantine-and-fleet-ops)
+- [Políticas y grupos](/agent/policies-and-groups)
+- [Proxy transparente](/agent/transparent-proxy): enruta el tráfico de IA permitido a través de la puerta de enlace en lugar de bloquearlo.
+- [Operaciones de cuarentena y flota](/agent/quarantine-and-fleet-ops)

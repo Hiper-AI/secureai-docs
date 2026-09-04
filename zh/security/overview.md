@@ -1,91 +1,89 @@
 ---
 sidebar_position: 1
-title: "Security Overview"
+title: "安全概述"
 ---
+# 安全概述
 
+了解 SecureAI 的安全功能和架构。
 
-# Security Overview
+## 安全特性
 
-Learn about SecureAI's security features and architecture.
+SecureAI 实施企业级安全措施来保护您的数据和应用程序，并以 SMLTP（安全模型语言传输协议）作为我们安全架构的基石。
 
-## Security Features
+### SMLTP（安全模型语言传输协议）
 
-SecureAI implements enterprise-grade security measures to protect your data and applications, with SMLTP (Secure Model Language Transfer Protocol) as the cornerstone of our security architecture.
+**SMLTP** 是一种具有公共规范草案的安全协议，可与
+大型语言模型（LLM）受到管理、包含和证明。它提供：
 
-### SMLTP (Secure Model Language Transfer Protocol)
+- **签名的权利令牌**：每个受管理的请求都带有 **Ed25519** 签名的令牌绑定
+  身份、授权模型、策略哈希和确切的请求字节 (SHA-256)
+- **签署的合规收据**：每个网关路由的交互都会生成一个收据，可以
+  根据网关的公钥离线验证
+- **策略执行**：模型允许列表、数据驻留检查和出口控制 - 在监视器中
+  或强制模式，带有签名的拒绝收据
+- **防篡改审计日志**：哈希链式、Merkle 密封日志，可选择锚定到
+  外部透明日志（Sigstore Rekor）
+- **密钥轮换**：Ed25519 签名密钥轮换；根据以前的钥匙发出的收据仍然保留
+  可验证的
+- **捆绑加密**：客户端和客户端之间的请求捆绑可选 AES-256-GCM 加密
+  网关
 
-**SMLTP** is a security protocol with a public specification draft that makes communication with
-Large Language Models (LLMs) governed, contained, and provable. It provides:
+### 数据保护
 
-- **Signed Entitlement Tokens**: every governed request carries an **Ed25519**-signed token binding
-  identity, authorized model, policy hash, and the exact request bytes (SHA-256)
-- **Signed Compliance Receipts**: each gateway-routed interaction produces a receipt that can be
-  verified offline against the gateway's public key
-- **Policy Enforcement**: model allowlists, data-residency checks, and egress controls — in monitor
-  or enforce mode, with signed denial receipts
-- **Tamper-Evident Audit Logging**: hash-chained, Merkle-sealed logs, optionally anchored to an
-  external transparency log (Sigstore Rekor)
-- **Key Rotation**: Ed25519 signing-key rotation; receipts issued under previous keys remain
-  verifiable
-- **Bundle Encryption**: optional AES-256-GCM encryption of request bundles between client and
-  gateway
+- **零知识状态**：客户管理的密钥 (BYOK)、临时内存处理和
+  部署本地日志记录将敏感数据置于您的控制之下
+- **静态加密**：所有存储的数据均使用行业标准算法进行加密
+- **传输中加密**：所有 API 通信均采用 TLS 1.3 加密
+- **客户管理的密钥**：您控制您的加密密钥
 
-### Data Protection
+### 访问控制
 
-- **Zero-Knowledge Posture**: customer-managed keys (BYOK), ephemeral in-memory processing, and
-  deployment-local logging keep sensitive data under your control
-- **Encryption at Rest**: All stored data is encrypted using industry-standard algorithms
-- **Encryption in Transit**: TLS 1.3 encryption for all API communications
-- **Customer-Managed Keys**: You control your encryption keys
+- **基于角色的访问控制（RBAC）**：不同用户类型的细化权限
+- **API 密钥管理**：所有 API 请求的安全身份验证
+- **速率限制**：智能速率限制以防止滥用
+- **审核日志**：完整的活动跟踪以确保合规性和安全性
 
-### Access Control
+### 安全策略
 
-- **Role-Based Access Control (RBAC)**: Granular permissions for different user types
-- **API Key Management**: Secure authentication for all API requests
-- **Rate Limiting**: Intelligent rate limiting to prevent abuse
-- **Audit Logs**: Complete activity tracking for compliance and security
+SMLTP 支持多种内置策略模板：
 
-### Security Policies
+- **内部**：公司内部数据的默认政策
+- **内部严格**：敏感内部数据的安全性更高
+- **公共**：对非敏感公共数据的限制性政策较少
+- **HIPAA**：符合医疗保健数据法规
+- **GDPR**：符合欧洲数据保护法规
+- **PCI-DSS**：符合支付卡行业标准
 
-SMLTP supports several built-in policy templates:
+### 合规性和认证
 
-- **Internal**: Default policy for internal company data
-- **Internal Strict**: Higher security for sensitive internal data
-- **Public**: Less restrictive policy for non-sensitive, public data
-- **HIPAA**: Compliant with healthcare data regulations
-- **GDPR**: Compliant with European data protection regulations
-- **PCI-DSS**: Compliant with payment card industry standards
+- **企业就绪**：专为企业安全要求而设计
+- **审计跟踪**：合规性和安全审计的完整日志记录
+- **策略执行**：自动执行安全策略
+- **实时监控**：持续监控安全事件
 
-### Compliance & Certifications
+## SMLTP 的工作原理
 
-- **Enterprise Ready**: Designed for enterprise security requirements
-- **Audit Trail**: Complete logging for compliance and security audits
-- **Policy Enforcement**: Automated enforcement of security policies
-- **Real-time Monitoring**: Continuous monitoring of security events
+1. **权利**：控制平面铸造一个签名令牌，授权该调用者、该模型、
+   在此策略下，对于这些确切的请求字节
+2. **验证**：SMLTP网关验证令牌 - 签名、到期、模型匹配、正文
+   哈希、重放和撤销——在请求到达任何地方之前
+3. **策略执行**：模型许可名单、驻留和出口规则在
+   网关；在强制模式下，不合规的呼叫将被阻止并带有签名的拒绝收据
+4. **检查和证明**：DLP/PII 检查在受管路径上运行（尽力而为、
+   概率），其判决记录在签名收据中
+5. **审计日志**：每次交互都会进入哈希链式、Merkle 密封的审计跟踪中
 
-## How SMLTP Works
+## 好处
 
-1. **Entitlement**: the control plane mints a signed token authorizing this caller, this model,
-   under this policy, for these exact request bytes
-2. **Verification**: the SMLTP gateway verifies the token — signature, expiry, model match, body
-   hash, replay, and revocation — before the request goes anywhere
-3. **Policy Enforcement**: model allowlist, residency, and egress rules are evaluated at the
-   gateway; in enforce mode a non-compliant call is blocked with a signed denial receipt
-4. **Inspection & Attestation**: DLP/PII inspection runs on the governed path (best-effort,
-   probabilistic), and its verdict is recorded in the signed receipt
-5. **Audit Logging**: every interaction lands in a hash-chained, Merkle-sealed audit trail
+- **可证明，而不仅仅是记录**：签名收据让审核员能够独立验证交互
+- **合规就绪**：对主要合规框架的内置支持
+- **遏制**：即使是受感染的代理也不能超出其加密签名的权限
+- **确定性撤销**：切断用户、密钥或代理在网关处生效
+  秒——无需等待任何人工智能提供商
+- **策略驱动**：自动执行您的安全策略
 
-## Benefits
+## 后续步骤
 
-- **Provable, not just logged**: signed receipts let auditors verify interactions independently
-- **Compliance Ready**: built-in support for major compliance frameworks
-- **Containment**: even a compromised agent cannot exceed its cryptographically signed permissions
-- **Deterministic Revocation**: cutting off a user, key, or agent takes effect at the gateway in
-  seconds — without waiting on any AI provider
-- **Policy Driven**: automated enforcement of your security policies
-
-## Next Steps
-
-- [SMLTP Deep Dive](/zh/security/smltp) - Learn more about SMLTP
-- [Authentication](/zh/iam/overview) - Understand authentication methods
-- [API Security](/zh/api) - Secure API usage guidelines 
+- [SMLTP 深入探讨](/zh/security/smltp) - 了解有关 SMLTP 的更多信息
+- [身份验证](/zh/iam/overview) - 了解身份验证方法
+- [API安全](/zh/api) - 安全API使用指南

@@ -1,47 +1,45 @@
 ---
 sidebar_position: 4
-title: "Search Index for Documents"
+title: "文件搜索索引"
 openapi: "GET /indexes/{indexName}/search"
 ---
+# 文档搜索索引
 
+使用语义搜索来搜索索引中的文档。
 
-# Search Index for Documents
-
-Search documents within an index using semantic search.
-
-## Endpoint
+## 端点
 
 ```
 GET /indexes/{indexName}/search
 ```
 
-## Description
+## 说明
 
-Search documents within an index using semantic search. Returns matching documents with relevance scores, sorted by relevance.
+使用语义搜索来搜索索引中的文档。返回具有相关性分数的匹配文档，并按相关性排序。
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## 路径参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `indexName` | string | Yes | Name of the index to search |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `indexName` |字符串|是的 |要搜索的索引名称 |
 
-## Query Parameters
+## 查询参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | Yes | Search query text |
-| `top_k` | integer | No | Maximum number of results to return (1-50, default: 10) |
-| `min_score` | float | No | Minimum relevance score threshold (0.0-1.0, default: 0.0) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `query` |字符串|是的 |搜索查询文本 |
+| `top_k` |整数 |没有 |返回结果的最大数量（1-50，默认值：10）|
+| `min_score` |浮动|没有 |最小相关性分数阈值（0.0-1.0，默认值：0.0）|
 
-## Request Example
+## 请求示例
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowledge-base/search?query=What%20is%20machine%20learning?&top_k=10&min_score=0.5" \
@@ -66,7 +64,7 @@ data.results.matches.forEach(match => {
 });
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -88,9 +86,9 @@ for match in result['results']['matches']:
     print(f"Rank {match['rank']}: {match['content'][:100]}... (score: {match['score']})")
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -134,46 +132,46 @@ for match in result['results']['matches']:
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `request_id` | string | Request ID for tracking |
-| `query` | string | The search query that was used |
-| `results` | object | Search results |
-| `index` | object | Index information |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |对于成功的请求始终如此 |
+| `request_id` |字符串|请求 ID 进行跟踪 |
+| `query` |字符串|使用的搜索查询 |
+| `results` |对象|搜索结果 |
+| `index` |对象|索引信息 |
 
-### Results Object
+### 结果对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `matches` | array | Array of matching documents, sorted by relevance |
-| `total` | integer | Total number of matches found |
-| `top_k` | integer | Requested top_k value |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `matches` |数组|匹配文档数组，按相关性排序 |
+| `total` |整数 |找到的匹配总数 |
+| `top_k` |整数 |请求的top_k值|
 
-### Match Object
+### 匹配对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `rank` | integer | Result rank (1-based) |
-| `score` | float | Relevance score (0.0-1.0, higher is more relevant) |
-| `source` | string | Document source identifier |
-| `content` | string | Content preview (truncated to 500 characters) |
-| `metadata` | object | Additional metadata |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `rank` |整数 |结果排名（从 1 开始）|
+| `score` |浮动|相关性得分（0.0-1.0，越高相关性越高）|
+| `source` |字符串|文档来源标识符 |
+| `content` |字符串|内容预览（截短至 500 个字符）|
+| `metadata` |对象|附加元数据 |
 
-### Metadata Object
+### 元数据对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `page` | integer\|null | Page number (if from PDF) |
-| `chunkIndex` | integer\|null | Chunk index within document |
-| `title` | string\|null | Document title |
-| `documentId` | string\|null | Document ID |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `page` |整数\|null |页码（如果来自 PDF）|
+| `chunkIndex` |整数\|null |文档中的块索引 |
+| `title` |字符串\|空|文档标题 |
+| `documentId` |字符串\|空|文件编号 |
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -183,7 +181,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -193,7 +191,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -203,7 +201,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 404 Not Found
+### 404 未找到
 
 ```json
 {
@@ -213,7 +211,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 500 Internal Server Error
+### 500 内部服务器错误
 
 ```json
 {
@@ -223,12 +221,11 @@ for match in result['results']['matches']:
 }
 ```
 
-## Notes
+## 注释
 
-- Semantic search uses vector similarity to find relevant documents
-- Results are sorted by relevance score (highest first)
-- Use `min_score` to filter out low-relevance results
-- Content previews are truncated to 500 characters
-- The `top_k` parameter limits the number of results returned
-- Metadata includes information about the document source and location
-
+- 语义搜索使用向量相似度来查找相关文档
+- 结果按相关性分数排序（最高的在前）
+- 使用`min_score`过滤掉低相关性结果
+- 内容预览被截断为 500 个字符
+- `top_k` 参数限制返回结果的数量
+- 元数据包括有关文档来源和位置的信息

@@ -1,59 +1,57 @@
 ---
 sidebar_position: 2
-title: "OpenAI Platform"
+title: "Integración con OpenAI Platform"
 sidebar_label: "OpenAI Platform"
-description: "Connect the OpenAI Platform so SecureAI can inventory projects, models, keys, usage, and cost"
+description: "Conecte la plataforma OpenAI para que SecureAI pueda inventariar proyectos, modelos, claves, uso y costos."
 ---
-
-
 
 # OpenAI Platform
 
-Connect your OpenAI organization so SecureAI can inventory projects, models, members, API keys, service accounts, spend, and audit activity — and surface leaked or over-privileged keys for remediation.
+Conecte su organización OpenAI para que SecureAI pueda inventariar proyectos, modelos, miembros, claves API, cuentas de servicio, gastos y actividad de auditoría, y revelar claves filtradas o con privilegios excesivos para su reparación.
 
-## What SecureAI imports
+## Qué importa SecureAI
 
-- **Projects, models, members, roles, and groups**
-- **NHIs** — API keys and service accounts (revocable — see [NHI Inventory](/en/discovery/nhi-inventory))
-- **Spend alerts, rate limits, certificates, and data-retention settings**
-- **Audit logs**
-- **Usage and cost** for the last 30 days, including per-user spend
+- **Proyectos, modelos, miembros, roles y grupos**
+- **NHI**: claves API y cuentas de servicio (revocables; consulte [Inventario de NHI](/discovery/nhi-inventory))
+- **Alertas de gasto, límites de tarifas, certificados y configuración de retención de datos**
+- **Registros de auditoría**
+- **Uso y costo** durante los últimos 30 días, incluido el gasto por usuario
 
-## Prerequisites
+## Requisitos previos
 
-- An **Organization owner** (or admin) on the OpenAI Platform.
-- An **Admin API key** (`sk-admin-…`). Admin keys are required to read org-wide projects, members, and usage.
+- Un **propietario de la organización** (o administrador) en la plataforma OpenAI.
+- Una **Clave API de administrador** (`sk-admin-…`). Se requieren claves de administrador para leer los proyectos, los miembros y el uso de toda la organización.
 
-## Credentials
+## Credenciales
 
-| Field | Required | Description |
+| Campo | Requerido | Descripción |
 |-------|----------|-------------|
-| `adminApiKey` | Yes | Organization **admin** key, format `sk-admin-…`. Encrypted at rest. |
-| `projectApiKey` | No | One or more project keys (one per line), only needed for legacy Assistants inventory. |
-| `organizationId` | No | Your `org-…` id; disambiguates when a key spans multiple orgs. |
+| `adminApiKey` | Sí | Clave **admin** de la organización, formato `sk-admin-…`. Cifrado en reposo. |
+| `projectApiKey` | No | Una o más claves de proyecto (una por línea), solo necesarias para el inventario de Asistentes heredado. |
+| `organizationId` | No | Su identificación `org-…`; elimina la ambigüedad cuando una clave abarca varias organizaciones. |
 
-### Where to get the admin key
+### Dónde obtener la clave de administrador
 
-1. Sign in to the [OpenAI Platform](https://platform.openai.com/) as an organization owner.
-2. Go to **Settings → Organization → Admin keys**.
-3. Create a new admin key and copy it (shown once).
+1. Inicie sesión en la [Plataforma OpenAI](https://platform.openai.com/) como propietario de una organización.
+2. Vaya a **Configuración → Organización → Claves de administrador**.
+3. Cree una nueva clave de administrador y cópiela (se muestra una vez).
 
-## Connect
+## Conectar
 
-1. **Admin → Integrations → Cloud → OpenAI Platform → Connect.**
-2. Paste the admin API key (and optional fields).
-3. **Test**, then **Save**.
-4. **Sync**.
+1. **Administrador → Integraciones → Nube → Plataforma OpenAI → Conectar.**
+2. Pegue la clave API de administrador (y los campos opcionales).
+3. **Probar**, luego **Guardar**.
+4. **Sincronización**.
 
-## Verify
+## Verificar
 
-After the first sync, open [Cloud Sensors](/en/discovery/cloud-sensors) to see discovered models/assistants, and [NHI Inventory](/en/discovery/nhi-inventory) to see keys and service accounts. Per-provider **Insights** show usage, cost, and per-user spend.
+Después de la primera sincronización, abra [Sensores de nube](/discovery/cloud-sensors) para ver los modelos/asistentes descubiertos y [Inventario NHI](/discovery/nhi-inventory) para ver claves y cuentas de servicio. **Estadísticas** por proveedor muestran el uso, el costo y el gasto por usuario.
 
-## Revocation
+## Revocación
 
-OpenAI API keys are **revocable** from [NHI Inventory](/en/discovery/nhi-inventory): SecureAI can disable a key at the source. (For service accounts, OpenAI identities are monitor-only.)
+Las claves API de OpenAI son **revocables** de [NHI Inventory](/discovery/nhi-inventory): SecureAI puede desactivar una clave en la fuente. (Para las cuentas de servicio, las identidades de OpenAI son solo de monitoreo).
 
-## Related
+## Relacionado
 
-- [Cloud AI Providers Overview](/en/integrations/cloud/overview)
-- [NHI Inventory](/en/discovery/nhi-inventory)
+- [Descripción general de los proveedores de IA en la nube](/integrations/cloud/overview)
+- [Inventario NHI](/discovery/nhi-inventory)

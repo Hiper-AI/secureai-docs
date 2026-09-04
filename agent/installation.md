@@ -1,53 +1,51 @@
 ---
 sidebar_position: 2
-title: "Installing the Agent"
-sidebar_label: "Installation"
-description: "Install the SecureAI OS Agent on Windows, Linux, and macOS endpoints"
+title: "Instalación del Endpoint Agent"
+sidebar_label: "Instalación"
+description: "Instale SecureAI OS Agent en terminales Windows, Linux y macOS"
 ---
 
+# Instalación del agente
 
+SecureAI OS Agent se instala desde un **paquete de instalación** que usted crea en **Admin → Agent Registry → OS Agents**. El paquete produce un comando listo para ejecutar (Windows) o un script (Linux/macOS) que lleva dos valores: la **URL de backend** y una **clave de inscripción** con alcance. Para conocer el creador de paquetes completo y los mecanismos de inscripción, consulte [Paquetes de instalación e inscripción](/agent/enrollment-and-packages).
 
-# Installing the Agent
+##Windows (MSI)
 
-The SecureAI OS Agent is installed from an **installer package** you build in **Admin → Agent Registry → OS Agents**. The package produces a ready-to-run command (Windows) or script (Linux/macOS) that carries two values: the **backend URL** and a scoped **enrollment key**. For the full package builder and enrollment mechanics, see [Enrollment & Installer Packages](/en/agent/enrollment-and-packages).
-
-## Windows (MSI)
-
-Windows uses a **code-signed MSI**. The MSI is never modified when it's downloaded, so its Authenticode signature stays valid — configuration is passed at install time on the `msiexec` command line instead of being baked into the file.
+Windows utiliza un **MSI con código firmado**. El MSI nunca se modifica cuando se descarga, por lo que su firma Authenticode sigue siendo válida: la configuración se pasa en el momento de la instalación en la línea de comando `msiexec` en lugar de incorporarse al archivo.
 
 ```powershell
 msiexec /i "secureai-agent.msi" /qb BACKEND_URL=https://{customer.name}.hiperai.ai ENROLL_KEY=sk-...
 ```
 
-| Property | Description |
+| Propiedad | Descripción |
 |----------|-------------|
-| `BACKEND_URL` | Your SecureAI backend origin (the endpoint calls home here). |
-| `ENROLL_KEY` | The scoped `agent:enroll` key from the installer package. |
+| `BACKEND_URL` | Su origen de backend de SecureAI (el endpoint llama a casa aquí). |
+| `ENROLL_KEY` | La clave `agent:enroll` con alcance del paquete de instalación. |
 
-The installer panel shows the exact command with your values pre-filled — copy it directly.
+El panel del instalador muestra el comando exacto con sus valores precargados; cópielo directamente.
 
 <Tip>
-**Deploy at scale**
+**Implementar a escala**
 
-Push the same `msiexec` command through your existing MDM/RMM (Intune, GPO, SCCM, etc.). Because the URL and key are command-line properties, one signed MSI works for every tenant and group.
+Ejecute el mismo comando `msiexec` a través de su MDM/RMM existente (Intune, GPO, SCCM, etc.). Dado que la URL y la clave son propiedades de la línea de comandos, un MSI firmado funciona para cada inquilino y grupo.
 </Tip>
 
-## Linux / macOS (script)
+## Linux/macOS (guión)
 
-Download the self-contained shell script from the installer package and run it. The script pulls the appropriate `.deb`/`.pkg` and writes the agent configuration (e.g. `/etc/secureai-agent.toml` on Linux, a LaunchAgent plist on macOS).
+Descargue el script de shell independiente del paquete de instalación y ejecútelo. El script extrae el `.deb`/`.pkg` apropiado y escribe la configuración del agente (por ejemplo, `/etc/secureai-agent.toml` en Linux, un plist de LaunchAgent en macOS).
 
 ```bash
 sudo ./secureai-agent-install.sh
 ```
 
-The backend URL and enrollment key are already embedded in the script generated for your package.
+La URL de backend y la clave de inscripción ya están integradas en el script generado para su paquete.
 
-## What happens on first run
+## ¿Qué sucede en la primera ejecución?
 
-On first launch the agent **enrolls**: it presents the enrollment key, registers the device, and receives a per-device token and its runtime configuration. It then begins heartbeating and applying its resolved [policy](/en/agent/policies-and-groups). See [Enrollment & Installer Packages](/en/agent/enrollment-and-packages) for the details, including how the backend URL is resolved and how device tokens rotate.
+En el primer lanzamiento, el agente se **inscribe**: presenta la clave de inscripción, registra el dispositivo y recibe un token por dispositivo y su configuración de tiempo de ejecución. Luego comienza a latir y a aplicar su [política] resuelta (/agente/políticas-y-grupos). Consulte [Paquetes de instalación y de inscripción](/agent/enrollment-and-packages) para obtener más detalles, incluido cómo se resuelve la URL de backend y cómo rotan los tokens de dispositivo.
 
-## Related
+## Relacionado
 
-- [Enrollment & Installer Packages](/en/agent/enrollment-and-packages)
-- [Policies & Groups](/en/agent/policies-and-groups)
-- [Endpoint Agent Overview](/en/agent/overview)
+- [Paquetes de inscripción e instalación](/agent/enrollment-and-packages)
+- [Políticas y grupos](/agent/policies-and-groups)
+- [Descripción general del agente de endpoint](/agent/overview)

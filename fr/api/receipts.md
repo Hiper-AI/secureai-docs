@@ -52,7 +52,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 }
 ```
 
-L'objet `receipt` est la charge utile signée émise par la passerelle. Voir [SMLTP Security](/fr/en/security/smltp) pour savoir comment les reçus s'intègrent dans le modèle de transparence et d'audit.
+L'objet `receipt` est la charge utile signée émise par la passerelle. Voir [SMLTP Security](/fr/security/smltp) pour savoir comment les reçus s'intègrent dans le modèle de transparence et d'audit.
 
 ### 404 Introuvable
 
@@ -70,11 +70,11 @@ Renvoyé lorsque l’identifiant du bundle est manquant ou comporte plus de 128 
 
 ## Remarques
 
-- Les reçus sont conservés dans la mémoire en mémoire de la passerelle pendant une durée limitée. Pour une preuve à long terme, comptez sur le **journal d'audit chaîné par hachage** — l'enregistrement faisant autorité et immuable. Voir [Journaux immuables](/fr/en/security/immutable-logs).
+- Les reçus sont conservés dans la mémoire en mémoire de la passerelle pendant une durée limitée. Pour une preuve à long terme, comptez sur le **journal d'audit chaîné par hachage** — l'enregistrement faisant autorité et immuable. Voir [Journaux immuables](/fr/security/immutable-logs).
 - Tous les déploiements ne passent pas par la passerelle ; traitez un `404` comme « aucun reçu de passerelle pour cet appel », et non comme une erreur dans votre intégration.
 
 ## Connexes
 
-- [Sécurité SMLTP](/fr/en/security/smltp)
-- [Journaux immuables](/fr/en/security/immutable-logs)
-- [Achèvement du chat](/fr/en/api/chat/completions)
+- [Sécurité SMLTP](/fr/security/smltp)
+- [Journaux immuables](/fr/security/immutable-logs)
+- [Achèvement du chat](/fr/api/chat/completions)

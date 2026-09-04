@@ -18,7 +18,7 @@ Jeder Connector gibt an, wie SecureAI ihn erreicht und wie er sich authentifizie
 |---------|-----------|------|----------|
 | Lokaler Prozess | `stdio` | API-Schlüssel (in Umgebung) | Notion, Cloudflare (lokaler Bin), Azure (`npx @azure/mcp`), AWS (`uvx awslabs.aws-api-mcp-server`), Referenzserver (Sequential Thinking, Web Fetch, Time). |
 | Remote (Token) | `streamable_http` | API-Schlüssel/Träger (in env) | GitHub offizielles MCP, die Google Cloud-Familie (BigQuery, Compute, Logging, Vertex AI, Cloud Run, GKE, …), Microsoft Learn. |
-| Remote (OAuth) | `streamable_http` | OAuth 2.1 + PKCE, mit dynamischer Client-Registrierung | Cloudflare (offizieller Remote-MCP). Siehe [Remote MCP mit OAuth & DCR](/de/en/integrations/mcp/remote-oauth-dcr). |
+| Remote (OAuth) | `streamable_http` | OAuth 2.1 + PKCE, mit dynamischer Client-Registrierung | Cloudflare (offizieller Remote-MCP). Siehe [Remote MCP mit OAuth & DCR](/de/integrations/mcp/remote-oauth-dcr). |
 
 Einige tokenbasierte Remote-Konnektoren (z. B. die Google Cloud-Familie) verfügen auch über einen OAuth-Ablauf, sodass ein Benutzer die Autorisierung mit seinem eigenen Google OAuth-Client über ein Popup durchführen kann, anstatt ein statisches Token einzufügen.
 
@@ -35,5 +35,5 @@ Jeder Connector deklariert **blockierte Toolmuster** – zerstörerische Vorgän
 
 ## Verwandte
 
-- [Remote MCP mit OAuth & DCR](/de/en/integrations/mcp/remote-oauth-dcr)
-- [AI Gateway — Remote Endpoints](/de/en/ai-gateway/remote-endpoints)
+- [Remote MCP mit OAuth & DCR](/de/integrations/mcp/remote-oauth-dcr)
+- [AI Gateway — Remote Endpoints](/de/ai-gateway/remote-endpoints)

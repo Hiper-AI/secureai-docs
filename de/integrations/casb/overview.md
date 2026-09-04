@@ -6,15 +6,15 @@ description: "Entdecken Sie Schatten-KI aus Ihren CASB-/SWG-/DNS-Protokollen –
 ---
 # CASB- und Netzwerk (SWG)-Integrationen
 
-Diese Konnektoren lösen das Problem der **Schatten-KI-Erkennung**: Sie finden jedes Unternehmensgerät, jeden Server oder jede Arbeitslast, die eine LLM-API aufruft – auch solche, bei denen Sie kein SDK oder den [Endpunktagenten](/de/en/agent/overview) (einen Build-Server, einen Lagersortierer, den Laptop eines Auftragnehmers) installieren können. SecureAI liest die Protokolle, die Ihre **CASB-/Secure Web Gateway (SWG)-/DNS-Plattform** bereits sammelt, und erkennt Datenverkehr zu KI-Anbietern.
+Diese Konnektoren lösen das Problem der **Schatten-KI-Erkennung**: Sie finden jedes Unternehmensgerät, jeden Server oder jede Arbeitslast, die eine LLM-API aufruft – auch solche, bei denen Sie kein SDK oder den [Endpunktagenten](/de/agent/overview) (einen Build-Server, einen Lagersortierer, den Laptop eines Auftragnehmers) installieren können. SecureAI liest die Protokolle, die Ihre **CASB-/Secure Web Gateway (SWG)-/DNS-Plattform** bereits sammelt, und erkennt Datenverkehr zu KI-Anbietern.
 
-Das Ergebnis ist eine Live-Inventur darüber, **welche Quell-IPs und Benutzer welche KI-Anbieter anrufen**, aufgetaucht in [Netzwerkquellen](/de/en/discovery/network-sources).
+Das Ergebnis ist eine Live-Inventur darüber, **welche Quell-IPs und Benutzer welche KI-Anbieter anrufen**, aufgetaucht in [Netzwerkquellen](/de/discovery/network-sources).
 
 ## Unterstützte Anschlüsse
 
 | Stecker | Datenquelle | Status |
 |-----------|-------------|--------|
-| [Cisco Umbrella](/de/en/integrations/casb/cisco-umbrella) | DNS-Layer-Reporting-API v2 | Verfügbar |
+| [Cisco Umbrella](/de/integrations/casb/cisco-umbrella) | DNS-Layer-Reporting-API v2 | Verfügbar |
 
 ## Die Setup-Schleife
 
@@ -25,7 +25,7 @@ Das Ergebnis ist eine Live-Inventur darüber, **welche Quell-IPs und Benutzer we
 
 ## Das Entdeckungsfenster
 
-Die Netzwerkerkennung meldet Aktivitäten über ein fortlaufendes Fenster – **standardmäßig 30 Tage** (konfigurierbar über die Umgebungsvariable `NETWORK_DISCOVERY_WINDOW_DAYS`). Einige Unteransichten (Top-Domains, Top-Benutzer, unbekannte Domains) verwenden ein festes 7-Tage-Fenster. Wie das Inventar präsentiert und selektiert wird, erfahren Sie unter [Netzwerkquellen](/de/en/discovery/network-sources).
+Die Netzwerkerkennung meldet Aktivitäten über ein fortlaufendes Fenster – **standardmäßig 30 Tage** (konfigurierbar über die Umgebungsvariable `NETWORK_DISCOVERY_WINDOW_DAYS`). Einige Unteransichten (Top-Domains, Top-Benutzer, unbekannte Domains) verwenden ein festes 7-Tage-Fenster. Wie das Inventar präsentiert und selektiert wird, erfahren Sie unter [Netzwerkquellen](/de/discovery/network-sources).
 
 ## Was erkannt wird
 
@@ -33,6 +33,6 @@ Jeder Connector gleicht den Datenverkehr mit einem kuratierten Katalog bekannter
 
 ## Verwandte
 
-- [Netzwerkquellen](/de/en/discovery/network-sources) – der entdeckte Inventarisierungs- und Triage-Workflow.
-- [Endpoint Agent](/de/en/agent/overview) – für Endpunkte, an denen Sie einen Agenten bereitstellen *können*.
-- [AI Discovery & Inventory Overview](/de/en/discovery/overview)
+- [Netzwerkquellen](/de/discovery/network-sources) – der entdeckte Inventarisierungs- und Triage-Workflow.
+- [Endpoint Agent](/de/agent/overview) – für Endpunkte, an denen Sie einen Agenten bereitstellen *können*.
+- [AI Discovery & Inventory Overview](/de/discovery/overview)

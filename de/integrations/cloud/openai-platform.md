@@ -11,7 +11,7 @@ Verbinden Sie Ihre OpenAI-Organisation, damit SecureAI Projekte, Modelle, Mitgli
 ## Was SecureAI importiert
 
 - **Projekte, Modelle, Mitglieder, Rollen und Gruppen**
-- **NHIs** – API-Schlüssel und Dienstkonten (widerruflich – siehe [NHI Inventory](/de/en/discovery/nhi-inventory))
+- **NHIs** – API-Schlüssel und Dienstkonten (widerruflich – siehe [NHI Inventory](/de/discovery/nhi-inventory))
 - **Ausgabewarnungen, Ratenlimits, Zertifikate und Einstellungen zur Datenaufbewahrung**
 - **Überwachungsprotokolle**
 - **Nutzung und Kosten** für die letzten 30 Tage, einschließlich der Ausgaben pro Benutzer
@@ -44,13 +44,13 @@ Verbinden Sie Ihre OpenAI-Organisation, damit SecureAI Projekte, Modelle, Mitgli
 
 ## Überprüfen
 
-Öffnen Sie nach der ersten Synchronisierung [Cloud Sensors](/de/en/discovery/cloud-sensors), um erkannte Modelle/Assistenten anzuzeigen, und [NHI Inventory](/de/en/discovery/nhi-inventory), um Schlüssel und Dienstkonten anzuzeigen. **Insights** pro Anbieter zeigen Nutzung, Kosten und Ausgaben pro Benutzer.
+Öffnen Sie nach der ersten Synchronisierung [Cloud Sensors](/de/discovery/cloud-sensors), um erkannte Modelle/Assistenten anzuzeigen, und [NHI Inventory](/de/discovery/nhi-inventory), um Schlüssel und Dienstkonten anzuzeigen. **Insights** pro Anbieter zeigen Nutzung, Kosten und Ausgaben pro Benutzer.
 
 ## Widerruf
 
-OpenAI-API-Schlüssel sind von [NHI Inventory](/de/en/discovery/nhi-inventory) **widerrufbar**: SecureAI kann einen Schlüssel an der Quelle deaktivieren. (Für Dienstkonten sind OpenAI-Identitäten nur zur Überwachung bestimmt.)
+OpenAI-API-Schlüssel sind von [NHI Inventory](/de/discovery/nhi-inventory) **widerrufbar**: SecureAI kann einen Schlüssel an der Quelle deaktivieren. (Für Dienstkonten sind OpenAI-Identitäten nur zur Überwachung bestimmt.)
 
 ## Verwandte
 
-- [Übersicht Cloud-KI-Anbieter](/de/en/integrations/cloud/overview)
-- [NHI Inventory](/de/en/discovery/nhi-inventory)
+- [Übersicht Cloud-KI-Anbieter](/de/integrations/cloud/overview)
+- [NHI Inventory](/de/discovery/nhi-inventory)

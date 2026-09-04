@@ -1,7 +1,9 @@
 ---
 sidebar_position: 4
-title: Immutable Logs
+title: "Logs Inmutables (Auditoría Criptográfica)"
+sidebar_label: "Logs Inmutables"
 ---
+
 
 # Immutable Logs — Cadena criptográfica de auditoría
 

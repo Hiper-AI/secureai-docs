@@ -1,39 +1,36 @@
 ---
-title: "Billing Mode API Keys"
+title: "计费模式 API 密钥"
 ---
+# 计费模式 API 密钥
 
+SecureAI 支持两种不同的 API 密钥计费模式，允许管理员控制如何跟踪不同 API 集成的使用情况和计费方式。
 
+## 概述
 
-# Billing Mode API Keys
+API 密钥可以配置为以下两种计费模式之一：
 
-SecureAI supports two distinct billing modes for API keys, allowing administrators to control how usage is tracked and billed for different API integrations.
+- **用户完成**：从用户的许可证完成存储桶中扣除
+- **按型号使用情况**：根据实际型号使用情况向用户信用卡收费
 
-## Overview
+## 计费模式
 
-API keys can be configured with one of two billing modes:
+### 用户完成模式
 
-- **User Completions**: Deducts from the user's license completion bucket
-- **Usage by Model**: Charges to the user's credit card based on actual model usage
+**默认模式** - API 密钥默认使用此模式。
 
-## Billing Modes
+#### 它是如何工作的
+- 从用户的每月许可证配额中扣除完成情况
+- 使用与网络界面相同的完成限制
+- 除了用户现有许可证之外，无需额外付费
+- 如果没有可用配额并且用户启用了按模型使用情况，则回退到按模型使用情况
 
-### User Completions Mode
+#### 用例
+- 您想要使用现有许可证分配的内部应用程序
+- 开发和测试环境
+- 您需要可预测的固定成本的应用程序
+- 当您想保持在现有许可限制范围内时
 
-**Default Mode** - API keys use this mode by default.
-
-#### How it Works
-- Deducts completions from the user's monthly license quota
-- Uses the same completion limits as the web interface
-- No additional charges beyond the user's existing license
-- Falls back to Usage by Model if no quota is available and the user has Usage by Model enabled
-
-#### Use Cases
-- Internal applications where you want to use existing license allocations
-- Development and testing environments
-- Applications where you want predictable, fixed costs
-- When you want to stay within existing license limits
-
-#### Configuration
+#### 配置
 ```json
 {
   "billingMode": "user-completions",
@@ -42,24 +39,24 @@ API keys can be configured with one of two billing modes:
 }
 ```
 
-### Usage by Model Mode
+### 按模型模式使用
 
-**Advanced Mode** - Requires explicit configuration and user permission.
+**高级模式** - 需要显式配置和用户许可。
 
-#### How it Works
-- Charges based on actual token usage and model costs
-- Tracks input tokens, output tokens, and total tokens
-- Calculates costs based on model-specific pricing
-- Requires the user to have Usage by Model enabled in their account
-- Has configurable monthly dollar limits
+#### 它是如何工作的
+- 根据实际代币使用情况和模型成本收费
+- 跟踪输入令牌、输出令牌和总令牌
+- 根据特定型号的定价计算成本
+- 要求用户在其帐户中启用按模型使用情况
+- 具有可配置的每月美元限额
 
-#### Use Cases
-- High-volume applications where you need precise cost tracking
-- Applications using higher-cost models (GPT-5.x, Claude Opus/Sonnet, etc.)
-- When you need detailed usage analytics
-- Applications where you want to pay only for what you use
+#### 用例
+- 需要精确成本跟踪的大批量应用
+- 使用较高成本模型的应用程序（GPT-5.x、Claude Opus/Sonnet 等）
+- 当您需要详细的使用情况分析时
+- 您只想为您使用的内容付费的应用程序
 
-#### Configuration
+#### 配置
 ```json
 {
   "billingMode": "usage-by-model",
@@ -70,44 +67,44 @@ API keys can be configured with one of two billing modes:
 }
 ```
 
-## API Key Creation
+## API 密钥创建
 
-### Creating API Keys with Billing Modes
+### 使用计费模式创建 API 密钥
 
-Create and configure API keys from the SecureAI Admin panel.
+从 SecureAI 管理面板创建和配置 API 密钥。
 
-1. Go to `Admin -> API Keys`.
-2. Create or edit an API key.
-3. Set `billingMode` to `user-completions` or `usage-by-model`.
-4. Configure limits, allowed models, allowed indexes, and allowed SMLTP policies.
+1. 转到`Admin -> API Keys`。
+2. 创建或编辑 API 密钥。
+3. 将`billingMode`设置为`user-completions`或`usage-by-model`。
+4. 配置限制、允许的模型、允许的索引和允许的 SMLTP 策略。
 
-### Billing Mode Validation
+### 计费模式验证
 
-The system validates billing mode requirements:
+系统验证计费模式要求：
 
-- **Usage by Model Mode**: Requires the user to have Usage by Model enabled
-- **User Completions Mode**: Works with any user, but may fall back to Usage by Model if no quota is available
+- **按模型使用模式**：要求用户启用按模型使用情况
+- **用户完成模式**：适用于任何用户，但如果没有可用配额，可能会退回到按模型使用
 
-## Usage Tracking
+## 使用情况跟踪
 
-### User Completions Tracking
+### 用户完成情况跟踪
 
-For User Completions mode, the system tracks:
-- Daily and monthly completion counts
-- Model-specific usage statistics
-- Quota consumption and limits
+对于用户完成模式，系统跟踪：
+- 每日和每月完成计数
+- 特定型号的使用统计
+- 配额消耗及限制
 
-### Usage by Model Tracking
+### 模型跟踪的使用情况
 
-For Usage by Model mode, the system tracks:
-- Input tokens, output tokens, and total tokens
-- Model-specific costs and points
-- Monthly dollar spending
-- Detailed usage analytics
+对于按模型使用模式，系统跟踪：
+- 输入代币、输出代币和总代币
+- 特定型号的成本和积分
+- 每月美元支出
+- 详细的使用情况分析
 
-## API Response Examples
+## API 响应示例
 
-### User Completions Mode Response
+### 用户完成模式响应
 
 ```json
 {
@@ -141,7 +138,7 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-### Usage by Model Mode Response
+### 按模型使用模式响应
 
 ```json
 {
@@ -177,9 +174,9 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-## Error Handling
+## 错误处理
 
-### Usage by Model Not Enabled
+### 按型号使用未启用
 
 ```json
 {
@@ -190,7 +187,7 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-### Quota Exceeded (User Completions)
+### 超出配额（用户完成）
 
 ```json
 {
@@ -201,7 +198,7 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-### Budget Exceeded (Usage by Model)
+### 超出预算（按型号划分的使用情况）
 
 ```json
 {
@@ -212,50 +209,50 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-## Best Practices
+## 最佳实践
 
-### Choosing the Right Billing Mode
+### 选择正确的计费模式
 
-1. **Use User Completions when:**
-   - You want predictable costs
-   - You're within existing license limits
-   - You're building internal tools
-   - You want to use existing quota allocations
+1. **在以下情况下使用用户完成：**
+   - 您想要可预测的成本
+   - 您在现有许可限制内
+   - 您正在构建内部工具
+   - 您想要使用现有的配额分配
 
-2. **Use Usage by Model when:**
-   - You need detailed cost tracking
-   - You're using expensive models frequently
-   - You want to pay only for actual usage
-   - You need granular usage analytics
+2. **在以下情况下使用按模型使用情况：**
+   - 您需要详细的成本跟踪
+   - 您经常使用昂贵的型号
+   - 您只需为实际使用付费
+   - 您需要精细的使用情况分析
 
-### Configuration Recommendations
+### 配置建议
 
-1. **Set appropriate limits:**
-   - Daily limits for rate control
-   - Monthly limits for cost control
-   - Dollar limits for Usage by Model mode
+1. **设置适当的限制：**
+   - 速率控制的每日限制
+   - 成本控制的每月限额
+   - 按型号模式使用的美元限制
 
-2. **Monitor usage:**
-   - Track API key usage regularly
-   - Set up alerts for approaching limits
-   - Review usage patterns monthly
+2. **监控使用情况：**
+   - 定期跟踪API密钥使用情况
+   - 设置接近限制的警报
+   - 每月审查使用模式
 
-3. **Security considerations:**
-   - Use IP restrictions for sensitive applications
-   - Rotate API keys regularly
-   - Monitor for unusual usage patterns
+3. **安全考虑：**
+   - 对敏感应用程序使用 IP 限制
+   - 定期轮换 API 密钥
+   - 监控异常使用模式
 
-## Fallback Mechanism
+## 后备机制
 
-### User Completions to Usage by Model Fallback
+### 按模型回退计算的用户完成使用情况
 
-When a User Completions API key encounters quota exhaustion, the system automatically falls back to Usage by Model if:
+当用户完成 API 密钥遇到配额耗尽时，如果出现以下情况，系统会自动回退到按模型使用情况：
 
-1. **User has Usage by Model enabled** in their account settings
-2. **User has available budget** in their Usage by Model allocation
-3. **API key allows fallback** (default behavior)
+1. **用户在其帐户设置中启用了按模型使用情况**
+2. **用户在按模型分配的使用情况中具有可用预算**
+3. **API 密钥允许回退**（默认行为）
 
-#### Fallback Process
+#### 后备流程
 
 ```json
 {
@@ -285,92 +282,92 @@ When a User Completions API key encounters quota exhaustion, the system automati
 }
 ```
 
-### Validation Logic
+### 验证逻辑
 
-#### Usage by Model Requirements
+#### 按型号要求使用
 
-The system validates the following before allowing Usage by Model billing:
+在允许按模型使用情况计费之前，系统会验证以下内容：
 
-1. **User Account Settings**: User must have "Usage by Model" enabled
-2. **Monthly Budget**: User must have available budget in their allocation
-3. **API Key Configuration**: API key must be configured for Usage by Model or allow fallback
-4. **Model Access**: User must have access to the requested model
+1. **用户帐户设置**：用户必须启用“按模型使用”
+2. **每月预算**：用户的分配中必须有可用预算
+3. **API 密钥配置**：API 密钥必须配置为按模型使用或允许回退
+4. **模型访问**：用户必须有权访问所请求的模型
 
-#### Mixed Billing Scenarios
+#### 混合计费场景
 
-When multiple API keys with different billing modes are used:
+当使用多个不同计费方式的API Key时：
 
-- **User Completions keys** consume from the user's monthly quota
-- **Usage by Model keys** consume from the user's budget allocation
-- **Fallback scenarios** prioritize User Completions first, then Usage by Model
-- **Quota exhaustion** triggers automatic fallback if available
+- **用户完成密钥**消耗用户的每月配额
+- **模型密钥的使用**从用户的预算分配中消耗
+- **后备方案** 首先优先考虑用户完成，然后按模型使用
+- **配额耗尽**触发自动回退（如果可用）
 
-## Migration Between Modes
+## 模式之间的迁移
 
-### From User Completions to Usage by Model
+### 从用户完成到按模型使用
 
-1. **Enable Usage by Model**: Ensure the user has Usage by Model enabled in their account
-2. **Update API Key**: Change the billing mode in the API key configuration
-3. **Set Budget Limits**: Configure appropriate monthly dollar limits
-4. **Monitor Usage**: Track both completion usage and budget consumption
-5. **Test Fallback**: Verify fallback behavior works correctly
+1. **启用按模型使用**：确保用户在其帐户中启用按模型使用情况
+2. **更新API Key**：更改API key配置中的计费模式
+3. **设置预算限额**：配置适当的每月美元限额
+4. **监控使用情况**：跟踪完成使用情况和预算消耗
+5. **测试回退**：验证回退行为是否正常工作
 
-### From Usage by Model to User Completions
+### 从模型使用到用户完成
 
-1. **Verify Quota**: Ensure the user has sufficient monthly completion quota
-2. **Update API Key**: Change the billing mode in the API key configuration
-3. **Monitor Usage**: Track completion consumption against monthly limits
-4. **Configure Fallback**: Set up fallback to Usage by Model if quota is exhausted
-5. **Test Limits**: Verify quota limits are properly enforced
+1. **验证配额**：确保用户有足够的每月完成配额
+2. **更新API Key**：更改API key配置中的计费模式
+3. **监控使用情况**：根据每月限制跟踪完成消耗
+4. **配置回退**：如果配额耗尽，设置回退到按模型使用情况
+5. **测试限制**：验证配额限制是否正确执行
 
-### Migration Best Practices
+### 迁移最佳实践
 
-- **Gradual Migration**: Test with low-volume API keys first
-- **Monitor Both Metrics**: Track both completion usage and budget consumption
-- **Set Appropriate Limits**: Configure realistic limits for both modes
-- **Document Changes**: Keep track of billing mode changes for audit purposes
-- **User Communication**: Inform users of billing mode changes and their implications
+- **逐步迁移**：首先使用少量 API 密钥进行测试
+- **监控两个指标**：跟踪完成使用情况和预算消耗
+- **设置适当的限制**：为两种模式配置实际限制
+- **文档更改**：跟踪计费模式更改以进行审计
+- **用户沟通**：告知用户计费模式的变化及其影响
 
-## Monitoring and Analytics
+## 监控和分析
 
-### Usage Analytics
+### 使用情况分析
 
-The system provides detailed analytics for both billing modes:
+系统提供两种计费模式的详细分析：
 
-- **User Completions**: Completion counts, quota usage, model distribution
-- **Usage by Model**: Token counts, costs, model-specific analytics
+- **用户完成**：完成计数、配额使用、模型分布
+- **按模型使用情况**：代币数量、成本、特定于模型的分析
 
-### Admin Panel Integration
+### 管理面板集成
 
-The admin panel provides:
-- Real-time usage monitoring
-- Billing mode configuration
-- Usage analytics and reports
-- Cost tracking and alerts
+管理面板提供：
+- 实时使用情况监控
+- 计费模式配置
+- 使用情况分析和报告
+- 成本跟踪和警报
 
-## Troubleshooting
+## 故障排除
 
-### Common Issues
+### 常见问题
 
-1. **Usage by Model not working:**
-   - Verify the user has Usage by Model enabled
-   - Check monthly dollar limits
-   - Ensure proper model access
+1. **按型号使用不起作用：**
+   - 验证用户已启用按模型使用情况
+   - 检查每月美元限额
+   - 确保正确的模型访问
 
-2. **User Completions quota issues:**
-   - Check user's license tier
-   - Verify monthly completion limits
-   - Consider enabling Usage by Model as fallback
+2. **用户完成配额问题：**
+   - 检查用户的许可级别
+   - 验证每月完成限制
+   - 考虑启用按模型使用情况作为后备
 
-3. **API key authentication errors:**
-   - Verify API key is active
-   - Check IP restrictions
-   - Ensure proper permissions
+3. **API密钥认证错误：**
+   - 验证 API 密钥是否处于活动状态
+   - 检查IP限制
+   - 确保适当的权限
 
-### Support
+### 支持
 
-For issues with billing modes:
-1. Check the admin panel for usage statistics
-2. Review API key configuration
-3. Contact system administrator for billing mode changes
-4. Monitor logs for detailed error information 
+对于计费模式问题：
+1. 检查管理面板的使用统计信息
+2. 检查 API 密钥配置
+3.联系系统管理员变更计费方式
+4.监控日志以获取详细的错误信息

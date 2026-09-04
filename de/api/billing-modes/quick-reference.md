@@ -249,7 +249,7 @@ Beide Abrechnungsmodi unterstützen die Durchsetzung von SMLTP-Richtlinien:
 
 ### Dokumentation
 - [Übersicht über die Abrechnungsmodi](../billing-modes.md)
-- [Limits & Quoten](/de/en/api/limits-and-quotas) - Plattformlimits verstehen
+- [Limits & Quoten](/de/api/limits-and-quotas) - Plattformlimits verstehen
 
 ### Admin-Panel
 - **API-Bereich**: API-Schlüssel erstellen und verwalten

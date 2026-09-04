@@ -1,61 +1,59 @@
 ---
 sidebar_position: 4
-title: "Policies & Groups"
-sidebar_label: "Policies & Groups"
-description: "Configure what the SecureAI OS Agent enforces with policies, groups, protection presets, and safe rollouts"
+title: "政策和团体"
+sidebar_label: "政策和团体"
+description: "配置 SecureAI OS 代理通过策略、组、保护预设和安全部署强制实施的内容"
 ---
+# 策略和组
 
+**策略**定义代理执行的内容； **组** 将策略分配给一组设备。每个设备都会在每次检测信号上解析其有效策略，因此更改会快速传播。
 
-# Policies & Groups
+## 政策
 
-A **policy** defines what the agent enforces; a **group** assigns a policy to a set of devices. Every device resolves its effective policy on each heartbeat, so changes propagate quickly.
+策略 (`AgentPolicy`) 包含：
 
-## Policies
-
-A policy (`AgentPolicy`) contains:
-
-| Setting | Description |
+|设置|描述 |
 |---------|-------------|
-| **Mode** | `monitor` (observe only) or `block` (enforce). |
-| **Rulesets** | Allow/deny lists for `mcps`, `apps`, `providers`, and `models`. |
-| **Threat feed** | Whether the device consumes the org threat feed. |
-| **Egress enforcement** | `off` / `kill` / `block` / `lockdown` (+ allow list, block-remote-MCP). See [Egress Enforcement](/zh/agent/egress-enforcement). |
-| **Behavior guard** | Behavioral AI-oversight: enabled, sensitivity, and default action (`alert`, `quarantine`, `kill`, `block`, `require_approval`), for endpoint and/or gateway. |
-| **Claude Code routing** | Transparent-proxy settings. See [Transparent Proxy](/zh/agent/transparent-proxy). |
-| **Tamper protection** | Uninstall-key requirement (see below). |
-| **Rollout** | Staged rollout configuration (see [Safe rollouts](#safe-rollouts)). |
+| **模式** | `monitor`（仅观察）或`block`（强制）。 |
+| **规则集** | `mcps`、`apps`、`providers` 和 `models` 的允许/拒绝列表。 |
+| **威胁源** |设备是否使用组织威胁源。 |
+| **出口执法** | `off` / `kill` / `block` / `lockdown`（+ 允许列表，块远程-MCP）。请参阅[Egress Enforcement](/zh/agent/egress-enforcement)。 |
+| **行为守卫** |行为 AI 监督：针对端点和/或网关，已启用、敏感度和默认操作（`alert`、`quarantine`、`kill`、`block`、`require_approval`）。 |
+| **克劳德代码路由** |透明代理设置。请参见[透明代理](/zh/agent/transparent-proxy)。 |
+| **防篡改** |卸载密钥要求（见下文）。 |
+| **推出** |分阶段推出配置（请参阅[安全推出](#safe-rollouts)）。 |
 
-### Protection presets
+### 保护预设
 
-Rather than tuning every knob, you can pick a single protection preset that bundles the behavior guard with the egress mode:
+您可以选择一个将行为防护与出口模式捆绑在一起的保护预设，而不是调整每个旋钮：
 
-| Preset | Behavior |
+|预设|行为 |
 |--------|----------|
-| **Passive** | Observe and alert; minimal enforcement. |
-| **Normal** | Balanced enforcement. |
-| **Aggressive** | Strong enforcement (e.g. block/quarantine, tighter egress). |
+| **被动** |观察和警报；最低程度的执法。 |
+| **正常** |均衡执法。 |
+| **激进** |强有力的执法（例如封锁/隔离、更严格的出口）。 |
 
-Off-preset combinations are shown as **Custom**.
+非预设组合显示为**自定义**。
 
-## Groups
+## 团体
 
-A **group** (`AgentGroup`) has a `policyId` plus dynamic **membership rules** — matched on OS, hostname glob pattern, and priority. A device's effective policy is resolved **device → group → policy**, re-evaluated on every heartbeat, so moving a device between groups (or editing a group's rules) re-targets it automatically.
+**组** (`AgentGroup`) 具有 `policyId` 以及动态 **成员资格规则** - 在操作系统、主机名全局模式和优先级上匹配。设备的有效策略已解析**设备 → 组 → 策略**，并在每次检测信号时重新评估，因此在组之间移动设备（或编辑组的规则）会自动重新定位它。
 
-## Safe rollouts
+## 安全推出
 
-Policy changes ship through a controlled workflow so you can validate before fleet-wide enforcement:
+政策变更通过受控工作流程进行交付，以便您可以在整个车队范围内强制执行之前进行验证：
 
-- **Revisions & rollback** — every policy change is versioned; roll back to a prior revision at any time.
-- **Rollout rings** — advance a change through staged rings (pause/resume/advance) instead of all at once.
-- **Dry-run simulate** — preview what a policy *would* detect or block against the current inventory, without saving or enforcing anything.
-- **Exceptions** — an approval workflow for per-device/per-rule exceptions; approving one appends a managed exclusion. Approval requires the admin role.
+- **修订和回滚** - 每个策略更改都有版本控制；随时回滚到之前的修订版本。
+- **推出环** — 通过分阶段环（暂停/恢复/提前）推进更改，而不是一次性全部进行。
+- **试运行模拟** — 预览策略*将*检测或阻止当前库存的内容，无需保存或强制执行任何内容。
+- **例外** — 每个设备/每个规则例外的批准工作流程；批准一项会附加托管排除。批准需要管理员角色。
 
-## Tamper protection & uninstall key
+## 防篡改和卸载密钥
 
-A policy can require an **uninstall key** (`tamperProtection.uninstallRequiresKey`) so the agent cannot be removed by a local user without it. The requirement (and a hashed key with an offline salt/hash) is delivered to the endpoint so it can validate even off-network. Uninstall attempts validate through a public token-validation endpoint (per-policy key first, then a fleet-wide fallback); failures are audited. See [Self-update & anti-tamper](/zh/agent/quarantine-and-fleet-ops#self-update--anti-tamper).
+策略可能需要 **卸载密钥** (`tamperProtection.uninstallRequiresKey`)，因此本地用户在没有它的情况下无法删除代理。需求（以及带有离线盐/哈希的哈希密钥）被传递到端点，以便它甚至可以在离线状态下进行验证。卸载尝试通过公共令牌验证端点进行验证（首先是每个策略密钥，然后是整个队列的回退）；对失败进行审核。请参见[自我更新和防篡改](/zh/agent/quarantine-and-fleet-ops#self-update--anti-tamper)。
 
-## Related
+## 相关
 
-- [Egress Enforcement](/zh/agent/egress-enforcement)
-- [Quarantine & Fleet Ops](/zh/agent/quarantine-and-fleet-ops)
-- [Transparent Proxy](/zh/agent/transparent-proxy)
+- [出口执行](/zh/agent/egress-enforcement)
+- [隔离和舰队行动](/zh/agent/quarantine-and-fleet-ops)
+- [透明代理](/zh/agent/transparent-proxy)

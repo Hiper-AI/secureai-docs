@@ -48,9 +48,9 @@ SecureAI s'authentifie avec `POST https://api.umbrella.com/auth/v2/token` (Basic
 
 ## Vérifier
 
-Après la première synchronisation, ouvrez [Sources réseau](/fr/en/discovery/network-sources) — les sources qui ont résolu les domaines IA apparaissent avec leur(s) fournisseur(s), le nombre d'appels et la gravité.
+Après la première synchronisation, ouvrez [Sources réseau](/fr/discovery/network-sources) — les sources qui ont résolu les domaines IA apparaissent avec leur(s) fournisseur(s), le nombre d'appels et la gravité.
 
 ## Connexes
 
-- [CASB & Présentation du réseau](/fr/en/integrations/casb/overview)
-- [Sources réseau](/fr/en/discovery/network-sources)
+- [CASB & Présentation du réseau](/fr/integrations/casb/overview)
+- [Sources réseau](/fr/discovery/network-sources)

@@ -1,42 +1,40 @@
 ---
 sidebar_position: 2
-title: "OpenAI-Compatible Endpoint"
-sidebar_label: "OpenAI-Compatible"
-description: "Drop-in OpenAI Chat Completions surface — point any OpenAI SDK at SecureAI"
+title: "OpenAI 兼容端点"
+sidebar_label: "OpenAI 兼容"
+description: "直接 OpenAI 聊天完成界面 — 将任何 OpenAI SDK 指向 SecureAI"
 openapi: "POST /v1/chat/completions"
 ---
+# OpenAI 兼容端点
 
+SecureAI 公开了与 OpenAI 兼容的表面，因此您可以通过仅更改基本 URL 和 API 密钥来与 **任何 OpenAI SDK 集成 - 无需更改代码。完整的 SecureAI 安全堆栈（API 密钥身份验证、模型/索引允许列表、SMLTP 策略执行 + 权利、Prompt Shield、PII/DLP、积分计费和[模型冗余引擎](/zh/api/redundancy)）在下面运行。
 
-# OpenAI-Compatible Endpoint
-
-SecureAI exposes an OpenAI-compatible surface so you can integrate with **any OpenAI SDK by changing only the base URL and API key** — no code changes. The full SecureAI security stack (API-key auth, model/index allowlists, SMLTP policy enforcement + entitlements, Prompt Shield, PII/DLP, points billing, and the [model redundancy engine](/zh/api/redundancy)) runs underneath.
-
-## Endpoint
+## 端点
 
 ```
 POST /api/external/v1/chat/completions
 GET  /api/external/v1/models
 ```
 
-Point your OpenAI client's `base_url` at:
+将您的 OpenAI 客户端的 `base_url` 指向：
 
 ```
 https://{customer.name}.hiperai.ai/api/external/v1
 ```
 
 <Info>
-**Zero-Knowledge only**
+**仅零知识**
 
-This surface does **not** support RAG / knowledge bases. Requests are pinned to `Zero-Knowledge`. If you need knowledge-base retrieval, use the classic [Chat Completion](/zh/api/chat/completions) endpoint.
+该表面**不**支持RAG/知识库。请求被固定到`Zero-Knowledge`。如果您需要知识库检索，请使用经典的[聊天完成](/zh/api/chat/completions)端点。
 </Info>
 
-## Authentication
+## 身份验证
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Using an OpenAI SDK
+## 使用 OpenAI SDK
 
 ### Python (`openai`)
 
@@ -81,29 +79,29 @@ const resp = await client.chat.completions.create({
 console.log(resp.choices[0].message.content);
 ```
 
-## Request Body
+## 请求正文
 
-Standard OpenAI fields are supported. `messages` is required (there is no `prompt` on this surface). `max_completion_tokens` is accepted as an alias for `max_tokens`.
+支持标准 OpenAI 字段。 `messages` 是必需的（该表面上没有 `prompt`）。 `max_completion_tokens` 被接受作为 `max_tokens` 的别名。
 
-The following OpenAI parameters are passed through to the provider as-is:
+以下 OpenAI 参数按原样传递给提供商：
 
-`tools`, `tool_choice`, `parallel_tool_calls`, `response_format`, `stop`, `top_p`, `frequency_penalty`, `presence_penalty`, `seed`, `logprobs`, `top_logprobs`, `user`.
+`tools`、`tool_choice`、`parallel_tool_calls`、`response_format`、`stop`、`top_p`、`frequency_penalty`、`presence_penalty`、`seed`、`logprobs`、`top_logprobs`、 `user`。
 
-### SecureAI extension fields
+### SecureAI 扩展字段
 
-Send these as extra body fields (via `extra_body` in the OpenAI SDKs):
+将它们作为额外的正文字段发送（通过 OpenAI SDK 中的 `extra_body`）：
 
-| Field | Description |
-|-------|-------------|
-| `smltp_policy` | SMLTP security policy for this call. |
-| `prompt_shield` | `{ enabled?, policy? }` — per-call Prompt Shield override. |
-| `models` / `fallback_models` | Model [redundancy](/zh/api/redundancy) chain. |
-| `redundancy` | `{ timeout_ms, first_token_timeout_ms, on[] }`. |
-| `user_id` | Bill to a different user (admin-gated). |
+|领域 |描述 |
+|--------|-------------|
+| `smltp_policy` | SMLTP 此调用的安全策略。 |
+| `prompt_shield` | `{ enabled?, policy? }` — 每次呼叫提示屏蔽覆盖。 |
+| `models` / `fallback_models` |模型[冗余](/zh/api/redundancy)链。 |
+| `redundancy` | `{ timeout_ms, first_token_timeout_ms, on[] }`。 |
+| `user_id` |向不同的用户计费（管理员控制）。 |
 
-## Response
+## 回应
 
-Standard OpenAI `chat.completion` shape, plus a `secureai` extension object.
+标准 OpenAI `chat.completion` 形状，加上 `secureai` 扩展对象。
 
 ```json
 {
@@ -128,24 +126,24 @@ Standard OpenAI `chat.completion` shape, plus a `secureai` extension object.
 }
 ```
 
-`secureai.smltp_bundle_id` (when present) can be exchanged for a signed compliance [receipt](/zh/api/receipts).
+`secureai.smltp_bundle_id`（如果存在）可以兑换为已签名的合规性[收据](/zh/api/receipts)。
 
-### Streaming
+### 流媒体
 
-Set `stream: true`. Frames are native OpenAI `chat.completion.chunk` objects terminated by `data: [DONE]`. The `secureai` extension is attached to the **first** chunk. `choices` (including `tool_calls` deltas and `finish_reason`) pass through untouched.
+设置`stream: true`。帧是由 `data: [DONE]` 终止的本机 OpenAI `chat.completion.chunk` 对象。 `secureai` 扩展附加到 **first** 块。 `choices`（包括`tool_calls`增量和`finish_reason`）不受影响地通过。
 
-## Errors
+## 错误
 
-Errors from this handler use the OpenAI envelope:
+此处理程序中的错误使用 OpenAI 信封：
 
 ```json
 { "error": { "message": "you must provide a model parameter", "type": "invalid_request_error", "code": null } }
 ```
 
-When a whole redundancy chain fails, the error uses `code: "all_models_failed"` and status `429` (all rate limits) or `502` (otherwise). Security-middleware rejections keep the SecureAI `{ "success": false, ... }` shape; both always carry a `message`.
+当整个冗余链失败时，错误使用 `code: "all_models_failed"` 和状态 `429`（所有速率限制）或 `502`（否则）。安全中间件拒绝保持 SecureAI `{ "success": false, ... }` 的形状；两者都始终带有 `message`。
 
-## Related
+## 相关
 
-- [Chat Completion](/zh/api/chat/completions) — the classic surface (adds RAG).
-- [Redundancy & Failover](/zh/api/redundancy)
-- [Prompt Shield API](/zh/api/threat-defense/prompt-shield)
+- [聊天完成](/zh/api/chat/completions) — 经典界面（添加 RAG）。
+- [冗余与故障转移](/zh/api/redundancy)
+- [提示盾API](/zh/api/threat-defense/prompt-shield)

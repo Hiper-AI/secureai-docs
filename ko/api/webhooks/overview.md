@@ -21,7 +21,7 @@ SecureAI는 Prompt Shield 차단, 카나리아 누출, DLP/PII 사고, API 제�
 | 테스트 배송 보내기 | `POST /api/admin/webhooks/:id/test` |
 | 엔드포인트 삭제 | `DELETE /api/admin/webhooks/:id` |
 
-생성 시간 입력: `url`, `description`, `events[]`([이벤트](/ko/en/api/webhooks/events) 참조) 및 `enabled`. 서명 비밀(`whsec_...`)은 생성 및 교체 시 **만** 표시됩니다. 안전하게 저장하세요. 다시 검색할 수 없습니다.
+생성 시간 입력: `url`, `description`, `events[]`([이벤트](/ko/api/webhooks/events) 참조) 및 `enabled`. 서명 비밀(`whsec_...`)은 생성 및 교체 시 **만** 표시됩니다. 안전하게 저장하세요. 다시 검색할 수 없습니다.
 
 끝점 `url`은 SSRF 검증을 거쳤습니다. `http(s)`만 허용되며 인스턴스가 `WEBHOOKS_ALLOW_PRIVATE=true`로 실행되지 않는 한 개인/루프백/링크 로컬 호스트는 거부됩니다(자체 호스팅 수신기에는 종종 이것이 필요함).
 
@@ -122,6 +122,6 @@ def secureai_webhook():
 
 ## 관련
 
-- [웹훅 이벤트](/ko/en/api/webhooks/events) — 전체 이벤트 카탈로그 및 페이로드.
-- [이중화 및 장애 조치](/ko/en/api/redundancy) — `api:model_failover`의 소스입니다.
-- [위협 방어](/ko/ko/threat-defense/overview) — `promptshield:*` 이벤트의 소스입니다.
+- [웹훅 이벤트](/ko/api/webhooks/events) — 전체 이벤트 카탈로그 및 페이로드.
+- [이중화 및 장애 조치](/ko/api/redundancy) — `api:model_failover`의 소스입니다.
+- [위협 방어](/ko/threat-defense/overview) — `promptshield:*` 이벤트의 소스입니다.

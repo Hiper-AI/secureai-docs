@@ -6,7 +6,7 @@ openapi: "POST /policy-check"
 ---
 # Richtlinienprüfung (Probelauf)
 
-Führen Sie die **gesamte Sicherheitspipeline** für eine Vervollständigungsnutzlast aus, ohne ein Modell aufzurufen und ohne Abrechnung. Policy Check akzeptiert den gleichen Text wie [Chat Completion](/de/en/api/chat/completions) und gibt einen Bericht pro Prüfung zurück: Eingabevalidierung, Modellzulassungslisten (für die gesamte [Redundanzkette](/de/en/api/redundancy)), SMLTP-Richtlinienauflösung/Autorisierung, Prompt Shield-Autorisierung und ein Nur-Bericht-Scan-Urteil sowie eine Punktekontingentvorschau.
+Führen Sie die **gesamte Sicherheitspipeline** für eine Vervollständigungsnutzlast aus, ohne ein Modell aufzurufen und ohne Abrechnung. Policy Check akzeptiert den gleichen Text wie [Chat Completion](/de/api/chat/completions) und gibt einen Bericht pro Prüfung zurück: Eingabevalidierung, Modellzulassungslisten (für die gesamte [Redundanzkette](/de/api/redundancy)), SMLTP-Richtlinienauflösung/Autorisierung, Prompt Shield-Autorisierung und ein Nur-Bericht-Scan-Urteil sowie eine Punktekontingentvorschau.
 
 Verwenden Sie es für Anfragen vor dem Flug und erstellen Sie „Ist dies zulässig?“ Benutzeroberflächen oder Richtlinienkonfiguration sicher testen.
 
@@ -24,7 +24,7 @@ Authorization: Bearer sk-your-api-key-here
 
 ## Anforderungstext
 
-Das gleiche Schema wie [Chat Completion](/de/en/api/chat/completions) (`prompt` oder `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index` usw.). Es wird nichts generiert und nichts in Rechnung gestellt.
+Das gleiche Schema wie [Chat Completion](/de/api/chat/completions) (`prompt` oder `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index` usw.). Es wird nichts generiert und nichts in Rechnung gestellt.
 
 ## Beispiel für Anfrage
 
@@ -111,6 +111,6 @@ Eine fehlgeschlagene Prüfung umfasst `passed: false`, das HTTP `status`, das de
 
 ## Verwandte
 
-- [Chat-Abschluss](/de/en/api/chat/completions)
-- [Redundanz & Failover](/de/en/api/redundancy)
-- [Usage](/de/en/api/usage)
+- [Chat-Abschluss](/de/api/chat/completions)
+- [Redundanz & Failover](/de/api/redundancy)
+- [Usage](/de/api/usage)

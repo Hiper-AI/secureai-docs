@@ -1,50 +1,48 @@
 ---
 sidebar_position: 1
-title: "Threat Defense"
+title: "威胁防御"
+---
+# 威胁防御
+
+威胁防御提供针对恶意即时攻击、越狱、指令泄漏和输出操纵的实时保护。
+
 ---
 
+## 受保护的威胁向量
 
-# Threat Defense
-
-Threat Defense provides real-time protection against malicious prompt attacks, jailbreaks, instruction leaks, and output manipulation.
-
----
-
-## Protected Threat Vectors
-
-| Threat | Description |
+|威胁|描述 |
 |---|---|
-| **Prompt Injection** | Attempts to override or bypass system instructions and constraints. |
-| **Jailbreaks** | Adversarial prompts designed to circumvent safety guardrails. |
-| **Instruction / System Prompt Leakage** | Extraction attacks attempting to reveal proprietary instructions. |
-| **Role Drift / Hijacking** | Manipulating the assistant to deviate from its intended business domain. |
-| **Data Extraction Attacks** | Automated attempts to harvest confidential training or index data. |
-| **Canary Token Leaks** | Detection of hidden canary strings signaling instruction exposure. |
+| **及时注射** |尝试覆盖或绕过系统指令和约束。 |
+| **越狱** |旨在规避安全护栏的对抗性提示。 |
+| **使用说明/系统提示漏电** |提取攻击试图泄露专有指令。 |
+| **角色漂移/劫持** |操纵助手偏离其预期业务领域。 |
+| **数据提取攻击** |自动尝试获取机密训练或索引数据。 |
+| **金丝雀代币泄露** |检测隐藏的金丝雀字符串，发出指令暴露信号。 |
 
 ---
 
-## Key Modules
+## 关键模块
 
-### 1. Prompt Shield Engine
-Evaluates every incoming prompt before it reaches the language model:
-- **Allow**: Request passes all safety checks.
-- **Flag**: Request is permitted, but logged as a security event for administrative review.
-- **Block**: Request is blocked immediately with a signed denial event.
+### 1.提示盾引擎
+在每个传入提示到达语言模型之前对其进行评估：
+- **允许**：请求通过所有安全检查。
+- **标记**：请求被允许，但记录为安全事件以供管理审查。
+- **阻止**：通过签名的拒绝事件立即阻止请求。
 
-### 2. Output Guardrails
-Monitors model outputs prior to client delivery to catch:
-- System prompt and internal context leakage.
-- Canary token leakage.
-- Unintended role drift or dangerous outputs.
+### 2.输出护栏
+在交付客户之前监控模型输出以捕获：
+- 系统提示和内部上下文泄漏。
+- 金丝雀令牌泄漏。
+- 意外的角色漂移或危险的输出。
 
-### 3. Canary Tokens
-Canary tokens are unique, hidden cryptographic markers inserted into chatbot instructions:
-- **How it works**: If an attacker succeeds in extracting instructions, the canary marker in the response triggers an immediate high-priority security alert.
-- **Configuration**: Go to **Admin ? Threat Defense ? Canary Tokens** to generate, rotate, or monitor tokens.
+### 3. 金丝雀代币
+金丝雀令牌是插入聊天机器人指令中的独特的隐藏加密标记：
+- **工作原理**：如果攻击者成功提取指令，响应中的金丝雀标记会立即触发高优先级安全警报。
+- **配置**：转到**管理员？威胁防御？金丝雀代币** 用于生成、轮换或监控代币。
 
 ---
 
-## Policy Configuration & Incident Management
+## 策略配置和事件管理
 
-1. **Configure Policies**: Go to **Admin ? Threat Defense ? Policies**. Select from **Strict** (public chatbots), **Balanced** (standard enterprise use), or **Permissive** (testing environments).
-2. **Review Incidents**: Inspect flagged or blocked events under **Admin ? Threat Defense ? Incidents** to analyze attack payloads and adjust sensitivity.
+1. **配置策略**：转到**管理员？威胁防御？政策**。从**严格**（公共聊天机器人）、**平衡**（标准企业用途）或**宽松**（测试环境）中进行选择。
+2. **查看事件**：检查 **Admin 下标记或阻止的事件？威胁防御？事件** 用于分析攻击负载并调整灵敏度。

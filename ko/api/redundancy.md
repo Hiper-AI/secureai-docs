@@ -7,7 +7,7 @@ description: "SecureAI Completions API에 대한 호출자 정의 모델 장애 
 
 Completions API는 공급자 호출이 실패할 때 한 모델에서 다른 모델로 자동으로 **장애 조치**할 수 있습니다. 순서가 지정된 체인(기본 모델과 최대 2개의 대체 모델)을 정의하면 SecureAI는 하나가 성공할 때까지 각 체인을 차례로 시도합니다. 이를 통해 자체 코드에 재시도 논리가 없어도 공급자 중단, 속도 제한 및 시간 초과에 대한 복원력을 얻을 수 있습니다.
 
-[클래식 `/chat/completions`](/api/chat/completions) 엔드포인트와 [OpenAI 호환 `/v1/chat/completions`](/api/chat/openai- Compatible) 엔드포인트 모두에서 중복성을 사용할 수 있습니다.
+[클래식 `/chat/completions`](/ko/api/chat/completions) 엔드포인트와 [OpenAI 호환 `/v1/chat/completions`](/ko/api/chat/openai- Compatible) 엔드포인트 모두에서 중복성을 사용할 수 있습니다.
 
 ## 체인 정의 방법
 
@@ -114,11 +114,11 @@ OpenAI 호환 엔드포인트에서 동일한 조건은 `code: "all_models_faile
 
 ## 보안 및 시도당 청구
 
-모든 시도는 SMLTP 래퍼를 통한 완전하고 독립적인 호출입니다. 즉, 정책 시행, 송신/상주 거버넌스 및 서명된 자격 토큰 발행은 모두 시도당 재실행되며 해당 시도의 모델과 정확한 요청 바이트에 바인딩됩니다. 청구에는 실제로 응답을 제공한 모델이 반영됩니다. 각 장애 조치는 또한 `api:model_failover` 보안 이벤트(구독한 [webhooks](/ko/en/api/webhooks/overview)에 전달됨)와 감사 로그 항목을 내보냅니다.
+모든 시도는 SMLTP 래퍼를 통한 완전하고 독립적인 호출입니다. 즉, 정책 시행, 송신/상주 거버넌스 및 서명된 자격 토큰 발행은 모두 시도당 재실행되며 해당 시도의 모델과 정확한 요청 바이트에 바인딩됩니다. 청구에는 실제로 응답을 제공한 모델이 반영됩니다. 각 장애 조치는 또한 `api:model_failover` 보안 이벤트(구독한 [webhooks](/ko/api/webhooks/overview)에 전달됨)와 감사 로그 항목을 내보냅니다.
 
 ## 관련
 
-- [채팅 완료](/ko/ko/api/chat/completions)
-- [OpenAI 호환 엔드포인트](/ko/en/api/chat/openai-호환)
-- [정책 확인](/ko/en/api/policy-check) — 포인트를 지출하지 않고 전체 체인의 액세스를 미리 볼 수 있습니다.
-- [Webhooks](/ko/ko/api/webhooks/overview) — `api:model_failover`을 구독하세요.
+- [채팅 완료](/ko/api/chat/completions)
+- [OpenAI 호환 엔드포인트](/ko/api/chat/openai-호환)
+- [정책 확인](/ko/api/policy-check) — 포인트를 지출하지 않고 전체 체인의 액세스를 미리 볼 수 있습니다.
+- [Webhooks](/ko/api/webhooks/overview) — `api:model_failover`을 구독하세요.

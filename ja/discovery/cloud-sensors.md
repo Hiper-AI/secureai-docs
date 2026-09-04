@@ -6,7 +6,7 @@ description: "接続された AI クラウド プラットフォーム内で検�
 ---
 # クラウドセンサー
 
-**クラウド センサー** (管理者 → エージェント レジストリ → **クラウド**) は、接続されたクラウド AI プラットフォーム (**Azure AI Foundry、AWS Bedrock、GCP Vertex AI、OpenAI Platform、Anthropic Console**) 内で検出されるエージェント、モデル、デプロイメントのインベントリです。これは読み取り専用です。[Integrations](/ja/en/integrations/cloud/overview) でコネクタを設定すると、Cloud Sensors が検出した内容を表示します。
+**クラウド センサー** (管理者 → エージェント レジストリ → **クラウド**) は、接続されたクラウド AI プラットフォーム (**Azure AI Foundry、AWS Bedrock、GCP Vertex AI、OpenAI Platform、Anthropic Console**) 内で検出されるエージェント、モデル、デプロイメントのインベントリです。これは読み取り専用です。[Integrations](/ja/integrations/cloud/overview) でコネクタを設定すると、Cloud Sensors が検出した内容を表示します。
 
 ## KPI
 
@@ -38,6 +38,6 @@ description: "接続された AI クラウド プラットフォーム内で検�
 
 ## 関連
 
-- [クラウド AI プロバイダー](/ja/ja/integrations/cloud/overview) — プロバイダーに接続して設定します。
-- [NHI Inventory](/ja/en/discovery/nhi-inventory) — 同じコネクタによって検出された ID。
-- [AI ディスカバリーとインベントリーの概要](/ja/ja/discovery/overview)
+- [クラウド AI プロバイダー](/ja/integrations/cloud/overview) — プロバイダーに接続して設定します。
+- [NHI Inventory](/ja/discovery/nhi-inventory) — 同じコネクタによって検出された ID。
+- [AI ディスカバリーとインベントリーの概要](/ja/discovery/overview)

@@ -11,7 +11,7 @@ Connectez votre organisation Anthropic afin que SecureAI puisse inventorier les 
 ## Ce que SecureAI importe
 
 - **Espaces de travail**, utilisation et coût
-- **NHIs** — Clés API, comptes de service et clés BYOK (révocables — voir [NHI Inventory](/fr/en/discovery/nhi-inventory))
+- **NHIs** — Clés API, comptes de service et clés BYOK (révocables — voir [NHI Inventory](/fr/discovery/nhi-inventory))
 - **Limites de dépenses**
 - **Journal d'audit** (API Entreprise / Conformité)
 - **Analyse Claude Code**
@@ -45,13 +45,13 @@ Connectez votre organisation Anthropic afin que SecureAI puisse inventorier les 
 
 ## Vérifier
 
-Ouvrez [Cloud Sensors](/fr/en/discovery/cloud-sensors) pour les espaces de travail/agents découverts et [NHI Inventory](/fr/en/discovery/nhi-inventory) pour les clés et les comptes de service. Les informations indiquent les limites d'utilisation, de coût et de dépenses.
+Ouvrez [Cloud Sensors](/fr/discovery/cloud-sensors) pour les espaces de travail/agents découverts et [NHI Inventory](/fr/discovery/nhi-inventory) pour les clés et les comptes de service. Les informations indiquent les limites d'utilisation, de coût et de dépenses.
 
 ## Révocation
 
-Les clés API Anthropic, les comptes de service et les clés BYOK sont **révocables** depuis [NHI Inventory](/fr/en/discovery/nhi-inventory).
+Les clés API Anthropic, les comptes de service et les clés BYOK sont **révocables** depuis [NHI Inventory](/fr/discovery/nhi-inventory).
 
 ## Connexes
 
-- [Présentation des fournisseurs Cloud AI](/fr/en/integrations/cloud/overview)
-- [Inventaire NHI](/fr/en/discovery/nhi-inventory)
+- [Présentation des fournisseurs Cloud AI](/fr/integrations/cloud/overview)
+- [Inventaire NHI](/fr/discovery/nhi-inventory)

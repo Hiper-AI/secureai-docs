@@ -10,8 +10,8 @@ Les connecteurs Cloud AI Provider permettent à SecureAI d'accéder aux plates-f
 
 Une fois connecté, un connecteur découvre et synchronise en continu :
 
-- **Agents, modèles et déploiements** exécutés sur la plateforme → affichés dans [Cloud Sensors](/fr/en/discovery/cloud-sensors).
-- **Identités non humaines (NHI)** — Clés API, comptes de service et (lorsque pris en charge) clés BYOK → affichées dans [Inventaire NHI](/fr/en/discovery/nhi-inventory), avec contrôles de blocage/révoquer.
+- **Agents, modèles et déploiements** exécutés sur la plateforme → affichés dans [Cloud Sensors](/fr/discovery/cloud-sensors).
+- **Identités non humaines (NHI)** — Clés API, comptes de service et (lorsque pris en charge) clés BYOK → affichées dans [Inventaire NHI](/fr/discovery/nhi-inventory), avec contrôles de blocage/révoquer.
 - **Utilisation, jetons et coût** au cours des 30 derniers jours.
 - **Signaux de gouvernance** — Les liaisons IAM/RBAC, les limites de dépenses et les journaux d'audit sont apparus dans les informations par fournisseur.
 
@@ -27,7 +27,7 @@ Chaque fournisseur suit les quatre mêmes étapes :
 <Info>
 **Là où les choses apparaissent**
 
-Le connecteur **configuration** se trouve dans **Admin → Intégrations**. L'**inventaire** qu'il produit apparaît dans **Admin → Agent Registry** : agents/modèles découverts sous [Cloud Sensors](/fr/en/discovery/cloud-sensors), et identités découvertes sous [NHI Inventory](/fr/en/discovery/nhi-inventory). Vous pouvez réexécuter une synchronisation à partir de n’importe quel endroit.
+Le connecteur **configuration** se trouve dans **Admin → Intégrations**. L'**inventaire** qu'il produit apparaît dans **Admin → Agent Registry** : agents/modèles découverts sous [Cloud Sensors](/fr/discovery/cloud-sensors), et identités découvertes sous [NHI Inventory](/fr/discovery/nhi-inventory). Vous pouvez réexécuter une synchronisation à partir de n’importe quel endroit.
 </Info>
 
 ## Choisir les identifiants
@@ -40,13 +40,13 @@ Tous les secrets que vous saisissez (secrets client, JSON du compte de service, 
 
 | Fournisseur | Type d'identifiant |
 |--------------|-----------------|
-| [Plateforme OpenAI](/fr/en/integrations/cloud/openai-platform) | Clé API d'administration de l'organisation |
-| [Console Anthropique](/fr/en/integrations/cloud/anthropic-console) | Clé API d'administration (+ espace de travail / clés de conformité facultatives) |
-| [Azure AI Foundry](/fr/en/integrations/cloud/azure-ai-foundry) | Principal du service Entra (locataire/client/secret) |
-| [Google Vertex AI](/fr/en/integrations/cloud/gcp-vertex-ai) | Compte de service JSON |
+| [Plateforme OpenAI](/fr/integrations/cloud/openai-platform) | Clé API d'administration de l'organisation |
+| [Console Anthropique](/fr/integrations/cloud/anthropic-console) | Clé API d'administration (+ espace de travail / clés de conformité facultatives) |
+| [Azure AI Foundry](/fr/integrations/cloud/azure-ai-foundry) | Principal du service Entra (locataire/client/secret) |
+| [Google Vertex AI](/fr/integrations/cloud/gcp-vertex-ai) | Compte de service JSON |
 
 ## Connexes
 
-- [Cloud Sensors](/fr/en/discovery/cloud-sensors) — l'inventaire des agents/modèles découverts.
-- [NHI Inventory](/fr/en/discovery/nhi-inventory) — l'inventaire des identités découvertes et les contrôles de révocation.
-- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/en/discovery/overview)
+- [Cloud Sensors](/fr/discovery/cloud-sensors) — l'inventaire des agents/modèles découverts.
+- [NHI Inventory](/fr/discovery/nhi-inventory) — l'inventaire des identités découvertes et les contrôles de révocation.
+- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/discovery/overview)

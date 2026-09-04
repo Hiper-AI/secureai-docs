@@ -11,7 +11,7 @@ SecureAI가 Azure OpenAI/AI Foundry 에이전트, AI 검색, Bot Service 및 ML 
 ## SecureAI가 가져오는 것
 
 - **Azure OpenAI/AI Foundry 에이전트, AI 검색, Bot Service 및 ML 엔드포인트**
-- **NHIs** — Entra 서비스 주체, 앱 비밀 및 인증서, 관리 ID(취소 가능 — [NHI 인벤토리](/ko/en/discovery/nhi-inventory) 참조)
+- **NHIs** — Entra 서비스 주체, 앱 비밀 및 인증서, 관리 ID(취소 가능 — [NHI 인벤토리](/ko/discovery/nhi-inventory) 참조)
 - **Azure RBAC** 역할 할당
 - **활동 로그**
 - 지난 30일 동안의 **사용량, 토큰 및 지출**
@@ -52,14 +52,14 @@ SecureAI는 OAuth2(클라이언트-자격 증명 서비스-주체 흐름)를 통
 
 ## 확인
 
-검색된 에이전트/엔드포인트에 대해서는 [클라우드 센서](/ko/en/discovery/cloud-sensors)를 열고 서비스 주체, 비밀 및 관리 ID에 대해서는 [NHI Inventory](/ko/en/discovery/nhi-inventory)를 엽니다. 통찰력에는 RBAC, 사용량 및 지출이 표시됩니다.
+검색된 에이전트/엔드포인트에 대해서는 [클라우드 센서](/ko/discovery/cloud-sensors)를 열고 서비스 주체, 비밀 및 관리 ID에 대해서는 [NHI Inventory](/ko/discovery/nhi-inventory)를 엽니다. 통찰력에는 RBAC, 사용량 및 지출이 표시됩니다.
 
 ## 철회
 
-Entra 서비스 주체, 앱 비밀/인증서 및 관리 ID는 [NHI Inventory](/ko/en/discovery/nhi-inventory)에서 Microsoft Graph를 통해 **취소 가능**합니다. 이를 위해서는 위의 `Application.ReadWrite.All` 권한이 필요합니다.
+Entra 서비스 주체, 앱 비밀/인증서 및 관리 ID는 [NHI Inventory](/ko/discovery/nhi-inventory)에서 Microsoft Graph를 통해 **취소 가능**합니다. 이를 위해서는 위의 `Application.ReadWrite.All` 권한이 필요합니다.
 
 ## 관련
 
-- [클라우드 AI 제공업체 개요](/ko/ko/integrations/cloud/overview)
-- [마이크로소프트 엔트라 ID SSO](/ko/ko/iam/microsoft-entra-id)
-- [NHI 인벤토리](/ko/en/discovery/nhi-inventory)
+- [클라우드 AI 제공업체 개요](/ko/integrations/cloud/overview)
+- [마이크로소프트 엔트라 ID SSO](/ko/iam/microsoft-entra-id)
+- [NHI 인벤토리](/ko/discovery/nhi-inventory)

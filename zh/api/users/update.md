@@ -1,56 +1,54 @@
 ---
 id: update
-title: "Update User"
-sidebar_label: "Update User"
-description: "Update an existing user account"
+title: "更新用户"
+sidebar_label: "更新用户"
+description: "更新现有用户帐户"
 openapi: "PUT /users/{userId}"
 ---
+# 更新用户
 
+使用新信息更新现有用户帐户。
 
-# Update User
-
-Update an existing user account with new information.
-
-## Endpoint
+## 端点
 
 ```
 PUT /users/{userId}
 ```
 
-## Description
+## 说明
 
-This endpoint allows administrators to update an existing user account. You can modify user details such as name, email, role, license tier, and other account settings.
+该端点允许管理员更新现有的用户帐户。您可以修改用户详细信息，例如姓名、电子邮件、角色、许可证层和其他帐户设置。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## 路径参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `userId` | string | Yes | The unique identifier of the user to update |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `userId` |字符串|是的 |要更新的用户的唯一标识符 |
 
-## Request Body
+## 请求正文
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | No | Full name of the user |
-| `username` | string | No | Unique username for the user |
-| `email` | string | No | Email address of the user |
-| `password` | string | No | New password for the user account |
-| `role` | string | No | User role (admin, user, globalReader) |
-| `license` | string | No | License tier (Essential, Growth, Ultra, Early Access) |
-| `status` | integer | No | Account status (0=inactive, 1=active) |
-| `roleId` | string | No | Custom role ID (MongoDB ObjectId) |
-| `setupCompleted` | boolean | No | Whether user setup is completed |
-| `isVerified` | boolean | No | Whether user is verified |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `name` |字符串|没有 |用户全名 |
+| `username` |字符串|没有 |用户的唯一用户名 |
+| `email` |字符串|没有 |用户的电子邮件地址 |
+| `password` |字符串|没有 |用户帐户的新密码 |
+| `role` |字符串|没有 |用户角色（管理员、用户、globalReader）|
+| `license` |字符串|没有 |许可级别（Essential、Growth、Ultra、Early Access）|
+| `status` |整数 |没有 |帐户状态（0=不活动，1=活动）|
+| `roleId` |字符串|没有 |自定义角色 ID (MongoDB ObjectId) |
+| `setupCompleted` |布尔 |没有 |用户设置是否完成 |
+| `isVerified` |布尔 |没有 |用户是否已验证 |
 
-## Example Request
+## 请求示例
 
 ```json
 {
@@ -64,9 +62,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `200 OK`
+**状态代码**：`200 OK`
 
 ```json
 {
@@ -95,29 +93,29 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `user` | object | Updated user object |
-| `user.id` | string | Unique user identifier |
-| `user.name` | string | User's full name |
-| `user.username` | string | User's username |
-| `user.email` | string | User's email address |
-| `user.role` | string | User's role in the system |
-| `user.license` | string | User's license tier |
-| `user.status` | integer | User's account status (0=inactive, 1=active) |
-| `user.isVerified` | boolean | Whether user is verified |
-| `user.setupCompleted` | boolean | Whether user setup is completed |
-| `user.authType` | string | Authentication type |
-| `user.customRole` | object | Custom role information (if assigned) |
-| `user.createdAt` | string | Account creation timestamp |
-| `user.updatedAt` | string | Last update timestamp |
-| `user.lastActive` | string | User's last activity timestamp |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `message` |字符串|成功留言|
+| `user` |对象|更新的用户对象 |
+| `user.id` |字符串|唯一的用户标识符 |
+| `user.name` |字符串|用户全名 |
+| `user.username` |字符串|用户的用户名 |
+| `user.email` |字符串|用户的电子邮件地址 |
+| `user.role` |字符串|用户在系统中的角色|
+| `user.license` |字符串|用户许可级别 |
+| `user.status` |整数 |用户帐户状态（0=非活动，1=活动）|
+| `user.isVerified` |布尔 |用户是否已验证 |
+| `user.setupCompleted` |布尔 |用户设置是否完成 |
+| `user.authType` |字符串|认证类型 |
+| `user.customRole` |对象|自定义角色信息（如果已分配）|
+| `user.createdAt` |字符串|帐户创建时间戳 |
+| `user.updatedAt` |字符串|最后更新时间戳 |
+| `user.lastActive` |字符串|用户上次活动时间戳 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -148,7 +146,7 @@ const result = await updateUser('60a7c8f5e8b4f5001f7a8c23', userData);
 console.log(result);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -176,7 +174,7 @@ result = update_user("60a7c8f5e8b4f5001f7a8c23", user_data)
 print(result)
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f5001f7a8c23" \
@@ -191,9 +189,9 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
   }'
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -209,7 +207,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -221,7 +219,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -233,7 +231,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 404 Not Found
+### 404 未找到
 
 ```json
 {
@@ -245,7 +243,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 409 Conflict
+### 409 冲突
 
 ```json
 {
@@ -257,24 +255,24 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-## Validations and Business Rules
+## 验证和业务规则
 
-- **License value**: Must be in allowed licenses (`Essential`, `Growth`, `Ultra`, `Early Access`). Invalid values return 400.
-- **License capacity**: Enforced via `checkLicenseCapacity`; returns 400 when the selected tier is full.
-- **License downgrade guard**: If changing to a lower tier reduces personal index quota, the change is blocked when current personal index count exceeds `INDEX_QUOTAS[new_license]`; returns 400 with explicit guidance.
-- **Email normalization**: Lowercased and trimmed before validation and storage.
-- **Username normalization**: Lowercased and trimmed before validation and storage.
-- **Email format**: Simple regex validation; invalid emails return 400.
-- **Username format**: Must match `^[a-z0-9.-]{3,30}$`; invalid usernames return 400.
-- **Uniqueness**: `email`, `username`, and `name` must remain unique; conflicts return 409.
+- **许可证值**：必须位于允许的许可证中（`Essential`、`Growth`、`Ultra`、`Early Access`）。无效值返回 400。
+- **许可证容量**：通过 `checkLicenseCapacity` 强制执行；当所选层已满时返回 400。
+- **许可证降级保护**：如果更改为较低级别会减少个人索引配额，则当当前个人索引计数超过`INDEX_QUOTAS[new_license]`时，更改将被阻止；返回 400 并有明确的指导。
+- **电子邮件标准化**：在验证和存储之前小写并修剪。
+- **用户名规范化**：在验证和存储之前小写并修剪。
+- **电子邮件格式**：简单的正则表达式验证；无效邮件返回400。
+- **用户名格式**：必须匹配`^[a-z0-9.-]{3,30}$`；无效的用户名返回 400。
+- **唯一性**：`email`、`username`和`name`必须保持唯一；冲突返回 409。
 
-## Normalization and Storage
+## 标准化和存储
 
-- `email` and `username` are always stored lowercased and trimmed.
+- `email` 和 `username` 始终以小写形式存储并进行修剪。
 
-## Typical Error Shapes
+## 典型错误形状
 
-### 400 Invalid License
+### 400 无效许可证
 
 ```json
 {
@@ -284,7 +282,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 License Unavailable
+### 400 许可证不可用
 
 ```json
 {
@@ -294,7 +292,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 License Downgrade Exceeds Quota
+### 400 个许可证降级超出配额
 
 ```json
 {
@@ -304,7 +302,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 Invalid Email
+### 400 无效电子邮件
 
 ```json
 {
@@ -314,7 +312,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 Invalid Username
+### 400 用户名无效
 
 ```json
 {
@@ -324,7 +322,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 409 Conflict (Uniqueness)
+### 409 冲突（唯一性）
 
 ```json
 {
@@ -334,48 +332,48 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-## User Roles
+## 用户角色
 
-| Role | Description | Permissions |
+|角色 |描述 |权限 |
 |------|-------------|-------------|
-| `admin` | Administrator | Full system access |
-| `user` | Regular user | Standard user access |
-| `globalReader` | Global Reader | Read-only admin panel access |
+| `admin` |管理员|完整的系统访问|
+| `user` |普通用户|标准用户访问 |
+| `globalReader` |全球读者|只读管理面板访问|
 
-## License Tiers
+## 许可级别
 
-| Tier | Description | Features |
+|等级 |描述 |特点|
 |------|-------------|----------|
-| `Essential` | Basic tier | Limited features |
-| `Growth` | Professional tier | Enhanced features |
-| `Ultra` | Premium tier | Full features |
-| `Early Access` | Early access tier | Beta features |
+| `Essential` |基本层|功能有限|
+| `Growth` |专业级|增强功能 |
+| `Ultra` |高级级别 |功能齐全 |
+| `Early Access` |抢先体验级别 |测试版功能 |
 
-## Account Status
+## 账户状态
 
-| Status | Description |
+|状态 |描述 |
 |--------|-------------|
-| `0` | Inactive account |
-| `1` | Active account |
+| `0` |不活跃帐户 |
+| `1` |活跃账户 |
 
-## Use Cases
+## 用例
 
-- **Role Management**: Updating user roles for access control
-- **License Upgrades**: Changing user license tiers
-- **Account Maintenance**: Updating user information and metadata
-- **Status Management**: Activating or suspending user accounts
-- **Profile Updates**: Modifying user names, emails, or other details
+- **角色管理**：更新用户角色以进行访问控制
+- **许可证升级**：更改用户许可证级别
+- **帐户维护**：更新用户信息和元数据
+- **状态管理**：激活或暂停用户帐户
+- **个人资料更新**：修改用户名、电子邮件或其他详细信息
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **默认**：每分钟 100 个请求
+- **每日**：每天 10,000 个请求
+- **每月**：每月 300,000 个请求
 
-## Notes
+## 注释
 
-- Only administrators can update user accounts
-- Email addresses must be unique across all users
-- Password updates are optional and will only be applied if provided
-- Metadata updates are merged with existing metadata
-- The `updatedAt` timestamp is automatically updated on successful operations 
+- 只有管理员可以更新用户帐户
+- 电子邮件地址在所有用户中必须是唯一的
+- 密码更新是可选的，并且仅在提供时才会应用
+- 元数据更新与现有元数据合并
+- `updatedAt` 时间戳会在成功操作时自动更新

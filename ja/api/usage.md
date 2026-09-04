@@ -62,7 +62,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 | `points.monthly_limit` |ユーザーの毎月のポイント付与額。 |
 | `points.next_renewal` |次回のポイント更新の ISO タイムスタンプ。 |
 | `usage_by_model` |課金対象ユーザーがモデル使用量課金モードの場合: `dollar_limit`、`current_spend`、`remaining_budget`。それ以外の場合は `{ "enabled": false }`。 |
-| `api_key.billing_mode` | `user-completions` または `usage-by-model` — [請求モード](/ja/en/api/billing-modes) を参照してください。 |
+| `api_key.billing_mode` | `user-completions` または `usage-by-model` — [請求モード](/ja/api/billing-modes) を参照してください。 |
 | `api_key.daily` / `api_key.monthly` |キーのリクエスト カウンタ (`used`、`limit`、`remaining`)。 |
 | `api_key.rate_limit` |分単位および時間単位のリクエスト上限。 |
 | `api_key.expires_at` | ISO 有効期限タイムスタンプ、またはキーの有効期限が切れない場合は `null`。 |
@@ -70,10 +70,10 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 ## 注意事項
 
 - 値は **請求対象** ユーザーを反映します。リクエストが請求の代わりに `user_id` を使用する場合、キーの所有者とは異なる場合があります。
-- *特定の* リクエストが (消費せずに) クォータを通過するかどうかをプレビューするには、[ポリシー チェック](/ja/en/api/policy-check) を使用し、`checks.quota` を読み取ります。
+- *特定の* リクエストが (消費せずに) クォータを通過するかどうかをプレビューするには、[ポリシー チェック](/ja/api/policy-check) を使用し、`checks.quota` を読み取ります。
 
 ## 関連
 
-- [課金モード](/ja/ja/api/billing-modes)
-- [認証概要](/ja/ja/api/auth/overview)
-- [ポリシーチェック](/ja/ja/api/policy-check)
+- [課金モード](/ja/api/billing-modes)
+- [認証概要](/ja/api/auth/overview)
+- [ポリシーチェック](/ja/api/policy-check)

@@ -1,143 +1,141 @@
 ---
 id: microsoft-sentinel
-title: "Microsoft Sentinel Integration"
+title: "Integración con Microsoft Sentinel"
 sidebar_label: "Microsoft Sentinel"
-description: "Integration Guide: Connecting Microsoft Sentinel with HiperAI via Azure Data Collection Rules (DCR)"
+description: "Guía de integración: Conexión de Microsoft Sentinel con HiperAI mediante reglas de recopilación de datos de Azure (DCR)"
 ---
 
+# Integración de Microsoft Sentinel
 
+Guía de integración: Conectando Microsoft Sentinel con HiperAI
 
-# Microsoft Sentinel Integration
+Esta guía describe los pasos necesarios para configurar Microsoft Sentinel para recibir registros de seguridad de SecureAI a través de las reglas de recopilación de datos de Azure (DCR).
 
-Integration Guide: Connecting Microsoft Sentinel with HiperAI
+## Paso 1: Crear la identidad de la aplicación (registro de la aplicación)
 
-This guide describes the necessary steps to configure Microsoft Sentinel to receive security logs from SecureAI via Azure Data Collection Rules (DCR).
+Primero, crearemos una identidad para su aplicación en Azure, lo que le permitirá autenticarse de forma segura.
 
-## Step 1: Create the Application Identity (App Registration)
+### A. Vaya a Azure Active Directory
 
-First, we'll create an identity for your application in Azure, allowing it to authenticate securely.
-
-### A. Go to Azure Active Directory
-
-In the Azure portal, search for and select **Azure Active Directory**.
+En Azure Portal, busque y seleccione **Azure Active Directory**.
 
 <div class="mac-window">
-  ![Azure Active Directory Search](/img/ms%20sentinel%20-%20images/Sentinel%20-%201.png)
+  ![Búsqueda de Azure Active Directory](/img/ms%20sentinel%20-%20images/Sentinel%20-%201.png)
 </div>
 
-### B. New Registration
+### B. Nuevo registro
 
-On the left menu, navigate to **App registrations** and click **+ New registration**.
+En el menú de la izquierda, navegue hasta **Registros de aplicaciones** y haga clic en **+ Nuevo registro**.
 
 <div class="mac-window">
-  ![App Registrations Menu](/img/ms%20sentinel%20-%20images/Sentinel%20-%202.png)
+  ![Menú de registros de aplicaciones](/img/ms%20sentinel%20-%20images/Sentinel%20-%202.png)
 </div>
 
-### C. Name the Application
+### C. Nombre la aplicación
 
-Provide a clear name, such as `SecureAI-Log-Ingester` and leave the other options as their defaults. Click **Register**.
+Proporcione un nombre claro, como `SecureAI-Log-Ingester` y deje las otras opciones con sus valores predeterminados. Haga clic en **Registrarse**.
 
 <div class="mac-window">
-  ![App Registration Form](/img/ms%20sentinel%20-%20images/Sentinel%20-%203.png)
+  ![Formulario de registro de aplicación](/img/ms%20sentinel%20-%20images/Sentinel%20-%203.png)
 </div>
 
-### D. Copy the IDs
+### D. Copie las identificaciones
 
-From the new application's Overview page, copy and securely store the following values:
-- **Application (client) ID**
-- **Directory (tenant) ID**
+Desde la página Descripción general de la nueva aplicación, copie y almacene de forma segura los siguientes valores:
+- **ID de aplicación (cliente)**
+- **ID del directorio (inquilino)**
 
 <div class="mac-window">
-  ![Application Overview with IDs](/img/ms%20sentinel%20-%20images/Sentinel%20-%204.png)
+  ![Descripción general de la aplicación con ID](/img/ms%20sentinel%20-%20images/Sentinel%20-%204.png)
 </div>
 
-### E. Create the Client Secret
+### E. Crear el secreto del cliente
 
-On the left menu, go to **Certificates & secrets** and click **+ New client secret**. Provide a description (e.g., "SentinelLogKey") and click **Add**.
+En el menú de la izquierda, vaya a **Certificados y secretos** y haga clic en **+ Nuevo secreto de cliente**. Proporcione una descripción (por ejemplo, "SentinelLogKey") y haga clic en **Agregar**.
 
 <div class="mac-window">
-  ![Create Client Secret](/img/ms%20sentinel%20-%20images/Sentinel%20-%205.png)
+  ![Crear secreto de cliente](/img/ms%20sentinel%20-%20images/Sentinel%20-%205.png)
 </div>
 
-**CRITICAL STEP**: Immediately copy the secret's **Value**. This is the only time it will be fully visible. Store it securely with the other IDs.
+**PASO CRÍTICO**: Copie inmediatamente el **Valor** del secreto. Esta es la única vez que será completamente visible. Guárdelo de forma segura con las otras identificaciones.
 
 <div class="mac-window">
-  ![Client Secret Value](/img/ms%20sentinel%20-%20images/Sentinel%20-%206.png)
+  ![Valor secreto del cliente](/img/ms%20sentinel%20-%20images/Sentinel%20-%206.png)
 </div>
 
-## Step 2: Create the Azure Ingestion Infrastructure
+## Paso 2: Crear la infraestructura de ingesta de Azure
 
-Now, we will build the "pathway" and "storage" for your logs.
+Ahora, construiremos la "vía" y el "almacenamiento" para sus registros.
 
-### A. Create the Data Collection Endpoint (DCE)
+### A. Crear el endpoint de recopilación de datos (DCE)
 
-#### 1. Find the Service
+#### 1. Encuentre el servicio
 
-In the Azure search bar, search for and select **Data Collection Endpoints**.
+En la barra de búsqueda de Azure, busque y seleccione **Endpoints de recopilación de datos**.
 
 <div class="mac-window">
-  ![Search Data Collection Endpoints](/img/ms%20sentinel%20-%20images/Sentinel%20-%207.png)
+  ![Buscar endpoints de recopilación de datos](/img/ms%20sentinel%20-%20images/Sentinel%20-%207.png)
 </div>
 
-#### 2. Create a New DCE
+#### 2. Crear un nuevo DCE
 
-Click **+ Create**.
+Haga clic en **+ Crear**.
 
 <div class="mac-window">
-  ![Create Data Collection Endpoint](/img/ms%20sentinel%20-%20images/Sentinel%20-%208.png)
+  ![Crear endpoint de recopilación de datos](/img/ms%20sentinel%20-%20images/Sentinel%20-%208.png)
 </div>
 
-#### 3. Configure the DCE
+#### 3. Configurar el DCE
 
-- **Name**: `dce-secureai-integration`
-- **Region**: Choose the same region as your Log Analytics Workspace
-- Click **Review + create**, and then **Create**
+- **Nombre**: `dce-secureai-integration`
+- **Región**: elija la misma región que su espacio de trabajo de Log Analytics
+- Haga clic en **Revisar + crear** y luego en **Crear**.
 
 <div class="mac-window">
-  ![Review and Create DCE](/img/ms%20sentinel%20-%20images/Sentinel%20-%209.png)
+  ![Revisar y crear DCE](/img/ms%20sentinel%20-%20images/Sentinel%20-%209.png)
 </div>
 
-#### 4. Copy the URI
+#### 4. Copie el URI
 
-Once deployed, navigate to the resource. On its Overview page, copy the **Logs ingestion URI** and save it.
+Una vez implementado, navegue hasta el recurso. En su página Descripción general, copie el **URI de ingesta de registros** y guárdelo.
 
 <div class="mac-window">
-  ![DCE Overview with URI](/img/ms%20sentinel%20-%20images/Sentinel%20-%2010.png)
+  ![Descripción general de DCE con URI](/img/ms%20sentinel%20-%20images/Sentinel%20-%2010.png)
 </div>
 
-### B. Create the Custom Table and Data Collection Rule (DCR)
+### B. Crear la tabla personalizada y la regla de recopilación de datos (DCR)
 
-#### 1. Go to Log Analytics
+#### 1. Vaya a Log Analytics
 
-Navigate to your **Log Analytics Workspace**.
+Navegue hasta su **Espacio de trabajo de Log Analytics**.
 
-#### 2. Create a Custom Table
+#### 2. Crear una tabla personalizada
 
-On the left menu, click **Tables**, then **+ Create**, and select **New custom log (DCR-based)**.
+En el menú de la izquierda, haga clic en **Tablas**, luego **+ Crear** y seleccione **Nuevo registro personalizado (basado en DCR)**.
 
 <div class="mac-window">
-  ![Create Custom Table](/img/ms%20sentinel%20-%20images/Sentinel%20-%2011.png)
+  ![Crear tabla personalizada](/img/ms%20sentinel%20-%20images/Sentinel%20-%2011.png)
 </div>
 
-#### 3. "Basics" Tab
+#### 3. Pestaña "Conceptos básicos"
 
-- **Table name**: `secureaitosiem` (Azure will automatically append `_CL`, making the full name `secureaitosiem_CL`)
-- **Data collection rule**: Select "Create a new..." and name it `dcr-secureai-events`
+- **Nombre de la tabla**: `secureaitosiem` (Azure agregará automáticamente `_CL`, creando el nombre completo `secureaitosiem_CL`)
+- **Regla de recopilación de datos**: seleccione "Crear un nuevo..." y asígnele el nombre `dcr-secureai-events`
 
 <div class="mac-window">
-  ![Data Collection Rule Setup](/img/ms%20sentinel%20-%20images/Sentinel%20-%2012.png)
+  ![Configuración de regla de recopilación de datos](/img/ms%20sentinel%20-%20images/Sentinel%20-%2012.png)
 </div>
 
-- **Data collection endpoint**: Select the DCE you created earlier (`dce-secureai-integration`)
-- Click **Next: Schema and transformation**
+- **Endpoint de recopilación de datos**: seleccione el DCE que creó anteriormente (`dce-secureai-integration`)
+- Haga clic en **Siguiente: Esquema y transformación**
 
 <div class="mac-window">
-  ![Next Schema and Transformation](/img/ms%20sentinel%20-%20images/Sentinel%20-%2013.png)
+  ![Siguiente esquema y transformación](/img/ms%20sentinel%20-%20images/Sentinel%20-%2013.png)
 </div>
 
-#### 4. "Schema and transformation" Tab
+#### 4. Pestaña "Esquema y transformación"
 
-**Upload a sample file**: The system will prompt you. Create a `.json` file with the following content and upload it:
+**Sube un archivo de muestra**: El sistema te lo indicará. Cree un archivo `.json` con el siguiente contenido y cárguelo:
 
 ```json
 [
@@ -200,13 +198,13 @@ On the left menu, click **Tables**, then **+ Create**, and select **New custom l
 ]
 ```
 
-**Download Sample File**: You can also download the complete sample JSON file to use directly:
+**Descargar archivo de muestra**: También puede descargar el archivo JSON de muestra completo para usarlo directamente:
 
-<a href="/en/sample-json.json" download>📥 sample.json</a>
+<a href="/sample-json.json" download>📥 muestra.json</a>
 
-#### 5. Apply the Transformation
+#### 5. Aplicar la transformación
 
-The system may show a warning about the TimeGenerated field. Click the **Transformation editor** button, delete all existing content, and paste the following complete KQL query:
+El sistema puede mostrar una advertencia sobre el campo TimeGenerated. Haga clic en el botón **Editor de transformación**, elimine todo el contenido existente y pegue la siguiente consulta KQL completa:
 
 ```kql
 source
@@ -220,107 +218,107 @@ source
 ```
 
 <div class="mac-window">
-  ![KQL Transformation Query](/img/ms%20sentinel%20-%20images/Sentinel%20-%2014.png)
+  ![Consulta de transformación KQL](/img/ms%20sentinel%20-%20images/Sentinel%20-%2014.png)
 </div>
 
-Click **Apply**. You should see a preview of the table with all the correct columns and data types.
+Haga clic en **Aplicar**. Debería ver una vista previa de la tabla con todas las columnas y tipos de datos correctos.
 
 <div class="mac-window">
-  ![Apply Transformation](/img/ms%20sentinel%20-%20images/Sentinel%20-%2015.png)
+  ![Aplicar transformación](/img/ms%20sentinel%20-%20images/Sentinel%20-%2015.png)
 </div>
 
-#### 6. Finalize Creation
+#### 6. Finalizar la creación
 
-Click **Next: Review + create** and then **Create**.
+Haga clic en **Siguiente: Revisar + crear** y luego en **Crear**.
 
 <div class="mac-window">
-  ![Review and Create DCR](/img/ms%20sentinel%20-%20images/Sentinel%20-%2016.png)
+  ![Revisar y crear DCR](/img/ms%20sentinel%20-%20images/Sentinel%20-%2016.png)
 </div>
 
-## Step 3: Connect the Identity to the Infrastructure (Permissions)
+## Paso 3: Conectar la identidad a la infraestructura (permisos)
 
-This crucial step grants our application permission to use the data collection rule we just created.
+Este paso crucial otorga permiso a nuestra aplicación para utilizar la regla de recopilación de datos que acabamos de crear.
 
-### A. Go to your new DCR
+### A. Vaya a su nuevo DCR
 
-Search for and open your Data Collection Rule, `dcr-secureai-events` and in "Overview", copy the immutable ID and save it for integration.
+Busque y abra su regla de recopilación de datos, `dcr-secureai-events` y en "Descripción general", copie el ID inmutable y guárdelo para su integración.
 
 <div class="mac-window">
-  ![DCR Overview with Immutable ID](/img/ms%20sentinel%20-%20images/Sentinel%20-%2017.png)
+  ![Descripción general de DCR con ID inmutable](/img/ms%20sentinel%20-%20images/Sentinel%20-%2017.png)
 </div>
 
-### B. Assign the Role
+### B. Asignar el rol
 
-On the left menu, go to **Access control (IAM)** and click **+ Add** → **Add role assignment**.
+En el menú de la izquierda, vaya a **Control de acceso (IAM)** y haga clic en **+ Agregar** → **Agregar asignación de roles**.
 
 <div class="mac-window">
-  ![Add Role Assignment](/img/ms%20sentinel%20-%20images/Sentinel%20-%2018.png)
+  ![Agregar asignación de roles](/img/ms%20sentinel%20-%20images/Sentinel%20-%2018.png)
 </div>
 
-**Role**: Search for and select **Monitoring Metrics Publisher**.
+**Función**: busque y seleccione **Editor de métricas de supervisión**.
 
 <div class="mac-window">
-  ![Select Monitoring Metrics Publisher Role](/img/ms%20sentinel%20-%20images/Sentinel%20-%2019.png)
+  ![Seleccione la función del editor de métricas de monitoreo](/img/ms%20sentinel%20-%20images/Sentinel%20-%2019.png)
 </div>
 
-**Members**: Click **Select members** and search for your App Registration name (`SecureAI-Log-Ingester`). Select it.
+**Miembros**: haga clic en **Seleccionar miembros** y busque el nombre de registro de su aplicación (`SecureAI-Log-Ingester`). Selecciónelo.
 
 <div class="mac-window">
-  ![Select App Registration Member](/img/ms%20sentinel%20-%20images/Sentinel%20-%2020.png)
+  ![Seleccione miembro de registro de la aplicación](/img/ms%20sentinel%20-%20images/Sentinel%20-%2020.png)
 </div>
 
-Click **Review + assign**.
+Haga clic en **Revisar + asignar**.
 
-## Step 4: Finalize and Share Information
+## Paso 4: Finalizar y compartir información
 
-You're almost done. Just one final step.
+Ya casi has terminado. Sólo un último paso.
 
-### A. Gather the Information
+### A. Reúna la información
 
-To complete the integration, the application needs the following six pieces of information:
+Para completar la integración, la aplicación necesita los siguientes seis datos:
 
-1. **Tenant ID**: (From Step 1)
-2. **Client ID**: (From Step 1)
-3. **Client Secret**: (From Step 1)
-4. **DCE URI**: (From Step 2A)
-5. **DCR Immutable ID**: (Navigate to your DCR `dcr-secureai-events` and copy this from the JSON View)
-6. **Stream Name**: This is a constructed value. The format is `Custom-{TableName}`. In our case, it will be: `Custom-secureaitosiem_CL`
+1. **ID de inquilino**: (Desde el paso 1)
+2. **ID de cliente**: (Desde el paso 1)
+3. **Secreto del cliente**: (Del paso 1)
+4. **DCE URI**: (Del paso 2A)
+5. **ID inmutable de DCR**: (Navegue a su DCR `dcr-secureai-events` y cópielo desde la vista JSON)
+6. **Nombre de la transmisión**: este es un valor construido. El formato es `Custom-{TableName}`. En nuestro caso será: `Custom-secureaitosiem_CL`
 
-### B. Configure the Application
+### B. Configurar la aplicación
 
-Input these 6 values into your application's configuration settings.
+Ingrese estos 6 valores en los ajustes de configuración de su aplicación.
 
 <div class="mac-window">
-  ![Application Configuration Settings](/img/ms%20sentinel%20-%20images/Sentinel%20-%2021.png)
+  ![Configuración de la aplicación](/img/ms%20sentinel%20-%20images/Sentinel%20-%2021.png)
 </div>
 
-## Step 5: Verify the Integration
+## Paso 5: Verificar la integración
 
-Once you have entered the integration details into the SecureAI application, you can verify that the connection is working correctly.
+Una vez que haya ingresado los detalles de integración en la aplicación SecureAI, podrá verificar que la conexión esté funcionando correctamente.
 
-### A. Test the Connection
+### A. Pruebe la conexión
 
-Use the "Test Connection" button within our application. This will send a test event to your Microsoft Sentinel workspace.
+Utilice el botón "Probar conexión" dentro de nuestra aplicación. Esto enviará un evento de prueba a su espacio de trabajo de Microsoft Sentinel.
 
-### B. Find the Test Event in Log Analytics
+### B. Busque el evento de prueba en Log Analytics
 
-To see if the event arrived in Microsoft Sentinel, go to your Log Analytics Workspace and click on **Logs**.
+Para ver si el evento llegó a Microsoft Sentinel, vaya a su área de trabajo de Log Analytics y haga clic en **Registros**.
 
-Run the following query to see your incoming data:
+Ejecute la siguiente consulta para ver sus datos entrantes:
 
 ```kql
 secureaitosiem_CL
 | order by TimeGenerated desc
 ```
 
-You should see your log data appearing with all columns (`TimeGenerated`, `Level_s`, `Message_s`, etc.) correctly populated. If so, your integration is a success! ✅
+Debería ver los datos de su registro aparecer con todas las columnas (`TimeGenerated`, `Level_s`, `Message_s`, etc.) correctamente completadas. Si es así, ¡tu integración es un éxito! ✅
 
 <div class="mac-window">
-  ![Successful Integration Verification](/img/ms%20sentinel%20-%20images/Sentinel%20-%2022.png)
+  ![Verificación de integración exitosa](/img/ms%20sentinel%20-%20images/Sentinel%20-%2022.png)
 </div>
 
-**Note**: Depending on network traffic and system load, it can sometimes take up to 10 minutes for logs to appear in Microsoft Sentinel.
+**Nota**: Dependiendo del tráfico de la red y la carga del sistema, a veces los registros pueden tardar hasta 10 minutos en aparecer en Microsoft Sentinel.
 
-## Done!
+## ¡Listo!
 
-With these steps, your Microsoft Sentinel instance is fully configured to integrate with SecureAI 😎.
+Con estos pasos, su instancia de Microsoft Sentinel estará completamente configurada para integrarse con SecureAI 😎.

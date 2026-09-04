@@ -1,48 +1,46 @@
 ---
 id: create
-title: "Create Role"
-sidebar_label: "Create Role"
-description: "Create a new user role"
+title: "Criar Função (Role)"
+sidebar_label: "Criar Role"
+description: "Crie uma nova função de usuário"
 openapi: "POST /roles"
 ---
 
+# Criar função
 
+Crie uma nova função de usuário personalizada com permissões específicas.
 
-# Create Role
-
-Create a new custom user role with specific permissions.
-
-## Endpoint
+## Ponto final
 
 ```
 POST /roles
 ```
 
-## Description
+## Descrição
 
-This endpoint allows administrators to create new custom user roles. Custom roles can have specific permissions tailored to your organization's needs. You can specify the role name, description, and permissions during creation.
+Este endpoint permite que os administradores criem novas funções de usuário personalizadas. As funções personalizadas podem ter permissões específicas adaptadas às necessidades da sua organização. Você pode especificar o nome da função, a descrição e as permissões durante a criação.
 
-## Authentication
+## Autenticação
 
-**Required**: API Key with admin privileges
+**Obrigatório**: Chave de API com privilégios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Corpo da solicitação
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | Yes | Role name (system identifier) |
-| `displayName` | string | Yes | Human-readable role name |
-| `description` | string | Yes | Description of the role purpose |
-| `hasAdminPanelAccess` | boolean | No | Whether role has admin panel access (default: false) |
-| `permissions` | array | No | Array of permission objects |
-| `canInteractWithAI` | boolean | No | Whether role can interact with AI (default: true) |
-| `canUseChat` | boolean | No | Whether role can use chat (default: true) |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `name` | corda | Sim | Nome da função (identificador do sistema) |
+| `displayName` | corda | Sim | Nome da função legível por humanos |
+| `description` | corda | Sim | Descrição da finalidade da função |
+| `hasAdminPanelAccess` | booleano | Não | Se a função tem acesso ao painel de administração (padrão: false) |
+| `permissions` | matriz | Não | Matriz de objetos de permissão |
+| `canInteractWithAI` | booleano | Não | Se a função pode interagir com IA (padrão: verdadeiro) |
+| `canUseChat` | booleano | Não | Se a função pode usar chat (padrão: true) |
 
-## Example Request
+## Exemplo de solicitação
 
 ```json
 {
@@ -65,9 +63,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## Resposta de sucesso
 
-**Status Code**: `201 Created`
+**Código de status**: `201 Created`
 
 ```json
 {
@@ -103,32 +101,32 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `role` | object | Created role object |
-| `role.id` | string | Unique role identifier |
-| `role.name` | string | Role name |
-| `role.displayName` | string | Display name for the role |
-| `role.description` | string | Role description |
-| `role.isSystem` | boolean | Whether this is a system role |
-| `role.hasAdminPanelAccess` | boolean | Whether role has admin panel access |
-| `role.permissions` | array | Array of permission objects |
-| `role.permissions[].section` | string | Permission section |
-| `role.permissions[].level` | string | Permission level |
-| `role.canInteractWithAI` | boolean | Whether role can interact with AI |
-| `role.canUseChat` | boolean | Whether role can use chat |
-| `role.userCount` | integer | Number of users with this role |
-| `role.createdBy` | object | User who created the role |
-| `role.createdBy.id` | string | Creator user ID |
-| `role.createdBy.name` | string | Creator name |
-| `role.createdBy.email` | string | Creator email |
-| `role.createdAt` | string | Creation timestamp |
+| `success` | booleano | Indica se a operação foi bem sucedida |
+| `message` | corda | Mensagem de sucesso |
+| `role` | objeto | Objeto de função criado |
+| `role.id` | corda | Identificador único de função |
+| `role.name` | corda | Nome da função |
+| `role.displayName` | corda | Nome de exibição da função |
+| `role.description` | corda | Descrição da função |
+| `role.isSystem` | booleano | Se esta é uma função do sistema |
+| `role.hasAdminPanelAccess` | booleano | Se a função tem acesso ao painel de administração |
+| `role.permissions` | matriz | Matriz de objetos de permissão |
+| `role.permissions[].section` | corda | Seção de permissão |
+| `role.permissions[].level` | corda | Nível de permissão |
+| `role.canInteractWithAI` | booleano | Se a função pode interagir com IA |
+| `role.canUseChat` | booleano | Se a função pode usar chat |
+| `role.userCount` | inteiro | Número de usuários com esta função |
+| `role.createdBy` | objeto | Usuário que criou a função |
+| `role.createdBy.id` | corda | ID do usuário criador |
+| `role.createdBy.name` | corda | Nome do criador |
+| `role.createdBy.email` | corda | E-mail do criador |
+| `role.createdAt` | corda | Carimbo de data e hora de criação |
 
-## Example Usage
+## Exemplo de uso
 
 ### JavaScript
 
@@ -170,7 +168,7 @@ const result = await createRole(roleData);
 console.log('Created role:', result.role.id);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -209,7 +207,7 @@ result = create_role(role_data)
 print("Created role:", result["role"]["id"])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
@@ -235,9 +233,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
   }'
 ```
 
-## Error Responses
+## Respostas de erro
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
 ```json
 {
@@ -253,7 +251,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -265,7 +263,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
 ```json
 {
@@ -277,7 +275,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 409 Conflict
+### 409 Conflito
 
 ```json
 {
@@ -289,7 +287,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-### 429 Too Many Requests
+### 429 Muitas solicitações
 
 ```json
 {
@@ -302,51 +300,51 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/roles" \
 }
 ```
 
-## Available Permission Sections
+## Seções de permissão disponíveis
 
-| Section | Description |
-|---------|-------------|
-| `home` | Home dashboard access |
-| `user-management` | User management operations |
-| `index-management` | Index management operations |
-| `analytics` | Analytics and reporting |
-| `group-management` | Group management operations |
-| `integrations` | Integration management |
-| `services-status` | Services status monitoring |
-| `settings` | System settings |
-| `announcements` | Announcement management |
-| `smltp-security` | SMLTP security features |
+| Seção | Descrição |
+|--------|-------------|
+| `home` | Acesso ao painel inicial |
+| `user-management` | Operações de gerenciamento de usuários |
+| `index-management` | Operações de gestão de índices |
+| `analytics` | Análise e relatórios |
+| `group-management` | Operações de gestão do grupo |
+| `integrations` | Gestão de integração |
+| `services-status` | Monitoramento do status dos serviços |
+| `settings` | Configurações do sistema |
+| `announcements` | Gestão de anúncios |
+| `smltp-security` | SMLTP recursos de segurança |
 
-## Available Permission Levels
+## Níveis de permissão disponíveis
 
-| Level | Description |
-|-------|-------------|
-| `none` | No access to the section |
-| `reader` | Read-only access to the section |
-| `admin` | Full administrative access to the section |
+| Nível | Descrição |
+|-------|------------|
+| `none` | Sem acesso à seção |
+| `reader` | Acesso somente leitura à seção |
+| `admin` | Acesso administrativo total à seção |
 
-## Use Cases
+## Casos de uso
 
-- **Custom Roles**: Create roles tailored to your organization's needs
-- **Access Control**: Define specific permissions for different user types
-- **Security**: Implement least-privilege access principles
-- **Compliance**: Create roles that meet regulatory requirements
-- **Integration**: Define roles for third-party system integration
+- **Funções personalizadas**: crie funções adaptadas às necessidades da sua organização
+- **Controle de acesso**: Defina permissões específicas para diferentes tipos de usuários
+- **Segurança**: implemente princípios de acesso com privilégios mínimos
+- **Conformidade**: crie funções que atendam aos requisitos regulatórios
+- **Integração**: defina funções para integração de sistemas de terceiros
 
-## Rate Limits
+## Limites de taxa
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **Padrão**: 50 solicitações por minuto
+- **Diariamente**: 5.000 solicitações por dia
+- **Mensal**: 150.000 solicitações por mês
 
-## Notes
+## Notas
 
-- **Admin Only**: This endpoint requires admin privileges
-- **Required Fields**: name, displayName, and description are required
-- **Permission Structure**: Permissions are objects with section and level properties
-- **System Roles**: Custom roles are never system roles
-- **Flat Response**: Response is not nested under data object
-- **Creator Info**: Shows who created the role
-- **User Count**: Starts at 0 for new roles
-- Role names must be unique within the system
-- The role is immediately available for user assignment 
+- **Somente administrador**: este endpoint requer privilégios de administrador
+- **Campos obrigatórios**: nome, displayName e descrição são obrigatórios
+- **Estrutura de permissão**: permissões são objetos com propriedades de seção e nível
+- **Funções do sistema**: funções personalizadas nunca são funções do sistema
+- **Resposta simples**: a resposta não está aninhada no objeto de dados
+- **Informações do criador**: mostra quem criou a função
+- **Contagem de usuários**: começa em 0 para novas funções
+- Os nomes das funções devem ser exclusivos no sistema
+- A função fica imediatamente disponível para atribuição do usuário

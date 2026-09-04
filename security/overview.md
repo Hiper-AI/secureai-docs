@@ -1,92 +1,91 @@
 ---
 sidebar_position: 1
-title: "Security Overview"
+title: "Descripción General de Seguridad"
+sidebar_label: "Visión General"
 ---
 
+# Descripción general de seguridad
 
+Conozca las características y la arquitectura de seguridad de SecureAI.
 
-# Security Overview
+## Funciones de seguridad
 
-Learn about SecureAI's security features and architecture.
+SecureAI implementa medidas de seguridad de nivel empresarial para proteger sus datos y aplicaciones, con SMLTP (Protocolo de transferencia de lenguaje de modelo seguro) como piedra angular de nuestra arquitectura de seguridad.
 
-## Security Features
+### SMLTP (Protocolo de transferencia de lenguaje de modelo seguro)
 
-SecureAI implements enterprise-grade security measures to protect your data and applications, with SMLTP (Secure Model Language Transfer Protocol) as the cornerstone of our security architecture.
+**SMLTP** es un protocolo de seguridad con un borrador de especificación pública que facilita la comunicación con
+Modelos de lenguajes grandes (LLM) gobernados, contenidos y demostrables. Proporciona:
 
-### SMLTP (Secure Model Language Transfer Protocol)
+- **Tokens de derechos firmados**: cada solicitud gobernada lleva un enlace de token firmado **Ed25519**
+  identidad, modelo autorizado, hash de política y bytes de solicitud exactos (SHA-256)
+- **Recibos de cumplimiento firmados**: cada interacción enrutada por la puerta de enlace produce un recibo que se puede
+  verificado fuera de línea con la clave pública de la puerta de enlace
+- **Cumplimiento de políticas**: listas permitidas de modelos, comprobaciones de residencia de datos y controles de salida (en monitor)
+  o en modo forzado, con recibos de denegación firmados
+- **Registro de auditoría a prueba de manipulaciones**: registros encadenados mediante hash y sellados con Merkle, opcionalmente anclados a un
+  registro de transparencia externo (Sigstore Rekor)
+- **Rotación de clave**: rotación de clave de firma Ed25519; los recibos emitidos bajo claves anteriores permanecen
+  verificable
+- **Bundle Encryption**: cifrado AES-256-GCM opcional de paquetes de solicitudes entre el cliente y
+  puerta de enlace
 
-**SMLTP** is a security protocol with a public specification draft that makes communication with
-Large Language Models (LLMs) governed, contained, and provable. It provides:
+### Protección de datos
 
-- **Signed Entitlement Tokens**: every governed request carries an **Ed25519**-signed token binding
-  identity, authorized model, policy hash, and the exact request bytes (SHA-256)
-- **Signed Compliance Receipts**: each gateway-routed interaction produces a receipt that can be
-  verified offline against the gateway's public key
-- **Policy Enforcement**: model allowlists, data-residency checks, and egress controls — in monitor
-  or enforce mode, with signed denial receipts
-- **Tamper-Evident Audit Logging**: hash-chained, Merkle-sealed logs, optionally anchored to an
-  external transparency log (Sigstore Rekor)
-- **Key Rotation**: Ed25519 signing-key rotation; receipts issued under previous keys remain
-  verifiable
-- **Bundle Encryption**: optional AES-256-GCM encryption of request bundles between client and
-  gateway
+- **Postura de conocimiento cero**: claves administradas por el cliente (BYOK), procesamiento efímero en memoria y
+  El registro local de implementación mantiene los datos confidenciales bajo su control.
+- **Cifrado en reposo**: todos los datos almacenados se cifran utilizando algoritmos estándar de la industria
+- **Cifrado en tránsito**: cifrado TLS 1.3 para todas las comunicaciones API
+- **Claves administradas por el cliente**: usted controla sus claves de cifrado
 
-### Data Protection
+### Control de acceso
 
-- **Zero-Knowledge Posture**: customer-managed keys (BYOK), ephemeral in-memory processing, and
-  deployment-local logging keep sensitive data under your control
-- **Encryption at Rest**: All stored data is encrypted using industry-standard algorithms
-- **Encryption in Transit**: TLS 1.3 encryption for all API communications
-- **Customer-Managed Keys**: You control your encryption keys
+- **Control de acceso basado en roles (RBAC)**: permisos granulares para diferentes tipos de usuarios
+- **Administración de claves API**: autenticación segura para todas las solicitudes de API
+- **Limitación de tasa**: limitación de tasa inteligente para evitar abusos
+- **Registros de auditoría**: seguimiento completo de la actividad para cumplimiento y seguridad
 
-### Access Control
+### Políticas de seguridad
 
-- **Role-Based Access Control (RBAC)**: Granular permissions for different user types
-- **API Key Management**: Secure authentication for all API requests
-- **Rate Limiting**: Intelligent rate limiting to prevent abuse
-- **Audit Logs**: Complete activity tracking for compliance and security
+SMLTP admite varias plantillas de políticas integradas:
 
-### Security Policies
+- **Interno**: Política predeterminada para datos internos de la empresa
+- **Estricto interno**: mayor seguridad para datos internos confidenciales
+- **Público**: política menos restrictiva para datos públicos no confidenciales
+- **HIPAA**: Cumple con las regulaciones de datos de atención médica
+- **GDPR**: Cumple con la normativa europea de protección de datos
+- **PCI-DSS**: Cumple con los estándares de la industria de tarjetas de pago
 
-SMLTP supports several built-in policy templates:
+### Cumplimiento y certificaciones
 
-- **Internal**: Default policy for internal company data
-- **Internal Strict**: Higher security for sensitive internal data
-- **Public**: Less restrictive policy for non-sensitive, public data
-- **HIPAA**: Compliant with healthcare data regulations
-- **GDPR**: Compliant with European data protection regulations
-- **PCI-DSS**: Compliant with payment card industry standards
+- **Enterprise Ready**: Diseñado para los requisitos de seguridad empresarial
+- **Audit Trail**: registro completo para auditorías de cumplimiento y seguridad
+- **Aplicación de políticas**: aplicación automatizada de políticas de seguridad
+- **Monitoreo en tiempo real**: Monitoreo continuo de eventos de seguridad
 
-### Compliance & Certifications
+## Cómo funciona SMLTP
 
-- **Enterprise Ready**: Designed for enterprise security requirements
-- **Audit Trail**: Complete logging for compliance and security audits
-- **Policy Enforcement**: Automated enforcement of security policies
-- **Real-time Monitoring**: Continuous monitoring of security events
+1. **Derecho**: el plano de control emite un token firmado que autoriza a esta persona que llama, este modelo,
+   Según esta política, para estos bytes de solicitud exactos.
+2. **Verificación**: la puerta de enlace SMLTP verifica el token: firma, vencimiento, coincidencia de modelo, cuerpo.
+   hash, repetición y revocación, antes de que la solicitud llegue a alguna parte
+3. **Aplicación de políticas**: la lista de modelos permitidos, la residencia y las reglas de salida se evalúan en el
+   puerta de entrada; en modo obligatorio, una llamada no conforme se bloquea con un recibo de denegación firmado
+4. **Inspección y atestación**: la inspección DLP/PII se ejecuta en la ruta gobernada (mejor esfuerzo,
+   probabilístico), y su veredicto se registra en el recibo firmado
+5. **Registro de auditoría**: cada interacción llega a un registro de auditoría encadenado mediante hash y sellado por Merkle.
 
-## How SMLTP Works
+## Beneficios
 
-1. **Entitlement**: the control plane mints a signed token authorizing this caller, this model,
-   under this policy, for these exact request bytes
-2. **Verification**: the SMLTP gateway verifies the token — signature, expiry, model match, body
-   hash, replay, and revocation — before the request goes anywhere
-3. **Policy Enforcement**: model allowlist, residency, and egress rules are evaluated at the
-   gateway; in enforce mode a non-compliant call is blocked with a signed denial receipt
-4. **Inspection & Attestation**: DLP/PII inspection runs on the governed path (best-effort,
-   probabilistic), and its verdict is recorded in the signed receipt
-5. **Audit Logging**: every interaction lands in a hash-chained, Merkle-sealed audit trail
+- **Demostrable, no sólo registrado**: los recibos firmados permiten a los auditores verificar las interacciones de forma independiente
+- **Compliance Ready**: soporte integrado para los principales marcos de cumplimiento
+- **Contención**: ni siquiera un agente comprometido puede exceder sus permisos firmados criptográficamente
+- **Revocación determinista**: el corte de un usuario, clave o agente tiene efecto en la puerta de enlace en
+  segundos, sin esperar a ningún proveedor de IA
+- **Policy Driven**: aplicación automatizada de sus políticas de seguridad
 
-## Benefits
+## Próximos pasos
 
-- **Provable, not just logged**: signed receipts let auditors verify interactions independently
-- **Compliance Ready**: built-in support for major compliance frameworks
-- **Containment**: even a compromised agent cannot exceed its cryptographically signed permissions
-- **Deterministic Revocation**: cutting off a user, key, or agent takes effect at the gateway in
-  seconds — without waiting on any AI provider
-- **Policy Driven**: automated enforcement of your security policies
-
-## Next Steps
-
-- [SMLTP Deep Dive](/en/security/smltp) - Learn more about SMLTP
-- [Authentication](/en/iam/overview) - Understand authentication methods
-- [API Security](/en/api) - Secure API usage guidelines 
+- [Análisis profundo de SMLTP](/security/smltp) - Obtenga más información sobre SMLTP
+- [Autenticación](/iam/overview) - Comprender los métodos de autenticación
+- [Seguridad API](/api) - Pautas de uso seguro de API

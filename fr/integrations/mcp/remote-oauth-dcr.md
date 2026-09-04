@@ -30,5 +30,5 @@ Certains serveurs MCP distants autorisent l'accès avec **OAuth 2.1** plutôt qu
 
 ## Connexes
 
-- [Présentation des connecteurs MCP](/fr/en/integrations/mcp/overview)
-- [AI Gateway — Points de terminaison distants](/fr/en/ai-gateway/remote-endpoints)
+- [Présentation des connecteurs MCP](/fr/integrations/mcp/overview)
+- [AI Gateway — Points de terminaison distants](/fr/ai-gateway/remote-endpoints)

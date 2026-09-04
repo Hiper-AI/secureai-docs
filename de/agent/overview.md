@@ -13,10 +13,10 @@ Die Agentenflotte wird unter **Admin → Agent Registry → OS Agents** verwalte
 ## Was der Agent tut
 
 - **Erkennt die KI-Nutzung auf dem Gerät** – installierte KI-SDKs/-Prozesse, MCP-Server und Schattennetzwerkaufrufe an KI-Anbieter.
-- **Erzwingt Richtlinien** – Überwachen oder blockieren Sie KI-Anbieter/-Modelle/Apps/MCPs, wenden Sie eine verhaltensbezogene KI-Überwachung an und erzwingen Sie die Ausgangskontrolle (siehe [Egress Enforcement](/de/en/agent/egress-enforcement)).
+- **Erzwingt Richtlinien** – Überwachen oder blockieren Sie KI-Anbieter/-Modelle/Apps/MCPs, wenden Sie eine verhaltensbezogene KI-Überwachung an und erzwingen Sie die Ausgangskontrolle (siehe [Egress Enforcement](/de/agent/egress-enforcement)).
 - **Schützt Daten** – Endpunkt-DLP/PII-Inspektion.
-- **Reagiert auf Bedrohungen** – isoliert schädliche Dateien und kann einen gefährdeten Endpunkt isolieren (siehe [Quarantäne & Flottenoperationen](/de/en/agent/quarantine-and-fleet-ops)).
-- **Optional leitet der Entwickler-KI-Verkehr** über das Gateway von SecureAI (siehe [Transparent Proxy](/de/en/agent/transparent-proxy)).
+- **Reagiert auf Bedrohungen** – isoliert schädliche Dateien und kann einen gefährdeten Endpunkt isolieren (siehe [Quarantäne & Flottenoperationen](/de/agent/quarantine-and-fleet-ops)).
+- **Optional leitet der Entwickler-KI-Verkehr** über das Gateway von SecureAI (siehe [Transparent Proxy](/de/agent/transparent-proxy)).
 
 ## Gerätegesundheit und -haltung
 
@@ -32,16 +32,16 @@ Auf der Registerkarte **OS-Agents** werden alle Geräte mit Status, Status, Risi
 
 ## So fangen Sie an
 
-1. **[Agent installieren](/de/en/agent/installation)** auf Endpunkten (signiertes MSI unter Windows; Skript unter Linux/macOS).
-2. Verstehen Sie **[Registrierungs- und Installationspakete](/de/en/agent/enrollment-and-packages)** – wie Geräte beitreten und ihre Konfiguration erhalten.
-3. Konfigurieren Sie **[Richtlinien & Gruppen](/de/en/agent/policies-and-groups)**, um zu entscheiden, was jedes Gerät durchsetzt.
-4. Optimieren Sie **[Egress Enforcement](/de/en/agent/egress-enforcement)** und **[Quarantäne & Flottenoperationen](/de/en/agent/quarantine-and-fleet-ops)** für die Reaktion.
+1. **[Agent installieren](/de/agent/installation)** auf Endpunkten (signiertes MSI unter Windows; Skript unter Linux/macOS).
+2. Verstehen Sie **[Registrierungs- und Installationspakete](/de/agent/enrollment-and-packages)** – wie Geräte beitreten und ihre Konfiguration erhalten.
+3. Konfigurieren Sie **[Richtlinien & Gruppen](/de/agent/policies-and-groups)**, um zu entscheiden, was jedes Gerät durchsetzt.
+4. Optimieren Sie **[Egress Enforcement](/de/agent/egress-enforcement)** und **[Quarantäne & Flottenoperationen](/de/agent/quarantine-and-fleet-ops)** für die Reaktion.
 
 ## Rollen
 
-Mit dem allgemeinen Zugriff auf das Admin-Panel können Sie die Flotte anzeigen und konfigurieren. **Zerstörerische Aktionen** – Quarantäne, Prozess-/MCP-/Netzwerk-Kill, Isolieren und Widerrufen – erfordern die erhöhte Systemrolle **Administrator**. Siehe [Quarantäne & Flotten-Ops](/de/en/agent/quarantine-and-fleet-ops).
+Mit dem allgemeinen Zugriff auf das Admin-Panel können Sie die Flotte anzeigen und konfigurieren. **Zerstörerische Aktionen** – Quarantäne, Prozess-/MCP-/Netzwerk-Kill, Isolieren und Widerrufen – erfordern die erhöhte Systemrolle **Administrator**. Siehe [Quarantäne & Flotten-Ops](/de/agent/quarantine-and-fleet-ops).
 
 ## Verwandte
 
-- [AI Discovery & Inventory](/de/en/discovery/overview) – der Agent ist eines von drei Discovery-Signalen.
-- [Threat Defense](/de/en/threat-defense/overview)
+- [AI Discovery & Inventory](/de/discovery/overview) – der Agent ist eines von drei Discovery-Signalen.
+- [Threat Defense](/de/threat-defense/overview)

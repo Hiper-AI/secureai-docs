@@ -1,65 +1,64 @@
 ---
 sidebar_position: 1
-title: "Get All Users"
+title: "Listar Usuários"
 openapi: "GET /users"
+sidebar_label: "Listar Usuários"
 ---
 
+# Obtenha todos os usuários
 
+Recuperar todos os usuários com paginação e filtragem. Acessível apenas por administradores.
 
-# Get All Users
-
-Retrieve all users with pagination and filtering. Only accessible by administrators.
-
-## Endpoint
+## Ponto final
 
 ```
 GET /users
 ```
 
-## Description
+## Descrição
 
-This endpoint allows administrators to retrieve a paginated list of all users in the system. It supports filtering by various criteria including role, license, status, and search terms. This is an administrative endpoint that requires appropriate permissions.
+Este endpoint permite que os administradores recuperem uma lista paginada de todos os usuários no sistema. Ele oferece suporte à filtragem por vários critérios, incluindo função, licença, status e termos de pesquisa. Este é um endpoint administrativo que requer permissões apropriadas.
 
-## Authentication
+## Autenticação
 
-Required. Include your API key in the Authorization header.
+Obrigatório. Inclua sua chave de API no cabeçalho de autorização.
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## Solicitação
 
-### Query Parameters
+### Parâmetros de consulta
 
-| Parameter | Type | Required | Default | Description |
+| Parâmetro | Tipo | Obrigatório | Padrão | Descrição |
 |-----------|------|----------|---------|-------------|
-| `page` | integer | No | 1 | Page number for pagination |
-| `limit` | integer | No | 20 | Number of users per page (1-100) |
-| `search` | string | No | - | Search term for name, email, or username |
-| `role` | string | No | - | Filter by user role (admin, user, globalReader) |
-| `license` | string | No | - | Filter by user license (Essential, Growth, Ultra, Early Access) |
-| `status` | integer | No | - | Filter by user status (0=inactive, 1=active) |
-| `sortBy` | string | No | createdAt | Field to sort by |
-| `sortOrder` | string | No | desc | Sort order (asc, desc) |
+| `page` | inteiro | Não | 1 | Número de página para paginação |
+| `limit` | inteiro | Não | 20 | Número de usuários por página (1-100) |
+| `search` | corda | Não | - | Termo de pesquisa por nome, e-mail ou nome de usuário |
+| `role` | corda | Não | - | Filtrar por função de usuário (admin, usuário, globalReader) |
+| `license` | corda | Não | - | Filtrar por licença de usuário (Essential, Growth, Ultra, Early Access) |
+| `status` | inteiro | Não | - | Filtrar por status do usuário (0=inativo, 1=ativo) |
+| `sortBy` | corda | Não | criadoEm | Campo para ordenar |
+| `sortOrder` | corda | Não | desc | Ordem de classificação (asc, desc) |
 
-### Example Request
+### Exemplo de solicitação
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=20&role=user&status=1" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-With search:
+Com pesquisa:
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?search=john&license=Growth" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Resposta
 
-### Success Response (200)
+### Resposta de sucesso (200)
 
 ```json
 {
@@ -96,37 +95,37 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?search=john&l
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Always `true` for successful requests |
-| `users` | array | Array of user objects |
-| `users[].id` | string | User's unique identifier |
-| `users[].name` | string | User's full name |
-| `users[].username` | string | User's username |
-| `users[].email` | string | User's email address |
-| `users[].role` | string | User's role (admin, user, globalReader) |
-| `users[].license` | string | User's license tier (Essential, Growth, Ultra, Early Access) |
-| `users[].status` | integer | User status (0=inactive, 1=active) |
-| `users[].isVerified` | boolean | Whether user is verified |
-| `users[].setupCompleted` | boolean | Whether user setup is completed |
-| `users[].authType` | string | Authentication type (basic, auth0) |
-| `users[].mfaEnabled` | boolean | Whether MFA is enabled |
-| `users[].customRole` | object | Custom role information (if assigned) |
-| `users[].customRole.id` | string | Custom role ID |
-| `users[].customRole.name` | string | Custom role name |
-| `users[].customRole.displayName` | string | Custom role display name |
-| `users[].createdAt` | string | User creation timestamp |
-| `users[].updatedAt` | string | User last update timestamp |
-| `users[].lastActive` | string | User's last activity timestamp |
-| `pagination` | object | Pagination information |
-| `pagination.page` | integer | Current page number |
-| `pagination.limit` | integer | Items per page |
-| `pagination.total` | integer | Total number of users |
-| `pagination.pages` | integer | Total number of pages |
+| `success` | booleano | Sempre `true` para solicitações bem-sucedidas |
+| `users` | matriz | Matriz de objetos de usuário |
+| `users[].id` | corda | Identificador único do utilizador |
+| `users[].name` | corda | Nome completo do usuário |
+| `users[].username` | corda | Nome de usuário do usuário |
+| `users[].email` | corda | Endereço de e-mail do usuário |
+| `users[].role` | corda | Função do usuário (admin, usuário, globalReader) |
+| `users[].license` | corda | Nível de licença do usuário (Essential, Growth, Ultra, Early Access) |
+| `users[].status` | inteiro | Status do usuário (0=inativo, 1=ativo) |
+| `users[].isVerified` | booleano | Se o usuário foi verificado |
+| `users[].setupCompleted` | booleano | Se a configuração do usuário foi concluída |
+| `users[].authType` | corda | Tipo de autenticação (básico, auth0) |
+| `users[].mfaEnabled` | booleano | Se a MFA está habilitada |
+| `users[].customRole` | objeto | Informações de função personalizada (se atribuídas) |
+| `users[].customRole.id` | corda | ID de função personalizada |
+| `users[].customRole.name` | corda | Nome da função personalizada |
+| `users[].customRole.displayName` | corda | Nome de exibição da função personalizada |
+| `users[].createdAt` | corda | Carimbo de data e hora de criação do usuário |
+| `users[].updatedAt` | corda | Carimbo de data e hora da última atualização do usuário |
+| `users[].lastActive` | corda | Carimbo de data/hora da última atividade do usuário |
+| `pagination` | objeto | Informações de paginação |
+| `pagination.page` | inteiro | Número da página atual |
+| `pagination.limit` | inteiro | Itens por página |
+| `pagination.total` | inteiro | Número total de usuários |
+| `pagination.pages` | inteiro | Número total de páginas |
 
-## Example Usage
+## Exemplo de uso
 
 ### JavaScript
 
@@ -147,7 +146,7 @@ if (data.success) {
 }
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -173,16 +172,16 @@ if data['success']:
         print(f"{user['name']} ({user['email']}) - {user['role']}")
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=20" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## Respostas de erro
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -192,7 +191,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
 ```json
 {
@@ -202,65 +201,65 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=
 }
 ```
 
-## Filtering Examples
+## Exemplos de filtragem
 
-### Search by Name or Email
+### Pesquise por nome ou e-mail
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?search=john" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by Role
+### Filtrar por função
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?role=admin" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by License
+### Filtrar por licença
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?license=Growth" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by Status
+### Filtrar por status
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?status=1" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Sort by Last Active
+### Classificar por último ativo
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?sortBy=lastActive&sortOrder=desc" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Use Cases
+## Casos de uso
 
-- **User Management**: View and manage all users in the system
-- **User Analytics**: Analyze user distribution by role, license, or status
-- **Search and Filter**: Find specific users based on various criteria
-- **Administrative Tasks**: Support administrative operations and reporting
+- **Gerenciamento de usuários**: visualize e gerencie todos os usuários no sistema
+- **Análise de usuários**: analise a distribuição de usuários por função, licença ou status
+- **Pesquisar e Filtrar**: Encontre usuários específicos com base em vários critérios
+- **Tarefas administrativas**: suporte a operações administrativas e relatórios
 
-## Role Descriptions
+## Descrições de funções
 
-- **admin**: Full system access with administrative control
-- **user**: Standard access to chat features and personal knowledge bases  
-- **globalReader**: Read-only access to admin panel with viewing permissions
+- **admin**: Acesso total ao sistema com controle administrativo
+- **usuário**: acesso padrão a recursos de chat e bases de conhecimento pessoais  
+- **globalReader**: acesso somente leitura ao painel de administração com permissões de visualização
 
-## License Descriptions
+## Descrições de licença
 
-- **Essential**: Basic tier with 29,000 points/month
-- **Growth**: Mid-tier with enhanced features
-- **Ultra**: Premium tier with maximum features
-- **Early Access**: Beta tier with experimental capabilities
+- **Essencial**: nível básico com 29.000 pontos/mês
+- **Crescimento**: nível intermediário com recursos aprimorados
+- **Ultra**: nível Premium com recursos máximos
+- **Acesso antecipado**: nível beta com recursos experimentais
 
-## Rate Limits
+## Limites de taxa
 
-This endpoint follows the standard rate limits:
-- 60 requests per minute
-- 1000 requests per hour 
+Este endpoint segue os limites de taxa padrão:
+- 60 solicitações por minuto
+- 1000 solicitações por hora

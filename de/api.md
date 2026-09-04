@@ -97,61 +97,61 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 ## API-Endpunkte
 
 ### System
-- [Health Check](/de/en/api/system/health) - API-Status prüfen
+- [Health Check](/de/api/system/health) - API-Status prüfen
 
 ### Entdeckung
-- [Verfügbare Modelle abrufen](/de/en/api/discovery/models) – Verfügbare KI-Modelle auflisten
-- [Verfügbare Wissensdatenbanken abrufen](/de/en/api/discovery/indexes) - Verfügbare Wissensdatenbanken auflisten
-- [Sicherheitsrichtlinien abrufen](/de/en/api/discovery/smltp-policies) - Verfügbare SMLTP-Richtlinien auflisten
+- [Verfügbare Modelle abrufen](/de/api/discovery/models) – Verfügbare KI-Modelle auflisten
+- [Verfügbare Wissensdatenbanken abrufen](/de/api/discovery/indexes) - Verfügbare Wissensdatenbanken auflisten
+- [Sicherheitsrichtlinien abrufen](/de/api/discovery/smltp-policies) - Verfügbare SMLTP-Richtlinien auflisten
 
 ### Chatten
-- [Chat Completion](/de/en/api/chat/completions) – Haupt-KI-Chat-Endpunkt mit RAG
-- [OpenAI-kompatibler Endpunkt](/de/en/api/chat/openai-kompatibel) - Drop-in `/v1/chat/completions` für OpenAI SDKs
-- [Redundanz & Failover](/de/en/api/redundancy) - Failover-Ketten modellieren
-- [Policy Check](/de/en/api/policy-check) - Führen Sie einen Probelauf der Sicherheitspipeline durch, ohne ein Modell aufzurufen
-- [Nutzung](/de/en/api/usage) – Self-Service-Kontingent, Budget und Ratenlimits
-- [Receipts](/de/en/api/receipts) - Signierte SMLTP-Konformitätsbelege abrufen
+- [Chat Completion](/de/api/chat/completions) – Haupt-KI-Chat-Endpunkt mit RAG
+- [OpenAI-kompatibler Endpunkt](/de/api/chat/openai-kompatibel) - Drop-in `/v1/chat/completions` für OpenAI SDKs
+- [Redundanz & Failover](/de/api/redundancy) - Failover-Ketten modellieren
+- [Policy Check](/de/api/policy-check) - Führen Sie einen Probelauf der Sicherheitspipeline durch, ohne ein Modell aufzurufen
+- [Nutzung](/de/api/usage) – Self-Service-Kontingent, Budget und Ratenlimits
+- [Receipts](/de/api/receipts) - Signierte SMLTP-Konformitätsbelege abrufen
 
 ### Webhooks
-- [Webhooks-Übersicht](/de/en/api/webhooks/overview) - Signierte Echtzeit-Ereigniszustellung
-- [Webhook Events](/de/en/api/webhooks/events) - Eventkatalog und Payloads
+- [Webhooks-Übersicht](/de/api/webhooks/overview) - Signierte Echtzeit-Ereigniszustellung
+- [Webhook Events](/de/api/webhooks/events) - Eventkatalog und Payloads
 
 ### Bilder
-- [Bilder generieren](/de/en/api/images/generations) - Bilder aus Text generieren oder vorhandene Bilder bearbeiten
-- [Bilder bearbeiten](/de/en/api/images/edits) - Bild-zu-Bild-Bearbeitung mit Textanweisungen
+- [Bilder generieren](/de/api/images/generations) - Bilder aus Text generieren oder vorhandene Bilder bearbeiten
+- [Bilder bearbeiten](/de/api/images/edits) - Bild-zu-Bild-Bearbeitung mit Textanweisungen
 
 ### Sprache/S2S
-- [S2S WebRTC-Sitzung initiieren](/de/en/api/speech/webrtc) - Sprachgespräche in Echtzeit aufbauen
-- [S2S-Zeitstatus abrufen](/de/en/api/speech/status) - Überprüfen Sie das verbleibende S2S-Zeitkontingent
-- [S2S-Sitzungsdauer protokollieren](/de/en/api/speech/log-session) - Sitzungsdauer und Abzugszeit protokollieren
+- [S2S WebRTC-Sitzung initiieren](/de/api/speech/webrtc) - Sprachgespräche in Echtzeit aufbauen
+- [S2S-Zeitstatus abrufen](/de/api/speech/status) - Überprüfen Sie das verbleibende S2S-Zeitkontingent
+- [S2S-Sitzungsdauer protokollieren](/de/api/speech/log-session) - Sitzungsdauer und Abzugszeit protokollieren
 
 ### Benutzerverwaltung
-- [Alle Benutzer abrufen](/de/en/api/users/list) - Benutzer mit Paginierung abrufen
-- [Benutzer erstellen](/de/en/api/users/create) - Neues Benutzerkonto erstellen
-- [Benutzer aktualisieren](/de/en/api/users/update) - Bestehenden Benutzer aktualisieren
-- [Lizenzverfügbarkeit abrufen](/de/en/api/billing-modes/licenses-availability) - Lizenzpoollimits und -nutzung abrufen
+- [Alle Benutzer abrufen](/de/api/users/list) - Benutzer mit Paginierung abrufen
+- [Benutzer erstellen](/de/api/users/create) - Neues Benutzerkonto erstellen
+- [Benutzer aktualisieren](/de/api/users/update) - Bestehenden Benutzer aktualisieren
+- [Lizenzverfügbarkeit abrufen](/de/api/billing-modes/licenses-availability) - Lizenzpoollimits und -nutzung abrufen
 
 ### Indexverwaltung
-- [Alle Indizes abrufen](/de/en/api/indexes/list) - Alle Wissensdatenbanken abrufen
-- [Index erstellen](/de/en/api/indexes/create) - Neue Wissensdatenbank erstellen
-- [Index aktualisieren](/de/en/api/indexes/update) - Bestehenden Index aktualisieren
-- [Index mit Dokumenten trainieren](/de/en/api/indexes/train) - Index durch Hochladen von Dokumenten trainieren
-- [Suchindex für Dokumente](/de/en/api/indexes/search) - Suche nach Dokumenten mittels semantischer Suche
+- [Alle Indizes abrufen](/de/api/indexes/list) - Alle Wissensdatenbanken abrufen
+- [Index erstellen](/de/api/indexes/create) - Neue Wissensdatenbank erstellen
+- [Index aktualisieren](/de/api/indexes/update) - Bestehenden Index aktualisieren
+- [Index mit Dokumenten trainieren](/de/api/indexes/train) - Index durch Hochladen von Dokumenten trainieren
+- [Suchindex für Dokumente](/de/api/indexes/search) - Suche nach Dokumenten mittels semantischer Suche
 
 ### Gruppenmanagement
-- [Alle Gruppen abrufen](/de/en/api/groups/list) - Alle Gruppen abrufen
-- [Gruppe erstellen](/de/en/api/groups/create) - Neue Gruppe erstellen
-- [Gruppe aktualisieren](/de/en/api/groups/update) - Bestehende Gruppe aktualisieren
+- [Alle Gruppen abrufen](/de/api/groups/list) - Alle Gruppen abrufen
+- [Gruppe erstellen](/de/api/groups/create) - Neue Gruppe erstellen
+- [Gruppe aktualisieren](/de/api/groups/update) - Bestehende Gruppe aktualisieren
 
 ### SMLTP-Sicherheit
-- [Alle SMLTP-Richtlinien abrufen](/de/en/api/smltp/policies) - Alle Sicherheitsrichtlinien auflisten
-- [Aktive Richtlinie abrufen](/de/en/api/smltp/active) - Aktuelle aktive Richtlinie abrufen
-- [Benutzerdefinierte Richtlinie erstellen](/de/en/api/smltp/create) - Benutzerdefinierte SMLTP-Richtlinie erstellen
-- [Audit-Logs](/de/en/api/smltp/audit-logs) – SMLTP-Audit-Logs abrufen
+- [Alle SMLTP-Richtlinien abrufen](/de/api/smltp/policies) - Alle Sicherheitsrichtlinien auflisten
+- [Aktive Richtlinie abrufen](/de/api/smltp/active) - Aktuelle aktive Richtlinie abrufen
+- [Benutzerdefinierte Richtlinie erstellen](/de/api/smltp/create) - Benutzerdefinierte SMLTP-Richtlinie erstellen
+- [Audit-Logs](/de/api/smltp/audit-logs) – SMLTP-Audit-Logs abrufen
 
 ### Rollenverwaltung
-- [Alle Rollen abrufen](/de/en/api/roles/list) - Alle Rollen abrufen
-- [Rolle erstellen](/de/en/api/roles/create) - Neue benutzerdefinierte Rolle erstellen
+- [Alle Rollen abrufen](/de/api/roles/list) - Alle Rollen abrufen
+- [Rolle erstellen](/de/api/roles/create) - Neue benutzerdefinierte Rolle erstellen
 
 ## Fehlerbehandlung
 
@@ -292,61 +292,61 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 ## API-Endpunkte
 
 ### System
-- [Health Check](/de/en/api/system/health) - API-Status prüfen
+- [Health Check](/de/api/system/health) - API-Status prüfen
 
 ### Entdeckung
-- [Verfügbare Modelle abrufen](/de/en/api/discovery/models) – Verfügbare KI-Modelle auflisten
-- [Verfügbare Wissensdatenbanken abrufen](/de/en/api/discovery/indexes) - Verfügbare Wissensdatenbanken auflisten
-- [Sicherheitsrichtlinien abrufen](/de/en/api/discovery/smltp-policies) - Verfügbare SMLTP-Richtlinien auflisten
+- [Verfügbare Modelle abrufen](/de/api/discovery/models) – Verfügbare KI-Modelle auflisten
+- [Verfügbare Wissensdatenbanken abrufen](/de/api/discovery/indexes) - Verfügbare Wissensdatenbanken auflisten
+- [Sicherheitsrichtlinien abrufen](/de/api/discovery/smltp-policies) - Verfügbare SMLTP-Richtlinien auflisten
 
 ### Chatten
-- [Chat Completion](/de/en/api/chat/completions) – Haupt-KI-Chat-Endpunkt mit RAG
-- [OpenAI-kompatibler Endpunkt](/de/en/api/chat/openai-kompatibel) - Drop-in `/v1/chat/completions` für OpenAI SDKs
-- [Redundanz & Failover](/de/en/api/redundancy) - Failover-Ketten modellieren
-- [Policy Check](/de/en/api/policy-check) - Führen Sie einen Probelauf der Sicherheitspipeline durch, ohne ein Modell aufzurufen
-- [Nutzung](/de/en/api/usage) – Self-Service-Kontingent, Budget und Ratenlimits
-- [Receipts](/de/en/api/receipts) - Signierte SMLTP-Konformitätsbelege abrufen
+- [Chat Completion](/de/api/chat/completions) – Haupt-KI-Chat-Endpunkt mit RAG
+- [OpenAI-kompatibler Endpunkt](/de/api/chat/openai-kompatibel) - Drop-in `/v1/chat/completions` für OpenAI SDKs
+- [Redundanz & Failover](/de/api/redundancy) - Failover-Ketten modellieren
+- [Policy Check](/de/api/policy-check) - Führen Sie einen Probelauf der Sicherheitspipeline durch, ohne ein Modell aufzurufen
+- [Nutzung](/de/api/usage) – Self-Service-Kontingent, Budget und Ratenlimits
+- [Receipts](/de/api/receipts) - Signierte SMLTP-Konformitätsbelege abrufen
 
 ### Webhooks
-- [Webhooks-Übersicht](/de/en/api/webhooks/overview) - Signierte Echtzeit-Ereigniszustellung
-- [Webhook Events](/de/en/api/webhooks/events) - Eventkatalog und Payloads
+- [Webhooks-Übersicht](/de/api/webhooks/overview) - Signierte Echtzeit-Ereigniszustellung
+- [Webhook Events](/de/api/webhooks/events) - Eventkatalog und Payloads
 
 ### Bilder
-- [Bilder generieren](/de/en/api/images/generations) - Bilder aus Text generieren oder vorhandene Bilder bearbeiten
-- [Bilder bearbeiten](/de/en/api/images/edits) - Bild-zu-Bild-Bearbeitung mit Textanweisungen
+- [Bilder generieren](/de/api/images/generations) - Bilder aus Text generieren oder vorhandene Bilder bearbeiten
+- [Bilder bearbeiten](/de/api/images/edits) - Bild-zu-Bild-Bearbeitung mit Textanweisungen
 
 ### Sprache/S2S
-- [S2S WebRTC-Sitzung initiieren](/de/en/api/speech/webrtc) - Sprachgespräche in Echtzeit aufbauen
-- [S2S-Zeitstatus abrufen](/de/en/api/speech/status) - Überprüfen Sie das verbleibende S2S-Zeitkontingent
-- [S2S-Sitzungsdauer protokollieren](/de/en/api/speech/log-session) - Sitzungsdauer und Abzugszeit protokollieren
+- [S2S WebRTC-Sitzung initiieren](/de/api/speech/webrtc) - Sprachgespräche in Echtzeit aufbauen
+- [S2S-Zeitstatus abrufen](/de/api/speech/status) - Überprüfen Sie das verbleibende S2S-Zeitkontingent
+- [S2S-Sitzungsdauer protokollieren](/de/api/speech/log-session) - Sitzungsdauer und Abzugszeit protokollieren
 
 ### Benutzerverwaltung
-- [Alle Benutzer abrufen](/de/en/api/users/list) - Benutzer mit Paginierung abrufen
-- [Benutzer erstellen](/de/en/api/users/create) - Neues Benutzerkonto erstellen
-- [Benutzer aktualisieren](/de/en/api/users/update) - Bestehenden Benutzer aktualisieren
-- [Lizenzverfügbarkeit abrufen](/de/en/api/billing-modes/licenses-availability) - Lizenzpoollimits und -nutzung abrufen
+- [Alle Benutzer abrufen](/de/api/users/list) - Benutzer mit Paginierung abrufen
+- [Benutzer erstellen](/de/api/users/create) - Neues Benutzerkonto erstellen
+- [Benutzer aktualisieren](/de/api/users/update) - Bestehenden Benutzer aktualisieren
+- [Lizenzverfügbarkeit abrufen](/de/api/billing-modes/licenses-availability) - Lizenzpoollimits und -nutzung abrufen
 
 ### Indexverwaltung
-- [Alle Indizes abrufen](/de/en/api/indexes/list) - Alle Wissensdatenbanken abrufen
-- [Index erstellen](/de/en/api/indexes/create) - Neue Wissensdatenbank erstellen
-- [Index aktualisieren](/de/en/api/indexes/update) - Bestehenden Index aktualisieren
-- [Index mit Dokumenten trainieren](/de/en/api/indexes/train) - Index durch Hochladen von Dokumenten trainieren
-- [Suchindex für Dokumente](/de/en/api/indexes/search) - Suche nach Dokumenten mittels semantischer Suche
+- [Alle Indizes abrufen](/de/api/indexes/list) - Alle Wissensdatenbanken abrufen
+- [Index erstellen](/de/api/indexes/create) - Neue Wissensdatenbank erstellen
+- [Index aktualisieren](/de/api/indexes/update) - Bestehenden Index aktualisieren
+- [Index mit Dokumenten trainieren](/de/api/indexes/train) - Index durch Hochladen von Dokumenten trainieren
+- [Suchindex für Dokumente](/de/api/indexes/search) - Suche nach Dokumenten mittels semantischer Suche
 
 ### Gruppenmanagement
-- [Alle Gruppen abrufen](/de/en/api/groups/list) - Alle Gruppen abrufen
-- [Gruppe erstellen](/de/en/api/groups/create) - Neue Gruppe erstellen
-- [Gruppe aktualisieren](/de/en/api/groups/update) - Bestehende Gruppe aktualisieren
+- [Alle Gruppen abrufen](/de/api/groups/list) - Alle Gruppen abrufen
+- [Gruppe erstellen](/de/api/groups/create) - Neue Gruppe erstellen
+- [Gruppe aktualisieren](/de/api/groups/update) - Bestehende Gruppe aktualisieren
 
 ### SMLTP-Sicherheit
-- [Alle SMLTP-Richtlinien abrufen](/de/en/api/smltp/policies) - Alle Sicherheitsrichtlinien auflisten
-- [Aktive Richtlinie abrufen](/de/en/api/smltp/active) - Aktuelle aktive Richtlinie abrufen
-- [Benutzerdefinierte Richtlinie erstellen](/de/en/api/smltp/create) - Benutzerdefinierte SMLTP-Richtlinie erstellen
-- [Audit-Logs](/de/en/api/smltp/audit-logs) – SMLTP-Audit-Logs abrufen
+- [Alle SMLTP-Richtlinien abrufen](/de/api/smltp/policies) - Alle Sicherheitsrichtlinien auflisten
+- [Aktive Richtlinie abrufen](/de/api/smltp/active) - Aktuelle aktive Richtlinie abrufen
+- [Benutzerdefinierte Richtlinie erstellen](/de/api/smltp/create) - Benutzerdefinierte SMLTP-Richtlinie erstellen
+- [Audit-Logs](/de/api/smltp/audit-logs) – SMLTP-Audit-Logs abrufen
 
 ### Rollenverwaltung
-- [Alle Rollen abrufen](/de/en/api/roles/list) - Alle Rollen abrufen
-- [Rolle erstellen](/de/en/api/roles/create) - Neue benutzerdefinierte Rolle erstellen
+- [Alle Rollen abrufen](/de/api/roles/list) - Alle Rollen abrufen
+- [Rolle erstellen](/de/api/roles/create) - Neue benutzerdefinierte Rolle erstellen
 
 ## Fehlerbehandlung
 
@@ -456,5 +456,5 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 
 ## Nächste Schritte
 
-- [Knowledge Base & RAG](/de/en/indexes/overview) - Erfahren Sie mehr über Knowledge Bases und RAG
+- [Knowledge Base & RAG](/de/indexes/overview) - Erfahren Sie mehr über Knowledge Bases und RAG
 „

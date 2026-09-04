@@ -1,62 +1,60 @@
 ---
 sidebar_position: 4
-title: "Policies & Groups"
-sidebar_label: "Policies & Groups"
-description: "Configure what the SecureAI OS Agent enforces with policies, groups, protection presets, and safe rollouts"
+title: "Políticas y Grupos de Dispositivos"
+sidebar_label: "Políticas y Grupos"
+description: "Configure lo que SecureAI OS Agent aplica con políticas, grupos, ajustes preestablecidos de protección e implementaciones seguras."
 ---
 
+# Políticas y grupos
 
+Una **política** define lo que aplica el agente; un **grupo** asigna una política a un conjunto de dispositivos. Cada dispositivo resuelve su política efectiva en cada latido, por lo que los cambios se propagan rápidamente.
 
-# Policies & Groups
+## Políticas
 
-A **policy** defines what the agent enforces; a **group** assigns a policy to a set of devices. Every device resolves its effective policy on each heartbeat, so changes propagate quickly.
+Una política (`AgentPolicy`) contiene:
 
-## Policies
-
-A policy (`AgentPolicy`) contains:
-
-| Setting | Description |
+| Configuración | Descripción |
 |---------|-------------|
-| **Mode** | `monitor` (observe only) or `block` (enforce). |
-| **Rulesets** | Allow/deny lists for `mcps`, `apps`, `providers`, and `models`. |
-| **Threat feed** | Whether the device consumes the org threat feed. |
-| **Egress enforcement** | `off` / `kill` / `block` / `lockdown` (+ allow list, block-remote-MCP). See [Egress Enforcement](/en/agent/egress-enforcement). |
-| **Behavior guard** | Behavioral AI-oversight: enabled, sensitivity, and default action (`alert`, `quarantine`, `kill`, `block`, `require_approval`), for endpoint and/or gateway. |
-| **Claude Code routing** | Transparent-proxy settings. See [Transparent Proxy](/en/agent/transparent-proxy). |
-| **Tamper protection** | Uninstall-key requirement (see below). |
-| **Rollout** | Staged rollout configuration (see [Safe rollouts](#safe-rollouts)). |
+| **Modo** | `monitor` (solo observar) o `block` (aplicar). |
+| **Conjuntos de reglas** | Listas de permitir/denegar para `mcps`, `apps`, `providers` y `models`. |
+| **Amenazas** | Si el dispositivo consume la fuente de amenazas de la organización. |
+| **Control de Salida (Egress Enforcement)** | `off` / `kill` / `block` / `lockdown` (+ lista de permitidos, bloque-remoto-MCP). Consulte [Cumplimiento de salida](/agent/egress-enforcement). |
+| **Guardia de comportamiento** | Supervisión de comportamiento de IA: habilitada, sensibilidad y acción predeterminada (`alert`, `quarantine`, `kill`, `block`, `require_approval`), para endpoint y/o gateway. |
+| **Enrutamiento del Claude Code** | Configuración de proxy transparente. Consulte [Proxy transparente](/agent/transparent-proxy). |
+| **Protección contra manipulaciones** | Requisito de clave de desinstalación (ver más abajo). |
+| **Lanzamiento** | Configuración de implementación por etapas (consulte [Implementaciones seguras](#safe-rollouts)). |
 
-### Protection presets
+### Ajustes preestablecidos de protección
 
-Rather than tuning every knob, you can pick a single protection preset that bundles the behavior guard with the egress mode:
+En lugar de ajustar cada perilla, puede elegir un único ajuste preestablecido de protección que combine la protección de comportamiento con el modo de salida:
 
-| Preset | Behavior |
+| Preestablecido | Comportamiento |
 |--------|----------|
-| **Passive** | Observe and alert; minimal enforcement. |
-| **Normal** | Balanced enforcement. |
-| **Aggressive** | Strong enforcement (e.g. block/quarantine, tighter egress). |
+| **Pasivo** | Observar y alertar; aplicación mínima. |
+| **Normal** | Aplicación equilibrada. |
+| **Agresivo** | Aplicación estricta (por ejemplo, bloqueo/cuarentena, salida más estricta). |
 
-Off-preset combinations are shown as **Custom**.
+Las combinaciones no preestablecidas se muestran como **Personalizadas**.
 
-## Groups
+## Grupos
 
-A **group** (`AgentGroup`) has a `policyId` plus dynamic **membership rules** — matched on OS, hostname glob pattern, and priority. A device's effective policy is resolved **device → group → policy**, re-evaluated on every heartbeat, so moving a device between groups (or editing a group's rules) re-targets it automatically.
+Un **grupo** (`AgentGroup`) tiene un `policyId` más **reglas de membresía** dinámicas: coinciden en sistema operativo, patrón global de nombre de host y prioridad. La política efectiva de un dispositivo se resuelve **dispositivo → grupo → política** y se reevalúa en cada latido, por lo que mover un dispositivo entre grupos (o editar las reglas de un grupo) lo reorienta automáticamente.
 
-## Safe rollouts
+## Implementaciones seguras
 
-Policy changes ship through a controlled workflow so you can validate before fleet-wide enforcement:
+Los cambios de política se envían a través de un flujo de trabajo controlado para que pueda validarlos antes de su aplicación en toda la flota:
 
-- **Revisions & rollback** — every policy change is versioned; roll back to a prior revision at any time.
-- **Rollout rings** — advance a change through staged rings (pause/resume/advance) instead of all at once.
-- **Dry-run simulate** — preview what a policy *would* detect or block against the current inventory, without saving or enforcing anything.
-- **Exceptions** — an approval workflow for per-device/per-rule exceptions; approving one appends a managed exclusion. Approval requires the admin role.
+- **Revisiones y reversiones**: cada cambio de política tiene una versión; retroceder a una revisión anterior en cualquier momento.
+- **Anillos de implementación**: avanza un cambio a través de anillos por etapas (pausar/reanudar/avanzar) en lugar de hacerlo todos a la vez.
+- **Simulación de prueba**: obtenga una vista previa de lo que una política *detectaría o bloquearía en el inventario actual, sin guardar ni aplicar nada.
+- **Excepciones**: un flujo de trabajo de aprobación para excepciones por dispositivo/por regla; aprobar uno agrega una exclusión administrada. La aprobación requiere el rol de administrador.
 
-## Tamper protection & uninstall key
+## Protección contra manipulaciones y clave de desinstalación
 
-A policy can require an **uninstall key** (`tamperProtection.uninstallRequiresKey`) so the agent cannot be removed by a local user without it. The requirement (and a hashed key with an offline salt/hash) is delivered to the endpoint so it can validate even off-network. Uninstall attempts validate through a public token-validation endpoint (per-policy key first, then a fleet-wide fallback); failures are audited. See [Self-update & anti-tamper](/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper).
+Una política puede requerir una **clave de desinstalación** (`tamperProtection.uninstallRequiresKey`) para que un usuario local no pueda eliminar el agente sin ella. El requisito (y una clave hash con un salt/hash fuera de línea) se entrega al endpoint para que pueda validarse incluso fuera de la red. Los intentos de desinstalación se validan a través de un endpoint público de validación de token (primero clave por política, luego un respaldo para toda la flota); Los fallos son auditados. Consulte [Autoactualización y antimanipulación](/agent/quarantine-and-fleet-ops#self-update--anti-tamper).
 
-## Related
+## Relacionado
 
-- [Egress Enforcement](/en/agent/egress-enforcement)
-- [Quarantine & Fleet Ops](/en/agent/quarantine-and-fleet-ops)
-- [Transparent Proxy](/en/agent/transparent-proxy)
+- [Aplicación de salida](/agent/egress-enforcement)
+- [Operaciones de cuarentena y flota](/agent/quarantine-and-fleet-ops)
+- [Proxy transparente](/agent/proxy-transparente)

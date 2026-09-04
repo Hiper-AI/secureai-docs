@@ -1,48 +1,46 @@
 ---
 sidebar_position: 3
-title: "Network Sources"
-sidebar_label: "Network Sources"
-description: "Shadow-AI discovery — which corporate source IPs and users are calling LLM APIs, from your CASB/SWG logs"
+title: "Fuentes de Red y Detección de Tráfico"
+sidebar_label: "Fuentes de Red"
+description: "Descubrimiento de Shadow-AI: qué IP de origen corporativo y qué usuarios llaman a las API de LLM, desde sus registros CASB/SWG"
 ---
 
+# Fuentes de red
 
+**Fuentes de red** (Administrador → Registro de agentes → **Red**) muestra la IA oculta que se encuentra en sus registros CASB/SWG: qué **IP de origen corporativas y usuarios llaman a las API de LLM**, incluso cuando no se implementa ningún SDK o [agente de endpoint](/agent/overview). Se alimenta de [CASB y conectores de red](/integrations/casb/overview): Cisco Umbrella, Zscaler y otros.
 
-# Network Sources
+## La ventana de descubrimiento
 
-**Network Sources** (Admin → Agent Registry → **Network**) surfaces the shadow AI found in your CASB/SWG logs: which corporate **source IPs and users are calling LLM APIs**, even where no SDK or [endpoint agent](/en/agent/overview) is deployed. It's fed by the [CASB & Network connectors](/en/integrations/casb/overview) — Cisco Umbrella, Zscaler, and others.
+La actividad se informa durante un período continuo: **30 días de forma predeterminada** (configurable a través de `NETWORK_DISCOVERY_WINDOW_DAYS`). Algunas subvistas (dominios principales, usuarios principales, dominios desconocidos) utilizan una ventana fija de 7 días. En la primera conexión, un conector ejecuta un reabastecimiento en segundo plano para que el historial esté disponible de inmediato.
 
-## The discovery window
+## Lo que muestra cada fuente
 
-Activity is reported over a rolling window — **30 days by default** (configurable via `NETWORK_DISCOVERY_WINDOW_DAYS`). A few sub-views (top domains, top users, unknown domains) use a fixed 7-day window. On first connect, a connector runs a background backfill so history is available immediately.
-
-## What each source shows
-
-| Field | Description |
+| Campo | Descripción |
 |-------|-------------|
-| **Source IP** | The corporate device/workload making AI calls. |
-| **User / gateway** | The primary user or gateway identity, when the connector provides it. |
-| **Total calls** | Call volume within the window. |
-| **Top domain / providers** | The most-hit AI destination and the provider set. |
-| **Severity** | `critical` / `high` / `medium` / `low`. |
-| **Threat domains** | A badge when a source reached risky destinations. |
-| **Registered** | Whether the source has been triaged/registered. |
+| **IP de origen** | El dispositivo/carga de trabajo corporativo que realiza llamadas de IA. |
+| **Usuario/puerta de enlace** | La identidad del usuario principal o de la puerta de enlace, cuando el conector la proporciona. |
+| **Llamadas totales** | Volumen de llamadas dentro de la ventana. |
+| **Dominios/proveedores principales** | El destino de IA más afectado y el conjunto de proveedores. |
+| **Severidad** | `critical` / `high` / `medium` / `low`. |
+| **Dominios de amenazas** | Una insignia cuando una fuente llegó a destinos peligrosos. |
+| **Registrado** | Si la fuente ha sido seleccionada/registrada. |
 
-Drilling into a source shows a per-observation table (domain, provider, connector, calls, user, last-seen).
+Al profundizar en una fuente se muestra una tabla por observación (dominio, proveedor, conector, llamadas, usuario, visto por última vez).
 
-## Triage workflow
+## Flujo de trabajo de clasificación
 
-- **Register** a source you recognize (it becomes part of your known inventory), or **elevate** it for follow-up.
-- **Ignore / unignore** sources that are expected/noise.
-- Review the **unknown-domains** queue to classify AI destinations the catalog didn't recognize.
-- Explore **analytics** and the **topology** view for org-wide patterns.
-- Export to CSV.
+- **Registra** una fuente que reconozcas (pasa a formar parte de tu inventario conocido) o **elévala** para su seguimiento.
+- **Ignorar/designorar** fuentes esperadas/ruido.
+- Revisar la cola **dominios desconocidos** para clasificar los destinos de IA que el catálogo no reconoció.
+- Explore **análisis** y la vista **topología** para conocer patrones en toda la organización.
+- Exportar a CSV.
 
-## Syncing
+## Sincronización
 
-Run **Sync** per connector or **Sync All**; connectors also sync on a schedule (default every 30 minutes). Backfill progress and connector staleness are shown inline. Connector setup lives in **Admin → Integrations → Network**.
+Ejecute **Sync** por conector o **Sync All**; Los conectores también se sincronizan según un cronograma (predeterminado cada 30 minutos). El progreso del reabastecimiento y el estado obsoleto del conector se muestran en línea. La configuración del conector se encuentra en **Admin → Integraciones → Red**.
 
-## Related
+## Relacionado
 
-- [CASB & Network (SWG) integrations](/en/integrations/casb/overview) — connect the log sources.
-- [Endpoint Agent](/en/agent/overview) — for endpoints you can manage directly.
-- [AI Discovery & Inventory Overview](/en/discovery/overview)
+- [Integraciones CASB y red (SWG)](/integrations/casb/overview): conecte las fuentes de registro.
+- [Agente de endpoint](/agent/overview): para endpoints que puede administrar directamente.
+- [Descripción general del inventario y descubrimiento de IA](/discovery/overview)

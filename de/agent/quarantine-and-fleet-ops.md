@@ -40,10 +40,10 @@ Das Dashboard fasst die gesamte Flotte zusammen: Abdeckung, Online-/Veraltungsza
 ## Selbstaktualisierung und Manipulationsschutz
 
 - **Selbstaktualisierung** – der Agent aktualisiert sich selbst über einen `update`-Befehl plus ein signiertes Release-Manifest (Version + Prüfsumme + Signatur); Der neueste Build kann automatisch mit der Flotte synchronisiert werden.
-- **Anti-Manipulations-/Deinstallationsschlüssel** – eine [Richtlinie](/de/en/agent/policies-and-groups#tamper-protection--uninstall-key) kann einen Deinstallationsschlüssel erfordern, damit der Agent nicht stillschweigend entfernt werden kann. Die Validierung funktioniert auch außerhalb des Netzwerks (ein Offline-Salt/Hash wird zum Endpunkt übertragen), mit einem flottenweiten Schlüssel als Fallback; Fehlgeschlagene Deinstallationsversuche werden überwacht.
+- **Anti-Manipulations-/Deinstallationsschlüssel** – eine [Richtlinie](/de/agent/policies-and-groups#tamper-protection--uninstall-key) kann einen Deinstallationsschlüssel erfordern, damit der Agent nicht stillschweigend entfernt werden kann. Die Validierung funktioniert auch außerhalb des Netzwerks (ein Offline-Salt/Hash wird zum Endpunkt übertragen), mit einem flottenweiten Schlüssel als Fallback; Fehlgeschlagene Deinstallationsversuche werden überwacht.
 
 ## Verwandte
 
-- [Richtlinien & Gruppen](/de/en/agent/richtlinien-und-gruppen)
-- [Egress Enforcement](/de/en/agent/egress-enforcement)
-- [Threat Defense](/de/en/threat-defense/overview)
+- [Richtlinien & Gruppen](/de/agent/richtlinien-und-gruppen)
+- [Egress Enforcement](/de/agent/egress-enforcement)
+- [Threat Defense](/de/threat-defense/overview)

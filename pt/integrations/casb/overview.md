@@ -1,23 +1,24 @@
 ---
 sidebar_position: 1
-title: "CASB & Network (SWG) Overview"
-sidebar_label: "Overview"
+title: "Segurança de Rede e CASB (SWG)"
+sidebar_label: "Visão Geral CASB"
 description: "Discover shadow AI from your CASB / SWG / DNS logs — which corporate sources are calling LLM APIs, with no agent required"
 ---
 
 
 
+
 # CASB & Network (SWG) Integrations
 
-These connectors solve the **shadow-AI discovery** problem: finding every corporate device, server, or workload that is calling an LLM API — even ones where you can't install an SDK or the [endpoint agent](/pt/en/agent/overview) (a build server, a warehouse sorter, a contractor's laptop). SecureAI reads the logs your **CASB / Secure Web Gateway (SWG) / DNS** platform already collects and detects traffic to AI providers.
+These connectors solve the **shadow-AI discovery** problem: finding every corporate device, server, or workload that is calling an LLM API — even ones where you can't install an SDK or the [endpoint agent](/pt/agent/overview) (a build server, a warehouse sorter, a contractor's laptop). SecureAI reads the logs your **CASB / Secure Web Gateway (SWG) / DNS** platform already collects and detects traffic to AI providers.
 
-The result is a live inventory of **which source IPs and users are calling which AI providers**, surfaced in [Network Sources](/pt/en/discovery/network-sources).
+The result is a live inventory of **which source IPs and users are calling which AI providers**, surfaced in [Network Sources](/pt/discovery/network-sources).
 
 ## Supported connectors
 
 | Connector | Data source | Status |
 |-----------|-------------|--------|
-| [Cisco Umbrella](/pt/en/integrations/casb/cisco-umbrella) | DNS-layer Reporting API v2 | Available |
+| [Cisco Umbrella](/pt/integrations/casb/cisco-umbrella) | DNS-layer Reporting API v2 | Available |
 
 ## The setup loop
 
@@ -28,7 +29,7 @@ The result is a live inventory of **which source IPs and users are calling which
 
 ## The discovery window
 
-Network discovery reports activity over a rolling window — **30 days by default** (configurable via the `NETWORK_DISCOVERY_WINDOW_DAYS` environment variable). A few sub-views (top domains, top users, unknown domains) use a fixed 7-day window. See [Network Sources](/pt/en/discovery/network-sources) for how the inventory is presented and triaged.
+Network discovery reports activity over a rolling window — **30 days by default** (configurable via the `NETWORK_DISCOVERY_WINDOW_DAYS` environment variable). A few sub-views (top domains, top users, unknown domains) use a fixed 7-day window. See [Network Sources](/pt/discovery/network-sources) for how the inventory is presented and triaged.
 
 ## What gets detected
 
@@ -36,6 +37,6 @@ Each connector matches traffic against a curated catalog of known LLM/AI domains
 
 ## Related
 
-- [Network Sources](/pt/en/discovery/network-sources) — the discovered inventory and triage workflow.
-- [Endpoint Agent](/pt/en/agent/overview) — for endpoints where you *can* deploy an agent.
-- [AI Discovery & Inventory Overview](/pt/en/discovery/overview)
+- [Network Sources](/pt/discovery/network-sources) — the discovered inventory and triage workflow.
+- [Endpoint Agent](/pt/agent/overview) — for endpoints where you *can* deploy an agent.
+- [AI Discovery & Inventory Overview](/pt/discovery/overview)

@@ -13,10 +13,10 @@ SecureAI **OS エージェント** は、Windows ラップトップ、Linux サ�
 ## エージェントが行うこと
 
 - **デバイス上の AI の使用状況を検出** — インストールされている AI SDK/プロセス、MCP サーバー、および AI プロバイダーへのシャドウ ネットワーク呼び出し。
-- **ポリシーの適用** — AI プロバイダー/モデル/アプリ/MCP を監視またはブロックし、AI の動作監視を適用し、出力制御を適用します ([出力の強制](/ja/en/agent/egress-enforcement) を参照)。
+- **ポリシーの適用** — AI プロバイダー/モデル/アプリ/MCP を監視またはブロックし、AI の動作監視を適用し、出力制御を適用します ([出力の強制](/ja/agent/egress-enforcement) を参照)。
 - **データを保護** — エンドポイント DLP/PII 検査。
-- **脅威への対応** — 悪意のあるファイルを隔離し、侵害されたエンドポイントを隔離できます ([隔離とフリート運用](/ja/en/agent/quarantine-and-fleet-ops) を参照)。
-- **オプションで開発者 AI トラフィックを SecureAI のゲートウェイ経由でルーティングします** ([透過プロキシ](/ja/en/agent/transparent-proxy) を参照)。
+- **脅威への対応** — 悪意のあるファイルを隔離し、侵害されたエンドポイントを隔離できます ([隔離とフリート運用](/ja/agent/quarantine-and-fleet-ops) を参照)。
+- **オプションで開発者 AI トラフィックを SecureAI のゲートウェイ経由でルーティングします** ([透過プロキシ](/ja/agent/transparent-proxy) を参照)。
 
 ## デバイスの健康状態と姿勢
 
@@ -32,16 +32,16 @@ SecureAI **OS エージェント** は、Windows ラップトップ、Linux サ�
 
 ## 始める方法
 
-1. エンドポイントに **[エージェントをインストール](/ja/en/agent/installation)** (Windows では署名付き MSI、Linux/macOS ではスクリプト)。
-2. **[登録およびインストーラー パッケージ](/ja/en/agent/enrollment-and-packages)** - デバイスがどのように参加して構成を取得するかを理解します。
-3. **[ポリシーとグループ](/ja/en/agent/policies-and-groups)** を設定して、各デバイスが適用する内容を決定します。
-4. **[出力強制](/ja/en/agent/egress-enforcement)** および **[検疫とフリート運用](/ja/en/agent/quarantine-and-fleet-ops)** を応答用に調整します。
+1. エンドポイントに **[エージェントをインストール](/ja/agent/installation)** (Windows では署名付き MSI、Linux/macOS ではスクリプト)。
+2. **[登録およびインストーラー パッケージ](/ja/agent/enrollment-and-packages)** - デバイスがどのように参加して構成を取得するかを理解します。
+3. **[ポリシーとグループ](/ja/agent/policies-and-groups)** を設定して、各デバイスが適用する内容を決定します。
+4. **[出力強制](/ja/agent/egress-enforcement)** および **[検疫とフリート運用](/ja/agent/quarantine-and-fleet-ops)** を応答用に調整します。
 
 ## 役割
 
-一般的な管理パネル アクセスにより、フリートを表示および構成できます。 **破壊的なアクション** - 隔離、プロセス/MCP/ネットワークの強制終了、隔離、および取り消し - には、昇格されたシステム **管理者** ロールが必要です。 [検疫とフリート運用](/ja/en/agent/quarantine-and-fleet-ops) を参照してください。
+一般的な管理パネル アクセスにより、フリートを表示および構成できます。 **破壊的なアクション** - 隔離、プロセス/MCP/ネットワークの強制終了、隔離、および取り消し - には、昇格されたシステム **管理者** ロールが必要です。 [検疫とフリート運用](/ja/agent/quarantine-and-fleet-ops) を参照してください。
 
 ## 関連
 
-- [AI Discovery & Inventory](/ja/en/discovery/overview) — エージェントは 3 つの検出シグナルの 1 つです。
-- [脅威防御](/ja/ja/threat-defense/overview)
+- [AI Discovery & Inventory](/ja/discovery/overview) — エージェントは 3 つの検出シグナルの 1 つです。
+- [脅威防御](/ja/threat-defense/overview)

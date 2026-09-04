@@ -1,44 +1,42 @@
 ---
 id: create
-title: "Create Group"
-sidebar_label: "Create Group"
-description: "Create a new user group"
+title: "创建群组"
+sidebar_label: "创建群组"
+description: "创建新用户组"
 openapi: "POST /groups"
 ---
+# 创建组
 
+创建新的用户组用于组织用户和管理访问权限。
 
-# Create Group
-
-Create a new user group for organizing users and managing access permissions.
-
-## Endpoint
+## 端点
 
 ```
 POST /groups
 ```
 
-## Description
+## 说明
 
-This endpoint allows administrators to create new user groups. Groups are used to organize users, manage permissions, and control access to different parts of the system. You can specify the group name, description, and metadata during creation.
+该端点允许管理员创建新的用户组。组用于组织用户、管理权限以及控制对系统不同部分的访问。您可以在创建过程中指定组名称、描述和元数据。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## 请求正文
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | Yes | Group name |
-| `description` | string | Yes | Group description |
-| `users` | array | No | Array of user IDs to add to the group |
-| `status` | string | No | Group status (defaults to "Active") |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `name` |字符串|是的 |团体名称|
+| `description` |字符串|是的 |集团简介|
+| `users` |数组|没有 |要添加到组中的用户 ID 数组 |
+| `status` |字符串|没有 |组状态（默认为“活动”）|
 
-## Example Request
+## 请求示例
 
 ```json
 {
@@ -49,9 +47,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `201 Created`
+**状态代码**：`201 Created`
 
 ```json
 {
@@ -80,25 +78,25 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `group` | object | Created group object |
-| `group.id` | string | Unique group identifier |
-| `group.name` | string | Group name |
-| `group.description` | string | Group description |
-| `group.status` | string | Group status |
-| `group.userCount` | integer | Number of users in the group |
-| `group.users` | array | Array of user objects in the group |
-| `group.users[].id` | string | User ID |
-| `group.users[].name` | string | User name |
-| `group.users[].email` | string | User email |
-| `group.createdAt` | string | Creation timestamp |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `message` |字符串|成功留言|
+| `group` |对象|创建组对象 |
+| `group.id` |字符串|唯一的组标识符 |
+| `group.name` |字符串|团体名称|
+| `group.description` |字符串|集团简介|
+| `group.status` |字符串|集团状态 |
+| `group.userCount` |整数 |群组中的用户数量|
+| `group.users` |数组|组中的用户对象数组 |
+| `group.users[].id` |字符串|用户名 |
+| `group.users[].name` |字符串|用户名 |
+| `group.users[].email` |字符串|用户邮箱 |
+| `group.createdAt` |字符串|创建时间戳 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -128,7 +126,7 @@ const result = await createGroup(groupData);
 console.log('Created group:', result.group.id);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -155,7 +153,7 @@ result = create_group(group_data)
 print("Created group:", result["group"]["id"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
@@ -169,9 +167,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
   }'
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -187,7 +185,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -199,7 +197,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -211,7 +209,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 409 Conflict
+### 409 冲突
 
 ```json
 {
@@ -223,7 +221,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -236,26 +234,26 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-## Use Cases
+## 用例
 
-- **User Organization**: Create groups to organize users by department or function
-- **Access Control**: Establish groups for managing permissions and access
-- **Team Management**: Create groups for different teams or projects
-- **Reporting**: Organize users for reporting and analytics
-- **Integration**: Create groups for third-party system integration
+- **用户组织**：创建组以按部门或职能组织用户
+- **访问控制**：建立用于管理权限和访问的组
+- **团队管理**：为不同的团队或项目创建组
+- **报告**：组织用户进行报告和分析
+- **集成**：创建第三方系统集成组
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **默认**：每分钟 50 个请求
+- **每日**：每天 5,000 个请求
+- **每月**：每月 150,000 个请求
 
-## Notes
+## 注释
 
-- This endpoint is only accessible by administrators
-- Required Fields: Both name and description are required
-- User Assignment: Can assign users to the group during creation
-- Status: Defaults to "Active" if not specified
-- Validation: User IDs are validated before assignment
-- Flat Response: Response is not nested under data object
-- The group is immediately available for use after creation 
+- 该端点只能由管理员访问
+- 必填字段：名称和描述均为必填项
+- 用户分配：可以在创建过程中将用户分配到组中
+- 状态：如果未指定，则默认为“活动”
+- 验证：在分配之前验证用户 ID
+- 扁平响应：响应未嵌套在数据对象下
+- 群组创建后可立即使用

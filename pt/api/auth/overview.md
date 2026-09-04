@@ -1,99 +1,98 @@
 ---
 sidebar_position: 1
-title: "Authentication Overview"
+title: "Autenticação da API"
+sidebar_label: "Autenticação"
 ---
 
+# Autenticação API
 
+SecureAI usa autenticação de chave API para todos os acessos externos à API. Chaves são tokens de portador criados e configurados por administradores, com controles por chave sobre modelos, políticas, limites, cobrança e segurança.
 
-# API Authentication
-
-SecureAI uses API key authentication for all external API access. Keys are Bearer tokens created and configured by administrators, with per-key controls over models, policies, limits, billing, and security.
-
-## Authentication Header
+## Cabeçalho de autenticação
 
 ```http
 Authorization: Bearer sk-your-api-key-here
 ```
 
-**API Key Format:**
-- Starts with an `sk-` prefix (e.g. `sk-8cd5253f...`).
-- The prefix is followed by a 64-character hexadecimal secret.
-- Only a SHA-256 hash of the key is stored server-side — the full key is shown **once**, at creation. If it's lost, rotate/recreate the key.
+**Formato de chave de API:**
+- Começa com um prefixo `sk-` (por exemplo, `sk-8cd5253f...`).
+- O prefixo é seguido por um segredo hexadecimal de 64 caracteres.
+- Apenas um hash SHA-256 da chave é armazenado no lado do servidor — a chave completa é mostrada **uma vez**, na criação. Se estiver perdido, gire/recrie a chave.
 
-All API calls require HTTPS.
+Todas as chamadas de API requerem HTTPS.
 
-## Creating & configuring API keys
+## Criando e configurando chaves de API
 
-Administrators create keys in **Admin → API Keys** (API base `/api/admin/api-keys`, admin-only). The full key is returned once on creation. Each key carries the following configuration:
+Os administradores criam chaves em **Admin → Chaves de API** (API base `/api/admin/api-keys`, somente administrador). A chave completa é retornada uma vez na criação. Cada chave carrega a seguinte configuração:
 
-### Ownership & billing
+### Propriedade e cobrança
 
-| Setting | Description |
-|---------|-------------|
-| `name` | Human-readable label. |
-| `userId` | The user account this key belongs to / bills against. |
-| `billingMode` | `user-completions` (deduct from the user's completion allowance) or `usage-by-model` (deduct a dollar budget by model cost). See [Billing Modes](/pt/en/api/billing-modes). |
+| Configuração | Descrição |
+|--------|-------------|
+| `name` | Etiqueta legível por humanos. |
+| `userId` | A conta de usuário à qual esta chave pertence/fatura. |
+| `billingMode` | `user-completions` (deduzir do subsídio de conclusão do usuário) ou `usage-by-model` (deduzir um orçamento em dólares pelo custo do modelo). Consulte [Modos de cobrança](/pt/api/billing-modes). |
 
-Callers can bill an individual request to a **different** user with the `user_id` body parameter (admin-gated).
+Os chamadores podem cobrar uma solicitação individual para um usuário **diferente** com o parâmetro corporal `user_id` (controlado pelo administrador).
 
-### Limits
+### Limites
 
-| Setting | Description |
-|---------|-------------|
-| `dailyLimit` | Max requests per day for this key. |
-| `monthlyLimit` | Max requests per month for this key. |
-| `rateLimit.requestsPerMinute` | Per-minute ceiling (up to 1000). |
-| `rateLimit.requestsPerHour` | Per-hour ceiling (up to 10000). |
-| `expiresAt` | Optional expiry; omit for a non-expiring key. |
+| Configuração | Descrição |
+|--------|-------------|
+| `dailyLimit` | Máximo de solicitações por dia para esta chave. |
+| `monthlyLimit` | Máximo de solicitações por mês para esta chave. |
+| `rateLimit.requestsPerMinute` | Teto por minuto (até 1000). |
+| `rateLimit.requestsPerHour` | Teto por hora (até 10.000). |
+| `expiresAt` | Expiração opcional; omitir para uma chave que não expira. |
 
-### Allowlists
+### Listas de permissões
 
-| Setting | Description |
-|---------|-------------|
-| `allowedModels[]` | If set, the key may use **only** these models. Empty = the license default catalog. |
-| `allowedIndexes[]` | Restricts which knowledge bases the key can query. |
-| `allowedSMLTPPolicies[]` | SMLTP policies the key may request (default `["public", "internal"]`). Validated against the policy resolver, so tenant custom policies are allowed. |
+| Configuração | Descrição |
+|--------|-------------|
+| `allowedModels[]` | Se definida, a chave pode usar **apenas** estes modelos. Vazio = o catálogo padrão da licença. |
+| `allowedIndexes[]` | Restringe quais bases de conhecimento a chave pode consultar. |
+| `allowedSMLTPPolicies[]` | Políticas SMLTP que a chave pode solicitar (padrão `["public", "internal"]`). Validado no resolvedor de políticas, portanto, políticas personalizadas de locatário são permitidas. |
 
-### Prompt Shield
+### Escudo de alerta
 
-| Setting | Description |
-|---------|-------------|
-| `enablePromptShield` | Turn Prompt Shield on for this key. |
-| `promptShieldSensitivity` | `strict`, `balanced`, or `permissive`. |
-| `promptShieldPolicyId` | Bind a specific Prompt Shield policy to the key. |
-| `allowedPromptShieldPolicies[]` | Policies the caller may select per call via `prompt_shield.policy`. |
+| Configuração | Descrição |
+|--------|-------------|
+| `enablePromptShield` | Ative o Prompt Shield para esta chave. |
+| `promptShieldSensitivity` | `strict`, `balanced` ou `permissive`. |
+| `promptShieldPolicyId` | Vincule uma política específica do Prompt Shield à chave. |
+| `allowedPromptShieldPolicies[]` | Políticas que o chamador pode selecionar por chamada via `prompt_shield.policy`. |
 
-See [Prompt Shield API](/pt/en/api/threat-defense/prompt-shield).
+Consulte [API Prompt Shield](/pt/api/threat-defense/prompt-shield).
 
-### Redundancy defaults
+### Padrões de redundância
 
-`failoverDefaults` attaches a default model [failover chain](/pt/en/api/redundancy) to the key: `models[]` (up to 3), `timeout_ms` (1000–300000), `first_token_timeout_ms` (500–60000), and `on[]` triggers. Callers then get failover without sending a chain on every request.
+`failoverDefaults` anexa um modelo padrão [cadeia de failover](/pt/api/redundancy) à chave: `models[]` (até 3), `timeout_ms` (1000–300000), `first_token_timeout_ms` (500–60000) e `on[]` gatilhos. Os chamadores obtêm failover sem enviar uma cadeia em cada solicitação.
 
-## Idempotency
+## Idempotência
 
-Completion `POST`s accept an `Idempotency-Key` header. Retrying with the same key returns the original result instead of billing a second time — use it to make network retries safe. See [Chat Completion](/pt/en/api/chat/completions).
+Conclusão `POST` aceita um cabeçalho `Idempotency-Key`. Tentar novamente com a mesma chave retorna o resultado original em vez de cobrar uma segunda vez – use-o para tornar as tentativas de rede seguras. Consulte [Conclusão do bate-papo](/pt/api/chat/completions).
 
-## Rate limiting
+## Limitação de taxa
 
-Default ceilings (configurable per key):
+Limites padrão (configuráveis por chave):
 
-- **Per minute**: 60 requests
-- **Per hour**: 1000 requests
-- **Daily**: 100 requests
-- **Monthly**: 10,000 requests
+- **Por minuto**: 60 solicitações
+- **Por hora**: 1.000 solicitações
+- **Diariamente**: 100 solicitações
+- **Mensal**: 10.000 solicitações
 
-A key holder can read its own live quota and limits via [`GET /usage`](/api/usage).
+Um detentor de chave pode ler suas próprias cotas e limites ativos via [`GET /usage`](/pt/api/usage).
 
-## Security features
+## Recursos de segurança
 
-- **HTTPS only** — all API calls require TLS.
-- **Hashed at rest** — only a SHA-256 hash of each key is stored.
-- **Usage tracking & audit logging** — every call and authentication event is logged.
-- **SMLTP compliance** — security policies are enforced on every request.
+- **Somente HTTPS** — todas as chamadas de API exigem TLS.
+- **Hashed em repouso** — apenas um hash SHA-256 de cada chave é armazenado.
+- **Rastreamento de uso e registro de auditoria** — todos os eventos de chamada e autenticação são registrados.
+- **SMLTP conformidade** — as políticas de segurança são aplicadas em cada solicitação.
 
-## Error Responses
+## Respostas de erro
 
-### Authentication error
+### Erro de autenticação
 
 ```json
 {
@@ -104,7 +103,7 @@ A key holder can read its own live quota and limits via [`GET /usage`](/api/usag
 }
 ```
 
-### Rate limit error
+### Erro de limite de taxa
 
 ```json
 {
@@ -115,18 +114,18 @@ A key holder can read its own live quota and limits via [`GET /usage`](/api/usag
 }
 ```
 
-## Common Error Codes
+## Códigos de erro comuns
 
-| Error | Description |
-|-------|-------------|
-| `Invalid API key` | API key is invalid, expired, or revoked. |
-| `Rate limit exceeded: too many requests per minute` | Per-minute rate limit exceeded. |
-| `Rate limit exceeded: too many requests per hour` | Per-hour rate limit exceeded. |
-| `Access denied` | Model, index, or policy not allowed for this key. |
+| Erro | Descrição |
+|-------|------------|
+| `Invalid API key` | A chave de API é inválida, expirou ou foi revogada. |
+| `Rate limit exceeded: too many requests per minute` | Limite de taxa por minuto excedido. |
+| `Rate limit exceeded: too many requests per hour` | Limite de taxa por hora excedido. |
+| `Access denied` | Modelo, índice ou política não permitido para esta chave. |
 
-## Next Steps
+## Próximas etapas
 
-- [API Reference](/pt/en/api) — Explore all available external endpoints.
-- [Chat Completions](/pt/en/api/chat/completions) — Start integrating completions.
-- [OpenAI-Compatible Endpoint](/pt/en/api/chat/openai-compatible) — Reuse an existing OpenAI SDK.
-- [Usage](/pt/en/api/usage) — Check quota and limits.
+- [Referência de API](/pt/api) — Explore todos os endpoints externos disponíveis.
+- [Conclusões de bate-papo](/pt/api/chat/completions) — Comece a integrar as conclusões.
+- [Endpoint compatível com OpenAI](/pt/api/chat/openai-compatível) — Reutilize um SDK OpenAI existente.
+- [Uso](/pt/api/usage) — Verifique cotas e limites.

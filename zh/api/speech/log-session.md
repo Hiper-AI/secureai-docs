@@ -1,47 +1,45 @@
 ---
 sidebar_position: 3
-title: "Log S2S Session Duration"
+title: "记录 S2S 会话持续时间"
 openapi: "POST /speech/s2s/log-session"
 ---
+# 记录 S2S 会话持续时间
 
+记录已完成的语音到语音会话的持续时间，并从用户的 S2S 时间配额中扣除该时间。
 
-# Log S2S Session Duration
-
-Log the duration of a completed Speech-to-Speech session and deduct the time from the user's S2S time quota.
-
-## Endpoint
+## 端点
 
 ```
 POST /speech/s2s/log-session
 ```
 
-## Description
+## 说明
 
-Log the duration of a completed Speech-to-Speech session and deduct the time from the user's S2S time quota. This should be called after a session ends to track usage accurately.
+记录已完成的语音到语音会话的持续时间，并从用户的 S2S 时间配额中扣除该时间。应在会话结束后调用此函数以准确跟踪使用情况。
 
-### Usage Tracking
+### 使用情况跟踪
 
-- Duration is specified in milliseconds
-- Automatically converted to minutes and deducted from user's quota
-- Time is tracked per-user based on license tier
-- Activity logs are created for audit purposes
+- 持续时间以毫秒为单位指定
+- 自动转换为分钟并从用户配额中扣除
+- 根据许可证级别跟踪每个用户的时间
+- 出于审计目的而创建活动日志
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## 请求正文
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `durationMs` | integer | Yes | Session duration in milliseconds (minimum: 0) |
-| `user_id` | string | No | User ID to bill this session to (defaults to API key owner) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `durationMs` |整数 |是的 |会话持续时间（以毫秒为单位）（最小值：0）|
+| `user_id` |字符串|没有 |将此会话记入帐单的用户 ID（默认为 API 密钥所有者）|
 
-## Request Example
+## 请求示例
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/speech/s2s/log-session" \
@@ -78,7 +76,7 @@ const data = await response.json();
 console.log('Session logged:', data.message);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -105,9 +103,9 @@ result = response.json()
 print('Session logged:', result['message'])
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -117,17 +115,17 @@ print('Session logged:', result['message'])
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `message` | string | Success message |
-| `request_id` | string | Request ID for tracking |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |对于成功的请求始终如此 |
+| `message` |字符串|成功留言|
+| `request_id` |字符串|请求 ID 进行跟踪 |
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -138,7 +136,7 @@ print('Session logged:', result['message'])
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -148,7 +146,7 @@ print('Session logged:', result['message'])
 }
 ```
 
-### 500 Internal Server Error
+### 500 内部服务器错误
 
 ```json
 {
@@ -159,12 +157,11 @@ print('Session logged:', result['message'])
 }
 ```
 
-## Notes
+## 注释
 
-- Call this endpoint after each S2S session ends to accurately track usage
-- Duration should be calculated from when the WebRTC connection is established until it's closed
-- Time is automatically converted from milliseconds to minutes and deducted from the user's quota
-- The `user_id` parameter allows billing to a different user account
-- Activity logs are automatically created for audit purposes
-- Ensure you have sufficient remaining time before starting a session (check with `/speech/s2s/status`)
-
+- 每个S2S会话结束后调用此端点以准确跟踪使用情况
+- 持续时间应从 WebRTC 连接建立到关闭计算
+- 时间自动从毫秒转换为分钟并从用户配额中扣除
+- `user_id` 参数允许向不同的用户帐户计费
+- 出于审计目的自动创建活动日志
+- 确保在开始会话之前有足够的剩余时间（检查`/speech/s2s/status`）

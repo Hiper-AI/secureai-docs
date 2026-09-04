@@ -7,7 +7,7 @@ openapi: "POST /v1/chat/completions"
 ---
 # OpenAI 互換エンドポイント
 
-SecureAI は OpenAI 互換サーフェスを公開しているため、**ベース URL と API キーのみを変更するだけで**、コードを変更することなく、任意の OpenAI SDK と統合できます。完全な SecureAI セキュリティ スタック (API キー認証、モデル/インデックス ホワイトリスト、SMLTP ポリシーの適用 + 資格、プロンプト シールド、PII/DLP、ポイント請求、[モデル冗長エンジン](/ja/en/api/redundancy)) がその下で実行されます。
+SecureAI は OpenAI 互換サーフェスを公開しているため、**ベース URL と API キーのみを変更するだけで**、コードを変更することなく、任意の OpenAI SDK と統合できます。完全な SecureAI セキュリティ スタック (API キー認証、モデル/インデックス ホワイトリスト、SMLTP ポリシーの適用 + 資格、プロンプト シールド、PII/DLP、ポイント請求、[モデル冗長エンジン](/ja/api/redundancy)) がその下で実行されます。
 
 ## エンドポイント
 
@@ -25,7 +25,7 @@ https://{customer.name}.hiperai.ai/api/external/v1
 <Info>
 **知識ゼロのみ**
 
-このサーフェスは RAG/ナレッジ ベースをサポートしません**。リクエストは `Zero-Knowledge` に固定されます。ナレッジベースの取得が必要な場合は、従来の [Chat Completion](/ja/en/api/chat/completions) エンドポイントを使用してください。
+このサーフェスは RAG/ナレッジ ベースをサポートしません**。リクエストは `Zero-Knowledge` に固定されます。ナレッジベースの取得が必要な場合は、従来の [Chat Completion](/ja/api/chat/completions) エンドポイントを使用してください。
 </Info>
 
 ## 認証
@@ -95,7 +95,7 @@ console.log(resp.choices[0].message.content);
 |------|-----------|
 | `smltp_policy` |この通話の SMLTP セキュリティ ポリシー。 |
 | `prompt_shield` | `{ enabled?, policy? }` — 呼び出しごとのプロンプト シールド オーバーライド。 |
-| `models` / `fallback_models` |モデル [冗長性](/ja/ja/api/redundancy) チェーン。 |
+| `models` / `fallback_models` |モデル [冗長性](/ja/api/redundancy) チェーン。 |
 | `redundancy` | `{ timeout_ms, first_token_timeout_ms, on[] }`。 |
 | `user_id` |別のユーザーに請求します (管理者ゲート)。 |
 
@@ -126,7 +126,7 @@ console.log(resp.choices[0].message.content);
 }
 ```
 
-`secureai.smltp_bundle_id` (存在する場合) は、署名済みのコンプライアンス [領収書](/ja/en/api/receipts) と交換できます。
+`secureai.smltp_bundle_id` (存在する場合) は、署名済みのコンプライアンス [領収書](/ja/api/receipts) と交換できます。
 
 ### ストリーミング
 
@@ -144,6 +144,6 @@ console.log(resp.choices[0].message.content);
 
 ## 関連
 
-- [チャット補完](/ja/en/api/chat/completions) — クラシック サーフェス (RAG を追加)。
-- [冗長性とフェイルオーバー](/ja/ja/api/redundancy)
-- [プロンプト シールド API](/ja/ja/api/threat-defense/prompt-shield)
+- [チャット補完](/ja/api/chat/completions) — クラシック サーフェス (RAG を追加)。
+- [冗長性とフェイルオーバー](/ja/api/redundancy)
+- [プロンプト シールド API](/ja/api/threat-defense/prompt-shield)

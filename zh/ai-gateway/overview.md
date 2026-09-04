@@ -1,38 +1,36 @@
 ---
 sidebar_position: 1
-title: "AI Gateway Overview"
+title: "AI网关概述"
+---
+# 人工智能网关
+
+**AI 网关** 是用于管理、保护、路由和检查所有组织范围内的 AI 模型流量的集中控制平面。
+
 ---
 
+## 核心能力
 
-# AI Gateway
+### 1. 安全策略
+定义组织范围内的执行规则：
+- **模型允许列表**：限制员工和应用程序可以与之交互的模型和提供商。
+- **数据驻留地理围栏**：确保提示和响应保留在指定的管辖范围内。
+- **执行模式**：在**监控模式**（无阻止地记录和证明）或**执行模式**（故障关闭、使用加密收据阻止不合规流量）下运行。
 
-The **AI Gateway** is the centralized control plane for governing, securing, routing, and inspecting all organization-wide AI model traffic.
+### 2. 仪表板和可观察性
+监控整个企业的实时指标：
+- **总安全交互**和活动的 SMLTP 捆绑包。
+- **编辑和阻止率**：跟踪 DLP/PII 引擎拦截的敏感数据。
+- **协议状态**：验证实时网关运行状况和密钥轮换状态。
 
----
+### 3. 密钥管理
+管理 Ed25519 签名密钥和 AES-256 加密密钥：
+- **零停机轮换**：定期轮换签名密钥，同时保留对使用先前密钥签名的收据进行离线验证。
+- **配置**：转到**管理员？人工智能网关？钥匙**。
 
-## Core Capabilities
+### 4. 透明度门户和审计
+使用加密证明验证交互完整性：
+- 通过 undle_id 搜索任何交互，以检查其 L1 哈希链、L2 Merkle 树和 L3 Sigstore Rekor 透明度锚点。
+- 为第三方合规审核员生成可共享的公共验证链接。
 
-### 1. Security Policies
-Define organization-wide enforcement rules:
-- **Model Allowlists**: Restrict which models and providers employees and applications can interact with.
-- **Data Residency Geofencing**: Ensure prompts and responses remain within designated jurisdictions.
-- **Enforcement Modes**: Run in **Monitor Mode** (log and attest without blocking) or **Enforce Mode** (fail-closed, blocking non-compliant traffic with cryptographic receipts).
-
-### 2. Dashboard & Observability
-Monitor real-time metrics across your enterprise:
-- **Total Secured Interactions** and active SMLTP bundles.
-- **Redaction & Blocking Rates**: Track sensitive data intercepted by DLP/PII engines.
-- **Protocol Status**: Verify live gateway health and key rotation status.
-
-### 3. Cryptographic Key Management
-Manage Ed25519 signing keys and AES-256 encryption keys:
-- **Zero-Downtime Rotation**: Rotate signing keys periodically while preserving offline verification for receipts signed under previous keys.
-- **Config**: Go to **Admin ? AI Gateway ? Keys**.
-
-### 4. Transparency Portal & Audit
-Validate interaction integrity using cryptographic proofs:
-- Search any interaction by undle_id to inspect its L1 hash chain, L2 Merkle tree, and L3 Sigstore Rekor transparency anchor.
-- Generate shareable public verification links for third-party compliance auditors.
-
-### 5. Extension Management
-Manage and enforce security policies across the SecureAI browser extension fleet to prevent shadow AI usage on client browsers.
+### 5. 扩展管理
+跨 SecureAI 浏览器扩展程序群管理和实施安全策略，以防止客户端浏览器上使用影子 AI。

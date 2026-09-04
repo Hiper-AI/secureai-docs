@@ -1,112 +1,105 @@
 ---
 sidebar_position: 4
-title: "Basic Auth"
+title: "Autenticación Básica (Usuario y Contraseña)"
+sidebar_label: "Autenticación Básica"
 ---
 
+# Autenticación básica
 
+La autenticación básica proporciona un método simple de autenticación de nombre de usuario y contraseña para SecureAI. Los usuarios se autentican en nuestra base de datos utilizando sus credenciales, con soporte de autenticación multifactor opcional.
 
-# Basic Authentication
+## ¿Qué es la autenticación básica?
 
-Basic authentication provides a simple username and password authentication method for SecureAI. Users authenticate against our database using their credentials, with optional multi-factor authentication support.
+**Autenticación básica** es un método de autenticación simple que utiliza credenciales de nombre de usuario y contraseña para autenticar a los usuarios en nuestra base de datos. Es el método de autenticación más sencillo disponible en SecureAI.
 
-## What is Basic Authentication?
+## Características clave
 
-**Basic authentication** is a simple authentication method that uses username and password credentials to authenticate users against our database. It's the most straightforward authentication method available in SecureAI.
+### **Inicio de sesión sencillo**
+- **Nombre de usuario y contraseña**: los usuarios proporcionan sus credenciales para iniciar sesión
+- **Autenticación de base de datos**: las credenciales se verifican con nuestra base de datos
+- **Almacenamiento seguro**: las contraseñas se almacenan y codifican de forma segura
 
-## Key Features
+### **Autenticación multifactor (MFA)**
+- **Google Authenticator**: los usuarios pueden inscribir su aplicación Google Authenticator
+- **Microsoft Authenticator**: compatibilidad con la aplicación Microsoft Authenticator
+- **Configuración de código QR**: proceso de inscripción sencillo con códigos QR
+- **Códigos de respaldo**: códigos de recuperación para acceder a la cuenta
 
-### **Simple Login**
-- **Username and Password**: Users provide their credentials to log in
-- **Database Authentication**: Credentials are verified against our database
-- **Secure Storage**: Passwords are securely hashed and stored
+### **Configuración OTP de correo electrónico**
+- **OTP de correo electrónico predeterminada**: la OTP de correo electrónico está habilitada de forma predeterminada como segundo factor
+- **Desactivación por usuario**: los administradores pueden desactivar la OTP de correo electrónico para usuarios específicos
+- **Alternativa MFA**: los usuarios pueden cambiar de OTP de correo electrónico a aplicaciones de autenticación
 
-### **Multi-Factor Authentication (MFA)**
-- **Google Authenticator**: Users can enroll their Google Authenticator app
-- **Microsoft Authenticator**: Support for Microsoft Authenticator app
-- **QR Code Setup**: Easy enrollment process with QR codes
-- **Backup Codes**: Recovery codes for account access
+## Cómo funciona
 
-### **Email OTP Configuration**
-- **Default Email OTP**: Email OTP is enabled by default as second factor
-- **Per-User Disable**: Admins can disable email OTP for specific users
-- **MFA Alternative**: Users can switch from email OTP to authenticator apps
+### **Flujo de autenticación**
+1. **Inicio de sesión de usuario**: El usuario ingresa nombre de usuario y contraseña
+2. **Verificación de credenciales**: el sistema verifica las credenciales con la base de datos
+3. **Segundo factor**: OTP enviada por correo electrónico o se requiere código de aplicación MFA
+4. **Acceso concedido**: el usuario obtiene acceso a la plataforma SecureAI
 
-## How It Works
+### **Comportamiento del segundo factor**
+- **Antes de la configuración de MFA**: la OTP de correo electrónico siempre se requiere como segundo factor
+- **Después de la configuración de MFA**: el usuario puede elegir entre OTP por correo electrónico o código MFA
+- **Opciones de inicio de sesión**: el usuario selecciona el método de segundo factor preferido durante el inicio de sesión
+- **Reserva**: la OTP de correo electrónico sigue estando disponible como opción de copia de seguridad
 
-### **Authentication Flow**
-1. **User Login**: User enters username and password
-2. **Credential Verification**: System checks credentials against database
-3. **Second Factor**: Email OTP sent or MFA app code required
-4. **Access Granted**: User gains access to SecureAI platform
+## Experiencia de usuario
 
-### **Second Factor Behavior**
-- **Before MFA Setup**: Email OTP is always required as second factor
-- **After MFA Setup**: User can choose between email OTP or MFA code
-- **Login Options**: User selects preferred second factor method during login
-- **Fallback**: Email OTP remains available as backup option
+### **Inicio de sesión por primera vez (antes de MFA)**
+- Ingrese nombre de usuario y contraseña
+- Recibir OTP por correo electrónico como segundo factor
+- Acceda a la plataforma SecureAI
 
-## User Experience
+### **Proceso de configuración de MFA**
+1. **Navegue al Chat**: Vaya a "/chat-ai/new-chat" o a cualquier página de chat
+2. **Abrir menú de perfil**: haga clic en la imagen de perfil en la esquina superior derecha
+3. **Configuración de acceso**: seleccione "Configuración" en el menú desplegable
+4. **Vaya a Seguridad**: haga clic en la pestaña "Seguridad"
+5. **Habilitar MFA**: haga clic en "Habilitar autenticación multifactor"
+6. **Escanear código QR**: use Google o Microsoft Authenticator para escanear el código QR
+7. **Ingrese el código**: ingrese el código de 6 dígitos de su aplicación de autenticación
+8. **Guardar códigos de respaldo**: almacene los códigos de respaldo generados de forma segura
 
-### **First Time Login (Before MFA)**
-- Enter username and password
-- Receive email OTP as second factor
-- Access SecureAI platform
+### **Iniciar sesión después de la configuración de MFA**
+- Ingrese nombre de usuario y contraseña
+- Elija el método del segundo factor:
+  - **OTP por correo electrónico**: reciba el código por correo electrónico
+  - **Código MFA**: ingrese el código de la aplicación de autenticación
+- Acceda a la plataforma SecureAI
 
-### **MFA Setup Process**
-1. **Navigate to Chat**: Go to "/chat-ai/new-chat" or any chat page
-2. **Open Profile Menu**: Click profile image in top-right corner
-3. **Access Settings**: Select "Settings" from dropdown
-4. **Go to Security**: Click on "Security" tab
-5. **Enable MFA**: Click "Enable Multi-Factor Authentication"
-6. **Scan QR Code**: Use Google or Microsoft Authenticator to scan QR code
-7. **Enter Code**: Input the 6-digit code from your authenticator app
-8. **Save Backup Codes**: Store the generated backup codes securely
+### **Uso del código de respaldo**
+- Utilice códigos de respaldo si la aplicación de autenticación no está disponible
+- Cada código de respaldo solo se puede usar una vez
+- Generar nuevos códigos de respaldo si es necesario
 
-### **Login After MFA Setup**
-- Enter username and password
-- Choose second factor method:
-  - **Email OTP**: Receive code via email
-  - **MFA Code**: Enter code from authenticator app
-- Access SecureAI platform
+## Funciones de seguridad
 
-### **Backup Code Usage**
-- Use backup codes if authenticator app is unavailable
-- Each backup code can only be used once
-- Generate new backup codes if needed
+### **Seguridad de contraseña**
+- **Hashing fuerte**: las contraseñas se codifican de forma segura
+- **Almacenamiento de base de datos**: Credenciales almacenadas en nuestra base de datos
+- **Transmisión segura**: todos los datos de autenticación cifrados
 
+### **Seguridad MFA**
+- **Códigos basados en tiempo**: las aplicaciones de autenticación generan códigos basados en tiempo
+- **Inscripción segura**: configuración segura basada en código QR
+- **Recuperación de copia de seguridad**: códigos de copia de seguridad para recuperación de cuenta
 
+### **Gestión de sesiones**
+- **Sesiones seguras**: gestión de sesiones cifradas
+- **Protección de tiempo de espera**: tiempo de espera automático de la sesión
+- **Control de sesiones simultáneas**: gestiona múltiples sesiones activas
 
-## Security Features
+## Empezando
 
-### **Password Security**
-- **Strong Hashing**: Passwords are securely hashed
-- **Database Storage**: Credentials stored in our database
-- **Secure Transmission**: All authentication data encrypted
+1. **Habilitar autenticación básica**: configurar en el panel de administración
+2. **Crear cuentas de usuario**: configurar las credenciales de usuario
+3. **Configurar MFA**: habilitar la autenticación multifactor
+4. **Capacitación de usuarios**: eduque a los usuarios sobre el proceso de inicio de sesión
+5. **Monitorear el uso**: realizar un seguimiento de los patrones de autenticación
 
-### **MFA Security**
-- **Time-based Codes**: Authenticator apps generate time-based codes
-- **Secure Enrollment**: QR code-based secure setup
-- **Backup Recovery**: Backup codes for account recovery
+## Próximos pasos
 
-### **Session Management**
-- **Secure Sessions**: Encrypted session management
-- **Timeout Protection**: Automatic session timeout
-- **Concurrent Session Control**: Manage multiple active sessions
-
-
-
-
-
-## Getting Started
-
-1. **Enable Basic Auth**: Configure in admin panel
-2. **Create User Accounts**: Set up user credentials
-3. **Configure MFA**: Enable multi-factor authentication
-4. **User Training**: Educate users on login process
-5. **Monitor Usage**: Track authentication patterns
-
-## Next Steps
-
-- [Google Workspace](/en/iam/google-workspace) - Integrate with Google Workspace
-- [Microsoft Entra ID](/en/iam/microsoft-entra-id) - Connect with Microsoft Entra ID
-- [IAM Overview](/en/iam/overview) - Learn about identity management 
+- [Google Workspace](/iam/google-workspace) - Integrar con Google Workspace
+- [ID de Microsoft Entra](/iam/microsoft-entra-id) - Conéctese con ID de Microsoft Entra
+- [Descripción general de IAM](/iam/overview) - Obtenga más información sobre la gestión de identidades

@@ -1,41 +1,39 @@
 ---
 sidebar_position: 1
-title: "AI Discovery & Inventory Overview"
-sidebar_label: "Overview"
-description: "How SecureAI discovers and inventories every AI agent, model, identity, and shadow-AI source across your organization"
+title: "Descoberta de IA e Shadow AI"
+sidebar_label: "Visão Geral"
+description: "Como a SecureAI descobre e inventaria cada agente, modelo, identidade e fonte de IA sombra em sua organização"
 ---
 
+# Descoberta e inventário de IA
 
+SecureAI cria um inventário único e continuamente atualizado da IA em sua organização – os agentes e modelos que você executa, as identidades por trás deles e a IA sombra que você não conhecia. Isso é feito a partir de **três sinais de descoberta complementares**, todos exibidos em **Admin → Registro do agente**.
 
-# AI Discovery & Inventory
+## Os três sinais
 
-SecureAI builds a single, continuously-updated inventory of the AI in your organization — the agents and models you run, the identities behind them, and the shadow AI you didn't know about. It does this from **three complementary discovery signals**, all surfaced under **Admin → Agent Registry**.
+| Sinal | Vê | Alimentado por |
+|----|------|--------|
+| **APIs de nuvem** | Agentes, modelos, implantações e identidades dentro de suas plataformas de IA. | Conectores [Provedor de IA em nuvem](/pt/integrations/cloud/overview) → [Sensores de nuvem](/pt/discovery/cloud-sensors) |
+| **Rede / CASB** | IPs de origem corporativos chamando APIs LLM, sem nenhum agente instalado. | Conectores [CASB / SWG](/pt/integrations/casb/overview) → [Fontes de rede](/pt/discovery/network-sources) |
+| **Agente de endpoint** | Atividade de AI/MCP em laptops e servidores gerenciados. | [Agente SO](/pt/agent/overview) |
 
-## The three signals
+As identidades descobertas em todos os sinais são acumuladas no [NHI Inventário](/pt/discovery/nhi-inventory), e os agentes/chatbots lógicos que você controla ficam no [Registro de Agente](/pt/discovery/agent-registry).
 
-| Signal | Sees | Fed by |
-|--------|------|--------|
-| **Cloud APIs** | Agents, models, deployments, and identities inside your AI platforms. | [Cloud AI Provider](/pt/en/integrations/cloud/overview) connectors → [Cloud Sensors](/pt/en/discovery/cloud-sensors) |
-| **Network / CASB** | Corporate source IPs calling LLM APIs, with no agent installed. | [CASB / SWG](/pt/en/integrations/casb/overview) connectors → [Network Sources](/pt/en/discovery/network-sources) |
-| **Endpoint agent** | AI/MCP activity on managed laptops and servers. | [OS Agent](/pt/en/agent/overview) |
+## As guias de inventário
 
-Identities discovered across all signals roll up into the [NHI Inventory](/pt/en/discovery/nhi-inventory), and the logical agents/chatbots you govern live in the [Agent Registry](/pt/en/discovery/agent-registry).
+Em **Administrador → Registro do agente** você encontrará:
 
-## The inventory tabs
+- **[Cloud Sensors](/pt/discovery/cloud-sensors)** — agentes e modelos descobertos na nuvem.
+- **[Fontes de rede](/pt/discovery/network-sources)** — fontes shadow-AI encontradas em logs CASB/SWG.
+- **[NHI Inventário](/pt/discovery/nhi-inventory)** — identidades não humanas (chaves, contas de serviço) com controles de bloqueio/revogação.
+- **[Registro de Agente](/pt/discovery/agent-registry)** — metadados de governança para seus agentes lógicos de IA e chatbots.
 
-Under **Admin → Agent Registry** you'll find:
+## Por que é importante
 
-- **[Cloud Sensors](/pt/en/discovery/cloud-sensors)** — cloud-discovered agents and models.
-- **[Network Sources](/pt/en/discovery/network-sources)** — shadow-AI sources found in CASB/SWG logs.
-- **[NHI Inventory](/pt/en/discovery/nhi-inventory)** — non-human identities (keys, service accounts) with block/revoke controls.
-- **[Agent Registry](/pt/en/discovery/agent-registry)** — governance metadata for your logical AI agents and chatbots.
+Você não pode governar o que não pode ver. O Discovery fornece o denominador: cada endpoint do modelo, cada chave, cada dispositivo ou carga de trabalho que toca a IA — portanto, a política, o controle de custos e a resposta a incidentes se aplicam a todo o seu patrimônio, não apenas às partes que foram declaradas.
 
-## Why it matters
+## Relacionado
 
-You can't govern what you can't see. Discovery gives you the denominator: every model endpoint, every key, every device or workload touching AI — so policy, cost control, and incident response apply to your *whole* estate, not just the parts that were declared.
-
-## Related
-
-- [Cloud AI Providers](/pt/en/integrations/cloud/overview)
-- [CASB & Network (SWG)](/pt/en/integrations/casb/overview)
-- [Endpoint Agent](/pt/en/agent/overview)
+- [Provedores de IA em nuvem](/pt/integrations/cloud/overview)
+- [CASB & Rede (SWG)](/pt/integrations/casb/overview)
+- [Agente Endpoint](/pt/agent/overview)

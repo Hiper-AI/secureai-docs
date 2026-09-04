@@ -40,10 +40,10 @@ description: "エンドポイントの脅威への対応 - 隔離、復元、隔
 ## 自己更新と改ざん防止
 
 - **自己更新** - エージェントは、`update` コマンドと署名付きリリース マニフェスト (バージョン + チェックサム + 署名) を介して自身を更新します。最新のビルドをフリートに自動同期できます。
-- **改ざん防止 / アンインストール キー** — [ポリシー](/ja/en/agent/policies-and-groups#tamper-protection--uninstall-key) では、エージェントをサイレントに削除できないようにアンインストール キーが必要になる場合があります。検証はネットワーク外でも機能し (オフラインのソルト/ハッシュがエンドポイントに送信されます)、フリート全体のキーがフォールバックとして使用されます。失敗したアンインストール試行は監査されます。
+- **改ざん防止 / アンインストール キー** — [ポリシー](/ja/agent/policies-and-groups#tamper-protection--uninstall-key) では、エージェントをサイレントに削除できないようにアンインストール キーが必要になる場合があります。検証はネットワーク外でも機能し (オフラインのソルト/ハッシュがエンドポイントに送信されます)、フリート全体のキーがフォールバックとして使用されます。失敗したアンインストール試行は監査されます。
 
 ## 関連
 
-- [ポリシーとグループ](/ja/ja/agent/policies-and-groups)
-- [出力強制](/ja/ja/agent/egress-enforcement)
-- [脅威防御](/ja/ja/threat-defense/overview)
+- [ポリシーとグループ](/ja/agent/policies-and-groups)
+- [出力強制](/ja/agent/egress-enforcement)
+- [脅威防御](/ja/threat-defense/overview)

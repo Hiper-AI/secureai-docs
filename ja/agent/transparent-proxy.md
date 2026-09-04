@@ -6,11 +6,11 @@ description: "開発者 AI トラフィック (例: Claude Code) をエンドポ
 ---
 # 透過プロキシ (AI ルーティング)
 
-エージェントは、開発者の AI トラフィック ([Claude Code](/ja/en/integrations/ide-claude-code) など) を SecureAI ゲートウェイ経由で透過的にルーティングできます。これにより、開発者がツールを変更することなく、他の AI 資産と同じガバナンス、コスト追跡、ポリシーの下でコーディング アシスタントを使用できるようになります。
+エージェントは、開発者の AI トラフィック ([Claude Code](/ja/integrations/ide-claude-code) など) を SecureAI ゲートウェイ経由で透過的にルーティングできます。これにより、開発者がツールを変更することなく、他の AI 資産と同じガバナンス、コスト追跡、ポリシーの下でコーディング アシスタントを使用できるようになります。
 
 ## 仕組み
 
-ルーティングは、`claudeCodeRouting` 経由で [ポリシー](/ja/en/agent/policies-and-groups) ごとに構成されます。
+ルーティングは、`claudeCodeRouting` 経由で [ポリシー](/ja/agent/policies-and-groups) ごとに構成されます。
 
 |設定 |説明 |
 |----------|---------------|
@@ -19,7 +19,7 @@ description: "開発者 AI トラフィック (例: Claude Code) をエンドポ
 | **モデル マッピング** |実際に提供されるモデルへの `opus` / `sonnet` / `haiku` のファミリごとのマッピング。 |
 | **モデルロック** | `user` または `force` — 開発者がマッピングを変更できるかどうか。 |
 
-ルーティングが有効な場合、SecureAI は **デバイスごとの API キー**を作成し、それを透過プロキシ構成を介してエンドポイントの環境 (`ANTHROPIC_AUTH_TOKEN` など) に挿入します。使用量は **リンクされた開発者のポイント バケット**に請求されるため、デバイスが所有者ユーザーにリンクされていることを確認してください ([登録とパッケージ](/ja/en/agent/enrollment-and-packages) を参照)。
+ルーティングが有効な場合、SecureAI は **デバイスごとの API キー**を作成し、それを透過プロキシ構成を介してエンドポイントの環境 (`ANTHROPIC_AUTH_TOKEN` など) に挿入します。使用量は **リンクされた開発者のポイント バケット**に請求されるため、デバイスが所有者ユーザーにリンクされていることを確認してください ([登録とパッケージ](/ja/agent/enrollment-and-packages) を参照)。
 
 ## フリート全体のデフォルト
 
@@ -27,11 +27,11 @@ description: "開発者 AI トラフィック (例: Claude Code) をエンドポ
 
 ## ブロックではなくルートを選択する理由
 
-認可された開発者 AI の場合、通常、[egress block](/ja/en/agent/egress-enforcement) よりもゲートウェイを経由するルーティングが推奨されます。開発者は作業を続けながら、ポリシーの適用、コストの帰属、そのトラフィックの監査を取得できます。承認されていないプロバイダーのブロック/ロックダウンを予約します。
+認可された開発者 AI の場合、通常、[egress block](/ja/agent/egress-enforcement) よりもゲートウェイを経由するルーティングが推奨されます。開発者は作業を続けながら、ポリシーの適用、コストの帰属、そのトラフィックの監査を取得できます。承認されていないプロバイダーのブロック/ロックダウンを予約します。
 
 ## 関連
 
-- [出力強制](/ja/ja/agent/egress-enforcement)
-- [ポリシーとグループ](/ja/ja/agent/policies-and-groups)
-- [AIゲートウェイ概要](/ja/ja/ai-gateway/overview)
-- [クロードコードIDE統合](/ja/ja/integrations/ide-claude-code)
+- [出力強制](/ja/agent/egress-enforcement)
+- [ポリシーとグループ](/ja/agent/policies-and-groups)
+- [AIゲートウェイ概要](/ja/ai-gateway/overview)
+- [クロードコードIDE統合](/ja/integrations/ide-claude-code)

@@ -11,7 +11,7 @@ OpenAI 조직을 연결하면 SecureAI가 프로젝트, 모델, 구성원, API �
 ## SecureAI가 가져오는 것
 
 - **프로젝트, 모델, 멤버, 역할 및 그룹**
-- **NHIs** — API 키 및 서비스 계정(취소 가능 — [NHI 인벤토리](/ko/en/discovery/nhi-inventory) 참조)
+- **NHIs** — API 키 및 서비스 계정(취소 가능 — [NHI 인벤토리](/ko/discovery/nhi-inventory) 참조)
 - **지출 알림, 비율 제한, 인증서 및 데이터 보존 설정**
 - **감사 로그**
 - 사용자당 지출을 포함한 지난 30일간의 **사용량 및 비용**
@@ -44,13 +44,13 @@ OpenAI 조직을 연결하면 SecureAI가 프로젝트, 모델, 구성원, API �
 
 ## 확인
 
-첫 번째 동기화 후 [클라우드 센서](/ko/en/discovery/cloud-sensors)를 열어 검색된 모델/어시스턴트를 확인하고, [NHI 인벤토리](/ko/en/discovery/nhi-inventory)를 열어 키와 서비스 계정을 확인하세요. 공급자별 **Insights**에는 사용량, 비용, 사용자별 지출이 표시됩니다.
+첫 번째 동기화 후 [클라우드 센서](/ko/discovery/cloud-sensors)를 열어 검색된 모델/어시스턴트를 확인하고, [NHI 인벤토리](/ko/discovery/nhi-inventory)를 열어 키와 서비스 계정을 확인하세요. 공급자별 **Insights**에는 사용량, 비용, 사용자별 지출이 표시됩니다.
 
 ## 철회
 
-OpenAI API 키는 [NHI Inventory](/ko/en/discovery/nhi-inventory)에서 **취소 가능**합니다. SecureAI는 소스에서 키를 비활성화할 수 있습니다. (서비스 계정의 경우 OpenAI ID는 모니터링 전용입니다.)
+OpenAI API 키는 [NHI Inventory](/ko/discovery/nhi-inventory)에서 **취소 가능**합니다. SecureAI는 소스에서 키를 비활성화할 수 있습니다. (서비스 계정의 경우 OpenAI ID는 모니터링 전용입니다.)
 
 ## 관련
 
-- [클라우드 AI 제공업체 개요](/ko/ko/integrations/cloud/overview)
-- [NHI 인벤토리](/ko/en/discovery/nhi-inventory)
+- [클라우드 AI 제공업체 개요](/ko/integrations/cloud/overview)
+- [NHI 인벤토리](/ko/discovery/nhi-inventory)

@@ -1,45 +1,43 @@
 ---
 id: create
-title: "Create SMLTP Policy"
-sidebar_label: "Create SMLTP Policy"
-description: "Create a new SMLTP security policy"
+title: "Criar Política SMLTP"
+sidebar_label: "Criar Política SMLTP"
+description: "Crie uma nova política de segurança SMLTP"
 openapi: "POST /smltp-policies/active"
 ---
 
+# Criar política SMLTP
 
+Crie uma nova política de segurança SMLTP (Secure Model Language Transfer Protocol) para sua conta.
 
-# Create SMLTP Policy
-
-Create a new SMLTP (Secure Model Language Transfer Protocol) security policy for your account.
-
-## Endpoint
+## Ponto final
 
 ```
 POST /smltp-policies
 ```
 
-## Description
+## Descrição
 
-Create a new custom SMLTP policy. Admin only access required.
+Crie uma nova política personalizada SMLTP. É necessário acesso apenas de administrador.
 
-## Authentication
+## Autenticação
 
-**Required**: API Key with admin privileges
+**Obrigatório**: Chave de API com privilégios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Corpo da solicitação
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | Yes | Policy name |
-| `description` | string | Yes | Policy description |
-| `policy` | object | Yes | Policy configuration object |
-| `setAsActive` | boolean | No | Whether to set this policy as active immediately (default: false) |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `name` | corda | Sim | Nome da política |
+| `description` | corda | Sim | Descrição da política |
+| `policy` | objeto | Sim | Objeto de configuração de política |
+| `setAsActive` | booleano | Não | Se esta política deve ser definida como ativa imediatamente (padrão: falso) |
 
-## Example Request
+## Exemplo de solicitação
 
 ```json
 {
@@ -52,9 +50,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## Resposta de sucesso
 
-**Status Code**: `201 Created`
+**Código de status**: `201 Created`
 
 ```json
 {
@@ -71,21 +69,21 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `policy` | object | Created policy object |
-| `policy.id` | string | Policy identifier (generated from name) |
-| `policy.name` | string | Policy name |
-| `policy.description` | string | Policy description |
-| `policy.type` | string | Policy type ("custom") |
-| `policy.isActive` | boolean | Whether policy is currently active |
-| `policy.createdAt` | string | Creation timestamp |
+| `success` | booleano | Indica se a operação foi bem sucedida |
+| `message` | corda | Mensagem de sucesso |
+| `policy` | objeto | Objeto de política criado |
+| `policy.id` | corda | Identificador da política (gerado a partir do nome) |
+| `policy.name` | corda | Nome da política |
+| `policy.description` | corda | Descrição da política |
+| `policy.type` | corda | Tipo de política ("personalizada") |
+| `policy.isActive` | booleano | Se a política está atualmente ativa |
+| `policy.createdAt` | corda | Carimbo de data e hora de criação |
 
-## Example Usage
+## Exemplo de uso
 
 ### JavaScript
 
@@ -117,7 +115,7 @@ const result = await createSmltpPolicy(policyData);
 console.log('Created policy:', result.policy.id);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -146,7 +144,7 @@ result = create_smltp_policy(policy_data)
 print("Created policy:", result["policy"]["id"])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
@@ -162,9 +160,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
   }'
 ```
 
-## Error Responses
+## Respostas de erro
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
 ```json
 {
@@ -180,7 +178,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -192,7 +190,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
 ```json
 {
@@ -204,7 +202,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 409 Conflict
+### 409 Conflito
 
 ```json
 {
@@ -216,7 +214,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 429 Too Many Requests
+### 429 Muitas solicitações
 
 ```json
 {
@@ -230,25 +228,25 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 ```
 
 
-## Use Cases
+## Casos de uso
 
-- **Custom Security**: Create policies tailored to your needs
-- **Compliance**: Implement specific regulatory requirements
-- **Risk Management**: Define security measures for risk mitigation
-- **Data Protection**: Establish privacy and data handling rules
-- **Policy Management**: Create and manage custom SMLTP policies
+- **Segurança personalizada**: crie políticas adaptadas às suas necessidades
+- **Conformidade**: Implementar requisitos regulatórios específicos
+- **Gerenciamento de riscos**: Defina medidas de segurança para mitigação de riscos
+- **Proteção de Dados**: Estabeleça regras de privacidade e tratamento de dados
+- **Gerenciamento de políticas**: crie e gerencie políticas SMLTP personalizadas
 
-## Rate Limits
+## Limites de taxa
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **Padrão**: 50 solicitações por minuto
+- **Diariamente**: 5.000 solicitações por dia
+- **Mensal**: 150.000 solicitações por mês
 
-## Notes
+## Notas
 
-- This endpoint requires admin privileges
-- Required Fields: name, description, and policy are required
-- Policy ID: Generated from name (lowercase, hyphens for spaces)
-- Unique Names: Policy names must be unique
-- Set Active: Can optionally set as active immediately
-- Flat Response: Response is not nested under data object 
+- Este endpoint requer privilégios de administrador
+- Campos obrigatórios: nome, descrição e política são obrigatórios
+- ID da política: gerado a partir do nome (letras minúsculas, hífens para espaços)
+- Nomes exclusivos: os nomes das políticas devem ser exclusivos
+- Definir ativo: opcionalmente, pode ser definido como ativo imediatamente
+- Resposta simples: a resposta não está aninhada no objeto de dados

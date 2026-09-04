@@ -1,49 +1,47 @@
 ---
 sidebar_position: 1
-title: "Endpoint Agent Overview"
-sidebar_label: "Overview"
-description: "The SecureAI OS Agent — endpoint AI governance, DLP, and egress control for laptops and servers"
+title: "端点代理概述"
+sidebar_label: "概述"
+description: "SecureAI OS 代理 — 笔记本电脑和服务器的端点 AI 治理、DLP 和出口控制"
 ---
+# 端点代理
 
+SecureAI **OS Agent** 在您的端点（Windows 笔记本电脑、Linux 服务器、macOS 计算机）上运行，并在实际工作发生的地方实施 AI 治理。它发现设备上的 AI/MCP 活动，应用数据丢失和行为保护，并可以根据策略控制或阻止 AI 提供商的出口。
 
-# Endpoint Agent
+代理队列在 **管理 → 代理注册表 → 操作系统代理** 下进行管理。
 
-The SecureAI **OS Agent** runs on your endpoints — Windows laptops, Linux servers, macOS machines — and enforces AI governance where the work actually happens. It discovers AI/MCP activity on the device, applies data-loss and behavioral protections, and can control or block egress to AI providers according to policy.
+## 代理的作用
 
-The agent fleet is managed under **Admin → Agent Registry → OS Agents**.
+- **发现设备上的 AI 使用情况** — 安装的 AI SDK/进程、MCP 服务器以及对 AI 提供商的影子网络调用。
+- **执行策略** — 监控或阻止 AI 提供程序/模型/应用程序/MCPs，应用行为 AI 监督，并执行出口控制（请参阅 [Egress Enforcement](/zh/agent/egress-enforcement)）。
+- **保护数据** — 端点 DLP/PII 检查。
+- **响应威胁** — 隔离恶意文件并隔离受感染的端点（请参阅[隔离和队列操作](/zh/agent/quarantine-and-fleet-ops)）。
+- **可选择通过 SecureAI 的网关路由开发人员 AI 流量**（请参阅[透明代理](/zh/agent/transparent-proxy)）。
 
-## What the agent does
+## 设备健康状况和状态
 
-- **Discovers AI usage on the device** — installed AI SDKs/processes, MCP servers, and shadow-network calls to AI providers.
-- **Enforces policy** — monitor or block AI providers/models/apps/MCPs, apply behavioral AI-oversight, and enforce egress control (see [Egress Enforcement](/zh/agent/egress-enforcement)).
-- **Protects data** — endpoint DLP/PII inspection.
-- **Responds to threats** — quarantines malicious files and can isolate a compromised endpoint (see [Quarantine & Fleet Ops](/zh/agent/quarantine-and-fleet-ops)).
-- **Optionally routes developer AI traffic** through SecureAI's gateway (see [Transparent Proxy](/zh/agent/transparent-proxy)).
+每个注册的设备都会报告健康状态和安全状况：
 
-## Device health & posture
-
-Each enrolled device reports a health status and a security posture:
-
-| Signal | Values |
+|信号|价值观 |
 |--------|--------|
-| **Status** | `healthy`, `stale` (no heartbeat for ~5 minutes), `enrolled`, `paused`, `revoked` |
-| **Posture** | `protected`, `at_risk`, `infected` |
-| **Risk score** | 0–100, computed from violations, threats, and configuration |
+| **状态** | `healthy`、`stale`（约 5 分钟无心跳）、`enrolled`、`paused`、`revoked` |
+| **姿势** | `protected`、`at_risk`、`infected` |
+| **风险评分** | 0–100，根据违规、威胁和配置计算得出 |
 
-The **OS Agents** tab lists every device with its status, posture, risk, OS/version, group, active policy, and linked owner. Expanding a device shows recent shadow-network observations, MCP inventory, AI-SDK processes, policy violations, blocked connections, quarantine items, threats, and command history.
+**操作系统代理**选项卡列出了每个设备及其状态、状态、风险、操作系统/版本、组、活动策略和链接的所有者。展开设备会显示最近的影子网络观察结果、MCP 库存、AI-SDK 进程、策略违规、阻止的连接、隔离项目、威胁和命令历史记录。
 
-## How to get started
+## 如何开始
 
-1. **[Install the agent](/zh/agent/installation)** on endpoints (signed MSI on Windows; script on Linux/macOS).
-2. Understand **[enrollment & installer packages](/zh/agent/enrollment-and-packages)** — how devices join and get their configuration.
-3. Configure **[policies & groups](/zh/agent/policies-and-groups)** to decide what each device enforces.
-4. Tune **[egress enforcement](/zh/agent/egress-enforcement)** and **[quarantine & fleet ops](/zh/agent/quarantine-and-fleet-ops)** for response.
+1. **[安装代理](/zh/agent/installation)** 在端点上（Windows 上签名的 MSI；Linux/macOS 上脚本）。
+2. 了解**[注册和安装程序包](/zh/agent/enrollment-and-packages)** — 设备如何加入并获取其配置。
+3. 配置**[策略和组](/zh/agent/policies-and-groups)**来决定每个设备强制执行的内容。
+4. 调整 **[出口强制执行](/zh/agent/egress-enforcement)** 和 **[隔离和队列操作](/zh/agent/quarantine-and-fleet-ops)** 以进行响应。
 
-## Roles
+## 角色
 
-General admin-panel access lets you view and configure the fleet. **Destructive actions** — quarantine, process/MCP/network kill, isolate, and revoke — require the elevated system **admin** role. See [Quarantine & Fleet Ops](/zh/agent/quarantine-and-fleet-ops).
+常规管理面板访问权限允许您查看和配置队列。 **破坏性操作** — 隔离、处理/MCP/网络终止、隔离和撤销 — 需要提升的系统 **admin** 角色。请参阅[隔离和舰队行动](/zh/agent/quarantine-and-fleet-ops)。
 
-## Related
+## 相关
 
-- [AI Discovery & Inventory](/zh/discovery/overview) — the agent is one of three discovery signals.
-- [Threat Defense](/zh/threat-defense/overview)
+- [AI Discovery & Inventory](/zh/discovery/overview) — 代理是三个发现信号之一。
+- [威胁防御](/zh/threat-defense/overview)

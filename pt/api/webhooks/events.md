@@ -1,12 +1,13 @@
 ---
 sidebar_position: 2
-title: "Eventos de webhook"
-sidebar_label: "Eventos"
+title: "Catálogo de Eventos de Webhooks"
+sidebar_label: "Eventos de Webhooks"
 description: "O catálogo de eventos do webhook SecureAI"
 ---
+
 # Eventos de webhook
 
-Ao criar ou atualizar um [endpoint webhook](/pt/en/api/webhooks/overview), você o inscreve em um ou mais tipos de eventos. Use `"*"` para receber todos os eventos.
+Ao criar ou atualizar um [endpoint webhook](/pt/api/webhooks/overview), você o inscreve em um ou mais tipos de eventos. Use `"*"` para receber todos os eventos.
 
 ## Catálogo de eventos
 
@@ -19,7 +20,7 @@ Ao criar ou atualizar um [endpoint webhook](/pt/en/api/webhooks/overview), você
 | `dlp:incident` | Uma regra de prevenção contra perda de dados correspondente. |
 | `pii:incident` | PII foi detectada/redigida. |
 | `api:limit_reached` | Uma chave de API atingiu um limite diário/mensal/de taxa. |
-| `api:model_failover` | Uma cadeia de [redundância](/pt/en/api/redundancy) fez failover de um modelo para outro. |
+| `api:model_failover` | Uma cadeia de [redundância](/pt/api/redundancy) fez failover de um modelo para outro. |
 
 A inscrição em um nome de evento desconhecido é rejeitada no momento da criação/atualização.
 
@@ -58,4 +59,4 @@ O botão **Enviar evento de teste** (ou `POST /api/admin/webhooks/:id/test`) ent
 
 ## Relacionado
 
-- [Visão geral dos Webhooks](/pt/en/api/webhooks/overview) — formato de entrega, verificação de assinatura, confiabilidade.
+- [Visão geral dos Webhooks](/pt/api/webhooks/overview) — formato de entrega, verificação de assinatura, confiabilidade.

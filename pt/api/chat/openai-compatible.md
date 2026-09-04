@@ -1,43 +1,41 @@
 ---
 sidebar_position: 2
-title: "OpenAI-Compatible Endpoint"
-sidebar_label: "OpenAI-Compatible"
-description: "Drop-in OpenAI Chat Completions surface — point any OpenAI SDK at SecureAI"
+title: "Compatibilidade com OpenAI"
+sidebar_label: "Compatível com OpenAI"
+description: "Superfície de conclusão do OpenAI Chat - aponte qualquer SDK OpenAI para SecureAI"
 openapi: "POST /v1/chat/completions"
 ---
 
+# Endpoint compatível com OpenAI
 
+SecureAI expõe uma superfície compatível com OpenAI para que você possa integrar com **qualquer SDK OpenAI alterando apenas o URL base e a chave de API** — sem alterações de código. A pilha de segurança SecureAI completa (autenticação de chave de API, listas de permissões de modelo/índice, aplicação de política SMLTP + direitos, Prompt Shield, PII/DLP, faturamento de pontos e o [mecanismo de redundância de modelo](/pt/api/redundancy)) é executado abaixo.
 
-# OpenAI-Compatible Endpoint
-
-SecureAI exposes an OpenAI-compatible surface so you can integrate with **any OpenAI SDK by changing only the base URL and API key** — no code changes. The full SecureAI security stack (API-key auth, model/index allowlists, SMLTP policy enforcement + entitlements, Prompt Shield, PII/DLP, points billing, and the [model redundancy engine](/pt/en/api/redundancy)) runs underneath.
-
-## Endpoint
+## Ponto final
 
 ```
 POST /api/external/v1/chat/completions
 GET  /api/external/v1/models
 ```
 
-Point your OpenAI client's `base_url` at:
+Aponte o `base_url` do seu cliente OpenAI para:
 
 ```
 https://{customer.name}.hiperai.ai/api/external/v1
 ```
 
 <Info>
-**Zero-Knowledge only**
+**Somente Conhecimento Zero**
 
-This surface does **not** support RAG / knowledge bases. Requests are pinned to `Zero-Knowledge`. If you need knowledge-base retrieval, use the classic [Chat Completion](/pt/en/api/chat/completions) endpoint.
+Esta superfície **não** suporta RAG/bases de conhecimento. As solicitações são fixadas em `Zero-Knowledge`. Se você precisar de recuperação da base de conhecimento, use o endpoint clássico [Chat Completion](/pt/api/chat/completions).
 </Info>
 
-## Authentication
+## Autenticação
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Using an OpenAI SDK
+## Usando um SDK OpenAI
 
 ### Python (`openai`)
 
@@ -82,29 +80,29 @@ const resp = await client.chat.completions.create({
 console.log(resp.choices[0].message.content);
 ```
 
-## Request Body
+## Corpo da solicitação
 
-Standard OpenAI fields are supported. `messages` is required (there is no `prompt` on this surface). `max_completion_tokens` is accepted as an alias for `max_tokens`.
+Os campos OpenAI padrão são suportados. `messages` é obrigatório (não há `prompt` nesta superfície). `max_completion_tokens` é aceito como um alias para `max_tokens`.
 
-The following OpenAI parameters are passed through to the provider as-is:
+Os seguintes parâmetros OpenAI são passados para o provedor no estado em que se encontram:
 
 `tools`, `tool_choice`, `parallel_tool_calls`, `response_format`, `stop`, `top_p`, `frequency_penalty`, `presence_penalty`, `seed`, `logprobs`, `top_logprobs`, `user`.
 
-### SecureAI extension fields
+### Campos de extensão SecureAI
 
-Send these as extra body fields (via `extra_body` in the OpenAI SDKs):
+Envie-os como campos de corpo extras (via `extra_body` nos SDKs OpenAI):
 
-| Field | Description |
-|-------|-------------|
-| `smltp_policy` | SMLTP security policy for this call. |
-| `prompt_shield` | `{ enabled?, policy? }` — per-call Prompt Shield override. |
-| `models` / `fallback_models` | Model [redundancy](/pt/en/api/redundancy) chain. |
+| Campo | Descrição |
+|-------|------------|
+| `smltp_policy` | Política de segurança SMLTP para esta chamada. |
+| `prompt_shield` | `{ enabled?, policy? }` — substituição do Prompt Shield por chamada. |
+| `models` / `fallback_models` | Cadeia de modelo [redundância](/pt/api/redundancy). |
 | `redundancy` | `{ timeout_ms, first_token_timeout_ms, on[] }`. |
-| `user_id` | Bill to a different user (admin-gated). |
+| `user_id` | Faturar para um usuário diferente (controlado pelo administrador). |
 
-## Response
+## Resposta
 
-Standard OpenAI `chat.completion` shape, plus a `secureai` extension object.
+Forma OpenAI padrão `chat.completion`, mais um objeto de extensão `secureai`.
 
 ```json
 {
@@ -129,24 +127,24 @@ Standard OpenAI `chat.completion` shape, plus a `secureai` extension object.
 }
 ```
 
-`secureai.smltp_bundle_id` (when present) can be exchanged for a signed compliance [receipt](/pt/en/api/receipts).
+`secureai.smltp_bundle_id` (quando presente) pode ser trocado por um [recibo] de conformidade assinado(/pt/api/receipts).
 
-### Streaming
+### Transmissão
 
-Set `stream: true`. Frames are native OpenAI `chat.completion.chunk` objects terminated by `data: [DONE]`. The `secureai` extension is attached to the **first** chunk. `choices` (including `tool_calls` deltas and `finish_reason`) pass through untouched.
+Defina `stream: true`. Os frames são objetos OpenAI nativos `chat.completion.chunk` terminados por `data: [DONE]`. A extensão `secureai` é anexada ao **primeiro** pedaço. `choices` (incluindo `tool_calls` deltas e `finish_reason`) passam intocados.
 
-## Errors
+## Erros
 
-Errors from this handler use the OpenAI envelope:
+Os erros deste manipulador usam o envelope OpenAI:
 
 ```json
 { "error": { "message": "you must provide a model parameter", "type": "invalid_request_error", "code": null } }
 ```
 
-When a whole redundancy chain fails, the error uses `code: "all_models_failed"` and status `429` (all rate limits) or `502` (otherwise). Security-middleware rejections keep the SecureAI `{ "success": false, ... }` shape; both always carry a `message`.
+Quando toda uma cadeia de redundância falha, o erro usa `code: "all_models_failed"` e status `429` (todos os limites de taxa) ou `502` (caso contrário). As rejeições de middleware de segurança mantêm o formato SecureAI `{ "success": false, ... }`; ambos sempre carregam um `message`.
 
-## Related
+## Relacionado
 
-- [Chat Completion](/pt/en/api/chat/completions) — the classic surface (adds RAG).
-- [Redundancy & Failover](/pt/en/api/redundancy)
-- [Prompt Shield API](/pt/en/api/threat-defense/prompt-shield)
+- [Conclusão de bate-papo](/pt/api/chat/completions) — a superfície clássica (adiciona RAG).
+- [Redundância e failover](/pt/api/redundancy)
+- [API Prompt Shield](/pt/api/threat-defense/prompt-shield)

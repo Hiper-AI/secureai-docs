@@ -1,14 +1,13 @@
 ---
 sidebar_position: 2
-title: "Create New User"
+title: "Crear Usuario"
 openapi: "POST /users"
+sidebar_label: "Crear Usuario"
 ---
 
+# Crear nuevo usuario
 
-
-# Create New User
-
-Create a new user account. Only accessible by administrators.
+Crea una nueva cuenta de usuario. Solo accesible para administradores.
 
 ## Endpoint
 
@@ -16,40 +15,40 @@ Create a new user account. Only accessible by administrators.
 POST /users
 ```
 
-## Description
+## Descripción
 
-This endpoint allows administrators to create new user accounts in the system. You can specify various user attributes including role, license, and authentication type. This is an administrative endpoint that requires appropriate permissions.
+Este endpoint permite a los administradores crear nuevas cuentas de usuario en el sistema. Puede especificar varios atributos de usuario, incluidos rol, licencia y tipo de autenticación. Este es un endpoint administrativo que requiere permisos adecuados.
 
-## User Creation Flow
+## Flujo de creación de usuarios
 
-**Basic Auth** (`authType: "basic"`): User receives a welcome email with a password setup link. Account is created unverified until password is set.
+**Autentificación básica** (`authType: "basic"`): el usuario recibe un correo electrónico de bienvenida con un enlace de configuración de contraseña. La cuenta se crea sin verificar hasta que se establece la contraseña.
 
-**Enterprise SSO** (`authType: "enterprise"`): User is created verified and can sign in via enterprise SSO (Auth0, Microsoft AD, etc.). No password setup required.
+**SSO empresarial** (`authType: "enterprise"`): el usuario se crea verificado y puede iniciar sesión a través de SSO empresarial (Auth0, Microsoft AD, etc.). No se requiere configuración de contraseña.
 
-## Authentication
+## Autenticación
 
-Required. Include your API key in the Authorization header.
+Requerido. Incluya su clave API en el encabezado de Autorización.
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## Solicitud
 
-### Request Body
+### Cuerpo de solicitud
 
-| Parameter | Type | Required | Default | Description |
+| Parámetro | Tipo | Requerido | Predeterminado | Descripción |
 |-----------|------|----------|---------|-------------|
-| `name` | string | Yes | - | User's full name |
-| `username` | string | No | - | Unique username (auto-generated from email if not provided) |
-| `email` | string | Yes | - | User's email address |
-| `role` | string | No | user | User's role (admin, user, globalReader) |
-| `license` | string | No | Essential | User's license tier (Essential, Growth, Ultra, Early Access) |
-| `roleId` | string | No | - | Custom role ID (MongoDB ObjectId) |
-| `setupCompleted` | boolean | No | false | Whether user setup is completed |
-| `authType` | string | No | basic | Authentication type (basic, enterprise) |
+| `name` | cadena | Sí | - | Nombre completo del usuario |
+| `username` | cadena | No | - | Nombre de usuario único (generado automáticamente desde el correo electrónico si no se proporciona) |
+| `email` | cadena | Sí | - | Dirección de correo electrónico del usuario |
+| `role` | cadena | No | usuario | Rol del usuario (admin, usuario, globalReader) |
+| `license` | cadena | No | Esencial | Nivel de licencia de usuario (Essential, Growth, Ultra, Early Access) |
+| `roleId` | cadena | No | - | ID de rol personalizado (MongoDB ObjectId) |
+| `setupCompleted` | booleano | No | falso | Si se completó la configuración del usuario |
+| `authType` | cadena | No | básico | Tipo de autenticación (básica, empresarial) |
 
-### Example Request
+### Solicitud de ejemplo
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
@@ -66,9 +65,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
   }'
 ```
 
-## Response
+## Respuesta
 
-### Success Response (201)
+### Respuesta exitosa (201)
 
 ```json
 {
@@ -90,26 +89,26 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Always `true` for successful requests |
-| `message` | string | Success message |
-| `user` | object | Created user object |
-| `user.id` | string | User's unique identifier |
-| `user.name` | string | User's full name |
-| `user.username` | string | User's username |
-| `user.email` | string | User's email address |
-| `user.role` | string | User's role |
-| `user.license` | string | User's license tier |
-| `user.status` | integer | User status (1=active) |
-| `user.isVerified` | boolean | Whether user is verified |
-| `user.setupCompleted` | boolean | Whether user setup is completed |
-| `user.authType` | string | Authentication type |
-| `user.createdAt` | string | User creation timestamp |
+| `success` | booleano | Siempre `true` para solicitudes exitosas |
+| `message` | cadena | Mensaje de éxito |
+| `user` | objeto | Objeto de usuario creado |
+| `user.id` | cadena | Identificador único del usuario |
+| `user.name` | cadena | Nombre completo del usuario |
+| `user.username` | cadena | Nombre de usuario del usuario |
+| `user.email` | cadena | Dirección de correo electrónico del usuario |
+| `user.role` | cadena | Rol del usuario |
+| `user.license` | cadena | Nivel de licencia de usuario |
+| `user.status` | entero | Estado del usuario (1=activo) |
+| `user.isVerified` | booleano | Si el usuario está verificado |
+| `user.setupCompleted` | booleano | Si se completó la configuración del usuario |
+| `user.authType` | cadena | Tipo de autenticación |
+| `user.createdAt` | cadena | Marca de tiempo de creación de usuario |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -137,7 +136,7 @@ if (data.success) {
 }
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -164,7 +163,7 @@ if result['success']:
     print('User ID:', result['user']['id'])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
@@ -179,9 +178,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
   }'
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -191,7 +190,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Invalid AuthType
+### 400 Tipo de autenticación no válido
 
 ```json
 {
@@ -201,7 +200,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Missing Required Fields
+### 400 campos obligatorios faltantes
 
 ```json
 {
@@ -211,7 +210,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -221,7 +220,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -231,7 +230,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 409 Conflict
+### 409 Conflicto
 
 ```json
 {
@@ -241,24 +240,24 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-## Validations and Business Rules
+## Validaciones y reglas de negocio
 
-- **License value**: Must be one of the allowed licenses (`Essential`, `Growth`, `Ultra`, `Early Access`). Invalid values return 400.
-- **License capacity**: Enforced via `checkLicenseCapacity`. If capacity is full for the selected tier, returns 400.
-- **Email normalization**: Lowercased and trimmed before validation and storage.
-- **Username normalization**: Lowercased and trimmed before validation and storage. Auto-generated from email if not provided.
-- **Email format**: Validated with a simple regex; invalid emails return 400.
-- **Username format**: Must match `^[a-z0-9.-]{3,30}$`; invalid usernames return 400.
-- **Uniqueness**: `email`, `username`, and `name` must be unique. Conflicts return 409.
-- **Email invite behavior**: For basic auth, users receive welcome emails with password setup links.
+- **Valor de la licencia**: Debe ser una de las licencias permitidas (`Essential`, `Growth`, `Ultra`, `Early Access`). Los valores no válidos devuelven 400.
+- **Capacidad de licencia**: Aplicada a través de `checkLicenseCapacity`. Si la capacidad está llena para el nivel seleccionado, devuelve 400.
+- **Normalización del correo electrónico**: minúsculas y recortadas antes de la validación y el almacenamiento.
+- **Normalización del nombre de usuario**: minúsculas y recortadas antes de la validación y el almacenamiento. Generado automáticamente desde el correo electrónico si no se proporciona.
+- **Formato de correo electrónico**: validado con una expresión regular simple; los correos electrónicos no válidos devuelven 400.
+- **Formato de nombre de usuario**: debe coincidir con `^[a-z0-9.-]{3,30}$`; Los nombres de usuario no válidos devuelven 400.
+- **Singularidad**: `email`, `username` y `name` deben ser únicos. Los conflictos regresan 409.
+- **Comportamiento de invitación por correo electrónico**: para la autenticación básica, los usuarios reciben correos electrónicos de bienvenida con enlaces de configuración de contraseña.
 
-## Normalization and Storage
+## Normalización y almacenamiento
 
-- `email` and `username` are always stored lowercased and trimmed.
+- `email` y `username` siempre se guardan en minúsculas y recortados.
 
-## Typical Error Shapes
+## Formas de error típicas
 
-### 400 Invalid License
+### 400 Licencia no válida
 
 ```json
 {
@@ -268,7 +267,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 License Unavailable
+### Licencia 400 no disponible
 
 ```json
 {
@@ -278,7 +277,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Invalid Email
+### 400 Correo electrónico no válido
 
 ```json
 {
@@ -288,7 +287,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Invalid Username
+### 400 Nombre de usuario no válido
 
 ```json
 {
@@ -298,7 +297,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 409 Conflict (Uniqueness)
+### 409 Conflicto (singularidad)
 
 ```json
 {
@@ -308,41 +307,41 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-## User Roles
+## Roles de usuario
 
-| Role | Description | Permissions |
+| Rol | Descripción | Permisos |
 |------|-------------|-------------|
-| `admin` | Administrator | Full system access |
-| `user` | Regular user | Standard user access |
-| `globalReader` | Global Reader | Read-only admin panel access |
+| `admin` | Administrador | Acceso completo al sistema |
+| `user` | Usuario habitual | Acceso de usuario estándar |
+| `globalReader` | Lector global | Acceso al panel de administración de solo lectura |
 
-## License Tiers
+## Niveles de licencia
 
-| License | Description | Features |
+| Licencia | Descripción | Características |
 |---------|-------------|----------|
-| `Essential` | Basic tier | Limited features |
-| `Growth` | Professional tier | Enhanced features |
-| `Ultra` | Premium tier | Full features |
-| `Early Access` | Early access tier | Beta features |
+| `Essential` | Nivel básico | Funciones limitadas |
+| `Growth` | Nivel profesional | Funciones mejoradas |
+| `Ultra` | Nivel premium | Funciones completas |
+| `Early Access` | Nivel de acceso temprano | Funciones beta |
 
-## Authentication Types
+## Tipos de autenticación
 
-| Type | Description |
+| Tipo | Descripción |
 |------|-------------|
-| `basic` | Username/password authentication (user receives password setup email) |
-| `enterprise` | Enterprise SSO integration (Auth0, Microsoft AD, etc.) |
+| `basic` | Autenticación de nombre de usuario/contraseña (el usuario recibe un correo electrónico de configuración de contraseña) |
+| `enterprise` | Integración SSO empresarial (Auth0, Microsoft AD, etc.) |
 
-## Use Cases
+## Casos de uso
 
-- **User Onboarding**: Create new user accounts for team members
-- **Passwordless Onboarding**: Create users who receive email invites to set their own passwords
-- **SSO Integration**: Create users who authenticate via external identity providers
-- **Bulk User Creation**: Programmatically create multiple users
-- **Integration**: Create users from external systems
-- **Administrative Tasks**: Manage user accounts through API
+- **Incorporación de usuarios**: cree nuevas cuentas de usuario para los miembros del equipo
+- **Incorporación sin contraseña**: cree usuarios que reciban invitaciones por correo electrónico para establecer sus propias contraseñas.
+- **Integración SSO**: cree usuarios que se autentiquen a través de proveedores de identidad externos
+- **Creación masiva de usuarios**: crea múltiples usuarios mediante programación
+- **Integración**: Crear usuarios desde sistemas externos
+- **Tareas administrativas**: administrar cuentas de usuario a través de API
 
-## Rate Limits
+## Límites de tarifas
 
-This endpoint follows the standard rate limits:
-- 60 requests per minute
-- 1000 requests per hour 
+Este endpoint sigue los límites de velocidad estándar:
+- 60 solicitudes por minuto
+- 1000 solicitudes por hora

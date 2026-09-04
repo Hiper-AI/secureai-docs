@@ -97,61 +97,61 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 ## Points de terminaison de l'API
 
 ### Système
-- [Health Check](/fr/en/api/system/health) - Vérifier l'état de l'API
+- [Health Check](/fr/api/system/health) - Vérifier l'état de l'API
 
 ### Découverte
-- [Obtenir les modèles disponibles](/fr/en/api/discovery/models) - Liste des modèles IA disponibles
-- [Obtenir les bases de connaissances disponibles](/fr/en/api/discovery/indexes) - Répertorier les bases de connaissances accessibles
-- [Obtenir les politiques de sécurité](/fr/en/api/discovery/smltp-policies) - Liste des politiques SMLTP disponibles
+- [Obtenir les modèles disponibles](/fr/api/discovery/models) - Liste des modèles IA disponibles
+- [Obtenir les bases de connaissances disponibles](/fr/api/discovery/indexes) - Répertorier les bases de connaissances accessibles
+- [Obtenir les politiques de sécurité](/fr/api/discovery/smltp-policies) - Liste des politiques SMLTP disponibles
 
 ### Discuter
-- [Chat Completion](/fr/en/api/chat/completions) - Point de terminaison principal du chat IA avec RAG
-- [OpenAI-Compatible Endpoint](/fr/en/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` pour les SDK OpenAI
-- [Redondance & Failover](/fr/en/api/redundancy) - Modéliser les chaînes de basculement
-- [Policy Check](/fr/en/api/policy-check) - Exécuter à sec le pipeline de sécurité sans appeler de modèle
-- [Usage](/fr/en/api/usage) - Quotas, budgets et limites de tarifs en libre-service
-- [Receipts](/fr/en/api/receipts) - Récupérer les reçus de conformité SMLTP signés
+- [Chat Completion](/fr/api/chat/completions) - Point de terminaison principal du chat IA avec RAG
+- [OpenAI-Compatible Endpoint](/fr/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` pour les SDK OpenAI
+- [Redondance & Failover](/fr/api/redundancy) - Modéliser les chaînes de basculement
+- [Policy Check](/fr/api/policy-check) - Exécuter à sec le pipeline de sécurité sans appeler de modèle
+- [Usage](/fr/api/usage) - Quotas, budgets et limites de tarifs en libre-service
+- [Receipts](/fr/api/receipts) - Récupérer les reçus de conformité SMLTP signés
 
 ### Webhooks
-- [Présentation des Webhooks](/fr/en/api/webhooks/overview) - Livraison d'événements signés en temps réel
-- [Événements Webhook](/fr/en/api/webhooks/events) - Catalogue d'événements et charges utiles
+- [Présentation des Webhooks](/fr/api/webhooks/overview) - Livraison d'événements signés en temps réel
+- [Événements Webhook](/fr/api/webhooks/events) - Catalogue d'événements et charges utiles
 
 ### Images
-- [Générer des images](/fr/en/api/images/generations) - Générer des images à partir de texte ou modifier des images existantes
-- [Modifier les images](/fr/en/api/images/edits) - Édition image à image avec instructions textuelles
+- [Générer des images](/fr/api/images/generations) - Générer des images à partir de texte ou modifier des images existantes
+- [Modifier les images](/fr/api/images/edits) - Édition image à image avec instructions textuelles
 
 ### Discours/S2S
-- [Initier une session S2S WebRTC](/fr/en/api/speech/webrtc) - Établir des conversations vocales en temps réel
-- [Obtenir le statut horaire S2S](/fr/en/api/speech/status) - Vérifier le quota de temps S2S restant
-- [Enregistrer la durée de la session S2S](/fr/en/api/speech/log-session) - Enregistrer la durée de la session et déduire le temps
+- [Initier une session S2S WebRTC](/fr/api/speech/webrtc) - Établir des conversations vocales en temps réel
+- [Obtenir le statut horaire S2S](/fr/api/speech/status) - Vérifier le quota de temps S2S restant
+- [Enregistrer la durée de la session S2S](/fr/api/speech/log-session) - Enregistrer la durée de la session et déduire le temps
 
 ### Gestion des utilisateurs
-- [Get All Users](/fr/en/api/users/list) - Récupérer les utilisateurs avec pagination
-- [Créer un utilisateur](/fr/en/api/users/create) - Créer un nouveau compte utilisateur
-- [Mettre à jour l'utilisateur](/fr/en/api/users/update) - Mettre à jour l'utilisateur existant
-- [Obtenir la disponibilité des licences](/fr/en/api/billing-modes/licenses-availability) - Récupérer les limites et l'utilisation du pool de licences
+- [Get All Users](/fr/api/users/list) - Récupérer les utilisateurs avec pagination
+- [Créer un utilisateur](/fr/api/users/create) - Créer un nouveau compte utilisateur
+- [Mettre à jour l'utilisateur](/fr/api/users/update) - Mettre à jour l'utilisateur existant
+- [Obtenir la disponibilité des licences](/fr/api/billing-modes/licenses-availability) - Récupérer les limites et l'utilisation du pool de licences
 
 ### Gestion des index
-- [Get All Indexes](/fr/en/api/indexes/list) - Récupérer toutes les bases de connaissances
-- [Créer un index](/fr/en/api/indexes/create) - Créer une nouvelle base de connaissances
-- [Mettre à jour l'index](/fr/en/api/indexes/update) - Mettre à jour l'index existant
-- [Train Index with Documents](/fr/en/api/indexes/train) - Former l'index en téléchargeant des documents
-- [Index de recherche de documents](/fr/en/api/indexes/search) - Rechercher des documents par recherche sémantique
+- [Get All Indexes](/fr/api/indexes/list) - Récupérer toutes les bases de connaissances
+- [Créer un index](/fr/api/indexes/create) - Créer une nouvelle base de connaissances
+- [Mettre à jour l'index](/fr/api/indexes/update) - Mettre à jour l'index existant
+- [Train Index with Documents](/fr/api/indexes/train) - Former l'index en téléchargeant des documents
+- [Index de recherche de documents](/fr/api/indexes/search) - Rechercher des documents par recherche sémantique
 
 ### Gestion de groupe
-- [Get All Groups](/fr/en/api/groups/list) - Récupérer tous les groupes
-- [Créer un groupe](/fr/en/api/groups/create) - Créer un nouveau groupe
-- [Mettre à jour le groupe](/fr/en/api/groups/update) - Mettre à jour le groupe existant
+- [Get All Groups](/fr/api/groups/list) - Récupérer tous les groupes
+- [Créer un groupe](/fr/api/groups/create) - Créer un nouveau groupe
+- [Mettre à jour le groupe](/fr/api/groups/update) - Mettre à jour le groupe existant
 
 ### Sécurité SMLTP
-- [Obtenir toutes les politiques SMLTP](/fr/en/api/smltp/policies) - Liste toutes les politiques de sécurité
-- [Obtenir la politique active](/fr/en/api/smltp/active) - Obtenir la politique active actuelle
-- [Créer une politique personnalisée](/fr/en/api/smltp/create) - Créer une politique SMLTP personnalisée
-- [Journaux d'audit](/fr/en/api/smltp/audit-logs) - Récupérer les journaux d'audit SMLTP
+- [Obtenir toutes les politiques SMLTP](/fr/api/smltp/policies) - Liste toutes les politiques de sécurité
+- [Obtenir la politique active](/fr/api/smltp/active) - Obtenir la politique active actuelle
+- [Créer une politique personnalisée](/fr/api/smltp/create) - Créer une politique SMLTP personnalisée
+- [Journaux d'audit](/fr/api/smltp/audit-logs) - Récupérer les journaux d'audit SMLTP
 
 ### Gestion des rôles
-- [Get All Roles](/fr/en/api/roles/list) - Récupérer tous les rôles
-- [Créer un rôle](/fr/en/api/roles/create) - Créer un nouveau rôle personnalisé
+- [Get All Roles](/fr/api/roles/list) - Récupérer tous les rôles
+- [Créer un rôle](/fr/api/roles/create) - Créer un nouveau rôle personnalisé
 
 ## Gestion des erreurs
 
@@ -292,61 +292,61 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 ## Points de terminaison de l'API
 
 ### Système
-- [Health Check](/fr/en/api/system/health) - Vérifier l'état de l'API
+- [Health Check](/fr/api/system/health) - Vérifier l'état de l'API
 
 ### Découverte
-- [Obtenir les modèles disponibles](/fr/en/api/discovery/models) - Liste des modèles IA disponibles
-- [Obtenir les bases de connaissances disponibles](/fr/en/api/discovery/indexes) - Répertorier les bases de connaissances accessibles
-- [Obtenir les politiques de sécurité](/fr/en/api/discovery/smltp-policies) - Liste des politiques SMLTP disponibles
+- [Obtenir les modèles disponibles](/fr/api/discovery/models) - Liste des modèles IA disponibles
+- [Obtenir les bases de connaissances disponibles](/fr/api/discovery/indexes) - Répertorier les bases de connaissances accessibles
+- [Obtenir les politiques de sécurité](/fr/api/discovery/smltp-policies) - Liste des politiques SMLTP disponibles
 
 ### Discuter
-- [Chat Completion](/fr/en/api/chat/completions) - Point de terminaison principal du chat IA avec RAG
-- [OpenAI-Compatible Endpoint](/fr/en/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` pour les SDK OpenAI
-- [Redondance & Failover](/fr/en/api/redundancy) - Modéliser les chaînes de basculement
-- [Policy Check](/fr/en/api/policy-check) - Exécuter à sec le pipeline de sécurité sans appeler de modèle
-- [Usage](/fr/en/api/usage) - Quotas, budgets et limites de tarifs en libre-service
-- [Receipts](/fr/en/api/receipts) - Récupérer les reçus de conformité SMLTP signés
+- [Chat Completion](/fr/api/chat/completions) - Point de terminaison principal du chat IA avec RAG
+- [OpenAI-Compatible Endpoint](/fr/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` pour les SDK OpenAI
+- [Redondance & Failover](/fr/api/redundancy) - Modéliser les chaînes de basculement
+- [Policy Check](/fr/api/policy-check) - Exécuter à sec le pipeline de sécurité sans appeler de modèle
+- [Usage](/fr/api/usage) - Quotas, budgets et limites de tarifs en libre-service
+- [Receipts](/fr/api/receipts) - Récupérer les reçus de conformité SMLTP signés
 
 ### Webhooks
-- [Présentation des Webhooks](/fr/en/api/webhooks/overview) - Livraison d'événements signés en temps réel
-- [Événements Webhook](/fr/en/api/webhooks/events) - Catalogue d'événements et charges utiles
+- [Présentation des Webhooks](/fr/api/webhooks/overview) - Livraison d'événements signés en temps réel
+- [Événements Webhook](/fr/api/webhooks/events) - Catalogue d'événements et charges utiles
 
 ### Images
-- [Générer des images](/fr/en/api/images/generations) - Générer des images à partir de texte ou modifier des images existantes
-- [Modifier les images](/fr/en/api/images/edits) - Édition image à image avec instructions textuelles
+- [Générer des images](/fr/api/images/generations) - Générer des images à partir de texte ou modifier des images existantes
+- [Modifier les images](/fr/api/images/edits) - Édition image à image avec instructions textuelles
 
 ### Discours/S2S
-- [Initier une session S2S WebRTC](/fr/en/api/speech/webrtc) - Établir des conversations vocales en temps réel
-- [Obtenir le statut horaire S2S](/fr/en/api/speech/status) - Vérifier le quota de temps S2S restant
-- [Enregistrer la durée de la session S2S](/fr/en/api/speech/log-session) - Enregistrer la durée de la session et déduire le temps
+- [Initier une session S2S WebRTC](/fr/api/speech/webrtc) - Établir des conversations vocales en temps réel
+- [Obtenir le statut horaire S2S](/fr/api/speech/status) - Vérifier le quota de temps S2S restant
+- [Enregistrer la durée de la session S2S](/fr/api/speech/log-session) - Enregistrer la durée de la session et déduire le temps
 
 ### Gestion des utilisateurs
-- [Get All Users](/fr/en/api/users/list) - Récupérer les utilisateurs avec pagination
-- [Créer un utilisateur](/fr/en/api/users/create) - Créer un nouveau compte utilisateur
-- [Mettre à jour l'utilisateur](/fr/en/api/users/update) - Mettre à jour l'utilisateur existant
-- [Obtenir la disponibilité des licences](/fr/en/api/billing-modes/licenses-availability) - Récupérer les limites et l'utilisation du pool de licences
+- [Get All Users](/fr/api/users/list) - Récupérer les utilisateurs avec pagination
+- [Créer un utilisateur](/fr/api/users/create) - Créer un nouveau compte utilisateur
+- [Mettre à jour l'utilisateur](/fr/api/users/update) - Mettre à jour l'utilisateur existant
+- [Obtenir la disponibilité des licences](/fr/api/billing-modes/licenses-availability) - Récupérer les limites et l'utilisation du pool de licences
 
 ### Gestion des index
-- [Get All Indexes](/fr/en/api/indexes/list) - Récupérer toutes les bases de connaissances
-- [Créer un index](/fr/en/api/indexes/create) - Créer une nouvelle base de connaissances
-- [Mettre à jour l'index](/fr/en/api/indexes/update) - Mettre à jour l'index existant
-- [Train Index with Documents](/fr/en/api/indexes/train) - Former l'index en téléchargeant des documents
-- [Index de recherche de documents](/fr/en/api/indexes/search) - Rechercher des documents par recherche sémantique
+- [Get All Indexes](/fr/api/indexes/list) - Récupérer toutes les bases de connaissances
+- [Créer un index](/fr/api/indexes/create) - Créer une nouvelle base de connaissances
+- [Mettre à jour l'index](/fr/api/indexes/update) - Mettre à jour l'index existant
+- [Train Index with Documents](/fr/api/indexes/train) - Former l'index en téléchargeant des documents
+- [Index de recherche de documents](/fr/api/indexes/search) - Rechercher des documents par recherche sémantique
 
 ### Gestion de groupe
-- [Get All Groups](/fr/en/api/groups/list) - Récupérer tous les groupes
-- [Créer un groupe](/fr/en/api/groups/create) - Créer un nouveau groupe
-- [Mettre à jour le groupe](/fr/en/api/groups/update) - Mettre à jour le groupe existant
+- [Get All Groups](/fr/api/groups/list) - Récupérer tous les groupes
+- [Créer un groupe](/fr/api/groups/create) - Créer un nouveau groupe
+- [Mettre à jour le groupe](/fr/api/groups/update) - Mettre à jour le groupe existant
 
 ### Sécurité SMLTP
-- [Obtenir toutes les politiques SMLTP](/fr/en/api/smltp/policies) - Liste toutes les politiques de sécurité
-- [Obtenir la politique active](/fr/en/api/smltp/active) - Obtenir la politique active actuelle
-- [Créer une politique personnalisée](/fr/en/api/smltp/create) - Créer une politique SMLTP personnalisée
-- [Journaux d'audit](/fr/en/api/smltp/audit-logs) - Récupérer les journaux d'audit SMLTP
+- [Obtenir toutes les politiques SMLTP](/fr/api/smltp/policies) - Liste toutes les politiques de sécurité
+- [Obtenir la politique active](/fr/api/smltp/active) - Obtenir la politique active actuelle
+- [Créer une politique personnalisée](/fr/api/smltp/create) - Créer une politique SMLTP personnalisée
+- [Journaux d'audit](/fr/api/smltp/audit-logs) - Récupérer les journaux d'audit SMLTP
 
 ### Gestion des rôles
-- [Get All Roles](/fr/en/api/roles/list) - Récupérer tous les rôles
-- [Créer un rôle](/fr/en/api/roles/create) - Créer un nouveau rôle personnalisé
+- [Get All Roles](/fr/api/roles/list) - Récupérer tous les rôles
+- [Créer un rôle](/fr/api/roles/create) - Créer un nouveau rôle personnalisé
 
 ## Gestion des erreurs
 
@@ -456,5 +456,5 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 
 ## Prochaines étapes
 
-- [Base de connaissances & RAG](/fr/en/indexes/overview) - En savoir plus sur les bases de connaissances et RAG
+- [Base de connaissances & RAG](/fr/indexes/overview) - En savoir plus sur les bases de connaissances et RAG
 ```

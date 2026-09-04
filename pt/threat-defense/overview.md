@@ -1,51 +1,50 @@
 ---
 sidebar_position: 1
-title: "Threat Defense"
+title: "Defesa Contra Ameaças de IA"
+sidebar_label: "Defesa Contra Ameaças"
 ---
 
+# Defesa contra ameaças
 
-
-# Threat Defense
-
-Threat Defense provides real-time protection against malicious prompt attacks, jailbreaks, instruction leaks, and output manipulation.
+O Threat Defense fornece proteção em tempo real contra ataques maliciosos, jailbreaks, vazamentos de instruções e manipulação de saída.
 
 ---
 
-## Protected Threat Vectors
+## Vetores de ameaças protegidos
 
-| Threat | Description |
+| Ameaça | Descrição |
 |---|---|
-| **Prompt Injection** | Attempts to override or bypass system instructions and constraints. |
-| **Jailbreaks** | Adversarial prompts designed to circumvent safety guardrails. |
-| **Instruction / System Prompt Leakage** | Extraction attacks attempting to reveal proprietary instructions. |
-| **Role Drift / Hijacking** | Manipulating the assistant to deviate from its intended business domain. |
-| **Data Extraction Attacks** | Automated attempts to harvest confidential training or index data. |
-| **Canary Token Leaks** | Detection of hidden canary strings signaling instruction exposure. |
+| **Injeção imediata** | Tentativas de substituir ou ignorar instruções e restrições do sistema. |
+| **Jailbreaks** | Alertas adversários projetados para contornar as grades de segurança. |
+| **Instrução/Vazamento de prompt do sistema** | Ataques de extração que tentam revelar instruções proprietárias. |
+| **Desvio de função/seqüestro** | Manipular o assistente para se desviar do domínio de negócios pretendido. |
+| **Ataques de extração de dados** | Tentativas automatizadas de coletar dados confidenciais de treinamento ou índice. |
+| **Vazamentos de token canário** | Detecção de strings canário ocultas sinalizando exposição de instruções. |
 
 ---
 
-## Key Modules
+## Módulos principais
 
-### 1. Prompt Shield Engine
-Evaluates every incoming prompt before it reaches the language model:
-- **Allow**: Request passes all safety checks.
-- **Flag**: Request is permitted, but logged as a security event for administrative review.
-- **Block**: Request is blocked immediately with a signed denial event.
+### 1. Mecanismo de escudo de alerta
+Avalia cada prompt recebido antes de chegar ao modelo de linguagem:
+- **Permitir**: a solicitação passa em todas as verificações de segurança.
+- **Sinalizador**: a solicitação é permitida, mas registrada como um evento de segurança para análise administrativa.
+- **Bloquear**: a solicitação é bloqueada imediatamente com um evento de negação assinado.
 
-### 2. Output Guardrails
-Monitors model outputs prior to client delivery to catch:
-- System prompt and internal context leakage.
-- Canary token leakage.
-- Unintended role drift or dangerous outputs.
+### 2. Protetores de saída
+Monitora os resultados do modelo antes da entrega ao cliente para capturar:
+- Alerta do sistema e vazamento de contexto interno.
+- Vazamento de token canário.
+- Desvio de função não intencional ou resultados perigosos.
 
-### 3. Canary Tokens
-Canary tokens are unique, hidden cryptographic markers inserted into chatbot instructions:
-- **How it works**: If an attacker succeeds in extracting instructions, the canary marker in the response triggers an immediate high-priority security alert.
-- **Configuration**: Go to **Admin ? Threat Defense ? Canary Tokens** to generate, rotate, or monitor tokens.
+### 3. Tokens Canário
+Os tokens canários são marcadores criptográficos ocultos exclusivos inseridos nas instruções do chatbot:
+- **Como funciona**: Se um invasor conseguir extrair instruções, o marcador canário na resposta aciona um alerta de segurança imediato de alta prioridade.
+- **Configuração**: Vá para **Admin ? Defesa contra ameaças? Canary Tokens** para gerar, girar ou monitorar tokens.
 
 ---
 
-## Policy Configuration & Incident Management
+## Configuração de políticas e gerenciamento de incidentes
 
-1. **Configure Policies**: Go to **Admin ? Threat Defense ? Policies**. Select from **Strict** (public chatbots), **Balanced** (standard enterprise use), or **Permissive** (testing environments).
-2. **Review Incidents**: Inspect flagged or blocked events under **Admin ? Threat Defense ? Incidents** to analyze attack payloads and adjust sensitivity.
+1. **Configurar políticas**: Vá para **Admin ? Defesa contra ameaças? Políticas**. Selecione entre **Estrito** (chatbots públicos), **Equilibrado** (uso empresarial padrão) ou **Permissivo** (ambientes de teste).
+2. **Revisar Incidentes**: Inspecione eventos sinalizados ou bloqueados em **Admin ? Defesa contra ameaças? Incidentes** para analisar cargas de ataque e ajustar a sensibilidade.

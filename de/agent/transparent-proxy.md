@@ -6,11 +6,11 @@ description: "Leiten Sie den KI-Verkehr des Entwicklers (z. B. Claude Code) vom 
 ---
 # Transparenter Proxy (KI-Routing)
 
-Der Agent kann den KI-Verkehr eines Entwicklers – zum Beispiel [Claude Code](/de/en/integrations/ide-claude-code) – transparent über das SecureAI-Gateway leiten. Dadurch unterliegt die Nutzung von Codierungsassistenten der gleichen Governance, Kostenverfolgung und Richtlinie wie der Rest Ihres KI-Bestands, ohne dass der Entwickler seine Tools ändern muss.
+Der Agent kann den KI-Verkehr eines Entwicklers – zum Beispiel [Claude Code](/de/integrations/ide-claude-code) – transparent über das SecureAI-Gateway leiten. Dadurch unterliegt die Nutzung von Codierungsassistenten der gleichen Governance, Kostenverfolgung und Richtlinie wie der Rest Ihres KI-Bestands, ohne dass der Entwickler seine Tools ändern muss.
 
 ## Wie es funktioniert
 
-Das Routing wird per [Richtlinie](/de/en/agent/policies-and-groups) über `claudeCodeRouting` konfiguriert:
+Das Routing wird per [Richtlinie](/de/agent/policies-and-groups) über `claudeCodeRouting` konfiguriert:
 
 | Einstellung | Beschreibung |
 |---------|-------------|
@@ -19,7 +19,7 @@ Das Routing wird per [Richtlinie](/de/en/agent/policies-and-groups) über `claud
 | **Modellzuordnungen** | Zuordnung pro Familie für `opus` / `sonnet` / `haiku` auf das tatsächlich bereitgestellte Modell. |
 | **Modellsperre** | `user` oder `force` – ob der Entwickler die Zuordnung ändern darf. |
 
-Wenn Routing aktiviert ist, erstellt SecureAI einen API-Schlüssel pro Gerät und fügt ihn über die Transparent-Proxy-Konfiguration in die Umgebung des Endpunkts ein (z. B. als `ANTHROPIC_AUTH_TOKEN`). Die Nutzung wird **über den Punkte-Bucket des verknüpften Entwicklers abgerechnet**. Stellen Sie daher sicher, dass das Gerät mit einem Eigentümerbenutzer verknüpft ist (siehe [Registrierung & Pakete](/de/en/agent/enrollment-and-packages)).
+Wenn Routing aktiviert ist, erstellt SecureAI einen API-Schlüssel pro Gerät und fügt ihn über die Transparent-Proxy-Konfiguration in die Umgebung des Endpunkts ein (z. B. als `ANTHROPIC_AUTH_TOKEN`). Die Nutzung wird **über den Punkte-Bucket des verknüpften Entwicklers abgerechnet**. Stellen Sie daher sicher, dass das Gerät mit einem Eigentümerbenutzer verknüpft ist (siehe [Registrierung & Pakete](/de/agent/enrollment-and-packages)).
 
 ## Flottenweite Standardeinstellungen
 
@@ -27,11 +27,11 @@ Gateway-Standardeinstellungen können einmal für die Flotte festgelegt werden �
 
 ## Warum Route statt Block
 
-Für sanktionierte Entwickler-KI ist das Routing über das Gateway in der Regel einem [Egress-Block](/de/en/agent/egress-enforcement) vorzuziehen: Der Entwickler arbeitet weiter, während Sie Richtliniendurchsetzung, Kostenzuordnung und Überwachung dieses Datenverkehrs erhalten. Sperrung/Sperrung für nicht sanktionierte Anbieter vorbehalten.
+Für sanktionierte Entwickler-KI ist das Routing über das Gateway in der Regel einem [Egress-Block](/de/agent/egress-enforcement) vorzuziehen: Der Entwickler arbeitet weiter, während Sie Richtliniendurchsetzung, Kostenzuordnung und Überwachung dieses Datenverkehrs erhalten. Sperrung/Sperrung für nicht sanktionierte Anbieter vorbehalten.
 
 ## Verwandte
 
-- [Egress Enforcement](/de/en/agent/egress-enforcement)
-- [Richtlinien & Gruppen](/de/en/agent/richtlinien-und-gruppen)
-- [AI Gateway Übersicht](/de/en/ai-gateway/overview)
-- [Claude Code IDE Integration](/de/en/integrations/ide-claude-code)
+- [Egress Enforcement](/de/agent/egress-enforcement)
+- [Richtlinien & Gruppen](/de/agent/richtlinien-und-gruppen)
+- [AI Gateway Übersicht](/de/ai-gateway/overview)
+- [Claude Code IDE Integration](/de/integrations/ide-claude-code)

@@ -1,39 +1,38 @@
 ---
 sidebar_position: 1
-title: "AI Gateway Overview"
+title: "AI Gateway — Plano de Control Centralizado"
+sidebar_label: "AI Gateway"
 ---
-
-
 
 # AI Gateway
 
-The **AI Gateway** is the centralized control plane for governing, securing, routing, and inspecting all organization-wide AI model traffic.
+**AI Gateway** es el plano de control centralizado para gobernar, proteger, enrutar e inspeccionar todo el tráfico del modelo de IA en toda la organización.
 
 ---
 
-## Core Capabilities
+## Capacidades principales
 
-### 1. Security Policies
-Define organization-wide enforcement rules:
-- **Model Allowlists**: Restrict which models and providers employees and applications can interact with.
-- **Data Residency Geofencing**: Ensure prompts and responses remain within designated jurisdictions.
-- **Enforcement Modes**: Run in **Monitor Mode** (log and attest without blocking) or **Enforce Mode** (fail-closed, blocking non-compliant traffic with cryptographic receipts).
+### 1. Políticas de seguridad
+Defina reglas de cumplimiento para toda la organización:
+- **Listas de modelos permitidos**: restringe con qué modelos y proveedores pueden interactuar los empleados y las aplicaciones.
+- **Geofencing de residencia de datos**: asegúrese de que las indicaciones y respuestas permanezcan dentro de las jurisdicciones designadas.
+- **Modos de cumplimiento**: se ejecuta en **Modo de supervisión** (registrar y dar fe sin bloquear) o en **Modo de cumplimiento** (cerrado contra fallas, bloqueando el tráfico no conforme con recibos criptográficos).
 
-### 2. Dashboard & Observability
-Monitor real-time metrics across your enterprise:
-- **Total Secured Interactions** and active SMLTP bundles.
-- **Redaction & Blocking Rates**: Track sensitive data intercepted by DLP/PII engines.
-- **Protocol Status**: Verify live gateway health and key rotation status.
+### 2. Panel de control y observabilidad
+Supervise las métricas en tiempo real en toda su empresa:
+- **Total de interacciones seguras** y paquetes SMLTP activos.
+- **Tasas de redacción y bloqueo**: realice un seguimiento de los datos confidenciales interceptados por los motores DLP/PII.
+- **Estado del protocolo**: verifica el estado de la puerta de enlace en vivo y el estado de rotación de claves.
 
-### 3. Cryptographic Key Management
-Manage Ed25519 signing keys and AES-256 encryption keys:
-- **Zero-Downtime Rotation**: Rotate signing keys periodically while preserving offline verification for receipts signed under previous keys.
-- **Config**: Go to **Admin ? AI Gateway ? Keys**.
+### 3. Gestión de claves criptográficas
+Administre claves de firma Ed25519 y claves de cifrado AES-256:
+- **Rotación sin tiempo de inactividad**: rote las claves de firma periódicamente mientras conserva la verificación fuera de línea para los recibos firmados con claves anteriores.
+- **Configuración**: ¿Ir a **Administrador? ¿Puerta de entrada de IA? Llaves**.
 
-### 4. Transparency Portal & Audit
-Validate interaction integrity using cryptographic proofs:
-- Search any interaction by undle_id to inspect its L1 hash chain, L2 Merkle tree, and L3 Sigstore Rekor transparency anchor.
-- Generate shareable public verification links for third-party compliance auditors.
+### 4. Portal de Transparencia y Auditoría
+Validar la integridad de la interacción mediante pruebas criptográficas:
+- Busque cualquier interacción por undle_id para inspeccionar su cadena hash L1, su árbol Merkle L2 y su ancla de transparencia Sigstore Rekor L3.
+- Genere enlaces de verificación pública compartibles para auditores de cumplimiento externos.
 
-### 5. Extension Management
-Manage and enforce security policies across the SecureAI browser extension fleet to prevent shadow AI usage on client browsers.
+### 5. Gestión de extensiones
+Administre y aplique políticas de seguridad en toda la flota de extensiones de navegador SecureAI para evitar el uso de IA en la sombra en los navegadores de los clientes.

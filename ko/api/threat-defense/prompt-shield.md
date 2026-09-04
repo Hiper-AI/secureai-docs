@@ -8,7 +8,7 @@ Prompt Shield API를 사용하면 모든 애플리케이션의 프롬프트와 �
 Prompt Shield는 두 가지 방법으로 사용할 수 있습니다.
 
 1. **독립 실행형 스캐닝 API** - 자체 LLM 파이프라인을 위한 아래에 문서화된 `/scan`, `/scan-output` 및 `/scan-conversation` 엔드포인트입니다.
-2. **완료 시 인라인** — [채팅 완료](/ko/en/api/chat/completions) 또는 [OpenAI 호환 엔드포인트](/ko/en/api/chat/openai-호환)를 호출하면 Prompt Shield가 자동으로 실행되며 호출별로 조정할 수 있습니다. [완료 시 호출별 제어](#per-call-control-on-completions)를 참조하세요.
+2. **완료 시 인라인** — [채팅 완료](/ko/api/chat/completions) 또는 [OpenAI 호환 엔드포인트](/ko/api/chat/openai-호환)를 호출하면 Prompt Shield가 자동으로 실행되며 호출별로 조정할 수 있습니다. [완료 시 호출별 제어](#per-call-control-on-completions)를 참조하세요.
 
 ## 완료 시 호출별 제어
 
@@ -28,7 +28,7 @@ Prompt Shield는 두 가지 방법으로 사용할 수 있습니다.
 | `enabled` | 이 호출을 검색에서 제외하려면 `false`를 설정하세요. 옵트아웃은 **실패 폐쇄**입니다. API 키가 옵트아웃이 허용된 경우에만 적용됩니다. 그렇지 않으면 통화가 거부됩니다. |
 | `policy` | 키의 허용 정책에서 이 호출에 대한 특정 Prompt Shield 정책(ID 또는 이름)을 선택합니다. |
 
-`policy`과 `enabled: false`을 결합할 수 없습니다. 적용된 정책은 응답(클래식 끝점의 `metadata.prompt_shield_policy`, `/v1` 끝점의 `secureai.prompt_shield_policy`)에 다시 반영됩니다. 모델을 실행하지 않고 호출 결과를 미리 보려면 [정책 확인](/ko/en/api/policy-check)을 사용하세요.
+`policy`과 `enabled: false`을 결합할 수 없습니다. 적용된 정책은 응답(클래식 끝점의 `metadata.prompt_shield_policy`, `/v1` 끝점의 `secureai.prompt_shield_policy`)에 다시 반영됩니다. 모델을 실행하지 않고 호출 결과를 미리 보려면 [정책 확인](/ko/api/policy-check)을 사용하세요.
 
 ## 인증
 

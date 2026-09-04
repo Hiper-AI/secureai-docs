@@ -1,45 +1,43 @@
 ---
 sidebar_position: 2
-title: "Get S2S Time Status"
+title: "获取S2S时间状态"
 openapi: "GET /speech/s2s/status"
 ---
+# 获取S2S时间状态
 
+检索计费用户当前的语音到语音 (S2S) 时间状态。
 
-# Get S2S Time Status
-
-Retrieve the current Speech-to-Speech (S2S) time status for the billing user.
-
-## Endpoint
+## 端点
 
 ```
 GET /speech/s2s/status
 ```
 
-## Description
+## 说明
 
-Retrieve the current Speech-to-Speech (S2S) time status for the billing user, including remaining time, total monthly limit, used time, and renewal information.
+检索计费用户当前的 S2S 时间状态，包括剩余时间、每月总限额、已使用时间和续订信息。
 
-### S2S Time Quotas
+### S2S 时间配额
 
-- Quotas are based on the user's license tier
-- Time resets monthly based on the license assignment date
-- Non-renewable trial licenses don't auto-reset
+- 配额基于用户的许可级别
+- 时间根据许可证分配日期每月重置
+- 不可续订的试用许可证不会自动重置
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## 查询参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `user_id` | string | No | User ID to check status for (defaults to API key owner) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `user_id` |字符串|没有 |用于检查状态的用户 ID（默认为 API 密钥所有者）|
 
-## Request Example
+## 请求示例
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/speech/s2s/status?user_id=60a7c8f5e8b4f5001f7a8c23" \
@@ -62,7 +60,7 @@ console.log('Total minutes:', data.total_minutes);
 console.log('Used minutes:', data.used_minutes);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -82,9 +80,9 @@ print('Total minutes:', result['total_minutes'])
 print('Used minutes:', result['used_minutes'])
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -99,22 +97,22 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `remaining_minutes` | number | Remaining S2S time in minutes |
-| `total_minutes` | number | Total monthly S2S time limit |
-| `used_minutes` | number | Used S2S time this month |
-| `has_time_remaining` | boolean | Whether user has any remaining S2S time |
-| `next_renewal_date` | string\|null | When the S2S time quota will reset (null for non-renewable licenses) |
-| `non_renewable` | boolean | Whether this is a non-renewable trial license |
-| `request_id` | string | Request ID for tracking |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |对于成功的请求始终如此 |
+| `remaining_minutes` |数量 |剩余 S2S 时间（分钟）|
+| `total_minutes` |数量 |每月 S2S 总时限 |
+| `used_minutes` |数量 |本月使用S2S时间|
+| `has_time_remaining` |布尔 |用户是否还有剩余S2S时间 |
+| `next_renewal_date` |字符串\|空| S2S 时间配额何时重置（不可续订许可证为空）|
+| `non_renewable` |布尔 |这是否是不可续订的试用许可证 |
+| `request_id` |字符串|请求 ID 进行跟踪 |
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -124,7 +122,7 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -134,7 +132,7 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### 404 Not Found
+### 404 未找到
 
 ```json
 {
@@ -144,7 +142,7 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### 500 Internal Server Error
+### 500 内部服务器错误
 
 ```json
 {
@@ -154,10 +152,9 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-## Notes
+## 注释
 
-- Check this endpoint before initiating S2S sessions to ensure sufficient time is available
-- The `user_id` parameter allows checking status for a different user (defaults to API key owner)
-- Time quotas are based on the user's license tier
-- Non-renewable trial licenses will have `non_renewable: true` and `next_renewal_date: null`
-
+- 在启动 S2S 会话之前检查此端点以确保有足够的时间可用
+- `user_id` 参数允许检查不同用户的状态（默认为 API 密钥所有者）
+- 时间配额基于用户的许可级别
+- 不可续订的试用许可证将具有 `non_renewable: true` 和 `next_renewal_date: null`

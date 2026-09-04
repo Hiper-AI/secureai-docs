@@ -1,43 +1,42 @@
 ---
 sidebar_position: 3
-title: "Security Policies"
+title: "Políticas de Segurança Descobertas"
 openapi: "GET /smltp-policies"
+sidebar_label: "Políticas de Segurança"
 ---
 
+# Obtenha políticas de segurança
 
+Recuperar políticas de segurança SMLTP (Secure Model Language Transfer Protocol) disponíveis.
 
-# Get Security Policies
-
-Retrieve available SMLTP (Secure Model Language Transfer Protocol) security policies.
-
-## Endpoint
+## Ponto final
 
 ```
 GET /smltp-policies
 ```
 
-## Description
+## Descrição
 
-Retrieve available SMLTP (Secure Model Language Transfer Protocol) security policies. These policies determine how your data is processed and protected.
+Recuperar políticas de segurança SMLTP (Secure Model Language Transfer Protocol) disponíveis. Estas políticas determinam como os seus dados são processados ​​e protegidos.
 
-## Authentication
+## Autenticação
 
-Required: API Key
+Obrigatório: Chave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## Solicitação
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Resposta
 
-### Success Response (200)
+### Resposta de sucesso (200)
 
 ```json
 {
@@ -65,31 +64,31 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descrição | Exemplo |
 |-------|------|-------------|---------|
-| `success` | boolean | Always true for successful requests | `true` |
-| `policies` | array | List of available security policies | See example |
-| `restrictions` | object | Policy access restrictions | See example |
+| `success` | booleano | Sempre verdadeiro para solicitações bem-sucedidas | `true` |
+| `policies` | matriz | Lista de políticas de segurança disponíveis | Veja exemplo |
+| `restrictions` | objeto | Restrições de acesso à política | Veja exemplo |
 
-### Policy Object
+### Objeto de Política
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descrição | Exemplo |
 |-------|------|-------------|---------|
-| `id` | string | Unique policy identifier | `"internal"` |
-| `name` | string | Policy display name | `"Internal"` |
-| `description` | string | Policy description | `"For internal company data"` |
+| `id` | corda | Identificador único de política | `"internal"` |
+| `name` | corda | Nome de exibição da política | `"Internal"` |
+| `description` | corda | Descrição da política | `"For internal company data"` |
 
-### Restrictions Object
+### Objeto de restrições
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descrição | Exemplo |
 |-------|------|-------------|---------|
-| `allowed_policies` | array | Array of allowed policy IDs | `["public", "internal", "confidential"]` |
+| `allowed_policies` | matriz | Matriz de IDs de políticas permitidas | `["public", "internal", "confidential"]` |
 
-## Error Responses
+## Respostas de erro
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -99,9 +98,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-## Example Usage
+## Exemplo de uso
 
-### JavaScript/Node.js
+###JavaScript/Node.js
 
 ```javascript
 const response = await fetch('https://{customer.name}.hiperai.ai/api/external/smltp-policies', {
@@ -114,7 +113,7 @@ const data = await response.json();
 console.log('Available Policies:', data.policies);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -129,33 +128,33 @@ data = response.json()
 print('Available Policies:', data['policies'])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Policy Types
+## Tipos de políticas
 
-### Public
-- **Use Case**: Public, non-sensitive data
-- **Security Level**: Low
-- **Data Processing**: Standard processing with basic security
+### Público
+- **Caso de uso**: dados públicos e não confidenciais
+- **Nível de segurança**: Baixo
+- **Processamento de Dados**: Processamento padrão com segurança básica
 
-### Internal
-- **Use Case**: Internal company data
-- **Security Level**: Medium
-- **Data Processing**: Enhanced security with additional safeguards
+### Interno
+- **Caso de uso**: dados internos da empresa
+- **Nível de segurança**: Médio
+- **Processamento de dados**: segurança aprimorada com proteções adicionais
 
-### Confidential
-- **Use Case**: Confidential business data
-- **Security Level**: High
-- **Data Processing**: Maximum security with strict data handling
+### Confidencial
+- **Caso de uso**: dados comerciais confidenciais
+- **Nível de segurança**: Alto
+- **Processamento de dados**: Máxima segurança com tratamento rigoroso de dados
 
-## Notes
+## Notas
 
-- Choose the appropriate policy based on your data sensitivity
-- Policies affect how your data is processed and protected
-- Use the policy ID in chat completion requests
-- Some policies may be restricted based on your account type 
+- Escolha a política apropriada com base na sensibilidade dos seus dados
+- As políticas afetam a forma como seus dados são processados e protegidos
+- Use o ID da política em solicitações de conclusão de chat
+- Algumas políticas podem ser restritas com base no seu tipo de conta

@@ -1,16 +1,14 @@
 ---
 id: list
-title: "List Roles"
-sidebar_label: "List Roles"
-description: "Retrieve all available user roles"
+title: "Listar Roles"
+sidebar_label: "Listar Roles"
+description: "Recuperar todos los roles de usuario disponibles"
 openapi: "GET /roles"
 ---
 
+# Lista de roles
 
-
-# List Roles
-
-Retrieve all available user roles in the SecureAI system.
+Recupere todos los roles de usuario disponibles en el sistema SecureAI.
 
 ## Endpoint
 
@@ -18,38 +16,38 @@ Retrieve all available user roles in the SecureAI system.
 GET /roles
 ```
 
-## Description
+## Descripción
 
-This endpoint returns all user roles available in the SecureAI system. It provides detailed information about each role including permissions, descriptions, and metadata. This is useful for understanding the available roles and their capabilities.
+Este endpoint devuelve todos los roles de usuario disponibles en el sistema SecureAI. Proporciona información detallada sobre cada rol, incluidos permisos, descripciones y metadatos. Esto es útil para comprender los roles disponibles y sus capacidades.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## Parámetros de consulta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `page` | integer | No | 1 | Page number for pagination (default: 1) |
-| `limit` | integer | No | 20 | Number of roles per page (default: 20) |
-| `search` | string | No | - | Search term for name, display name, or description |
-| `isSystem` | string | No | - | Filter by system roles (true/false) |
-| `sortBy` | string | No | createdAt | Field to sort by (default: "createdAt") |
-| `sortOrder` | string | No | desc | Sort order (asc/desc, default: "desc") |
+| `page` | entero | No | 1 | Número de página para paginación (predeterminado: 1) |
+| `limit` | entero | No | 20 | Número de roles por página (predeterminado: 20) |
+| `search` | cadena | No | - | Término de búsqueda para nombre, nombre para mostrar o descripción |
+| `isSystem` | cadena | No | - | Filtrar por roles del sistema (verdadero/falso) |
+| `sortBy` | cadena | No | creadoEn | Campo para ordenar por (predeterminado: "createdAt") |
+| `sortOrder` | cadena | No | desc | Orden de clasificación (asc/desc, predeterminado: "desc") |
 
-## Example Request
+## Solicitud de ejemplo
 
 ```bash
 GET /roles?page=1&limit=10&search=admin
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `200 OK`
+**Código de estado**: `200 OK`
 
 ```json
 {
@@ -93,37 +91,37 @@ GET /roles?page=1&limit=10&search=admin
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `roles` | array | Array of role objects |
-| `roles[].id` | string | Unique role identifier |
-| `roles[].name` | string | Role name |
-| `roles[].displayName` | string | Display name for the role |
-| `roles[].description` | string | Role description |
-| `roles[].isSystem` | boolean | Whether this is a system role |
-| `roles[].hasAdminPanelAccess` | boolean | Whether role has admin panel access |
-| `roles[].permissions` | array | Array of permission objects |
-| `roles[].permissions[].section` | string | Permission section |
-| `roles[].permissions[].level` | string | Permission level |
-| `roles[].canInteractWithAI` | boolean | Whether role can interact with AI |
-| `roles[].canUseChat` | boolean | Whether role can use chat |
-| `roles[].userCount` | integer | Number of users with this role |
-| `roles[].createdBy` | object | User who created the role |
-| `roles[].createdBy.id` | string | Creator user ID |
-| `roles[].createdBy.name` | string | Creator name |
-| `roles[].createdBy.email` | string | Creator email |
-| `roles[].createdAt` | string | Creation timestamp |
-| `roles[].updatedAt` | string | Last update timestamp |
-| `pagination` | object | Pagination information |
-| `pagination.page` | integer | Current page number |
-| `pagination.limit` | integer | Items per page |
-| `pagination.total` | integer | Total number of roles |
-| `pagination.pages` | integer | Total number of pages |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `roles` | matriz | Matriz de objetos de rol |
+| `roles[].id` | cadena | Identificador de rol único |
+| `roles[].name` | cadena | Nombre del rol |
+| `roles[].displayName` | cadena | Nombre para mostrar del rol |
+| `roles[].description` | cadena | Descripción del rol |
+| `roles[].isSystem` | booleano | Si se trata de una función del sistema |
+| `roles[].hasAdminPanelAccess` | booleano | Si el rol tiene acceso al panel de administración |
+| `roles[].permissions` | matriz | Matriz de objetos de permiso |
+| `roles[].permissions[].section` | cadena | Sección de permisos |
+| `roles[].permissions[].level` | cadena | Nivel de permiso |
+| `roles[].canInteractWithAI` | booleano | Si el rol puede interactuar con la IA |
+| `roles[].canUseChat` | booleano | Si el rol puede usar el chat |
+| `roles[].userCount` | entero | Número de usuarios con este rol |
+| `roles[].createdBy` | objeto | Usuario que creó el rol |
+| `roles[].createdBy.id` | cadena | ID de usuario del creador |
+| `roles[].createdBy.name` | cadena | Nombre del creador |
+| `roles[].createdBy.email` | cadena | Correo electrónico del creador |
+| `roles[].createdAt` | cadena | Marca de tiempo de creación |
+| `roles[].updatedAt` | cadena | Marca de tiempo de la última actualización |
+| `pagination` | objeto | Información de paginación |
+| `pagination.page` | entero | Número de página actual |
+| `pagination.limit` | entero | Artículos por página |
+| `pagination.total` | entero | Número total de funciones |
+| `pagination.pages` | entero | Número total de páginas |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -151,7 +149,7 @@ const result = await listRoles({
 console.log(result.roles);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -176,16 +174,16 @@ result = list_roles(params)
 print(result["roles"])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/roles?page=1&limit=10&search=admin" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -197,7 +195,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/roles?page=1&limit=
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -209,7 +207,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/roles?page=1&limit=
 }
 ```
 
-### 429 Too Many Requests
+### 429 Demasiadas solicitudes
 
 ```json
 {
@@ -223,27 +221,27 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/roles?page=1&limit=
 ```
 
 
-## Use Cases
+## Casos de uso
 
-- **Role Management**: List all available roles for user assignment
-- **Permission Review**: Understand what permissions each role has
-- **Access Control**: Plan user access based on available roles
-- **User Assignment**: Assign roles to users based on their needs
-- **Role Analysis**: Analyze role usage and user distribution
+- **Gestión de roles**: enumera todos los roles disponibles para la asignación de usuarios
+- **Revisión de permisos**: comprenda qué permisos tiene cada rol
+- **Control de acceso**: planifique el acceso de los usuarios según los roles disponibles
+- **Asignación de usuarios**: asigne roles a los usuarios según sus necesidades
+- **Análisis de roles**: analiza el uso de roles y la distribución de usuarios
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **Predeterminado**: 100 solicitudes por minuto
+- **Diario**: 10.000 solicitudes por día
+- **Mensual**: 300.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- This endpoint requires admin privileges
-- Page-based Pagination: Uses page parameter, not offset
-- Search: Searches in name, displayName, and description fields
-- System Roles: Can filter by system vs custom roles
-- Sorting: Can sort by any field in ascending or descending order
-- Flat Response: Response is not nested under data object
-- User Count: Shows how many users have each role
-- Creator Info: Shows who created each role 
+- Este endpoint requiere privilegios de administrador
+- Paginación basada en páginas: utiliza parámetros de página, no desplazamiento
+- Búsqueda: busca en los campos de nombre, nombre para mostrar y descripción.
+- Roles del sistema: puede filtrar por sistema o por roles personalizados
+- Clasificación: puede ordenar por cualquier campo en orden ascendente o descendente
+- Respuesta plana: la respuesta no está anidada en el objeto de datos
+- Conteo de usuarios: muestra cuántos usuarios tienen cada rol
+- Información del creador: muestra quién creó cada rol.

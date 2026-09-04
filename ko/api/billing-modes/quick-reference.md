@@ -249,7 +249,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 
 ### 문서
 - [결제 모드 개요](../billing-modes.md)
-- [한도 및 할당량](/ko/en/api/limits-and-quotas) - 플랫폼 한도 이해
+- [한도 및 할당량](/ko/api/limits-and-quotas) - 플랫폼 한도 이해
 
 ### 관리자 패널
 - **API 섹션**: API 키 생성 및 관리

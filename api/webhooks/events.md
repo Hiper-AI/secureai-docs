@@ -1,34 +1,32 @@
 ---
 sidebar_position: 2
-title: "Webhook Events"
-sidebar_label: "Events"
-description: "The SecureAI webhook event catalog"
+title: "Catálogo de Eventos de Webhooks"
+sidebar_label: "Eventos de Webhooks"
+description: "El catálogo de eventos del webhook de SecureAI"
 ---
 
+# Eventos de webhook
 
+Al crear o actualizar un [endpoint de webhook](/api/webhooks/overview), lo suscribe a uno o más tipos de eventos. Utilice `"*"` para recibir todos los eventos.
 
-# Webhook Events
+## Catálogo de eventos
 
-When creating or updating a [webhook endpoint](/en/api/webhooks/overview), you subscribe it to one or more event types. Use `"*"` to receive every event.
-
-## Event catalog
-
-| Event | Fires when |
+| Evento | Se dispara cuando |
 |-------|-----------|
-| `*` | Wildcard — subscribes to **all** events below. |
-| `promptshield:attack:blocked` | Prompt Shield blocked a prompt-injection/jailbreak attempt. |
-| `promptshield:attack:detected` | Prompt Shield flagged a suspicious prompt (detected but not blocked). |
-| `promptshield:canary:leaked` | A canary token was found in model output (system-prompt/data exfiltration signal). |
-| `dlp:incident` | A Data Loss Prevention rule matched. |
-| `pii:incident` | PII was detected/redacted. |
-| `api:limit_reached` | An API key hit a daily/monthly/rate limit. |
-| `api:model_failover` | A [redundancy](/en/api/redundancy) chain failed over from one model to another. |
+| `*` | Comodín: se suscribe a **todos** los eventos siguientes. |
+| `promptshield:attack:blocked` | Prompt Shield bloqueó un intento de inyección rápida/jailbreak. |
+| `promptshield:attack:detected` | Prompt Shield marcó un mensaje sospechoso (detectado pero no bloqueado). |
+| `promptshield:canary:leaked` | Se encontró un token canario en la salida del modelo (señal de aviso del sistema/exfiltración de datos). |
+| `dlp:incident` | Una regla de Prevención de pérdida de datos coincide. |
+| `pii:incident` | Se detectó/redactó PII. |
+| `api:limit_reached` | Una clave API alcanzó un límite diario/mensual/de tasa. |
+| `api:model_failover` | Una cadena [redundancia](/api/redundancy) falló de un modelo a otro. |
 
-Subscribing to an unknown event name is rejected at create/update time.
+La suscripción a un nombre de evento desconocido se rechaza en el momento de la creación/actualización.
 
-## Payload envelope
+## Sobre de carga útil
 
-Every delivery shares the same envelope; the `data` object is event-specific.
+Cada entrega comparte el mismo sobre; el objeto `data` es específico del evento.
 
 ```json
 {
@@ -46,9 +44,9 @@ Every delivery shares the same envelope; the `data` object is event-specific.
 }
 ```
 
-## Test deliveries
+## Entregas de prueba
 
-The **Send test event** button (or `POST /api/admin/webhooks/:id/test`) delivers a `webhook:test` event so you can confirm your receiver and signature verification before going live:
+El botón **Enviar evento de prueba** (o `POST /api/admin/webhooks/:id/test`) entrega un evento `webhook:test` para que pueda confirmar su destinatario y la verificación de firma antes de publicarlo:
 
 ```json
 {
@@ -59,6 +57,6 @@ The **Send test event** button (or `POST /api/admin/webhooks/:id/test`) delivers
 }
 ```
 
-## Related
+## Relacionado
 
-- [Webhooks Overview](/en/api/webhooks/overview) — delivery format, signature verification, reliability.
+- [Descripción general de webhooks](/api/webhooks/overview): formato de entrega, verificación de firma, confiabilidad.

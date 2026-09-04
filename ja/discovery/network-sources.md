@@ -6,7 +6,7 @@ description: "Shadow-AI の検出 - CASB/SWG ログから、どの企業のソ�
 ---
 # ネットワークソース
 
-**ネットワーク ソース** (管理者 → エージェント レジストリ → **ネットワーク**) は、CASB/SWG ログで見つかったシャドウ AI を表示します。SDK や [エンドポイント エージェント](/ja/en/agent/overview) が展開されていない場合でも、企業の **ソース IP とユーザーが LLM API を呼び出している**ことがわかります。 [CASB およびネットワーク コネクタ](/ja/en/integrations/casb/overview) - Cisco Umbrella、Zscaler などによって供給されます。
+**ネットワーク ソース** (管理者 → エージェント レジストリ → **ネットワーク**) は、CASB/SWG ログで見つかったシャドウ AI を表示します。SDK や [エンドポイント エージェント](/ja/agent/overview) が展開されていない場合でも、企業の **ソース IP とユーザーが LLM API を呼び出している**ことがわかります。 [CASB およびネットワーク コネクタ](/ja/integrations/casb/overview) - Cisco Umbrella、Zscaler などによって供給されます。
 
 ## 検出ウィンドウ
 
@@ -40,6 +40,6 @@ description: "Shadow-AI の検出 - CASB/SWG ログから、どの企業のソ�
 
 ## 関連
 
-- [CASB とネットワーク (SWG) の統合](/ja/en/integrations/casb/overview) - ログ ソースを接続します。
-- [エンドポイント エージェント](/ja/ja/agent/overview) — 直接管理できるエンドポイントの場合。
-- [AI ディスカバリーとインベントリーの概要](/ja/ja/discovery/overview)
+- [CASB とネットワーク (SWG) の統合](/ja/integrations/casb/overview) - ログ ソースを接続します。
+- [エンドポイント エージェント](/ja/agent/overview) — 直接管理できるエンドポイントの場合。
+- [AI ディスカバリーとインベントリーの概要](/ja/discovery/overview)

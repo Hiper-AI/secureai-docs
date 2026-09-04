@@ -1,54 +1,52 @@
 ---
 sidebar_position: 2
-title: "Create New User"
+title: "创建新用户"
 openapi: "POST /users"
 ---
+# 创建新用户
 
+创建一个新的用户帐户。仅可由管理员访问。
 
-# Create New User
-
-Create a new user account. Only accessible by administrators.
-
-## Endpoint
+## 端点
 
 ```
 POST /users
 ```
 
-## Description
+## 说明
 
-This endpoint allows administrators to create new user accounts in the system. You can specify various user attributes including role, license, and authentication type. This is an administrative endpoint that requires appropriate permissions.
+该端点允许管理员在系统中创建新的用户帐户。您可以指定各种用户属性，包括角色、许可证和身份验证类型。这是需要适当权限的管理端点。
 
-## User Creation Flow
+## 用户创建流程
 
-**Basic Auth** (`authType: "basic"`): User receives a welcome email with a password setup link. Account is created unverified until password is set.
+**基本身份验证** (`authType: "basic"`)：用户收到一封带有密码设置链接的欢迎电子邮件。在设置密码之前，帐户的创建未经验证。
 
-**Enterprise SSO** (`authType: "enterprise"`): User is created verified and can sign in via enterprise SSO (Auth0, Microsoft AD, etc.). No password setup required.
+**企业 SSO** (`authType: "enterprise"`)：用户已创建并经过验证，可以通过企业 SSO（Auth0、Microsoft AD 等）登录。无需设置密码。
 
-## Authentication
+## 身份验证
 
-Required. Include your API key in the Authorization header.
+必填。将您的 API 密钥包含在授权标头中。
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## 请求
 
-### Request Body
+### 请求正文
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `name` | string | Yes | - | User's full name |
-| `username` | string | No | - | Unique username (auto-generated from email if not provided) |
-| `email` | string | Yes | - | User's email address |
-| `role` | string | No | user | User's role (admin, user, globalReader) |
-| `license` | string | No | Essential | User's license tier (Essential, Growth, Ultra, Early Access) |
-| `roleId` | string | No | - | Custom role ID (MongoDB ObjectId) |
-| `setupCompleted` | boolean | No | false | Whether user setup is completed |
-| `authType` | string | No | basic | Authentication type (basic, enterprise) |
+|参数|类型 |必填|默认|描述 |
+|------------|------|----------|---------|------------|
+| `name` |字符串|是的 | - |用户全名 |
+| `username` |字符串|没有 | - |唯一的用户名（如果未提供，则从电子邮件自动生成）|
+| `email` |字符串|是的 | - |用户的电子邮件地址 |
+| `role` |字符串|没有 |用户 |用户角色（管理员、用户、globalReader）|
+| `license` |字符串|没有 |必备|用户许可级别（Essential、Growth、Ultra、Early Access）|
+| `roleId` |字符串|没有 | - |自定义角色 ID (MongoDB ObjectId) |
+| `setupCompleted` |布尔 |没有 |假 |用户设置是否完成 |
+| `authType` |字符串|没有 |基本 |身份验证类型（基本、企业）|
 
-### Example Request
+### 请求示例
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
@@ -65,9 +63,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
   }'
 ```
 
-## Response
+## 回应
 
-### Success Response (201)
+### 成功响应 (201)
 
 ```json
 {
@@ -89,26 +87,26 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Always `true` for successful requests |
-| `message` | string | Success message |
-| `user` | object | Created user object |
-| `user.id` | string | User's unique identifier |
-| `user.name` | string | User's full name |
-| `user.username` | string | User's username |
-| `user.email` | string | User's email address |
-| `user.role` | string | User's role |
-| `user.license` | string | User's license tier |
-| `user.status` | integer | User status (1=active) |
-| `user.isVerified` | boolean | Whether user is verified |
-| `user.setupCompleted` | boolean | Whether user setup is completed |
-| `user.authType` | string | Authentication type |
-| `user.createdAt` | string | User creation timestamp |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |对于成功的请求，始终 `true` |
+| `message` |字符串|成功留言|
+| `user` |对象|创建用户对象 |
+| `user.id` |字符串|用户的唯一标识符|
+| `user.name` |字符串|用户全名 |
+| `user.username` |字符串|用户的用户名 |
+| `user.email` |字符串|用户的电子邮件地址 |
+| `user.role` |字符串|用户角色|
+| `user.license` |字符串|用户许可级别 |
+| `user.status` |整数 |用户状态（1=活动）|
+| `user.isVerified` |布尔 |用户是否已验证 |
+| `user.setupCompleted` |布尔 |用户设置是否完成 |
+| `user.authType` |字符串|认证类型 |
+| `user.createdAt` |字符串|用户创建时间戳 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -136,7 +134,7 @@ if (data.success) {
 }
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -163,7 +161,7 @@ if result['success']:
     print('User ID:', result['user']['id'])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
@@ -178,9 +176,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
   }'
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -190,7 +188,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Invalid AuthType
+### 400 无效的身份验证类型
 
 ```json
 {
@@ -200,7 +198,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Missing Required Fields
+### 400 缺少必填字段
 
 ```json
 {
@@ -210,7 +208,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -220,7 +218,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -230,7 +228,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 409 Conflict
+### 409 冲突
 
 ```json
 {
@@ -240,24 +238,24 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-## Validations and Business Rules
+## 验证和业务规则
 
-- **License value**: Must be one of the allowed licenses (`Essential`, `Growth`, `Ultra`, `Early Access`). Invalid values return 400.
-- **License capacity**: Enforced via `checkLicenseCapacity`. If capacity is full for the selected tier, returns 400.
-- **Email normalization**: Lowercased and trimmed before validation and storage.
-- **Username normalization**: Lowercased and trimmed before validation and storage. Auto-generated from email if not provided.
-- **Email format**: Validated with a simple regex; invalid emails return 400.
-- **Username format**: Must match `^[a-z0-9.-]{3,30}$`; invalid usernames return 400.
-- **Uniqueness**: `email`, `username`, and `name` must be unique. Conflicts return 409.
-- **Email invite behavior**: For basic auth, users receive welcome emails with password setup links.
+- **许可证值**：必须是允许的许可证之一（`Essential`、`Growth`、`Ultra`、`Early Access`）。无效值返回 400。
+- **许可证容量**：通过 `checkLicenseCapacity` 强制执行。如果所选层的容量已满，则返回 400。
+- **电子邮件标准化**：在验证和存储之前小写并修剪。
+- **用户名规范化**：在验证和存储之前小写并修剪。如果未提供，则从电子邮件自动生成。
+- **电子邮件格式**：使用简单的正则表达式进行验证；无效邮件返回400。
+- **用户名格式**：必须匹配`^[a-z0-9.-]{3,30}$`；无效的用户名返回 400。
+- **唯一性**：`email`、`username` 和 `name` 必须是唯一的。冲突再次出现 409。
+- **电子邮件邀请行为**：对于基本身份验证，用户会收到带有密码设置链接的欢迎电子邮件。
 
-## Normalization and Storage
+## 标准化和存储
 
-- `email` and `username` are always stored lowercased and trimmed.
+- `email` 和 `username` 始终以小写形式存储并进行修剪。
 
-## Typical Error Shapes
+## 典型错误形状
 
-### 400 Invalid License
+### 400 无效许可证
 
 ```json
 {
@@ -267,7 +265,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 License Unavailable
+### 400 许可证不可用
 
 ```json
 {
@@ -277,7 +275,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Invalid Email
+### 400 无效电子邮件
 
 ```json
 {
@@ -287,7 +285,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 400 Invalid Username
+### 400 用户名无效
 
 ```json
 {
@@ -297,7 +295,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-### 409 Conflict (Uniqueness)
+### 409 冲突（唯一性）
 
 ```json
 {
@@ -307,41 +305,41 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/users" \
 }
 ```
 
-## User Roles
+## 用户角色
 
-| Role | Description | Permissions |
+|角色 |描述 |权限 |
 |------|-------------|-------------|
-| `admin` | Administrator | Full system access |
-| `user` | Regular user | Standard user access |
-| `globalReader` | Global Reader | Read-only admin panel access |
+| `admin` |管理员|完整的系统访问|
+| `user` |普通用户|标准用户访问 |
+| `globalReader` |全球读者|只读管理面板访问|
 
-## License Tiers
+## 许可级别
 
-| License | Description | Features |
+|许可证|描述 |特点|
 |---------|-------------|----------|
-| `Essential` | Basic tier | Limited features |
-| `Growth` | Professional tier | Enhanced features |
-| `Ultra` | Premium tier | Full features |
-| `Early Access` | Early access tier | Beta features |
+| `Essential` |基本层|功能有限|
+| `Growth` |专业级|增强功能 |
+| `Ultra` |高级级别 |功能齐全 |
+| `Early Access` |抢先体验级别 |测试版功能 |
 
-## Authentication Types
+## 身份验证类型
 
-| Type | Description |
+|类型 |描述 |
 |------|-------------|
-| `basic` | Username/password authentication (user receives password setup email) |
-| `enterprise` | Enterprise SSO integration (Auth0, Microsoft AD, etc.) |
+| `basic` |用户名/密码验证（用户收到密码设置电子邮件）|
+| `enterprise` |企业 SSO 集成（Auth0、Microsoft AD 等）|
 
-## Use Cases
+## 用例
 
-- **User Onboarding**: Create new user accounts for team members
-- **Passwordless Onboarding**: Create users who receive email invites to set their own passwords
-- **SSO Integration**: Create users who authenticate via external identity providers
-- **Bulk User Creation**: Programmatically create multiple users
-- **Integration**: Create users from external systems
-- **Administrative Tasks**: Manage user accounts through API
+- **用户入职**：为团队成员创建新的用户帐户
+- **无密码入职**：创建接收电子邮件邀请设置自己密码的用户
+- **SSO 集成**：创建通过外部身份提供商进行身份验证的用户
+- **批量用户创建**：以编程方式创建多个用户
+- **集成**：从外部系统创建用户
+- **管理任务**：通过API管理用户帐户
 
-## Rate Limits
+## 速率限制
 
-This endpoint follows the standard rate limits:
-- 60 requests per minute
-- 1000 requests per hour 
+此端点遵循标准速率限制：
+- 每分钟 60 个请求
+- 每小时 1000 个请求

@@ -1,43 +1,41 @@
 ---
 sidebar_position: 4
-title: "Immutable Logs"
+title: "Logs Imutáveis (Auditoria Criptográfica)"
+sidebar_label: "Logs Imutáveis"
 ---
 
+# Logs Imutáveis — Cadeia de auditoria criptográfica
 
+SecureAI registra **cada interação de IA e cada ação administrativa** em uma cadeia imutável de três camadas. Essa arquitetura garante que qualquer modificação, exclusão ou manipulação de registros seja detectável — mesmo que alguém tenha acesso direto ao banco de dados.
 
+## Por que isso importa?
 
-# Immutable Logs — Cryptographic audit chain
+Um log que existe apenas no MongoDB não é verdadeiramente imutável: qualquer pessoa que tenha acesso ao servidor pode excluí-lo sem deixar rastros. SecureAI resolve isso fixando cada log em **Sigstore Rekor**, um log de transparência pública operado pela Open Source Security Foundation (OpenSSF) — o mesmo sistema que a indústria de software usa para verificar a cadeia de custódia de pacotes críticos.
 
-SecureAI records **every AI interaction and every administrative action** in a three-layer immutable chain. This architecture ensures that any modification, deletion or manipulation of records is detectable — even if someone has direct access to the database.
-
-## Why does it matter?
-
-A log that only exists in MongoDB is not truly immutable: anyone who has access to the server can delete it without leaving a trace. SecureAI solves this by pinning each log to **Sigstore Rekor**, a public transparency log operated by the Open Source Security Foundation (OpenSSF) — the same system the software industry uses to verify the chain of custody of critical packages.
-
-> **Technical guarantee:** Once a Merkle block hash is in Rekor, no one — including the SecureAI operator — can retroactively alter that record. Any third-party auditor can independently verify it with a single curl call.
+> **Garantia técnica:** Depois que um hash de bloco Merkle estiver em Rekor, ninguém — incluindo o operador SecureAI — poderá alterar retroativamente esse registro. Qualquer auditor terceirizado pode verificá-lo de forma independente com uma única chamada curl.
 
 ---
 
-##The three layers of proof
+##As três camadas de prova
 
-Each interaction bundle has three levels of cryptographic evidence:
+Cada pacote de interação possui três níveis de evidência criptográfica:
 
-### Layer 1 — MongoDB Registry (L1)
+### Camada 1 — Registro MongoDB (L1)
 
-The primary record of the interaction is stored in MongoDB with:
+O registro primário da interação é armazenado no MongoDB com:
 
-| Field | Description |
-|-------|-------------|
-| `current_hash` | SHA-256 of the payload of this entry + `prev_hash` previous |
-| `prev_hash` | Hash of the immediately preceding entry — forms the **hash chain** |
-| `bundle_id` | Unique identifier of the interaction package |
-| `receipt_signature` | If the AI ​​provider returned a signed acknowledgment of the privacy headers |
+| Campo | Descrição |
+|-------|------------|
+| `current_hash` | SHA-256 da carga desta entrada + `prev_hash` anterior |
+| `prev_hash` | Hash da entrada imediatamente anterior — forma a **cadeia de hash** |
+| `bundle_id` | Identificador único do pacote de interação |
+| `receipt_signature` | Se o provedor de IA retornou uma confirmação assinada dos cabeçalhos de privacidade |
 
-The string `prev_hash → current_hash → next_current_hash` causes **deleting any row to break the string** — the discrepancy is detectable by traversing the sequence.
+A string `prev_hash → current_hash → next_current_hash` faz com que **a exclusão de qualquer linha quebre a string** — a discrepância é detectável ao percorrer a sequência.
 
-### Layer 2 — Merkle Tree (L2)
+### Camada 2 — Árvore Merkle (L2)
 
-Every 10 log entries are grouped into a **Merkle block**:
+Cada 10 entradas de log são agrupadas em um **bloco Merkle**:
 
 ```
   Merkle Root
@@ -47,76 +45,76 @@ Every 10 log entries are grouped into a **Merkle block**:
  h0    h1 h2    h3   ...hasta h9
 ```
 
-The `merkle_root` is the root hash that represents the 10 entries. If any entry is altered, the `merkle_root` changes — invalidating the inclusion test.
+O `merkle_root` é o hash raiz que representa as 10 entradas. Se alguma entrada for alterada, o `merkle_root` muda — invalidando o teste de inclusão.
 
-| Field L2 | Description |
-|----------|-------------|
-| `block_id` | Merkle Block ID |
-| `merkle_root` | Tree root hash |
-| `leaf_hash` | Hash of this specific entry within the tree |
-| `leaf_index` | Position (0–9) within the block |
-| `verified` | `true` if `leaf_hash` is committed in `merkle_root` |
+| Campo L2 | Descrição |
+|----------|------------|
+| `block_id` | ID do bloco Merkle |
+| `merkle_root` | Hash de raiz de árvore |
+| `leaf_hash` | Hash desta entrada específica dentro da árvore |
+| `leaf_index` | Posição (0–9) dentro do bloco |
+| `verified` | `true` se `leaf_hash` for confirmado em `merkle_root` |
 
-### Layer 3 — Rekor Anchor (L3)
+### Camada 3 — Rekor Âncora (L3)
 
-The `merkle_root` of each sealed block is sent to **[Sigstore Rekor](https://rekor.sigstore.dev/)**, a public append-only log. Rekor returns:
+O `merkle_root` de cada bloco selado é enviado para **[Sigstore Rekor](https://rekor.sigstore.dev/)**, um log público somente para acréscimos. Rekor retorna:
 
-| Field L3 | Description |
-|----------|-------------|
-| `log_index` | Global sequence number in Rekor log — unique and monotonically increasing |
-| `uuid` | Entry identifier in Rekor |
-| `integrated_time` | Timestamp in which Rekor signed the inclusion test |
-| `rekor_url` | Direct URL to entry raw JSON in Rekor |
+| Campo L3 | Descrição |
+|----------|------------|
+| `log_index` | Número de sequência global no log Rekor — único e crescente monotonicamente |
+| `uuid` | Identificador de entrada em Rekor |
+| `integrated_time` | Timestamp em que Rekor assinou o teste de inclusão |
+| `rekor_url` | URL direto para inserir JSON bruto em Rekor |
 
-Once `log_index` exists in Rekor, **no one can delete it** — the Rekor log is public, distributed, and immutable by design.
-
----
-
-## Transparency Portal (admin)
-
-### Access
-
-**Admin → AI Gateway → Transparency Portal**
-
-### Verify a bundle
-
-1. Type or paste `bundle_id` into the search field.
-2. Click **"Verify Proof"**.
-3. You will see the three layers with status badges:
-   - ✅ **Green** = verified successfully
-   - ⚠️ **Yellow** = sealing/anchor pending (normal for interactions less than 2 minutes ago)
-   - ❌ **Red** = verification failure (warning signal)
-
-### Copy public verification link
-
-When the result is visible, a bar appears with the **"Copy public verification URL"** button. That link is public — you can send it to an external auditor without requiring a login.
+Uma vez que `log_index` existe em Rekor, **ninguém pode excluí-lo** — o log Rekor é público, distribuído e imutável por design.
 
 ---
 
-##Public verification page
+## Portal da Transparência (admin)
 
-Anyone with a `bundle_id` can verify the test without access to SecureAI:
+### Acesso
+
+**Administrador → AI Gateway → Portal de Transparência**
+
+### Verifique um pacote
+
+1. Digite ou cole `bundle_id` no campo de pesquisa.
+2. Clique em **"Verificar Prova"**.
+3. Você verá as três camadas com emblemas de status:
+   - ✅ **Verde** = verificado com sucesso
+   - ⚠️ **Amarelo** = selagem/âncora pendente (normal para interações há menos de 2 minutos)
+   - ❌ **Vermelho** = falha na verificação (sinal de alerta)
+
+### Copiar link de verificação pública
+
+Quando o resultado estiver visível, uma barra aparecerá com o botão **"Copiar URL de verificação pública"**. Esse link é público – você pode enviá-lo a um auditor externo sem precisar de login.
+
+---
+
+##Página de verificação pública
+
+Qualquer pessoa com um `bundle_id` pode verificar o teste sem acesso ao SecureAI:
 
 ```
 https://tu-dominio.com/verify/<bundle_id>
 ```
 
-The page shows the three layers, a button to download the test JSON, and commands to verify locally.
+A página mostra as três camadas, um botão para baixar o JSON de teste e comandos para verificar localmente.
 
-**This page does not expose:**
-- The content of the message nor the response of the AI
-- User data (name, email, IP)
-- Any personally identifiable information
+**Esta página não expõe:**
+- O conteúdo da mensagem nem a resposta da IA
+- Dados do usuário (nome, email, IP)
+- Qualquer informação pessoalmente identificável
 
-It only shows hashes, timestamps, indexes and verification status.
+Ele mostra apenas hashes, carimbos de data/hora, índices e status de verificação.
 
 ---
 
-## Independent verification with curl
+## Verificação independente com curl
 
-An external auditor can verify any bundle without trusting the web interface:
+Um auditor externo pode verificar qualquer pacote sem confiar na interface web:
 
-### Step 1 — Get the test
+### Etapa 1 — Faça o teste
 
 ```bash
 BUNDLE_ID="fc9c40c6-c210-4a18-8403-59a46f220e34"
@@ -125,7 +123,7 @@ HOST="https://tu-dominio.com"
 curl -s "$HOST/api/public/verify/$BUNDLE_ID" | jq .
 ```
 
-### Step 2 — Confirm the hash in the Merkle layer
+### Passo 2 — Confirme o hash na camada Merkle
 
 ```bash
 # Verificar que el leaf_hash esté en el merkle_root
@@ -135,7 +133,7 @@ echo "Leaf: $LEAF"
 echo "Root: $ROOT"
 ```
 
-### Step 3 — Confirm the anchor in Rekor
+### Etapa 3 — Confirme a âncora em Rekor
 
 ```bash
 REKOR_UUID=$(curl -s "$HOST/api/public/verify/$BUNDLE_ID" | jq -r '.layer3.uuid')
@@ -144,35 +142,35 @@ curl -s "https://rekor.sigstore.dev/api/v1/log/entries/${REKOR_UUID}" \
   | jq '.[].verification'
 ```
 
-A non-empty `signedEntryTimestamp` field confirms that Rekor has accepted and signed the entry. That timestamp cannot be retroactively altered.
+Um campo `signedEntryTimestamp` não vazio confirma que Rekor aceitou e assinou a entrada. Esse carimbo de data/hora não pode ser alterado retroativamente.
 
 ---
 
-## Signed export bundle (auditors and users)
+## Pacote de exportação assinado (auditores e usuários)
 
-In addition to the public verifier by `bundle_id`, SecureAI allows you to export cryptographic evidence in a portable ZIP for offline audits.
+Além do verificador público do `bundle_id`, o SecureAI permite exportar evidências criptográficas em um ZIP portátil para auditorias offline.
 
-### What does the ZIP include?
+### O que o ZIP inclui?
 
-When an administrator uses **Export signed bundle** in Logs or SMLTP, a file is downloaded with:
+Quando um administrador usa **Exportar pacote assinado** em Logs ou SMLTP, um arquivo é baixado com:
 
-- `data.csv`: exported data.
-- `manifest.json`: cryptographic metadata (`rowCount`, `merkleRootOfExport`, `signingKeyFingerprint`, timestamp, etc.).
-- `manifest.sig`: signature Ed25519 of `manifest.json`.
-- `verify.js`: offline verifier without dependencies.
-- `README.txt`: quick instructions.
+- `data.csv`: dados exportados.
+- `manifest.json`: metadados criptográficos (`rowCount`, `merkleRootOfExport`, `signingKeyFingerprint`, carimbo de data/hora, etc.).
+- `manifest.sig`: assinatura Ed25519 de `manifest.json`.
+- `verify.js`: verificador offline sem dependências.
+- `README.txt`: instruções rápidas.
 
-### How to verify (offline)
+### Como verificar (off-line)
 
-1. Unzip the ZIP.
-2. Open a terminal in that folder.
-3. Run:
+1. Descompacte o ZIP.
+2. Abra um terminal nessa pasta.
+3. Execute:
 
 ```bash
 node verify.js
 ```
 
-Expected output on an intact bundle:
+Resultado esperado em um pacote intacto:
 
 ```text
 [PASS] Manifest signature (Ed25519)
@@ -182,48 +180,48 @@ Expected output on an intact bundle:
 ✓ All checks PASSED — bundle is authentic.
 ```
 
-### What does this verifier detect?
+### O que esse verificador detecta?
 
-- Editing any field in `data.csv`.
-- Deleting or adding rows in `data.csv`.
-- Modification of `manifest.json`.
-- Use of incorrect signing key.
+- Editando qualquer campo em `data.csv`.
+- Excluindo ou adicionando linhas em `data.csv`.
+- Modificação de `manifest.json`.
+- Uso de chave de assinatura incorreta.
 
-If any check appears as `FAIL`, that export **should not be considered trusted**.
+Se alguma verificação aparecer como `FAIL`, essa exportação **não deve ser considerada confiável**.
 
-### Quick test for audit
+### Teste rápido para auditoria
 
-To demonstrate tamper detection:
+Para demonstrar a detecção de violação:
 
-1. Run `node verify.js` on the newly exported ZIP (it should give all `PASS`).
-2. Edit any character in `data.csv` and save.
-3. Run `node verify.js` again.
-4. Must fail at least `Merkle root of export`.
+1. Execute `node verify.js` no ZIP recém-exportado (deve fornecer todos `PASS`).
+2. Edite qualquer caractere em `data.csv` e salve.
+3. Execute `node verify.js` novamente.
+4. Deve falhar pelo menos `Merkle root of export`.
 
-This confirms evidence of end-to-end integrity for the exported dataset.
-
----
-
-## Interpretation of states
-
-| L1 State | Meaning |
-|-----------|-------------|
-| ✅ Registration present | The interaction is in MongoDB with valid hash chain |
-
-| L2 State | Meaning |
-|-----------|-------------|
-| ✅ Merkle verified | The hash of this entry is part of the Merkle tree and the verification is correct |
-| ⚠️ Pending block | There are not yet 10 entries to form a block (normal in the first minutes) |
-| ❌ Verification failed | Hash does not match merkle_root — possible manipulation |
-
-| State L3 | Meaning |
-|-----------|-------------|
-| ✅ Anchored in Rekor | The merkle_root is in the Rekor public log with signed timestamp |
-| ⏳ Anchor pending | The block has been sealed but not yet sent to Rekor (may take up to 30 seconds) |
+Isto confirma a evidência de integridade ponta a ponta do conjunto de dados exportado.
 
 ---
 
-## Complete flow of a message
+## Interpretação de estados
+
+| Estado L1 | Significado |
+|-----------|------------|
+| ✅ Inscrição presente | A interação está no MongoDB com cadeia de hash válida |
+
+| Estado L2 | Significado |
+|-----------|------------|
+| ✅ Merkle verificado | O hash desta entrada faz parte da árvore Merkle e a verificação está correta |
+| ⚠️ Bloqueio pendente | Ainda não há 10 entradas para formar bloco (normal nos primeiros minutos) |
+| ❌ Falha na verificação | Hash não corresponde a merkle_root — possível manipulação |
+
+| Estado L3 | Significado |
+|-----------|------------|
+| ✅ Ancorado em Rekor | O merkle_root está no log público Rekor com carimbo de data/hora assinado |
+| ⏳ Âncora pendente | O bloco foi selado, mas ainda não foi enviado para Rekor (pode levar até 30 segundos) |
+
+---
+
+## Fluxo completo de uma mensagem
 
 ```
 Usuario envía mensaje
@@ -249,28 +247,28 @@ Prueba completa disponible en /verify/<bundle_id>
 
 ---
 
-## Supplier compliance
+## Conformidade do fornecedor
 
-The **"Provider Compliance"** badge indicates whether the AI ​​provider (OpenAI, Anthropic, etc.) confirmed receiving the SMLTP privacy headers:
+O selo **"Provider Compliance"** indica se o provedor de IA (OpenAI, Anthropic, etc.) confirmou o recebimento dos cabeçalhos de privacidade SMLTP:
 
-| Badge | Meaning |
-|-------|-------------|
-| ✅ VERIFIED / CERTIFIED | The supplier confirmed receipt with a signed acknowledgment |
-| 🛡️ GATEWAY PROTECTED | Privacy headers were sent but not explicitly confirmed by the provider. Your data is protected by the gateway. |
-| ⚠️ PROVIDER NOT VERIFIED | The supplier did not confirm receipt. The data traveled protected by SMLTP but there is no guarantee that the provider will respect the no-training instructions. |
+| Distintivo | Significado |
+|-------|------------|
+| ✅ VERIFICADO/CERTIFICADO | O fornecedor confirmou a recepção com um aviso de recepção assinado |
+| 🛡️ GATEWAY PROTEGIDO | Cabeçalhos de privacidade foram enviados, mas não confirmados explicitamente pelo provedor. Seus dados são protegidos pelo gateway. |
+| ⚠️ FORNECEDOR NÃO VERIFICADO | O fornecedor não confirmou o recebimento. Os dados trafegados são protegidos por SMLTP, mas não há garantia de que o provedor respeitará as instruções de não treinamento. |
 
 ---
 
-## Frequently asked questions
+## Perguntas frequentes
 
-**Can I verify a bundle without internet?**
-Yes, download the test JSON from the "Download JSON" button while you are online. The `merkle_root` and hashes are verifiable offline by recomputing the tree.
+**Posso verificar um pacote sem internet?**
+Sim, baixe o JSON de teste no botão "Baixar JSON" enquanto estiver online. O `merkle_root` e os hashes podem ser verificados offline, recalculando a árvore.
 
-**What happens if L3 is pending?**
-This is normal for recent interactions (less than 1 minute). Rekor's sidecar processes blocks every ~30 seconds. If after 5 minutes it is still pending, verify that the sidecar `rekor-anchor` is running.
+**O que acontece se L3 estiver pendente?**
+Isso é normal para interações recentes (menos de 1 minuto). O sidecar do Rekor processa blocos a cada aproximadamente 30 segundos. Se após 5 minutos ainda estiver pendente, verifique se o sidecar `rekor-anchor` está rodando.
 
-**How long are records kept?**
-By default, logs are kept based on the configured `retentionPeriod`. Records marked as compliance (`phi`, `pii`, `security`, `authorization`) are never automatically deleted.
+**Por quanto tempo os registros são mantidos?**
+Por padrão, os logs são mantidos com base no `retentionPeriod` configurado. Registros marcados como conformidade (`phi`, `pii`, `security`, `authorization`) nunca são excluídos automaticamente.
 
-**Can I share the verification link with a customer?**
-Yes. The URL `/verify/<bundle_id>` does not require login and does not expose sensitive data. It is safe to share with auditors, regulators or clients.
+**Posso compartilhar o link de verificação com um cliente?**
+Sim. A URL `/verify/<bundle_id>` não requer login e não expõe dados confidenciais. É seguro compartilhar com auditores, reguladores ou clientes.

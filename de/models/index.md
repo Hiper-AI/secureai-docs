@@ -76,6 +76,6 @@ SecureAI umfasst eine **Auto-Select**-Funktion, die automatisch das beste Modell
 
 ## Nächste Schritte
 
-- [API-Referenz](/de/en/api) – Erfahren Sie, wie Sie Modelle über API nutzen
-- [Quickstart](/de/en/quickstart) - Beginnen Sie mit Ihrem ersten Modell
-- [Sicherheitsübersicht](/de/en/security/overview) - Modell-Sicherheitsfunktionen verstehen
+- [API-Referenz](/de/api) – Erfahren Sie, wie Sie Modelle über API nutzen
+- [Quickstart](/de/quickstart) - Beginnen Sie mit Ihrem ersten Modell
+- [Sicherheitsübersicht](/de/security/overview) - Modell-Sicherheitsfunktionen verstehen

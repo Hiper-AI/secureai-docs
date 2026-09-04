@@ -6,7 +6,7 @@ description: "Découverte Shadow-AI — quelles adresses IP sources d'entreprise
 ---
 # Sources réseau
 
-**Sources réseau** (Admin → Registre d'agent → **Réseau**) fait apparaître l'IA fantôme trouvée dans vos journaux CASB/SWG : quelles **IP sources d'entreprise et quels utilisateurs appellent les API LLM**, même si aucun SDK ou [agent de point final](/fr/en/agent/overview) n'est déployé. Il est alimenté par les [connecteurs CASB & Réseau](/fr/en/integrations/casb/overview) — Cisco Umbrella, Zscaler et autres.
+**Sources réseau** (Admin → Registre d'agent → **Réseau**) fait apparaître l'IA fantôme trouvée dans vos journaux CASB/SWG : quelles **IP sources d'entreprise et quels utilisateurs appellent les API LLM**, même si aucun SDK ou [agent de point final](/fr/agent/overview) n'est déployé. Il est alimenté par les [connecteurs CASB & Réseau](/fr/integrations/casb/overview) — Cisco Umbrella, Zscaler et autres.
 
 ## La fenêtre de découverte
 
@@ -40,6 +40,6 @@ Exécutez **Sync** par connecteur ou **Sync All** ; les connecteurs se synchron
 
 ## Connexes
 
-- [Intégrations CASB & Network (SWG)](/fr/en/integrations/casb/overview) — connectez les sources des logs.
-- [Endpoint Agent](/fr/en/agent/overview) — pour les points de terminaison que vous pouvez gérer directement.
-- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/en/discovery/overview)
+- [Intégrations CASB & Network (SWG)](/fr/integrations/casb/overview) — connectez les sources des logs.
+- [Endpoint Agent](/fr/agent/overview) — pour les points de terminaison que vous pouvez gérer directement.
+- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/discovery/overview)

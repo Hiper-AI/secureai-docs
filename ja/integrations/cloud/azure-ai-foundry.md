@@ -11,7 +11,7 @@ Azure テナントを接続すると、SecureAI が Azure OpenAI / AI Foundry �
 ## SecureAI がインポートするもの
 
 - **Azure OpenAI / AI Foundry エージェント、AI Search、Bot Service、および ML エンドポイント**
-- **NHI** — Entra サービス プリンシパル、アプリ シークレットと証明書、マネージド ID (取り消し可能 — [NHI Inventory](/ja/en/discovery/nhi-inventory) を参照)
+- **NHI** — Entra サービス プリンシパル、アプリ シークレットと証明書、マネージド ID (取り消し可能 — [NHI Inventory](/ja/discovery/nhi-inventory) を参照)
 - **Azure RBAC** ロールの割り当て
 - **アクティビティログ**
 - 過去 30 日間の **使用量、トークン、支出**
@@ -52,14 +52,14 @@ SecureAI は、OAuth2 (クライアント - 資格情報サービス - プリン
 
 ## 確認する
 
-検出されたエージェント/エンドポイントについては [Cloud Sensors](/ja/ja/discovery/cloud-sensors) を開き、サービス プリンシパル、シークレット、およびマネージド ID については [NHI Inventory](/ja/ja/discovery/nhi-inventory) を開きます。インサイトには、RBAC、使用量、支出が表示されます。
+検出されたエージェント/エンドポイントについては [Cloud Sensors](/ja/discovery/cloud-sensors) を開き、サービス プリンシパル、シークレット、およびマネージド ID については [NHI Inventory](/ja/discovery/nhi-inventory) を開きます。インサイトには、RBAC、使用量、支出が表示されます。
 
 ## 失効
 
-Entra サービス プリンシパル、アプリのシークレット/証明書、およびマネージド ID は、Microsoft Graph を介して [NHI Inventory](/ja/en/discovery/nhi-inventory) から**取り消し可能**です。これには、上記の `Application.ReadWrite.All` 権限が必要です。
+Entra サービス プリンシパル、アプリのシークレット/証明書、およびマネージド ID は、Microsoft Graph を介して [NHI Inventory](/ja/discovery/nhi-inventory) から**取り消し可能**です。これには、上記の `Application.ReadWrite.All` 権限が必要です。
 
 ## 関連
 
-- [クラウド AI プロバイダーの概要](/ja/ja/integrations/cloud/overview)
-- [Microsoft Entra ID SSO](/ja/ja/iam/microsoft-entra-id)
-- [国民健康保険の目録](/ja/ja/discovery/nhi-inventory)
+- [クラウド AI プロバイダーの概要](/ja/integrations/cloud/overview)
+- [Microsoft Entra ID SSO](/ja/iam/microsoft-entra-id)
+- [国民健康保険の目録](/ja/discovery/nhi-inventory)

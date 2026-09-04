@@ -1,69 +1,67 @@
 ---
 sidebar_position: 6
-title: "Google Vertex AI"
-sidebar_label: "Google Vertex AI"
-description: "Connect Google Vertex AI so SecureAI can inventory agents, models, service accounts, IAM, usage, and cost"
+title: "Integração com Google Cloud Vertex AI"
+sidebar_label: "Google Cloud Vertex AI"
+description: "Conecte o Google Vertex AI para que o SecureAI possa inventariar agentes, modelos, contas de serviço, IAM, uso e custo"
 ---
-
-
 
 # Google Vertex AI
 
-Connect your Google Cloud project so SecureAI can inventory Vertex AI agents, endpoints, and models, along with the service accounts, IAM bindings, audit logs, usage, and billing that surround them.
+Conecte seu projeto do Google Cloud para que a SecureAI possa inventariar agentes, endpoints e modelos da Vertex AI, juntamente com as contas de serviço, vinculações IAM, registros de auditoria, uso e faturamento que os cercam.
 
-## What SecureAI imports
+## O que o SecureAI importa
 
-- **Vertex AI agents, endpoints, and models**
-- **NHIs** — service accounts, service-account keys, and API keys (revocable — see [NHI Inventory](/pt/en/discovery/nhi-inventory))
-- **IAM** role bindings
-- **Cloud Audit Logs**
-- **Requests, tokens, and cost** for the last 30 days (actual from BigQuery billing export, or estimated)
+- **Agentes, endpoints e modelos da Vertex AI**
+- **NHIs** — contas de serviço, chaves de conta de serviço e chaves de API (revogáveis — consulte [NHI Inventário](/pt/discovery/nhi-inventory))
+- **IAM** vinculações de função
+- **Registros de auditoria em nuvem**
+- **Solicitações, tokens e custos** dos últimos 30 dias (reais da exportação de faturamento do BigQuery ou estimados)
 
-## Prerequisites
+## Pré-requisitos
 
-- A **service account** with a JSON key, granted read roles on the project:
+- Uma **conta de serviço** com uma chave JSON, com funções de leitura concedidas no projeto:
   - `roles/aiplatform.viewer`
   - `roles/monitoring.viewer`
   - `roles/iam.securityReviewer`
   - `roles/logging.viewer`
   - `roles/billing.viewer`
-  - BigQuery roles (e.g. `roles/bigquery.dataViewer`, `roles/bigquery.jobUser`) if you use billing export for **actual** cost.
-  - *(Optional)* key/service-account admin roles if you want SecureAI to revoke identities at the source.
+  - Papéis do BigQuery (por exemplo, `roles/bigquery.dataViewer`, `roles/bigquery.jobUser`) se você usar a exportação de faturamento para o custo **real**.
+  - *(Opcional)* funções de administrador de chave/conta de serviço se desejar que o SecureAI revogue identidades na origem.
 
-## Credentials
+## Credenciais
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `projectId` | Yes | GCP project ID. |
-| `location` | Yes | Vertex region (e.g. `us-central1`). |
-| `serviceAccountJson` | Yes | The service-account key JSON. Encrypted at rest. |
-| `billingExportTable` | No | BigQuery table for actual billing (e.g. `dataset.gcp_billing_export_v1_XXXX`). |
-| `billingProjectId` | No | Project that hosts the billing export, if different. |
+| Campo | Obrigatório | Descrição |
+|-------|----------|------------|
+| `projectId` | Sim | ID do projeto do GCP. |
+| `location` | Sim | Região de vértice (por exemplo, `us-central1`). |
+| `serviceAccountJson` | Sim | A chave da conta de serviço JSON. Criptografado em repouso. |
+| `billingExportTable` | Não | Tabela do BigQuery para faturamento real (por exemplo, `dataset.gcp_billing_export_v1_XXXX`). |
+| `billingProjectId` | Não | Projeto que hospeda a exportação de faturamento, se for diferente. |
 
-### Where to get them
+### Onde obtê-los
 
-1. In the [Google Cloud console](https://console.cloud.google.com/), go to **IAM & Admin → Service Accounts → Create service account**.
-2. Grant the roles listed above.
-3. Under **Keys → Add key → JSON**, download the key file.
-4. Paste the **entire** JSON into the `serviceAccountJson` field.
+1. No [console do Google Cloud](https://console.cloud.google.com/), acesse **IAM e Admin → Contas de serviço → Criar conta de serviço**.
+2. Conceda as funções listadas acima.
+3. Em **Chaves → Adicionar chave → JSON**, baixe o arquivo de chave.
+4. Cole o JSON **inteiro** no campo `serviceAccountJson`.
 
-## Connect
+## Conectar
 
-1. **Admin → Integrations → Cloud → Google Vertex AI → Connect.**
-2. Enter project, location, and the service-account JSON (plus optional billing fields).
-3. **Test**, then **Save**.
-4. **Sync**.
+1. **Administrador → Integrações → Nuvem → Google Vertex AI → Conectar.**
+2. Insira o projeto, o local e o JSON da conta de serviço (além de campos de faturamento opcionais).
+3. **Teste** e **Salve**.
+4. **Sincronizar**.
 
-## Verify
+## Verifique
 
-Open [Cloud Sensors](/pt/en/discovery/cloud-sensors) for discovered agents/endpoints/models and [NHI Inventory](/pt/en/discovery/nhi-inventory) for service accounts and keys. Insights show IAM bindings, usage, and cost.
+Abra [Cloud Sensors](/pt/discovery/cloud-sensors) para agentes/endpoints/modelos descobertos e [NHI Inventário](/pt/discovery/nhi-inventory) para contas de serviço e chaves. Os insights mostram ligações, uso e custo de IAM.
 
-## Revocation
+## Revogação
 
-GCP service accounts, SA keys, and API keys are **revocable** from [NHI Inventory](/pt/en/discovery/nhi-inventory) when the connector has the optional key/SA admin roles.
+Contas de serviço do GCP, chaves SA e chaves de API são **revogáveis** do [NHI Inventário](/pt/discovery/nhi-inventory) quando o conector tem as funções opcionais de administrador de chave/SA.
 
-## Related
+## Relacionado
 
-- [Cloud AI Providers Overview](/pt/en/integrations/cloud/overview)
-- [Google Workspace SSO](/pt/en/iam/google-workspace)
-- [NHI Inventory](/pt/en/discovery/nhi-inventory)
+- [Visão geral dos provedores de IA em nuvem](/pt/integrations/cloud/overview)
+- [Google Workspace SSO](/pt/iam/google-workspace)
+- [NHI Inventário](/pt/discovery/nhi-inventory)

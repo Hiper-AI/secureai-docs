@@ -1,83 +1,82 @@
 ---
 sidebar_position: 2
-title: "SMLTP Security"
+title: "Seguridad y Protocolo SMLTP"
+sidebar_label: "Seguridad SMLTP"
 ---
 
+# Protocolo de seguridad SMLTP
 
+SecureAI utiliza el **Protocolo de transferencia de lenguaje de modelo seguro (SMLTP)** para gobernar, contener y probar
+comunicación con modelos de lenguaje grande (LLM).
 
-# SMLTP Security Protocol
+## ¿Qué es SMLTP?
 
-SecureAI uses the **Secure Model Language Transfer Protocol (SMLTP)** to govern, contain, and prove
-communication with Large Language Models (LLMs).
+SMLTP es un protocolo de seguridad con un **borrador de especificación pública** (v0.2). Define un
+**plano de control determinista** para el tráfico de IA: en lugar de depender únicamente de la inspección probabilística
+de indicaciones, SMLTP hace que cinco propiedades de cada llamada de IA gobernada sean deterministas y criptográficamente
+verificable.
 
-## What is SMLTP?
-
-SMLTP is a security protocol with a **public specification draft** (v0.2). It defines a
-**deterministic control plane** for AI traffic: instead of relying only on probabilistic inspection
-of prompts, SMLTP makes five properties of every governed AI call deterministic and cryptographically
-verifiable.
-
-| Layer | Deterministic mechanism |
+| Capa | Mecanismo determinista |
 |---|---|
-| **Identity** | Ed25519 Signed Entitlement Token (SET) minted per request |
-| **Authorization** | `model` and `policy_hash` claims — the call runs under a named policy or not at all |
-| **Transport integrity** | `body_sha256` binds the token to the exact request bytes |
-| **Containment** | Monitor/enforce modes, replay cache, subject revocation, fail-closed defaults |
-| **Audit** | Hash-chained, Merkle-sealed log with signed compliance receipts |
+| **Identidad** | Ed25519 Token de derecho firmado (SET) acuñado por solicitud |
+| **Autorización** | Reclamaciones `model` y `policy_hash`: la llamada se ejecuta según una política determinada o no se ejecuta en absoluto |
+| **Integridad del transporte** | `body_sha256` vincula el token a los bytes de solicitud exactos |
+| **Contención** | Monitorear/hacer cumplir modos, reproducir caché, revocación de sujeto, valores predeterminados de cierre fallido |
+| **Auditoría** | Registro encadenado mediante hash y sellado con Merkle con recibos de cumplimiento firmados |
 
-## The two-plane model
+## El modelo de dos planos
 
-SMLTP deliberately separates two kinds of controls:
+SMLTP separa deliberadamente dos tipos de controles:
 
-- **Deterministic plane (cryptography):** who is calling, what they are authorized to call, that the
-  request was not altered, that a revoked subject is cut off, and that the record cannot be silently
-  rewritten. These are guarantees, enforced by signatures and hashes.
-- **Probabilistic plane (inspection):** DLP, PII redaction, and Prompt Shield run *behind* the
-  deterministic controls and are explicitly **best-effort**. SMLTP never claims that cryptography
-  detects prompt injection or that inspection catches every sensitive string — it claims that the
-  inspection verdict that *was* produced is recorded in a signed, verifiable receipt.
+- **Plano determinista (criptografía):** quién llama, a qué está autorizado a llamar, que
+  la solicitud no fue alterada, que un tema revocado se corta y que el registro no puede ser silenciosamente
+  reescrito. Estas son garantías, reforzadas mediante firmas y hashes.
+- **Plano probabilístico (inspección):** DLP, redacción de PII y Prompt Shield se ejecutan *detrás* del
+  controles deterministas y son explícitamente **mejor esfuerzo**. SMLTP nunca afirma que la criptografía
+  detecta una inyección rápida o que la inspección detecta cada cadena sensible: afirma que el
+  El veredicto de inspección que *fue* producido se registra en un recibo firmado y verificable.
 
-## Key Features
+## Características clave
 
-### Signed Entitlement Tokens
-- Every governed request carries an Ed25519-signed token binding identity, model, policy, and request bytes
-- Replay protection via single-use token IDs
-- Revoking a subject takes effect at the gateway within seconds — no provider-side cooperation needed
+### Tokens de derechos firmados
+- Cada solicitud gobernada lleva un token vinculante firmado por Ed25519, modelo, política y bytes de solicitud.
+- Protección de reproducción mediante ID de token de un solo uso
+- La revocación de un asunto tiene efecto en la puerta de enlace en cuestión de segundos; no se necesita cooperación del proveedor
 
-### Signed Compliance Receipts
-- Each gateway-routed interaction produces a receipt signed by the gateway
-- Receipts record the governing policy, request hash, and the inspection evidence that was produced
-- Receipts can be verified offline against the gateway's public key — see
-  [Receipts API](../api/receipts.md)
+### Recibos de cumplimiento firmados
+- Cada interacción enrutada por la puerta de enlace produce un recibo firmado por la puerta de enlace.
+- Los recibos registran la política vigente, el hash de solicitud y la evidencia de inspección que se produjo.
+- Los recibos se pueden verificar fuera de línea con la clave pública de la puerta de enlace; consulte
+  [API de recibos](../api/receipts.md)
 
-### Tamper-Evident Audit
-- Audit events are hash-chained (`prev_hash` → `current_hash`) and sealed into Merkle blocks
-- Merkle roots can be anchored to an external transparency log (Sigstore Rekor), so the record's
-  integrity does not depend on trusting the SecureAI operator — see
-  [Immutable Logs](./immutable-logs.md)
+### Auditoría a prueba de manipulaciones
+- Los eventos de auditoría están encadenados mediante hash (`prev_hash` → `current_hash`) y sellados en bloques Merkle
+- Las raíces de Merkle se pueden anclar a un registro de transparencia externo (Sigstore Rekor), por lo que el registro
+  la integridad no depende de confiar en el operador de SecureAI; consulte
+  [Registros inmutables](./immutable-logs.md)
 
-### Policy Enforcement
-- Model allowlists, data-residency (geofence) checks, and egress controls evaluated at the gateway
-- **Monitor mode** observes and attests; **enforce mode** blocks non-compliant calls with a signed
-  denial receipt
+### Aplicación de políticas
+- Modelo de listas permitidas, verificaciones de residencia de datos (geocerca) y controles de salida evaluados en la puerta de enlace
+- **Modo monitor** observa y da fe; **modo de aplicación** bloquea llamadas no conformes con un signo firmado
+  recibo de denegación
 
-### Key Management
-- Ed25519 signing keys with rotation support; receipts issued under previous keys remain verifiable
+### Gestión de claves
+- Ed25519 claves de firma con soporte de rotación; Los recibos emitidos bajo claves anteriores siguen siendo verificables.
 
-## Scope and honesty
+## Alcance y honestidad
 
-- **Deployment scope:** SMLTP receipts and enforcement apply to **gateway-routed deployments**.
-  Deployments that call providers directly still get platform DLP/PII and audit logging, but not
-  gateway-signed receipts (the [Receipts API](../api/receipts.md) documents this behavior).
-- **Encryption scope:** transport encryption is TLS; request bundles between client and gateway can
-  additionally be encrypted (AES-256-GCM). SMLTP does not currently provide end-to-end encryption
-  through the AI provider, and does not claim forward secrecy.
-- **Inspection scope:** DLP/PII detection is probabilistic and best-effort. What SMLTP guarantees is
-  that the verdict is *attested* — the receipt proves what was checked and what the result was.
+- **Alcance de la implementación:** Las recepciones y la aplicación de SMLTP se aplican a **implementaciones enrutadas por puerta de enlace**.
+  Las implementaciones que llaman directamente a los proveedores aún obtienen DLP/PII de la plataforma y registros de auditoría, pero no
+  recibos firmados por la puerta de enlace (la [API de recibos](../api/receipts.md) documenta este comportamiento).
+- **Alcance del cifrado:** el cifrado de transporte es TLS; Los paquetes de solicitudes entre el cliente y la puerta de enlace pueden
+  además estar cifrado (AES-256-GCM). SMLTP actualmente no proporciona cifrado de extremo a extremo
+  a través del proveedor de IA y no reclama secreto previo.
+- **Alcance de la inspección:** La detección de DLP/PII es probabilística y de mejor esfuerzo. Lo que garantiza SMLTP es
+  que el veredicto esté *certificado*: el recibo prueba lo que se verificó y cuál fue el resultado.
 
-## Security Benefits
+## Beneficios de seguridad
 
-- **Provability**: signed receipts turn "we have logs" into "anyone can verify what happened"
-- **Containment**: even a compromised or misbehaving agent cannot exceed its signed entitlements
-- **Deterministic revocation**: blocking a user, key, or agent cuts traffic at the gateway in seconds
-- **Auditability**: a tamper-evident trail that external auditors can verify independently
+- **Provabilidad**: los recibos firmados convierten "tenemos registros" en "cualquiera puede verificar lo que sucedió"
+- **Contención**: incluso un agente comprometido o que se porta mal no puede exceder sus derechos firmados
+- **Revocación determinista**: bloquear un usuario, clave o agente corta el tráfico en la puerta de enlace en segundos
+- **Auditabilidad**: un rastro a prueba de manipulaciones que los auditores externos pueden verificar de forma independiente

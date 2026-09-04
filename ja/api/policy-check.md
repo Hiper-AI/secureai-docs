@@ -6,7 +6,7 @@ openapi: "POST /policy-check"
 ---
 # ポリシーチェック (ドライラン)
 
-モデルの呼び出しや課金を行わずに、完了ペイロードの **セキュリティ パイプライン全体**を実行します。ポリシー チェックは、[チャット完了](/ja/en/api/chat/completions) と同じ本文を受け入れ、チェックごとのレポートを返します: 入力検証、モデル許可リスト ([冗長チェーン](/ja/en/api/redundancy) 全体用)、SMLTP ポリシー解決/承認、プロンプト シールド承認とレポートのみのスキャン判定、ポイント割り当てプレビュー。
+モデルの呼び出しや課金を行わずに、完了ペイロードの **セキュリティ パイプライン全体**を実行します。ポリシー チェックは、[チャット完了](/ja/api/chat/completions) と同じ本文を受け入れ、チェックごとのレポートを返します: 入力検証、モデル許可リスト ([冗長チェーン](/ja/api/redundancy) 全体用)、SMLTP ポリシー解決/承認、プロンプト シールド承認とレポートのみのスキャン判定、ポイント割り当てプレビュー。
 
 これをプリフライトリクエストに使用し、「これは許可されますか?」を構築します。 UI、またはポリシー構成を安全にテストします。
 
@@ -24,7 +24,7 @@ Authorization: Bearer sk-your-api-key-here
 
 ## リクエスト本文
 
-[チャット補完](/ja/ja/api/chat/completions) と同じスキーマ (`prompt` または `messages`、`model`/`models`/`fallback_models`、`smltp_policy`、`prompt_shield`、`index` など)。何も生成されず、請求も行われません。
+[チャット補完](/ja/api/chat/completions) と同じスキーマ (`prompt` または `messages`、`model`/`models`/`fallback_models`、`smltp_policy`、`prompt_shield`、`index` など)。何も生成されず、請求も行われません。
 
 ## リクエストの例
 
@@ -111,6 +111,6 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/policy-check" \
 
 ## 関連
 
-- [チャット補完](/ja/ja/api/chat/completions)
-- [冗長性とフェイルオーバー](/ja/ja/api/redundancy)
-- [使い方](/ja/ja/api/usage)
+- [チャット補完](/ja/api/chat/completions)
+- [冗長性とフェイルオーバー](/ja/api/redundancy)
+- [使い方](/ja/api/usage)

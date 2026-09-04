@@ -1,37 +1,35 @@
 ---
 sidebar_position: 2
-title: "Remote MCP with OAuth & DCR"
-sidebar_label: "Remote OAuth & DCR"
-description: "How SecureAI connects to remote MCP servers using OAuth 2.1, PKCE, and Dynamic Client Registration"
+title: "MCP Remoto con OAuth y DCR"
+sidebar_label: "OAuth Remoto y DCR"
+description: "Cómo se conecta SecureAI a servidores MCP remotos mediante OAuth 2.1, PKCE y registro dinámico de cliente"
 ---
 
+# MCP remoto con OAuth y DCR
 
+Algunos servidores MCP remotos autorizan el acceso con **OAuth 2.1** en lugar de un token API estático. SecureAI admite esto de un extremo a otro, incluidos **PKCE** y **Registro dinámico de cliente (DCR)** para que no tenga que registrar previamente una aplicación OAuth. El ejemplo de referencia es el conector **Cloudflare Official Remote MCP** (`cloudflare-remote`).
 
-# Remote MCP with OAuth & DCR
+## Cómo funciona el flujo
 
-Some remote MCP servers authorize access with **OAuth 2.1** rather than a static API token. SecureAI supports this end to end, including **PKCE** and **Dynamic Client Registration (DCR)** so you don't have to pre-register an OAuth application. The reference example is the **Cloudflare Official Remote MCP** connector (`cloudflare-remote`).
+1. **Registro dinámico de cliente (RFC 7591).** Cuando un conector declara un `registrationUrl` y no tiene un `clientId` estático, SecureAI se registra como un cliente PKCE público en esa URL y almacena en caché el [[XINL3] resultante. Si el URI de redireccionamiento cambia, se vuelve a registrar automáticamente. (Para los conectores que envían una identificación de cliente estática, se omite este paso).
+2. **Autorización + PKCE (S256).** SecureAI genera un verificador/desafío PKCE, crea la URL de autorización con `code_challenge` y `code_challenge_method=S256` y redirige al administrador/usuario al proveedor para otorgar acceso.
+3. **Devolución de llamada.** El proveedor redirige nuevamente a `GET /api/connectors/oauth/callback/:slug`. Esta ruta está protegida por el parámetro opaco `state` (comparado con un almacén PKCE de corta duración de 10 minutos) en lugar de una sesión, por lo que no necesita middleware de autenticación.
+4. **Intercambio y almacenamiento de tokens.** SecureAI intercambia el código (con el verificador PKCE) por tokens y los almacena **por usuario**. Luego, el token de acceso se inyecta en el transporte MCP (por ejemplo, como `BEARER_TOKEN`) para las llamadas a la herramienta de ese usuario.
 
-## How the flow works
+## Conexión de un conector MCP OAuth
 
-1. **Dynamic Client Registration (RFC 7591).** When a connector declares a `registrationUrl` and has no static `clientId`, SecureAI registers itself as a public PKCE client at that URL and caches the resulting `client_id`. If the redirect URI changes, it re-registers automatically. (For connectors that ship a static client id, this step is skipped.)
-2. **Authorization + PKCE (S256).** SecureAI generates a PKCE verifier/challenge, builds the authorization URL with `code_challenge` and `code_challenge_method=S256`, and redirects the admin/user to the provider to grant access.
-3. **Callback.** The provider redirects back to `GET /api/connectors/oauth/callback/:slug`. This route is secured by the opaque `state` parameter (matched against a short-lived, 10-minute PKCE store) rather than a session, so it needs no auth middleware.
-4. **Token exchange & storage.** SecureAI exchanges the code (with the PKCE verifier) for tokens and stores them **per user**. The access token is then injected into the MCP transport (e.g. as `BEARER_TOKEN`) for that user's tool calls.
+1. **Administrador → Integraciones → MCP** y elija un conector OAuth (por ejemplo, MCP remoto oficial de Cloudflare).
+2. Haga clic en **Autorizar**: una ventana emergente abre la pantalla de consentimiento del proveedor.
+3. Aprobar los alcances solicitados.
+4. Si tiene éxito, se le redirigirá nuevamente y el conector se mostrará como conectado.
 
-## Connecting an OAuth MCP connector
+## Notas
 
-1. **Admin → Integrations → MCP** and pick an OAuth connector (e.g. Cloudflare Official Remote MCP).
-2. Click **Authorize** — a popup opens the provider's consent screen.
-3. Approve the requested scopes.
-4. On success you're redirected back and the connector shows as connected.
+- **Tokens por usuario.** Cada usuario autoriza individualmente; Las llamadas a herramientas se ejecutan con la concesión propia de ese usuario, no con una credencial compartida.
+- **Se requiere PKCE** para estos conectores (`pkceRequired: true`), por lo que no se almacena ningún secreto de cliente para los clientes públicos.
+- **Conectores de cliente estático.** Si su organización registra previamente un cliente OAuth, proporcione su ID/secreto de cliente y SecureAI lo usará en lugar de DCR.
 
-## Notes
+## Relacionado
 
-- **Per-user tokens.** Each user authorizes individually; tool calls run with that user's own grant, not a shared credential.
-- **PKCE is required** for these connectors (`pkceRequired: true`), so no client secret is stored for public clients.
-- **Static-client connectors.** If your organization pre-registers an OAuth client, provide its client id/secret and SecureAI uses it instead of DCR.
-
-## Related
-
-- [MCP Connectors Overview](/en/integrations/mcp/overview)
-- [AI Gateway — Remote Endpoints](/en/ai-gateway/remote-endpoints)
+- [Descripción general de los conectores MCP](/integrations/mcp/overview)
+- [AI Gateway — Extremos remotos](/ai-gateway/remote-endpoints)

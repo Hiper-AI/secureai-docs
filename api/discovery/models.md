@@ -1,14 +1,13 @@
 ---
 sidebar_position: 1
-title: "Available Models"
+title: "Modelos Disponibles en la API"
 openapi: "GET /models"
+sidebar_label: "Modelos Disponibles"
 ---
 
+# Obtener modelos disponibles
 
-
-# Get Available Models
-
-Retrieve available AI models based on your API key permissions and user license.
+Recupere los modelos de IA disponibles según los permisos de su clave API y su licencia de usuario.
 
 ## Endpoint
 
@@ -16,43 +15,43 @@ Retrieve available AI models based on your API key permissions and user license.
 GET /models
 ```
 
-## Description
+## Descripción
 
-Retrieve available AI models based on your API key permissions and user license.
+Recupere los modelos de IA disponibles según los permisos de su clave API y su licencia de usuario.
 
-## Authentication
+## Autenticación
 
-Required: API Key
+Requerido: Clave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Parameters
+## Parámetros
 
-| Parameter | Type | Required | Description | Example |
+| Parámetro | Tipo | Requerido | Descripción | Ejemplo |
 |-----------|------|----------|-------------|---------|
-| `provider` | string | No | Filter models by provider | `"openai"` |
+| `provider` | cadena | No | Filtrar modelos por proveedor | `"openai"` |
 
-## Request
+## Solicitud
 
-### Basic Request
+### Solicitud básica
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by Provider
+### Filtrar por proveedor
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=openai" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -79,39 +78,39 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descripción | Ejemplo |
 |-------|------|-------------|---------|
-| `success` | boolean | Always true for successful requests | `true` |
-| `models` | array | List of available models | See example |
-| `user_license` | string | User's license tier | `"Pro"` |
-| `restrictions` | object | Model access restrictions | See example |
-| `filters` | object | Applied filters | See example |
+| `success` | booleano | Siempre es cierto para solicitudes exitosas | `true` |
+| `models` | matriz | Lista de modelos disponibles | Ver ejemplo |
+| `user_license` | cadena | Nivel de licencia de usuario | `"Pro"` |
+| `restrictions` | objeto | Restricciones de acceso al modelo | Ver ejemplo |
+| `filters` | objeto | Filtros aplicados | Ver ejemplo |
 
-### Model Object
+### Objeto modelo
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descripción | Ejemplo |
 |-------|------|-------------|---------|
-| `id` | string | Unique model identifier | `"openai/gpt-5-nano"` |
-| `name` | string | Model display name | `"openai/gpt-5-nano"` |
-| `provider` | string | Model provider | `"openai"` |
+| `id` | cadena | Identificador de modelo único | `"openai/gpt-5-nano"` |
+| `name` | cadena | Nombre para mostrar del modelo | `"openai/gpt-5-nano"` |
+| `provider` | cadena | Proveedor de modelos | `"openai"` |
 
-### Restrictions Object
+### Objeto de restricciones
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descripción | Ejemplo |
 |-------|------|-------------|---------|
-| `allowed_models` | string | Model access level | `"all"` |
+| `allowed_models` | cadena | Nivel de acceso al modelo | `"all"` |
 
-### Filters Object
+### Objeto de filtros
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descripción | Ejemplo |
 |-------|------|-------------|---------|
-| `provider` | string | Applied provider filter | `"openai"` |
+| `provider` | cadena | Filtro de proveedor aplicado | `"openai"` |
 
-## Error Responses
+## Respuestas de error
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -121,7 +120,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 }
 ```
 
-### 429 Rate Limit Exceeded
+### 429 Límite de tasa excedido
 
 ```json
 {
@@ -132,7 +131,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 }
 ```
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript/Node.js
 
@@ -148,7 +147,7 @@ console.log('Available Models:', data.models);
 console.log('User License:', data.user_license);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -164,7 +163,7 @@ print('Available Models:', data['models'])
 print('User License:', data['user_license'])
 ```
 
-### Filter by Provider
+### Filtrar por proveedor
 
 ```python
 import requests
@@ -184,7 +183,7 @@ data = response.json()
 print('OpenAI Models:', data['models'])
 ```
 
-### cURL
+### rizo
 
 ```bash
 # Get all models
@@ -196,16 +195,16 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## LLM Buckets (Current)
+## Depósitos de LLM (actuales)
 
-The chat system classifies models into two execution buckets:
+El sistema de chat clasifica los modelos en dos grupos de ejecución:
 
-- `standard` bucket
-- `premium` bucket
+- cubo `standard`
+- cubo `premium`
 
-This reference is based on the active backend bucket mapping.
+Esta referencia se basa en la asignación de depósitos de backend activos.
 
-### Standard Bucket
+### Cucharón estándar
 
 - `openai/gpt-oss-120b`
 - `openai/gpt-5-nano`
@@ -227,7 +226,7 @@ This reference is based on the active backend bucket mapping.
 - `qwen/qwen3-coder-next`
 - `qwen/qwen3.5-397b-a17b`
 
-### Premium Bucket
+### Cubo premium
 
 - `anthropic/claude-3.7-sonnet`
 - `anthropic/claude-sonnet-4.6`
@@ -240,21 +239,21 @@ This reference is based on the active backend bucket mapping.
 - `google/gemini-3.1-pro-preview`
 - `x-ai/grok-4`
 
-## Available Providers
+## Proveedores disponibles
 
-- **OpenAI**
-- **Anthropic**
+- **AI abierta**
+- **Antrópico**
 - **Google**
 - **Meta**
 - **Mistral**
-- **DeepSeek**
+- **búsqueda profunda**
 - **xAI**
 - **Qwen**
 
-## Notes
+## Notas
 
-- Models available depend on your subscription tier
-- Some models may be restricted based on your license
-- Use the provider filter to get models from specific providers
-- The response includes your current license tier and restrictions 
-- API key restrictions (`allowedModels`) can further reduce the model list
+- Los modelos disponibles dependen de su nivel de suscripción
+- Algunos modelos pueden estar restringidos según su licencia
+- Utilice el filtro de proveedores para obtener modelos de proveedores específicos
+- La respuesta incluye su nivel de licencia actual y sus restricciones. 
+- Las restricciones de clave API (`allowedModels`) pueden reducir aún más la lista de modelos

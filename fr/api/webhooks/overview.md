@@ -21,7 +21,7 @@ Les points de terminaison Webhook sont gérés par les administrateurs dans **Ad
 | Envoyer une livraison test | `POST /api/admin/webhooks/:id/test` |
 | Supprimer le point de terminaison | `DELETE /api/admin/webhooks/:id` |
 
-Entrées au moment de la création : `url`, `description`, `events[]` (voir [Events](/fr/en/api/webhooks/events)) et `enabled`. Le secret de signature (`whsec_...`) est affiché **uniquement** lors de la création et de la rotation — stockez-le en toute sécurité ; vous ne pouvez pas le récupérer à nouveau.
+Entrées au moment de la création : `url`, `description`, `events[]` (voir [Events](/fr/api/webhooks/events)) et `enabled`. Le secret de signature (`whsec_...`) est affiché **uniquement** lors de la création et de la rotation — stockez-le en toute sécurité ; vous ne pouvez pas le récupérer à nouveau.
 
 Le point de terminaison `url` est validé par SSRF : seul `http(s)` est accepté et les hôtes privés/bouclage/lien-local sont rejetés à moins que l'instance ne s'exécute avec `WEBHOOKS_ALLOW_PRIVATE=true` (les récepteurs auto-hébergés en ont souvent besoin).
 
@@ -122,6 +122,6 @@ def secureai_webhook():
 
 ## Connexes
 
-- [Webhook Events](/fr/en/api/webhooks/events) — le catalogue complet des événements et les charges utiles.
-- [Redondance & Failover](/fr/en/api/redundancy) — source de `api:model_failover`.
-- [Threat Defense](/fr/en/threat-defense/overview) — source des événements `promptshield:*`.
+- [Webhook Events](/fr/api/webhooks/events) — le catalogue complet des événements et les charges utiles.
+- [Redondance & Failover](/fr/api/redundancy) — source de `api:model_failover`.
+- [Threat Defense](/fr/threat-defense/overview) — source des événements `promptshield:*`.

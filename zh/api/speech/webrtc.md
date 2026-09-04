@@ -1,73 +1,71 @@
 ---
 sidebar_position: 1
-title: "Initiate Speech-to-Speech WebRTC Session"
+title: "启动语音到语音 WebRTC 会话"
 openapi: "POST /speech/s2s/webrtc"
 ---
+# 启动语音到语音 WebRTC 会话
 
+使用 OpenAI Realtime API 建立用于实时语音到语音对话的 WebRTC 连接。
 
-# Initiate Speech-to-Speech WebRTC Session
-
-Establish a WebRTC connection for real-time speech-to-speech conversations using OpenAI Realtime API.
-
-## Endpoint
+## 端点
 
 ```
 POST /speech/s2s/webrtc
 ```
 
-## Description
+## 说明
 
-Establishes a WebRTC connection for real-time speech-to-speech conversations using OpenAI Realtime API. This endpoint accepts a WebRTC SDP offer and returns an SDP answer that can be used to establish a peer connection with OpenAI's Realtime API.
+使用 OpenAI Realtime API 建立用于实时语音到语音对话的 WebRTC 连接。该端点接受 WebRTC SDP 提议并返回 SDP 应答，该应答可用于与 OpenAI 的实时 API 建立对等连接。
 
-### Usage Flow
+### 使用流程
 
-1. Client creates a WebRTC offer (RTCPeerConnection.createOffer)
-2. Client sends the SDP offer to this endpoint
-3. This endpoint proxies the offer to OpenAI Realtime API
-4. Client receives SDP answer and establishes WebRTC connection
-5. Client can then have real-time voice conversations with the AI
+1. 客户端创建WebRTC报价（RTCPeerConnection.createOffer）
+2. 客户端将 SDP Offer 发送到该端点
+3. 该端点代理 OpenAI Realtime API 的报价
+4. 客户端收到SDP应答并建立WebRTC连接
+5. 客户可以与AI进行实时语音对话
 
-### S2S Time Tracking
+### S2S时间追踪
 
-- Each user has a monthly S2S time quota based on their license
-- Time is tracked in minutes and deducted when sessions are logged
-- Use `/speech/s2s/status` to check remaining time
-- Use `/speech/s2s/log-session` to log session duration and deduct time
+- 每个用户都有基于其许可证的每月 S2S 时间配额
+- 时间以分钟为单位进行跟踪，并在记录会话时扣除
+- 使用`/speech/s2s/status`查看剩余时间
+- 使用`/speech/s2s/log-session`记录会话持续时间并扣除时间
 
-### SMLTP Integration
+### SMLTP 集成
 
-- All requests are processed through SMLTP for security and compliance
-- Model validation is enforced based on the specified SMLTP policy
-- Requests are audited and logged for compliance tracking
+- 所有请求均通过 SMLTP 处理，以确保安全性和合规性
+- 根据指定的 SMLTP 策略强制执行模型验证
+- 审核并记录请求以进行合规性跟踪
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## 请求正文
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `sdp` | string | Yes | WebRTC SDP offer from the client's RTCPeerConnection |
-| `model` | string | No | OpenAI Realtime model (default: "gpt-4o-mini-realtime-preview") |
-| `voice` | string | No | Voice to use for AI response (default: "alloy") |
-| `smltp_policy` | string | No | SMLTP policy (default: "internal") |
-| `output_audio` | boolean | No | Whether to enable audio output (default: true) |
-| `user_id` | string | No | User ID to bill this session to (defaults to API key owner) |
-| `instructions` | string | No | Optional system instructions for the AI assistant |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `sdp` |字符串|是的 |来自客户端的 RTCPeerConnection 的 WebRTC SDP 报价 |
+| `model` |字符串|没有 | OpenAI 实时模型（默认：“gpt-4o-mini-realtime-preview”）|
+| `voice` |字符串|没有 |用于 AI 响应的语音（默认：“合金”）|
+| `smltp_policy` |字符串|没有 | SMLTP 策略（默认：“内部”）|
+| `output_audio` |布尔 |没有 |是否启用音频输出（默认：true）|
+| `user_id` |字符串|没有 |将此会话记入帐单的用户 ID（默认为 API 密钥所有者）|
+| `instructions` |字符串|没有 | AI助手可选系统说明|
 
-### Available Models
+### 可用型号
 
 - `gpt-4o-mini-realtime-preview`
 - `gpt-4o-realtime-preview`
 
-### Available Voices
+### 可用的声音
 
-- `alloy` (default)
+- `alloy`（默认）
 - `echo`
 - `fable`
 - `onyx`
@@ -77,17 +75,17 @@ Authorization: Bearer sk-your-api-key-here
 - `ballad`
 - `coral`
 
-### Available SMLTP Policies
+### 可用的 SMLTP 策略
 
 - `public`
-- `internal` (default)
+- `internal`（默认）
 - `internal-strict`
 - `confidential`
 - `hipaa`
 - `gdpr`
 - `pci-dss`
 
-## Request Example
+## 请求示例
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/speech/s2s/webrtc" \
@@ -142,7 +140,7 @@ await pc.setRemoteDescription(new RTCSessionDescription({
 // Now you can have real-time voice conversations
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -166,13 +164,13 @@ sdp_answer = response.text
 print('SDP Answer:', sdp_answer)
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
-**Content-Type**: `application/sdp`
+**内容类型**：`application/sdp`
 
-The response is an SDP answer string that can be used with `RTCPeerConnection.setRemoteDescription()`.
+响应是一个 SDP 应答字符串，可与 `RTCPeerConnection.setRemoteDescription()` 一起使用。
 
 ```
 v=0
@@ -182,9 +180,9 @@ t=0 0
 ...
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -195,9 +193,9 @@ t=0 0
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
-#### S2S Time Limit Reached
+#### S2S 已达到时间限制
 
 ```json
 {
@@ -210,7 +208,7 @@ t=0 0
 }
 ```
 
-#### Model Validation Failed
+#### 模型验证失败
 
 ```json
 {
@@ -221,7 +219,7 @@ t=0 0
 }
 ```
 
-### 500 Internal Server Error
+### 500 内部服务器错误
 
 ```json
 {
@@ -232,12 +230,11 @@ t=0 0
 }
 ```
 
-## Notes
+## 注释
 
-- The SDP offer must be a valid WebRTC SDP offer string
-- After receiving the SDP answer, use it to set the remote description on your RTCPeerConnection
-- Check S2S time status before initiating sessions using `/speech/s2s/status`
-- Log session duration after completion using `/speech/s2s/log-session`
-- All requests are processed through SMLTP for security and compliance
-- The `user_id` parameter allows billing to a different user account
-
+- SDP优惠必须是有效的WebRTC SDP优惠字符串
+- 收到 SDP 应答后，用它来设置 RTCPeerConnection 上的远程描述
+- 使用 `/speech/s2s/status` 启动会话之前检查 S2S 时间状态
+- 使用 `/speech/s2s/log-session` 完成后记录会话持续时间
+- 所有请求均通过 SMLTP 处理，以确保安全性和合规性
+- `user_id` 参数允许向不同的用户帐户计费

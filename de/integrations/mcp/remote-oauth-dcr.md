@@ -30,5 +30,5 @@ Einige Remote-MCP-Server autorisieren den Zugriff mit **OAuth 2.1** anstelle ein
 
 ## Verwandte
 
-- [MCP Connectors Übersicht](/de/en/integrations/mcp/overview)
-- [AI Gateway — Remote Endpoints](/de/en/ai-gateway/remote-endpoints)
+- [MCP Connectors Übersicht](/de/integrations/mcp/overview)
+- [AI Gateway — Remote Endpoints](/de/ai-gateway/remote-endpoints)

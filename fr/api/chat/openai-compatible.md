@@ -7,7 +7,7 @@ openapi: "POST /v1/chat/completions"
 ---
 # Point de terminaison compatible OpenAI
 
-SecureAI expose une surface compatible OpenAI afin que vous puissiez intégrer **n'importe quel SDK OpenAI en modifiant uniquement l'URL de base et la clé API** — aucune modification de code. La pile de sécurité complète SecureAI (authentification par clé API, listes d'autorisation de modèle/index, application de la politique SMLTP + droits, Prompt Shield, PII/DLP, facturation des points et le [moteur de redondance de modèle](/fr/en/api/redundancy)) s'exécute en dessous.
+SecureAI expose une surface compatible OpenAI afin que vous puissiez intégrer **n'importe quel SDK OpenAI en modifiant uniquement l'URL de base et la clé API** — aucune modification de code. La pile de sécurité complète SecureAI (authentification par clé API, listes d'autorisation de modèle/index, application de la politique SMLTP + droits, Prompt Shield, PII/DLP, facturation des points et le [moteur de redondance de modèle](/fr/api/redundancy)) s'exécute en dessous.
 
 ## Point de terminaison
 
@@ -25,7 +25,7 @@ https://{customer.name}.hiperai.ai/api/external/v1
 <Info>
 **Zéro-Connaissance uniquement**
 
-Cette surface ne prend **pas** en charge les RAG/bases de connaissances. Les demandes sont épinglées sur `Zero-Knowledge`. Si vous avez besoin d'une récupération de base de connaissances, utilisez le point de terminaison classique [Chat Completion](/fr/en/api/chat/completions).
+Cette surface ne prend **pas** en charge les RAG/bases de connaissances. Les demandes sont épinglées sur `Zero-Knowledge`. Si vous avez besoin d'une récupération de base de connaissances, utilisez le point de terminaison classique [Chat Completion](/fr/api/chat/completions).
 </Info>
 
 ## Authentification
@@ -95,7 +95,7 @@ Envoyez-les sous forme de champs de corps supplémentaires (via `extra_body` dan
 |-------|-------------|
 | `smltp_policy` | Politique de sécurité SMLTP pour cet appel. |
 | `prompt_shield` | `{ enabled?, policy? }` — remplacement du bouclier d'invite par appel. |
-| `models` / `fallback_models` | Modèle de chaîne de [redondance](/fr/en/api/redundancy). |
+| `models` / `fallback_models` | Modèle de chaîne de [redondance](/fr/api/redundancy). |
 | `redundancy` | `{ timeout_ms, first_token_timeout_ms, on[] }`. |
 | `user_id` | Facturer à un autre utilisateur (admin-gated). |
 
@@ -126,7 +126,7 @@ Forme OpenAI standard `chat.completion`, plus un objet d'extension `secureai`.
 }
 ```
 
-`secureai.smltp_bundle_id` (lorsqu'il est présent) peut être échangé contre un [reçu] de conformité signé (/fr/en/api/receipts).
+`secureai.smltp_bundle_id` (lorsqu'il est présent) peut être échangé contre un [reçu] de conformité signé (/en/api/receipts).
 
 ### Diffusion
 
@@ -144,6 +144,6 @@ Lorsqu'une chaîne de redondance entière échoue, l'erreur utilise `code: "all_
 
 ## Connexes
 
-- [Chat Completion](/fr/en/api/chat/completions) — la surface classique (ajoute RAG).
-- [Redondance & Failover](/fr/en/api/redundancy)
-- [API Prompt Shield](/fr/en/api/threat-defense/prompt-shield)
+- [Chat Completion](/fr/api/chat/completions) — la surface classique (ajoute RAG).
+- [Redondance & Failover](/fr/api/redundancy)
+- [API Prompt Shield](/fr/api/threat-defense/prompt-shield)

@@ -249,7 +249,7 @@ Les deux modes de facturation prennent en charge l'application des politiques SM
 
 ###Documentations
 - [Aperçu des modes de facturation](../billing-modes.md)
-- [Limites & Quotas](/fr/en/api/limits-and-quotas) - Comprendre les limites de la plateforme
+- [Limites & Quotas](/fr/api/limits-and-quotas) - Comprendre les limites de la plateforme
 
 ### Panneau d'administration
 - **Section API** : créer et gérer des clés API

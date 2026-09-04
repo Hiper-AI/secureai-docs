@@ -1,59 +1,58 @@
 ---
-title: "Billing Modes Quick Reference"
+title: "Referencia Rápida de Facturación"
+sidebar_label: "Referencia de Facturación"
 ---
 
+# Referencia rápida de modos de facturación
 
+Una guía de comparación rápida para elegir entre los modos de facturación Finalizaciones de usuario y Uso por modelo.
 
-# Billing Modes Quick Reference
+## Comparación rápida
 
-A quick comparison guide for choosing between User Completions and Usage by Model billing modes.
-
-## Quick Comparison
-
-| Feature | User Completions | Usage by Model |
+| Característica | Finalizaciones de usuario | Uso por modelo |
 |---------|------------------|----------------|
-| **Default Mode** | ✅ Yes | ❌ No |
-| **Cost Structure** | Fixed (license quota) | Variable (per token) |
-| **User Permission** | Not required | Must be enabled |
-| **Cost Tracking** | Completion counts | Token counts + costs |
-| **Best For** | Predictable costs | High-volume usage |
-| **Fallback Support** | ✅ Yes | ❌ No |
+| **Modo predeterminado** | ✅ Sí | ❌ No |
+| **Estructura de costos** | Fijo (cuota de licencia) | Variable (por token) |
+| **Permiso de usuario** | No requerido | Debe estar habilitado |
+| **Seguimiento de costos** | La finalización cuenta | Recuento de tokens + costos |
+| **Mejor para** | Costos predecibles | Uso de gran volumen |
+| **Soporte alternativo** | ✅ Sí | ❌ No |
 
-## When to Use Each Mode
+## Cuándo usar cada modo
 
-### User Completions Mode
+### Modo de finalización del usuario
 
-**Choose this when:**
-- ✅ You want predictable, fixed costs
-- ✅ You're within existing license limits
-- ✅ You're building internal tools
-- ✅ You want to use existing quota allocations
-- ✅ You need simple cost management
+**Elige esto cuando:**
+- ✅ Quiere costos fijos y predecibles
+- ✅ Estás dentro de los límites de licencia existentes
+- ✅ Estás construyendo herramientas internas
+- ✅ Quiere utilizar las asignaciones de cuotas existentes
+- ✅ Necesitas una gestión de costes sencilla
 
-**Example Use Cases:**
-- Internal chatbots
-- Development and testing
-- Low-volume applications
-- Fixed-budget projects
+**Casos de uso de ejemplo:**
+- Chatbots internos
+- Desarrollo y pruebas
+- Aplicaciones de bajo volumen
+- Proyectos de presupuesto fijo
 
-### Usage by Model Mode
+### Uso por modo de modelo
 
-**Choose this when:**
-- ✅ You need detailed cost tracking
-- ✅ You're using expensive models frequently
-- ✅ You want to pay only for actual usage
-- ✅ You need granular usage analytics
-- ✅ You have high-volume requirements
+**Elige esto cuando:**
+- ✅ Necesita un seguimiento detallado de los costos
+- ✅ Utilizas modelos caros con frecuencia
+- ✅ Quieres pagar solo por el uso real
+- ✅ Necesita análisis de uso granular
+- ✅ Tienes requerimientos de gran volumen
 
-**Example Use Cases:**
-- Production applications
-- High-volume AI services
-- Cost-sensitive projects
-- Multi-model applications
+**Casos de uso de ejemplo:**
+- Aplicaciones de producción
+- Servicios de IA de alto volumen
+- Proyectos sensibles a los costos
+- Aplicaciones multimodelo
 
-## API Usage
+## Uso de API
 
-When using the external API with billing modes:
+Al utilizar la API externa con modos de facturación:
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -66,29 +65,29 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## Rate Limits
+## Límites de tarifas
 
-### Default Rate Limits
-- **Requests per minute**: 60 (configurable)
-- **Requests per hour**: 1,000 (configurable)
-- **Daily limits**: 100 requests (configurable)
-- **Monthly limits**: 10,000 requests (configurable)
+### Límites de tasa predeterminados
+- **Solicitudes por minuto**: 60 (configurable)
+- **Solicitudes por hora**: 1.000 (configurable)
+- **Límites diarios**: 100 solicitudes (configurables)
+- **Límites mensuales**: 10.000 solicitudes (configurables)
 
-### Billing Mode Specific Limits
-- **User Completions**: Based on license quota
-- **Usage by Model**: Additional dollar-based limits
+### Límites específicos del modo de facturación
+- **Finalizaciones de usuario**: según la cuota de licencia
+- **Uso por modelo**: límites adicionales basados en dólares
 
-## SMLTP Policy Integration
+## Integración de políticas SMLTP
 
-Both billing modes support SMLTP policy enforcement:
+Ambos modos de facturación admiten la aplicación de políticas SMLTP:
 
-| Policy | Description | Use Case |
+| Política | Descripción | Caso de uso |
 |--------|-------------|----------|
-| `public` | For non-sensitive data | Public-facing applications |
-| `internal` | For company data | Internal tools and processes |
-| `confidential` | For sensitive information | Restricted access applications |
+| `public` | Para datos no confidenciales | Aplicaciones de cara al público |
+| `internal` | Para datos de la empresa | Herramientas y procesos internos |
+| `confidential` | Para información confidencial | Aplicaciones de acceso restringido |
 
-### SMLTP Configuration Example
+### Ejemplo de configuración SMLTP
 
 ```json
 {
@@ -99,9 +98,9 @@ Both billing modes support SMLTP policy enforcement:
 }
 ```
 
-## Configuration Examples
+## Ejemplos de configuración
 
-### User Completions Configuration
+### Configuración de finalización del usuario
 
 ```json
 {
@@ -117,7 +116,7 @@ Both billing modes support SMLTP policy enforcement:
 }
 ```
 
-### Usage by Model Configuration
+### Uso por configuración del modelo
 
 ```json
 {
@@ -137,34 +136,34 @@ Both billing modes support SMLTP policy enforcement:
 }
 ```
 
-## Error Scenarios
+## Escenarios de error
 
-### User Completions Errors
+### Errores de finalización del usuario
 
-| Error | Cause | Solution |
+| Error | Causa | Solución |
 |-------|-------|----------|
-| `Completion limit exceeded` | Monthly quota reached | Enable Usage by Model or increase quota |
-| `Daily limit exceeded` | Daily limit reached | Wait for reset or increase limit |
-| `User not found` | Invalid user ID | Verify user exists |
+| `Completion limit exceeded` | Cuota mensual alcanzada | Habilitar uso por modelo o aumentar cuota |
+| `Daily limit exceeded` | Límite diario alcanzado | Espere a que se restablezca o aumente el límite |
+| `User not found` | ID de usuario no válido | Verificar que el usuario existe |
 
-### Usage by Model Errors
+### Errores de uso por modelo
 
-| Error | Cause | Solution |
+| Error | Causa | Solución |
 |-------|-------|----------|
-| `Usage by Model required` | User doesn't have it enabled | Enable Usage by Model for user |
-| `Usage by Model budget exceeded` | Monthly budget reached | Increase dollar limit |
-| `Invalid billing mode` | Invalid mode specified | Use `"usage-by-model"` or `"user-completions"` |
+| `Usage by Model required` | El usuario no lo tiene habilitado | Habilitar uso por modelo para usuario |
+| `Usage by Model budget exceeded` | Presupuesto mensual alcanzado | Aumentar límite de dólares |
+| `Invalid billing mode` | Modo no válido especificado | Utilice `"usage-by-model"` o `"user-completions"` |
 
-## Migration Guide
+## Guía de migración
 
-### From User Completions to Usage by Model
+### De las terminaciones del usuario al uso por modelo
 
-1. **Enable Usage by Model for the user**
+1. **Habilitar uso por modelo para el usuario**
    ```bash
    # Admin panel: Users > Edit User > Enable Usage by Model
    ```
 
-2. **Update API key configuration**
+2. **Actualizar configuración de clave API**
    ```json
    {
      "billingMode": "usage-by-model",
@@ -175,18 +174,18 @@ Both billing modes support SMLTP policy enforcement:
    }
    ```
 
-3. **Monitor usage and costs**
-   - Track token usage
-   - Monitor monthly spending
-   - Adjust limits as needed
+3. **Monitorear el uso y los costos**
+   - Seguimiento del uso de tokens
+   - Monitorear el gasto mensual
+   - Ajustar los límites según sea necesario
 
-### From Usage by Model to User Completions
+### Del uso por modelo a las terminaciones del usuario
 
-1. **Verify user has sufficient quota**
-   - Check license tier
-   - Verify monthly limits
+1. **Verificar que el usuario tenga cuota suficiente**
+   - Verificar nivel de licencia
+   - Verificar límites mensuales
 
-2. **Update API key configuration**
+2. **Actualizar configuración de clave API**
    ```json
    {
      "billingMode": "user-completions",
@@ -195,71 +194,71 @@ Both billing modes support SMLTP policy enforcement:
    }
    ```
 
-3. **Monitor completion usage**
-   - Track completion counts
-   - Ensure fallback behavior works
+3. **Supervisar el uso de finalización**
+   - Seguimiento del recuento de finalización
+   - Garantizar que el comportamiento alternativo funcione
 
-## Cost Estimation
+## Estimación de costos
 
-### User Completions Costs
+### Costos de finalización del usuario
 
-- **Fixed cost**: Based on license tier
-- **No additional charges**: Beyond existing license
-- **Predictable**: Same as web interface usage
+- **Costo fijo**: según el nivel de licencia
+- **Sin cargos adicionales**: más allá de la licencia existente
+- **Predecible**: Igual que el uso de la interfaz web
 
-### Usage by Model Costs
+### Uso por costos modelo
 
-- **Variable cost**: Based on token usage
-- **Model-specific pricing**: Different rates per model
-- **Example costs**:
-  - GPT-5.1: provider pricing applies
-  - Claude Sonnet 4.6: provider pricing applies
-  - GPT-5 Nano: provider pricing applies
+- **Costo variable**: basado en el uso del token
+- **Precios específicos del modelo**: diferentes tarifas por modelo
+- **Costos de ejemplo**:
+  - GPT-5.1: se aplican precios del proveedor
+  - Claude Sonnet 4.6: se aplican precios del proveedor
+  - GPT-5 Nano: se aplican precios del proveedor
 
-## Monitoring Tips
+## Consejos de seguimiento
 
-### User Completions Monitoring
+### Monitoreo de finalización de usuarios
 
-- Track completion counts daily
-- Monitor quota consumption
-- Set alerts for approaching limits
-- Review usage patterns monthly
+- El seguimiento de la finalización cuenta diariamente
+- Monitorear el consumo de cuotas.
+- Establecer alertas para acercarse a los límites
+- Revisar los patrones de uso mensualmente
 
-### Usage by Model Monitoring
+### Uso por modelo de seguimiento
 
-- Track token usage and costs
-- Monitor monthly spending
-- Set dollar limit alerts
-- Review cost breakdown by model
+- Seguimiento del uso y los costos del token
+- Monitorear el gasto mensual
+- Establecer alertas de límite de dólares
+- Revisar el desglose de costos por modelo.
 
-## Security Considerations
+## Consideraciones de seguridad
 
-### Both Modes
+### Ambos modos
 
-- Use IP restrictions for sensitive apps
-- Rotate API keys regularly
-- Monitor for unusual activity
-- Implement proper error handling
+- Utilice restricciones de IP para aplicaciones sensibles
+- Rote las claves API con regularidad
+- Monitorear actividad inusual
+- Implementar un manejo adecuado de errores.
 
-### Usage by Model Specific
+### Uso por modelo específico
 
-- Set appropriate dollar limits
-- Monitor for cost spikes
-- Review model usage patterns
-- Track expensive model usage
+- Establecer límites de dólares apropiados
+- Monitorear los picos de costos
+- Revisar los patrones de uso del modelo.
+- Seguimiento del uso de modelos costosos
 
-## Support Resources
+## Recursos de soporte
 
-### Documentation
-- [Billing Modes Overview](../billing-modes.md)
-- [Limits & Quotas](/en/api/limits-and-quotas) - Understand platform limits
+### Documentación
+- [Descripción general de los modos de facturación] (../billing-modes.md)
+- [Límites y cuotas](/api/limits-and-quotas) - Comprender los límites de la plataforma
 
-### Admin Panel
-- **APIs Section**: Create and manage API keys
-- **Users Section**: Enable Usage by Model
+### Panel de administración
+- **Sección API**: crear y administrar claves API
+- **Sección de Usuarios**: Habilitar uso por modelo
 
-### Common Issues
-1. **Usage by Model not working**: Check user permissions
-2. **Quota exceeded**: Enable Usage by Model or increase limits
-3. **Cost spikes**: Review model usage and set limits
-4. **Authentication errors**: Verify API key and permissions 
+### Problemas comunes
+1. **El uso por modelo no funciona**: verifique los permisos de usuario
+2. **Cuota superada**: habilite el uso por modelo o aumente los límites
+3. **Picos de costos**: revise el uso del modelo y establezca límites
+4. **Errores de autenticación**: verifique la clave API y los permisos

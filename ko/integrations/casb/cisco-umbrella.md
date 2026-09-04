@@ -48,9 +48,9 @@ SecureAI는 `POST https://api.umbrella.com/auth/v2/token`(기본 `apiKey:apiSecr
 
 ## 확인
 
-첫 번째 동기화 후 [네트워크 소스](/ko/en/discovery/network-sources)를 엽니다. AI 도메인을 해결한 소스는 해당 공급자, 호출 횟수 및 심각도와 함께 표시됩니다.
+첫 번째 동기화 후 [네트워크 소스](/ko/discovery/network-sources)를 엽니다. AI 도메인을 해결한 소스는 해당 공급자, 호출 횟수 및 심각도와 함께 표시됩니다.
 
 ## 관련
 
-- [CASB 및 네트워크 개요](/ko/ko/integrations/casb/overview)
-- [네트워크 소스](/ko/ko/discovery/network-sources)
+- [CASB 및 네트워크 개요](/ko/integrations/casb/overview)
+- [네트워크 소스](/ko/discovery/network-sources)

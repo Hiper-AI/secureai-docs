@@ -1,49 +1,47 @@
 ---
 id: create
-title: "Create Index"
-sidebar_label: "Create Index"
-description: "Create a new knowledge base index"
+title: "Criar Índice RAG"
+sidebar_label: "Criar Índice"
+description: "Crie um novo índice da base de conhecimento"
 openapi: "POST /indexes/all"
 ---
 
+# Criar índice
 
+Crie um novo índice da base de conhecimento para armazenar e recuperar documentos.
 
-# Create Index
-
-Create a new knowledge base index for storing and retrieving documents.
-
-## Endpoint
+## Ponto final
 
 ```
 POST /indexes
 ```
 
-## Description
+## Descrição
 
-This endpoint allows administrators to create a new knowledge base index. The index can be assigned to specific users or groups. Only administrators can create indexes.
+Este endpoint permite que os administradores criem um novo índice da base de conhecimento. O índice pode ser atribuído a usuários ou grupos específicos. Somente administradores podem criar índices.
 
-## Authentication
+## Autenticação
 
-**Required**: API Key with admin privileges
+**Obrigatório**: Chave de API com privilégios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Corpo da solicitação
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | Yes | Index name |
-| `assignedUser` | string | No | User ID to assign the index to (MongoDB ObjectId) |
-| `assignedGroup` | string | No | Group ID to assign the index to (MongoDB ObjectId) |
-| `sharedIndexName` | string | No | Shared index name (defaults to name) |
-| `namespace` | string | No | Namespace for the index (auto-generated if not provided) |
-| `region` | string | No | Region hint for storage (optional) |
-| `cloud` | string | No | Cloud provider hint (optional) |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `name` | corda | Sim | Nome do índice |
+| `assignedUser` | corda | Não | ID do usuário para atribuir o índice ao (MongoDB ObjectId) |
+| `assignedGroup` | corda | Não | ID do grupo ao qual atribuir o índice (MongoDB ObjectId) |
+| `sharedIndexName` | corda | Não | Nome do índice compartilhado (o padrão é nome) |
+| `namespace` | corda | Não | Namespace para o índice (gerado automaticamente se não for fornecido) |
+| `region` | corda | Não | Dica de região para armazenamento (opcional) |
+| `cloud` | corda | Não | Dica do provedor de nuvem (opcional) |
 
 
-## Example Request
+## Exemplo de solicitação
 
 ```json
 {
@@ -55,9 +53,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## Resposta de sucesso
 
-**Status Code**: `201 Created`
+**Código de status**: `201 Created`
 
 ```json
 {
@@ -80,23 +78,23 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `index` | object | Created index object |
-| `index.id` | string | Unique index identifier |
-| `index.name` | string | Index name |
-| `index.sharedIndexName` | string | Shared index name |
-| `index.namespace` | string | Index namespace |
-| `index.type` | string | Index type (personal, general, group, unknown) |
-| `index.assignedUser` | object | Assigned user information (if personal) |
-| `index.assignedGroup` | object | Assigned group information (if group) |
-| `index.createdAt` | string | Creation timestamp |
+| `success` | booleano | Indica se a operação foi bem sucedida |
+| `message` | corda | Mensagem de sucesso |
+| `index` | objeto | Objeto de índice criado |
+| `index.id` | corda | Identificador de índice único |
+| `index.name` | corda | Nome do índice |
+| `index.sharedIndexName` | corda | Nome do índice compartilhado |
+| `index.namespace` | corda | Espaço para nome do índice |
+| `index.type` | corda | Tipo de índice (pessoal, geral, grupo, desconhecido) |
+| `index.assignedUser` | objeto | Informações atribuídas ao usuário (se pessoais) |
+| `index.assignedGroup` | objeto | Informações atribuídas ao grupo (se for grupo) |
+| `index.createdAt` | corda | Carimbo de data e hora de criação |
 
-## Example Usage
+## Exemplo de uso
 
 ### JavaScript
 
@@ -126,7 +124,7 @@ const result = await createIndex(indexData);
 console.log('Created index:', result.index.id);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -153,7 +151,7 @@ result = create_index(index_data)
 print("Created index:", result["index"]["id"])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
@@ -167,9 +165,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
   }'
 ```
 
-## Error Responses
+## Respostas de erro
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
 ```json
 {
@@ -185,27 +183,27 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-## Validations and Business Rules
+## Validações e regras de negócios
 
-- **Index name normalization** (for storage and uniqueness checks):
-  - Lowercase, trim whitespace
-  - Replace spaces with hyphens
-  - Remove any character not in `[a-z0-9-]`
-- **Index name validation**: Must match `^[a-z0-9-]{3,50}$`; otherwise returns 400.
-- **Uniqueness**: Normalized `name` must be unique; duplicates return 409.
-- **Assigned user quota**: If `assignedUser` is provided, enforce user index quota via `checkUserIndexQuota`; exceeded quota returns 403.
-- **Region restriction (Essential)**: For `Essential` license, indexes can only be created with `cloud=aws` and `region=us-east-1`; otherwise 403.
-- **Assigned group**: When `assignedGroup` is provided, the group must exist and not be archived (`status != 'Archived'`); otherwise 400.
+- **Normalização do nome do índice** (para verificações de armazenamento e exclusividade):
+  - Minúsculas, corte os espaços em branco
+  - Substitua espaços por hífens
+  - Remova qualquer caractere que não esteja em `[a-z0-9-]`
+- **Validação do nome do índice**: Deve corresponder a `^[a-z0-9-]{3,50}$`; caso contrário, retorna 400.
+- **Unicidade**: `name` normalizado deve ser único; duplicatas retornam 409.
+- **Cota de usuário atribuída**: Se `assignedUser` for fornecido, aplique a cota de índice de usuário por meio de `checkUserIndexQuota`; excedeu a cota retorna 403.
+- **Restrição de região (Essencial)**: Para licença `Essential`, índices só podem ser criados com `cloud=aws` e `region=us-east-1`; caso contrário, 403.
+- **Grupo atribuído**: Quando `assignedGroup` é fornecido, o grupo deve existir e não ser arquivado (`status != 'Archived'`); caso contrário, 400.
 
-## Normalization and Storage
+## Normalização e armazenamento
 
-- `name` is stored normalized.
-- `sharedIndexName` defaults to the normalized `name`.
-- `namespace` defaults to `user-{userId}-index-{normalizedName}` when assigned to a user.
+- `name` é armazenado normalizado.
+- `sharedIndexName` padrão é o normalizado `name`.
+- `namespace` é padronizado como `user-{userId}-index-{normalizedName}` quando atribuído a um usuário.
 
-## Typical Error Shapes
+## Formas de erro típicas
 
-### 400 Invalid Index Name
+### 400 Nome de índice inválido
 
 ```json
 {
@@ -215,7 +213,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### 403 Index Quota Exceeded
+### 403 Cota do índice excedida
 
 ```json
 {
@@ -225,7 +223,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### 403 Region Not Allowed
+### 403 Região não permitida
 
 ```json
 {
@@ -235,7 +233,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### 400 Group Invalid/Inactive
+### 400 Grupo inválido/inativo
 
 ```json
 {
@@ -245,7 +243,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -257,7 +255,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
 ```json
 {
@@ -269,7 +267,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### 409 Conflict
+### 409 Conflito
 
 ```json
 {
@@ -281,7 +279,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### 429 Too Many Requests
+### 429 Muitas solicitações
 
 ```json
 {
@@ -294,43 +292,43 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-## Index Types
+## Tipos de índice
 
-| Type | Description | Permissions Required |
-|------|-------------|---------------------|
-| `personal` | Personal index for individual use | Admin privileges |
-| `general` | Shared organizational index | Admin privileges |
-| `group` | Group-assigned index | Admin privileges |
+| Tipo | Descrição | Permissões necessárias |
+|------|-------------|----------|
+| `personal` | Índice pessoal para uso individual | Privilégios de administrador |
+| `general` | Índice organizacional compartilhado | Privilégios de administrador |
+| `group` | Índice atribuído ao grupo | Privilégios de administrador |
 
-## Required Fields
+## Campos obrigatórios
 
-| Field | Description | Example |
-|-------|-------------|----------|
-| `name` | Index name | "my-knowledge-base" |
-| `region` | AWS region | "us-east-1" |
-| `cloud` | Cloud provider | "aws" |
+| Campo | Descrição | Exemplo |
+|-------|------------|----------|
+| `name` | Nome do índice | "minha base de conhecimento" |
+| `region` | Região AWS | "nós-leste-1" |
+| `cloud` | Provedor de nuvem | "ah" |
 
-## Use Cases
+## Casos de uso
 
-- **User Assignment**: Create indexes and assign them to specific users
-- **Group Assignment**: Create indexes and assign them to groups
-- **Knowledge Bases**: Build specialized knowledge bases for specific domains
-- **Content Organization**: Organize content by topic or category
-- **Vector Storage**: Create indexes for storing and retrieving vector embeddings
+- **Atribuição de usuário**: crie índices e atribua-os a usuários específicos
+- **Atribuição de grupo**: crie índices e atribua-os a grupos
+- **Bases de conhecimento**: crie bases de conhecimento especializadas para domínios específicos
+- **Organização de conteúdo**: organize o conteúdo por tópico ou categoria
+- **Armazenamento de vetores**: crie índices para armazenar e recuperar incorporações de vetores
 
-## Rate Limits
+## Limites de taxa
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **Padrão**: 50 solicitações por minuto
+- **Diariamente**: 5.000 solicitações por dia
+- **Mensal**: 150.000 solicitações por mês
 
-## Notes
+## Notas
 
-- This endpoint is only accessible by administrators
-- Required fields: name, region, cloud are all required
-- Assignment: Index can be assigned to a user (assignedUser) or group (assignedGroup)
-- Auto-generation: namespace is auto-generated if not provided
-- Unique Names: Index names must be unique across the system
-- The index is immediately available for use after creation
-- Dimension: Vector dimension is managed internally by the application (currently 4096)
-- Metric: Similarity metric is managed internally by the application 
+- Este endpoint só é acessível por administradores
+- Campos obrigatórios: nome, região, nuvem são todos obrigatórios
+- Atribuição: o índice pode ser atribuído a um usuário (assignedUser) ou grupo (assignedGroup)
+- Geração automática: o namespace é gerado automaticamente se não for fornecido
+- Nomes exclusivos: os nomes dos índices devem ser exclusivos em todo o sistema
+- O índice fica imediatamente disponível para uso após a criação
+- Dimensão: a dimensão vetorial é gerenciada internamente pela aplicação (atualmente 4096)
+- Métrica: a métrica de similaridade é gerenciada internamente pelo aplicativo

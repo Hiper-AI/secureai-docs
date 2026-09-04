@@ -1,174 +1,172 @@
 ---
 id: splunk-security
-title: "Splunk Security Integration"
+title: "Integração com Splunk Security (HEC)"
 sidebar_label: "Splunk Security"
-description: "Integration Guide: Connecting Splunk SIEM with HiperAI via HTTP Event Collector (HEC)"
+description: "Guia de integração: conectando Splunk SIEM com HiperAI via HTTP Event Collector (HEC)"
 ---
 
+# Integração de segurança Splunk
 
+Guia de Integração: Conectando Splunk SIEM com HiperAI
 
-# Splunk Security Integration
+Este guia descreve as etapas necessárias para configurar o Splunk para receber logs de segurança do HiperAI através do HTTP Event Collector (HEC).
 
-Integration Guide: Connecting Splunk SIEM with HiperAI
+## Etapa 1: Crie um novo índice
 
-This guide describes the necessary steps to configure Splunk to receive security logs from HiperAI via the HTTP Event Collector (HEC).
+Primeiramente, criaremos um espaço dedicado para armazenar os logs da aplicação.
 
-## Step 1: Create a New Index
-
-First, we will create a dedicated space to store the application's logs.
-
-### A. From the Splunk home screen, navigate to Settings > Indexes.
+### A. Na tela inicial do Splunk, navegue até Configurações > Índices.
 
 <div class="mac-window">
-  ![Splunk Settings Indexes](/img/splunk%20images/1%20-%20Splunk%20Integration.png)
+  ![Índices de configurações do Splunk](/img/splunk%20images/1%20-%20Splunk%20Integration.png)
 </div>
 
-### B. Click the New Index button in the top-right corner.
+### B. Clique no botão Novo índice no canto superior direito.
 
-### C. Configure the index:
+### C. Configure o índice:
 
-- **Index Name**: `secureai_events`
-- Leave all other options with their default values for a standard configuration.
-- Click **Save**.
+- **Nome do índice**: `secureai_events`
+- Deixe todas as outras opções com seus valores padrão para uma configuração padrão.
+- Clique em **Salvar**.
 
 <div class="mac-window">
-  ![Splunk Index Configuration](/img/splunk%20images/2%20-%20Splunk%20Integration.png)
+  ![Configuração do índice Splunk](/img/splunk%20images/2%20-%20Splunk%20Integration.png)
 </div>
 
-Your new index is now created and ready to receive data.
+Seu novo índice agora está criado e pronto para receber dados.
 
-## Step 2: Enable the HTTP Event Collector (HEC)
+## Etapa 2: ativar o coletor de eventos HTTP (HEC)
 
-Next, we will ensure that Splunk is listening for incoming data requests.
+A seguir, garantiremos que o Splunk esteja escutando as solicitações de dados recebidas.
 
-### A. Go to Settings > Data Inputs.
+### A. Vá para Configurações > Entradas de dados.
 
 <div class="mac-window">
-  ![Splunk Data Inputs](/img/splunk%20images/3%20-%20Splunk%20Integration.png)
+  ![Entradas de dados do Splunk](/img/splunk%20images/3%20-%20Splunk%20Integration.png)
 </div>
 
-### B. Under "Local inputs," click on HTTP Event Collector.
+### B. Em "Entradas locais", clique em HTTP Event Collector.
 
 <div class="mac-window">
-  ![Splunk HTTP Event Collector](/img/splunk%20images/4%20-%20Splunk%20Integration.png)
+  ![Coletor de eventos HTTP do Splunk](/img/splunk%20images/4%20-%20Splunk%20Integration.png)
 </div>
 
-### C. In the top-right corner, click Global Settings.
+### C. No canto superior direito, clique em Configurações globais.
 
-### D. Verify the following configuration:
+### D. Verifique a seguinte configuração:
 
-- **All Tokens**: Must be Enabled.
-- **Enable SSL**: (Optional) This is recommended for production environments but can be disabled for initial testing.
-- **HTTP Port Number**: Ensure the port is 8088.
-- Click **Save**.
+- **Todos os tokens**: devem estar habilitados.
+- **Ativar SSL**: (opcional) recomendado para ambientes de produção, mas pode ser desativado para testes iniciais.
+- **Número da porta HTTP**: certifique-se de que a porta seja 8088.
+- Clique em **Salvar**.
 
 <div class="mac-window">
-  ![Splunk HEC Global Settings](/img/splunk%20images/5%20-%20Splunk%20Integration.png)
+  ![Configurações globais do Splunk HEC](/img/splunk%20images/5%20-%20Splunk%20Integration.png)
 </div>
 
-## Step 3: Create the HEC Token
+## Etapa 3: Crie o token HEC
 
-The token is the secure access key that our application will use to authenticate with Splunk.
+O token é a chave de acesso segura que nosso aplicativo usará para autenticar no Splunk.
 
-### A. Return to the HTTP Event Collector page (Settings > Data Inputs > HTTP Event Collector).
+### A. Retorne à página do Coletor de Eventos HTTP (Configurações > Entradas de Dados > Coletor de Eventos HTTP).
 
-### B. Click the New Token button.
+### B. Clique no botão Novo token.
 
 <div class="mac-window">
-  ![Splunk New Token Button](/img/splunk%20images/6%20-%20Splunk%20Integration.png)
+  ![Botão Novo Token do Splunk](/img/splunk%20images/6%20-%20Splunk%20Integration.png)
 </div>
 
-### C. Token Configuration (Tab 1):
+### C. Configuração do token (guia 1):
 
-- **Name**: `token_secureai_app`
-- **Description**: (Optional) Add a brief description.
-- **Enable indexer acknowledgment**: **IMPORTANT**: Ensure this checkbox is unchecked.
-- Click **Next**.
+- **Nome**: `token_secureai_app`
+- **Descrição**: (Opcional) Adicione uma breve descrição.
+- **Ativar reconhecimento do indexador**: **IMPORTANTE**: certifique-se de que esta caixa de seleção esteja desmarcada.
+- Clique em **Avançar**.
 
 <div class="mac-window">
-  ![Splunk Token Configuration](/img/splunk%20images/7%20-%20Splunk%20Integration.png)
+  ![Configuração do token Splunk](/img/splunk%20images/7%20-%20Splunk%20Integration.png)
 </div>
 
-### D. Input Settings (Tab 2):
+### D. Configurações de entrada (guia 2):
 
-- **Source Type**: Click Select. In the search field, type `_json` and select it from the list. This tells Splunk to expect data in JSON format.
-- **Allowed Indexes**: In the "Available indexes" column, find the index we created (`secureai_events`) and click it to move it to the "Selected indexes" column.
-- **Default Index**: Select `secureai_events` from the dropdown menu.
+- **Tipo de fonte**: Clique em Selecionar. No campo de pesquisa, digite `_json` e selecione-o na lista. Isso diz ao Splunk para esperar dados no formato JSON.
+- **Índices permitidos**: Na coluna "Índices disponíveis", encontre o índice que criamos (`secureai_events`) e clique nele para movê-lo para a coluna "Índices selecionados".
+- **Índice padrão**: Selecione `secureai_events` no menu suspenso.
 
 <div class="mac-window">
-  ![Splunk Input Settings](/img/splunk%20images/8%20-%20Splunk%20Integration.png)
+  ![Configurações de entrada do Splunk](/img/splunk%20images/8%20-%20Splunk%20Integration.png)
 </div>
 
-- Click **Review** and then **Submit**.
+- Clique em **Revisar** e depois em **Enviar**.
 
 <div class="mac-window">
-  ![Splunk Review and Submit](/img/splunk%20images/9%20-%20Splunk%20Integration.png)
+  ![Revisão e envio do Splunk](/img/splunk%20images/9%20-%20Splunk%20Integration.png)
 </div>
 
-### E. Copy the Token Value!
+### E. Copie o valor do token!
 
-Splunk will now display the token value. Copy it immediately and save it in a secure location. This is the token you will need to configure in our application.
+O Splunk agora exibirá o valor do token. Copie-o imediatamente e salve-o em um local seguro. Este é o token que você precisará configurar em nossa aplicação.
 
 <div class="mac-window">
-  ![Splunk Token Value](/img/splunk%20images/10%20-%20Splunk%20Integration.png)
+  ![Valor do token Splunk](/img/splunk%20images/10%20-%20Splunk%20Integration.png)
 </div>
 
-## Step 4: Finalize and Share Information
+## Etapa 4: finalizar e compartilhar informações
 
-You're almost done. Just one final step.
+Você está quase terminando. Apenas uma etapa final.
 
-### A. Gather the Information
+### A. Reúna as informações
 
-To complete the integration, the application needs the following three pieces of information:
+Para completar a integração, o aplicativo precisa das três informações a seguir:
 
-1. **HEC URL**: The address of your Splunk server and the HEC port (e.g., `http://splunk.yourcompany.com:8088/services/collector`).
-2. **The HEC Token**: The value you copied in the previous step.
-3. **The Index Name**: The name of the index you created (`secureai_events`).
+1. **HEC URL**: O endereço do seu servidor Splunk e a porta HEC (por exemplo, `http://splunk.yourcompany.com:8088/services/collector`).
+2. **O token HEC**: O valor que você copiou na etapa anterior.
+3. **O nome do índice**: O nome do índice que você criou (`secureai_events`).
 
 <div class="mac-window">
-  ![Splunk Index Information](/img/splunk%20images/11%20-%20Splunk%20Integration.png)
+  ![Informações do índice do Splunk](/img/splunk%20images/11%20-%20Splunk%20Integration.png)
 </div>
 
-### B. Review Firewall Rules
+### B. Revise as regras de firewall
 
-Ensure that any firewall between the application server and your Splunk server allows traffic on the HEC port (typically TCP 8088).
+Certifique-se de que qualquer firewall entre o servidor de aplicativos e o servidor Splunk permita tráfego na porta HEC (normalmente TCP 8088).
 
-## Step 4: Note on Data Format (Sourcetype)
+## Etapa 4: Nota sobre o formato dos dados (tipo de origem)
 
-To ensure data is correctly identified and parsed, our application sends logs in a specific structured JSON format.
+Para garantir que os dados sejam identificados e analisados corretamente, nosso aplicativo envia logs em um formato JSON estruturado específico.
 
-**Important**: All events sent from SecureAI will have the sourcetype `secureai:json`.
+**Importante**: Todos os eventos enviados do SecureAI terão o tipo de origem `secureai:json`.
 
-This value is set directly in the data payload sent by our application, so it will automatically override the default sourcetype (`_json`) you selected for the token. No further action is required, but it is important for you to know that you will find the data under the sourcetype="secureai:json" in your searches.
+Este valor é definido diretamente na carga de dados enviada por nosso aplicativo, portanto, ele substituirá automaticamente o tipo de fonte padrão (`_json`) que você selecionou para o token. Nenhuma ação adicional é necessária, mas é importante que você saiba que encontrará os dados em sourcetype="secureai:json" em suas pesquisas.
 
-## Step 6: Verify the Integration
+## Etapa 6: Verifique a integração
 
-Once you have entered the integration details into the SecureAI application, you can verify that the connection is working correctly.
+Depois de inserir os detalhes de integração no aplicativo SecureAI, você poderá verificar se a conexão está funcionando corretamente.
 
-### A. Test the Connection
+### A. Teste a conexão
 
-Use the "Test Connection" button within our application. This will send a test event to your Splunk index.
+Use o botão "Testar Conexão" em nosso aplicativo. Isso enviará um evento de teste para o seu índice do Splunk.
 
 <div class="mac-window">
-  ![Splunk Test Connection](/img/splunk%20images/12%20-%20Splunk%20Integration.png)
+  ![Conexão de teste do Splunk](/img/splunk%20images/12%20-%20Splunk%20Integration.png)
 </div>
 
-You will see a success message if the event was sent correctly or an error message if any of the provided data is incorrect.
+Você verá uma mensagem de sucesso se o evento foi enviado corretamente ou uma mensagem de erro se algum dos dados fornecidos estiver incorreto.
 
-### B. Find the Test Event in Splunk
+### B. Encontre o evento de teste no Splunk
 
-To see if the event arrived in Splunk, go to the Search & Reporting app.
+Para ver se o evento chegou ao Splunk, acesse o aplicativo Search & Reporting.
 
-In the search bar, run a search for your index (e.g., `index="secureai_events"`).
+Na barra de pesquisa, faça uma pesquisa pelo seu índice (por exemplo, `index="secureai_events"`).
 
-Set the Time Range to "Last 24 hours". You should see the test log appear in the results.
+Defina o intervalo de tempo para "Últimas 24 horas". Você deverá ver o log de teste aparecer nos resultados.
 
 <div class="mac-window">
-  ![Splunk Search Results](/img/splunk%20images/13%20-%20Splunk%20Integration.png)
+  ![Resultados da pesquisa do Splunk](/img/splunk%20images/13%20-%20Splunk%20Integration.png)
 </div>
 
-**Note**: Depending on network traffic and system load, it can sometimes take up to 10 minutes for logs to appear in Splunk.
+**Observação**: Dependendo do tráfego de rede e da carga do sistema, às vezes pode levar até 10 minutos para que os logs apareçam no Splunk.
 
-## Done!
+## Feito!
 
-With these steps, your Splunk instance is fully configured to integrate with SecureAI 😎.
+Com essas etapas, sua instância do Splunk está totalmente configurada para integração com SecureAI 😎.

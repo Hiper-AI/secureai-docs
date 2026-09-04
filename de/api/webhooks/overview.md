@@ -21,7 +21,7 @@ Webhook-Endpunkte werden von Administratoren unter **Admin → Webhooks** (API-B
 | Senden Sie eine Testlieferung | `POST /api/admin/webhooks/:id/test` |
 | Endpunkt löschen | `DELETE /api/admin/webhooks/:id` |
 
-Eingaben zur Erstellungszeit: `url`, `description`, `events[]` (siehe [Events](/de/en/api/webhooks/events)) und `enabled`. Das Signaturgeheimnis (`whsec_...`) wird **nur** beim Erstellen und Rotieren angezeigt – speichern Sie es sicher; Sie können es nicht erneut abrufen.
+Eingaben zur Erstellungszeit: `url`, `description`, `events[]` (siehe [Events](/de/api/webhooks/events)) und `enabled`. Das Signaturgeheimnis (`whsec_...`) wird **nur** beim Erstellen und Rotieren angezeigt – speichern Sie es sicher; Sie können es nicht erneut abrufen.
 
 Der Endpunkt `url` ist SSRF-validiert: nur `http(s)` wird akzeptiert und private/Loopback-/Link-Local-Hosts werden abgelehnt, es sei denn, die Instanz läuft mit `WEBHOOKS_ALLOW_PRIVATE=true` (selbstgehostete Empfänger benötigen dies oft).
 
@@ -122,6 +122,6 @@ def secureai_webhook():
 
 ## Verwandte
 
-- [Webhook Events](/de/en/api/webhooks/events) – der vollständige Eventkatalog und die Payloads.
-- [Redundancy & Failover](/de/en/api/redundancy) — Quelle von `api:model_failover`.
-- [Threat Defense](/de/en/threat-defense/overview) – Quelle der `promptshield:*`-Ereignisse.
+- [Webhook Events](/de/api/webhooks/events) – der vollständige Eventkatalog und die Payloads.
+- [Redundancy & Failover](/de/api/redundancy) — Quelle von `api:model_failover`.
+- [Threat Defense](/de/threat-defense/overview) – Quelle der `promptshield:*`-Ereignisse.

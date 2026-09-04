@@ -11,7 +11,7 @@ Verbinden Sie Ihr Google Cloud-Projekt, damit SecureAI Vertex AI-Agenten, Endpun
 ## Was SecureAI importiert
 
 - **Vertex AI-Agenten, Endpunkte und Modelle**
-- **NHIs** – Dienstkonten, Dienstkontoschlüssel und API-Schlüssel (widerruflich – siehe [NHI Inventory](/de/en/discovery/nhi-inventory))
+- **NHIs** – Dienstkonten, Dienstkontoschlüssel und API-Schlüssel (widerruflich – siehe [NHI Inventory](/de/discovery/nhi-inventory))
 - **IAM** Rollenbindungen
 - **Cloud-Audit-Protokolle**
 – **Anfragen, Token und Kosten** für die letzten 30 Tage (tatsächlich aus dem BigQuery-Abrechnungsexport oder geschätzt)
@@ -53,14 +53,14 @@ Verbinden Sie Ihr Google Cloud-Projekt, damit SecureAI Vertex AI-Agenten, Endpun
 
 ## Überprüfen
 
-Öffnen Sie [Cloud Sensors](/de/en/discovery/cloud-sensors) für erkannte Agenten/Endpunkte/Modelle und [NHI Inventory](/de/en/discovery/nhi-inventory) für Dienstkonten und Schlüssel. Einblicke zeigen IAM-Bindungen, Nutzung und Kosten.
+Öffnen Sie [Cloud Sensors](/de/discovery/cloud-sensors) für erkannte Agenten/Endpunkte/Modelle und [NHI Inventory](/de/discovery/nhi-inventory) für Dienstkonten und Schlüssel. Einblicke zeigen IAM-Bindungen, Nutzung und Kosten.
 
 ## Widerruf
 
-GCP-Dienstkonten, SA-Schlüssel und API-Schlüssel können von [NHI Inventory](/de/en/discovery/nhi-inventory) **widerruflich** werden, wenn der Connector über die optionalen Schlüssel-/SA-Administratorrollen verfügt.
+GCP-Dienstkonten, SA-Schlüssel und API-Schlüssel können von [NHI Inventory](/de/discovery/nhi-inventory) **widerruflich** werden, wenn der Connector über die optionalen Schlüssel-/SA-Administratorrollen verfügt.
 
 ## Verwandte
 
-- [Übersicht Cloud-KI-Anbieter](/de/en/integrations/cloud/overview)
-- [Google Workspace SSO](/de/en/iam/google-workspace)
-- [NHI Inventory](/de/en/discovery/nhi-inventory)
+- [Übersicht Cloud-KI-Anbieter](/de/integrations/cloud/overview)
+- [Google Workspace SSO](/de/iam/google-workspace)
+- [NHI Inventory](/de/discovery/nhi-inventory)

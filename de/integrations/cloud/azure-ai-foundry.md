@@ -11,7 +11,7 @@ Verbinden Sie Ihren Azure-Mandanten, damit SecureAI Azure OpenAI/AI Foundry-Agen
 ## Was SecureAI importiert
 
 - **Azure OpenAI/AI Foundry-Agenten, AI Search, Bot Service und ML-Endpunkte**
-- **NHIs** – Entra-Dienstprinzipale, App-Geheimnisse und -Zertifikate sowie verwaltete Identitäten (widerruflich – siehe [NHI Inventory](/de/en/discovery/nhi-inventory))
+- **NHIs** – Entra-Dienstprinzipale, App-Geheimnisse und -Zertifikate sowie verwaltete Identitäten (widerruflich – siehe [NHI Inventory](/de/discovery/nhi-inventory))
 – **Azure RBAC** Rollenzuweisungen
 - **Aktivitätsprotokolle**
 - **Nutzung, Token und Ausgaben** für die letzten 30 Tage
@@ -52,14 +52,14 @@ SecureAI authentifiziert sich über OAuth2 (Service-Principal-Flow für Client-A
 
 ## Überprüfen
 
-Öffnen Sie [Cloud Sensors](/de/en/discovery/cloud-sensors) für erkannte Agenten/Endpunkte und [NHI Inventory](/de/en/discovery/nhi-inventory) für Dienstprinzipale, Geheimnisse und verwaltete Identitäten. Einblicke zeigen RBAC, Nutzung und Ausgaben.
+Öffnen Sie [Cloud Sensors](/de/discovery/cloud-sensors) für erkannte Agenten/Endpunkte und [NHI Inventory](/de/discovery/nhi-inventory) für Dienstprinzipale, Geheimnisse und verwaltete Identitäten. Einblicke zeigen RBAC, Nutzung und Ausgaben.
 
 ## Widerruf
 
-Entra-Dienstprinzipale, App-Geheimnisse/-Zertifikate und verwaltete Identitäten können über Microsoft Graph von [NHI Inventory](/de/en/discovery/nhi-inventory) **widerruflich** werden – hierfür ist die oben genannte `Application.ReadWrite.All`-Berechtigung erforderlich.
+Entra-Dienstprinzipale, App-Geheimnisse/-Zertifikate und verwaltete Identitäten können über Microsoft Graph von [NHI Inventory](/de/discovery/nhi-inventory) **widerruflich** werden – hierfür ist die oben genannte `Application.ReadWrite.All`-Berechtigung erforderlich.
 
 ## Verwandte
 
-- [Übersicht Cloud-KI-Anbieter](/de/en/integrations/cloud/overview)
-- [Microsoft Entra ID SSO](/de/en/iam/microsoft-entra-id)
-- [NHI Inventory](/de/en/discovery/nhi-inventory)
+- [Übersicht Cloud-KI-Anbieter](/de/integrations/cloud/overview)
+- [Microsoft Entra ID SSO](/de/iam/microsoft-entra-id)
+- [NHI Inventory](/de/discovery/nhi-inventory)

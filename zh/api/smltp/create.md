@@ -1,44 +1,42 @@
 ---
 id: create
-title: "Create SMLTP Policy"
-sidebar_label: "Create SMLTP Policy"
-description: "Create a new SMLTP security policy"
+title: "创建 SMTP 策略"
+sidebar_label: "创建 SMTP 策略"
+description: "创建新的 SMTP 安全策略"
 openapi: "POST /smltp-policies/active"
 ---
+# 创建SMLTP策略
 
+为您的帐户创建新的 SMLTP（安全模型语言传输协议）安全策略。
 
-# Create SMLTP Policy
-
-Create a new SMLTP (Secure Model Language Transfer Protocol) security policy for your account.
-
-## Endpoint
+## 端点
 
 ```
 POST /smltp-policies
 ```
 
-## Description
+## 说明
 
-Create a new custom SMLTP policy. Admin only access required.
+创建新的自定义 SMLTP 策略。仅需要管理员访问权限。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## 请求正文
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | Yes | Policy name |
-| `description` | string | Yes | Policy description |
-| `policy` | object | Yes | Policy configuration object |
-| `setAsActive` | boolean | No | Whether to set this policy as active immediately (default: false) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `name` |字符串|是的 |保单名称|
+| `description` |字符串|是的 |政策说明 |
+| `policy` |对象|是的 |策略配置对象|
+| `setAsActive` |布尔 |没有 |是否立即将此策略设置为活动（默认：false） |
 
-## Example Request
+## 请求示例
 
 ```json
 {
@@ -51,9 +49,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `201 Created`
+**状态代码**：`201 Created`
 
 ```json
 {
@@ -70,21 +68,21 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `policy` | object | Created policy object |
-| `policy.id` | string | Policy identifier (generated from name) |
-| `policy.name` | string | Policy name |
-| `policy.description` | string | Policy description |
-| `policy.type` | string | Policy type ("custom") |
-| `policy.isActive` | boolean | Whether policy is currently active |
-| `policy.createdAt` | string | Creation timestamp |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `message` |字符串|成功留言|
+| `policy` |对象|创建策略对象 |
+| `policy.id` |字符串|策略标识符（根据名称生成）|
+| `policy.name` |字符串|保单名称|
+| `policy.description` |字符串|政策说明 |
+| `policy.type` |字符串|策略类型（“自定义”）|
+| `policy.isActive` |布尔 |政策当前是否有效 |
+| `policy.createdAt` |字符串|创建时间戳 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -116,7 +114,7 @@ const result = await createSmltpPolicy(policyData);
 console.log('Created policy:', result.policy.id);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -145,7 +143,7 @@ result = create_smltp_policy(policy_data)
 print("Created policy:", result["policy"]["id"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
@@ -161,9 +159,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
   }'
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -179,7 +177,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -191,7 +189,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -203,7 +201,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 409 Conflict
+### 409 冲突
 
 ```json
 {
@@ -215,7 +213,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -229,25 +227,25 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 ```
 
 
-## Use Cases
+## 用例
 
-- **Custom Security**: Create policies tailored to your needs
-- **Compliance**: Implement specific regulatory requirements
-- **Risk Management**: Define security measures for risk mitigation
-- **Data Protection**: Establish privacy and data handling rules
-- **Policy Management**: Create and manage custom SMLTP policies
+- **自定义安全**：创建适合您需求的策略
+- **合规性**：实施特定的监管要求
+- **风险管理**：定义缓解风险的安全措施
+- **数据保护**：建立隐私和数据处理规则
+- **策略管理**：创建和管理自定义 SMLTP 策略
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **默认**：每分钟 50 个请求
+- **每日**：每天 5,000 个请求
+- **每月**：每月 150,000 个请求
 
-## Notes
+## 注释
 
-- This endpoint requires admin privileges
-- Required Fields: name, description, and policy are required
-- Policy ID: Generated from name (lowercase, hyphens for spaces)
-- Unique Names: Policy names must be unique
-- Set Active: Can optionally set as active immediately
-- Flat Response: Response is not nested under data object 
+- 该端点需要管理员权限
+- 必填字段：名称、描述和政策为必填项
+- 策略 ID：根据名称生成（小写，连字符用于空格）
+- 唯一名称：策略名称必须是唯一的
+- 设置活动：可以选择立即设置为活动
+- 扁平响应：响应未嵌套在数据对象下

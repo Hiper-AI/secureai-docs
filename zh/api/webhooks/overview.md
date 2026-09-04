@@ -1,35 +1,33 @@
 ---
 sidebar_position: 1
-title: "Webhooks Overview"
-sidebar_label: "Overview"
-description: "Receive real-time security and platform events from SecureAI via signed HTTP webhooks"
+title: "Webhook 概述"
+sidebar_label: "概述"
+description: "通过签名的 HTTP Webhooks 从 SecureAI 接收实时安全和平台事件"
 ---
+# 网络钩子
 
+SecureAI 可以将安全和平台事件实时推送到您自己的 HTTP 端点 - Prompt Shield 阻止、金丝雀泄漏、DLP/PII 事件、API 限制事件和模型故障转移。每次交付均使用 HMAC-SHA256 签名进行签名，因此您可以验证它来自 SecureAI 并且未被篡改或重播。
 
-# Webhooks
+Webhook 端点由管理员在 **Admin → Webhooks**（API 基础 `/api/admin/webhooks`）中进行管理。
 
-SecureAI can push security and platform events to your own HTTP endpoints in real time — Prompt Shield blocks, canary leaks, DLP/PII incidents, API limit events, and model failovers. Every delivery is signed with an HMAC-SHA256 signature so you can verify it came from SecureAI and was not tampered with or replayed.
+## 管理端点
 
-Webhook endpoints are managed by administrators in **Admin → Webhooks** (API base `/api/admin/webhooks`).
+|行动|路线 |
+|--------|--------|
+|列出端点（+事件目录）| `GET /api/admin/webhooks` |
+|创建端点（返回秘密一次）| `POST /api/admin/webhooks` |
+|更新端点 | `PUT /api/admin/webhooks/:id` |
+|轮换签名秘密（返回一次）| `POST /api/admin/webhooks/:id/rotate-secret` |
+|发送测试交付 | `POST /api/admin/webhooks/:id/test` |
+|删除端点 | `DELETE /api/admin/webhooks/:id` |
 
-## Managing endpoints
+创建时输入：`url`、`description`、`events[]`（请参阅[事件](/zh/api/webhooks/events)）和`enabled`。签名秘密 (`whsec_...`) **仅**在创建和旋转时显示 - 安全存储它；您无法再次检索它。
 
-| Action | Route |
-|--------|-------|
-| List endpoints (+ event catalog) | `GET /api/admin/webhooks` |
-| Create endpoint (returns secret once) | `POST /api/admin/webhooks` |
-| Update endpoint | `PUT /api/admin/webhooks/:id` |
-| Rotate signing secret (returned once) | `POST /api/admin/webhooks/:id/rotate-secret` |
-| Send a test delivery | `POST /api/admin/webhooks/:id/test` |
-| Delete endpoint | `DELETE /api/admin/webhooks/:id` |
+端点 `url` 经过 SSRF 验证：仅接受 `http(s)`，私有/环回/本地链路主机将被拒绝，除非实例与 `WEBHOOKS_ALLOW_PRIVATE=true` 一起运行（自托管接收器通常需要此）。
 
-Create-time inputs: `url`, `description`, `events[]` (see [Events](/zh/api/webhooks/events)), and `enabled`. The signing secret (`whsec_...`) is shown **only** on create and rotate — store it securely; you cannot retrieve it again.
+## 交付格式
 
-The endpoint `url` is SSRF-validated: only `http(s)` is accepted, and private/loopback/link-local hosts are rejected unless the instance runs with `WEBHOOKS_ALLOW_PRIVATE=true` (self-hosted receivers often need this).
-
-## Delivery format
-
-Each delivery is an HTTP `POST` with a JSON body:
+每个交付都是一个带有 JSON 正文的 HTTP `POST`：
 
 ```json
 {
@@ -40,22 +38,22 @@ Each delivery is an HTTP `POST` with a JSON body:
 }
 ```
 
-And these headers:
+还有这些标题：
 
-| Header | Description |
+|标题|描述 |
 |--------|-------------|
 | `Content-Type` | `application/json` |
-| `X-SecureAI-Event` | The event type (e.g. `promptshield:attack:blocked`). |
-| `X-SecureAI-Delivery` | A unique delivery UUID (use for idempotency). |
+| `X-SecureAI-Event` |事件类型（例如 `promptshield:attack:blocked`）。 |
+| `X-SecureAI-Delivery` |唯一的交付 UUID（用于幂等性）。 |
 | `X-SecureAI-Signature` | `t=<unix-seconds>,v1=<hex hmac-sha256(secret, "${t}.${rawBody}")>` |
 
-Your endpoint should return any `2xx` status to acknowledge the delivery.
+您的端点应返回任何 `2xx` 状态以确认传送。
 
-## Verifying the signature
+## 验证签名
 
-Recompute the HMAC over `` `${t}.${rawBody}` `` using your signing secret and compare it to the `v1` value. Reject the delivery if it doesn't match, or if `t` is outside your tolerance window (replay protection). **Verify against the raw request body** — parsing and re-serializing the JSON first will change the bytes and break the signature.
+通过 `` `${t}.${rawBody}` `` using your signing secret and compare it to the `v1` value. Reject the delivery if it doesn't match, or if `t` 重新计算 HMAC 超出了容差窗口（重放保护）。 **根据原始请求正文进行验证** — 首先解析并重新序列化 JSON 将更改字节并破坏签名。
 
-### Node.js (Express)
+### Node.js（Express）
 
 ```javascript
 import crypto from 'crypto';
@@ -87,7 +85,7 @@ app.post('/webhooks/secureai', express.raw({ type: 'application/json' }), (req, 
 });
 ```
 
-### Python (Flask)
+### Python（烧瓶）
 
 ```python
 import hashlib, hmac, time
@@ -115,15 +113,15 @@ def secureai_webhook():
     return "", 200
 ```
 
-## Reliability
+## 可靠性
 
-- **Retries:** up to 3 attempts with 0s / 10s / 60s backoff, 5s timeout each. Any `2xx` acknowledges.
-- **Auto-disable:** after 20 consecutive delivery failures an endpoint is automatically disabled; an admin re-enables it (which also resets the failure counter).
-- **At-least-once:** deliveries may repeat — deduplicate on `X-SecureAI-Delivery` (or the payload `id`).
-- **Fire-and-forget:** webhook delivery never blocks or delays the originating API request.
+- **重试：** 最多 3 次尝试，每次有 0 秒/10 秒/60 秒回退，每次 5 秒超时。任何`2xx`确认。
+- **自动禁用：**连续 20 次传送失败后，端点将自动禁用；管理员重新启用它（这也会重置失败计数器）。
+- **至少一次：** 交付可能会重复 — 在 `X-SecureAI-Delivery`（或有效负载 `id`）上进行重复数据删除。
+- **即发即忘：** Webhook 传递永远不会阻止或延迟原始 API 请求。
 
-## Related
+## 相关
 
-- [Webhook Events](/zh/api/webhooks/events) — the full event catalog and payloads.
-- [Redundancy & Failover](/zh/api/redundancy) — source of `api:model_failover`.
-- [Threat Defense](/zh/threat-defense/overview) — source of the `promptshield:*` events.
+- [Webhook 事件](/zh/api/webhooks/events) — 完整的事件目录和有效负载。
+- [冗余和故障转移](/zh/api/redundancy) — `api:model_failover` 的来源。
+- [威胁防御](/zh/threat-defense/overview) — `promptshield:*` 事件的来源。

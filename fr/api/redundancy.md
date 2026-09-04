@@ -7,7 +7,7 @@ description: "Chaînes de basculement de modèle définies par l'appelant pour l
 
 L'API Completions peut automatiquement **basculer** d'un modèle à un autre lorsqu'un appel de fournisseur échoue. Vous définissez une chaîne ordonnée (un modèle principal et jusqu'à deux solutions de secours) et SecureAI les essaie tour à tour jusqu'à ce que l'un d'entre eux réussisse. Cela vous donne une résilience contre les pannes de fournisseur, les limites de débit et les délais d'attente sans aucune logique de nouvelle tentative dans votre propre code.
 
-La redondance est disponible à la fois sur le point de terminaison [classique `/chat/completions`](/api/chat/completions) et sur le point de terminaison [compatible OpenAI `/v1/chat/completions`](/api/chat/openai-compatible).
+La redondance est disponible à la fois sur le point de terminaison [classique `/chat/completions`](/fr/api/chat/completions) et sur le point de terminaison [compatible OpenAI `/v1/chat/completions`](/fr/api/chat/openai-compatible).
 
 ## Comment une chaîne est définie
 
@@ -114,11 +114,11 @@ Lorsqu'un appelant envoie uniquement `model: "a"` et que `a` est présent dans `
 
 ## Sécurité et facturation par tentative
 
-Chaque tentative est un appel complet et indépendant via le wrapper SMLTP : application des politiques, gouvernance de sortie/résidence et création du jeton de droit signé, tous réexécutés par tentative, liés au modèle de cette tentative et aux octets exacts de la requête. La facturation reflète le modèle qui a réellement servi la réponse. Chaque basculement émet également un événement de sécurité `api:model_failover` (délivré à tout [webhooks](/fr/en/api/webhooks/overview) abonné) et une entrée de journal d'audit.
+Chaque tentative est un appel complet et indépendant via le wrapper SMLTP : application des politiques, gouvernance de sortie/résidence et création du jeton de droit signé, tous réexécutés par tentative, liés au modèle de cette tentative et aux octets exacts de la requête. La facturation reflète le modèle qui a réellement servi la réponse. Chaque basculement émet également un événement de sécurité `api:model_failover` (délivré à tout [webhooks](/fr/api/webhooks/overview) abonné) et une entrée de journal d'audit.
 
 ## Connexes
 
-- [Achèvement du chat](/fr/en/api/chat/completions)
-- [Point de terminaison compatible OpenAI](/fr/en/api/chat/openai-compatible)
-- [Policy Check](/fr/en/api/policy-check) — prévisualisez l'accès à toute la chaîne sans dépenser de points.
-- [Webhooks](/fr/en/api/webhooks/overview) — abonnez-vous à `api:model_failover`.
+- [Achèvement du chat](/fr/api/chat/completions)
+- [Point de terminaison compatible OpenAI](/fr/api/chat/openai-compatible)
+- [Policy Check](/fr/api/policy-check) — prévisualisez l'accès à toute la chaîne sans dépenser de points.
+- [Webhooks](/fr/api/webhooks/overview) — abonnez-vous à `api:model_failover`.

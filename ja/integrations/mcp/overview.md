@@ -18,7 +18,7 @@ SecureAI は **Model Context Protocol (MCP)** サーバーに接続できるた�
 |----------|-----------|------|----------|
 |ローカルプロセス | `stdio` | API キー (環境内) | Notion、Cloudflare (ローカル ビン)、Azure (`npx @azure/mcp`)、AWS (`uvx awslabs.aws-api-mcp-server`)、リファレンス サーバー (Sequential Thinking、Web Fetch、Time)。 |
 |リモート (トークン) | `streamable_http` | API キー / ベアラー (環境内) | GitHub 公式 MCP、Google Cloud ファミリー (BigQuery、Compute、Logging、Vertex AI、Cloud Run、GKE など)、Microsoft Learn。 |
-|リモート (OAuth) | `streamable_http` | OAuth 2.1 + PKCE、動的クライアント登録 | Cloudflare (公式リモート MCP)。 [OAuth および DCR を使用したリモート MCP](/ja/en/integrations/mcp/remote-oauth-dcr) を参照してください。 |
+|リモート (OAuth) | `streamable_http` | OAuth 2.1 + PKCE、動的クライアント登録 | Cloudflare (公式リモート MCP)。 [OAuth および DCR を使用したリモート MCP](/ja/integrations/mcp/remote-oauth-dcr) を参照してください。 |
 
 一部のトークンベースのリモート コネクタ (Google Cloud ファミリなど) も OAuth フローを実行するため、ユーザーは静的トークンを貼り付けるのではなく、ポップアップ経由で独自の Google OAuth クライアントを使用して認証できます。
 
@@ -35,5 +35,5 @@ SecureAI は **Model Context Protocol (MCP)** サーバーに接続できるた�
 
 ## 関連
 
-- [OAuth および DCR を使用したリモート MCP](/ja/ja/integrations/mcp/remote-oauth-dcr)
-- [AI ゲートウェイ — リモート エンドポイント](/ja/ja/ai-gateway/remote-endpoints)
+- [OAuth および DCR を使用したリモート MCP](/ja/integrations/mcp/remote-oauth-dcr)
+- [AI ゲートウェイ — リモート エンドポイント](/ja/ai-gateway/remote-endpoints)

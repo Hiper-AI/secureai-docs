@@ -6,7 +6,7 @@ description: "Windows, Linux 및 macOS 엔드포인트에 SecureAI OS 에이전�
 ---
 # 에이전트 설치
 
-SecureAI OS 에이전트는 **관리자 → 에이전트 레지스트리 → OS 에이전트**에서 빌드한 **설치 프로그램 패키지**에서 설치됩니다. 패키지는 **백엔드 URL** 및 범위가 지정된 **등록 키**라는 두 가지 값을 전달하는 즉시 실행 가능한 명령(Windows) 또는 스크립트(Linux/macOS)를 생성합니다. 전체 패키지 빌더 및 등록 메커니즘은 [등록 및 설치 프로그램 패키지](/ko/en/agent/enrollment-and-packages)를 참조하세요.
+SecureAI OS 에이전트는 **관리자 → 에이전트 레지스트리 → OS 에이전트**에서 빌드한 **설치 프로그램 패키지**에서 설치됩니다. 패키지는 **백엔드 URL** 및 범위가 지정된 **등록 키**라는 두 가지 값을 전달하는 즉시 실행 가능한 명령(Windows) 또는 스크립트(Linux/macOS)를 생성합니다. 전체 패키지 빌더 및 등록 메커니즘은 [등록 및 설치 프로그램 패키지](/ko/agent/enrollment-and-packages)를 참조하세요.
 
 ## 윈도우(MSI)
 
@@ -41,10 +41,10 @@ sudo ./secureai-agent-install.sh
 
 ## 처음 실행하면 어떻게 되나요?
 
-에이전트가 처음 실행되면 **등록**: 등록 키를 제시하고, 장치를 등록하고, 장치별 토큰과 해당 런타임 구성을 받습니다. 그런 다음 하트비트를 시작하고 해결된 [정책](/ko/en/agent/policies-and-groups)을 적용합니다. 백엔드 URL 확인 방법 및 기기 토큰 순환 방법을 포함한 자세한 내용은 [등록 및 설치 프로그램 패키지](/ko/ko/agent/enrollment-and-packages)를 참조하세요.
+에이전트가 처음 실행되면 **등록**: 등록 키를 제시하고, 장치를 등록하고, 장치별 토큰과 해당 런타임 구성을 받습니다. 그런 다음 하트비트를 시작하고 해결된 [정책](/ko/agent/policies-and-groups)을 적용합니다. 백엔드 URL 확인 방법 및 기기 토큰 순환 방법을 포함한 자세한 내용은 [등록 및 설치 프로그램 패키지](/ko/agent/enrollment-and-packages)를 참조하세요.
 
 ## 관련
 
-- [등록 및 설치 프로그램 패키지](/ko/ko/agent/enrollment-and-packages)
-- [정책 및 그룹](/ko/ko/agent/policies-and-groups)
-- [엔드포인트 에이전트 개요](/ko/ko/agent/overview)
+- [등록 및 설치 프로그램 패키지](/ko/agent/enrollment-and-packages)
+- [정책 및 그룹](/ko/agent/policies-and-groups)
+- [엔드포인트 에이전트 개요](/ko/agent/overview)

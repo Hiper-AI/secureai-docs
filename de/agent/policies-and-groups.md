@@ -17,9 +17,9 @@ Eine Richtlinie (`AgentPolicy`) enthält:
 | **Modus** | `monitor` (nur beobachten) oder `block` (erzwingen). |
 | **Regelsätze** | Zulassungs-/Verweigerungslisten für `mcps`, `apps`, `providers` und `models`. |
 | **Bedrohungsfeed** | Ob das Gerät den Bedrohungsfeed der Organisation nutzt. |
-| **Durchsetzung des ausgehenden Datenverkehrs** | `off` / `kill` / `block` / `lockdown` (+ Zulassungsliste, Block-Remote-MCP). Siehe [Egress Enforcement](/de/en/agent/egress-enforcement). |
+| **Durchsetzung des ausgehenden Datenverkehrs** | `off` / `kill` / `block` / `lockdown` (+ Zulassungsliste, Block-Remote-MCP). Siehe [Egress Enforcement](/de/agent/egress-enforcement). |
 | **Verhaltensschutz** | Verhaltensbasierte KI-Überwachung: aktiviert, Empfindlichkeit und Standardaktion (`alert`, `quarantine`, `kill`, `block`, `require_approval`), für Endpunkt und/oder Gateway. |
-| **Claude-Code-Routing** | Einstellungen für transparente Proxys. Siehe [Transparent Proxy](/de/en/agent/transparent-proxy). |
+| **Claude-Code-Routing** | Einstellungen für transparente Proxys. Siehe [Transparent Proxy](/de/agent/transparent-proxy). |
 | **Manipulationsschutz** | Deinstallationsschlüssel-Anforderung (siehe unten). |
 | **Einführung** | Gestaffelte Rollout-Konfiguration (siehe [Sichere Rollouts](#safe-rollouts)). |
 
@@ -50,10 +50,10 @@ Richtlinienänderungen werden über einen kontrollierten Workflow versendet, sod
 
 ## Manipulationsschutz und Deinstallationsschlüssel
 
-Eine Richtlinie kann einen **Deinstallationsschlüssel** (`tamperProtection.uninstallRequiresKey`) erfordern, sodass der Agent ohne diesen Schlüssel nicht von einem lokalen Benutzer entfernt werden kann. Die Anforderung (und ein Hash-Schlüssel mit einem Offline-Salt/Hash) wird an den Endpunkt übermittelt, sodass dieser auch außerhalb des Netzwerks validieren kann. Deinstallationsversuche werden über einen öffentlichen Token-Validierungsendpunkt validiert (zuerst pro Richtlinienschlüssel, dann ein flottenweiter Fallback); Ausfälle werden geprüft. Siehe [Selbstupdate & Anti-Tamper](/de/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper).
+Eine Richtlinie kann einen **Deinstallationsschlüssel** (`tamperProtection.uninstallRequiresKey`) erfordern, sodass der Agent ohne diesen Schlüssel nicht von einem lokalen Benutzer entfernt werden kann. Die Anforderung (und ein Hash-Schlüssel mit einem Offline-Salt/Hash) wird an den Endpunkt übermittelt, sodass dieser auch außerhalb des Netzwerks validieren kann. Deinstallationsversuche werden über einen öffentlichen Token-Validierungsendpunkt validiert (zuerst pro Richtlinienschlüssel, dann ein flottenweiter Fallback); Ausfälle werden geprüft. Siehe [Selbstupdate & Anti-Tamper](/de/agent/quarantine-and-fleet-ops#self-update--anti-tamper).
 
 ## Verwandte
 
-- [Egress Enforcement](/de/en/agent/egress-enforcement)
-- [Quarantäne & Flotten-Ops](/de/en/agent/quarantäne-und-flotten-ops)
-- [Transparenter Proxy](/de/en/agent/transparent-proxy)
+- [Egress Enforcement](/de/agent/egress-enforcement)
+- [Quarantäne & Flotten-Ops](/de/agent/quarantäne-und-flotten-ops)
+- [Transparenter Proxy](/de/agent/transparent-proxy)

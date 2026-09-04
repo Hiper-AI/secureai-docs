@@ -1,10 +1,11 @@
 ---
 id: licenses-availability
-title: "Disponibilidade de licenças"
-sidebar_label: "Disponibilidade de licenças"
+title: "Disponibilidade de Licenças"
+sidebar_label: "Disponibilidade de Licenças"
 description: "Recuperar limites atuais do pool de licenças, uso e restante (somente administrador)"
 openapi: "GET /licenses/availability"
 ---
+
 # Disponibilidade de licenças
 
 Recupere os limites do pool de licenças, o uso atual e as licenças restantes para cada nível.

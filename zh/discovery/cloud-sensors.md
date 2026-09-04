@@ -1,45 +1,43 @@
 ---
 sidebar_position: 2
-title: "Cloud Sensors"
-sidebar_label: "Cloud Sensors"
-description: "The read-only inventory of agents and models discovered inside your connected AI cloud platforms"
+title: "云传感器"
+sidebar_label: "云传感器"
+description: "在连接的 AI 云平台中发现的代理和模型的只读清单"
 ---
+# 云传感器
 
+**云传感器**（管理 → 代理注册表 → **云**）是在连接的云 AI 平台中发现的代理、模型和部署的清单 - **Azure AI Foundry、AWS Bedrock、GCP Vertex AI、OpenAI Platform 和 Anthropic Console**。它是只读的：您在[集成](/zh/integrations/cloud/overview)中配置连接器，云传感器会显示它们发现的内容。
 
-# Cloud Sensors
+## 关键绩效指标
 
-**Cloud Sensors** (Admin → Agent Registry → **Cloud**) is the inventory of agents, models, and deployments discovered inside your connected cloud AI platforms — **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform, and Anthropic Console**. It's read-only: you configure the connectors in [Integrations](/zh/integrations/cloud/overview) and Cloud Sensors shows what they found.
-
-## KPIs
-
-| KPI | Meaning |
+|关键绩效指标|意义|
 |-----|---------|
-| **Connected Providers** | How many cloud providers are configured and connected. |
-| **Discovered Agents** | Total agents/models currently visible across providers. |
-| **Active Cloud Agents** | Agents still present in the latest discovery. |
-| **Auto-Retired** | Agents removed by a recent discovery (they disappeared from the provider). |
+| **连接的提供商** |配置和连接了多少个云提供商。 |
+| **发现代理** |当前跨提供商可见的代理/模型总数。 |
+| **活动云代理** |最新发现中仍然存在特工。 |
+| **自动退休** |最近的发现删除了代理（它们从提供商中消失了）。 |
 
-Each KPI carries a 30-day sparkline built from sync history.
+每个 KPI 都带有根据同步历史记录构建的 30 天迷你图。
 
-## The inventory table
+## 库存表
 
-| Column | Description |
+|专栏 |描述 |
 |--------|-------------|
-| **Agent** | Discovered agent/model name. |
-| **Provider** | Azure / AWS / GCP / OpenAI / Anthropic. |
-| **Workspace / Deployment** | Where it lives on the provider. |
-| **Model** | Underlying model. |
-| **Status** | `observed`, `active`, or `retired` (with a `· auto` suffix when auto-retired by discovery). |
-| **Last discovery** | When it was last seen. |
+| **代理** |发现的代理商/型号名称。 |
+| **提供商** | Azure / AWS / GCP / OpenAI / Anthropic。 |
+| **工作区/部署** |它位于提供者的位置。 |
+| **型号** |底层模型。 |
+| **状态** | `observed`、`active` 或 `retired`（通过发现自动退出时带有 `· auto` 后缀）。 |
+| **最后的发现** |最后一次见到它是什么时候。 |
 
-Filter by provider, status, or free-text search; export the visible rows to CSV.
+按提供商、状态或自由文本搜索进行过滤；将可见行导出到 CSV。
 
-## Syncing
+## 同步
 
-Run **Sync** for a single provider or **Sync All**. Each provider also exposes an **Insights** dialog (usage, cost, governance details specific to that provider). Connector credentials and setup live in **Admin → Integrations → Cloud** — this tab links out to it, and the empty state points you there.
+为单个提供商运行 **同步** 或 **同步全部**。每个提供商还公开一个**见解**对话框（特定于该提供商的使用情况、成本、治理详细信息）。连接器凭据和设置位于**管理 → 集成 → 云** - 此选项卡链接到它，并且空状态将您指向那里。
 
-## Related
+## 相关
 
-- [Cloud AI Providers](/zh/integrations/cloud/overview) — connect and configure the providers.
-- [NHI Inventory](/zh/discovery/nhi-inventory) — identities discovered by the same connectors.
-- [AI Discovery & Inventory Overview](/zh/discovery/overview)
+- [Cloud AI Providers](/zh/integrations/cloud/overview) — 连接并配置提供商。
+- [NHI Inventory](/zh/discovery/nhi-inventory) — 由相同连接器发现的身份。
+- [AI发现与库存概述](/zh/discovery/overview)

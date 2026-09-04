@@ -1,26 +1,24 @@
 ---
 id: ide-claude-code
-title: "Claude Code"
-sidebar_label: "Claude Code"
-description: "Use Claude Code with SecureAI — full SMLTP, DLP, and PII enforcement for AI-assisted development"
+title: "克劳德·科德"
+sidebar_label: "克劳德·科德"
+description: "将 Claude Code 与 SecureAI 结合使用 — 全面实施 SMLTP、DLP 和 PII，以实现 AI 辅助开发"
+---
+# Claude Code — IDE 集成
+
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) 是 Anthropic 的代理编码助手。通过将其指向 SecureAI 的 Anthropic 兼容代理，您的开发人员发送的每个提示都会通过 **SMLTP、DLP、PII 扫描、Prompt Shield、速率限制和模型治理** — 无需对开发人员的工作流程进行任何更改。
+
 ---
 
+## 它是如何工作的
 
-# Claude Code — IDE Integration
-
-[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) is Anthropic's agentic coding assistant. By pointing it at SecureAI's Anthropic-compatible proxy, every prompt your developers send passes through **SMLTP, DLP, PII scanning, Prompt Shield, rate limiting, and model governance** — without any changes to the developer's workflow.
-
----
-
-## How it works
-
-SecureAI exposes an Anthropic Messages API-compatible endpoint at:
+SecureAI 在以下位置公开了与 Anthropic Messages API 兼容的端点：
 
 ```
 https://<your-host>/api/claude-code
 ```
 
-Claude Code natively supports redirecting all traffic to a custom base URL via the `ANTHROPIC_BASE_URL` environment variable. When configured, it speaks its native Anthropic protocol directly to SecureAI — no local proxy or wrapper script required.
+Claude Code 本身支持通过 `ANTHROPIC_BASE_URL` 环境变量将所有流量重定向到自定义基本 URL。配置后，它会直接与 SecureAI 对话其本机 Anthropic 协议，无需本地代理或包装脚本。
 
 ```
 Developer machine
@@ -40,11 +38,11 @@ SecureAI  (/api/claude-code)
 OpenRouter / Self-Hosted LLM
 ```
 
-All activity appears in the SecureAI admin dashboard under **AI Gateway → Audit Logs**, attributed to the developer's API key.
+所有活动都显示在 SecureAI 管理仪表板的 **AI Gateway → 审核日志** 下，归因于开发人员的 API 密钥。
 
 ---
 
-## Step 1 — Install Claude Code
+## 步骤 1 — 安装 Claude Code
 
 
 <Tabs>
@@ -66,22 +64,22 @@ irm https://claude.ai/install.ps1 | iex
 
 ---
 
-## Step 2 — Generate an API key
+## 步骤 2 — 生成 API 密钥
 
-1. Go to **Admin → API Keys** (`https://<your-host>/admin/apis`)
-2. Click **Create API Key**
-3. Set a name (e.g. `claude-code-dev-jane`)
-4. Configure:
-   - **Allowed models** — select which LLMs the key can use (see [available models](#available-models))
-   - **SMLTP policy** — select the compliance policy (`internal`, `confidential`, `hipaa`, etc.)
-   - **Rate limits** as required
-5. Copy the `sk-…` value — it is shown only once
+1. 转到 **管理 → API 密钥** (`https://<your-host>/admin/apis`)
+2. 点击**创建 API 密钥**
+3. 设置名称（例如`claude-code-dev-jane`）
+4. 配置：
+   - **允许的模型** — 选择密钥可以使用哪些 LLM（请参阅[可用模型](#available-models)）
+   - **SMLTP 策略** — 选择合规性策略（`internal`、`confidential`、`hipaa` 等）
+   - **速率限制** 根据需要
+5. 复制 `sk-…` 值 — 它仅显示一次
 
 ---
 
-## Step 3 — Configure Claude Code
+## 步骤 3 — 配置 Claude Code
 
-The recommended approach is to add the settings to the **project-level local settings file** (`.claude/settings.local.json`), which is git-ignored by default.
+推荐的方法是将设置添加到**项目级本地设置文件** (`.claude/settings.local.json`)，默认情况下该文件是 git 忽略的。
 
 ```json title=".claude/settings.local.json"
 {
@@ -101,116 +99,116 @@ The recommended approach is to add the settings to the **project-level local set
 ```
 
 <Warning>
-`ANTHROPIC_API_KEY` must be **explicitly set to an empty string** to prevent Claude Code from trying to authenticate directly with Anthropic.
+`ANTHROPIC_API_KEY` 必须**显式设置为空字符串**，以防止 Claude Code 尝试直接通过 Anthropic 进行身份验证。
 </Warning>
 
 <Tip>
-**Shell profile (alternative)**
+**外壳轮廓（替代）**
 
-You can also add the variables to `~/.zshrc`, `~/.bashrc`, or your PowerShell `$PROFILE` instead of the settings file. The settings file is preferred for team projects so every developer inherits the same configuration automatically.
+您还可以将变量添加到 `~/.zshrc`、`~/.bashrc` 或 PowerShell `$PROFILE` 而不是设置文件。设置文件是团队项目的首选，因此每个开发人员都会自动继承相同的配置。
 </Tip>
 
 ---
 
-## Step 4 — Verify the connection
+## 步骤 4 — 验证连接
 
-Start Claude Code from your project directory:
+从项目目录启动 Claude Code：
 
 ```bash
 cd /path/to/your/project
 claude
 ```
 
-Run `/status` inside the session. You should see:
+在会话内运行 `/status`。你应该看到：
 
 ```
 Auth token:          ANTHROPIC_AUTH_TOKEN
 Anthropic base URL:  https://<your-host>/api/claude-code
 ```
 
-That confirms all traffic is routing through SecureAI.
+这证实了所有流量都通过 SecureAI 路由。
 
 ---
 
-## Available models
+## 可用型号
 
-SecureAI exposes the same model catalog available in the chat interface. Use any `id` value from the table below in the env vars above.
+SecureAI 在聊天界面中公开了相同的模型目录。在上面的环境变量中使用下表中的任何 `id` 值。
 
-### Anthropic (Claude)
-| Model ID | Display name |
+### 人类（克劳德）
+|型号 ID |显示名称 |
 |---|---|
-| `anthropic/claude-sonnet-4.6` | Claude Sonnet 4.6 |
-| `anthropic/claude-opus-4.6` | Claude Opus 4.6 |
+| `anthropic/claude-sonnet-4.6` |克劳德十四行诗 4.6 |
+| `anthropic/claude-opus-4.6` |克劳德作品 4.6 |
 
-### OpenAI
-| Model ID | Display name |
+### 开放人工智能
+|型号 ID |显示名称 |
 |---|---|
-| `openai/gpt-5-mini` | GPT-5 Mini |
-| `openai/gpt-5.1-codex` | GPT-5.1-Codex |
+| `openai/gpt-5-mini` | GPT-5 迷你 |
+| `openai/gpt-5.1-codex` | GPT-5.1-法典 |
 | `openai/gpt-5.1` | GPT-5.1 |
 | `openai/gpt-5.2` | GPT-5.2 |
-| `openai/gpt-5.3-codex` | GPT-5.3-Codex |
+| `openai/gpt-5.3-codex` | GPT-5.3-法典 |
 
-### Google (Gemini)
-| Model ID | Display name |
+### 谷歌（双子座）
+|型号 ID |显示名称 |
 |---|---|
-| `google/gemini-3-flash-preview` | Gemini 3 Flash Preview |
-| `google/gemini-3.1-pro-preview` | Gemini 3.1 Pro Preview |
+| `google/gemini-3-flash-preview` | Gemini 3 Flash 预览 |
+| `google/gemini-3.1-pro-preview` | Gemini 3.1 专业版预览 |
 
-### Meta (Llama)
-| Model ID | Display name |
+### 元（骆驼）
+|型号 ID |显示名称 |
 |---|---|
-| `meta-llama/llama-4-maverick` | Llama 4 Maverick |
-| `meta-llama/llama-4-scout` | Llama 4 Scout |
-| `meta-llama/llama-3.3-70b-instruct` | Llama 3.3 70B Instruct |
+| `meta-llama/llama-4-maverick` |骆驼 4 特立独行 |
+| `meta-llama/llama-4-scout` |骆驼 4 侦察兵 |
+| `meta-llama/llama-3.3-70b-instruct` |骆驼 3.3 70B 指导 |
 
-### Mistral
-| Model ID | Display name |
+### 米斯特拉尔
+|型号 ID |显示名称 |
 |---|---|
-| `mistralai/mistral-large-2512` | Mistral Large 3 2512 |
-| `mistralai/ministral-14b-2512` | Ministral 14B 2512 |
-| `mistralai/mistral-nemo` | Mistral Nemo |
-| `mistralai/mistral-7b-instruct` | Mistral 7B Instruct |
+| `mistralai/mistral-large-2512` |米斯特拉尔大 3 2512 |
+| `mistralai/ministral-14b-2512` |部委 14B 2512 |
+| `mistralai/mistral-nemo` |米斯特拉尔尼莫 |
+| `mistralai/mistral-7b-instruct` |米斯特拉尔 7B 指导 |
 
-### DeepSeek
-| Model ID | Display name |
+### 深度搜索
+|型号 ID |显示名称 |
 |---|---|
-| `deepseek/deepseek-r1-0528` | DeepSeek R1 0528 |
+| `deepseek/deepseek-r1-0528` | 0528 | 深度搜索 R1
 | `deepseek/deepseek-v3.2` | DeepSeek V3.2 |
 
 ### xAI (Grok)
-| Model ID | Display name |
+|型号 ID |显示名称 |
 |---|---|
-| `x-ai/grok-4` | Grok 4 |
-| `x-ai/grok-code-fast-1` | Grok Code Fast 1 |
-| `x-ai/grok-4.1-fast` | Grok 4.1 Fast |
+| `x-ai/grok-4` |格洛克 4 |
+| `x-ai/grok-code-fast-1` | Grok 代码快速 1 |
+| `x-ai/grok-4.1-fast` | Grok 4.1 快速 |
 
-### Qwen
-| Model ID | Display name |
+### 奎文
+|型号 ID |显示名称 |
 |---|---|
-| `qwen/qwen3-coder` | Qwen3-Coder |
-| `qwen/qwen3-coder-next` | Qwen3 Coder Next |
+| `qwen/qwen3-coder` | Qwen3-编码器 |
+| `qwen/qwen3-coder-next` | Qwen3 编码器
 | `qwen/qwen3-235b-a22b-2507` | Qwen3 235B A22B 2507 |
 | `qwen/qwen3.5-397b-a17b` | Qwen3.5 397B A17B |
 
-### Self-Hosted (Remote SMLTP Endpoints)
+### 自托管（远程 SMLTP 端点）
 
-Self-hosted models registered as active remote SMLTP endpoints are automatically available. Their IDs follow the pattern `self-hosted/<model-name>`. Run `/status` in Claude Code or call `GET /api/claude-code/v1/models` to see the live list.
+注册为活动远程 SMLTP 端点的自托管模型自动可用。他们的 ID 遵循 `self-hosted/<model-name>` 模式。运行Claude Code中的`/status`或调用`GET /api/claude-code/v1/models`来查看实时列表。
 
 ---
 
-## Claude Code model roles
+## Claude Code 模型角色
 
-Claude Code uses different models for different internal tasks. Map each role to any model from the catalog above:
+Claude Code 针对不同的内部任务使用不同的模型。将每个角色映射到上面目录中的任何模型：
 
-| Environment variable | Role | Recommended |
+|环境变量 |角色 |推荐|
 |---|---|---|
-| `ANTHROPIC_DEFAULT_OPUS_MODEL` | Complex reasoning, main agentic loop | `anthropic/claude-opus-4.6` |
-| `ANTHROPIC_DEFAULT_SONNET_MODEL` | General coding tasks | `anthropic/claude-sonnet-4.6` |
-| `ANTHROPIC_DEFAULT_HAIKU_MODEL` | Quick completions, tool calls | `google/gemini-3-flash-preview` |
-| `CLAUDE_CODE_SUBAGENT_MODEL` | Spawned sub-agent tasks | `anthropic/claude-sonnet-4.6` |
+| `ANTHROPIC_DEFAULT_OPUS_MODEL` |复杂的推理，主要的代理循环 | `anthropic/claude-opus-4.6` |
+| `ANTHROPIC_DEFAULT_SONNET_MODEL` |一般编码任务 | `anthropic/claude-sonnet-4.6` |
+| `ANTHROPIC_DEFAULT_HAIKU_MODEL` |快速完成、工具调用 | `google/gemini-3-flash-preview` |
+| `CLAUDE_CODE_SUBAGENT_MODEL` |生成的子代理任务 | `anthropic/claude-sonnet-4.6` |
 
-You can mix providers freely. For example, use Gemini for fast/cheap sub-tasks and Claude for the main reasoning loop:
+您可以自由混合提供商。例如，使用 Gemini 执行快速/廉价的子任务，使用 Claude 执行主要推理循环：
 
 ```json
 "ANTHROPIC_DEFAULT_OPUS_MODEL":   "anthropic/claude-opus-4.6",
@@ -221,29 +219,29 @@ You can mix providers freely. For example, use Gemini for fast/cheap sub-tasks a
 
 ---
 
-## Security enforcement
+## 安全执行
 
-Every request through the proxy is subject to the full SecureAI security stack:
+通过代理的每个请求都受到完整的 SecureAI 安全堆栈的约束：
 
-| Layer | What it does |
+|层 |它有什么作用 |
 |---|---|
-| **SMLTP** | Attaches bundle ID, policy hash, trace ID, and egress enforcement to every call |
-| **DLP** | Scans prompts for data-loss patterns (secrets, credentials, confidential docs) |
-| **PII** | Detects and redacts personally identifiable information; graduated enforcement tiers |
-| **Prompt Shield** | Detects prompt injection attempts |
-| **Model governance** | Enforces allowed models, provider allowlists, and residency rules |
-| **Rate limiting** | Per-key and per-user limits enforced via Redis |
-| **Audit logs** | Full per-request audit trail in **AI Gateway → Audit Logs** |
+| **SMLTP** |将捆绑 ID、策略哈希、跟踪 ID 和出口强制附加到每个调用 |
+| **DLP** |扫描数据丢失模式的提示（秘密、凭据、机密文档）|
+| **个人身份信息** |检测并编辑个人身份信息；分级执法等级|
+| **提示盾** |检测提示注入尝试 |
+| **模型治理** |强制执行允许的模型、提供商许可名单和驻留规则 |
+| **速率限制** |通过 Redis 强制执行每键和每用户限制 |
+| **审核日志** | **AI Gateway → 审计日志** | 中的完整每个请求审计跟踪
 
-The SMLTP policy is inherited from the API key configuration. To change the policy for a key, go to **Admin → API Keys**, edit the key, and select a different **SMLTP Policy**.
+SMLTP 策略继承自 API 密钥配置。要更改密钥的策略，请转至 **管理 → API 密钥**，编辑密钥，然后选择不同的 **SMLTP 策略**。
 
 ---
 
-## Troubleshooting
+## 故障排除
 
-### `/status` still shows `api.anthropic.com`
+### `/status` 仍然显示 `api.anthropic.com`
 
-Claude Code has cached credentials from a previous login. Run `/logout` inside a Claude Code session, then restart:
+Claude Code 已缓存上次登录的凭据。在 Claude Code 会话中运行 `/logout`，然后重新启动：
 
 ```bash
 claude
@@ -252,14 +250,14 @@ claude
 
 ### `401 Unauthorized`
 
-- Verify the `sk-…` key is active in **Admin → API Keys**
-- Check that `ANTHROPIC_API_KEY` is set to an empty string (`""`)
+- 验证 `sk-…` 密钥在 **管理 → API 密钥** 中处于活动状态
+- 检查 `ANTHROPIC_API_KEY` 是否设置为空字符串 (`""`)
 
-### Model not available
+### 型号不可用
 
-- Check the API key's **Allowed Models** list in **Admin → API Keys**
-- Call `GET /api/claude-code/v1/models` (with your `Bearer sk-…` token) to see exactly what the key can access
+- 在 **管理 → API 密钥** 中检查 API 密钥的 **允许的模型** 列表
+- 调用 `GET /api/claude-code/v1/models`（使用您的 `Bearer sk-…` 令牌）以查看密钥可以访问的内容
 
-### DLP / PII block
+### DLP / PII 块
 
-If a prompt is blocked, Claude Code will receive an error response with a message explaining the violation. The incident is logged in **Admin → Incidents** and visible in **AI Gateway → Audit Logs**.
+如果提示被阻止，Claude Code 将收到错误响应，其中包含解释违规的消息。该事件记录在**管理→事件**中，并在**AI Gateway→审核日志**中可见。

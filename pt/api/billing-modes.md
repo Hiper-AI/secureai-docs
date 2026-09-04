@@ -1,6 +1,8 @@
 ---
-title: "Chaves de API do modo de faturamento"
+title: "Modos de Faturamento e Chaves de API"
+sidebar_label: "Modos de Faturamento"
 ---
+
 # Chaves de API do modo de faturamento
 
 SecureAI oferece suporte a dois modos de cobrança distintos para chaves de API, permitindo que os administradores controlem como o uso é rastreado e cobrado por diferentes integrações de API.

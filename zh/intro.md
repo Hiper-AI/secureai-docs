@@ -1,64 +1,60 @@
 ---
-title: "Welcome to SecureAI"
-description: "Secure Artificial Intelligence business platform, compliant with regulations and with full governance control."
+title: "欢迎来到安全人工智能"
+description: "安全的人工智能业务平台，符合法规并具有全面的治理控制。"
 ---
+SecureAI 是一个商业平台，旨在部署和使用人工智能模型，最大限度地保证安全性、隐私性和可观察性。
 
-
-
-SecureAI is a business platform designed to deploy and consume Artificial Intelligence models with the maximum guarantees of security, privacy and observability.
-
-It combines advanced **RAG (Retrieval-Augmented Generation)** capabilities, transparent proxying for corporate fleets, compliance using the **SMLTP** cryptographic protocol, and a **unified API with automatic redundancy** between multiple AI providers.
+它结合了先进的 **RAG（检索增强生成）** 功能、企业车队的透明代理、使用 **SMLTP** 加密协议的合规性，以及多个 AI 提供商之间具有自动冗余功能的**统一 API。
 
 ---
 
-## ⚡ Starts in Minutes
+## ⚡ 几分钟后开始
 
-Explore getting started resources to get your environment up and running or integrate SecureAI into your applications:
+探索入门资源以启动并运行您的环境或将 SecureAI 集成到您的应用程序中：
 
 <CardGroup cols={2}>
-  <Card title="Quickstart Guide" icon="rocket" href="/zh/en/quickstart">
-    Learn how to access the platform, set up your profile and create your first RAG index in minutes.
+  <Card title="快速入门指南" icon="rocket" href="/zh/quickstart">
+    了解如何访问该平台、设置您的个人资料并在几分钟内创建您的第一个 RAG 索引。
   </Card>
-  <Card title="API Reference & Playground" icon="code" href="/zh/en/api">
-    Test all 38 endpoints live with our interactive playground (Chat, Images, S2S, RAG and IAM).
+  <Card title="API 参考和游乐场" icon="code" href="/zh/api">
+    使用我们的交互式游乐场实时测试所有 38 个端点（聊天、图像、S2S、RAG 和 IAM）。
   </Card>
 </CardGroup>
 
 ---
 
-## 🛡️ Pillars of the Platform
+## 🛡️ 平台的支柱
 
 <CardGroup cols={3}>
-  <Card title="Security & SMLTP" icon="shield-halved" href="/zh/en/security/overview">
-    End-to-End Encryption, Data Leak Prevention (DLP), Prompt Shields, and Immutable Compliance Receipts.
+  <Card title="安全和 SMLTP" icon="shield-halved" href="/zh/security/overview">
+    端到端加密、数据泄露防护 (DLP)、提示盾和不可变的合规收据。
   </Card>
-  <Card title="Knowledge Bases (RAG)" icon="database" href="/zh/en/indexes/overview">
-    Vector semantic search, real-time document ingestion, and personal, team, and global indexes.
+  <Card title="知识库（RAG）" icon="database" href="/zh/indexes/overview">
+    矢量语义搜索、实时文档摄取以及个人、团队和全局索引。
   </Card>
-  <Card title="AI Discovery & Agents" icon="network-wired" href="/zh/en/agent/overview">
-    Inventory of Non-Human Identities (NHIs), detection of MCPs servers, Shadow AI and exit control on endpoints.
+  <Card title="人工智能发现与代理" icon="network-wired" href="/zh/agent/overview">
+    非人类身份清单 (NHIs)、MCPs 服务器检测、影子 AI 和端点退出控制。
   </Card>
-  <Card title="Identity & SSO" icon="id-badge" href="/zh/en/iam/google-workspace">
-    Native enterprise integration with Google Workspace, Microsoft Entra ID (Azure), and role-based access control (RBAC).
+  <Card title="身份和单点登录" icon="id-badge" href="/zh/iam/google-workspace">
+    与 Google Workspace、Microsoft Entra ID (Azure) 和基于角色的访问控制 (RBAC) 的本机企业集成。
   </Card>
-  <Card title="AI Gateway & Redundancy" icon="server" href="/zh/en/ai-gateway/overview">
-    Centralized endpoint with load balancing, automatic failover chains and unified auditing.
+  <Card title="AI网关与冗余" icon="server" href="/zh/ai-gateway/overview">
+    具有负载平衡、自动故障转移链和统一审核的集中端点。
   </Card>
-  <Card title="CASB, Network & MCPs" icon="plug" href="/zh/en/integrations/casb/overview">
-    Connects Cisco Umbrella (CASB/SWG), Cloud AI providers (OpenAI, AWS, Azure), and enterprise MCP connectors.
+  <Card title="CASB、网络和 MCP" icon="plug" href="/zh/integrations/casb/overview">
+    连接 Cisco Umbrella (CASB/SWG)、云 AI 提供商（OpenAI、AWS、Azure）和企业 MCP 连接器。
   </Card>
 </CardGroup>
 
 ---
 
-## 💡 Additional Resources
+## 💡 其他资源
 
 <CardGroup cols={2}>
-  <Card title="Supported Models" icon="brain" href="/zh/en/models">
-    Get to know the list of available language models (OpenAI, Anthropic, Google Gemini, Meta, DeepSeek).
+  <Card title="支持型号" icon="brain" href="/zh/models">
+    了解可用语言模型的列表（OpenAI、Anthropic、Google Gemini、Meta、DeepSeek）。
   </Card>
-  <Card title="Support and Contact" icon="headset" href="https://hiperai.com/contact">
-    Contact the technical support team or request assistance for enterprise deployments.
+  <Card title="支持与联系" icon="headset" href="https://hiperai.com/contact">
+    联系技术支持团队或请求企业部署方面的帮助。
   </Card>
 </CardGroup>
-

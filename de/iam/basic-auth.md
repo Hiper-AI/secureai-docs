@@ -98,6 +98,6 @@ Die Standardauthentifizierung bietet eine einfache Authentifizierungsmethode mit
 
 ## Nächste Schritte
 
-- [Google Workspace](/de/en/iam/google-workspace) - Integration mit Google Workspace
-- [Microsoft Entra ID](/de/en/iam/microsoft-entra-id) - Mit Microsoft Entra ID verbinden
-- [IAM-Übersicht](/de/en/iam/overview) - Erfahren Sie mehr über Identitätsmanagement
+- [Google Workspace](/de/iam/google-workspace) - Integration mit Google Workspace
+- [Microsoft Entra ID](/de/iam/microsoft-entra-id) - Mit Microsoft Entra ID verbinden
+- [IAM-Übersicht](/de/iam/overview) - Erfahren Sie mehr über Identitätsmanagement

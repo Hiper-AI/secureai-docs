@@ -17,9 +17,9 @@ description: "SecureAI OS Agent がポリシー、グループ、保護プリセ
 | **モード** | `monitor` (監視のみ) または `block` (強制)。 |
 | **ルールセット** | `mcps`、`apps`、`providers`、および `models` の許可/拒否リスト。 |
 | **脅威フィード** |デバイスが組織の脅威フィードを使用するかどうか。 |
-| **下りの強制** | `off` / `kill` / `block` / `lockdown` (+ 許可リスト、ブロックリモート MCP)。 「出力強制」(/ja/en/agent/egress-enforcement) を参照してください。 |
+| **下りの強制** | `off` / `kill` / `block` / `lockdown` (+ 許可リスト、ブロックリモート MCP)。 「出力強制」(/en/agent/egress-enforcement) を参照してください。 |
 | **行動ガード** |動作 AI 監視: エンドポイントおよび/またはゲートウェイの有効化、感度、デフォルト アクション (`alert`、`quarantine`、`kill`、`block`、`require_approval`)。 |
-| **クロード コード ルーティング** |透過プロキシ設定。 「透過プロキシ」(/ja/ja/agent/transparent-proxy) を参照してください。 |
+| **クロード コード ルーティング** |透過プロキシ設定。 「透過プロキシ」(/ja/agent/transparent-proxy) を参照してください。 |
 | **改ざん防止** |アンインストール キーの要件 (下記を参照)。 |
 | **ロールアウト** |段階的ロールアウト構成 ([安全なロールアウト](#safe-rollouts) を参照)。 |
 
@@ -50,10 +50,10 @@ description: "SecureAI OS Agent がポリシー、グループ、保護プリセ
 
 ## 改ざん防止とアンインストール キー
 
-ポリシーには **アンインストール キー** (`tamperProtection.uninstallRequiresKey`) が必要な場合があるため、キーがなければローカル ユーザーはエージェントを削除できません。要件 (およびオフライン ソルト/ハッシュを含むハッシュ化されたキー) がエンドポイントに配信されるため、ネットワーク外でも検証できます。アンインストール試行は、パブリック トークン検証エンドポイントを通じて検証されます (最初にポリシーごとのキー、次にフリート全体のフォールバック)。失敗は監査されます。 [自己更新と改ざん防止](/ja/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper) を参照してください。
+ポリシーには **アンインストール キー** (`tamperProtection.uninstallRequiresKey`) が必要な場合があるため、キーがなければローカル ユーザーはエージェントを削除できません。要件 (およびオフライン ソルト/ハッシュを含むハッシュ化されたキー) がエンドポイントに配信されるため、ネットワーク外でも検証できます。アンインストール試行は、パブリック トークン検証エンドポイントを通じて検証されます (最初にポリシーごとのキー、次にフリート全体のフォールバック)。失敗は監査されます。 [自己更新と改ざん防止](/ja/agent/quarantine-and-fleet-ops#self-update--anti-tamper) を参照してください。
 
 ## 関連
 
-- [出力強制](/ja/ja/agent/egress-enforcement)
-- [検疫と艦隊作戦](/ja/en/agent/quarantine-and-fleet-ops)
-- [透過プロキシ](/ja/ja/agent/transparent-proxy)
+- [出力強制](/ja/agent/egress-enforcement)
+- [検疫と艦隊作戦](/ja/agent/quarantine-and-fleet-ops)
+- [透過プロキシ](/ja/agent/transparent-proxy)

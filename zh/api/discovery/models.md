@@ -1,57 +1,55 @@
 ---
 sidebar_position: 1
-title: "Available Models"
+title: "可用型号"
 openapi: "GET /models"
 ---
+# 获取可用模型
 
+根据您的 API 密钥权限和用户许可证检索可用的 AI 模型。
 
-# Get Available Models
-
-Retrieve available AI models based on your API key permissions and user license.
-
-## Endpoint
+## 端点
 
 ```
 GET /models
 ```
 
-## Description
+## 说明
 
-Retrieve available AI models based on your API key permissions and user license.
+根据您的 API 密钥权限和用户许可证检索可用的 AI 模型。
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Parameters
+## 参数
 
-| Parameter | Type | Required | Description | Example |
-|-----------|------|----------|-------------|---------|
-| `provider` | string | No | Filter models by provider | `"openai"` |
+|参数|类型 |必填 |描述 |示例|
+|------------|------|----------|----------|----------|
+| `provider` |字符串|没有 |按供应商筛选型号 | `"openai"` |
 
-## Request
+## 请求
 
-### Basic Request
+### 基本请求
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by Provider
+### 按提供商过滤
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=openai" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -78,39 +76,39 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `success` | boolean | Always true for successful requests | `true` |
-| `models` | array | List of available models | See example |
-| `user_license` | string | User's license tier | `"Pro"` |
-| `restrictions` | object | Model access restrictions | See example |
-| `filters` | object | Applied filters | See example |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `success` |布尔 |对于成功的请求始终如此 | `true` |
+| `models` |数组|可用型号列表 |参见示例 |
+| `user_license` |字符串|用户许可级别 | `"Pro"` |
+| `restrictions` |对象|模型访问限制|参见示例 |
+| `filters` |对象|应用过滤器|参见示例 |
 
-### Model Object
+### 模型对象
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `id` | string | Unique model identifier | `"openai/gpt-5-nano"` |
-| `name` | string | Model display name | `"openai/gpt-5-nano"` |
-| `provider` | string | Model provider | `"openai"` |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `id` |字符串|唯一型号标识符| `"openai/gpt-5-nano"` |
+| `name` |字符串|型号显示名称 | `"openai/gpt-5-nano"` |
+| `provider` |字符串|模型提供商| `"openai"` |
 
-### Restrictions Object
+### 限制对象
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `allowed_models` | string | Model access level | `"all"` |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `allowed_models` |字符串|模型访问级别 | `"all"` |
 
-### Filters Object
+### 过滤对象
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `provider` | string | Applied provider filter | `"openai"` |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `provider` |字符串|应用供应商过滤器 | `"openai"` |
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -120,7 +118,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 }
 ```
 
-### 429 Rate Limit Exceeded
+### 429 超出速率限制
 
 ```json
 {
@@ -131,7 +129,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 }
 ```
 
-## Example Usage
+## 用法示例
 
 ### JavaScript/Node.js
 
@@ -147,7 +145,7 @@ console.log('Available Models:', data.models);
 console.log('User License:', data.user_license);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -163,7 +161,7 @@ print('Available Models:', data['models'])
 print('User License:', data['user_license'])
 ```
 
-### Filter by Provider
+### 按提供商过滤
 
 ```python
 import requests
@@ -183,7 +181,7 @@ data = response.json()
 print('OpenAI Models:', data['models'])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 # Get all models
@@ -195,16 +193,16 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## LLM Buckets (Current)
+## LLM 桶（当前）
 
-The chat system classifies models into two execution buckets:
+聊天系统将模型分为两个执行桶：
 
-- `standard` bucket
-- `premium` bucket
+- `standard` 桶
+- `premium` 铲斗
 
-This reference is based on the active backend bucket mapping.
+该参考基于活动后端存储桶映射。
 
-### Standard Bucket
+### 标准桶
 
 - `openai/gpt-oss-120b`
 - `openai/gpt-5-nano`
@@ -226,7 +224,7 @@ This reference is based on the active backend bucket mapping.
 - `qwen/qwen3-coder-next`
 - `qwen/qwen3.5-397b-a17b`
 
-### Premium Bucket
+### 优质桶
 
 - `anthropic/claude-3.7-sonnet`
 - `anthropic/claude-sonnet-4.6`
@@ -239,21 +237,21 @@ This reference is based on the active backend bucket mapping.
 - `google/gemini-3.1-pro-preview`
 - `x-ai/grok-4`
 
-## Available Providers
+## 可用的提供商
 
-- **OpenAI**
-- **Anthropic**
-- **Google**
-- **Meta**
-- **Mistral**
-- **DeepSeek**
+- **开放人工智能**
+- **人择**
+- **谷歌**
+- **元**
+- **米斯特拉尔**
+- **深度搜索**
 - **xAI**
 - **Qwen**
 
-## Notes
+## 注释
 
-- Models available depend on your subscription tier
-- Some models may be restricted based on your license
-- Use the provider filter to get models from specific providers
-- The response includes your current license tier and restrictions 
-- API key restrictions (`allowedModels`) can further reduce the model list
+- 可用型号取决于您的订阅级别
+- 某些型号可能会根据您的许可证受到限制
+- 使用提供商过滤器从特定提供商获取模型
+- 响应包括您当前的许可级别和限制 
+- API密钥限制（`allowedModels`）可以进一步减少型号列表

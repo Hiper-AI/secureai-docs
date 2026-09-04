@@ -18,7 +18,7 @@ POST /chat/completions
 オプションのナレッジ ベース取得 (RAG) を備えた AI チャット完了のメイン エンドポイント。以下をサポートします。
 
 - **2 つの入力形式** - 単一の `prompt` 文字列 (レガシー) **または** OpenAI スタイルの `messages` 配列。
-- **モデルの冗長性** — 呼び出し元定義のフェイルオーバー チェーン (プライマリ + 最大 2 つのフォールバック)。 「冗長性とフェイルオーバー」(/ja/ja/api/redundancy) を参照してください。
+- **モデルの冗長性** — 呼び出し元定義のフェイルオーバー チェーン (プライマリ + 最大 2 つのフォールバック)。 「冗長性とフェイルオーバー」(/ja/api/redundancy) を参照してください。
 - **通話ごとのセキュリティ** - SMLTP ポリシーの選択とインライン プロンプト シールドのオーバーライド。
 - **ストリーミング** — サーバー送信イベント (SSE)。
 - **署名済み受領書** — ゲートウェイを介してルーティングされた応答に関する SMLTP 準拠の受領書参照。
@@ -26,7 +26,7 @@ POST /chat/completions
 <Tip>
 **OpenAI SDK の互換性**
 
-**コード変更なし**で SecureAI を既存の OpenAI 統合にドロップしたい場合は、代わりに `/api/external/v1/chat/completions` の [OpenAI 互換エンドポイント](/ja/en/api/chat/openai-compatibility) を使用してください。このクラシック エンドポイントは、RAG をサポートする唯一のエンドポイントです。
+**コード変更なし**で SecureAI を既存の OpenAI 統合にドロップしたい場合は、代わりに `/api/external/v1/chat/completions` の [OpenAI 互換エンドポイント](/ja/api/chat/openai-compatibility) を使用してください。このクラシック エンドポイントは、RAG をサポートする唯一のエンドポイントです。
 </Tip>
 
 ## 認証
@@ -64,7 +64,7 @@ Authorization: Bearer sk-your-api-key-here
 | `model` |文字列 |条件付き | AI モデル (例: `"openai/gpt-5-nano"`)。 `models` が指定されていない場合は必須です。 |
 | `models` |配列 |いいえ |明示的なフェイルオーバー チェーン (`model` をオーバーライドします)。最大 3 つの異なるエントリ。各エントリはモデル文字列または `{ model, timeout_ms, first_token_timeout_ms }` です。 |
 | `fallback_models` |配列 |いいえ |フォールバックは `model` の後に追加されます。 `models`との併用はできません。 |
-| `redundancy` |オブジェクト |いいえ |チェーン全体のオプション: `{ timeout_ms, first_token_timeout_ms, on: [...] }`。 「冗長性とフェイルオーバー」(/ja/ja/api/redundancy) を参照してください。 |
+| `redundancy` |オブジェクト |いいえ |チェーン全体のオプション: `{ timeout_ms, first_token_timeout_ms, on: [...] }`。 「冗長性とフェイルオーバー」(/ja/api/redundancy) を参照してください。 |
 
 ### パラメータの取得と生成
 
@@ -73,12 +73,12 @@ Authorization: Bearer sk-your-api-key-here
 | `index` |文字列 | **はい** |クエリするナレッジベース名。 RAG を使用しない直接 AI には `"Zero-Knowledge"` を使用します。このフィールドは必須です。`index` のないリクエストは `400 "Index required"` を返します。 |
 | `use_rag` |ブール値 |いいえ |ナレッジの検索を有効にします (デフォルト: `true`)。 `use_rag: false` を設定しても、`index` 要件が免除されるわけではありません。つまり、`index: "Zero-Knowledge"` が送信されます。 |
 | `smltp_policy` |文字列 |いいえ |セキュリティ ポリシー (`"internal"`、`"public"`、`"confidential"`、またはテナント カスタム ポリシー)。 |
-| `prompt_shield` |オブジェクト |いいえ |通話ごとのプロンプト シールド コントロール: `{ enabled?: boolean, policy?: string }`。 [プロンプト シールド API](/ja/en/api/threat-defense/prompt-shield#per-call-control-on-completions) を参照してください。 |
+| `prompt_shield` |オブジェクト |いいえ |通話ごとのプロンプト シールド コントロール: `{ enabled?: boolean, policy?: string }`。 [プロンプト シールド API](/ja/api/threat-defense/prompt-shield#per-call-control-on-completions) を参照してください。 |
 | `temperature` |番号 |いいえ |ランダムネス制御 (0 ～ 2、デフォルト: 0.7)。 |
 | `max_tokens` |整数 |いいえ |最大応答トークン (デフォルト: 1000、上限は 4000)。 |
 | `stream` |ブール値 |いいえ |応答を SSE としてストリーミングします (デフォルト: `false`)。 |
 | `conversation_id` |文字列 |いいえ |追跡用のオプションの会話 ID。 |
-| `user_id` |文字列 |いいえ |このリクエストの請求先となるユーザーの MongoDB ObjectId (管理者ゲート。[請求モード](/ja/en/api/billing-modes) を参照)。 |
+| `user_id` |文字列 |いいえ |このリクエストの請求先となるユーザーの MongoDB ObjectId (管理者ゲート。[請求モード](/ja/api/billing-modes) を参照)。 |
 
 ## リクエストの例
 
@@ -158,8 +158,8 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 | `prompt_shield_policy` |オブジェクト \|ヌル |この通話に適用される Prompt Shield ポリシー (存在する場合)。 |
 | `served_model` |文字列 |実際に答えを出したモデル。 |
 | `requested_model` |文字列 |要求されたチェーンの最初のモデル。 |
-| `failover` |オブジェクト | **マルチモデル チェーンが実行されている場合にのみ存在します。** `{ occurred, attempts[] }` — [冗長性とフェイルオーバー](/ja/en/api/redundancy) を参照してください。 |
-| `smltp` |オブジェクト | SMLTP 資格が通話に対して作成されるときに存在します。 `{ bundle_id, receipt_url }`。 `bundle_id` (権利 ID、例: `jti-…`) は、ネイティブ/直接展開でも返されます。 `receipt_url` の署名付きレシートは、トラフィックが SMLTP ゲートウェイを介してルーティングされる場合にのみ取得できます (それ以外の場合、[Receipts](/ja/en/api/receipts) は `404` を返します)。 |
+| `failover` |オブジェクト | **マルチモデル チェーンが実行されている場合にのみ存在します。** `{ occurred, attempts[] }` — [冗長性とフェイルオーバー](/ja/api/redundancy) を参照してください。 |
+| `smltp` |オブジェクト | SMLTP 資格が通話に対して作成されるときに存在します。 `{ bundle_id, receipt_url }`。 `bundle_id` (権利 ID、例: `jti-…`) は、ネイティブ/直接展開でも返されます。 `receipt_url` の署名付きレシートは、トラフィックが SMLTP ゲートウェイを介してルーティングされる場合にのみ取得できます (それ以外の場合、[Receipts](/ja/api/receipts) は `404` を返します)。 |
 | `rag_enabled` |ブール値 | RAG が使用されたかどうか。 |
 | `documents_retrieved` |整数 |取得されたドキュメントの数。 |
 | `sources` |配列 |最大 3 つの文書ソースを取得 `{ source, score }`。 |
@@ -300,5 +300,5 @@ print("Response:", result["choices"][0]["message"]["content"])
 - `index`は必須です。 RAG を使用しない直接 AI 応答の場合は `index: "Zero-Knowledge"` を送信します。
 - `user_id` パラメーターは、リクエストを別のユーザー アカウント (管理者ゲート) に請求します。
 - 温度は 0 ～ 2 に固定されます。 `max_tokens` の上限は 4000 です。
-- モデルの呼び出しやポイントの消費を**せずに**、すべてのポリシーに対してリクエストを検証するには、[ポリシー チェック](/ja/ja/api/policy-check) を使用します。
-- フェイルオーバー チェーンのセマンティクス (トリガー、タイムアウト、ストリーミング動作、枯渇ステータス コード) については、[冗長性とフェイルオーバー](/ja/ja/api/redundancy) を参照してください。
+- モデルの呼び出しやポイントの消費を**せずに**、すべてのポリシーに対してリクエストを検証するには、[ポリシー チェック](/ja/api/policy-check) を使用します。
+- フェイルオーバー チェーンのセマンティクス (トリガー、タイムアウト、ストリーミング動作、枯渇ステータス コード) については、[冗長性とフェイルオーバー](/ja/api/redundancy) を参照してください。

@@ -249,7 +249,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 
 ### ドキュメント
 - [請求モードの概要](../billing-modes.md)
-- [制限とクォータ](/ja/ja/api/limits-and-quotas) - プラットフォームの制限を理解する
+- [制限とクォータ](/ja/api/limits-and-quotas) - プラットフォームの制限を理解する
 
 ### 管理パネル
 - **API セクション**: API キーの作成と管理

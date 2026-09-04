@@ -1,42 +1,39 @@
 ---
 sidebar_position: 4
-title: "Immutable Logs"
+title: "不可变日志"
 ---
+# 不可变日志 — 加密审计链
 
+SecureAI 在三层不可变链中记录**每个人工智能交互和每个管理操作**。这种架构确保对记录的任何修改、删除或操作都是可检测的——即使有人可以直接访问数据库。
 
+## 为什么这很重要？
 
-# Immutable Logs — Cryptographic audit chain
+仅存在于 MongoDB 中的日志并不是真正不可变的：任何有权访问服务器的人都可以删除它而不留下任何痕迹。 SecureAI 通过将每个日志固定到 **Sigstore Rekor** 来解决这个问题，这是一个由开源安全基金会 (OpenSSF) 运营的公共透明日志 — 软件行业使用同一系统来验证关键软件包的监管链。
 
-SecureAI records **every AI interaction and every administrative action** in a three-layer immutable chain. This architecture ensures that any modification, deletion or manipulation of records is detectable — even if someone has direct access to the database.
-
-## Why does it matter?
-
-A log that only exists in MongoDB is not truly immutable: anyone who has access to the server can delete it without leaving a trace. SecureAI solves this by pinning each log to **Sigstore Rekor**, a public transparency log operated by the Open Source Security Foundation (OpenSSF) — the same system the software industry uses to verify the chain of custody of critical packages.
-
-> **Technical guarantee:** Once a Merkle block hash is in Rekor, no one — including the SecureAI operator — can retroactively alter that record. Any third-party auditor can independently verify it with a single curl call.
+> **技术保证：** 一旦 Merkle 区块哈希位于 Rekor 中，任何人（包括 SecureAI 运营商）都无法追溯更改该记录。任何第三方审核员都可以通过一次curl调用独立验证它。
 
 ---
 
-##The three layers of proof
+##三层证明
 
-Each interaction bundle has three levels of cryptographic evidence:
+每个交互包都具有三个级别的加密证据：
 
-### Layer 1 — MongoDB Registry (L1)
+### 第 1 层 — MongoDB 注册表 (L1)
 
-The primary record of the interaction is stored in MongoDB with:
+交互的主要记录存储在 MongoDB 中：
 
-| Field | Description |
-|-------|-------------|
-| `current_hash` | SHA-256 of the payload of this entry + `prev_hash` previous |
-| `prev_hash` | Hash of the immediately preceding entry — forms the **hash chain** |
-| `bundle_id` | Unique identifier of the interaction package |
-| `receipt_signature` | If the AI ​​provider returned a signed acknowledgment of the privacy headers |
+|领域 |描述 |
+|--------|-------------|
+| `current_hash` |此条目有效负载的 SHA-256 + `prev_hash` 上一个 |
+| `prev_hash` |前一个条目的哈希值 — 形成 **哈希链** |
+| `bundle_id` |交互包唯一标识|
+| `receipt_signature` |如果AI提供商返回了隐私标头的签名确认|
 
-The string `prev_hash → current_hash → next_current_hash` causes **deleting any row to break the string** — the discrepancy is detectable by traversing the sequence.
+字符串 `prev_hash → current_hash → next_current_hash` 导致**删除任何行来破坏字符串** - 通过遍历序列可以检测到差异。
 
-### Layer 2 — Merkle Tree (L2)
+### 第 2 层 — Merkle 树 (L2)
 
-Every 10 log entries are grouped into a **Merkle block**:
+每 10 个日志条目被分组到一个 **Merkle 块**：
 
 ```
   Merkle Root
@@ -46,76 +43,76 @@ Every 10 log entries are grouped into a **Merkle block**:
  h0    h1 h2    h3   ...hasta h9
 ```
 
-The `merkle_root` is the root hash that represents the 10 entries. If any entry is altered, the `merkle_root` changes — invalidating the inclusion test.
+`merkle_root` 是代表 10 个条目的根哈希。如果任何条目被更改，`merkle_root` 就会更改 — 使包含测试无效。
 
-| Field L2 | Description |
+| L2 场 |描述 |
 |----------|-------------|
-| `block_id` | Merkle Block ID |
-| `merkle_root` | Tree root hash |
-| `leaf_hash` | Hash of this specific entry within the tree |
-| `leaf_index` | Position (0–9) within the block |
-| `verified` | `true` if `leaf_hash` is committed in `merkle_root` |
+| `block_id` | Merkle 区块 ID |
+| `merkle_root` |树根哈希 |
+| `leaf_hash` |树中此特定条目的哈希值 |
+| `leaf_index` |块内的位置 (0–9) |
+| `verified` | `true` 如果 `leaf_hash` 提交到 `merkle_root` |
 
-### Layer 3 — Rekor Anchor (L3)
+### 第 3 层 — Rekor 锚点 (L3)
 
-The `merkle_root` of each sealed block is sent to **[Sigstore Rekor](https://rekor.sigstore.dev/)**, a public append-only log. Rekor returns:
+每个密封块的 `merkle_root` 被发送到 **[Sigstore Rekor](https://rekor.sigstore.dev/)**，一个公共的仅附加日志。 Rekor 返回：
 
-| Field L3 | Description |
+| L3 场 |描述 |
 |----------|-------------|
-| `log_index` | Global sequence number in Rekor log — unique and monotonically increasing |
-| `uuid` | Entry identifier in Rekor |
-| `integrated_time` | Timestamp in which Rekor signed the inclusion test |
-| `rekor_url` | Direct URL to entry raw JSON in Rekor |
+| `log_index` | Rekor 日志中的全局序列号 — 唯一且单调递增 |
+| `uuid` | Rekor | 中的条目标识符
+| `integrated_time` | Rekor 签署包含测试的时间戳 |
+| `rekor_url` |指向 Rekor 中原始 JSON 条目的直接 URL |
 
-Once `log_index` exists in Rekor, **no one can delete it** — the Rekor log is public, distributed, and immutable by design.
+一旦 `log_index` 存在于 Rekor 中，**没有人可以删除它** — Rekor 日志在设计上是公共的、分布式的且不可变的。
 
 ---
 
-## Transparency Portal (admin)
+## 透明度门户（管理员）
 
-### Access
+### 访问
 
-**Admin → AI Gateway → Transparency Portal**
+**管理员 → AI Gateway → 透明度门户**
 
-### Verify a bundle
+### 验证捆绑包
 
-1. Type or paste `bundle_id` into the search field.
-2. Click **"Verify Proof"**.
-3. You will see the three layers with status badges:
-   - ✅ **Green** = verified successfully
-   - ⚠️ **Yellow** = sealing/anchor pending (normal for interactions less than 2 minutes ago)
-   - ❌ **Red** = verification failure (warning signal)
+1. 在搜索字段中输入或粘贴 `bundle_id`。
+2. 单击**“验证证明”**。
+3. 您将看到带有状态徽章的三层：
+   - ✅ **绿色** = 验证成功
+   - ⚠️ **黄色** = 密封/锚定待定（不到 2 分钟前的交互正常）
+   - ❌ **红色** = 验证失败（警告信号）
 
-### Copy public verification link
+### 复制公开验证链接
 
-When the result is visible, a bar appears with the **"Copy public verification URL"** button. That link is public — you can send it to an external auditor without requiring a login.
+当结果可见时，会出现一个带有 **“复制公共验证 URL”** 按钮的栏。该链接是公开的——您可以将其发送给外部审计员，无需登录。
 
 ---
 
-##Public verification page
+##公开验证页面
 
-Anyone with a `bundle_id` can verify the test without access to SecureAI:
+任何拥有 `bundle_id` 的人都可以验证测试，而无需访问 SecureAI：
 
 ```
 https://tu-dominio.com/verify/<bundle_id>
 ```
 
-The page shows the three layers, a button to download the test JSON, and commands to verify locally.
+该页面显示了三层、用于下载测试 JSON 的按钮以及用于本地验证的命令。
 
-**This page does not expose:**
-- The content of the message nor the response of the AI
-- User data (name, email, IP)
-- Any personally identifiable information
+**此页面不公开：**
+- 消息内容或人工智能的响应
+- 用户数据（姓名、电子邮件、IP）
+- 任何个人身份信息
 
-It only shows hashes, timestamps, indexes and verification status.
+它仅显示哈希值、时间戳、索引和验证状态。
 
 ---
 
-## Independent verification with curl
+## 使用curl进行独立验证
 
-An external auditor can verify any bundle without trusting the web interface:
+外部审核员可以在不信任 Web 界面的情况下验证任何捆绑包：
 
-### Step 1 — Get the test
+### 第 1 步 — 进行测试
 
 ```bash
 BUNDLE_ID="fc9c40c6-c210-4a18-8403-59a46f220e34"
@@ -124,7 +121,7 @@ HOST="https://tu-dominio.com"
 curl -s "$HOST/api/public/verify/$BUNDLE_ID" | jq .
 ```
 
-### Step 2 — Confirm the hash in the Merkle layer
+### 步骤 2 — 确认 Merkle 层中的哈希值
 
 ```bash
 # Verificar que el leaf_hash esté en el merkle_root
@@ -134,7 +131,7 @@ echo "Leaf: $LEAF"
 echo "Root: $ROOT"
 ```
 
-### Step 3 — Confirm the anchor in Rekor
+### 步骤 3 — 确认 Rekor 中的锚点
 
 ```bash
 REKOR_UUID=$(curl -s "$HOST/api/public/verify/$BUNDLE_ID" | jq -r '.layer3.uuid')
@@ -143,35 +140,35 @@ curl -s "https://rekor.sigstore.dev/api/v1/log/entries/${REKOR_UUID}" \
   | jq '.[].verification'
 ```
 
-A non-empty `signedEntryTimestamp` field confirms that Rekor has accepted and signed the entry. That timestamp cannot be retroactively altered.
+非空的 `signedEntryTimestamp` 字段确认 Rekor 已接受并签署了该条目。该时间戳无法追溯更改。
 
 ---
 
-## Signed export bundle (auditors and users)
+## 签名导出包（审核员和用户）
 
-In addition to the public verifier by `bundle_id`, SecureAI allows you to export cryptographic evidence in a portable ZIP for offline audits.
+除了 `bundle_id` 的公共验证器之外，SecureAI 还允许您以便携式 ZIP 格式导出加密证据以进行离线审计。
 
-### What does the ZIP include?
+### ZIP 包含什么？
 
-When an administrator uses **Export signed bundle** in Logs or SMLTP, a file is downloaded with:
+当管理员在日志或 SMLTP 中使用 **导出签名包** 时，将下载一个文件：
 
-- `data.csv`: exported data.
-- `manifest.json`: cryptographic metadata (`rowCount`, `merkleRootOfExport`, `signingKeyFingerprint`, timestamp, etc.).
-- `manifest.sig`: signature Ed25519 of `manifest.json`.
-- `verify.js`: offline verifier without dependencies.
-- `README.txt`: quick instructions.
+- `data.csv`：导出的数据。
+- `manifest.json`：加密元数据（`rowCount`、`merkleRootOfExport`、`signingKeyFingerprint`、时间戳等）。
+- `manifest.sig`：`manifest.json` 的签名 Ed25519。
+- `verify.js`：没有依赖项的离线验证器。
+- `README.txt`：快速说明。
 
-### How to verify (offline)
+### 如何验证（离线）
 
-1. Unzip the ZIP.
-2. Open a terminal in that folder.
-3. Run:
+1. 解压 ZIP。
+2. 在该文件夹中打开终端。
+3. 运行：
 
 ```bash
 node verify.js
 ```
 
-Expected output on an intact bundle:
+完整包的预期输出：
 
 ```text
 [PASS] Manifest signature (Ed25519)
@@ -181,48 +178,48 @@ Expected output on an intact bundle:
 ✓ All checks PASSED — bundle is authentic.
 ```
 
-### What does this verifier detect?
+### 这个验证器检测什么？
 
-- Editing any field in `data.csv`.
-- Deleting or adding rows in `data.csv`.
-- Modification of `manifest.json`.
-- Use of incorrect signing key.
+- 编辑`data.csv`中的任何字段。
+- 删除或添加`data.csv`中的行。
+- 修改`manifest.json`。
+- 使用不正确的签名密钥。
 
-If any check appears as `FAIL`, that export **should not be considered trusted**.
+如果任何检查显示为 `FAIL`，则该导出**不应被视为可信**。
 
-### Quick test for audit
+### 审计快速测试
 
-To demonstrate tamper detection:
+演示篡改检测：
 
-1. Run `node verify.js` on the newly exported ZIP (it should give all `PASS`).
-2. Edit any character in `data.csv` and save.
-3. Run `node verify.js` again.
-4. Must fail at least `Merkle root of export`.
+1. 在新导出的 ZIP 上运行 `node verify.js`（它应该给出所有 `PASS`）。
+2. 编辑`data.csv`中的任意字符并保存。
+3. 再次运行`node verify.js`。
+4. 必须至少失败 `Merkle root of export`。
 
-This confirms evidence of end-to-end integrity for the exported dataset.
-
----
-
-## Interpretation of states
-
-| L1 State | Meaning |
-|-----------|-------------|
-| ✅ Registration present | The interaction is in MongoDB with valid hash chain |
-
-| L2 State | Meaning |
-|-----------|-------------|
-| ✅ Merkle verified | The hash of this entry is part of the Merkle tree and the verification is correct |
-| ⚠️ Pending block | There are not yet 10 entries to form a block (normal in the first minutes) |
-| ❌ Verification failed | Hash does not match merkle_root — possible manipulation |
-
-| State L3 | Meaning |
-|-----------|-------------|
-| ✅ Anchored in Rekor | The merkle_root is in the Rekor public log with signed timestamp |
-| ⏳ Anchor pending | The block has been sealed but not yet sent to Rekor (may take up to 30 seconds) |
+这证实了导出数据集的端到端完整性的证据。
 
 ---
 
-## Complete flow of a message
+## 状态解释
+
+| L1 状态 |意义|
+|------------|-------------|
+| ✅ 报名礼物 | MongoDB 中与有效哈希链的交互 |
+
+| L2 状态 |意义|
+|------------|-------------|
+| ✅ Merkle 验证 |该条目的哈希是 Merkle 树的一部分并且验证正确 |
+| ⚠️ 待处理块 |还没有 10 个条目形成一个块（前几分钟正常） |
+| ❌ 验证失败 |哈希与 merkle_root 不匹配 — 可能被操纵 |
+
+|状态 L3 |意义|
+|------------|-------------|
+| ✅ 锚定于 Rekor | merkle_root 位于 Rekor 公共日志中，带有签名时间戳 |
+| ⏳ 锚定待定 |该块已被密封，但尚未发送到Rekor（可能最多需要 30 秒）|
+
+---
+
+## 消息的完整流程
 
 ```
 Usuario envía mensaje
@@ -248,28 +245,28 @@ Prueba completa disponible en /verify/<bundle_id>
 
 ---
 
-## Supplier compliance
+## 供应商合规性
 
-The **"Provider Compliance"** badge indicates whether the AI ​​provider (OpenAI, Anthropic, etc.) confirmed receiving the SMLTP privacy headers:
+**“提供商合规性”**徽章指示 AI 提供商（OpenAI、Anthropic 等）是否确认收到 SMLTP 隐私标头：
 
-| Badge | Meaning |
-|-------|-------------|
-| ✅ VERIFIED / CERTIFIED | The supplier confirmed receipt with a signed acknowledgment |
-| 🛡️ GATEWAY PROTECTED | Privacy headers were sent but not explicitly confirmed by the provider. Your data is protected by the gateway. |
-| ⚠️ PROVIDER NOT VERIFIED | The supplier did not confirm receipt. The data traveled protected by SMLTP but there is no guarantee that the provider will respect the no-training instructions. |
+|徽章|意义|
+|--------|-------------|
+| ✅ 已验证/认证 |供应商通过签署的确认书确认收货 |
+| 🛡️ 网关受保护 |隐私标头已发送，但提供商未明确确认。您的数据受网关保护。 |
+| ⚠️ 提供商未经验证 |供应商未确认收货。传输的数据受 SMLTP 保护，但不能保证提供商会遵守非培训说明。 |
 
 ---
 
-## Frequently asked questions
+## 常见问题
 
-**Can I verify a bundle without internet?**
-Yes, download the test JSON from the "Download JSON" button while you are online. The `merkle_root` and hashes are verifiable offline by recomputing the tree.
+**我可以在没有互联网的情况下验证捆绑包吗？**
+是的，当您在线时，通过“下载 JSON”按钮下载测试 JSON。 `merkle_root` 和哈希值可以通过重新计算树来离线验证。
 
-**What happens if L3 is pending?**
-This is normal for recent interactions (less than 1 minute). Rekor's sidecar processes blocks every ~30 seconds. If after 5 minutes it is still pending, verify that the sidecar `rekor-anchor` is running.
+**如果 L3 待决会发生什么？**
+这对于最近的交互（少于 1 分钟）来说是正常的。 Rekor 的 sidecar 每约 30 秒处理一次块。如果 5 分钟后仍处于待处理状态，请验证 sidecar `rekor-anchor` 是否正在运行。
 
-**How long are records kept?**
-By default, logs are kept based on the configured `retentionPeriod`. Records marked as compliance (`phi`, `pii`, `security`, `authorization`) are never automatically deleted.
+**记录保存多长时间？**
+默认情况下，日志根据配置的`retentionPeriod`保留。标记为合规性的记录（`phi`、`pii`、`security`、`authorization`）永远不会自动删除。
 
-**Can I share the verification link with a customer?**
-Yes. The URL `/verify/<bundle_id>` does not require login and does not expose sensitive data. It is safe to share with auditors, regulators or clients.
+**我可以与客户分享验证链接吗？**
+是的。 URL `/verify/<bundle_id>` 不需要登录，也不会暴露敏感数据。与审计师、监管机构或客户分享是安全的。

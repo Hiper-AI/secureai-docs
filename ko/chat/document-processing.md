@@ -82,4 +82,4 @@ SecureAI를 사용하면 다양한 문서 유형을 업로드하고 처리하여
 ## 다음 단계
 
 
-- [색인](/ko/ko/indexes/overview) - 지식창고 관리
+- [색인](/ko/indexes/overview) - 지식창고 관리

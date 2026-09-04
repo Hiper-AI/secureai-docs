@@ -6,7 +6,7 @@ description: "Installieren Sie den SecureAI OS Agent auf Windows-, Linux- und ma
 ---
 # Installation des Agenten
 
-Der SecureAI OS Agent wird aus einem **Installationspaket** installiert, das Sie unter **Admin → Agent Registry → OS Agents** erstellen. Das Paket erzeugt einen betriebsbereiten Befehl (Windows) oder ein Skript (Linux/macOS), das zwei Werte enthält: die **Backend-URL** und einen gültigen **Registrierungsschlüssel**. Den vollständigen Paket-Builder und die Registrierungsmechanismen finden Sie unter [Registrierungs- und Installationspakete](/de/en/agent/enrollment-and-packages).
+Der SecureAI OS Agent wird aus einem **Installationspaket** installiert, das Sie unter **Admin → Agent Registry → OS Agents** erstellen. Das Paket erzeugt einen betriebsbereiten Befehl (Windows) oder ein Skript (Linux/macOS), das zwei Werte enthält: die **Backend-URL** und einen gültigen **Registrierungsschlüssel**. Den vollständigen Paket-Builder und die Registrierungsmechanismen finden Sie unter [Registrierungs- und Installationspakete](/de/agent/enrollment-and-packages).
 
 ## Windows (MSI)
 
@@ -41,10 +41,10 @@ Die Backend-URL und der Registrierungsschlüssel sind bereits in das für Ihr Pa
 
 ## Was passiert beim ersten Durchlauf?
 
-Beim ersten Start führt der Agent eine **Registrierung** durch: Er präsentiert den Registrierungsschlüssel, registriert das Gerät und empfängt ein gerätespezifisches Token und seine Laufzeitkonfiguration. Anschließend beginnt es mit dem Heartbeating und der Anwendung seiner gelösten [Richtlinie](/de/en/agent/policies-and-groups). Weitere Informationen finden Sie unter [Registrierungs- und Installationspakete] (/de/en/agent/enrollment-and-packages), einschließlich der Auflösung der Backend-URL und der Rotation der Geräte-Tokens.
+Beim ersten Start führt der Agent eine **Registrierung** durch: Er präsentiert den Registrierungsschlüssel, registriert das Gerät und empfängt ein gerätespezifisches Token und seine Laufzeitkonfiguration. Anschließend beginnt es mit dem Heartbeating und der Anwendung seiner gelösten [Richtlinie](/de/agent/policies-and-groups). Weitere Informationen finden Sie unter [Registrierungs- und Installationspakete] (/en/agent/enrollment-and-packages), einschließlich der Auflösung der Backend-URL und der Rotation der Geräte-Tokens.
 
 ## Verwandte
 
-- [Registrierungs- und Installationspakete](/de/en/agent/enrollment-and-packages)
-- [Richtlinien & Gruppen](/de/en/agent/richtlinien-und-gruppen)
-- [Endpoint Agent Übersicht](/de/en/agent/overview)
+- [Registrierungs- und Installationspakete](/de/agent/enrollment-and-packages)
+- [Richtlinien & Gruppen](/de/agent/richtlinien-und-gruppen)
+- [Endpoint Agent Übersicht](/de/agent/overview)

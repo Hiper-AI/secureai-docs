@@ -6,7 +6,7 @@ description: "Shadow-AI 검색 — CASB/SWG 로그에서 LLM API를 호출하는
 ---
 # 네트워크 소스
 
-**네트워크 소스**(관리 → 에이전트 레지스트리 → **네트워크**)는 CASB/SWG 로그에서 발견된 섀도우 AI, 즉 SDK 또는 [엔드포인트 에이전트](/ko/en/agent/overview)가 배포되지 않은 경우에도 어떤 회사의 **소스 IP 및 사용자가 LLM API를 호출하고 있는지** 표시합니다. 이는 [CASB 및 네트워크 커넥터](/ko/en/integrations/casb/overview) — Cisco Umbrella, Zscaler 등을 통해 공급됩니다.
+**네트워크 소스**(관리 → 에이전트 레지스트리 → **네트워크**)는 CASB/SWG 로그에서 발견된 섀도우 AI, 즉 SDK 또는 [엔드포인트 에이전트](/ko/agent/overview)가 배포되지 않은 경우에도 어떤 회사의 **소스 IP 및 사용자가 LLM API를 호출하고 있는지** 표시합니다. 이는 [CASB 및 네트워크 커넥터](/ko/integrations/casb/overview) — Cisco Umbrella, Zscaler 등을 통해 공급됩니다.
 
 ## 발견 창
 
@@ -40,6 +40,6 @@ description: "Shadow-AI 검색 — CASB/SWG 로그에서 LLM API를 호출하는
 
 ## 관련
 
-- [CASB 및 네트워크(SWG) 통합](/ko/ko/integrations/casb/overview) — 로그 소스를 연결합니다.
-- [엔드포인트 에이전트](/ko/ko/agent/overview) — 직접 관리할 수 있는 엔드포인트입니다.
-- [AI 발견 및 인벤토리 개요](/ko/ko/discovery/overview)
+- [CASB 및 네트워크(SWG) 통합](/ko/integrations/casb/overview) — 로그 소스를 연결합니다.
+- [엔드포인트 에이전트](/ko/agent/overview) — 직접 관리할 수 있는 엔드포인트입니다.
+- [AI 발견 및 인벤토리 개요](/ko/discovery/overview)

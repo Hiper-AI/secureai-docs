@@ -6,7 +6,7 @@ description: "Der schreibgeschützte Bestand an Agenten und Modellen, die in Ihr
 ---
 # Wolkensensoren
 
-**Cloud Sensors** (Admin → Agent Registry → **Cloud**) ist das Inventar der Agenten, Modelle und Bereitstellungen, die in Ihren verbundenen Cloud-KI-Plattformen entdeckt wurden – **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform und Anthropic Console**. Es ist schreibgeschützt: Sie konfigurieren die Konnektoren in [Integrationen](/de/en/integrations/cloud/overview) und Cloud Sensors zeigt, was sie gefunden haben.
+**Cloud Sensors** (Admin → Agent Registry → **Cloud**) ist das Inventar der Agenten, Modelle und Bereitstellungen, die in Ihren verbundenen Cloud-KI-Plattformen entdeckt wurden – **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform und Anthropic Console**. Es ist schreibgeschützt: Sie konfigurieren die Konnektoren in [Integrationen](/de/integrations/cloud/overview) und Cloud Sensors zeigt, was sie gefunden haben.
 
 ## KPIs
 
@@ -38,6 +38,6 @@ Führen Sie **Sync** für einen einzelnen Anbieter oder **Sync All** aus. Jeder 
 
 ## Verwandte
 
-- [Cloud AI Providers](/de/en/integrations/cloud/overview) – Anbieter verbinden und konfigurieren.
-- [NHI Inventory](/de/en/discovery/nhi-inventory) – Identitäten, die von denselben Konnektoren entdeckt werden.
-- [AI Discovery & Inventory Overview](/de/en/discovery/overview)
+- [Cloud AI Providers](/de/integrations/cloud/overview) – Anbieter verbinden und konfigurieren.
+- [NHI Inventory](/de/discovery/nhi-inventory) – Identitäten, die von denselben Konnektoren entdeckt werden.
+- [AI Discovery & Inventory Overview](/de/discovery/overview)

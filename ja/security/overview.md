@@ -84,6 +84,6 @@ SMLTP は、いくつかの組み込みポリシー テンプレートをサポ�
 
 ## 次のステップ
 
-- [SMLTP の詳細](/ja/ja/security/smltp) - SMLTP について詳しく見る
-- [認証](/ja/ja/iam/overview) - 認証方法を理解する
-- [APIセキュリティ](/ja/ja/api) - 安全なAPI利用ガイドライン
+- [SMLTP の詳細](/ja/security/smltp) - SMLTP について詳しく見る
+- [認証](/ja/iam/overview) - 認証方法を理解する
+- [APIセキュリティ](/ja/api) - 安全なAPI利用ガイドライン

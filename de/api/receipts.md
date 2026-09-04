@@ -52,7 +52,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 }
 ```
 
-Das `receipt`-Objekt ist die vom Gateway ausgegebene signierte Nutzlast. Wie Belege in das Transparenz- und Prüfmodell passen, erfahren Sie unter [SMLTP-Sicherheit](/de/en/security/smltp).
+Das `receipt`-Objekt ist die vom Gateway ausgegebene signierte Nutzlast. Wie Belege in das Transparenz- und Prüfmodell passen, erfahren Sie unter [SMLTP-Sicherheit](/de/security/smltp).
 
 ### 404 Nicht gefunden
 
@@ -70,11 +70,11 @@ Wird zurückgegeben, wenn die Bundle-ID fehlt oder länger als 128 Zeichen ist.
 
 ## Notizen
 
-- Belege werden für eine begrenzte Zeit im In-Memory-Speicher des Gateways gespeichert. Für einen langfristigen Nachweis verlassen Sie sich auf das **Hash-verkettete Prüfprotokoll** – den maßgeblichen, unveränderlichen Datensatz. Siehe [Immutable Logs](/de/en/security/immutable-logs).
+- Belege werden für eine begrenzte Zeit im In-Memory-Speicher des Gateways gespeichert. Für einen langfristigen Nachweis verlassen Sie sich auf das **Hash-verkettete Prüfprotokoll** – den maßgeblichen, unveränderlichen Datensatz. Siehe [Immutable Logs](/de/security/immutable-logs).
 – Nicht jede Bereitstellung erfolgt über das Gateway. Behandeln Sie einen `404` als „Kein Gateway-Empfang für diesen Anruf“ und nicht als Fehler in Ihrer Integration.
 
 ## Verwandte
 
-- [SMLTP-Sicherheit](/de/en/security/smltp)
-- [Unveränderliche Protokolle](/de/en/security/immutable-logs)
-- [Chat-Abschluss](/de/en/api/chat/completions)
+- [SMLTP-Sicherheit](/de/security/smltp)
+- [Unveränderliche Protokolle](/de/security/immutable-logs)
+- [Chat-Abschluss](/de/api/chat/completions)

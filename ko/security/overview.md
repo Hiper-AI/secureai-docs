@@ -84,6 +84,6 @@ SMLTP는 여러 가지 기본 제공 정책 템플릿을 지원합니다.
 
 ## 다음 단계
 
-- [SMLTP 심층 분석](/ko/ko/security/smltp) - SMLTP에 대해 자세히 알아보기
-- [인증](/ko/en/iam/overview) - 인증 방법 이해
-- [API 보안](/ko/ko/api) - 안전한 API 사용 가이드라인
+- [SMLTP 심층 분석](/ko/security/smltp) - SMLTP에 대해 자세히 알아보기
+- [인증](/ko/iam/overview) - 인증 방법 이해
+- [API 보안](/ko/api) - 안전한 API 사용 가이드라인

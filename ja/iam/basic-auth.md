@@ -98,6 +98,6 @@ title: "基本認証"
 
 ## 次のステップ
 
-- [Google Workspace](/ja/ja/iam/google-workspace) - Google Workspace との統合
-- [Microsoft Entra ID](/ja/ja/iam/microsoft-entra-id) - Microsoft Entra IDで接続します
-- [IAM 概要](/ja/ja/iam/overview) - ID 管理について学ぶ
+- [Google Workspace](/ja/iam/google-workspace) - Google Workspace との統合
+- [Microsoft Entra ID](/ja/iam/microsoft-entra-id) - Microsoft Entra IDで接続します
+- [IAM 概要](/ja/iam/overview) - ID 管理について学ぶ

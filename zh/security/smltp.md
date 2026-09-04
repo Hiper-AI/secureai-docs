@@ -1,82 +1,80 @@
 ---
 sidebar_position: 2
-title: "SMLTP Security"
+title: "SMTP 安全"
 ---
+# SMLTP 安全协议
 
+SecureAI 使用 **安全模型语言传输协议 (SMLTP)** 来管理、包含和证明
+与大型语言模型（LLM）的通信。
 
-# SMLTP Security Protocol
+## SMLTP 是什么？
 
-SecureAI uses the **Secure Model Language Transfer Protocol (SMLTP)** to govern, contain, and prove
-communication with Large Language Models (LLMs).
+SMLTP 是一个具有 **公共规范草案** (v0.2) 的安全协议。它定义了一个
+**人工智能流量的确定性控制平面**：而不是仅依赖概率检查
+提示中，SMLTP 使每个受控 AI 调用的五个属性具有确定性和加密性
+可验证的。
 
-## What is SMLTP?
-
-SMLTP is a security protocol with a **public specification draft** (v0.2). It defines a
-**deterministic control plane** for AI traffic: instead of relying only on probabilistic inspection
-of prompts, SMLTP makes five properties of every governed AI call deterministic and cryptographically
-verifiable.
-
-| Layer | Deterministic mechanism |
+|层 |确定性机制 |
 |---|---|
-| **Identity** | Ed25519 Signed Entitlement Token (SET) minted per request |
-| **Authorization** | `model` and `policy_hash` claims — the call runs under a named policy or not at all |
-| **Transport integrity** | `body_sha256` binds the token to the exact request bytes |
-| **Containment** | Monitor/enforce modes, replay cache, subject revocation, fail-closed defaults |
-| **Audit** | Hash-chained, Merkle-sealed log with signed compliance receipts |
+| **身份** | Ed25519 根据请求铸造的签名权利令牌 (SET) |
+| **授权** | `model` 和 `policy_hash` 声明 — 调用在指定策略下运行或根本不运行 |
+| **运输完整性** | `body_sha256` 将令牌绑定到确切的请求字节 |
+| **遏制** |监控/强制模式、重放缓存、主题撤销、故障关闭默认值 |
+| **审计** |带有签名合规收据的哈希链式默克尔密封日志 |
 
-## The two-plane model
+## 二平面模型
 
-SMLTP deliberately separates two kinds of controls:
+SMLTP故意分离了两种控件：
 
-- **Deterministic plane (cryptography):** who is calling, what they are authorized to call, that the
-  request was not altered, that a revoked subject is cut off, and that the record cannot be silently
-  rewritten. These are guarantees, enforced by signatures and hashes.
-- **Probabilistic plane (inspection):** DLP, PII redaction, and Prompt Shield run *behind* the
-  deterministic controls and are explicitly **best-effort**. SMLTP never claims that cryptography
-  detects prompt injection or that inspection catches every sensitive string — it claims that the
-  inspection verdict that *was* produced is recorded in a signed, verifiable receipt.
+- **确定性平面（密码学）：** 谁在呼叫，他们被授权呼叫什么，
+  请求未被更改，撤销的主题被切断，并且记录不能被静默
+  重写。这些是由签名和哈希强制执行的保证。
+- **概率平面（检查）：** DLP、PII 编辑和 Prompt Shield 在*后面*运行
+  确定性控制并且明确是**尽力而为**。 SMLTP 从未声称密码学
+  检测到提示注入或检查捕获每个敏感字符串 - 它声称
+  *产生*的检验结论记录在一份签名的、可验证的收据中。
 
-## Key Features
+## 主要特点
 
-### Signed Entitlement Tokens
-- Every governed request carries an Ed25519-signed token binding identity, model, policy, and request bytes
-- Replay protection via single-use token IDs
-- Revoking a subject takes effect at the gateway within seconds — no provider-side cooperation needed
+### 签名的权利令牌
+- 每个受管理的请求都带有 Ed25519 签名的令牌绑定身份、模型、策略和请求字节
+- 通过一次性令牌 ID 进行重放保护
+- 撤销主体在网关几秒内生效——无需提供商方配合
 
-### Signed Compliance Receipts
-- Each gateway-routed interaction produces a receipt signed by the gateway
-- Receipts record the governing policy, request hash, and the inspection evidence that was produced
-- Receipts can be verified offline against the gateway's public key — see
-  [Receipts API](../api/receipts.md)
+### 签署合规收据
+- 每个网关路由的交互都会生成由网关签名的收据
+- 收据记录管理政策、请求哈希以及生成的检查证据
+- 收据可以根据网关的公钥离线验证 - 请参阅
+  [收据API](../api/receipts.md)
 
 ### Tamper-Evident Audit
-- Audit events are hash-chained (`prev_hash` → `current_hash`) and sealed into Merkle blocks
-- Merkle roots can be anchored to an external transparency log (Sigstore Rekor), so the record's
-  integrity does not depend on trusting the SecureAI operator — see
-  [Immutable Logs](./immutable-logs.md)
+- 审计事件采用哈希链（`prev_hash` → `current_hash`）并密封到 Merkle 块中
+- Merkle 根可以锚定到外部透明度日志 (Sigstore Rekor)，因此记录的
+  完整性并不依赖于信任 SecureAI 操作员 — 请参阅
+  [不可变日志](./immutable-logs.md)
 
 ### Policy Enforcement
-- Model allowlists, data-residency (geofence) checks, and egress controls evaluated at the gateway
-- **Monitor mode** observes and attests; **enforce mode** blocks non-compliant calls with a signed
+- 模型许可名单、数据驻留（地理围栏）检查和在网关评估的出口控制
+- **监控模式**观察和证明； **强制模式**阻止带有签名的不合规调用
   denial receipt
 
 ### Key Management
-- Ed25519 signing keys with rotation support; receipts issued under previous keys remain verifiable
+- Ed25519 签名密钥支持轮换；根据以前的密钥发出的收据仍然可以验证
 
 ## Scope and honesty
 
-- **Deployment scope:** SMLTP receipts and enforcement apply to **gateway-routed deployments**.
-  Deployments that call providers directly still get platform DLP/PII and audit logging, but not
-  gateway-signed receipts (the [Receipts API](../api/receipts.md) documents this behavior).
-- **Encryption scope:** transport encryption is TLS; request bundles between client and gateway can
-  additionally be encrypted (AES-256-GCM). SMLTP does not currently provide end-to-end encryption
-  through the AI provider, and does not claim forward secrecy.
-- **Inspection scope:** DLP/PII detection is probabilistic and best-effort. What SMLTP guarantees is
-  that the verdict is *attested* — the receipt proves what was checked and what the result was.
+- **部署范围：** SMLTP 收据和强制执行适用于 **网关路由部署**。
+  直接调用提供商的部署仍然可以获得平台 DLP/PII 和审核日志记录，但不会
+  网关签名的收据（[收据 API](../api/receipts.md) 记录了此行为）。
+- **加密范围：**传输加密为TLS；客户端和网关之间的请求捆绑可以
+  另外进行加密（AES-256-GCM）。 SMLTP 目前不提供端到端加密
+  通过人工智能提供商，并且不要求前向保密。
+- **检查范围：** DLP/PII 检测是概率性且尽力而为的。 SMLTP 保证的是
+  判决已得到“证实”——收据证明了检查内容和结果。
 
-## Security Benefits
+## 安全优势
 
-- **Provability**: signed receipts turn "we have logs" into "anyone can verify what happened"
-- **Containment**: even a compromised or misbehaving agent cannot exceed its signed entitlements
-- **Deterministic revocation**: blocking a user, key, or agent cuts traffic at the gateway in seconds
-- **Auditability**: a tamper-evident trail that external auditors can verify independently
+- **可证明性**：签名收据将“我们有日志”变成“任何人都可以验证发生了什么”
+- **遏制**：即使是受损或行为不端的特工也不能超出其签署的权利
+- **确定性撤销**：阻止用户、密钥或代理可在几秒钟内减少网关的流量
+- **可审计性**：外部审计员可以独立验证的防篡改痕迹

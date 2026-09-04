@@ -29,7 +29,7 @@ Administratoren erstellen Schlüssel unter **Admin → API-Schlüssel** (API-Bas
 |---------|-------------|
 | `name` | Für Menschen lesbares Etikett. |
 | `userId` | Das Benutzerkonto, zu dem dieser Schlüssel gehört/gegen den er abrechnet. |
-| `billingMode` | `user-completions` (von der Fertigstellungsvergütung des Benutzers abziehen) oder `usage-by-model` (ein Dollarbudget von den Modellkosten abziehen). Siehe [Abrechnungsmodi](/de/en/api/billing-modes). |
+| `billingMode` | `user-completions` (von der Fertigstellungsvergütung des Benutzers abziehen) oder `usage-by-model` (ein Dollarbudget von den Modellkosten abziehen). Siehe [Abrechnungsmodi](/de/api/billing-modes). |
 
 Anrufer können eine einzelne Anfrage einem **anderen** Benutzer mit dem Body-Parameter `user_id` (admin-gated) in Rechnung stellen.
 
@@ -60,15 +60,15 @@ Anrufer können eine einzelne Anfrage einem **anderen** Benutzer mit dem Body-Pa
 | `promptShieldPolicyId` | Binden Sie eine bestimmte Prompt Shield-Richtlinie an den Schlüssel. |
 | `allowedPromptShieldPolicies[]` | Richtlinien, die der Anrufer pro Anruf über `prompt_shield.policy` auswählen kann. |
 
-Siehe [Prompt Shield API](/de/en/api/threat-defense/prompt-shield).
+Siehe [Prompt Shield API](/de/api/threat-defense/prompt-shield).
 
 ### Redundanzstandards
 
-`failoverDefaults` fügt dem Schlüssel ein Standardmodell [Failover-Kette](/de/en/api/redundancy) hinzu: `models[]` (bis zu 3), `timeout_ms` (1000–300000), `first_token_timeout_ms` (500–60000) und `on[]` Trigger. Anrufer erhalten dann ein Failover, ohne bei jeder Anfrage eine Kette zu senden.
+`failoverDefaults` fügt dem Schlüssel ein Standardmodell [Failover-Kette](/de/api/redundancy) hinzu: `models[]` (bis zu 3), `timeout_ms` (1000–300000), `first_token_timeout_ms` (500–60000) und `on[]` Trigger. Anrufer erhalten dann ein Failover, ohne bei jeder Anfrage eine Kette zu senden.
 
 ## Idempotenz
 
-Abschluss-`POST`s akzeptieren einen `Idempotency-Key`-Header. Bei einem erneuten Versuch mit demselben Schlüssel wird das ursprüngliche Ergebnis zurückgegeben, anstatt ein zweites Mal in Rechnung gestellt zu werden – nutzen Sie es, um Netzwerkwiederholungen sicher zu machen. Siehe [Chat-Abschluss](/de/en/api/chat/completions).
+Abschluss-`POST`s akzeptieren einen `Idempotency-Key`-Header. Bei einem erneuten Versuch mit demselben Schlüssel wird das ursprüngliche Ergebnis zurückgegeben, anstatt ein zweites Mal in Rechnung gestellt zu werden – nutzen Sie es, um Netzwerkwiederholungen sicher zu machen. Siehe [Chat-Abschluss](/de/api/chat/completions).
 
 ## Ratenbegrenzung
 
@@ -79,7 +79,7 @@ Standardobergrenzen (per Taste konfigurierbar):
 - **Täglich**: 100 Anfragen
 - **Monatlich**: 10.000 Anfragen
 
-Ein Schlüsselinhaber kann sein eigenes Live-Kontingent und seine eigenen Limits über [`GET /usage`](/api/usage) lesen.
+Ein Schlüsselinhaber kann sein eigenes Live-Kontingent und seine eigenen Limits über [`GET /usage`](/de/api/usage) lesen.
 
 ## Sicherheitsfunktionen
 
@@ -123,7 +123,7 @@ Ein Schlüsselinhaber kann sein eigenes Live-Kontingent und seine eigenen Limits
 
 ## Nächste Schritte
 
-- [API-Referenz](/de/en/api) – Entdecken Sie alle verfügbaren externen Endpunkte.
-- [Chat Completions](/de/en/api/chat/completions) – Beginnen Sie mit der Integration von Vervollständigungen.
-- [OpenAI-kompatibler Endpunkt](/de/en/api/chat/openai-kompatibel) – Wiederverwendung eines vorhandenen OpenAI SDK.
-- [Nutzung](/de/en/api/usage) — Kontingent und Limits prüfen.
+- [API-Referenz](/de/api) – Entdecken Sie alle verfügbaren externen Endpunkte.
+- [Chat Completions](/de/api/chat/completions) – Beginnen Sie mit der Integration von Vervollständigungen.
+- [OpenAI-kompatibler Endpunkt](/de/api/chat/openai-kompatibel) – Wiederverwendung eines vorhandenen OpenAI SDK.
+- [Nutzung](/de/api/usage) — Kontingent und Limits prüfen.

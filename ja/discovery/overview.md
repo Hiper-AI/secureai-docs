@@ -12,20 +12,20 @@ SecureAI は、組織内の AI (実行するエージェントとモデル、そ
 
 |信号 |見る |提供元 |
 |----------|------|----------|
-| **クラウド API** | AI プラットフォーム内のエージェント、モデル、デプロイメント、およびアイデンティティ。 | [クラウド AI プロバイダー](/ja/ja/integrations/cloud/overview) コネクタ → [クラウドセンサー](/ja/ja/discovery/cloud-sensors) |
-| **ネットワーク / CASB** |エージェントがインストールされていない、LLM API を呼び出す企業ソース IP。 | [CASB / SWG](/ja/ja/integrations/casb/overview) コネクタ → [ネットワーク ソース](/ja/ja/discovery/network-sources) |
-| **エンドポイント エージェント** |管理されたラップトップおよびサーバー上の AI/MCP アクティビティ。 | [OSエージェント](/ja/ja/agent/overview) |
+| **クラウド API** | AI プラットフォーム内のエージェント、モデル、デプロイメント、およびアイデンティティ。 | [クラウド AI プロバイダー](/ja/integrations/cloud/overview) コネクタ → [クラウドセンサー](/ja/discovery/cloud-sensors) |
+| **ネットワーク / CASB** |エージェントがインストールされていない、LLM API を呼び出す企業ソース IP。 | [CASB / SWG](/ja/integrations/casb/overview) コネクタ → [ネットワーク ソース](/ja/discovery/network-sources) |
+| **エンドポイント エージェント** |管理されたラップトップおよびサーバー上の AI/MCP アクティビティ。 | [OSエージェント](/ja/agent/overview) |
 
-すべてのシグナルで検出された ID は [NHI インベントリ](/ja/en/discovery/nhi-inventory) にロールアップされ、管理する論理エージェント/チャットボットは [エージェント レジストリ](/ja/en/discovery/agent-registry) に存在します。
+すべてのシグナルで検出された ID は [NHI インベントリ](/ja/discovery/nhi-inventory) にロールアップされ、管理する論理エージェント/チャットボットは [エージェント レジストリ](/ja/discovery/agent-registry) に存在します。
 
 ## インベントリタブ
 
 **[管理者] → [エージェント レジストリ]** の下に次のものが表示されます。
 
-- **[クラウド センサー](/ja/en/discovery/cloud-sensors)** — クラウドで検出されたエージェントとモデル。
-- **[ネットワーク ソース](/ja/en/discovery/network-sources)** — CASB/SWG ログで見つかったシャドウ AI ソース。
-- **[NHI Inventory](/ja/en/discovery/nhi-inventory)** — ブロック/取り消し制御を備えた人間以外の ID (キー、サービス アカウント)。
-- **[エージェント レジストリ](/ja/en/discovery/agent-registry)** — 論理 AI エージェントとチャットボットのガバナンス メタデータ。
+- **[クラウド センサー](/ja/discovery/cloud-sensors)** — クラウドで検出されたエージェントとモデル。
+- **[ネットワーク ソース](/ja/discovery/network-sources)** — CASB/SWG ログで見つかったシャドウ AI ソース。
+- **[NHI Inventory](/ja/discovery/nhi-inventory)** — ブロック/取り消し制御を備えた人間以外の ID (キー、サービス アカウント)。
+- **[エージェント レジストリ](/ja/discovery/agent-registry)** — 論理 AI エージェントとチャットボットのガバナンス メタデータ。
 
 ## なぜそれが重要なのか
 
@@ -33,6 +33,6 @@ SecureAI は、組織内の AI (実行するエージェントとモデル、そ
 
 ## 関連
 
-- [クラウド AI プロバイダー](/ja/ja/integrations/cloud/overview)
-- [CASB とネットワーク (SWG)](/ja/ja/integrations/casb/overview)
-- [エンドポイントエージェント](/ja/ja/agent/overview)
+- [クラウド AI プロバイダー](/ja/integrations/cloud/overview)
+- [CASB とネットワーク (SWG)](/ja/integrations/casb/overview)
+- [エンドポイントエージェント](/ja/agent/overview)

@@ -1,17 +1,15 @@
 ---
-title: "Policy Check (Dry Run)"
+title: "Verificación de Políticas"
 sidebar_label: "Policy Check"
-description: "Validate a completion request against every SecureAI policy without calling a model or spending points"
+description: "Valide una solicitud de finalización con cada política de SecureAI sin llamar a un modelo ni gastar puntos."
 openapi: "POST /policy-check"
 ---
 
+# Verificación de políticas (ejecución en seco)
 
+Ejecute **todo el proceso de seguridad** para completar la carga útil sin llamar a ningún modelo y sin facturación. Policy Check acepta el mismo cuerpo que [Finalización del chat](/api/chat/completions) y devuelve un informe por verificación: validación de entrada, listas de modelos permitidos (para toda la [cadena de redundancia](/api/redundancy)), autorización/resolución de políticas SMLTP, autorización de Prompt Shield y un veredicto de escaneo de solo informe, y una vista previa de cuota de puntos.
 
-# Policy Check (Dry Run)
-
-Run the **entire security pipeline** for a completion payload without calling any model and without billing. Policy Check accepts the same body as [Chat Completion](/en/api/chat/completions) and returns a per-check report: input validation, model allowlists (for the whole [redundancy chain](/en/api/redundancy)), SMLTP policy resolution/authorization, Prompt Shield authorization and a report-only scan verdict, and a points-quota preview.
-
-Use it to pre-flight requests, build "will this be allowed?" UIs, or test policy configuration safely.
+Úselo para solicitudes previas al vuelo y cree "¿se permitirá esto?" UI o pruebe la configuración de políticas de forma segura.
 
 ## Endpoint
 
@@ -19,17 +17,17 @@ Use it to pre-flight requests, build "will this be allowed?" UIs, or test policy
 POST /policy-check
 ```
 
-## Authentication
+## Autenticación
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Cuerpo de solicitud
 
-The same schema as [Chat Completion](/en/api/chat/completions) (`prompt` or `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index`, etc.). Nothing is generated and nothing is billed.
+El mismo esquema que [Finalización de chat](/api/chat/completions) (`prompt` o `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index`, etc.). No se genera nada ni se factura nada.
 
-## Request Example
+## Ejemplo de solicitud
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/policy-check" \
@@ -43,7 +41,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/policy-check" \
   }'
 ```
 
-## Response
+## Respuesta
 
 ```json
 {
@@ -83,37 +81,37 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/policy-check" \
 }
 ```
 
-### Top-level fields
+### Campos de nivel superior
 
-| Field | Description |
+| Campo | Descripción |
 |-------|-------------|
-| `dry_run` | Always `true`. |
-| `allowed` | `true` only if every check passed. A report-only Prompt Shield `BLOCK` sets this to `false`. |
-| `checks` | Per-check results (see below). |
-| `plan` | The resolved redundancy chain: `models[]` and whether the failover `engine` would run. |
+| `dry_run` | Siempre `true`. |
+| `allowed` | `true` solo si se aprobaron todas las comprobaciones. Un Escudo de aviso solo para informes `BLOCK` establece esto en `false`. |
+| `checks` | Resultados por verificación (ver más abajo). |
+| `plan` | La cadena de redundancia resuelta: `models[]` y si se ejecutaría la conmutación por error `engine`. |
 
-### Checks
+### Cheques
 
-| Check | Meaning |
+| Consultar | Significado |
 |-------|---------|
-| `input` | Request normalization / validation (prompt vs messages, model config). |
-| `model_access` | Every model in the chain is allowed for this key/license. |
-| `smltp_policy` | The SMLTP policy resolved; `applied` carries its name, canonical name, source, and hash. |
-| `smltp_policy_access` | The key is allowed to use that policy. |
-| `prompt_shield_authorization` | Per-call Prompt Shield authorization (opt-out/policy selection is permitted). |
-| `quota` | Points preview: `points_required` (max cost across the chain) and `points_remaining`. No deduction. |
-| `prompt_shield_scan` | **Report-only** injection scan. `verdict`, `risk_score`, `attack_category`, `detections`, `shield_mode`, and `would_block`. A `BLOCK` here is reported, never enforced. |
+| `input` | Solicitar normalización/validación (mensajes vs mensajes, configuración del modelo). |
+| `model_access` | Todos los modelos de la cadena están permitidos para esta clave/licencia. |
+| `smltp_policy` | La política SMLTP resuelta; `applied` lleva su nombre, nombre canónico, fuente y hash. |
+| `smltp_policy_access` | La clave puede utilizar esa política. |
+| `prompt_shield_authorization` | Autorización de Prompt Shield por llamada (se permite la exclusión voluntaria/selección de política). |
+| `quota` | Vista previa de puntos: `points_required` (coste máximo en toda la cadena) y `points_remaining`. Sin deducción. |
+| `prompt_shield_scan` | **Solo informe** escaneo de inyección. `verdict`, `risk_score`, `attack_category`, `detections`, `shield_mode` y `would_block`. Aquí se informa un `BLOCK`, pero nunca se aplica. |
 
-A failed check includes `passed: false`, the HTTP `status` the real endpoint would have returned, and the same `error`/`message` fields.
+Una verificación fallida incluye `passed: false`, el HTTP `status` que habría devuelto el endpoint real y los mismos campos `error`/`message`.
 
-## Notes
+## Notas
 
-- Policy Check never calls a model, never streams, and never spends points.
-- The Prompt Shield scan is skipped (`skipped: true`) when the key disables the shield or the request opted out.
-- `would_block` reflects the current shield mode — a `BLOCK` verdict only blocks when `shield_mode` is `blocking`.
+- Policy Check nunca llama a un modelo, nunca transmite y nunca gasta puntos.
+- El análisis de Prompt Shield se omite (`skipped: true`) cuando la clave desactiva el escudo o la solicitud se excluye.
+- `would_block` refleja el modo de escudo actual: un veredicto de `BLOCK` solo se bloquea cuando `shield_mode` es `blocking`.
 
-## Related
+## Relacionado
 
-- [Chat Completion](/en/api/chat/completions)
-- [Redundancy & Failover](/en/api/redundancy)
-- [Usage](/en/api/usage)
+- [Finalización del chat](/api/chat/completions)
+- [Redundancia y conmutación por error](/api/redundancy)
+- [Uso](/api/uso)

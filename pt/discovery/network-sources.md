@@ -1,15 +1,16 @@
 ---
 sidebar_position: 3
-title: "Network Sources"
-sidebar_label: "Network Sources"
+title: "Fontes de Rede e Detecção de Tráfego"
+sidebar_label: "Fontes de Rede"
 description: "Shadow-AI discovery — which corporate source IPs and users are calling LLM APIs, from your CASB/SWG logs"
 ---
 
 
 
+
 # Network Sources
 
-**Network Sources** (Admin → Agent Registry → **Network**) surfaces the shadow AI found in your CASB/SWG logs: which corporate **source IPs and users are calling LLM APIs**, even where no SDK or [endpoint agent](/pt/en/agent/overview) is deployed. It's fed by the [CASB & Network connectors](/pt/en/integrations/casb/overview) — Cisco Umbrella, Zscaler, and others.
+**Network Sources** (Admin → Agent Registry → **Network**) surfaces the shadow AI found in your CASB/SWG logs: which corporate **source IPs and users are calling LLM APIs**, even where no SDK or [endpoint agent](/pt/agent/overview) is deployed. It's fed by the [CASB & Network connectors](/pt/integrations/casb/overview) — Cisco Umbrella, Zscaler, and others.
 
 ## The discovery window
 
@@ -43,6 +44,6 @@ Run **Sync** per connector or **Sync All**; connectors also sync on a schedule (
 
 ## Related
 
-- [CASB & Network (SWG) integrations](/pt/en/integrations/casb/overview) — connect the log sources.
-- [Endpoint Agent](/pt/en/agent/overview) — for endpoints you can manage directly.
-- [AI Discovery & Inventory Overview](/pt/en/discovery/overview)
+- [CASB & Network (SWG) integrations](/pt/integrations/casb/overview) — connect the log sources.
+- [Endpoint Agent](/pt/agent/overview) — for endpoints you can manage directly.
+- [AI Discovery & Inventory Overview](/pt/discovery/overview)

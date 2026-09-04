@@ -1,14 +1,13 @@
 ---
 sidebar_position: 1
-title: "Chat Completion"
+title: "Chat Completions"
 openapi: "POST /chat/completions"
+sidebar_label: "Chat Completions"
 ---
 
+# Finalización del chat
 
-
-# Chat Completion
-
-The main endpoint for AI chat completions with optional knowledge base retrieval (RAG), model redundancy/failover, per-call security policies, and streaming.
+El endpoint principal para la finalización de chats de IA con recuperación de base de conocimientos (RAG) opcional, redundancia/conmutación por error de modelos, políticas de seguridad por llamada y transmisión.
 
 ## Endpoint
 
@@ -16,74 +15,74 @@ The main endpoint for AI chat completions with optional knowledge base retrieval
 POST /chat/completions
 ```
 
-## Description
+## Descripción
 
-The main endpoint for AI chat completions with optional knowledge base retrieval (RAG). It supports:
+El endpoint principal para la finalización del chat de IA con recuperación de la base de conocimientos (RAG) opcional. Soporta:
 
-- **Two input forms** — a single `prompt` string (legacy) **or** an OpenAI-style `messages` array.
-- **Model redundancy** — a caller-defined failover chain (primary + up to 2 fallbacks). See [Redundancy & Failover](/en/api/redundancy).
-- **Per-call security** — SMLTP policy selection and an inline Prompt Shield override.
-- **Streaming** — Server-Sent Events (SSE).
-- **Signed receipts** — an SMLTP compliance receipt reference on responses routed through the gateway.
+- **Dos formularios de entrada**: una sola cadena `prompt` (heredada) **o** una matriz `messages` de estilo OpenAI.
+- **Redundancia de modelo**: una cadena de conmutación por error definida por la persona que llama (primaria + hasta 2 alternativas). Consulte [Redundancia y conmutación por error](/api/redundancy).
+- **Seguridad por llamada**: selección de política SMLTP y anulación de Prompt Shield en línea.
+- **Transmisión**: eventos enviados por el servidor (SSE).
+- **Recibos firmados**: una referencia de recibo de cumplimiento SMLTP en las respuestas enviadas a través de la puerta de enlace.
 
 <Tip>
-**OpenAI SDK compatibility**
+**Compatibilidad con el SDK de OpenAI**
 
-If you want to drop SecureAI into an existing OpenAI integration with **zero code changes**, use the [OpenAI-compatible endpoint](/en/api/chat/openai-compatible) at `/api/external/v1/chat/completions` instead. This classic endpoint is the only one that supports RAG.
+Si desea incluir SecureAI en una integración de OpenAI existente con **cero cambios de código**, utilice el [endpoint compatible con OpenAI](/api/chat/openai-compatible) en `/api/external/v1/chat/completions` en su lugar. Este endpoint clásico es el único que admite RAG.
 </Tip>
 
-## Authentication
+## Autenticación
 
-Required: API Key
+Requerido: Clave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Headers
+## encabezados
 
-| Header | Required | Description |
+| Encabezado | Requerido | Descripción |
 |--------|----------|-------------|
-| `Authorization` | Yes | `Bearer sk-...` |
-| `Content-Type` | Yes | `application/json` |
-| `Idempotency-Key` | No | A unique key that makes a completion POST safe to retry. Repeating a request with the same key returns the original result instead of billing twice. |
+| `Authorization` | Sí | `Bearer sk-...` |
+| `Content-Type` | Sí | `application/json` |
+| `Idempotency-Key` | No | Una clave única que hace que sea seguro volver a intentar una POST de finalización. Repetir una solicitud con la misma clave devuelve el resultado original en lugar de facturar dos veces. |
 
-## Request Body
+## Cuerpo de solicitud
 
-### Input parameters
+### Parámetros de entrada
 
-Provide **either** `prompt` **or** `messages` — not both.
+Proporcione **ya sea** `prompt` **o** `messages`, no ambos.
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `prompt` | string | Conditional | User's message (legacy single-turn form). |
-| `messages` | array | Conditional | OpenAI-style array of `{ role, content }`. `role` is `system`, `user`, or `assistant`. At most one `system` message, and only as the first entry. Max 100 messages, 256&nbsp;KB total content. |
-| `system_message` | string | No | Custom system prompt (legacy). Cannot be combined with an in-band `system` role in `messages`. |
+| `prompt` | cadena | Condicional | Mensaje del usuario (formulario heredado de un solo turno). |
+| `messages` | matriz | Condicional | Matriz estilo OpenAI de `{ role, content }`. `role` es `system`, `user` o `assistant`. Como máximo un mensaje `system`, y solo como primera entrada. Máximo 100 mensajes, 256 KB de contenido total. |
+| `system_message` | cadena | No | Aviso del sistema personalizado (heredado). No se puede combinar con una función `system` dentro de banda en `messages`. |
 
-### Model & redundancy parameters
+### Modelo y parámetros de redundancia
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `model` | string | Conditional | AI model (e.g. `"openai/gpt-5-nano"`). Required unless `models` is supplied. |
-| `models` | array | No | Explicit failover chain (overrides `model`). Up to 3 distinct entries; each entry is a model string or `{ model, timeout_ms, first_token_timeout_ms }`. |
-| `fallback_models` | array | No | Fallbacks appended after `model`. Cannot be combined with `models`. |
-| `redundancy` | object | No | Chain-wide options: `{ timeout_ms, first_token_timeout_ms, on: [...] }`. See [Redundancy & Failover](/en/api/redundancy). |
+| `model` | cadena | Condicional | Modelo de IA (por ejemplo, `"openai/gpt-5-nano"`). Requerido a menos que se proporcione `models`. |
+| `models` | matriz | No | Cadena de conmutación por error explícita (anula `model`). Hasta 3 entradas distintas; cada entrada es una cadena modelo o `{ model, timeout_ms, first_token_timeout_ms }`. |
+| `fallback_models` | matriz | No | Respaldos añadidos después de `model`. No se puede combinar con `models`. |
+| `redundancy` | objeto | No | Opciones para toda la cadena: `{ timeout_ms, first_token_timeout_ms, on: [...] }`. Consulte [Redundancia y conmutación por error](/api/redundancy). |
 
-### Retrieval & generation parameters
+### Parámetros de recuperación y generación
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `index` | string | **Yes** | Knowledge base name to query. Use `"Zero-Knowledge"` for direct AI with no RAG. This field is required — a request without `index` returns `400 "Index required"`. |
-| `use_rag` | boolean | No | Enable knowledge retrieval (default: `true`). Setting `use_rag: false` does **not** waive the `index` requirement — send `index: "Zero-Knowledge"`. |
-| `smltp_policy` | string | No | Security policy (`"internal"`, `"public"`, `"confidential"`, or a tenant custom policy). |
-| `prompt_shield` | object | No | Per-call Prompt Shield control: `{ enabled?: boolean, policy?: string }`. See [Prompt Shield API](/en/api/threat-defense/prompt-shield#per-call-control-on-completions). |
-| `temperature` | number | No | Randomness control (0–2, default: 0.7). |
-| `max_tokens` | integer | No | Max response tokens (default: 1000, capped at 4000). |
-| `stream` | boolean | No | Stream the response as SSE (default: `false`). |
-| `conversation_id` | string | No | Optional conversation ID for tracking. |
-| `user_id` | string | No | MongoDB ObjectId of the user to bill this request to (admin-gated; see [Billing Modes](/en/api/billing-modes)). |
+| `index` | cadena | **Sí** | Nombre de la base de conocimientos a consultar. Utilice `"Zero-Knowledge"` para IA directa sin RAG. Este campo es obligatorio: una solicitud sin `index` devuelve `400 "Index required"`. |
+| `use_rag` | booleano | No | Habilitar la recuperación de conocimientos (predeterminado: `true`). Configurar `use_rag: false` **no** renuncia al requisito de `index`: envíe `index: "Zero-Knowledge"`. |
+| `smltp_policy` | cadena | No | Política de seguridad (`"internal"`, `"public"`, `"confidential"` o una política personalizada de inquilino). |
+| `prompt_shield` | objeto | No | Control de protección de aviso por llamada: `{ enabled?: boolean, policy?: string }`. Consulte [API Prompt Shield](/api/threat-defense/prompt-shield#per-call-control-on-completions). |
+| `temperature` | número | No | Control de aleatoriedad (0–2, predeterminado: 0,7). |
+| `max_tokens` | entero | No | Tokens de respuesta máximos (predeterminado: 1000, con un límite de 4000). |
+| `stream` | booleano | No | Transmita la respuesta como SSE (predeterminado: `false`). |
+| `conversation_id` | cadena | No | ID de conversación opcional para seguimiento. |
+| `user_id` | cadena | No | MongoDB ObjectId del usuario al que facturar esta solicitud (accesible al administrador; consulte [Modos de facturación](/api/billing-modes)). |
 
-## Request Example
+## Ejemplo de solicitud
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -105,9 +104,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -149,34 +148,34 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Metadata Object
+### Objeto de metadatos
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `conversation_id` | string | Conversation ID (echoed or generated). |
-| `index_used` | string | Knowledge base used. |
-| `smltp_policy_used` | string | Applied SMLTP policy name. |
-| `smltp_policy_source` | string | Where the policy came from (`request`, key default, etc.). |
-| `smltp_policy_hash` | string \| null | Hash of the applied policy for verification. |
-| `prompt_shield_policy` | object \| null | Prompt Shield policy applied to this call, if any. |
-| `served_model` | string | Model that actually produced the answer. |
-| `requested_model` | string | First model in the requested chain. |
-| `failover` | object | **Present only when a multi-model chain ran.** `{ occurred, attempts[] }` — see [Redundancy & Failover](/en/api/redundancy). |
-| `smltp` | object | Present when an SMLTP entitlement is minted for the call. `{ bundle_id, receipt_url }`. The `bundle_id` (an entitlement id, e.g. `jti-…`) is returned even on native/direct deployments; the signed receipt at `receipt_url` is only retrievable when traffic is routed through the SMLTP gateway (otherwise [Receipts](/en/api/receipts) returns `404`). |
-| `rag_enabled` | boolean | Whether RAG was used. |
-| `documents_retrieved` | integer | Number of documents retrieved. |
-| `sources` | array | Up to 3 retrieved document sources `{ source, score }`. |
+| `conversation_id` | cadena | ID de conversación (repetida o generada). |
+| `index_used` | cadena | Base de conocimientos utilizada. |
+| `smltp_policy_used` | cadena | Nombre de la política SMLTP aplicada. |
+| `smltp_policy_source` | cadena | De dónde vino la política (`request`, clave predeterminada, etc.). |
+| `smltp_policy_hash` | cadena \| nulo | Hash de la política aplicada para verificación. |
+| `prompt_shield_policy` | objeto \| nulo | La política de Prompt Shield se aplicó a esta llamada, si corresponde. |
+| `served_model` | cadena | Modelo que realmente produjo la respuesta. |
+| `requested_model` | cadena | Primer modelo de la cadena solicitada. |
+| `failover` | objeto | **Presente solo cuando se ejecutó una cadena multimodelo.** `{ occurred, attempts[] }` — consulte [Redundancia y conmutación por error](/api/redundancy). |
+| `smltp` | objeto | Presente cuando se genera un derecho SMLTP para la llamada. `{ bundle_id, receipt_url }`. El `bundle_id` (una identificación de derecho, por ejemplo, `jti-…`) se devuelve incluso en implementaciones nativas/directas; el recibo firmado en `receipt_url` solo se puede recuperar cuando el tráfico se enruta a través de la puerta de enlace SMLTP (de lo contrario, [Receipts](/api/receipts) devuelve `404`). |
+| `rag_enabled` | booleano | Si se utilizó RAG. |
+| `documents_retrieved` | entero | Número de documentos recuperados. |
+| `sources` | matriz | Hasta 3 fuentes de documentos recuperados `{ source, score }`. |
 
-## Streaming
+## Transmisión
 
-Set `"stream": true` to receive Server-Sent Events. Each SSE line is `data: <json>` and the stream ends with `data: [DONE]`. Frames are typed via a `type` field:
+Configure `"stream": true` para recibir eventos enviados por el servidor. Cada línea SSE es `data: <json>` y la transmisión termina en `data: [DONE]`. Los fotogramas se escriben mediante un campo `type`:
 
-| Frame `type` | Payload |
+| Marco `type` | Carga útil |
 |--------------|---------|
-| `metadata` | The response envelope (`id`, `object`, `created`, `model` = serving model, and the `metadata` object above). Sent first. |
-| `chunk` | An incremental delta: `{ id, object: "chat.completion.chunk", model, choices: [{ index, delta: { role, content }, finish_reason }] }`. |
-| `usage` | Final token usage. |
-| `error` | A mid-stream provider interruption (after the first token, failover is no longer possible). |
+| `metadata` | El sobre de respuesta (`id`, `object`, `created`, `model` = modelo de publicación y el objeto `metadata` anterior). Enviado primero. |
+| `chunk` | Un delta incremental: `{ id, object: "chat.completion.chunk", model, choices: [{ index, delta: { role, content }, finish_reason }] }`. |
+| `usage` | Uso final del token. |
+| `error` | Una interrupción del proveedor a mitad de camino (después del primer token, la conmutación por error ya no es posible). |
 
 ```text
 data: {"type":"metadata","data":{"success":true,"id":"req-abc123","object":"chat.completion","created":1705312200,"model":"openai/gpt-5-nano","metadata":{...}}}
@@ -188,9 +187,9 @@ data: {"type":"usage","data":{"usage":{"prompt_tokens":150,"completion_tokens":2
 data: [DONE]
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -200,7 +199,7 @@ data: [DONE]
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -210,7 +209,7 @@ data: [DONE]
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -220,9 +219,9 @@ data: [DONE]
 }
 ```
 
-### 429 / 502 — Redundancy chain exhausted
+### 429/502 — Cadena de redundancia agotada
 
-When every model in a redundancy chain fails, the response reports each attempt. The status is `429` if all failures were rate limits, otherwise `502`.
+Cuando todos los modelos de una cadena de redundancia fallan, la respuesta informa de cada intento. El estado es `429` si todas las fallas fueron límites de velocidad, en caso contrario `502`.
 
 ```json
 {
@@ -237,7 +236,7 @@ When every model in a redundancy chain fails, the response reports each attempt.
 }
 ```
 
-### 500 Internal Server Error
+### 500 Error interno del servidor
 
 ```json
 {
@@ -247,7 +246,7 @@ When every model in a redundancy chain fails, the response reports each attempt.
 }
 ```
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript/Node.js
 
@@ -273,7 +272,7 @@ console.log('Served by:', data.metadata.served_model);
 console.log('Response:', data.choices[0].message.content);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -298,10 +297,10 @@ print("Served by:", result["metadata"]["served_model"])
 print("Response:", result["choices"][0]["message"]["content"])
 ```
 
-## Notes
+## Notas
 
-- `index` is required. Send `index: "Zero-Knowledge"` for direct AI responses without RAG.
-- The `user_id` parameter bills the request to a different user account (admin-gated).
-- Temperature is clamped to 0–2; `max_tokens` is capped at 4000.
-- To validate a request against every policy **without** calling a model or spending points, use [Policy Check](/en/api/policy-check).
-- For failover chain semantics (triggers, timeouts, streaming behavior, exhaustion status codes), see [Redundancy & Failover](/en/api/redundancy).
+- Se requiere `index`. Envíe `index: "Zero-Knowledge"` para obtener respuestas directas de IA sin RAG.
+- El parámetro `user_id` factura la solicitud a una cuenta de usuario diferente (con control de administrador).
+- La temperatura se fija entre 0 y 2; `max_tokens` tiene un límite de 4000.
+- Para validar una solicitud con respecto a cada política **sin** llamar a un modelo o gastar puntos, use [Policy Check](/api/policy-check).
+- Para conocer la semántica de la cadena de conmutación por error (activadores, tiempos de espera, comportamiento de transmisión, códigos de estado de agotamiento), consulte [Redundancia y conmutación por error](/api/redundancy).

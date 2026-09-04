@@ -1,44 +1,42 @@
 ---
 id: licenses-availability
-title: "Licenses Availability"
-sidebar_label: "Licenses Availability"
-description: "Retrieve current license pool limits, usage, and remaining (admin only)"
+title: "许可证可用性"
+sidebar_label: "许可证可用性"
+description: "检索当前许可证池限制、使用情况和剩余量（仅限管理员）"
 openapi: "GET /licenses/availability"
 ---
+# 许可证可用性
 
+检索每个层的许可证池限制、当前使用情况和剩余许可证。
 
-# Licenses Availability
-
-Retrieve license pool limits, current usage, and remaining licenses for each tier.
-
-## Endpoint
+## 端点
 
 ```
 GET /licenses/availability
 ```
 
-## Description
+## 说明
 
-Returns the license pool status for all license tiers, including limits, current usage, and remaining capacity. Admin-only endpoint.
+返回所有许可证层的许可证池状态，包括限制、当前使用情况和剩余容量。仅限管理端点。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## 请求
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availability" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -49,18 +47,18 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availabili
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `limits` | object | License pool configured limits per tier |
-| `usage` | object | Current assigned/used licenses per tier |
-| `remaining` | object | Remaining licenses per tier |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `limits` |对象|许可证池每层配置的限制 |
+| `usage` |对象|当前每层分配/使用的许可证 |
+| `remaining` |对象|每层剩余许可证 |
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -70,7 +68,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availabili
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -80,8 +78,8 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availabili
 }
 ```
 
-## Notes
+## 注释
 
-- Admin-only endpoint
-- Remaining may be reported as `Infinity` when no pool limit is enforced for that tier
-- Values are organization-wide aggregates
+- 仅限管理端点
+- 当该层没有强制执行池限制时，剩余可能会报告为 `Infinity`
+- 价值观是组织范围内的聚合

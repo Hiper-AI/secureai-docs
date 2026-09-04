@@ -30,5 +30,5 @@ description: "SecureAI가 OAuth 2.1, PKCE 및 동적 클라이언트 등록을 �
 
 ## 관련
 
-- [MCP 커넥터 개요](/ko/ko/integrations/mcp/overview)
-- [AI 게이트웨이 - 원격 엔드포인트](/ko/en/ai-gateway/remote-endpoints)
+- [MCP 커넥터 개요](/ko/integrations/mcp/overview)
+- [AI 게이트웨이 - 원격 엔드포인트](/ko/ai-gateway/remote-endpoints)

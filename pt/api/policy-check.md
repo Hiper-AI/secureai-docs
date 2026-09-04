@@ -1,5 +1,5 @@
 ---
-title: "Policy Check (Dry Run)"
+title: "Verificação de Políticas"
 sidebar_label: "Policy Check"
 description: "Validate a completion request against every SecureAI policy without calling a model or spending points"
 openapi: "POST /policy-check"
@@ -7,9 +7,10 @@ openapi: "POST /policy-check"
 
 
 
+
 # Policy Check (Dry Run)
 
-Run the **entire security pipeline** for a completion payload without calling any model and without billing. Policy Check accepts the same body as [Chat Completion](/pt/en/api/chat/completions) and returns a per-check report: input validation, model allowlists (for the whole [redundancy chain](/pt/en/api/redundancy)), SMLTP policy resolution/authorization, Prompt Shield authorization and a report-only scan verdict, and a points-quota preview.
+Run the **entire security pipeline** for a completion payload without calling any model and without billing. Policy Check accepts the same body as [Chat Completion](/pt/api/chat/completions) and returns a per-check report: input validation, model allowlists (for the whole [redundancy chain](/pt/api/redundancy)), SMLTP policy resolution/authorization, Prompt Shield authorization and a report-only scan verdict, and a points-quota preview.
 
 Use it to pre-flight requests, build "will this be allowed?" UIs, or test policy configuration safely.
 
@@ -27,7 +28,7 @@ Authorization: Bearer sk-your-api-key-here
 
 ## Request Body
 
-The same schema as [Chat Completion](/pt/en/api/chat/completions) (`prompt` or `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index`, etc.). Nothing is generated and nothing is billed.
+The same schema as [Chat Completion](/pt/api/chat/completions) (`prompt` or `messages`, `model`/`models`/`fallback_models`, `smltp_policy`, `prompt_shield`, `index`, etc.). Nothing is generated and nothing is billed.
 
 ## Request Example
 
@@ -114,6 +115,6 @@ A failed check includes `passed: false`, the HTTP `status` the real endpoint wou
 
 ## Related
 
-- [Chat Completion](/pt/en/api/chat/completions)
-- [Redundancy & Failover](/pt/en/api/redundancy)
-- [Usage](/pt/en/api/usage)
+- [Chat Completion](/pt/api/chat/completions)
+- [Redundancy & Failover](/pt/api/redundancy)
+- [Usage](/pt/api/usage)

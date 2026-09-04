@@ -1,65 +1,62 @@
 ---
-title: "Welcome to SecureAI"
-description: "Secure Artificial Intelligence business platform, compliant with regulations and with full governance control."
+title: "Bem-vindo ao SecureAI"
+description: "Plataforma de negócios segura de Inteligência Artificial, compatível com regulamentações e com total controle de governança."
+sidebar_label: "Bem-vindo"
 ---
 
+SecureAI é uma plataforma de negócios projetada para implantar e consumir modelos de Inteligência Artificial com as máximas garantias de segurança, privacidade e observabilidade.
 
-
-
-SecureAI is a business platform designed to deploy and consume Artificial Intelligence models with the maximum guarantees of security, privacy and observability.
-
-It combines advanced **RAG (Retrieval-Augmented Generation)** capabilities, transparent proxying for corporate fleets, compliance using the **SMLTP** cryptographic protocol, and a **unified API with automatic redundancy** between multiple AI providers.
+Ele combina recursos avançados de **RAG (Retrieval-Augmented Generation)**, proxy transparente para frotas corporativas, conformidade usando o protocolo criptográfico **SMLTP** e uma **API unificada com redundância automática** entre vários provedores de IA.
 
 ---
 
-## ⚡ Starts in Minutes
+## ⚡ Começa em minutos
 
-Explore getting started resources to get your environment up and running or integrate SecureAI into your applications:
+Explore os recursos de introdução para colocar seu ambiente em funcionamento ou integre o SecureAI aos seus aplicativos:
 
 <CardGroup cols={2}>
-  <Card title="Quickstart Guide" icon="rocket" href="/pt/en/quickstart">
-    Learn how to access the platform, set up your profile and create your first RAG index in minutes.
+  <Card title="Guia de início rápido" icon="rocket" href="/pt/quickstart">
+    Aprenda como acessar a plataforma, configurar seu perfil e criar seu primeiro índice RAG em minutos.
   </Card>
-  <Card title="API Reference & Playground" icon="code" href="/pt/en/api">
-    Test all 38 endpoints live with our interactive playground (Chat, Images, S2S, RAG and IAM).
+  <Card title="Referência de API e Playground" icon="code" href="/pt/api">
+    Teste todos os 38 endpoints ao vivo com nosso playground interativo (Bate-papo, Imagens, S2S, RAG e IAM).
   </Card>
 </CardGroup>
 
 ---
 
-## 🛡️ Pillars of the Platform
+## 🛡️ Pilares da Plataforma
 
 <CardGroup cols={3}>
-  <Card title="Security & SMLTP" icon="shield-halved" href="/pt/en/security/overview">
-    End-to-End Encryption, Data Leak Prevention (DLP), Prompt Shields, and Immutable Compliance Receipts.
+  <Card title="Segurança e SMLTP" icon="shield-halved" href="/pt/security/overview">
+    Criptografia ponta a ponta, prevenção contra vazamento de dados (DLP), escudos de alerta e recibos de conformidade imutáveis.
   </Card>
-  <Card title="Knowledge Bases (RAG)" icon="database" href="/pt/en/indexes/overview">
-    Vector semantic search, real-time document ingestion, and personal, team, and global indexes.
+  <Card title="Bases de Conhecimento (RAG)" icon="database" href="/pt/indexes/overview">
+    Pesquisa semântica vetorial, ingestão de documentos em tempo real e índices pessoais, de equipe e globais.
   </Card>
-  <Card title="AI Discovery & Agents" icon="network-wired" href="/pt/en/agent/overview">
-    Inventory of Non-Human Identities (NHIs), detection of MCPs servers, Shadow AI and exit control on endpoints.
+  <Card title="Descoberta e agentes de IA" icon="network-wired" href="/pt/agent/overview">
+    Inventário de identidades não humanas (NHIs), detecção de servidores MCPs, Shadow AI e controle de saída em endpoints.
   </Card>
-  <Card title="Identity & SSO" icon="id-badge" href="/pt/en/iam/google-workspace">
-    Native enterprise integration with Google Workspace, Microsoft Entra ID (Azure), and role-based access control (RBAC).
+  <Card title="Identidade e SSO" icon="id-badge" href="/pt/iam/google-workspace">
+    Integração empresarial nativa com Google Workspace, Microsoft Entra ID (Azure) e controle de acesso baseado em função (RBAC).
   </Card>
-  <Card title="AI Gateway & Redundancy" icon="server" href="/pt/en/ai-gateway/overview">
-    Centralized endpoint with load balancing, automatic failover chains and unified auditing.
+  <Card title="Gateway e redundância de IA" icon="server" href="/pt/ai-gateway/overview">
+    Endpoint centralizado com balanceamento de carga, cadeias de failover automáticas e auditoria unificada.
   </Card>
-  <Card title="CASB, Network & MCPs" icon="plug" href="/pt/en/integrations/casb/overview">
-    Connects Cisco Umbrella (CASB/SWG), Cloud AI providers (OpenAI, AWS, Azure), and enterprise MCP connectors.
+  <Card title="CASB, Rede e MCPs" icon="plug" href="/pt/integrations/casb/overview">
+    Conecta Cisco Umbrella (CASB/SWG), provedores de IA em nuvem (OpenAI, AWS, Azure) e conectores empresariais MCP.
   </Card>
 </CardGroup>
 
 ---
 
-## 💡 Additional Resources
+## 💡 Recursos Adicionais
 
 <CardGroup cols={2}>
-  <Card title="Supported Models" icon="brain" href="/pt/en/models">
-    Get to know the list of available language models (OpenAI, Anthropic, Google Gemini, Meta, DeepSeek).
+  <Card title="Modelos Suportados" icon="brain" href="/pt/models">
+    Conheça a lista de modelos de linguagens disponíveis (OpenAI, Anthropic, Google Gemini, Meta, DeepSeek).
   </Card>
-  <Card title="Support and Contact" icon="headset" href="https://hiperai.com/contact">
-    Contact the technical support team or request assistance for enterprise deployments.
+  <Card title="Suporte e Contato" icon="headset" href="https://hiperai.com/contact">
+    Entre em contato com a equipe de suporte técnico ou solicite assistência para implantações empresariais.
   </Card>
 </CardGroup>
-

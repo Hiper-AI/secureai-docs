@@ -1,142 +1,140 @@
 ---
 id: microsoft-sentinel
-title: "Microsoft Sentinel Integration"
-sidebar_label: "Microsoft Sentinel"
-description: "Integration Guide: Connecting Microsoft Sentinel with HiperAI via Azure Data Collection Rules (DCR)"
+title: "微软哨兵集成"
+sidebar_label: "微软哨兵"
+description: "集成指南：通过 Azure 数据收集规则 (DCR) 连接 Microsoft Sentinel 与 HiperAI"
 ---
+# Microsoft Sentinel 集成
 
+集成指南：将Microsoft Sentinel与HiperAI连接
 
-# Microsoft Sentinel Integration
+本指南介绍了配置 Microsoft Sentinel 以通过 Azure 数据收集规则 (DCR) 从 SecureAI 接收安全日志的必要步骤。
 
-Integration Guide: Connecting Microsoft Sentinel with HiperAI
+## 第 1 步：创建应用程序身份（应用程序注册）
 
-This guide describes the necessary steps to configure Microsoft Sentinel to receive security logs from SecureAI via Azure Data Collection Rules (DCR).
+首先，我们将在 Azure 中为您的应用程序创建一个身份，使其能够安全地进行身份验证。
 
-## Step 1: Create the Application Identity (App Registration)
+### A. 转到 Azure Active Directory
 
-First, we'll create an identity for your application in Azure, allowing it to authenticate securely.
-
-### A. Go to Azure Active Directory
-
-In the Azure portal, search for and select **Azure Active Directory**.
+在 Azure 门户中，搜索并选择 **Azure Active Directory**。
 
 <div class="mac-window">
-  ![Azure Active Directory Search](/img/ms%20sentinel%20-%20images/Sentinel%20-%201.png)
+  ![Azure Active Directory 搜索](/img/ms%20sentinel%20-%20images/Sentinel%20-%201.png)
 </div>
 
-### B. New Registration
+### B. 新注册
 
-On the left menu, navigate to **App registrations** and click **+ New registration**.
+在左侧菜单上，导航至 **应用程序注册**，然后单击 **+ 新注册**。
 
 <div class="mac-window">
-  ![App Registrations Menu](/img/ms%20sentinel%20-%20images/Sentinel%20-%202.png)
+  ![应用程序注册菜单](/img/ms%20sentinel%20-%20images/Sentinel%20-%202.png)
 </div>
 
-### C. Name the Application
+### C. 命名应用程序
 
-Provide a clear name, such as `SecureAI-Log-Ingester` and leave the other options as their defaults. Click **Register**.
+提供一个明确的名称，例如 `SecureAI-Log-Ingester` 并将其他选项保留为默认值。单击**注册**。
 
 <div class="mac-window">
-  ![App Registration Form](/img/ms%20sentinel%20-%20images/Sentinel%20-%203.png)
+  ![应用注册表](/img/ms%20sentinel%20-%20images/Sentinel%20-%203.png)
 </div>
 
-### D. Copy the IDs
+### D. 复制 ID
 
-From the new application's Overview page, copy and securely store the following values:
-- **Application (client) ID**
-- **Directory (tenant) ID**
+从新应用程序的概述页面，复制并安全存储以下值：
+- **应用程序（客户端）ID**
+- **目录（租户）ID**
 
 <div class="mac-window">
-  ![Application Overview with IDs](/img/ms%20sentinel%20-%20images/Sentinel%20-%204.png)
+  ![带有 ID 的应用程序概述](/img/ms%20sentinel%20-%20images/Sentinel%20-%204.png)
 </div>
 
-### E. Create the Client Secret
+### E. 创建客户端密钥
 
-On the left menu, go to **Certificates & secrets** and click **+ New client secret**. Provide a description (e.g., "SentinelLogKey") and click **Add**.
+在左侧菜单中，转到 **证书和机密**，然后单击 **+ 新客户端机密**。提供描述（例如“SentinelLogKey”）并单击“**添加**”。
 
 <div class="mac-window">
-  ![Create Client Secret](/img/ms%20sentinel%20-%20images/Sentinel%20-%205.png)
+  ![创建客户端密钥](/img/ms%20sentinel%20-%20images/Sentinel%20-%205.png)
 </div>
 
-**CRITICAL STEP**: Immediately copy the secret's **Value**. This is the only time it will be fully visible. Store it securely with the other IDs.
+**关键步骤**：立即复制秘密的**值**。这是唯一一次完全可见。将其与其他 ID 一起安全存放。
 
 <div class="mac-window">
-  ![Client Secret Value](/img/ms%20sentinel%20-%20images/Sentinel%20-%206.png)
+  ![客户端秘密值](/img/ms%20sentinel%20-%20images/Sentinel%20-%206.png)
 </div>
 
-## Step 2: Create the Azure Ingestion Infrastructure
+## 步骤 2：创建 Azure 摄取基础设施
 
-Now, we will build the "pathway" and "storage" for your logs.
+现在，我们将为您的日志构建“路径”和“存储”。
 
-### A. Create the Data Collection Endpoint (DCE)
+### A. 创建数据收集端点 (DCE)
 
-#### 1. Find the Service
+#### 1. 找到服务
 
-In the Azure search bar, search for and select **Data Collection Endpoints**.
+在 Azure 搜索栏中，搜索并选择“**数据收集终结点**”。
 
 <div class="mac-window">
-  ![Search Data Collection Endpoints](/img/ms%20sentinel%20-%20images/Sentinel%20-%207.png)
+  ![搜索数据收集端点](/img/ms%20sentinel%20-%20images/Sentinel%20-%207.png)
 </div>
 
-#### 2. Create a New DCE
+#### 2.创建一个新的DCE
 
-Click **+ Create**.
+单击 **+ 创建**。
 
 <div class="mac-window">
-  ![Create Data Collection Endpoint](/img/ms%20sentinel%20-%20images/Sentinel%20-%208.png)
+  ![创建数据收集端点](/img/ms%20sentinel%20-%20images/Sentinel%20-%208.png)
 </div>
 
-#### 3. Configure the DCE
+#### 3. 配置 DCE
 
-- **Name**: `dce-secureai-integration`
-- **Region**: Choose the same region as your Log Analytics Workspace
-- Click **Review + create**, and then **Create**
+- **姓名**：`dce-secureai-integration`
+- **区域**：选择与您的 Log Analytics 工作区相同的区域
+- 单击“**查看 + 创建**”，然后单击“**创建**”
 
 <div class="mac-window">
-  ![Review and Create DCE](/img/ms%20sentinel%20-%20images/Sentinel%20-%209.png)
+  ![查看并创建 DCE](/img/ms%20sentinel%20-%20images/Sentinel%20-%209.png)
 </div>
 
-#### 4. Copy the URI
+#### 4. 复制 URI
 
-Once deployed, navigate to the resource. On its Overview page, copy the **Logs ingestion URI** and save it.
+部署后，导航到资源。在其概述页面上，复制 **日志摄取 URI** 并保存。
 
 <div class="mac-window">
-  ![DCE Overview with URI](/img/ms%20sentinel%20-%20images/Sentinel%20-%2010.png)
+  ![带 URI 的 DCE 概述](/img/ms%20sentinel%20-%20images/Sentinel%20-%2010.png)
 </div>
 
-### B. Create the Custom Table and Data Collection Rule (DCR)
+### B. 创建自定义表和数据收集规则 (DCR)
 
-#### 1. Go to Log Analytics
+#### 1. 转到日志分析
 
-Navigate to your **Log Analytics Workspace**.
+导航到您的 **Log Analytics 工作区**。
 
-#### 2. Create a Custom Table
+#### 2. 创建自定义表
 
-On the left menu, click **Tables**, then **+ Create**, and select **New custom log (DCR-based)**.
+在左侧菜单中，单击“**表**”，然后单击“**+ 创建**”，然后选择“**新建自定义日志（基于 DCR）**”。
 
 <div class="mac-window">
-  ![Create Custom Table](/img/ms%20sentinel%20-%20images/Sentinel%20-%2011.png)
+  ![创建自定义表](/img/ms%20sentinel%20-%20images/Sentinel%20-%2011.png)
 </div>
 
-#### 3. "Basics" Tab
+#### 3.“基本”选项卡
 
-- **Table name**: `secureaitosiem` (Azure will automatically append `_CL`, making the full name `secureaitosiem_CL`)
-- **Data collection rule**: Select "Create a new..." and name it `dcr-secureai-events`
+- **表名称**：`secureaitosiem`（Azure 将自动附加 `_CL`，使全名成为 `secureaitosiem_CL`）
+- **数据收集规则**：选择“创建新...”并将其命名为`dcr-secureai-events`
 
 <div class="mac-window">
-  ![Data Collection Rule Setup](/img/ms%20sentinel%20-%20images/Sentinel%20-%2012.png)
+  ![数据收集规则设置](/img/ms%20sentinel%20-%20images/Sentinel%20-%2012.png)
 </div>
 
-- **Data collection endpoint**: Select the DCE you created earlier (`dce-secureai-integration`)
-- Click **Next: Schema and transformation**
+- **数据收集端点**：选择您之前创建的 DCE (`dce-secureai-integration`)
+- 单击**下一步：架构和转换**
 
 <div class="mac-window">
-  ![Next Schema and Transformation](/img/ms%20sentinel%20-%20images/Sentinel%20-%2013.png)
+  ![下一个架构和转换](/img/ms%20sentinel%20-%20images/Sentinel%20-%2013.png)
 </div>
 
-#### 4. "Schema and transformation" Tab
+#### 4.“架构和转换”选项卡
 
-**Upload a sample file**: The system will prompt you. Create a `.json` file with the following content and upload it:
+**上传示例文件**：系统会提示您。创建一个包含以下内容的 `.json` 文件并上传：
 
 ```json
 [
@@ -199,13 +197,13 @@ On the left menu, click **Tables**, then **+ Create**, and select **New custom l
 ]
 ```
 
-**Download Sample File**: You can also download the complete sample JSON file to use directly:
+**下载示例文件**：您还可以下载完整的示例 JSON 文件直接使用：
 
-<a href="/zh/sample-json.json" download>📥 sample.json</a>
+<a href="/zh/sample-json.json" download>📥sample.json</a>
 
-#### 5. Apply the Transformation
+#### 5. 应用转换
 
-The system may show a warning about the TimeGenerated field. Click the **Transformation editor** button, delete all existing content, and paste the following complete KQL query:
+系统可能会显示有关 TimeGenerated 字段的警告。单击 **转换编辑器** 按钮，删除所有现有内容，然后粘贴以下完整的 KQL 查询：
 
 ```kql
 source
@@ -219,107 +217,107 @@ source
 ```
 
 <div class="mac-window">
-  ![KQL Transformation Query](/img/ms%20sentinel%20-%20images/Sentinel%20-%2014.png)
+  ![KQL转换查询](/img/ms%20sentinel%20-%20images/Sentinel%20-%2014.png)
 </div>
 
-Click **Apply**. You should see a preview of the table with all the correct columns and data types.
+单击**应用**。您应该看到包含所有正确列和数据类型的表预览。
 
 <div class="mac-window">
-  ![Apply Transformation](/img/ms%20sentinel%20-%20images/Sentinel%20-%2015.png)
+  ![应用转换](/img/ms%20sentinel%20-%20images/Sentinel%20-%2015.png)
 </div>
 
-#### 6. Finalize Creation
+#### 6. 完成创建
 
-Click **Next: Review + create** and then **Create**.
+单击“**下一步：查看 + 创建**”，然后单击“**创建**”。
 
 <div class="mac-window">
-  ![Review and Create DCR](/img/ms%20sentinel%20-%20images/Sentinel%20-%2016.png)
+  ![查看并创建 DCR](/img/ms%20sentinel%20-%20images/Sentinel%20-%2016.png)
 </div>
 
-## Step 3: Connect the Identity to the Infrastructure (Permissions)
+## 步骤 3：将身份连接到基础设施（权限）
 
-This crucial step grants our application permission to use the data collection rule we just created.
+这一关键步骤授予我们的应用程序使用我们刚刚创建的数据收集规则的权限。
 
-### A. Go to your new DCR
+### A. 转到您的新 DCR
 
-Search for and open your Data Collection Rule, `dcr-secureai-events` and in "Overview", copy the immutable ID and save it for integration.
+搜索并打开数据收集规则 `dcr-secureai-events`，然后在“概述”中复制不可变 ID 并将其保存以进行集成。
 
 <div class="mac-window">
-  ![DCR Overview with Immutable ID](/img/ms%20sentinel%20-%20images/Sentinel%20-%2017.png)
+  ![具有不可变 ID 的 DCR 概述](/img/ms%20sentinel%20-%20images/Sentinel%20-%2017.png)
 </div>
 
-### B. Assign the Role
+### B. 分配角色
 
-On the left menu, go to **Access control (IAM)** and click **+ Add** → **Add role assignment**.
+在左侧菜单上，转到 **访问控制 (IAM)** 并单击 **+ 添加** → **添加角色分配**。
 
 <div class="mac-window">
-  ![Add Role Assignment](/img/ms%20sentinel%20-%20images/Sentinel%20-%2018.png)
+  ![添加角色分配](/img/ms%20sentinel%20-%20images/Sentinel%20-%2018.png)
 </div>
 
-**Role**: Search for and select **Monitoring Metrics Publisher**.
+**角色**：搜索并选择**Monitoring Metrics Publisher**。
 
 <div class="mac-window">
-  ![Select Monitoring Metrics Publisher Role](/img/ms%20sentinel%20-%20images/Sentinel%20-%2019.png)
+  ![选择监控指标发布者角色](/img/ms%20sentinel%20-%20images/Sentinel%20-%2019.png)
 </div>
 
-**Members**: Click **Select members** and search for your App Registration name (`SecureAI-Log-Ingester`). Select it.
+**成员**：单击**选择成员**并搜索您的应用程序注册名称 (`SecureAI-Log-Ingester`)。选择它。
 
 <div class="mac-window">
-  ![Select App Registration Member](/img/ms%20sentinel%20-%20images/Sentinel%20-%2020.png)
+  ![选择应用注册会员](/img/ms%20sentinel%20-%20images/Sentinel%20-%2020.png)
 </div>
 
-Click **Review + assign**.
+单击“**查看 + 分配**”。
 
-## Step 4: Finalize and Share Information
+## 步骤 4：最终确定并共享信息
 
-You're almost done. Just one final step.
+你快完成了。只是最后一步。
 
-### A. Gather the Information
+### A. 收集信息
 
-To complete the integration, the application needs the following six pieces of information:
+为了完成集成，应用程序需要以下六项信息：
 
-1. **Tenant ID**: (From Step 1)
-2. **Client ID**: (From Step 1)
-3. **Client Secret**: (From Step 1)
-4. **DCE URI**: (From Step 2A)
-5. **DCR Immutable ID**: (Navigate to your DCR `dcr-secureai-events` and copy this from the JSON View)
-6. **Stream Name**: This is a constructed value. The format is `Custom-{TableName}`. In our case, it will be: `Custom-secureaitosiem_CL`
+1. **租户 ID**：（来自第 1 步）
+2. **客户端 ID**：（来自步骤 1）
+3. **客户端秘密**：（来自步骤 1）
+4. **DCE URI**：（来自步骤 2A）
+5. **DCR 不可变 ID**：（导航到 DCR `dcr-secureai-events` 并从 JSON 视图复制此内容）
+6. **流名称**：这是一个构造值。格式为`Custom-{TableName}`。在我们的例子中，它将是：`Custom-secureaitosiem_CL`
 
-### B. Configure the Application
+### B. 配置应用程序
 
-Input these 6 values into your application's configuration settings.
+将这 6 个值输入到应用程序的配置设置中。
 
 <div class="mac-window">
-  ![Application Configuration Settings](/img/ms%20sentinel%20-%20images/Sentinel%20-%2021.png)
+  ![应用程序配置设置](/img/ms%20sentinel%20-%20images/Sentinel%20-%2021.png)
 </div>
 
-## Step 5: Verify the Integration
+## 步骤 5：验证集成
 
-Once you have entered the integration details into the SecureAI application, you can verify that the connection is working correctly.
+将集成详细信息输入 SecureAI 应用程序后，您可以验证连接是否正常工作。
 
-### A. Test the Connection
+### A. 测试连接
 
-Use the "Test Connection" button within our application. This will send a test event to your Microsoft Sentinel workspace.
+使用我们的应用程序中的“测试连接”按钮。这会将测试事件发送到您的 Microsoft Sentinel 工作区。
 
-### B. Find the Test Event in Log Analytics
+### B. 在 Log Analytics 中查找测试事件
 
-To see if the event arrived in Microsoft Sentinel, go to your Log Analytics Workspace and click on **Logs**.
+要查看事件是否到达 Microsoft Sentinel，请转到 Log Analytics 工作区并单击 **日志**。
 
-Run the following query to see your incoming data:
+运行以下查询以查看传入的数据：
 
 ```kql
 secureaitosiem_CL
 | order by TimeGenerated desc
 ```
 
-You should see your log data appearing with all columns (`TimeGenerated`, `Level_s`, `Message_s`, etc.) correctly populated. If so, your integration is a success! ✅
+您应该会看到日志数据显示，并且所有列（`TimeGenerated`、`Level_s`、`Message_s` 等）均已正确填充。如果是这样，您的集成就成功了！ ✅
 
 <div class="mac-window">
-  ![Successful Integration Verification](/img/ms%20sentinel%20-%20images/Sentinel%20-%2022.png)
+  ![集成验证成功](/img/ms%20sentinel%20-%20images/Sentinel%20-%2022.png)
 </div>
 
-**Note**: Depending on network traffic and system load, it can sometimes take up to 10 minutes for logs to appear in Microsoft Sentinel.
+**注意**：根据网络流量和系统负载，有时日志可能需要长达 10 分钟才能显示在 Microsoft Sentinel 中。
 
-## Done!
+## 完成！
 
-With these steps, your Microsoft Sentinel instance is fully configured to integrate with SecureAI 😎.
+通过这些步骤，您的 Microsoft Sentinel 实例已完全配置为与 SecureAI 集成。

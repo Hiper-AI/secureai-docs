@@ -62,7 +62,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 | `points.monthly_limit` | 사용자의 월별 포인트 허용량입니다. |
 | `points.next_renewal` | 다음 포인트 갱신의 ISO 타임스탬프입니다. |
 | `usage_by_model` | 청구 사용자가 모델별 사용량 청구 모드인 경우: `dollar_limit`, `current_spend`, `remaining_budget`. 그렇지 않으면 `{ "enabled": false }`. |
-| `api_key.billing_mode` | `user-completions` 또는 `usage-by-model` — [결제 모드](/ko/en/api/billing-modes)를 참조하세요. |
+| `api_key.billing_mode` | `user-completions` 또는 `usage-by-model` — [결제 모드](/ko/api/billing-modes)를 참조하세요. |
 | `api_key.daily` / `api_key.monthly` | 키의 요청 카운터(`used`, `limit`, `remaining`). |
 | `api_key.rate_limit` | 분당 및 시간당 요청 한도. |
 | `api_key.expires_at` | ISO 만료 타임스탬프 또는 키가 만료되지 않는 경우 `null`입니다. |
@@ -70,10 +70,10 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 ## 메모
 
 - 값은 **청구** 사용자를 반영하며, 요청이 청구를 대신하여 `user_id`를 사용하는 경우 키 소유자와 다를 수 있습니다.
-- *특정* 요청이 (지출 없이) 할당량을 통과하는지 미리 보려면 [정책 확인](/ko/en/api/policy-check)을 사용하고 `checks.quota`을 읽으세요.
+- *특정* 요청이 (지출 없이) 할당량을 통과하는지 미리 보려면 [정책 확인](/ko/api/policy-check)을 사용하고 `checks.quota`을 읽으세요.
 
 ## 관련
 
-- [결제 모드](/ko/ko/api/billing-modes)
-- [인증 개요](/ko/ko/api/auth/overview)
-- [정책 확인](/ko/ko/api/policy-check)
+- [결제 모드](/ko/api/billing-modes)
+- [인증 개요](/ko/api/auth/overview)
+- [정책 확인](/ko/api/policy-check)

@@ -1,88 +1,87 @@
 ---
 sidebar_position: 3
-title: "Document Processing"
+title: "Procesamiento de Documentos con IA"
+sidebar_label: "Procesamiento de Documentos"
 ---
 
+# Procesamiento de documentos
 
+SecureAI le permite cargar y procesar varios tipos de documentos para crear su base de conocimientos personal para respuestas de IA mejoradas.
 
-# Document Processing
+## Tipos de archivos admitidos
 
-SecureAI allows you to upload and process various document types to create your personal knowledge base for enhanced AI responses.
+### **Formatos de documentos**
+- **Documentos PDF**: extracción y procesamiento de texto
+- **Documentos de Word**: archivos DOC, DOCX
+- **Archivos de texto**: texto sin formato y rebajas
+- **Datos estructurados**: archivos CSV, JSON
 
-## Supported File Types
+### **Límites de tamaño de archivo**
+- **Tamaño máximo de archivo**: 10 MB por archivo
+- **Carga por lotes**: cargue varios archivos a la vez
+- **Tiempo de procesamiento**: varía según el tamaño y la complejidad del archivo
 
-### **Document Formats**
-- **PDF Documents**: Text extraction and processing
-- **Word Documents**: DOC, DOCX files
-- **Text Files**: Plain text and markdown
-- **Structured Data**: CSV, JSON files
+## Proceso de carga
 
-### **File Size Limits**
-- **Maximum File Size**: 10MB per file
-- **Batch Upload**: Upload multiple files at once
-- **Processing Time**: Varies based on file size and complexity
+### **Paso 1: Seleccione su base de conocimientos**
+- Elija una base de conocimientos existente o cree una nueva
+- Nombra tu base de conocimientos para una fácil identificación
 
-## Upload Process
+### **Paso 2: cargar documentos**
+- **Arrastrar y soltar**: simplemente arrastre los archivos al área de carga
+- **Explorador de archivos**: haga clic para buscar y seleccionar archivos
+- **Selección por lotes**: seleccione varios archivos a la vez
+- **Seguimiento del progreso**: vea el progreso de la carga en tiempo real
 
-### **Step 1: Select Your Knowledge Base**
-- Choose an existing knowledge base or create a new one
-- Name your knowledge base for easy identification
+### **Paso 3: Estado de procesamiento**
+- **Confirmación de carga**: los archivos se cargaron correctamente
+- **Indicador de procesamiento**: observe cómo se procesan los documentos
 
-### **Step 2: Upload Documents**
-- **Drag and Drop**: Simply drag files into the upload area
-- **File Browser**: Click to browse and select files
-- **Batch Selection**: Select multiple files at once
-- **Progress Tracking**: See upload progress in real-time
+## Qué puedes hacer
 
-### **Step 3: Processing Status**
-- **Upload Confirmation**: Files are uploaded successfully
-- **Processing Indicator**: Watch as documents are processed
+### **Gestión de documentos**
+- **Cargar documentos**: agregue archivos a su base de conocimientos
+- **Ver archivos cargados**: vea todos los documentos en su base de conocimientos
 
-## What You Can Do
+### **Organización de la base de conocimientos**
+- **Crear múltiples bases**: organice documentos por tema o proyecto
+- **Nombra tus bases**: asigna nombres significativos a tus bases de conocimiento.
 
-### **Document Management**
-- **Upload Documents**: Add files to your knowledge base
-- **View Uploaded Files**: See all documents in your knowledge base
+## Mejores prácticas
 
-### **Knowledge Base Organization**
-- **Create Multiple Bases**: Organize documents by topic or project
-- **Name Your Bases**: Give meaningful names to your knowledge bases
+### **Preparación de documentos**
+- Utilice documentos legibles y de alta calidad.
+- Asegúrese de que el texto sea claro y esté bien formateado.
+- Eliminar formatos o imágenes innecesarios
+- Utilice nombres de archivos descriptivos
 
-## Best Practices
+### **Organización**
+- Agrupar documentos relacionados en la misma base de conocimientos.
+- Utilice convenciones de nomenclatura coherentes
+- Crear bases de conocimiento separadas para diferentes proyectos.
+- Revisar y limpiar periódicamente documentos antiguos.
 
-### **Document Preparation**
-- Use high-quality, readable documents
-- Ensure text is clear and well-formatted
-- Remove unnecessary formatting or images
-- Use descriptive file names
+### **Subir consejos**
+- Cargue documentos en lotes para mayor eficiencia.
+- Supervisar el estado de procesamiento de archivos grandes
+- Mantenga el tamaño de los archivos por debajo de 10 MB para un procesamiento más rápido
 
-### **Organization**
-- Group related documents in the same knowledge base
-- Use consistent naming conventions
-- Create separate knowledge bases for different projects
-- Regularly review and clean up old documents
+## Problemas comunes
 
-### **Upload Tips**
-- Upload documents in batches for efficiency
-- Monitor processing status for large files
-- Keep file sizes under 10MB for faster processing
-
-## Common Issues
-
-| Issue | Solution |
+| Problema | Solución |
 |-------|----------|
-| File too large | Split into smaller files or compress |
-| Processing failed | Check file format and try again |
-| Upload stuck | Refresh page and try again |
+| Archivo demasiado grande | Dividir en archivos más pequeños o comprimir |
+| Error de procesamiento | Verifique el formato del archivo e inténtelo nuevamente |
+| Subir atascado | Actualiza la página y vuelve a intentarlo |
 
-## Getting Started
+## Empezando
 
-1. **Create Knowledge Base**: Start by creating a new knowledge base
-2. **Upload Documents**: Add your first documents
-3. **Wait for Processing**: Let the system process your files
-4. **Start Chatting**: Use your knowledge base in conversations
+1. **Crear base de conocimientos**: comience creando una nueva base de conocimientos.
+2. **Subir documentos**: Añade tus primeros documentos
+3. **Esperar procesamiento**: deja que el sistema procese tus archivos
+4. **Empieza a chatear**: utiliza tu base de conocimientos en las conversaciones
 
-## Next Steps
+## Próximos pasos
 
 
-- [Indexes](/en/indexes/overview) - Manage your knowledge bases 
+- [Índices](/indexes/overview) - Administre sus bases de conocimientos

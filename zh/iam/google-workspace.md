@@ -1,296 +1,294 @@
 ---
 sidebar_position: 2
-title: "Google Workspace (SSO)"
+title: "Google Workspace (单点登录)"
 ---
+# Google Workspace (SSO) 积分
 
+本指南将引导您完成使用 SecureAI 配置 Google Workspace 以进行单点登录 (SSO) 的过程。您将了解如何从 Google Cloud Console 获取必要的凭据并提交它们以完成集成。
 
-# Google Workspace (SSO) Integration
+## 先决条件
 
-This guide will walk you through the process of configuring Google Workspace for single sign-on (SSO) with SecureAI. You'll learn how to obtain the necessary credentials from Google Cloud Console and submit them to complete the integration.
+- 管理员访问 Google Cloud Console
+- 您的组织的 Google Workspace 帐户
+- 访问您组织的 Google Workspace 管理控制台（如果使用域限制）
+- SecureAI 的管理员访问权限
 
-## Prerequisites
+## 步骤 1：在 Google Cloud Console 中创建项目
 
-- Administrator access to Google Cloud Console
-- A Google Workspace account for your organization
-- Access to your organization's Google Workspace admin console (if using domain restrictions)
-- Administrator access to SecureAI
-
-## Step 1: Create a Project in Google Cloud Console
-
-1. Sign in to [Google Cloud Console](https://console.cloud.google.com)
-2. Click on the project dropdown at the top of the page
-3. Click **New Project**
+1.登录[Google Cloud Console](https://console.cloud.google.com)
+2. 单击页面顶部的项目下拉列表
+3. 单击“**新建项目**”
 
 <div class="mac-window">
-  ![New Project](/img/google%20sso%20images/google%20-%201.png)
+  ![新项目](/img/google%20sso%20images/google%20-%201.png)
 </div>
 
-4. Enter a project name (e.g., "SecureAI SSO")
-5. Click **Create**
+4. 输入项目名称（例如“SecureAI SSO”）
+5. 单击“**创建**”
 
 <div class="mac-window">
-  ![Create Project](/img/google%20sso%20images/google%20-%202.png)
+  ![创建项目](/img/google%20sso%20images/google%20-%202.png)
 </div>
 
-## Step 2: Enable the Google+ API (if needed)
+## 步骤 2：启用 Google+ API（如果需要）
 
-1. In your project, go to **APIs & Services** > **Library**
-2. Search for "Google+ API" or "Google Identity"
-3. Click on it and click **Enable** (if not already enabled)
-4. **Note**: Modern Google OAuth may not require this, but enabling it ensures compatibility
+1. 在您的项目中，转到 **API 和服务** > **库**
+2. 搜索“Google+ API”或“Google 身份”
+3. 单击它并单击“**启用**”（如果尚未启用）
+4. **注意**：现代 Google OAuth 可能不需要此功能，但启用它可确保兼容性
 
-## Step 3: Configure the OAuth Consent Screen
+## 步骤 3：配置 OAuth 同意屏幕
 
-1. Go to **APIs & Services** > **OAuth consent screen**
+1. 转至 **API 和服务** > **OAuth 同意屏幕**
 
 <div class="mac-window">
-  ![OAuth Consent Screen](/img/google%20sso%20images/google%20-%203.png)
+  ![OAuth 同意屏幕](/img/google%20sso%20images/google%20-%203.png)
 </div>
 
-2. Fill in the required information:
-   - **App name**: Enter a name (e.g., "SecureAI")
-   - **User support email**: Select a support email address
-   - **Contact information**: Add a contact email address
+2.填写所需信息：
+   - **应用程序名称**：输入名称（例如“SecureAI”）
+   - **用户支持电子邮件**：选择支持电子邮件地址
+   - **联系信息**：添加联系电子邮件地址
 
-3. Choose **User Type**:
-   - **Internal**: Only for users in your Google Workspace organization (recommended for company use)
-   - **External**: For users outside your organization
+3. 选择**用户类型**：
+   - **内部**：仅适用于您的 Google Workspace 组织中的用户（建议公司使用）
+   - **外部**：适用于组织外部的用户
 
-4. Click **Create**
+4. 单击“**创建**”
 
 <div class="mac-window">
-  ![Create OAuth Consent](/img/google%20sso%20images/google%20-%204.png)
+  ![创建 OAuth 同意](/img/google%20sso%20images/google%20-%204.png)
 </div>
 
-5. **Branding**:
-   - Go to the **Branding** section in the left menu
-   - Find **Authorized domains** and add your company domain
-   - This allows users to sign in with their company email address
-   - (Additionally, you can add your homepage URL, privacy policy, and terms of service if desired)
+5. **品牌**：
+   - 转到左侧菜单中的 **品牌** 部分
+   - 查找**授权域**并添加您的公司域
+   - 这允许用户使用他们的公司电子邮件地址登录
+   - （此外，如果需要，您可以添加主页 URL、隐私政策和服务条款）
 
 <div class="mac-window">
-  ![Authorized Domains](/img/google%20sso%20images/google%20-%205.png)
+  ![授权域名](/img/google%20sso%20images/google%20-%205.png)
 </div>
 
-6. **Scopes**:
-   - In the left menu, click on the **Data Access** section
-   - Within the Data Access section, click **Add or Remove Scopes**
-   - A window will open from the left side where you can search for roles
-   - Search for the role **"openid"** and select it
-   - Click **Update**
-   - Then click **Save** in the Data Access section
-   - **Note**: The `openid` scope automatically includes `profile` and `email` access - you don't need to add them separately
-   - If you see other scope options, you only need **OpenID** for SecureAI SSO
+6. **范围**：
+   - 在左侧菜单中，单击“**数据访问**”部分
+   - 在“数据访问”部分中，单击“**添加或删除范围**”
+   - 左侧将会打开一个窗口，您可以在其中搜索角色
+   - 搜索角色 **“openid”** 并选择它
+   - 单击**更新**
+   - 然后单击数据访问部分中的**保存**
+   - **注意**：`openid` 范围自动包含 `profile` 和 `email` 访问权限 - 您无需单独添加它们
+   - 如果您看到其他范围选项，您只需要 **OpenID** for SecureAI SSO
 
 <div class="mac-window">
-  ![OpenID Scope Selection](/img/google%20sso%20images/google%20-%206.png)
+  ![OpenID 范围选择](/img/google%20sso%20images/google%20-%206.png)
 </div>
 
-   - **Important**: The OpenID scope provides access to:
-     - User's email address
-     - Basic profile information
-     - This is all that's needed for SecureAI authentication
+   - **重要**：OpenID 范围提供对以下内容的访问：
+     - 用户的电子邮件地址
+     - 基本个人资料信息
+     - 这就是 SecureAI 身份验证所需的全部内容
 
-7. **Test users** (if using External):
-   - Add test users if needed during testing
-   - Click **Save and Continue**
+7. **测试用户**（如果使用外部）：
+   - 在测试过程中如果需要添加测试用户
+   - 单击**保存并继续**
 
-8. **Summary**:
-   - Review your configuration
-   - Click **Back to Dashboard**
+8. **总结**：
+   - 检查您的配置
+   - 单击**返回仪表板**
 
-## Step 4: Create OAuth 2.0 Credentials
+## 步骤 4：创建 OAuth 2.0 凭证
 
-1. Go to **APIs & Services** > **Credentials**
-2. Click **+ Create Credentials** > **OAuth client ID**
+1. 转至 **API 和服务** > **凭证**
+2. 单击 **+ 创建凭据** > **OAuth 客户端 ID**
 
 <div class="mac-window">
-  ![Create OAuth Client ID](/img/google%20sso%20images/google%20-%207.png)
+  ![创建 OAuth 客户端 ID](/img/google%20sso%20images/google%20-%207.png)
 </div>
-3. **Application type**: Select **Web application**
-4. **Name**: Enter a descriptive name (e.g., "SecureAI SSO Client")
-5. **Authorized redirect URIs**: Click **+ Add URI** and enter:
+3. **应用程序类型**：选择**Web应用程序**
+4. **名称**：输入描述性名称（例如“SecureAI SSO Client”）
+5. **授权重定向 URI**：单击 **+ 添加 URI** 并输入：
    - `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-   - **Important**: The URL must match exactly (including `https://` and `/api/auth/google/callback`)
+   - **重要**：URL 必须完全匹配（包括 `https://` 和 `/api/auth/google/callback`）
 
 <div class="mac-window">
-  ![Authorized Redirect URIs](/img/google%20sso%20images/google%20-%208.png)
+  ![授权重定向 URI](/img/google%20sso%20images/google%20-%208.png)
 </div>
 
-6. Click **Create**
+6. 单击“**创建**”
 
-## Step 5: Get Your Credentials
+## 第 5 步：获取您的凭据
 
-After creating the OAuth client:
+创建 OAuth 客户端后：
 
-1. A popup will appear with your credentials
+1. 将出现一个弹出窗口，其中包含您的凭据
 
 <div class="mac-window">
-  ![OAuth Credentials Popup](/img/google%20sso%20images/google%20-%209.png)
+  ![OAuth 凭据弹出窗口](/img/google%20sso%20images/google%20-%209.png)
 </div>
-2. **Client ID**:
-   - Looks like: `123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com`
-   - **Copy this value** - you will need it later
-3. **Client secret**:
-   - Looks like: `GOCSPX-abcdefghijklmnopqrstuvwxyz`
-   - **Copy this value immediately**
-   - **WARNING**: This secret is only shown once in the popup. If you lose it, you will need to create a new OAuth client
+2. **客户端ID**：
+   - 看起来像：`123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com`
+   - **复制此值** - 您稍后将需要它
+3. **客户秘密**：
+   - 看起来像：`GOCSPX-abcdefghijklmnopqrstuvwxyz`
+   - **立即复制该值**
+   - **警告**：此秘密仅在弹出窗口中显示一次。如果丢失，您将需要创建一个新的 OAuth 客户端
 
-## Step 6: Send Variables to the Hiper AI Team
+## 步骤 6：将变量发送给 Hiper AI 团队
 
-Once you have created the OAuth client in Google Cloud Console and followed the steps above, you will have obtained the following critical pieces of information:
+在 Google Cloud Console 中创建 OAuth 客户端并按照上述步骤操作后，您将获得以下关键信息：
 
-1. **Client ID** (from Step 5)
-2. **Client Secret** (from Step 5)
-3. **Redirect URI**: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
+1. **客户端 ID**（来自步骤 5）
+2. **客户端秘密**（来自步骤 5）
+3. **重定向 URI**: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
 
-You must send these values to the Hiper AI team to complete the SSO integration.
+您必须将这些值发送给 Hiper AI 团队才能完成 SSO 集成。
 
-### A. Access the Admin Panel
+### A. 访问管理面板
 
-1. Log in to your SecureAI instance as an administrator
-2. Navigate to `https://{enterprise.name}.hiperai.ai/admin/home`
-3. In the upper right corner, click on your admin profile picture
-4. This will open a dropdown menu with various options
+1. 以管理员身份登录您的SecureAI实例
+2. 导航至`https://{enterprise.name}.hiperai.ai/admin/home`
+3. 在右上角，单击您的管理员个人资料图片
+4. 这将打开一个包含各种选项的下拉菜单
 
-### B. Submit the Support Request
+### B. 提交支持请求
 
-1. Click **"Get Support"** from the dropdown menu
+1. 从下拉菜单中单击**“获取支持”**
 
 <div class="mac-window">
-  ![Get Support Menu](/img/microsoft%20entraid%20sso%20images/10%20-%20azure.png)
+  ![获取支持菜单](/img/microsoft%20entraid%20sso%20images/10%20-%20azure.png)
 </div>
 
-2. A popup window will appear with a support ticket form
-3. Fill in the form with the following information:
-   - **Category**: Select **"Integrations and Implementations"**
+2. 将出现一个弹出窗口，其中包含支持票表格
+3. 在表格中填写以下信息：
+   - **类别**：选择**“集成和实施”**
 
 <div class="mac-window">
-  ![Support Form Category](/img/microsoft%20entraid%20sso%20images/11%20-%20azure.png)
+  ![支持表单类别](/img/microsoft%20entraid%20sso%20images/11%20-%20azure.png)
 </div>
 
-   - **Subject**: Enter **"Google Workspace SSO Integration"**
-   - **Description**: Paste the values you copied during the setup process:
-     - Client ID
-     - Client Secret
-     - Redirect URI: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-4. Click the **"Submit request"** button
+   - **主题**：输入 **“Google Workspace SSO 集成”**
+   - **说明**：粘贴您在设置过程中复制的值：
+     - 客户ID
+     - 客户秘密
+     - 重定向 URI：`https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
+4. 单击**“提交请求”**按钮
 
-### C. Wait for Confirmation
+### C. 等待确认
 
-- You will receive an email confirmation within **24 to 72 hours** (depending on availability)
-- The email will confirm that your SSO has been successfully configured
-- Once configured, you will be able to access your SecureAI instance using the **"Continue with Google"** login button on the sign-in page
+- 您将在 **24 至 72 小时**内收到一封确认电子邮件（取决于供应情况）
+- 该电子邮件将确认您的 SSO 已成功配置
+- 配置完成后，您将能够使用登录页面上的 **“继续使用 Google”** 登录按钮访问您的 SecureAI 实例
 
-**Important**: Keep your credentials secure until the integration is complete. Do not share them through insecure channels.
+**重要**：在集成完成之前，请确保您的凭据安全。不要通过不安全的渠道分享它们。
 
-## User Configuration
+## 用户配置
 
-### Existing Users
+### 现有用户
 
-Users who already have accounts in SecureAI (regardless of whether they use basic authentication) **do not need to be recreated**. They can continue using their existing accounts and will also be able to sign in using Google Workspace SSO once it's configured.
+已在 SecureAI 中拥有帐户的用户（无论是否使用基本身份验证）**不需要重新创建**。他们可以继续使用现有帐户，并且在配置后也可以使用 Google Workspace SSO 登录。
 
-**Important**: The user's email in Google Workspace must match exactly with the email in SecureAI for SSO to work.
+**重要**：Google Workspace 中的用户电子邮件必须与 SecureAI 中的电子邮件完全匹配，SSO 才能正常工作。
 
-### Creating New SSO Users
+### 创建新的 SSO 用户
 
-For new users who should access SecureAI exclusively through SSO:
+对于应仅通过 SSO 访问 SecureAI 的新用户：
 
-1. Navigate to **User Management** in the SecureAI admin panel
-2. Click to create a new user
-3. When creating the user, select the **"Business Account / SSO"** option
-4. This configuration ensures that:
-   - The new user **will not receive an email** to generate a password
-   - The user will be able to access SecureAI **directly using the Google Workspace SSO** login button
-   - The user's email in Google Workspace must match exactly with the email entered in SecureAI
+1. 导航至 SecureAI 管理面板中的 **用户管理**
+2.点击创建新用户
+3. 创建用户时，选择**“企业帐户/SSO”**选项
+4. 此配置可确保：
+   - 新用户**不会收到生成密码的电子邮件**
+   - 用户将能够直接使用 Google Workspace SSO** 登录按钮访问 SecureAI
+   - Google Workspace中的用户电子邮件必须与SecureAI中输入的电子邮件完全匹配
 
-## Troubleshooting
+## 故障排除
 
-### Error: "redirect_uri_mismatch"
+### 错误：“redirect_uri_mismatch”
 
-- Verify that the Redirect URI in Google Cloud Console matches exactly with what is configured on the server
-- Make sure to include `https://` (not `http://` in production)
-- The redirect URI must be exactly: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-- Check for trailing slashes or typos
+- 验证 Google Cloud Console 中的重定向 URI 是否与服务器上的配置完全匹配
+- 确保包含 `https://`（不在生产中包含 `http://`）
+- 重定向 URI 必须准确无误：`https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
+- 检查结尾斜杠或拼写错误
 
-### Error: "User not found in SecureAI database"
+### 错误：“在 SecureAI 数据库中找不到用户”
 
-- The user must be previously registered in SecureAI
-- Contact the SecureAI administrator to create the user account
-- Verify that the email address in Google Workspace matches the email in SecureAI exactly
+- 用户必须事先在SecureAI中注册
+- 联系SecureAI管理员创建用户帐户
+- 验证 Google Workspace 中的电子邮件地址与 SecureAI 中的电子邮件地址完全匹配
 
-### Error: "Email domain not allowed for Google Workspace login"
+### 错误：“Google Workspace 登录不允许使用电子邮件域”
 
-- The user's email domain is not in the allowed domains list
-- Contact your development team to add your domain to the allowed list
-- Or verify that the domain restriction configuration is correct
+- 用户的电子邮件域不在允许的域列表中
+- 联系您的开发团队将您的域添加到允许列表中
+- 或者验证域限制配置是否正确
 
-### Error: "access_denied" or "unauthorized_client"
+### 错误：“access_denied”或“unauthorized_client”
 
-- Verify that the OAuth consent screen is properly configured
-- Check that your application is approved (if using External user type)
-- Ensure the Client ID and Client Secret are correct
+- 验证 OAuth 同意屏幕是否已正确配置
+- 检查您的申请是否已获得批准（如果使用外部用户类型）
+- 确保客户端 ID 和客户端密钥正确
 
-### Error: "invalid_client"
+### 错误：“invalid_client”
 
-- The Client Secret may have been reset or is incorrect
-- Verify the Client Secret in Google Cloud Console
-- Create a new Client Secret if needed and provide the new value to your development team
+- 客户端密码可能已重置或不正确
+- 在 Google Cloud Console 中验证客户端密钥
+- 如果需要，创建新的客户端密钥，并为您的开发团队提供新的价值
 
-## Client Secret Security Best Practices
+## 客户端秘密安全最佳实践
 
-1. **Never commit secrets to code repositories**
-2. **Rotate secrets periodically** (recommended: every 90 days)
-3. **Limit access** to Google Cloud Console credentials page
-4. **Use secure channels** when sharing secrets with your development team
-5. **Monitor usage** in Google Cloud Console for suspicious activity
+1. **永远不要将机密提交到代码存储库**
+2. **定期轮换机密**（建议：每 90 天一次）
+3. **限制对 Google Cloud Console 凭据页面的访问**
+4. **与开发团队共享秘密时使用安全通道**
+5. **在 Google Cloud Console 中监控使用情况**是否存在可疑活动
 
-## Client Secret Renewal
+## 客户秘密更新
 
-To rotate your Client Secret (recommended every 90 days):
+要轮换您的客户端密钥（建议每 90 天一次）：
 
-1. Go to **APIs & Services** > **Credentials**
-2. Find your OAuth 2.0 Client ID
-3. Click the **pencil icon** (Edit)
-4. In the **Client secret** section, click **Reset Secret**
-5. **Immediately copy** the new secret value
-6. Provide the new secret to your development team through the admin panel support request
-7. They will update the configuration without interrupting the service
-8. After confirming the new secret works, you can optionally delete the old secret
+1. 转至 **API 和服务** > **凭证**
+2. 找到您的 OAuth 2.0 客户端 ID
+3. 单击 **铅笔图标**（编辑）
+4. 在 **客户端密码** 部分中，单击 **重置密码**
+5. **立即复制**新的秘密值
+6. 通过管理面板支持请求向您的开发团队提供新的秘密
+7. 他们会在不中断服务的情况下更新配置
+8. 确认新密钥有效后，您可以选择删除旧密钥
 
-**Note**: There is a brief overlap period during rotation where both secrets work, allowing for a smooth transition.
+**注意**：轮换期间有一个短暂的重叠期，两个秘密都起作用，从而实现平稳过渡。
 
-## Testing SSO Login
+## 测试 SSO 登录
 
-After configuration is complete:
+配置完成后：
 
-1. Go to your SecureAI login page
-2. Click **Continue with Google**
-3. Select your Google Workspace account
-4. Grant permissions if prompted
-5. You should be redirected to SecureAI and logged in
+1. 进入您的SecureAI登录页面
+2. 点击**继续使用 Google**
+3. 选择您的Google Workspace帐户
+4. 如果出现提示，请授予权限
+5. 您应该被重定向到 SecureAI 并登录
 
-If you encounter issues:
-- Clear your browser cookies and try again
-- Verify you're using the correct Google Workspace account
-- Check that your email exists in SecureAI
+如果您遇到问题：
+- 清除浏览器cookie并重试
+- 验证您使用的是正确的 Google Workspace 帐户
+- 检查您的电子邮件是否存在于 SecureAI 中
 
-## Support
+## 支持
 
-If you encounter problems during configuration:
+如果您在配置过程中遇到问题：
 
-1. Verify that you have administrator permissions in Google Cloud Console
-2. Verify that you have Google Workspace admin access (if domain restrictions are used)
-3. Contact your development team through the admin panel support request with:
-   - Screenshots of the errors
-   - The Client ID (you can share this - it's not sensitive)
-   - The complete error message
-   - Any relevant browser console errors
+1. 验证您在 Google Cloud Console 中是否拥有管理员权限
+2. 验证您是否具有 Google Workspace 管理员访问权限（如果使用域限制）
+3. 通过管理面板支持请求联系您的开发团队：
+   - 错误的屏幕截图
+   - 客户端 ID（您可以共享此信息 - 它不敏感）
+   - 完整的错误信息
+   - 任何相关的浏览器控制台错误
 
-**Never share your Client Secret in support requests** - only share it through secure channels after establishing identity verification.
+**切勿在支持请求中共享您的客户端密钥** - 仅在建立身份验证后通过安全渠道共享。
 
-## Additional Resources
+## 其他资源
 
-- [Google Cloud Console Documentation](https://cloud.google.com/docs)
-- [Google OAuth 2.0 Documentation](https://developers.google.com/identity/protocols/oauth2)
-- [Google Workspace Admin Help](https://support.google.com/a)
+- [Google Cloud 控制台文档](https://cloud.google.com/docs)
+- [Google OAuth 2.0 文档](https://developers.google.com/identity/protocols/oauth2)
+- [Google Workspace 管理员帮助](https://support.google.com/a)

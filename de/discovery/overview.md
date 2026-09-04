@@ -12,20 +12,20 @@ SecureAI erstellt ein einziges, kontinuierlich aktualisiertes Inventar der KI in
 
 | Signal | Sieht | Gefüttert von |
 |--------|------|--------|
-| **Cloud-APIs** | Agenten, Modelle, Bereitstellungen und Identitäten innerhalb Ihrer KI-Plattformen. | [Cloud AI Provider](/de/en/integrations/cloud/overview) Konnektoren → [Cloud Sensors](/de/en/discovery/cloud-sensors) |
-| **Netzwerk / CASB** | Unternehmensquell-IPs rufen LLM-APIs auf, ohne dass ein Agent installiert ist. | [CASB / SWG](/de/en/integrations/casb/overview) Konnektoren → [Netzwerkquellen](/de/en/discovery/network-sources) |
-| **Endpunkt-Agent** | AI/MCP-Aktivität auf verwalteten Laptops und Servern. | [OS Agent](/de/en/agent/overview) |
+| **Cloud-APIs** | Agenten, Modelle, Bereitstellungen und Identitäten innerhalb Ihrer KI-Plattformen. | [Cloud AI Provider](/de/integrations/cloud/overview) Konnektoren → [Cloud Sensors](/de/discovery/cloud-sensors) |
+| **Netzwerk / CASB** | Unternehmensquell-IPs rufen LLM-APIs auf, ohne dass ein Agent installiert ist. | [CASB / SWG](/de/integrations/casb/overview) Konnektoren → [Netzwerkquellen](/de/discovery/network-sources) |
+| **Endpunkt-Agent** | AI/MCP-Aktivität auf verwalteten Laptops und Servern. | [OS Agent](/de/agent/overview) |
 
-Über alle Signale hinweg entdeckte Identitäten werden im [NHI-Inventar](/de/en/discovery/nhi-inventory) erfasst, und die von Ihnen verwalteten logischen Agenten/Chatbots leben im [Agentenregister](/de/en/discovery/agent-registry).
+Über alle Signale hinweg entdeckte Identitäten werden im [NHI-Inventar](/de/discovery/nhi-inventory) erfasst, und die von Ihnen verwalteten logischen Agenten/Chatbots leben im [Agentenregister](/de/discovery/agent-registry).
 
 ## Die Inventar-Registerkarten
 
 Unter **Admin → Agent Registry** finden Sie:
 
-- **[Cloud Sensors](/de/en/discovery/cloud-sensors)** – von der Cloud entdeckte Agenten und Modelle.
-- **[Netzwerkquellen](/de/en/discovery/network-sources)** – Schatten-KI-Quellen in CASB/SWG-Protokollen gefunden.
-- **[NHI Inventory](/de/en/discovery/nhi-inventory)** – nicht-menschliche Identitäten (Schlüssel, Dienstkonten) mit Sperr-/Widerrufskontrollen.
-- **[Agent Registry](/de/en/discovery/agent-registry)** – Governance-Metadaten für Ihre logischen KI-Agenten und Chatbots.
+- **[Cloud Sensors](/de/discovery/cloud-sensors)** – von der Cloud entdeckte Agenten und Modelle.
+- **[Netzwerkquellen](/de/discovery/network-sources)** – Schatten-KI-Quellen in CASB/SWG-Protokollen gefunden.
+- **[NHI Inventory](/de/discovery/nhi-inventory)** – nicht-menschliche Identitäten (Schlüssel, Dienstkonten) mit Sperr-/Widerrufskontrollen.
+- **[Agent Registry](/de/discovery/agent-registry)** – Governance-Metadaten für Ihre logischen KI-Agenten und Chatbots.
 
 ## Warum es wichtig ist
 
@@ -33,6 +33,6 @@ Sie können nicht regieren, was Sie nicht sehen können. Discovery liefert Ihnen
 
 ## Verwandte
 
-- [Cloud-KI-Anbieter](/de/en/integrations/cloud/overview)
-- [CASB & Netzwerk (SWG)](/de/en/integrations/casb/overview)
-- [Endpoint Agent](/de/en/agent/overview)
+- [Cloud-KI-Anbieter](/de/integrations/cloud/overview)
+- [CASB & Netzwerk (SWG)](/de/integrations/casb/overview)
+- [Endpoint Agent](/de/agent/overview)

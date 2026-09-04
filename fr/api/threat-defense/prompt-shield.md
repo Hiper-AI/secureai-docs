@@ -8,7 +8,7 @@ L'API Prompt Shield vous permet d'analyser les invites et les réponses de n'imp
 Prompt Shield peut être utilisé de deux manières :
 
 1. **API d'analyse autonome** : les points de terminaison `/scan`, `/scan-output` et `/scan-conversation` documentés ci-dessous, pour votre propre pipeline LLM.
-2. **En ligne lors des complétions** — lorsque vous appelez [Chat Completion](/fr/en/api/chat/completions) ou le [Point de terminaison compatible OpenAI](/fr/en/api/chat/openai-compatible), Prompt Shield s'exécute automatiquement et peut être réglé par appel. Voir [Contrôle par appel des achèvements](#per-call-control-on-completions).
+2. **En ligne lors des complétions** — lorsque vous appelez [Chat Completion](/fr/api/chat/completions) ou le [Point de terminaison compatible OpenAI](/fr/api/chat/openai-compatible), Prompt Shield s'exécute automatiquement et peut être réglé par appel. Voir [Contrôle par appel des achèvements](#per-call-control-on-completions).
 
 ## Contrôle par appel sur les achèvements
 
@@ -28,7 +28,7 @@ Les demandes d'achèvement analysent automatiquement les entrées (et les sortie
 | `enabled` | Définissez `false` pour désactiver cet appel de l'analyse. La désinscription est **fermée en cas d'échec** : elle n'est honorée que si la clé API est autorisée à se désinscrire ; sinon l'appel est rejeté. |
 | `policy` | Sélectionnez une stratégie Prompt Shield spécifique (identifiant ou nom) pour cet appel, parmi les stratégies autorisées de la clé. |
 
-Vous ne pouvez pas combiner `policy` avec `enabled: false`. La stratégie appliquée est renvoyée sur la réponse (`metadata.prompt_shield_policy` sur le point de terminaison classique, `secureai.prompt_shield_policy` sur le point de terminaison `/v1`). Pour prévisualiser le verdict d'un appel sans exécuter le modèle, utilisez [Policy Check](/fr/en/api/policy-check).
+Vous ne pouvez pas combiner `policy` avec `enabled: false`. La stratégie appliquée est renvoyée sur la réponse (`metadata.prompt_shield_policy` sur le point de terminaison classique, `secureai.prompt_shield_policy` sur le point de terminaison `/v1`). Pour prévisualiser le verdict d'un appel sans exécuter le modèle, utilisez [Policy Check](/fr/api/policy-check).
 
 ## Authentification
 

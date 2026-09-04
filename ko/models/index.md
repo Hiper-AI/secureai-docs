@@ -76,6 +76,6 @@ SecureAI에는 특정 작업에 가장 적합한 모델을 자동으로 선택�
 
 ## 다음 단계
 
-- [API 레퍼런스](/ko/en/api) - API를 통해 모델 사용 방법 알아보기
-- [빠른 시작](/ko/en/quickstart) - 첫 번째 모델 시작하기
-- [보안 개요](/ko/ko/security/overview) - 모델 보안 기능 이해
+- [API 레퍼런스](/ko/api) - API를 통해 모델 사용 방법 알아보기
+- [빠른 시작](/ko/quickstart) - 첫 번째 모델 시작하기
+- [보안 개요](/ko/security/overview) - 모델 보안 기능 이해

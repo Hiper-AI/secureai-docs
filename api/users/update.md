@@ -1,16 +1,14 @@
 ---
 id: update
-title: "Update User"
-sidebar_label: "Update User"
-description: "Update an existing user account"
+title: "Actualizar Usuario"
+sidebar_label: "Actualizar Usuario"
+description: "Actualizar una cuenta de usuario existente"
 openapi: "PUT /users/{userId}"
 ---
 
+# Actualizar usuario
 
-
-# Update User
-
-Update an existing user account with new information.
+Actualice una cuenta de usuario existente con nueva información.
 
 ## Endpoint
 
@@ -18,40 +16,40 @@ Update an existing user account with new information.
 PUT /users/{userId}
 ```
 
-## Description
+## Descripción
 
-This endpoint allows administrators to update an existing user account. You can modify user details such as name, email, role, license tier, and other account settings.
+Este endpoint permite a los administradores actualizar una cuenta de usuario existente. Puede modificar los detalles del usuario, como el nombre, el correo electrónico, la función, el nivel de licencia y otras configuraciones de la cuenta.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## Parámetros de ruta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `userId` | string | Yes | The unique identifier of the user to update |
+| `userId` | cadena | Sí | El identificador único del usuario a actualizar |
 
-## Request Body
+## Cuerpo de solicitud
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `name` | string | No | Full name of the user |
-| `username` | string | No | Unique username for the user |
-| `email` | string | No | Email address of the user |
-| `password` | string | No | New password for the user account |
-| `role` | string | No | User role (admin, user, globalReader) |
-| `license` | string | No | License tier (Essential, Growth, Ultra, Early Access) |
-| `status` | integer | No | Account status (0=inactive, 1=active) |
-| `roleId` | string | No | Custom role ID (MongoDB ObjectId) |
-| `setupCompleted` | boolean | No | Whether user setup is completed |
-| `isVerified` | boolean | No | Whether user is verified |
+| `name` | cadena | No | Nombre completo del usuario |
+| `username` | cadena | No | Nombre de usuario único para el usuario |
+| `email` | cadena | No | Dirección de correo electrónico del usuario |
+| `password` | cadena | No | Nueva contraseña para la cuenta de usuario |
+| `role` | cadena | No | Rol de usuario (administrador, usuario, globalReader) |
+| `license` | cadena | No | Nivel de licencia (Esencial, Crecimiento, Ultra, Acceso temprano) |
+| `status` | entero | No | Estado de la cuenta (0=inactivo, 1=activo) |
+| `roleId` | cadena | No | ID de rol personalizado (MongoDB ObjectId) |
+| `setupCompleted` | booleano | No | Si se completó la configuración del usuario |
+| `isVerified` | booleano | No | Si el usuario está verificado |
 
-## Example Request
+## Solicitud de ejemplo
 
 ```json
 {
@@ -65,9 +63,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `200 OK`
+**Código de estado**: `200 OK`
 
 ```json
 {
@@ -96,29 +94,29 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `user` | object | Updated user object |
-| `user.id` | string | Unique user identifier |
-| `user.name` | string | User's full name |
-| `user.username` | string | User's username |
-| `user.email` | string | User's email address |
-| `user.role` | string | User's role in the system |
-| `user.license` | string | User's license tier |
-| `user.status` | integer | User's account status (0=inactive, 1=active) |
-| `user.isVerified` | boolean | Whether user is verified |
-| `user.setupCompleted` | boolean | Whether user setup is completed |
-| `user.authType` | string | Authentication type |
-| `user.customRole` | object | Custom role information (if assigned) |
-| `user.createdAt` | string | Account creation timestamp |
-| `user.updatedAt` | string | Last update timestamp |
-| `user.lastActive` | string | User's last activity timestamp |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `message` | cadena | Mensaje de éxito |
+| `user` | objeto | Objeto de usuario actualizado |
+| `user.id` | cadena | Identificador único de usuario |
+| `user.name` | cadena | Nombre completo del usuario |
+| `user.username` | cadena | Nombre de usuario del usuario |
+| `user.email` | cadena | Dirección de correo electrónico del usuario |
+| `user.role` | cadena | Rol del usuario en el sistema |
+| `user.license` | cadena | Nivel de licencia de usuario |
+| `user.status` | entero | Estado de la cuenta del usuario (0=inactivo, 1=activo) |
+| `user.isVerified` | booleano | Si el usuario está verificado |
+| `user.setupCompleted` | booleano | Si se completó la configuración del usuario |
+| `user.authType` | cadena | Tipo de autenticación |
+| `user.customRole` | objeto | Información de función personalizada (si está asignada) |
+| `user.createdAt` | cadena | Marca de tiempo de creación de cuenta |
+| `user.updatedAt` | cadena | Marca de tiempo de la última actualización |
+| `user.lastActive` | cadena | Marca de tiempo de la última actividad del usuario |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -149,7 +147,7 @@ const result = await updateUser('60a7c8f5e8b4f5001f7a8c23', userData);
 console.log(result);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -177,7 +175,7 @@ result = update_user("60a7c8f5e8b4f5001f7a8c23", user_data)
 print(result)
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f5001f7a8c23" \
@@ -192,9 +190,9 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
   }'
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -210,7 +208,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -222,7 +220,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -234,7 +232,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 404 Not Found
+### 404 no encontrado
 
 ```json
 {
@@ -246,7 +244,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 409 Conflict
+### 409 Conflicto
 
 ```json
 {
@@ -258,24 +256,24 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-## Validations and Business Rules
+## Validaciones y reglas de negocio
 
-- **License value**: Must be in allowed licenses (`Essential`, `Growth`, `Ultra`, `Early Access`). Invalid values return 400.
-- **License capacity**: Enforced via `checkLicenseCapacity`; returns 400 when the selected tier is full.
-- **License downgrade guard**: If changing to a lower tier reduces personal index quota, the change is blocked when current personal index count exceeds `INDEX_QUOTAS[new_license]`; returns 400 with explicit guidance.
-- **Email normalization**: Lowercased and trimmed before validation and storage.
-- **Username normalization**: Lowercased and trimmed before validation and storage.
-- **Email format**: Simple regex validation; invalid emails return 400.
-- **Username format**: Must match `^[a-z0-9.-]{3,30}$`; invalid usernames return 400.
-- **Uniqueness**: `email`, `username`, and `name` must remain unique; conflicts return 409.
+- **Valor de licencia**: Debe estar en licencias permitidas (`Essential`, `Growth`, `Ultra`, `Early Access`). Los valores no válidos devuelven 400.
+- **Capacidad de licencia**: Aplicada a través de `checkLicenseCapacity`; devuelve 400 cuando el nivel seleccionado está lleno.
+- **Guardia de degradación de licencia**: si el cambio a un nivel inferior reduce la cuota de índice personal, el cambio se bloquea cuando el recuento de índice personal actual excede `INDEX_QUOTAS[new_license]`; devuelve 400 con orientación explícita.
+- **Normalización del correo electrónico**: minúsculas y recortadas antes de la validación y el almacenamiento.
+- **Normalización del nombre de usuario**: minúsculas y recortadas antes de la validación y el almacenamiento.
+- **Formato de correo electrónico**: validación de expresiones regulares simple; los correos electrónicos no válidos devuelven 400.
+- **Formato de nombre de usuario**: debe coincidir con `^[a-z0-9.-]{3,30}$`; Los nombres de usuario no válidos devuelven 400.
+- **Singularidad**: `email`, `username` y `name` deben seguir siendo únicos; Los conflictos regresan 409.
 
-## Normalization and Storage
+## Normalización y almacenamiento
 
-- `email` and `username` are always stored lowercased and trimmed.
+- `email` y `username` siempre se guardan en minúsculas y recortados.
 
-## Typical Error Shapes
+## Formas de error típicas
 
-### 400 Invalid License
+### 400 Licencia no válida
 
 ```json
 {
@@ -285,7 +283,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 License Unavailable
+### Licencia 400 no disponible
 
 ```json
 {
@@ -295,7 +293,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 License Downgrade Exceeds Quota
+### La degradación de la licencia 400 supera la cuota
 
 ```json
 {
@@ -305,7 +303,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 Invalid Email
+### 400 Correo electrónico no válido
 
 ```json
 {
@@ -315,7 +313,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 400 Invalid Username
+### 400 Nombre de usuario no válido
 
 ```json
 {
@@ -325,7 +323,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-### 409 Conflict (Uniqueness)
+### 409 Conflicto (singularidad)
 
 ```json
 {
@@ -335,48 +333,48 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/users/60a7c8f5e8b4f
 }
 ```
 
-## User Roles
+## Roles de usuario
 
-| Role | Description | Permissions |
+| Rol | Descripción | Permisos |
 |------|-------------|-------------|
-| `admin` | Administrator | Full system access |
-| `user` | Regular user | Standard user access |
-| `globalReader` | Global Reader | Read-only admin panel access |
+| `admin` | Administrador | Acceso completo al sistema |
+| `user` | Usuario habitual | Acceso de usuario estándar |
+| `globalReader` | Lector global | Acceso al panel de administración de solo lectura |
 
-## License Tiers
+## Niveles de licencia
 
-| Tier | Description | Features |
+| Nivel | Descripción | Características |
 |------|-------------|----------|
-| `Essential` | Basic tier | Limited features |
-| `Growth` | Professional tier | Enhanced features |
-| `Ultra` | Premium tier | Full features |
-| `Early Access` | Early access tier | Beta features |
+| `Essential` | Nivel básico | Funciones limitadas |
+| `Growth` | Nivel profesional | Funciones mejoradas |
+| `Ultra` | Nivel premium | Funciones completas |
+| `Early Access` | Nivel de acceso temprano | Funciones beta |
 
-## Account Status
+## Estado de la cuenta
 
-| Status | Description |
+| Estado | Descripción |
 |--------|-------------|
-| `0` | Inactive account |
-| `1` | Active account |
+| `0` | Cuenta inactiva |
+| `1` | Cuenta activa |
 
-## Use Cases
+## Casos de uso
 
-- **Role Management**: Updating user roles for access control
-- **License Upgrades**: Changing user license tiers
-- **Account Maintenance**: Updating user information and metadata
-- **Status Management**: Activating or suspending user accounts
-- **Profile Updates**: Modifying user names, emails, or other details
+- **Gestión de roles**: actualización de roles de usuario para control de acceso
+- **Actualizaciones de licencia**: cambio de niveles de licencia de usuario
+- **Mantenimiento de cuenta**: actualización de información y metadatos del usuario
+- **Gestión de estado**: Activar o suspender cuentas de usuario
+- **Actualizaciones de perfil**: modificación de nombres de usuario, correos electrónicos u otros detalles
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **Predeterminado**: 100 solicitudes por minuto
+- **Diario**: 10.000 solicitudes por día
+- **Mensual**: 300.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- Only administrators can update user accounts
-- Email addresses must be unique across all users
-- Password updates are optional and will only be applied if provided
-- Metadata updates are merged with existing metadata
-- The `updatedAt` timestamp is automatically updated on successful operations 
+- Sólo los administradores pueden actualizar las cuentas de usuario.
+- Las direcciones de correo electrónico deben ser únicas para todos los usuarios.
+- Las actualizaciones de contraseña son opcionales y solo se aplicarán si se proporcionan
+- Las actualizaciones de metadatos se fusionan con los metadatos existentes.
+- La marca de tiempo `updatedAt` se actualiza automáticamente en operaciones exitosas

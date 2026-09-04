@@ -1,40 +1,38 @@
 ---
 sidebar_position: 7
-title: "Transparent Proxy (AI Routing)"
-sidebar_label: "Transparent Proxy"
-description: "Route developer AI traffic (e.g. Claude Code) through the SecureAI gateway from the endpoint"
+title: "Proxy Transparente (Enrutamiento Local de IA)"
+sidebar_label: "Proxy Transparente"
+description: "Enrutar el tráfico de IA del desarrollador (por ejemplo, Claude Code) a través de la puerta de enlace SecureAI desde el endpoint"
 ---
 
+# Proxy transparente (enrutamiento AI)
 
+El agente puede enrutar de forma transparente el tráfico de IA de un desarrollador, por ejemplo [Claude Code](/integrations/ide-claude-code), a través de la puerta de enlace SecureAI. Esto hace que el uso del asistente de codificación esté bajo la misma gobernanza, seguimiento de costos y política que el resto de su patrimonio de IA, sin que el desarrollador cambie sus herramientas.
 
-# Transparent Proxy (AI Routing)
+## Cómo funciona
 
-The agent can transparently route a developer's AI traffic — for example [Claude Code](/en/integrations/ide-claude-code) — through the SecureAI gateway. This brings coding-assistant usage under the same governance, cost tracking, and policy as the rest of your AI estate, without the developer changing their tools.
+El enrutamiento se configura por [política](/agent/policies-and-groups) a través de `claudeCodeRouting`:
 
-## How it works
-
-Routing is configured per [policy](/en/agent/policies-and-groups) via `claudeCodeRouting`:
-
-| Setting | Description |
+| Configuración | Descripción |
 |---------|-------------|
-| **Enabled** | Turn routing on for devices under this policy. |
-| **Lock** | `user` (developer may toggle), `force_on` (always routed), or `force_off` (never routed). |
-| **Model mappings** | Per-family mapping for `opus` / `sonnet` / `haiku` to the model actually served. |
-| **Model lock** | `user` or `force` — whether the developer may change the mapping. |
+| **Habilitado** | Active el enrutamiento para dispositivos bajo esta política. |
+| **Bloquear** | `user` (el desarrollador puede alternar), `force_on` (siempre enrutado) o `force_off` (nunca enrutado). |
+| **Asignaciones de modelos** | Mapeo por familia para `opus` / `sonnet` / `haiku` al modelo realmente servido. |
+| **Bloqueo de modelo** | `user` o `force`: si el desarrollador puede cambiar la asignación. |
 
-When routing is enabled, SecureAI **mints a per-device API key** and injects it into the endpoint's environment (e.g. as `ANTHROPIC_AUTH_TOKEN`) via the transparent-proxy configuration. Usage is **billed to the linked developer's points bucket**, so make sure the device is linked to an owner user (see [Enrollment & Packages](/en/agent/enrollment-and-packages)).
+Cuando el enrutamiento está habilitado, SecureAI **crea una clave API por dispositivo** y la inyecta en el entorno del endpoint (por ejemplo, como `ANTHROPIC_AUTH_TOKEN`) a través de la configuración de proxy transparente. El uso se **factura al depósito de puntos del desarrollador vinculado**, así que asegúrese de que el dispositivo esté vinculado a un usuario propietario (consulte [Inscripción y paquetes](/agent/enrollment-and-packages)).
 
-## Fleet-wide defaults
+## Valores predeterminados para toda la flota
 
-Gateway defaults can be set once for the fleet — `anthropicBaseUrl`, `openaiBaseUrl`, the auth token, and a lock — and inherited by devices. The agent reports whether the proxy is currently on or off, and those transitions are audited.
+Los valores predeterminados de la puerta de enlace se pueden configurar una vez para la flota (`anthropicBaseUrl`, `openaiBaseUrl`, el token de autenticación y un bloqueo) y los dispositivos los heredan. El agente informa si el proxy está actualmente activado o desactivado y esas transiciones se auditan.
 
-## Why route instead of block
+## ¿Por qué enrutar en lugar de bloquear?
 
-For sanctioned developer AI, routing through the gateway is usually preferable to an [egress block](/en/agent/egress-enforcement): the developer keeps working, while you gain policy enforcement, cost attribution, and audit on that traffic. Reserve blocking/lockdown for unsanctioned providers.
+Para la IA de un desarrollador autorizado, el enrutamiento a través de la puerta de enlace suele ser preferible a un [bloque de salida](/agent/egress-enforcement): el desarrollador sigue trabajando, mientras usted obtiene la aplicación de políticas, la atribución de costos y la auditoría de ese tráfico. Bloqueo/bloqueo de reserva para proveedores no autorizados.
 
-## Related
+## Relacionado
 
-- [Egress Enforcement](/en/agent/egress-enforcement)
-- [Policies & Groups](/en/agent/policies-and-groups)
-- [AI Gateway Overview](/en/ai-gateway/overview)
-- [Claude Code IDE Integration](/en/integrations/ide-claude-code)
+- [Aplicación de salida](/agent/egress-enforcement)
+- [Políticas y grupos](/agent/policies-and-groups)
+- [Descripción general de la puerta de enlace AI](/ai-gateway/overview)
+- [Integración IDE de Claude Code](/integrations/ide-claude-code)

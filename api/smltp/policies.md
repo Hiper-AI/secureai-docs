@@ -1,16 +1,14 @@
 ---
 id: policies
-title: "SMLTP Policies"
-sidebar_label: "SMLTP Policies"
-description: "Retrieve all SMLTP security policies"
+title: "Políticas SMLTP"
+sidebar_label: "Políticas SMLTP"
+description: "Recuperar todas las políticas de seguridad SMLTP"
 openapi: "GET /smltp-policies/all"
 ---
 
+# Políticas SMLTP
 
-
-# SMLTP Policies
-
-Retrieve all available SMLTP (Secure Model Language Transfer Protocol) security policies.
+Recupere todas las políticas de seguridad SMLTP (Protocolo seguro de transferencia de lenguaje de modelo) disponibles.
 
 ## Endpoint
 
@@ -18,33 +16,33 @@ Retrieve all available SMLTP (Secure Model Language Transfer Protocol) security 
 GET /smltp-policies/all
 ```
 
-## Description
+## Descripción
 
-Retrieve all available SMLTP policies including built-in and custom policies. **Admin only access required.**
+Recupere todas las políticas SMLTP disponibles, incluidas las políticas integradas y personalizadas. **Solo se requiere acceso de administrador.**
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## Parámetros de consulta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-❌ No query parameters supported - the actual API doesn't accept any query parameters.
+❌ No se admiten parámetros de consulta: la API real no acepta ningún parámetro de consulta.
 
-## Example Request
+## Solicitud de ejemplo
 
 ```bash
 GET /smltp-policies/all
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `200 OK`
+**Código de estado**: `200 OK`
 
 ```json
 {
@@ -105,21 +103,21 @@ GET /smltp-policies/all
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `data` | object | Response data object |
-| `data.builtInPolicies` | array | Array of built-in policy objects |
-| `data.customPolicies` | array | Array of custom policy objects |
-| `data.activePolicyTemplate` | string | Currently active policy template ID |
-| `data.summary` | object | Summary statistics |
-| `data.summary.totalPolicies` | integer | Total number of policies |
-| `data.summary.builtInCount` | integer | Number of built-in policies |
-| `data.summary.customCount` | integer | Number of custom policies |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `data` | objeto | Objeto de datos de respuesta |
+| `data.builtInPolicies` | matriz | Matriz de objetos de política integrados |
+| `data.customPolicies` | matriz | Matriz de objetos de política personalizados |
+| `data.activePolicyTemplate` | cadena | ID de plantilla de política actualmente activa |
+| `data.summary` | objeto | Estadísticas resumidas |
+| `data.summary.totalPolicies` | entero | Número total de pólizas |
+| `data.summary.builtInCount` | entero | Número de políticas integradas |
+| `data.summary.customCount` | entero | Número de pólizas personalizadas |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -141,7 +139,7 @@ console.log('Built-in policies:', result.data.builtInPolicies);
 console.log('Active policy:', result.data.activePolicyTemplate);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -161,16 +159,16 @@ print("Built-in policies:", result["data"]["builtInPolicies"])
 print("Active policy:", result["data"]["activePolicyTemplate"])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/all" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -182,7 +180,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/all"
 }
 ```
 
-### 429 Too Many Requests
+### 429 Demasiadas solicitudes
 
 ```json
 {
@@ -195,36 +193,36 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/all"
 }
 ```
 
-## Policy Object Fields
+## Campos de objeto de política
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `id` | string | Policy identifier |
-| `name` | string | Policy name |
-| `type` | string | Policy type ("built-in" or "custom") |
-| `description` | string | Policy description |
-| `isActive` | boolean | Whether this policy is currently active |
-| `createdAt` | string | Creation timestamp (custom policies only) |
+| `id` | cadena | Identificador de política |
+| `name` | cadena | Nombre de la política |
+| `type` | cadena | Tipo de política ("integrada" o "personalizada") |
+| `description` | cadena | Descripción de la política |
+| `isActive` | booleano | Si esta política está actualmente activa |
+| `createdAt` | cadena | Marca de tiempo de creación (solo políticas personalizadas) |
 
-## Use Cases
+## Casos de uso
 
-- **Policy Discovery**: Find available security policies
-- **Compliance Planning**: Understand policy requirements
-- **Security Configuration**: Select appropriate policies
-- **Active Policy Management**: Check which policy is currently active
-- **Integration**: Apply policies to chat completions
+- **Descubrimiento de políticas**: busque políticas de seguridad disponibles
+- **Planificación de cumplimiento**: comprender los requisitos de las políticas
+- **Configuración de seguridad**: seleccione las políticas adecuadas
+- **Gestión de políticas activas**: compruebe qué política está actualmente activa
+- **Integración**: Aplicar políticas para finalizar el chat
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **Predeterminado**: 100 solicitudes por minuto
+- **Diario**: 10.000 solicitudes por día
+- **Mensual**: 300.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- This endpoint requires admin privileges
-- No Parameters: No query parameters are supported
-- Built-in Policies: Returns predefined system policies
-- Custom Policies: Returns custom policies if any exist
-- Active Policy: Shows which policy template is currently active
-- Flat Response: Response is nested under data object 
+- Este endpoint requiere privilegios de administrador
+- Sin parámetros: no se admiten parámetros de consulta
+- Políticas integradas: devuelve políticas del sistema predefinidas
+- Políticas personalizadas: devuelve políticas personalizadas si existen.
+- Política activa: muestra qué plantilla de política está actualmente activa
+- Respuesta plana: la respuesta está anidada bajo el objeto de datos.

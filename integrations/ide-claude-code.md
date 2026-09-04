@@ -1,27 +1,25 @@
 ---
 id: ide-claude-code
-title: "Claude Code"
+title: "Integración con Claude Code"
 sidebar_label: "Claude Code"
-description: "Use Claude Code with SecureAI — full SMLTP, DLP, and PII enforcement for AI-assisted development"
+description: "Utilice Claude Code con SecureAI: aplicación completa de SMLTP, DLP y PII para el desarrollo asistido por IA"
 ---
 
+# Claude Code: integración IDE
 
-
-# Claude Code — IDE Integration
-
-[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) is Anthropic's agentic coding assistant. By pointing it at SecureAI's Anthropic-compatible proxy, every prompt your developers send passes through **SMLTP, DLP, PII scanning, Prompt Shield, rate limiting, and model governance** — without any changes to the developer's workflow.
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) es el asistente de codificación agente de Anthropic. Al apuntar al proxy compatible con Anthropic de SecureAI, cada mensaje que envían sus desarrolladores pasa por **SMLTP, DLP, escaneo de PII, Prompt Shield, limitación de velocidad y gobernanza de modelos**, sin ningún cambio en el flujo de trabajo del desarrollador.
 
 ---
 
-## How it works
+## Cómo funciona
 
-SecureAI exposes an Anthropic Messages API-compatible endpoint at:
+SecureAI expone un endpoint compatible con la API de Anthropic Messages en:
 
 ```
 https://<your-host>/api/claude-code
 ```
 
-Claude Code natively supports redirecting all traffic to a custom base URL via the `ANTHROPIC_BASE_URL` environment variable. When configured, it speaks its native Anthropic protocol directly to SecureAI — no local proxy or wrapper script required.
+Claude Code admite de forma nativa la redirección de todo el tráfico a una URL base personalizada a través de la variable de entorno `ANTHROPIC_BASE_URL`. Cuando se configura, habla su protocolo Anthropic nativo directamente a SecureAI, sin necesidad de proxy local ni secuencia de comandos contenedora.
 
 ```
 Developer machine
@@ -41,22 +39,22 @@ SecureAI  (/api/claude-code)
 OpenRouter / Self-Hosted LLM
 ```
 
-All activity appears in the SecureAI admin dashboard under **AI Gateway → Audit Logs**, attributed to the developer's API key.
+Toda la actividad aparece en el panel de administración de SecureAI en **AI Gateway → Audit Logs**, atribuida a la clave API del desarrollador.
 
 ---
 
-## Step 1 — Install Claude Code
+## Paso 1: instalar el Claude Code
 
 
 <Tabs>
-  <Tab title="macOS / Linux / WSL">
+  <Tab title="macOS/Linux/WSL">
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
   </Tab>
-  <Tab title="Windows PowerShell">
+  <Tab title="WindowsPowerShell">
 
 ```powershell
 irm https://claude.ai/install.ps1 | iex
@@ -67,22 +65,22 @@ irm https://claude.ai/install.ps1 | iex
 
 ---
 
-## Step 2 — Generate an API key
+## Paso 2: generar una clave API
 
-1. Go to **Admin → API Keys** (`https://<your-host>/admin/apis`)
-2. Click **Create API Key**
-3. Set a name (e.g. `claude-code-dev-jane`)
-4. Configure:
-   - **Allowed models** — select which LLMs the key can use (see [available models](#available-models))
-   - **SMLTP policy** — select the compliance policy (`internal`, `confidential`, `hipaa`, etc.)
-   - **Rate limits** as required
-5. Copy the `sk-…` value — it is shown only once
+1. Vaya a **Administrador → Claves API** (`https://<your-host>/admin/apis`)
+2. Haga clic en **Crear clave API**
+3. Establezca un nombre (por ejemplo, `claude-code-dev-jane`)
+4. Configurar:
+   - **Modelos permitidos**: seleccione qué LLM puede usar la clave (consulte [modelos disponibles](#modelos-disponibles))
+   - **Política SMLTP**: seleccione la política de cumplimiento (`internal`, `confidential`, `hipaa`, etc.)
+   - **Límites de tarifas** según sea necesario
+5. Copie el valor `sk-…`; se muestra solo una vez
 
 ---
 
-## Step 3 — Configure Claude Code
+## Paso 3: configurar el Claude Code
 
-The recommended approach is to add the settings to the **project-level local settings file** (`.claude/settings.local.json`), which is git-ignored by default.
+El enfoque recomendado es agregar la configuración al **archivo de configuración local a nivel de proyecto** (`.claude/settings.local.json`), que git ignora de forma predeterminada.
 
 ```json title=".claude/settings.local.json"
 {
@@ -102,116 +100,116 @@ The recommended approach is to add the settings to the **project-level local set
 ```
 
 <Warning>
-`ANTHROPIC_API_KEY` must be **explicitly set to an empty string** to prevent Claude Code from trying to authenticate directly with Anthropic.
+`ANTHROPIC_API_KEY` debe **establecerse explícitamente en una cadena vacía** para evitar que Claude Code intente autenticarse directamente con Anthropic.
 </Warning>
 
 <Tip>
-**Shell profile (alternative)**
+**Perfil de carcasa (alternativo)**
 
-You can also add the variables to `~/.zshrc`, `~/.bashrc`, or your PowerShell `$PROFILE` instead of the settings file. The settings file is preferred for team projects so every developer inherits the same configuration automatically.
+También puede agregar las variables a `~/.zshrc`, `~/.bashrc` o a su PowerShell `$PROFILE` en lugar del archivo de configuración. Se prefiere el archivo de configuración para proyectos de equipo, de modo que cada desarrollador herede la misma configuración automáticamente.
 </Tip>
 
 ---
 
-## Step 4 — Verify the connection
+## Paso 4: verificar la conexión
 
-Start Claude Code from your project directory:
+Inicie Claude Code desde el directorio de su proyecto:
 
 ```bash
 cd /path/to/your/project
 claude
 ```
 
-Run `/status` inside the session. You should see:
+Ejecute `/status` dentro de la sesión. Deberías ver:
 
 ```
 Auth token:          ANTHROPIC_AUTH_TOKEN
 Anthropic base URL:  https://<your-host>/api/claude-code
 ```
 
-That confirms all traffic is routing through SecureAI.
+Eso confirma que todo el tráfico se dirige a través de SecureAI.
 
 ---
 
-## Available models
+## Modelos disponibles
 
-SecureAI exposes the same model catalog available in the chat interface. Use any `id` value from the table below in the env vars above.
+SecureAI expone el mismo catálogo de modelos disponible en la interfaz de chat. Utilice cualquier valor `id` de la siguiente tabla en las variables de entorno anteriores.
 
-### Anthropic (Claude)
-| Model ID | Display name |
+### Antrópico (Claude)
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
-| `anthropic/claude-sonnet-4.6` | Claude Sonnet 4.6 |
+| `anthropic/claude-sonnet-4.6` | Claude Soneto 4.6 |
 | `anthropic/claude-opus-4.6` | Claude Opus 4.6 |
 
-### OpenAI
-| Model ID | Display name |
+### IA abierta
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
 | `openai/gpt-5-mini` | GPT-5 Mini |
-| `openai/gpt-5.1-codex` | GPT-5.1-Codex |
+| `openai/gpt-5.1-codex` | Códice GPT-5.1 |
 | `openai/gpt-5.1` | GPT-5.1 |
 | `openai/gpt-5.2` | GPT-5.2 |
-| `openai/gpt-5.3-codex` | GPT-5.3-Codex |
+| `openai/gpt-5.3-codex` | Códice GPT-5.3 |
 
-### Google (Gemini)
-| Model ID | Display name |
+### Google (Géminis)
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
-| `google/gemini-3-flash-preview` | Gemini 3 Flash Preview |
-| `google/gemini-3.1-pro-preview` | Gemini 3.1 Pro Preview |
+| `google/gemini-3-flash-preview` | Vista previa flash de Géminis 3 |
+| `google/gemini-3.1-pro-preview` | Vista previa de Géminis 3.1 Pro |
 
 ### Meta (Llama)
-| Model ID | Display name |
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
 | `meta-llama/llama-4-maverick` | Llama 4 Maverick |
-| `meta-llama/llama-4-scout` | Llama 4 Scout |
-| `meta-llama/llama-3.3-70b-instruct` | Llama 3.3 70B Instruct |
+| `meta-llama/llama-4-scout` | Llama 4 Explorador |
+| `meta-llama/llama-3.3-70b-instruct` | Llama 3.3 70B Instrucción |
 
-### Mistral
-| Model ID | Display name |
+###Mistral
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
-| `mistralai/mistral-large-2512` | Mistral Large 3 2512 |
+| `mistralai/mistral-large-2512` | Mistral Grande 3 2512 |
 | `mistralai/ministral-14b-2512` | Ministral 14B 2512 |
 | `mistralai/mistral-nemo` | Mistral Nemo |
-| `mistralai/mistral-7b-instruct` | Mistral 7B Instruct |
+| `mistralai/mistral-7b-instruct` | Instrucción Mistral 7B |
 
-### DeepSeek
-| Model ID | Display name |
+### Búsqueda profunda
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
 | `deepseek/deepseek-r1-0528` | DeepSeek R1 0528 |
 | `deepseek/deepseek-v3.2` | DeepSeek V3.2 |
 
-### xAI (Grok)
-| Model ID | Display name |
+### xAI (Asimilar)
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
 | `x-ai/grok-4` | Grok 4 |
-| `x-ai/grok-code-fast-1` | Grok Code Fast 1 |
-| `x-ai/grok-4.1-fast` | Grok 4.1 Fast |
+| `x-ai/grok-code-fast-1` | Código Grok Rápido 1 |
+| `x-ai/grok-4.1-fast` | Grok 4.1 Rápido |
 
 ### Qwen
-| Model ID | Display name |
+| Identificación del modelo | Nombre para mostrar |
 |---|---|
-| `qwen/qwen3-coder` | Qwen3-Coder |
-| `qwen/qwen3-coder-next` | Qwen3 Coder Next |
+| `qwen/qwen3-coder` | Codificador Qwen3 |
+| `qwen/qwen3-coder-next` | Codificador Qwen3 Siguiente |
 | `qwen/qwen3-235b-a22b-2507` | Qwen3 235B A22B 2507 |
 | `qwen/qwen3.5-397b-a17b` | Qwen3.5 397B A17B |
 
-### Self-Hosted (Remote SMLTP Endpoints)
+### Autohospedado (endpoints SMLTP remotos)
 
-Self-hosted models registered as active remote SMLTP endpoints are automatically available. Their IDs follow the pattern `self-hosted/<model-name>`. Run `/status` in Claude Code or call `GET /api/claude-code/v1/models` to see the live list.
+Los modelos autohospedados registrados como endpoints SMLTP remotos activos están disponibles automáticamente. Sus identificaciones siguen el patrón `self-hosted/<model-name>`. Ejecute `/status` en Claude Code o llame a `GET /api/claude-code/v1/models` para ver la lista en vivo.
 
 ---
 
-## Claude Code model roles
+## Roles modelo de Claude Code
 
-Claude Code uses different models for different internal tasks. Map each role to any model from the catalog above:
+Claude Code utiliza diferentes modelos para diferentes tareas internas. Asigne cada rol a cualquier modelo del catálogo anterior:
 
-| Environment variable | Role | Recommended |
+| Variable de entorno | Rol | Recomendado |
 |---|---|---|
-| `ANTHROPIC_DEFAULT_OPUS_MODEL` | Complex reasoning, main agentic loop | `anthropic/claude-opus-4.6` |
-| `ANTHROPIC_DEFAULT_SONNET_MODEL` | General coding tasks | `anthropic/claude-sonnet-4.6` |
-| `ANTHROPIC_DEFAULT_HAIKU_MODEL` | Quick completions, tool calls | `google/gemini-3-flash-preview` |
-| `CLAUDE_CODE_SUBAGENT_MODEL` | Spawned sub-agent tasks | `anthropic/claude-sonnet-4.6` |
+| `ANTHROPIC_DEFAULT_OPUS_MODEL` | Razonamiento complejo, principal bucle agente | `anthropic/claude-opus-4.6` |
+| `ANTHROPIC_DEFAULT_SONNET_MODEL` | Tareas generales de codificación | `anthropic/claude-sonnet-4.6` |
+| `ANTHROPIC_DEFAULT_HAIKU_MODEL` | Finalizaciones rápidas, llamadas de herramientas | `google/gemini-3-flash-preview` |
+| `CLAUDE_CODE_SUBAGENT_MODEL` | Tareas de subagente generadas | `anthropic/claude-sonnet-4.6` |
 
-You can mix providers freely. For example, use Gemini for fast/cheap sub-tasks and Claude for the main reasoning loop:
+Puede mezclar proveedores libremente. Por ejemplo, utilice Gemini para subtareas rápidas/económicas y Claude para el bucle de razonamiento principal:
 
 ```json
 "ANTHROPIC_DEFAULT_OPUS_MODEL":   "anthropic/claude-opus-4.6",
@@ -222,29 +220,29 @@ You can mix providers freely. For example, use Gemini for fast/cheap sub-tasks a
 
 ---
 
-## Security enforcement
+## Aplicación de la seguridad
 
-Every request through the proxy is subject to the full SecureAI security stack:
+Cada solicitud a través del proxy está sujeta a la pila de seguridad completa de SecureAI:
 
-| Layer | What it does |
+| Capa | Qué hace |
 |---|---|
-| **SMLTP** | Attaches bundle ID, policy hash, trace ID, and egress enforcement to every call |
-| **DLP** | Scans prompts for data-loss patterns (secrets, credentials, confidential docs) |
-| **PII** | Detects and redacts personally identifiable information; graduated enforcement tiers |
-| **Prompt Shield** | Detects prompt injection attempts |
-| **Model governance** | Enforces allowed models, provider allowlists, and residency rules |
-| **Rate limiting** | Per-key and per-user limits enforced via Redis |
-| **Audit logs** | Full per-request audit trail in **AI Gateway → Audit Logs** |
+| **SMLTP** | Adjunta ID de paquete, hash de políticas, ID de rastreo y cumplimiento de salida a cada llamada |
+| **DLP** | Analiza mensajes en busca de patrones de pérdida de datos (secretos, credenciales, documentos confidenciales) |
+| **PII** | Detecta y redacta información de identificación personal; niveles de cumplimiento graduados |
+| **Escudo rápido** | Detecta intentos de inyección rápidos |
+| **Gobernanza modelo** | Hace cumplir los modelos permitidos, las listas de proveedores permitidos y las reglas de residencia |
+| **Limitación de tasa** | Límites por clave y por usuario aplicados a través de Redis |
+| **Registros de auditoría** | Seguimiento de auditoría completo por solicitud en **AI Gateway → Registros de auditoría** |
 
-The SMLTP policy is inherited from the API key configuration. To change the policy for a key, go to **Admin → API Keys**, edit the key, and select a different **SMLTP Policy**.
+La política SMLTP se hereda de la configuración de la clave API. Para cambiar la política de una clave, vaya a **Administrador → Claves API**, edite la clave y seleccione una **Política SMLTP** diferente.
 
 ---
 
-## Troubleshooting
+## Solución de problemas
 
-### `/status` still shows `api.anthropic.com`
+### `/status` todavía muestra `api.anthropic.com`
 
-Claude Code has cached credentials from a previous login. Run `/logout` inside a Claude Code session, then restart:
+Claude Code tiene credenciales almacenadas en caché de un inicio de sesión anterior. Ejecute `/logout` dentro de una sesión de Claude Code, luego reinicie:
 
 ```bash
 claude
@@ -253,14 +251,14 @@ claude
 
 ### `401 Unauthorized`
 
-- Verify the `sk-…` key is active in **Admin → API Keys**
-- Check that `ANTHROPIC_API_KEY` is set to an empty string (`""`)
+- Verifique que la clave `sk-…` esté activa en **Admin → Claves API**
+- Compruebe que `ANTHROPIC_API_KEY` esté configurado en una cadena vacía (`""`)
 
-### Model not available
+### Modelo no disponible
 
-- Check the API key's **Allowed Models** list in **Admin → API Keys**
-- Call `GET /api/claude-code/v1/models` (with your `Bearer sk-…` token) to see exactly what the key can access
+- Verifique la lista **Modelos permitidos** de la clave API en **Administrador → Claves API**
+- Llame a `GET /api/claude-code/v1/models` (con su token `Bearer sk-…`) para ver exactamente a qué puede acceder la clave
 
-### DLP / PII block
+### Bloqueo DLP/PII
 
-If a prompt is blocked, Claude Code will receive an error response with a message explaining the violation. The incident is logged in **Admin → Incidents** and visible in **AI Gateway → Audit Logs**.
+Si se bloquea un mensaje, Claude Code recibirá una respuesta de error con un mensaje que explica la infracción. El incidente se registra en **Admin → Incidentes** y es visible en **AI Gateway → Registros de auditoría**.

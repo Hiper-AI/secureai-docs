@@ -1,16 +1,14 @@
 ---
 id: list
-title: "List Groups"
-sidebar_label: "List Groups"
-description: "Retrieve all user groups"
+title: "Listar Grupos"
+sidebar_label: "Listar Grupos"
+description: "Recuperar todos los grupos de usuarios"
 openapi: "GET /groups"
 ---
 
+# Listar grupos
 
-
-# List Groups
-
-Retrieve a list of all user groups in the system with pagination and filtering options.
+Recupere una lista de todos los grupos de usuarios en el sistema con opciones de paginación y filtrado.
 
 ## Endpoint
 
@@ -18,38 +16,38 @@ Retrieve a list of all user groups in the system with pagination and filtering o
 GET /groups
 ```
 
-## Description
+## Descripción
 
-This endpoint returns all user groups available in the SecureAI system. It provides detailed information about each group including members, permissions, and metadata. This is useful for managing user access and organizational structure.
+Este endpoint devuelve todos los grupos de usuarios disponibles en el sistema SecureAI. Proporciona información detallada sobre cada grupo, incluidos miembros, permisos y metadatos. Esto es útil para gestionar el acceso de los usuarios y la estructura organizativa.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## Parámetros de consulta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `page` | integer | No | 1 | Page number for pagination |
-| `limit` | integer | No | 20 | Number of groups per page (1-100) |
-| `search` | string | No | - | Search term for group name or description |
-| `status` | string | No | - | Filter by group status |
-| `sortBy` | string | No | createdAt | Field to sort by |
-| `sortOrder` | string | No | desc | Sort order (asc, desc) |
+| `page` | entero | No | 1 | Número de página para paginación |
+| `limit` | entero | No | 20 | Número de grupos por página (1-100) |
+| `search` | cadena | No | - | Término de búsqueda para nombre o descripción del grupo |
+| `status` | cadena | No | - | Filtrar por estado del grupo |
+| `sortBy` | cadena | No | creadoEn | Campo para ordenar por |
+| `sortOrder` | cadena | No | desc | Orden de clasificación (asc, desc) |
 
-## Example Request
+## Solicitud de ejemplo
 
 ```bash
 GET /groups?search=engineering&limit=20&page=1&sortBy=createdAt&sortOrder=desc
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `200 OK`
+**Código de estado**: `200 OK`
 
 ```json
 {
@@ -80,25 +78,25 @@ GET /groups?search=engineering&limit=20&page=1&sortBy=createdAt&sortOrder=desc
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `groups[]` | array | Array of group objects |
-| `groups[].id` | string | Unique group identifier |
-| `groups[].name` | string | Group name |
-| `groups[].description` | string | Group description |
-| `groups[].status` | string | Group status |
-| `groups[].userCount` | integer | Number of users in the group |
-| `groups[].users` | array | Array of user objects in the group |
-| `groups[].users[].id` | string | User ID |
-| `groups[].users[].name` | string | User name |
-| `groups[].users[].email` | string | User email |
-| `groups[].createdAt` | string | Creation timestamp |
-| `pagination` | object | Pagination information |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `groups[]` | matriz | Matriz de objetos de grupo |
+| `groups[].id` | cadena | Identificador de grupo único |
+| `groups[].name` | cadena | Nombre del grupo |
+| `groups[].description` | cadena | Descripción del grupo |
+| `groups[].status` | cadena | Estado del grupo |
+| `groups[].userCount` | entero | Número de usuarios en el grupo |
+| `groups[].users` | matriz | Matriz de objetos de usuario en el grupo |
+| `groups[].users[].id` | cadena | ID de usuario |
+| `groups[].users[].name` | cadena | Nombre de usuario |
+| `groups[].users[].email` | cadena | Correo electrónico del usuario |
+| `groups[].createdAt` | cadena | Marca de tiempo de creación |
+| `pagination` | objeto | Información de paginación |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -128,7 +126,7 @@ const result = await listGroups({
 console.log(result.groups);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -155,16 +153,16 @@ result = list_groups(params)
 print(result["groups"])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engineering&limit=10&page=1&sortBy=createdAt&sortOrder=desc" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -176,7 +174,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engin
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -188,7 +186,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engin
 }
 ```
 
-### 429 Too Many Requests
+### 429 Demasiadas solicitudes
 
 ```json
 {
@@ -201,9 +199,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/groups?search=engin
 }
 ```
 
-## Filtering Examples
+## Ejemplos de filtrado
 
-### Search Groups
+### Buscar grupos
 
 ```bash
 # Search by name
@@ -213,7 +211,7 @@ GET /groups?search=engineering
 GET /groups?search=development
 ```
 
-### Sort Options
+### Opciones de clasificación
 
 ```bash
 # Sort by name ascending
@@ -226,7 +224,7 @@ GET /groups?sortBy=userCount&sortOrder=desc
 GET /groups?sortBy=createdAt&sortOrder=desc
 ```
 
-### Pagination
+### Paginación
 
 ```bash
 # Get first 20 groups
@@ -236,26 +234,26 @@ GET /groups?limit=20&page=1
 GET /groups?limit=20&page=2
 ```
 
-## Use Cases
+## Casos de uso
 
-- **Group Management**: List all groups for administrative purposes
-- **User Organization**: Discover available groups for user assignment
-- **Access Control**: Review group permissions and member counts
-- **Reporting**: Generate reports on group structure and membership
-- **Integration**: Discover groups for application integration
+- **Gestión de grupos**: enumera todos los grupos para fines administrativos
+- **Organización de usuarios**: descubra los grupos disponibles para la asignación de usuarios
+- **Control de acceso**: revisar los permisos del grupo y el recuento de miembros
+- **Informes**: genere informes sobre la estructura del grupo y la membresía
+- **Integración**: Descubra grupos para la integración de aplicaciones
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **Predeterminado**: 100 solicitudes por minuto
+- **Diario**: 10.000 solicitudes por día
+- **Mensual**: 300.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- This endpoint is only accessible by administrators
-- Pagination: Uses page parameter, not offset
-- Flat Response: Response is not nested under data object
-- User Details: Includes full user information for each group member
-- Status Filter: Can filter by group status
-- Search functionality works across group names and descriptions
-- Sorting options help organize results by different criteria 
+- Solo los administradores pueden acceder a este endpoint.
+- Paginación: utiliza el parámetro de página, no el desplazamiento.
+- Respuesta plana: la respuesta no está anidada en el objeto de datos
+- Detalles del usuario: incluye información de usuario completa para cada miembro del grupo
+- Filtro de estado: puede filtrar por estado de grupo
+- La función de búsqueda funciona en todos los nombres y descripciones de grupos.
+- Las opciones de clasificación ayudan a organizar los resultados según diferentes criterios.

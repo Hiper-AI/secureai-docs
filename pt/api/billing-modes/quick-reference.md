@@ -1,6 +1,8 @@
 ---
-title: "Referência rápida dos modos de cobrança"
+title: "Referência Rápida de Faturamento"
+sidebar_label: "Referência de Faturamento"
 ---
+
 # Referência rápida dos modos de cobrança
 
 Um guia de comparação rápida para escolher entre os modos de faturamento Preenchimentos do usuário e Uso por modelo.
@@ -249,7 +251,7 @@ Ambos os modos de cobrança oferecem suporte à aplicação da política SMLTP:
 
 ### Documentação
 - [Visão geral dos modos de faturamento](../billing-modes.md)
-- [Limites e Cotas](/pt/en/api/limits-and-quotas) - Entenda os limites da plataforma
+- [Limites e Cotas](/pt/api/limits-and-quotas) - Entenda os limites da plataforma
 
 ### Painel de administração
 - **Seção APIs**: Criar e gerenciar chaves de API

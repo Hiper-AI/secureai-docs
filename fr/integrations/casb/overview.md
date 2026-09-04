@@ -6,15 +6,15 @@ description: "Découvrez l'IA fantôme à partir de vos journaux CASB / SWG / DN
 ---
 # Intégrations CASB et réseau (SWG)
 
-Ces connecteurs résolvent le problème de la **shadow-AI Discovery** : trouver chaque appareil, serveur ou charge de travail d'entreprise qui appelle une API LLM, même ceux sur lesquels vous ne pouvez pas installer de SDK ou d'[endpoint agent](/fr/en/agent/overview) (un serveur de build, un trieur d'entrepôt, l'ordinateur portable d'un entrepreneur). SecureAI lit les journaux que votre plate-forme **CASB / Secure Web Gateway (SWG) / DNS** collecte déjà et détecte le trafic vers les fournisseurs d'IA.
+Ces connecteurs résolvent le problème de la **shadow-AI Discovery** : trouver chaque appareil, serveur ou charge de travail d'entreprise qui appelle une API LLM, même ceux sur lesquels vous ne pouvez pas installer de SDK ou d'[endpoint agent](/fr/agent/overview) (un serveur de build, un trieur d'entrepôt, l'ordinateur portable d'un entrepreneur). SecureAI lit les journaux que votre plate-forme **CASB / Secure Web Gateway (SWG) / DNS** collecte déjà et détecte le trafic vers les fournisseurs d'IA.
 
-Le résultat est un inventaire en direct de **quelles adresses IP sources et utilisateurs appellent quels fournisseurs d'IA**, apparu dans [Network Sources](/fr/en/discovery/network-sources).
+Le résultat est un inventaire en direct de **quelles adresses IP sources et utilisateurs appellent quels fournisseurs d'IA**, apparu dans [Network Sources](/fr/discovery/network-sources).
 
 ## Connecteurs pris en charge
 
 | Connecteur | Source de données | Statut |
 |---------------|-------------|--------|
-| [Cisco Umbrella](/fr/en/integrations/casb/cisco-umbrella) | API de reporting de couche DNS v2 | Disponible |
+| [Cisco Umbrella](/fr/integrations/casb/cisco-umbrella) | API de reporting de couche DNS v2 | Disponible |
 
 ## La boucle de configuration
 
@@ -25,7 +25,7 @@ Le résultat est un inventaire en direct de **quelles adresses IP sources et uti
 
 ## La fenêtre de découverte
 
-La découverte du réseau signale l'activité sur une fenêtre glissante : **30 jours par défaut** (configurable via la variable d'environnement `NETWORK_DISCOVERY_WINDOW_DAYS`). Quelques sous-vues (principaux domaines, principaux utilisateurs, domaines inconnus) utilisent une fenêtre fixe de 7 jours. Voir [Sources réseau](/fr/en/discovery/network-sources) pour savoir comment l'inventaire est présenté et trié.
+La découverte du réseau signale l'activité sur une fenêtre glissante : **30 jours par défaut** (configurable via la variable d'environnement `NETWORK_DISCOVERY_WINDOW_DAYS`). Quelques sous-vues (principaux domaines, principaux utilisateurs, domaines inconnus) utilisent une fenêtre fixe de 7 jours. Voir [Sources réseau](/fr/discovery/network-sources) pour savoir comment l'inventaire est présenté et trié.
 
 ## Ce qui est détecté
 
@@ -33,6 +33,6 @@ Chaque connecteur compare le trafic à un catalogue organisé de domaines LLM/AI
 
 ## Connexes
 
-- [Sources réseau](/fr/en/discovery/network-sources) — le workflow d'inventaire et de tri découvert.
-- [Endpoint Agent](/fr/en/agent/overview) — pour les points de terminaison sur lesquels vous *pouvez* déployer un agent.
-- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/en/discovery/overview)
+- [Sources réseau](/fr/discovery/network-sources) — le workflow d'inventaire et de tri découvert.
+- [Endpoint Agent](/fr/agent/overview) — pour les points de terminaison sur lesquels vous *pouvez* déployer un agent.
+- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/discovery/overview)

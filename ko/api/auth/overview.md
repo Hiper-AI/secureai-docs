@@ -29,7 +29,7 @@ Authorization: Bearer sk-your-api-key-here
 |---------|-------------|
 | `name` | 사람이 읽을 수 있는 라벨. |
 | `userId` | 이 키가 속하거나 청구되는 사용자 계정입니다. |
-| `billingMode` | `user-completions`(사용자의 완료 허용량에서 공제) 또는 `usage-by-model`(모델 비용별로 달러 예산 공제). [결제 모드](/ko/en/api/billing-modes)를 참조하세요. |
+| `billingMode` | `user-completions`(사용자의 완료 허용량에서 공제) 또는 `usage-by-model`(모델 비용별로 달러 예산 공제). [결제 모드](/ko/api/billing-modes)를 참조하세요. |
 
 발신자는 `user_id` 본문 매개변수(관리자 지정)를 사용하여 **다른** 사용자에게 개별 요청에 대해 요금을 청구할 수 있습니다.
 
@@ -60,15 +60,15 @@ Authorization: Bearer sk-your-api-key-here
 | `promptShieldPolicyId` | 특정 Prompt Shield 정책을 키에 바인딩합니다. |
 | `allowedPromptShieldPolicies[]` | 발신자는 `prompt_shield.policy`를 통해 통화별로 선택할 수 있는 정책을 선택할 수 있습니다. |
 
-[Prompt Shield API](/ko/en/api/threat-defense/prompt-shield)를 참조하세요.
+[Prompt Shield API](/ko/api/threat-defense/prompt-shield)를 참조하세요.
 
 ### 중복 기본값
 
-`failoverDefaults`는 기본 모델 [장애 조치 체인](/ko/en/api/redundancy)을 키에 연결합니다: `models[]`(최대 3개), `timeout_ms`(1000–300000), `first_token_timeout_ms`(500–60000) 및 `on[]` 트리거. 그런 다음 호출자는 모든 요청에 ​​대해 체인을 보내지 않고 장애 조치를 받습니다.
+`failoverDefaults`는 기본 모델 [장애 조치 체인](/ko/api/redundancy)을 키에 연결합니다: `models[]`(최대 3개), `timeout_ms`(1000–300000), `first_token_timeout_ms`(500–60000) 및 `on[]` 트리거. 그런 다음 호출자는 모든 요청에 ​​대해 체인을 보내지 않고 장애 조치를 받습니다.
 
 ## 멱등성
 
-완료 `POST`는 `Idempotency-Key` 헤더를 허용합니다. 동일한 키를 사용하여 재시도하면 두 번째 비용이 청구되는 대신 원래 결과가 반환됩니다. 이를 사용하여 네트워크 재시도를 안전하게 만드세요. [채팅 완료](/ko/ko/api/chat/completions)를 참고하세요.
+완료 `POST`는 `Idempotency-Key` 헤더를 허용합니다. 동일한 키를 사용하여 재시도하면 두 번째 비용이 청구되는 대신 원래 결과가 반환됩니다. 이를 사용하여 네트워크 재시도를 안전하게 만드세요. [채팅 완료](/ko/api/chat/completions)를 참고하세요.
 
 ## 속도 제한
 
@@ -79,7 +79,7 @@ Authorization: Bearer sk-your-api-key-here
 - **일일**: 요청 100개
 - **월간**: 요청 10,000건
 
-키 보유자는 [`GET /usage`](/api/usage)를 통해 자체 실시간 할당량 및 한도를 읽을 수 있습니다.
+키 보유자는 [`GET /usage`](/ko/api/usage)를 통해 자체 실시간 할당량 및 한도를 읽을 수 있습니다.
 
 ## 보안 기능
 
@@ -123,7 +123,7 @@ Authorization: Bearer sk-your-api-key-here
 
 ## 다음 단계
 
-- [API 참조](/ko/en/api) — 사용 가능한 모든 외부 엔드포인트를 살펴보세요.
-- [채팅 완료](/ko/en/api/chat/completions) — 완료 통합을 시작합니다.
-- [OpenAI 호환 엔드포인트](/ko/en/api/chat/openai- Compatible) — 기존 OpenAI SDK를 재사용합니다.
-- [사용량](/ko/en/api/usage) — 할당량 및 한도를 확인하세요.
+- [API 참조](/ko/api) — 사용 가능한 모든 외부 엔드포인트를 살펴보세요.
+- [채팅 완료](/ko/api/chat/completions) — 완료 통합을 시작합니다.
+- [OpenAI 호환 엔드포인트](/ko/api/chat/openai- Compatible) — 기존 OpenAI SDK를 재사용합니다.
+- [사용량](/ko/api/usage) — 할당량 및 한도를 확인하세요.

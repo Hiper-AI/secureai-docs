@@ -11,7 +11,7 @@ description: "논리적 AI 에이전트 및 챗봇 관리(소유자, 목적, 자
 <Info>
 **엔드포인트 플릿 아님**
 
-Agent Registry는 *논리적* AI 에이전트(지원 챗봇, 내부 부조종사)에 관한 것입니다. 이는 [엔드포인트 에이전트](/ko/en/agent/overview)에 문서화된 엔드포인트에 설치된 SecureAI 소프트웨어인 **OS 에이전트** 제품군과 다릅니다.
+Agent Registry는 *논리적* AI 에이전트(지원 챗봇, 내부 부조종사)에 관한 것입니다. 이는 [엔드포인트 에이전트](/ko/agent/overview)에 문서화된 엔드포인트에 설치된 SecureAI 소프트웨어인 **OS 에이전트** 제품군과 다릅니다.
 </Info>
 
 ## 에이전트별로 녹음되는 내용
@@ -30,11 +30,11 @@ Agent Registry는 *논리적* AI 에이전트(지원 챗봇, 내부 부조종사
 - **가져오기** 에이전트를 사용하여 인벤토리를 부트스트랩합니다.
 - 상담원, 도구, 데이터 간의 **관계**를 검토합니다.
 - **제안된 자율성 적용** — 에이전트에 권장되는 자율성 수준을 수락합니다.
-- 모니터링을 위해 챗봇을 등록합니다. [Prompt Shield API](/ko/en/api/threat-defense/prompt-shield)를 통해 처음 본 챗봇은 귀하의 검토를 위해 여기에 `observed`로 자동 등록됩니다.
+- 모니터링을 위해 챗봇을 등록합니다. [Prompt Shield API](/ko/api/threat-defense/prompt-shield)를 통해 처음 본 챗봇은 귀하의 검토를 위해 여기에 `observed`로 자동 등록됩니다.
 
 ## 관련
 
-- [엔드포인트 에이전트](/ko/en/agent/overview) — OS 수준 에이전트 플릿(이와 구별됨).
-- [NHI Inventory](/ko/en/discovery/nhi-inventory) — 에이전트가 인증하는 신원입니다.
-- [Prompt Shield API](/ko/en/api/threat-defense/prompt-shield) — 챗봇을 자동 등록합니다.
-- [AI 발견 및 인벤토리 개요](/ko/ko/discovery/overview)
+- [엔드포인트 에이전트](/ko/agent/overview) — OS 수준 에이전트 플릿(이와 구별됨).
+- [NHI Inventory](/ko/discovery/nhi-inventory) — 에이전트가 인증하는 신원입니다.
+- [Prompt Shield API](/ko/api/threat-defense/prompt-shield) — 챗봇을 자동 등록합니다.
+- [AI 발견 및 인벤토리 개요](/ko/discovery/overview)

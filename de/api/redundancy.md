@@ -7,7 +7,7 @@ description: "Vom Aufrufer definierte Modell-Failover-Ketten für die SecureAI C
 
 Die Completions-API kann automatisch von einem Modell auf ein anderes **Failover** durchführen, wenn ein Anbieteraufruf fehlschlägt. Sie definieren eine geordnete Kette – ein Primärmodell plus bis zu zwei Fallbacks – und SecureAI probiert sie nacheinander aus, bis eines erfolgreich ist. Dies gibt Ihnen Widerstandsfähigkeit gegen Anbieterausfälle, Ratenbegrenzungen und Zeitüberschreitungen, ohne dass Ihr eigener Code eine Wiederholungslogik erfordert.
 
-Redundanz ist sowohl auf dem [klassischen `/chat/completions`](/api/chat/completions) Endpunkt als auch auf dem [OpenAI-kompatiblen `/v1/chat/completions`](/api/chat/openai-kompatiblen) Endpunkt verfügbar.
+Redundanz ist sowohl auf dem [klassischen `/chat/completions`](/de/api/chat/completions) Endpunkt als auch auf dem [OpenAI-kompatiblen `/v1/chat/completions`](/de/api/chat/openai-kompatiblen) Endpunkt verfügbar.
 
 ## Wie eine Kette definiert ist
 
@@ -114,11 +114,11 @@ Wenn ein Anrufer nur `model: "a"` sendet und `a` in `failoverDefaults.models` vo
 
 ## Sicherheit & Abrechnung pro Versuch
 
-Jeder Versuch ist ein vollständiger, unabhängiger Aufruf über den SMLTP-Wrapper – Richtliniendurchsetzung, Egress-/Residency-Governance und das Signed Entitlement Token Mint werden alle pro Versuch erneut ausgeführt, gebunden an das Modell dieses Versuchs und die genauen Anforderungsbytes. Die Abrechnung spiegelt das Modell wider, das die Antwort tatsächlich bereitgestellt hat. Jedes Failover gibt außerdem ein `api:model_failover`-Sicherheitsereignis (das an alle abonnierten [Webhooks](/de/en/api/webhooks/overview) übermittelt wird) und einen Audit-Log-Eintrag aus.
+Jeder Versuch ist ein vollständiger, unabhängiger Aufruf über den SMLTP-Wrapper – Richtliniendurchsetzung, Egress-/Residency-Governance und das Signed Entitlement Token Mint werden alle pro Versuch erneut ausgeführt, gebunden an das Modell dieses Versuchs und die genauen Anforderungsbytes. Die Abrechnung spiegelt das Modell wider, das die Antwort tatsächlich bereitgestellt hat. Jedes Failover gibt außerdem ein `api:model_failover`-Sicherheitsereignis (das an alle abonnierten [Webhooks](/de/api/webhooks/overview) übermittelt wird) und einen Audit-Log-Eintrag aus.
 
 ## Verwandte
 
-- [Chat-Abschluss](/de/en/api/chat/completions)
-- [OpenAI-kompatibler Endpunkt](/de/en/api/chat/openai-kompatibel)
-- [Policy Check](/de/en/api/policy-check) – Vorschau des Zugriffs der gesamten Kette, ohne Punkte auszugeben.
-- [Webhooks](/de/en/api/webhooks/overview) – abonnieren Sie `api:model_failover`.
+- [Chat-Abschluss](/de/api/chat/completions)
+- [OpenAI-kompatibler Endpunkt](/de/api/chat/openai-kompatibel)
+- [Policy Check](/de/api/policy-check) – Vorschau des Zugriffs der gesamten Kette, ohne Punkte auszugeben.
+- [Webhooks](/de/api/webhooks/overview) – abonnieren Sie `api:model_failover`.

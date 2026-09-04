@@ -1,9 +1,10 @@
 ---
 sidebar_position: 1
-title: "Visão geral dos webhooks"
-sidebar_label: "Visão geral"
+title: "Webhooks de Eventos — Visão Geral"
+sidebar_label: "Webhooks"
 description: "Receba eventos de plataforma e segurança em tempo real da SecureAI por meio de webhooks HTTP assinados"
 ---
+
 # Webhooks
 
 SecureAI pode enviar eventos de segurança e de plataforma para seus próprios endpoints HTTP em tempo real – blocos Prompt Shield, vazamentos canário, incidentes DLP/PII, eventos de limite de API e failovers de modelo. Cada entrega é assinada com uma assinatura HMAC-SHA256 para que você possa verificar se ela veio da SecureAI e não foi adulterada ou reproduzida.
@@ -21,7 +22,7 @@ Os endpoints do Webhook são gerenciados por administradores em **Admin → Webh
 | Envie uma entrega de teste | `POST /api/admin/webhooks/:id/test` |
 | Excluir ponto de extremidade | `DELETE /api/admin/webhooks/:id` |
 
-Entradas de tempo de criação: `url`, `description`, `events[]` (consulte [Eventos](/pt/en/api/webhooks/events)) e `enabled`. O segredo de assinatura (`whsec_...`) é mostrado **apenas** na criação e rotação — armazene-o com segurança; você não pode recuperá-lo novamente.
+Entradas de tempo de criação: `url`, `description`, `events[]` (consulte [Eventos](/pt/api/webhooks/events)) e `enabled`. O segredo de assinatura (`whsec_...`) é mostrado **apenas** na criação e rotação — armazene-o com segurança; você não pode recuperá-lo novamente.
 
 O endpoint `url` é validado por SSRF: apenas `http(s)` é aceito e hosts privados/loopback/link-local são rejeitados, a menos que a instância seja executada com `WEBHOOKS_ALLOW_PRIVATE=true` (receptores auto-hospedados geralmente precisam disso).
 
@@ -122,6 +123,6 @@ def secureai_webhook():
 
 ## Relacionado
 
-- [Webhook Events](/pt/en/api/webhooks/events) — o catálogo completo de eventos e cargas úteis.
-- [Redundância e Failover](/pt/en/api/redundancy) — fonte de `api:model_failover`.
-- [Threat Defense](/pt/en/threat-defense/overview) — fonte dos eventos `promptshield:*`.
+- [Webhook Events](/pt/api/webhooks/events) — o catálogo completo de eventos e cargas úteis.
+- [Redundância e Failover](/pt/api/redundancy) — fonte de `api:model_failover`.
+- [Threat Defense](/pt/threat-defense/overview) — fonte dos eventos `promptshield:*`.

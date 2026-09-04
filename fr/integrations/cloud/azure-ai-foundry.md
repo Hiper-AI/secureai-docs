@@ -11,7 +11,7 @@ Connectez votre locataire Azure afin que SecureAI puisse inventorier les agents 
 ## Ce que SecureAI importe
 
 - **Agents Azure OpenAI/AI Foundry, AI Search, Bot Service et points de terminaison ML**
-- **NHI** — Principes de service Entra, secrets et certificats d'application et identités gérées (révocables — voir [Inventaire NHI](/fr/en/discovery/nhi-inventory))
+- **NHI** — Principes de service Entra, secrets et certificats d'application et identités gérées (révocables — voir [Inventaire NHI](/fr/discovery/nhi-inventory))
 - Attributions de rôles **Azure RBAC**
 - **Journaux d'activité**
 - **Utilisation, jetons et dépenses** au cours des 30 derniers jours
@@ -52,14 +52,14 @@ SecureAI s'authentifie via OAuth2 (flux principal du service d'identification du
 
 ## Vérifier
 
-Ouvrez [Cloud Sensors](/fr/en/discovery/cloud-sensors) pour les agents/points de terminaison découverts et [NHI Inventory](/fr/en/discovery/nhi-inventory) pour les principaux de service, les secrets et les identités gérées. Les informations montrent le RBAC, l'utilisation et les dépenses.
+Ouvrez [Cloud Sensors](/fr/discovery/cloud-sensors) pour les agents/points de terminaison découverts et [NHI Inventory](/fr/discovery/nhi-inventory) pour les principaux de service, les secrets et les identités gérées. Les informations montrent le RBAC, l'utilisation et les dépenses.
 
 ## Révocation
 
-Les principaux de service Entra, les secrets/certificats d'application et les identités gérées sont **révocables** via Microsoft Graph à partir de [NHI Inventory](/fr/en/discovery/nhi-inventory) — cela nécessite l'autorisation `Application.ReadWrite.All` ci-dessus.
+Les principaux de service Entra, les secrets/certificats d'application et les identités gérées sont **révocables** via Microsoft Graph à partir de [NHI Inventory](/fr/discovery/nhi-inventory) — cela nécessite l'autorisation `Application.ReadWrite.All` ci-dessus.
 
 ## Connexes
 
-- [Présentation des fournisseurs Cloud AI](/fr/en/integrations/cloud/overview)
-- [Microsoft Entra ID SSO](/fr/en/iam/microsoft-entra-id)
-- [Inventaire NHI](/fr/en/discovery/nhi-inventory)
+- [Présentation des fournisseurs Cloud AI](/fr/integrations/cloud/overview)
+- [Microsoft Entra ID SSO](/fr/iam/microsoft-entra-id)
+- [Inventaire NHI](/fr/discovery/nhi-inventory)

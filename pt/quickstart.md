@@ -1,7 +1,9 @@
 ---
-title: "Guia de início rápido (início rápido)"
+title: "Guia de Início Rápido (Quickstart)"
 description: "Comece a usar o SecureAI em minutos: acesse a plataforma, configure o assistente e crie seu primeiro índice RAG."
+sidebar_label: "Início Rápido"
 ---
+
 
 Este guia orientará você passo a passo para acessar a instância SecureAI da sua organização, escolher seu método de autenticação e implantar sua primeira base de conhecimento de IA.
 

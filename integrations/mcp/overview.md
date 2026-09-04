@@ -1,42 +1,40 @@
 ---
 sidebar_position: 1
-title: "MCP Connectors Overview"
-sidebar_label: "Overview"
-description: "Connect Model Context Protocol (MCP) servers to give SecureAI's assistants governed access to tools"
+title: "Conectores MCP (Model Context Protocol)"
+sidebar_label: "Conectores MCP"
+description: "Conecte servidores Model Context Protocol (MCP) para brindar a los asistentes de SecureAI acceso gobernado a las herramientas"
 ---
 
+# Conectores MCP
 
+SecureAI puede conectarse a servidores **Model Context Protocol (MCP)** para que sus asistentes puedan llamar a herramientas externas (consultar bases de datos, leer tickets, ejecutar operaciones en la nube) bajo control. Los conectores se eligen de un mercado integrado y se configuran por usuario; Cada llamada a la herramienta aún pasa por la capa de política y seguridad de SecureAI.
 
-# MCP Connectors
+Los conectores se administran en **Admin → Integraciones → MCP** (base de API `/api/connectors`).
 
-SecureAI can connect to **Model Context Protocol (MCP)** servers so its assistants can call external tools — querying databases, reading tickets, running cloud operations — under governance. Connectors are chosen from a built-in marketplace and configured per user; every tool call still passes through SecureAI's policy and safety layer.
+## Patrones de transporte y autenticación
 
-Connectors are managed in **Admin → Integrations → MCP** (API base `/api/connectors`).
+Cada conector declara cómo llega SecureAI a él y cómo se autentica. Se admiten tres patrones:
 
-## Transport & authentication patterns
-
-Each connector declares how SecureAI reaches it and how it authenticates. Three patterns are supported:
-
-| Pattern | Transport | Auth | Examples |
+| Patrón | Transporte | Autenticación | Ejemplos |
 |---------|-----------|------|----------|
-| Local process | `stdio` | API key (in env) | Notion, Cloudflare (local bin), Azure (`npx @azure/mcp`), AWS (`uvx awslabs.aws-api-mcp-server`), reference servers (Sequential Thinking, Web Fetch, Time). |
-| Remote (token) | `streamable_http` | API key / bearer (in env) | GitHub official MCP, the Google Cloud family (BigQuery, Compute, Logging, Vertex AI, Cloud Run, GKE, …), Microsoft Learn. |
-| Remote (OAuth) | `streamable_http` | OAuth 2.1 + PKCE, with Dynamic Client Registration | Cloudflare (Official Remote MCP). See [Remote MCP with OAuth & DCR](/en/integrations/mcp/remote-oauth-dcr). |
+| Proceso local | `stdio` | Clave API (en env) | Notion, Cloudflare (bin local), Azure (`npx @azure/mcp`), AWS (`uvx awslabs.aws-api-mcp-server`), servidores de referencia (Sequential Thinking, Web Fetch, Time). |
+| Remoto (token) | `streamable_http` | Clave API/portador (en env) | MCP oficial de GitHub, la familia Google Cloud (BigQuery, Compute, Logging, Vertex AI, Cloud Run, GKE,…), Microsoft Learn. |
+| Remoto (OAuth) | `streamable_http` | OAuth 2.1 + PKCE, con Registro Dinámico de Cliente | Cloudflare (MCP remoto oficial). Consulte [MCP remoto con OAuth y DCR](/integrations/mcp/remote-oauth-dcr). |
 
-Some token-based remote connectors (e.g. the Google Cloud family) also carry an OAuth flow so a user can authorize with their own Google OAuth client via a popup, rather than pasting a static token.
+Algunos conectores remotos basados en tokens (por ejemplo, la familia Google Cloud) también llevan un flujo OAuth para que un usuario pueda autorizar con su propio cliente Google OAuth a través de una ventana emergente, en lugar de pegar un token estático.
 
-## Connecting a connector
+## Conexión de un conector
 
-1. **Admin → Integrations → MCP.**
-2. Pick a connector from the marketplace.
-3. Provide its required configuration — an API key/token, or authorize via the OAuth popup for OAuth connectors.
-4. Save. The connector becomes available to the assistant's tool router.
+1. **Administrador → Integraciones → MCP.**
+2. Elija un conector del mercado.
+3. Proporcione la configuración requerida: una clave/token de API, o autorice a través de la ventana emergente de OAuth para conectores OAuth.
+4. Guardar. El conector queda disponible para el enrutador de herramientas del asistente.
 
-## Tool safety
+## Seguridad de las herramientas
 
-Every connector declares **blocked tool patterns** — destructive operations (e.g. `delete`, `destroy`, `terminate`) that SecureAI refuses to invoke even if the MCP server exposes them. This guardrail is enforced centrally, so a connected tool server cannot be coerced into a destructive action through the assistant.
+Cada conector declara **patrones de herramientas bloqueados**: operaciones destructivas (por ejemplo, `delete`, `destroy`, `terminate`) que SecureAI se niega a invocar incluso si el servidor MCP las expone. Esta barrera de seguridad se aplica de forma centralizada, por lo que un servidor de herramientas conectado no puede ser obligado a realizar una acción destructiva a través del asistente.
 
-## Related
+## Relacionado
 
-- [Remote MCP with OAuth & DCR](/en/integrations/mcp/remote-oauth-dcr)
-- [AI Gateway — Remote Endpoints](/en/ai-gateway/remote-endpoints)
+- [MCP remoto con OAuth y DCR](/integrations/mcp/remote-oauth-dcr)
+- [AI Gateway — Extremos remotos](/ai-gateway/remote-endpoints)

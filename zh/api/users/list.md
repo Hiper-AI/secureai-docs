@@ -1,64 +1,62 @@
 ---
 sidebar_position: 1
-title: "Get All Users"
+title: "获取所有用户"
 openapi: "GET /users"
 ---
+# 获取所有用户
 
+通过分页和过滤检索所有用户。仅可由管理员访问。
 
-# Get All Users
-
-Retrieve all users with pagination and filtering. Only accessible by administrators.
-
-## Endpoint
+## 端点
 
 ```
 GET /users
 ```
 
-## Description
+## 说明
 
-This endpoint allows administrators to retrieve a paginated list of all users in the system. It supports filtering by various criteria including role, license, status, and search terms. This is an administrative endpoint that requires appropriate permissions.
+该端点允许管理员检索系统中所有用户的分页列表。它支持按各种标准进行过滤，包括角色、许可证、状态和搜索词。这是需要适当权限的管理端点。
 
-## Authentication
+## 身份验证
 
-Required. Include your API key in the Authorization header.
+必填。将您的 API 密钥包含在授权标头中。
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## 请求
 
-### Query Parameters
+### 查询参数
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `page` | integer | No | 1 | Page number for pagination |
-| `limit` | integer | No | 20 | Number of users per page (1-100) |
-| `search` | string | No | - | Search term for name, email, or username |
-| `role` | string | No | - | Filter by user role (admin, user, globalReader) |
-| `license` | string | No | - | Filter by user license (Essential, Growth, Ultra, Early Access) |
-| `status` | integer | No | - | Filter by user status (0=inactive, 1=active) |
-| `sortBy` | string | No | createdAt | Field to sort by |
-| `sortOrder` | string | No | desc | Sort order (asc, desc) |
+|参数|类型 |必填|默认|描述 |
+|------------|------|----------|---------|------------|
+| `page` |整数 |没有 | 1 |分页页码|
+| `limit` |整数 |没有 | 20 | 20每页用户数 (1-100) |
+| `search` |字符串|没有 | - |姓名、电子邮件或用户名的搜索词 |
+| `role` |字符串|没有 | - |按用户角色过滤（管理员、用户、globalReader）|
+| `license` |字符串|没有 | - |按用户许可证过滤（Essential、Growth、Ultra、Early Access）|
+| `status` |整数 |没有 | - |按用户状态过滤（0=非活动，1=活动）|
+| `sortBy` |字符串|没有 |创建于 |排序依据的字段 |
+| `sortOrder` |字符串|没有 |描述 |排序顺序（升序、降序）|
 
-### Example Request
+### 请求示例
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=20&role=user&status=1" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-With search:
+通过搜索：
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?search=john&license=Growth" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -95,37 +93,37 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?search=john&l
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Always `true` for successful requests |
-| `users` | array | Array of user objects |
-| `users[].id` | string | User's unique identifier |
-| `users[].name` | string | User's full name |
-| `users[].username` | string | User's username |
-| `users[].email` | string | User's email address |
-| `users[].role` | string | User's role (admin, user, globalReader) |
-| `users[].license` | string | User's license tier (Essential, Growth, Ultra, Early Access) |
-| `users[].status` | integer | User status (0=inactive, 1=active) |
-| `users[].isVerified` | boolean | Whether user is verified |
-| `users[].setupCompleted` | boolean | Whether user setup is completed |
-| `users[].authType` | string | Authentication type (basic, auth0) |
-| `users[].mfaEnabled` | boolean | Whether MFA is enabled |
-| `users[].customRole` | object | Custom role information (if assigned) |
-| `users[].customRole.id` | string | Custom role ID |
-| `users[].customRole.name` | string | Custom role name |
-| `users[].customRole.displayName` | string | Custom role display name |
-| `users[].createdAt` | string | User creation timestamp |
-| `users[].updatedAt` | string | User last update timestamp |
-| `users[].lastActive` | string | User's last activity timestamp |
-| `pagination` | object | Pagination information |
-| `pagination.page` | integer | Current page number |
-| `pagination.limit` | integer | Items per page |
-| `pagination.total` | integer | Total number of users |
-| `pagination.pages` | integer | Total number of pages |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |对于成功的请求，始终 `true` |
+| `users` |数组|用户对象数组 |
+| `users[].id` |字符串|用户的唯一标识符|
+| `users[].name` |字符串|用户全名 |
+| `users[].username` |字符串|用户的用户名 |
+| `users[].email` |字符串|用户的电子邮件地址 |
+| `users[].role` |字符串|用户角色（管理员、用户、globalReader）|
+| `users[].license` |字符串|用户许可级别（Essential、Growth、Ultra、Early Access）|
+| `users[].status` |整数 |用户状态（0=非活动，1=活动）|
+| `users[].isVerified` |布尔 |用户是否已验证 |
+| `users[].setupCompleted` |布尔 |用户设置是否完成 |
+| `users[].authType` |字符串|身份验证类型（基本、auth0）|
+| `users[].mfaEnabled` |布尔 |是否启用MFA |
+| `users[].customRole` |对象|自定义角色信息（如果已分配）|
+| `users[].customRole.id` |字符串|自定义角色 ID |
+| `users[].customRole.name` |字符串|自定义角色名称 |
+| `users[].customRole.displayName` |字符串|自定义角色显示名称 |
+| `users[].createdAt` |字符串|用户创建时间戳 |
+| `users[].updatedAt` |字符串|用户上次更新时间戳 |
+| `users[].lastActive` |字符串|用户上次活动时间戳 |
+| `pagination` |对象|分页信息|
+| `pagination.page` |整数 |当前页码 |
+| `pagination.limit` |整数 |每页项目 |
+| `pagination.total` |整数 |用户总数 |
+| `pagination.pages` |整数 |总页数 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -146,7 +144,7 @@ if (data.success) {
 }
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -172,16 +170,16 @@ if data['success']:
         print(f"{user['name']} ({user['email']}) - {user['role']}")
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=20" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -191,7 +189,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -201,65 +199,65 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?page=1&limit=
 }
 ```
 
-## Filtering Examples
+## 过滤示例
 
-### Search by Name or Email
+### 按姓名或电子邮件搜索
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?search=john" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by Role
+### 按角色过滤
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?role=admin" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by License
+### 按许可证过滤
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?license=Growth" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Filter by Status
+### 按状态过滤
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?status=1" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### Sort by Last Active
+### 按上次活动排序
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/users?sortBy=lastActive&sortOrder=desc" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Use Cases
+## 用例
 
-- **User Management**: View and manage all users in the system
-- **User Analytics**: Analyze user distribution by role, license, or status
-- **Search and Filter**: Find specific users based on various criteria
-- **Administrative Tasks**: Support administrative operations and reporting
+- **用户管理**：查看和管理系统中的所有用户
+- **用户分析**：按角色、许可证或状态分析用户分布
+- **搜索和过滤**：根据各种条件查找特定用户
+- **管理任务**：支持管理操作和报告
 
-## Role Descriptions
+## 角色描述
 
-- **admin**: Full system access with administrative control
-- **user**: Standard access to chat features and personal knowledge bases  
-- **globalReader**: Read-only access to admin panel with viewing permissions
+- **管理员**：具有管理控制的完整系统访问权限
+- **用户**：对聊天功能和个人知识库的标准访问  
+- **globalReader**：具有查看权限的管理面板的只读访问权限
 
-## License Descriptions
+## 许可证说明
 
-- **Essential**: Basic tier with 29,000 points/month
-- **Growth**: Mid-tier with enhanced features
-- **Ultra**: Premium tier with maximum features
-- **Early Access**: Beta tier with experimental capabilities
+- **Essential**：基本级别，每月 29,000 点
+- **增长**：具有增强功能的中层
+- **Ultra**：具有最多功能的高级层
+- **抢先体验**：具有实验功能的 Beta 层
 
-## Rate Limits
+## 速率限制
 
-This endpoint follows the standard rate limits:
-- 60 requests per minute
-- 1000 requests per hour 
+此端点遵循标准速率限制：
+- 每分钟 60 个请求
+- 每小时 1000 个请求

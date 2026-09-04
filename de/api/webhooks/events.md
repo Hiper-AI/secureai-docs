@@ -6,7 +6,7 @@ description: "Der SecureAI-Webhook-Ereigniskatalog"
 ---
 # Webhook-Ereignisse
 
-Wenn Sie einen [Webhook-Endpunkt](/de/en/api/webhooks/overview) erstellen oder aktualisieren, abonnieren Sie ihn für einen oder mehrere Ereignistypen. Verwenden Sie `"*"`, um jedes Ereignis zu empfangen.
+Wenn Sie einen [Webhook-Endpunkt](/de/api/webhooks/overview) erstellen oder aktualisieren, abonnieren Sie ihn für einen oder mehrere Ereignistypen. Verwenden Sie `"*"`, um jedes Ereignis zu empfangen.
 
 ## Veranstaltungskatalog
 
@@ -19,7 +19,7 @@ Wenn Sie einen [Webhook-Endpunkt](/de/en/api/webhooks/overview) erstellen oder a
 | `dlp:incident` | Eine Data Loss Prevention-Regel stimmt überein. |
 | `pii:incident` | PII wurden erkannt/geschwärzt. |
 | `api:limit_reached` | Ein API-Schlüssel hat ein Tages-/Monats-/Ratenlimit erreicht. |
-| `api:model_failover` | Eine [redundancy](/de/en/api/redundancy)-Kette ist von einem Modell auf ein anderes fehlgeschlagen. |
+| `api:model_failover` | Eine [redundancy](/de/api/redundancy)-Kette ist von einem Modell auf ein anderes fehlgeschlagen. |
 
 Das Abonnieren eines unbekannten Ereignisnamens wird zum Zeitpunkt der Erstellung/Aktualisierung abgelehnt.
 
@@ -58,4 +58,4 @@ Die Schaltfläche **Testereignis senden** (oder `POST /api/admin/webhooks/:id/te
 
 ## Verwandte
 
-- [Webhooks-Übersicht](/de/en/api/webhooks/overview) – Lieferformat, Signaturprüfung, Zuverlässigkeit.
+- [Webhooks-Übersicht](/de/api/webhooks/overview) – Lieferformat, Signaturprüfung, Zuverlässigkeit.

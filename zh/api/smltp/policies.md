@@ -1,49 +1,47 @@
 ---
 id: policies
-title: "SMLTP Policies"
-sidebar_label: "SMLTP Policies"
-description: "Retrieve all SMLTP security policies"
+title: "SMLTP 策略"
+sidebar_label: "SMLTP 策略"
+description: "检索所有 SMLTP 安全策略"
 openapi: "GET /smltp-policies/all"
 ---
+# SMLTP 政策
 
+检索所有可用的 SMLTP（安全模型语言传输协议）安全策略。
 
-# SMLTP Policies
-
-Retrieve all available SMLTP (Secure Model Language Transfer Protocol) security policies.
-
-## Endpoint
+## 端点
 
 ```
 GET /smltp-policies/all
 ```
 
-## Description
+## 说明
 
-Retrieve all available SMLTP policies including built-in and custom policies. **Admin only access required.**
+检索所有可用的 SMLTP 策略，包括内置和自定义策略。 **仅需要管理员访问权限。**
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## 查询参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-❌ No query parameters supported - the actual API doesn't accept any query parameters.
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+❌ 不支持查询参数 - 实际 API 不接受任何查询参数。
 
-## Example Request
+## 请求示例
 
 ```bash
 GET /smltp-policies/all
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `200 OK`
+**状态代码**：`200 OK`
 
 ```json
 {
@@ -104,21 +102,21 @@ GET /smltp-policies/all
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `data` | object | Response data object |
-| `data.builtInPolicies` | array | Array of built-in policy objects |
-| `data.customPolicies` | array | Array of custom policy objects |
-| `data.activePolicyTemplate` | string | Currently active policy template ID |
-| `data.summary` | object | Summary statistics |
-| `data.summary.totalPolicies` | integer | Total number of policies |
-| `data.summary.builtInCount` | integer | Number of built-in policies |
-| `data.summary.customCount` | integer | Number of custom policies |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `data` |对象|响应数据对象 |
+| `data.builtInPolicies` |数组|内置策略对象数组 |
+| `data.customPolicies` |数组|自定义策略对象数组 |
+| `data.activePolicyTemplate` |字符串|当前活动的策略模板 ID |
+| `data.summary` |对象|统计摘要|
+| `data.summary.totalPolicies` |整数 |保单总数 |
+| `data.summary.builtInCount` |整数 |内置策略数量 |
+| `data.summary.customCount` |整数 |定制保单数量|
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -140,7 +138,7 @@ console.log('Built-in policies:', result.data.builtInPolicies);
 console.log('Active policy:', result.data.activePolicyTemplate);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -160,16 +158,16 @@ print("Built-in policies:", result["data"]["builtInPolicies"])
 print("Active policy:", result["data"]["activePolicyTemplate"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/all" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -181,7 +179,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/all"
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -194,36 +192,36 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/all"
 }
 ```
 
-## Policy Object Fields
+## 策略对象字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | string | Policy identifier |
-| `name` | string | Policy name |
-| `type` | string | Policy type ("built-in" or "custom") |
-| `description` | string | Policy description |
-| `isActive` | boolean | Whether this policy is currently active |
-| `createdAt` | string | Creation timestamp (custom policies only) |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `id` |字符串|策略标识符 |
+| `name` |字符串|保单名称|
+| `type` |字符串|策略类型（“内置”或“自定义”）|
+| `description` |字符串|政策说明 |
+| `isActive` |布尔 |该政策目前是否有效 |
+| `createdAt` |字符串|创建时间戳（仅限自定义策略）|
 
-## Use Cases
+## 用例
 
-- **Policy Discovery**: Find available security policies
-- **Compliance Planning**: Understand policy requirements
-- **Security Configuration**: Select appropriate policies
-- **Active Policy Management**: Check which policy is currently active
-- **Integration**: Apply policies to chat completions
+- **策略发现**：查找可用的安全策略
+- **合规规划**：了解政策要求
+- **安全配置**：选择适当的策略
+- **活动策略管理**：检查当前处于活动状态的策略
+- **集成**：将策略应用于聊天完成
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **默认**：每分钟 100 个请求
+- **每日**：每天 10,000 个请求
+- **每月**：每月 300,000 个请求
 
-## Notes
+## 注释
 
-- This endpoint requires admin privileges
-- No Parameters: No query parameters are supported
-- Built-in Policies: Returns predefined system policies
-- Custom Policies: Returns custom policies if any exist
-- Active Policy: Shows which policy template is currently active
-- Flat Response: Response is nested under data object 
+- 该端点需要管理员权限
+- 无参数：不支持查询参数
+- 内置策略：返回预定义的系统策略
+- 自定义策略：返回自定义策略（如果存在）
+- 活动策略：显示当前处于活动状态的策略模板
+- 扁平响应：响应嵌套在数据对象下

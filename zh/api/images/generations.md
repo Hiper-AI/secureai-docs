@@ -1,55 +1,53 @@
 ---
 sidebar_position: 1
-title: "Generate Images"
+title: "生成图像"
 openapi: "POST /images/generations"
 ---
+# 生成图像
 
+根据文本提示生成新图像或使用 Google Gemini 2.5 Flash Image 转换现有图像。
 
-# Generate Images
-
-Generate new images from text prompts or transform existing images using Google Gemini 2.5 Flash Image.
-
-## Endpoint
+## 端点
 
 ```
 POST /images/generations
 ```
 
-## Description
+## 说明
 
-Generate new images from text descriptions or transform existing images. This endpoint supports:
+从文本描述生成新图像或转换现有图像。该端点支持：
 
-- **Text-to-Image**: Generate images from text descriptions
-- **Image-to-Image**: Transform or edit existing images (upload an image file)
+- **文本到图像**：从文本描述生成图像
+- **图像到图像**：转换或编辑现有图像（上传图像文件）
 
-All prompts and responses are automatically processed through SMLTP for audit logging and compliance.
+所有提示和响应均通过 SMLTP 自动处理，以进行审核记录和合规性。
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## 请求正文
 
-This endpoint accepts both `multipart/form-data` (for file uploads) and `application/json` formats.
+此端点接受 `multipart/form-data`（用于文件上传）和 `application/json` 格式。
 
-### Parameters
+### 参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `prompt` | string | Yes | Text prompt describing the image to generate or how to transform the uploaded image (1-4000 characters) |
-| `image` | binary | No | Image file for image-to-image generation (JPEG, PNG, WEBP, or GIF, max 10MB) |
-| `smltp_policy` | string | No | SMLTP security policy (default: "internal") |
-| `response_format` | string | No | Response format: "url" or "b64_json" (default: "url") |
-| `size` | string | No | Image size (default: "1024x1024") |
-| `n` | integer | No | Number of images to generate (1-4, default: 1) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `prompt` |字符串|是的 |描述要生成的图像或如何转换上传的图像的文本提示（1-4000 个字符） |
+| `image` |二进制|没有 |用于图像到图像生成的图像文件（JPEG、PNG、WEBP 或 GIF，最大 10MB）|
+| `smltp_policy` |字符串|没有 | SMLTP 安全策略（默认：“内部”）|
+| `response_format` |字符串|没有 |响应格式：“url”或“b64_json”（默认：“url”）|
+| `size` |字符串|没有 |图像大小（默认：“1024x1024”）|
+| `n` |整数 |没有 |要生成的图像数量（1-4，默认值：1）|
 
-## Request Examples
+## 请求示例
 
-### Text-to-Image (JSON)
+### 文本到图像 (JSON)
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/generations" \
@@ -63,7 +61,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/generations
   }'
 ```
 
-### Image-to-Image (Multipart Form Data)
+### 图像到图像（多部分表单数据）
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/generations" \
@@ -114,7 +112,7 @@ const data2 = await response2.json();
 console.log('Edited image URL:', data2.data[0].url);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -149,9 +147,9 @@ with open('image.jpg', 'rb') as f:
     print('Edited image URL:', result['data'][0]['url'])
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -178,41 +176,41 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `id` | string | Unique request identifier |
-| `object` | string | Object type: "image.generation" |
-| `created` | integer | Unix timestamp of when images were created |
-| `data` | array | Array of generated images |
-| `metadata` | object | Additional metadata including SMLTP tracking |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |对于成功的请求始终如此 |
+| `id` |字符串|唯一的请求标识符 |
+| `object` |字符串|对象类型：“image. Generation” |
+| `created` |整数 |创建图像时的 Unix 时间戳 |
+| `data` |数组|生成的图像数组 |
+| `metadata` |对象|其他元数据包括 SMLTP 跟踪 |
 
-### Image Object
+### 图像对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `url` | string | URL to access the generated image (when response_format is "url") |
-| `b64_json` | string | Base64-encoded image data (when response_format is "b64_json") |
-| `revised_prompt` | string | The prompt actually used for generation (may differ from input) |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `url` |字符串|访问生成图像的 URL（当 response_format 为“url”时）|
+| `b64_json` |字符串| Base64编码的图像数据（当response_format为“b64_json”时）|
+| `revised_prompt` |字符串|实际用于生成的提示（可能与输入不同） |
 
-### Metadata Object
+### 元数据对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `model` | string | Model used: "google/gemini-2.5-flash-image-preview" |
-| `provider` | string | Provider: "Google" |
-| `total_images` | integer | Total number of images generated |
-| `is_image_to_image` | boolean | Whether this was an image-to-image generation |
-| `text_response` | string\|null | Optional text response from the model |
-| `smltp_trace_id` | string | SMLTP trace ID for audit tracking |
-| `smltp_bundle_id` | string | SMLTP bundle ID for audit tracking |
-| `smltp_policy` | string | SMLTP policy that was applied |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `model` |字符串|使用的模型：“google/gemini-2.5-flash-image-preview”|
+| `provider` |字符串|提供商：“谷歌” |
+| `total_images` |整数 |生成的图像总数 |
+| `is_image_to_image` |布尔 |这是否是图像到图像的生成 |
+| `text_response` |字符串\|空|模型的可选文本响应 |
+| `smltp_trace_id` |字符串| SMLTP 用于审核跟踪的跟踪 ID |
+| `smltp_bundle_id` |字符串| SMLTP 用于审核跟踪的捆绑包 ID |
+| `smltp_policy` |字符串| SMLTP 已应用的策略 |
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -223,7 +221,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -233,7 +231,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -243,7 +241,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 413 Payload Too Large
+### 413 有效负载太大
 
 ```json
 {
@@ -254,7 +252,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 500 Internal Server Error
+### 500 内部服务器错误
 
 ```json
 {
@@ -264,7 +262,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 503 Service Unavailable
+### 503 服务不可用
 
 ```json
 {
@@ -275,12 +273,11 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-## Notes
+## 注释
 
-- Supported image formats for upload: JPEG, PNG, WEBP, GIF
-- Maximum file size: 10MB per image
-- When uploading an image, the prompt describes how to transform it
-- Gemini typically generates 1-4 images per request
-- All requests are processed through SMLTP for security and compliance
-- Use `response_format: "b64_json"` to receive base64-encoded image data instead of URLs
-
+- 支持上传的图像格式：JPEG、PNG、WEBP、GIF
+- 最大文件大小：每张图像 10MB
+- 上传图片时，提示说明如何转换图片
+- Gemini 通常为每个请求生成 1-4 张图像
+- 所有请求均通过 SMLTP 处理，以确保安全性和合规性
+- 使用`response_format: "b64_json"`接收base64编码的图像数据而不是URL

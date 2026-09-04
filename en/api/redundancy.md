@@ -10,7 +10,7 @@ description: "Caller-defined model failover chains for the SecureAI Completions 
 
 The Completions API can automatically **fail over** from one model to another when a provider call fails. You define an ordered chain — a primary model plus up to two fallbacks — and SecureAI tries each in turn until one succeeds. This gives you resilience against provider outages, rate limits, and timeouts without any retry logic in your own code.
 
-Redundancy is available on both the [classic `/chat/completions`](/api/chat/completions) endpoint and the [OpenAI-compatible `/v1/chat/completions`](/api/chat/openai-compatible) endpoint.
+Redundancy is available on both the [classic `/chat/completions`](/en/api/chat/completions) endpoint and the [OpenAI-compatible `/v1/chat/completions`](/en/api/chat/openai-compatible) endpoint.
 
 ## How a chain is defined
 

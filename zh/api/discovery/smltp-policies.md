@@ -1,42 +1,40 @@
 ---
 sidebar_position: 3
-title: "Security Policies"
+title: "安全政策"
 openapi: "GET /smltp-policies"
 ---
+# 获取安全策略
 
+检索可用的 SMLTP（安全模型语言传输协议）安全策略。
 
-# Get Security Policies
-
-Retrieve available SMLTP (Secure Model Language Transfer Protocol) security policies.
-
-## Endpoint
+## 端点
 
 ```
 GET /smltp-policies
 ```
 
-## Description
+## 说明
 
-Retrieve available SMLTP (Secure Model Language Transfer Protocol) security policies. These policies determine how your data is processed and protected.
+检索可用的 SMLTP（安全模型语言传输协议）安全策略。这些政策决定如何处理和保护您的数据。
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## 请求
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -64,31 +62,31 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `success` | boolean | Always true for successful requests | `true` |
-| `policies` | array | List of available security policies | See example |
-| `restrictions` | object | Policy access restrictions | See example |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `success` |布尔 |对于成功的请求始终如此 | `true` |
+| `policies` |数组|可用安全策略列表 |参见示例 |
+| `restrictions` |对象|政策准入限制|参见示例 |
 
-### Policy Object
+### 策略对象
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `id` | string | Unique policy identifier | `"internal"` |
-| `name` | string | Policy display name | `"Internal"` |
-| `description` | string | Policy description | `"For internal company data"` |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `id` |字符串|唯一保单标识符 | `"internal"` |
+| `name` |字符串|策略显示名称 | `"Internal"` |
+| `description` |字符串|政策说明 | `"For internal company data"` |
 
-### Restrictions Object
+### 限制对象
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `allowed_policies` | array | Array of allowed policy IDs | `["public", "internal", "confidential"]` |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `allowed_policies` |数组|允许的策略 ID 数组 | `["public", "internal", "confidential"]` |
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -98,7 +96,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
 }
 ```
 
-## Example Usage
+## 用法示例
 
 ### JavaScript/Node.js
 
@@ -113,7 +111,7 @@ const data = await response.json();
 console.log('Available Policies:', data.policies);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -128,33 +126,33 @@ data = response.json()
 print('Available Policies:', data['policies'])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Policy Types
+## 保单类型
 
-### Public
-- **Use Case**: Public, non-sensitive data
-- **Security Level**: Low
-- **Data Processing**: Standard processing with basic security
+### 公开
+- **用例**：公共、非敏感数据
+- **安全级别**：低
+- **数据处理**：具有基本安全性的标准处理
 
-### Internal
-- **Use Case**: Internal company data
-- **Security Level**: Medium
-- **Data Processing**: Enhanced security with additional safeguards
+### 内部
+- **用例**：公司内部数据
+- **安全级别**：中
+- **数据处理**：通过额外的保障措施增强安全性
 
-### Confidential
-- **Use Case**: Confidential business data
-- **Security Level**: High
-- **Data Processing**: Maximum security with strict data handling
+### 机密
+- **用例**：机密业务数据
+- **安全级别**：高
+- **数据处理**：通过严格的数据处理实现最大的安全性
 
-## Notes
+## 注释
 
-- Choose the appropriate policy based on your data sensitivity
-- Policies affect how your data is processed and protected
-- Use the policy ID in chat completion requests
-- Some policies may be restricted based on your account type 
+- 根据您的数据敏感性选择适当的策略
+- 政策影响您的数据的处理和保护方式
+- 在聊天完成请求中使用策略 ID
+- 某些政策可能会根据您的账户类型受到限制

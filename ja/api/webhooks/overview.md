@@ -21,7 +21,7 @@ Webhook エンドポイントは、**Admin → Webhook** (API ベース `/api/ad
 |テスト配信を送信する | `POST /api/admin/webhooks/:id/test` |
 |エンドポイントの削除 | `DELETE /api/admin/webhooks/:id` |
 
-作成時の入力: `url`、`description`、`events[]` ([イベント](/ja/en/api/webhooks/events) を参照)、および `enabled`。署名シークレット (`whsec_...`) は作成時と回転時に**のみ**表示されます。安全に保存してください。再度取得することはできません。
+作成時の入力: `url`、`description`、`events[]` ([イベント](/ja/api/webhooks/events) を参照)、および `enabled`。署名シークレット (`whsec_...`) は作成時と回転時に**のみ**表示されます。安全に保存してください。再度取得することはできません。
 
 エンドポイント `url` は SSRF で検証されています。`http(s)` のみが受け入れられ、インスタンスが `WEBHOOKS_ALLOW_PRIVATE=true` で実行されない限り、プライベート/ループバック/リンクローカル ホストは拒否されます (セルフホスト受信機はこれを必要とすることがよくあります)。
 
@@ -122,6 +122,6 @@ def secureai_webhook():
 
 ## 関連
 
-- [Webhook Events](/ja/en/api/webhooks/events) — 完全なイベント カタログとペイロード。
-- [冗長性とフェイルオーバー](/ja/en/api/redundancy) — `api:model_failover`のソース。
-- [Threat Defense](/ja/en/threat-defense/overview) — `promptshield:*` イベントのソース。
+- [Webhook Events](/ja/api/webhooks/events) — 完全なイベント カタログとペイロード。
+- [冗長性とフェイルオーバー](/ja/api/redundancy) — `api:model_failover`のソース。
+- [Threat Defense](/ja/threat-defense/overview) — `promptshield:*` イベントのソース。

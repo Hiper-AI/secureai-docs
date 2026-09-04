@@ -7,7 +7,7 @@ description: "SecureAI Completions API の呼び出し元定義モデル フェ�
 
 Completions API は、プロバイダー呼び出しが失敗したときに、あるモデルから別のモデルに自動的に**フェイルオーバー**できます。順序付けされたチェーン (プライマリ モデルと最大 2 つのフォールバック) を定義すると、SecureAI はいずれかが成功するまで順番にそれぞれを試行します。これにより、独自のコードに再試行ロジックを追加しなくても、プロバイダーの停止、レート制限、タイムアウトに対する回復力が得られます。
 
-冗長性は、[クラシック `/chat/completions`](/api/chat/completions) エンドポイントと [OpenAI 互換 `/v1/chat/completions`](/api/chat/openai-completions) エンドポイントの両方で利用できます。
+冗長性は、[クラシック `/chat/completions`](/ja/api/chat/completions) エンドポイントと [OpenAI 互換 `/v1/chat/completions`](/ja/api/chat/openai-completions) エンドポイントの両方で利用できます。
 
 ## チェーンの定義方法
 
@@ -114,11 +114,11 @@ OpenAI 互換エンドポイントでは、同じ条件により `code: "all_mod
 
 ## セキュリティと試行ごとの課金
 
-すべての試行は、SMLTP ラッパーを介した完全な独立した呼び出しです。ポリシーの適用、出力/常駐ガバナンス、および署名付き資格トークンのミントはすべて試行ごとに再実行され、その試行のモデルと正確な要求バイトにバインドされます。請求には、実際に応答を提供したモデルが反映されます。各フェイルオーバーは、`api:model_failover` セキュリティ イベント (サブスクライブされた [webhooks](/ja/en/api/webhooks/overview) に配信される) と監査ログ エントリも生成します。
+すべての試行は、SMLTP ラッパーを介した完全な独立した呼び出しです。ポリシーの適用、出力/常駐ガバナンス、および署名付き資格トークンのミントはすべて試行ごとに再実行され、その試行のモデルと正確な要求バイトにバインドされます。請求には、実際に応答を提供したモデルが反映されます。各フェイルオーバーは、`api:model_failover` セキュリティ イベント (サブスクライブされた [webhooks](/ja/api/webhooks/overview) に配信される) と監査ログ エントリも生成します。
 
 ## 関連
 
-- [チャット補完](/ja/ja/api/chat/completions)
-- [OpenAI互換エンドポイント](/ja/ja/api/chat/openai互換)
-- [ポリシーチェック](/ja/ja/api/policy-check) — ポイントを消費せずにチェーン全体のアクセスをプレビューします。
-- [Webhooks](/ja/en/api/webhooks/overview) — `api:model_failover` をサブスクライブします。
+- [チャット補完](/ja/api/chat/completions)
+- [OpenAI互換エンドポイント](/ja/api/chat/openai互換)
+- [ポリシーチェック](/ja/api/policy-check) — ポイントを消費せずにチェーン全体のアクセスをプレビューします。
+- [Webhooks](/ja/api/webhooks/overview) — `api:model_failover` をサブスクライブします。

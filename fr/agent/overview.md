@@ -13,10 +13,10 @@ La flotte d'agents est gérée sous **Admin → Agent Registry → OS Agents**.
 ## Ce que fait l'agent
 
 - **Découvre l'utilisation de l'IA sur l'appareil** : SDK/processus d'IA installés, serveurs MCP et appels de réseau fantôme aux fournisseurs d'IA.
-- **Applique la politique** — surveille ou bloque les fournisseurs/modèles/applications/MCP d'IA, applique une surveillance comportementale de l'IA et applique le contrôle de sortie (voir [Egress Enforcement](/fr/en/agent/egress-enforcement)).
+- **Applique la politique** — surveille ou bloque les fournisseurs/modèles/applications/MCP d'IA, applique une surveillance comportementale de l'IA et applique le contrôle de sortie (voir [Egress Enforcement](/fr/agent/egress-enforcement)).
 - **Protège les données** — inspection DLP/PII du point final.
-- **Répond aux menaces** — met en quarantaine les fichiers malveillants et peut isoler un point de terminaison compromis (voir [Quarantine & Fleet Ops](/fr/en/agent/quarantine-and-fleet-ops)).
-- **Achemine éventuellement le trafic IA des développeurs** via la passerelle SecureAI (voir [Transparent Proxy](/fr/en/agent/transparent-proxy)).
+- **Répond aux menaces** — met en quarantaine les fichiers malveillants et peut isoler un point de terminaison compromis (voir [Quarantine & Fleet Ops](/fr/agent/quarantine-and-fleet-ops)).
+- **Achemine éventuellement le trafic IA des développeurs** via la passerelle SecureAI (voir [Transparent Proxy](/fr/agent/transparent-proxy)).
 
 ## Santé et posture de l'appareil
 
@@ -32,16 +32,16 @@ L'onglet **OS Agents** répertorie chaque appareil avec son état, sa posture, s
 
 ## Comment commencer
 
-1. **[Installer l'agent](/fr/en/agent/installation)** sur les endpoints (MSI signé sous Windows ; script sous Linux/macOS).
-2. Comprendre **[packages d'inscription et d'installation](/fr/en/agent/enrollment-and-packages)** — comment les appareils rejoignent et obtiennent leur configuration.
-3. Configurez **[policies & groups](/fr/en/agent/policies-and-groups)** pour décider de ce que chaque appareil applique.
-4. Réglez **[egressforcement](/fr/en/agent/egress-enforcement)** et **[quarantine & Fleet Ops](/fr/en/agent/quarantine-and-fleet-ops)** pour la réponse.
+1. **[Installer l'agent](/fr/agent/installation)** sur les endpoints (MSI signé sous Windows ; script sous Linux/macOS).
+2. Comprendre **[packages d'inscription et d'installation](/fr/agent/enrollment-and-packages)** — comment les appareils rejoignent et obtiennent leur configuration.
+3. Configurez **[policies & groups](/fr/agent/policies-and-groups)** pour décider de ce que chaque appareil applique.
+4. Réglez **[egressforcement](/fr/agent/egress-enforcement)** et **[quarantine & Fleet Ops](/fr/agent/quarantine-and-fleet-ops)** pour la réponse.
 
 ## Rôles
 
-L'accès général au panneau d'administration vous permet de visualiser et de configurer la flotte. **Les actions destructrices** (mise en quarantaine, suppression de processus/MCP/réseau, isolement et révocation) nécessitent le rôle **admin** système élevé. Voir [Quarantine & Fleet Ops](/fr/en/agent/quarantine-and-fleet-ops).
+L'accès général au panneau d'administration vous permet de visualiser et de configurer la flotte. **Les actions destructrices** (mise en quarantaine, suppression de processus/MCP/réseau, isolement et révocation) nécessitent le rôle **admin** système élevé. Voir [Quarantine & Fleet Ops](/fr/agent/quarantine-and-fleet-ops).
 
 ## Connexes
 
-- [AI Discovery & Inventory](/fr/en/discovery/overview) — l'agent est l'un des trois signaux de découverte.
-- [Défense contre les menaces](/fr/en/threat-defense/overview)
+- [AI Discovery & Inventory](/fr/discovery/overview) — l'agent est l'un des trois signaux de découverte.
+- [Défense contre les menaces](/fr/threat-defense/overview)

@@ -11,7 +11,7 @@ Verbinden Sie Ihre Anthropic-Organisation, damit SecureAI Arbeitsbereiche, API-S
 ## Was SecureAI importiert
 
 - **Arbeitsbereiche**, Nutzung und Kosten
-- **NHIs** – API-Schlüssel, Dienstkonten und BYOK-Schlüssel (widerruflich – siehe [NHI Inventory](/de/en/discovery/nhi-inventory))
+- **NHIs** – API-Schlüssel, Dienstkonten und BYOK-Schlüssel (widerruflich – siehe [NHI Inventory](/de/discovery/nhi-inventory))
 - **Ausgabenlimits**
 - **Audit-Protokoll** (Enterprise/Compliance-API)
 - **Claude Code-Analyse**
@@ -45,13 +45,13 @@ Verbinden Sie Ihre Anthropic-Organisation, damit SecureAI Arbeitsbereiche, API-S
 
 ## Überprüfen
 
-Öffnen Sie [Cloud Sensors](/de/en/discovery/cloud-sensors) für erkannte Arbeitsbereiche/Agenten und [NHI Inventory](/de/en/discovery/nhi-inventory) für Schlüssel und Dienstkonten. Einblicke zeigen Nutzung, Kosten und Ausgabengrenzen.
+Öffnen Sie [Cloud Sensors](/de/discovery/cloud-sensors) für erkannte Arbeitsbereiche/Agenten und [NHI Inventory](/de/discovery/nhi-inventory) für Schlüssel und Dienstkonten. Einblicke zeigen Nutzung, Kosten und Ausgabengrenzen.
 
 ## Widerruf
 
-Anthropic API-Schlüssel, Dienstkonten und BYOK-Schlüssel können von [NHI Inventory](/de/en/discovery/nhi-inventory) **widerruflich** werden.
+Anthropic API-Schlüssel, Dienstkonten und BYOK-Schlüssel können von [NHI Inventory](/de/discovery/nhi-inventory) **widerruflich** werden.
 
 ## Verwandte
 
-- [Übersicht Cloud-KI-Anbieter](/de/en/integrations/cloud/overview)
-- [NHI Inventory](/de/en/discovery/nhi-inventory)
+- [Übersicht Cloud-KI-Anbieter](/de/integrations/cloud/overview)
+- [NHI Inventory](/de/discovery/nhi-inventory)

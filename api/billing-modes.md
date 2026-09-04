@@ -1,39 +1,38 @@
 ---
-title: "Billing Mode API Keys"
+title: "Modos de Facturación y Claves API"
+sidebar_label: "Modos de Facturación"
 ---
 
+# Claves API del modo de facturación
 
+SecureAI admite dos modos de facturación distintos para las claves API, lo que permite a los administradores controlar cómo se rastrea y factura el uso para diferentes integraciones de API.
 
-# Billing Mode API Keys
+## Descripción general
 
-SecureAI supports two distinct billing modes for API keys, allowing administrators to control how usage is tracked and billed for different API integrations.
+Las claves API se pueden configurar con uno de dos modos de facturación:
 
-## Overview
+- **Finalizaciones de usuario**: se deduce del depósito de finalización de licencia del usuario.
+- **Uso por modelo**: cargos a la tarjeta de crédito del usuario según el uso real del modelo.
 
-API keys can be configured with one of two billing modes:
+## Modos de facturación
 
-- **User Completions**: Deducts from the user's license completion bucket
-- **Usage by Model**: Charges to the user's credit card based on actual model usage
+### Modo de finalización del usuario
 
-## Billing Modes
+**Modo predeterminado**: las claves API utilizan este modo de forma predeterminada.
 
-### User Completions Mode
+#### Cómo funciona
+- Deduce las finalizaciones de la cuota de licencia mensual del usuario.
+- Utiliza los mismos límites de finalización que la interfaz web.
+- No hay cargos adicionales más allá de la licencia existente del usuario
+- Vuelve al uso por modelo si no hay cuota disponible y el usuario tiene habilitado el uso por modelo.
 
-**Default Mode** - API keys use this mode by default.
+#### Casos de uso
+- Aplicaciones internas en las que desea utilizar asignaciones de licencias existentes
+- Entornos de desarrollo y pruebas.
+- Aplicaciones en las que desea costos fijos y predecibles
+- Cuando desee permanecer dentro de los límites de la licencia existente
 
-#### How it Works
-- Deducts completions from the user's monthly license quota
-- Uses the same completion limits as the web interface
-- No additional charges beyond the user's existing license
-- Falls back to Usage by Model if no quota is available and the user has Usage by Model enabled
-
-#### Use Cases
-- Internal applications where you want to use existing license allocations
-- Development and testing environments
-- Applications where you want predictable, fixed costs
-- When you want to stay within existing license limits
-
-#### Configuration
+#### Configuración
 ```json
 {
   "billingMode": "user-completions",
@@ -42,24 +41,24 @@ API keys can be configured with one of two billing modes:
 }
 ```
 
-### Usage by Model Mode
+### Uso por modo de modelo
 
-**Advanced Mode** - Requires explicit configuration and user permission.
+**Modo avanzado**: requiere configuración explícita y permiso del usuario.
 
-#### How it Works
-- Charges based on actual token usage and model costs
-- Tracks input tokens, output tokens, and total tokens
-- Calculates costs based on model-specific pricing
-- Requires the user to have Usage by Model enabled in their account
-- Has configurable monthly dollar limits
+#### Cómo funciona
+- Cargos basados en el uso real del token y los costos del modelo.
+- Realiza un seguimiento de tokens de entrada, tokens de salida y tokens totales
+- Calcula los costos en función de los precios específicos del modelo.
+- Requiere que el usuario tenga habilitado el Uso por modelo en su cuenta
+- Tiene límites de dólares mensuales configurables
 
-#### Use Cases
-- High-volume applications where you need precise cost tracking
-- Applications using higher-cost models (GPT-5.x, Claude Opus/Sonnet, etc.)
-- When you need detailed usage analytics
-- Applications where you want to pay only for what you use
+#### Casos de uso
+- Aplicaciones de gran volumen donde se necesita un seguimiento preciso de los costos
+- Aplicaciones que utilizan modelos de mayor coste (GPT-5.x, Claude Opus/Sonnet, etc.)
+- Cuando necesite análisis de uso detallados
+- Aplicaciones donde quieres pagar solo por lo que usas
 
-#### Configuration
+#### Configuración
 ```json
 {
   "billingMode": "usage-by-model",
@@ -70,44 +69,44 @@ API keys can be configured with one of two billing modes:
 }
 ```
 
-## API Key Creation
+## Creación de clave API
 
-### Creating API Keys with Billing Modes
+### Creación de claves API con modos de facturación
 
-Create and configure API keys from the SecureAI Admin panel.
+Cree y configure claves API desde el panel de administración de SecureAI.
 
-1. Go to `Admin -> API Keys`.
-2. Create or edit an API key.
-3. Set `billingMode` to `user-completions` or `usage-by-model`.
-4. Configure limits, allowed models, allowed indexes, and allowed SMLTP policies.
+1. Vaya a `Admin -> API Keys`.
+2. Cree o edite una clave API.
+3. Establezca `billingMode` en `user-completions` o `usage-by-model`.
+4. Configure límites, modelos permitidos, índices permitidos y políticas SMLTP permitidas.
 
-### Billing Mode Validation
+### Validación del modo de facturación
 
-The system validates billing mode requirements:
+El sistema valida los requisitos del modo de facturación:
 
-- **Usage by Model Mode**: Requires the user to have Usage by Model enabled
-- **User Completions Mode**: Works with any user, but may fall back to Usage by Model if no quota is available
+- **Modo de uso por modelo**: requiere que el usuario tenga habilitado el uso por modelo.
+- **Modo de finalización de usuario**: funciona con cualquier usuario, pero puede recurrir al uso por modelo si no hay cuota disponible.
 
-## Usage Tracking
+## Seguimiento de uso
 
-### User Completions Tracking
+### Seguimiento de finalización del usuario
 
-For User Completions mode, the system tracks:
-- Daily and monthly completion counts
-- Model-specific usage statistics
-- Quota consumption and limits
+Para el modo Finalizaciones de usuario, el sistema realiza un seguimiento de:
+- Recuentos de finalización diarios y mensuales.
+- Estadísticas de uso específicas del modelo
+- Consumo de cuotas y límites
 
-### Usage by Model Tracking
+### Uso por seguimiento de modelo
 
-For Usage by Model mode, the system tracks:
-- Input tokens, output tokens, and total tokens
-- Model-specific costs and points
-- Monthly dollar spending
-- Detailed usage analytics
+Para el modo Uso por modelo, el sistema rastrea:
+- Tokens de entrada, tokens de salida y tokens totales
+- Costos y puntos específicos del modelo.
+- Gasto mensual en dólares
+- Análisis de uso detallados
 
-## API Response Examples
+## Ejemplos de respuesta API
 
-### User Completions Mode Response
+### Respuesta del modo de finalización del usuario
 
 ```json
 {
@@ -141,7 +140,7 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-### Usage by Model Mode Response
+### Uso por respuesta del modo modelo
 
 ```json
 {
@@ -177,9 +176,9 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-## Error Handling
+## Manejo de errores
 
-### Usage by Model Not Enabled
+### Uso por modelo no habilitado
 
 ```json
 {
@@ -190,7 +189,7 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-### Quota Exceeded (User Completions)
+### Cuota excedida (finalizaciones del usuario)
 
 ```json
 {
@@ -201,7 +200,7 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-### Budget Exceeded (Usage by Model)
+### Presupuesto excedido (uso por modelo)
 
 ```json
 {
@@ -212,50 +211,50 @@ For Usage by Model mode, the system tracks:
 }
 ```
 
-## Best Practices
+## Mejores prácticas
 
-### Choosing the Right Billing Mode
+### Elegir el modo de facturación adecuado
 
-1. **Use User Completions when:**
-   - You want predictable costs
-   - You're within existing license limits
-   - You're building internal tools
-   - You want to use existing quota allocations
+1. **Usar Completaciones de usuario cuando:**
+   - Quieres costos predecibles
+   - Estás dentro de los límites de licencia existentes
+   - Estás construyendo herramientas internas.
+   - Quiere utilizar asignaciones de cuotas existentes
 
-2. **Use Usage by Model when:**
-   - You need detailed cost tracking
-   - You're using expensive models frequently
-   - You want to pay only for actual usage
-   - You need granular usage analytics
+2. **Utilice el uso por modelo cuando:**
+   - Necesita un seguimiento detallado de los costos
+   - Utilizas modelos caros con frecuencia.
+   - Quieres pagar sólo por el uso real
+   - Necesita análisis de uso granular
 
-### Configuration Recommendations
+### Recomendaciones de configuración
 
-1. **Set appropriate limits:**
-   - Daily limits for rate control
-   - Monthly limits for cost control
-   - Dollar limits for Usage by Model mode
+1. **Establezca límites apropiados:**
+   - Límites diarios para el control de tarifas.
+   - Límites mensuales para el control de costos.
+   - Límites en dólares para el modo Uso por modelo
 
-2. **Monitor usage:**
-   - Track API key usage regularly
-   - Set up alerts for approaching limits
-   - Review usage patterns monthly
+2. **Monitorear el uso:**
+   - Realice un seguimiento del uso de la clave API con regularidad
+   - Configurar alertas para acercarse a los límites
+   - Revisar los patrones de uso mensualmente
 
-3. **Security considerations:**
-   - Use IP restrictions for sensitive applications
-   - Rotate API keys regularly
-   - Monitor for unusual usage patterns
+3. **Consideraciones de seguridad:**
+   - Utilice restricciones de IP para aplicaciones sensibles
+   - Rote las claves API con regularidad
+   - Supervisar patrones de uso inusuales
 
-## Fallback Mechanism
+## Mecanismo de respaldo
 
-### User Completions to Usage by Model Fallback
+### Finalizaciones del usuario para el uso por modelo de reserva
 
-When a User Completions API key encounters quota exhaustion, the system automatically falls back to Usage by Model if:
+Cuando una clave de API de finalización de usuario agota la cuota, el sistema vuelve automáticamente al uso por modelo si:
 
-1. **User has Usage by Model enabled** in their account settings
-2. **User has available budget** in their Usage by Model allocation
-3. **API key allows fallback** (default behavior)
+1. **El usuario tiene habilitado el uso por modelo** en la configuración de su cuenta.
+2. **El usuario tiene presupuesto disponible** en su asignación de Uso por modelo
+3. **La clave API permite el respaldo** (comportamiento predeterminado)
 
-#### Fallback Process
+#### Proceso alternativo
 
 ```json
 {
@@ -285,92 +284,92 @@ When a User Completions API key encounters quota exhaustion, the system automati
 }
 ```
 
-### Validation Logic
+### Lógica de validación
 
-#### Usage by Model Requirements
+#### Uso por requisitos de modelo
 
-The system validates the following before allowing Usage by Model billing:
+El sistema valida lo siguiente antes de permitir la facturación de Uso por modelo:
 
-1. **User Account Settings**: User must have "Usage by Model" enabled
-2. **Monthly Budget**: User must have available budget in their allocation
-3. **API Key Configuration**: API key must be configured for Usage by Model or allow fallback
-4. **Model Access**: User must have access to the requested model
+1. **Configuración de cuenta de usuario**: el usuario debe tener habilitado "Uso por modelo"
+2. **Presupuesto mensual**: el usuario debe tener presupuesto disponible en su asignación
+3. **Configuración de clave API**: la clave API debe configurarse para uso por modelo o permitir respaldo
+4. **Acceso al modelo**: El usuario debe tener acceso al modelo solicitado
 
-#### Mixed Billing Scenarios
+#### Escenarios de facturación mixtos
 
-When multiple API keys with different billing modes are used:
+Cuando se utilizan varias claves API con diferentes modos de facturación:
 
-- **User Completions keys** consume from the user's monthly quota
-- **Usage by Model keys** consume from the user's budget allocation
-- **Fallback scenarios** prioritize User Completions first, then Usage by Model
-- **Quota exhaustion** triggers automatic fallback if available
+- **Claves de finalización del usuario** consumen de la cuota mensual del usuario
+- **Uso por claves de modelo** consume de la asignación presupuestaria del usuario
+- **Escenarios alternativos** priorizan primero las finalizaciones del usuario y luego el uso por modelo.
+- **El agotamiento de la cuota** activa el respaldo automático si está disponible
 
-## Migration Between Modes
+## Migración entre modos
 
-### From User Completions to Usage by Model
+### De las terminaciones del usuario al uso por modelo
 
-1. **Enable Usage by Model**: Ensure the user has Usage by Model enabled in their account
-2. **Update API Key**: Change the billing mode in the API key configuration
-3. **Set Budget Limits**: Configure appropriate monthly dollar limits
-4. **Monitor Usage**: Track both completion usage and budget consumption
-5. **Test Fallback**: Verify fallback behavior works correctly
+1. **Habilitar uso por modelo**: asegúrese de que el usuario tenga habilitado el uso por modelo en su cuenta.
+2. **Actualizar clave API**: cambie el modo de facturación en la configuración de la clave API
+3. **Establecer límites de presupuesto**: configure límites de dólares mensuales apropiados
+4. **Supervisar el uso**: realice un seguimiento tanto del uso de finalización como del consumo del presupuesto.
+5. **Probar respaldo**: verificar que el comportamiento de respaldo funcione correctamente
 
-### From Usage by Model to User Completions
+### Del uso por modelo a las terminaciones del usuario
 
-1. **Verify Quota**: Ensure the user has sufficient monthly completion quota
-2. **Update API Key**: Change the billing mode in the API key configuration
-3. **Monitor Usage**: Track completion consumption against monthly limits
-4. **Configure Fallback**: Set up fallback to Usage by Model if quota is exhausted
-5. **Test Limits**: Verify quota limits are properly enforced
+1. **Verificar cuota**: asegúrese de que el usuario tenga suficiente cuota de finalización mensual
+2. **Actualizar clave API**: cambie el modo de facturación en la configuración de la clave API
+3. **Monitorear el uso**: realice un seguimiento del consumo completado en comparación con los límites mensuales
+4. **Configurar reserva**: configure la reserva para Uso por modelo si se agota la cuota
+5. **Límites de prueba**: Verifique que los límites de cuota se apliquen correctamente
 
-### Migration Best Practices
+### Mejores prácticas de migración
 
-- **Gradual Migration**: Test with low-volume API keys first
-- **Monitor Both Metrics**: Track both completion usage and budget consumption
-- **Set Appropriate Limits**: Configure realistic limits for both modes
-- **Document Changes**: Keep track of billing mode changes for audit purposes
-- **User Communication**: Inform users of billing mode changes and their implications
+- **Migración gradual**: Pruebe primero con claves API de bajo volumen
+- **Monitorear ambas métricas**: realice un seguimiento tanto del uso de finalización como del consumo de presupuesto
+- **Establecer límites apropiados**: configure límites realistas para ambos modos
+- **Cambios en los documentos**: realice un seguimiento de los cambios en el modo de facturación para fines de auditoría.
+- **Comunicación con el usuario**: informar a los usuarios sobre los cambios en el modo de facturación y sus implicaciones.
 
-## Monitoring and Analytics
+## Monitoreo y análisis
 
-### Usage Analytics
+### Análisis de uso
 
-The system provides detailed analytics for both billing modes:
+El sistema proporciona análisis detallados para ambos modos de facturación:
 
-- **User Completions**: Completion counts, quota usage, model distribution
-- **Usage by Model**: Token counts, costs, model-specific analytics
+- **Finalizaciones de usuarios**: recuentos de finalización, uso de cuotas, distribución de modelos.
+- **Uso por modelo**: recuentos de tokens, costos, análisis específicos del modelo
 
-### Admin Panel Integration
+### Integración del panel de administración
 
-The admin panel provides:
-- Real-time usage monitoring
-- Billing mode configuration
-- Usage analytics and reports
-- Cost tracking and alerts
+El panel de administración proporciona:
+- Monitoreo de uso en tiempo real
+- Configuración del modo de facturación
+- Análisis e informes de uso.
+- Seguimiento de costos y alertas.
 
-## Troubleshooting
+## Solución de problemas
 
-### Common Issues
+### Problemas comunes
 
-1. **Usage by Model not working:**
-   - Verify the user has Usage by Model enabled
-   - Check monthly dollar limits
-   - Ensure proper model access
+1. **El uso por modelo no funciona:**
+   - Verificar que el usuario tenga habilitado el Uso por modelo
+   - Verifique los límites mensuales en dólares
+   - Garantizar el acceso adecuado al modelo.
 
-2. **User Completions quota issues:**
-   - Check user's license tier
-   - Verify monthly completion limits
-   - Consider enabling Usage by Model as fallback
+2. **Problemas con la cuota de finalización de usuarios:**
+   - Verifique el nivel de licencia del usuario
+   - Verificar los límites de finalización mensuales
+   - Considere habilitar el uso por modelo como alternativa
 
-3. **API key authentication errors:**
-   - Verify API key is active
-   - Check IP restrictions
-   - Ensure proper permissions
+3. **Errores de autenticación de clave API:**
+   - Verificar que la clave API esté activa
+   - Verificar restricciones de IP
+   - Garantizar los permisos adecuados
 
-### Support
+### Soporte
 
-For issues with billing modes:
-1. Check the admin panel for usage statistics
-2. Review API key configuration
-3. Contact system administrator for billing mode changes
-4. Monitor logs for detailed error information 
+Para problemas con los modos de facturación:
+1. Consulte el panel de administración para ver las estadísticas de uso.
+2. Revisar la configuración de la clave API
+3. Comuníquese con el administrador del sistema para cambios en el modo de facturación.
+4. Supervise los registros para obtener información detallada sobre los errores.

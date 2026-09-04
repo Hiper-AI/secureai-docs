@@ -1,55 +1,53 @@
 ---
 sidebar_position: 1
-title: "Cloud AI Providers Overview"
-sidebar_label: "Overview"
-description: "Connect your OpenAI, Anthropic, Azure, AWS, and GCP AI platforms so SecureAI can inventory agents, models, identities, usage, and cost"
+title: "Provedores Cloud de IA — Visão Geral"
+sidebar_label: "Visão Geral Cloud"
+description: "Conecte suas plataformas OpenAI, Anthropic, Azure, AWS e GCP AI para que a SecureAI possa inventariar agentes, modelos, identidades, uso e custos"
 ---
 
+# Provedores de IA em nuvem
 
+Os conectores Cloud AI Provider permitem que a SecureAI alcance as plataformas de IA que sua organização já usa — **OpenAI Platform, Anthropic Console, Azure AI Foundry e Google Vertex AI** — e inventariar automaticamente tudo o que é executado lá. Nenhum agente ou SDK precisa ser implantado no lado do provedor; SecureAI pesquisa a API de gerenciamento de cada provedor com as credenciais de leitura que você fornece.
 
-# Cloud AI Providers
+Uma vez conectado, um conector descobre e sincroniza continuamente:
 
-Cloud AI Provider connectors let SecureAI reach into the AI platforms your organization already uses — **OpenAI Platform, Anthropic Console, Azure AI Foundry, and Google Vertex AI** — and automatically inventory everything running there. No agent or SDK needs to be deployed on the provider side; SecureAI polls each provider's management API with read-mostly credentials you supply.
+- **Agentes, modelos e implantações** em execução na plataforma → mostrados em [Cloud Sensors](/pt/discovery/cloud-sensors).
+- **Identidades não humanas (NHIs)** — chaves de API, contas de serviço e (quando suportado) chaves BYOK → mostradas em [NHI Inventário](/pt/discovery/nhi-inventory), com controles de bloqueio/revogação.
+- **Uso, tokens e custo** nos últimos 30 dias.
+- **Sinais de governança** — vinculações IAM/RBAC, limites de gastos e registros de auditoria, exibidos em insights por provedor.
 
-Once connected, a connector discovers and continuously syncs:
+## O ciclo de configuração
 
-- **Agents, models, and deployments** running on the platform → shown in [Cloud Sensors](/pt/en/discovery/cloud-sensors).
-- **Non-Human Identities (NHIs)** — API keys, service accounts, and (where supported) BYOK keys → shown in [NHI Inventory](/pt/en/discovery/nhi-inventory), with block/revoke controls.
-- **Usage, tokens, and cost** for the last 30 days.
-- **Governance signals** — IAM/RBAC bindings, spend limits, and audit logs, surfaced in per-provider Insights.
+Cada provedor segue as mesmas quatro etapas:
 
-## The setup loop
-
-Every provider follows the same four steps:
-
-1. **Open Admin → Integrations** and select the **Cloud** category.
-2. **Connect** the provider card and enter its credentials (see each provider's page).
-3. **Test** the connection to validate the credentials.
-4. **Sync** — the first sync runs a full import; subsequent syncs are incremental and also run on a schedule.
+1. **Abra Admin → Integrações** e selecione a categoria **Nuvem**.
+2. **Conecte** o cartão da operadora e insira suas credenciais (veja a página de cada operadora).
+3. **Teste** a conexão para validar as credenciais.
+4. **Sincronização** — a primeira sincronização executa uma importação completa; as sincronizações subsequentes são incrementais e também executadas de acordo com uma programação.
 
 <Info>
-**Where things appear**
+**Onde as coisas aparecem**
 
-Connector **setup** lives in **Admin → Integrations**. The **inventory** it produces appears in **Admin → Agent Registry**: discovered agents/models under [Cloud Sensors](/pt/en/discovery/cloud-sensors), and discovered identities under [NHI Inventory](/pt/en/discovery/nhi-inventory). You can re-run a sync from either place.
+A **configuração** do conector fica em **Administrador → Integrações**. O **inventário** que ele produz aparece em **Admin → Registro de Agente**: agentes/modelos descobertos em [Sensores de Nuvem](/pt/discovery/cloud-sensors) e identidades descobertas em [NHI Inventário](/pt/discovery/nhi-inventory). Você pode executar novamente uma sincronização em qualquer lugar.
 </Info>
 
-## Choosing credentials
+## Escolhendo credenciais
 
-Use **read-only / viewer** credentials wherever possible — SecureAI only needs to *read* your inventory to build the picture. Some optional capabilities (revoking a leaked key, creating a spend alert) require additional write permissions; each provider page calls these out explicitly, and they are always optional.
+Use credenciais **somente leitura/visualizador** sempre que possível — o SecureAI só precisa *ler* seu inventário para construir a imagem. Alguns recursos opcionais (revogar uma chave vazada, criar um alerta de gasto) exigem permissões de gravação adicionais; cada página do provedor os destaca explicitamente e são sempre opcionais.
 
-All secrets you enter (client secrets, service-account JSON, admin API keys) are **encrypted at rest**.
+Todos os segredos inseridos (segredos do cliente, JSON da conta de serviço, chaves de API do administrador) são **criptografados em repouso**.
 
-## Provider guides
+## Guias do provedor
 
-| Provider | Credential type |
+| Provedor | Tipo de credencial |
 |----------|-----------------|
-| [OpenAI Platform](/pt/en/integrations/cloud/openai-platform) | Organization admin API key |
-| [Anthropic Console](/pt/en/integrations/cloud/anthropic-console) | Admin API key (+ optional workspace / compliance keys) |
-| [Azure AI Foundry](/pt/en/integrations/cloud/azure-ai-foundry) | Entra service principal (tenant/client/secret) |
-| [Google Vertex AI](/pt/en/integrations/cloud/gcp-vertex-ai) | Service-account JSON |
+| [Plataforma OpenAI](/pt/integrations/cloud/openai-platform) | Chave de API do administrador da organização |
+| [Console Antrópico](/pt/integrations/cloud/anthropic-console) | Chave de API Admin (+ espaço de trabalho opcional/chaves de conformidade) |
+| [Azure AI Foundry](/pt/integrations/cloud/azure-ai-foundry) | Entrar entidade de serviço (locatário/cliente/segredo) |
+| [Google Vertex AI](/pt/integrations/cloud/gcp-vertex-ai) | JSON da conta de serviço |
 
-## Related
+## Relacionado
 
-- [Cloud Sensors](/pt/en/discovery/cloud-sensors) — the discovered agent/model inventory.
-- [NHI Inventory](/pt/en/discovery/nhi-inventory) — the discovered identity inventory and revoke controls.
-- [AI Discovery & Inventory Overview](/pt/en/discovery/overview)
+- [Cloud Sensors](/pt/discovery/cloud-sensors) — o inventário de agente/modelo descoberto.
+- [NHI Inventário](/pt/discovery/nhi-inventory) — o inventário de identidade descoberto e controles de revogação.
+- [Visão geral do inventário e descoberta de IA](/pt/discovery/overview)

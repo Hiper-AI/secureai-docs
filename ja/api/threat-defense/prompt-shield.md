@@ -8,7 +8,7 @@ Prompt Shield API を使用すると、任意のアプリケーションから�
 プロンプト シールドは 2 つの方法で使用できます。
 
 1. **スタンドアロン スキャン API** — 独自の LLM パイプライン用の、以下に記載されている `/scan`、`/scan-output`、および `/scan-conversation` エンドポイント。
-2. **完了時にインライン** — [チャット完了](/ja/en/api/chat/completions) または [OpenAI 互換エンドポイント](/ja/en/api/chat/openai-completions) を呼び出すと、プロンプト シールドが自動的に実行され、呼び出しごとに調整できます。 [完了時の呼び出しごとの制御](#per-call-control-on-completions) を参照してください。
+2. **完了時にインライン** — [チャット完了](/ja/api/chat/completions) または [OpenAI 互換エンドポイント](/ja/api/chat/openai-completions) を呼び出すと、プロンプト シールドが自動的に実行され、呼び出しごとに調整できます。 [完了時の呼び出しごとの制御](#per-call-control-on-completions) を参照してください。
 
 ## 呼び出しごとの完了の制御
 
@@ -28,7 +28,7 @@ API キーでプロンプト シールドが有効になっている場合、完
 | `enabled` | `false` を設定して、この呼び出しをスキャンから除外します。オプトアウトは **フェイルクローズ**: API キーでオプトアウトが許可されている場合にのみ適用されます。それ以外の場合、通話は拒否されます。 |
 | `policy` |キーの許可されたポリシーから、この通話の特定のプロンプト シールド ポリシー (ID または名前) を選択します。 |
 
-`policy` と `enabled: false` を組み合わせることはできません。適用されたポリシーは応答でエコーバックされます (クラシック エンドポイントでは `metadata.prompt_shield_policy`、`/v1` エンドポイントでは `secureai.prompt_shield_policy`)。モデルを実行せずに呼び出しの判定をプレビューするには、[ポリシー チェック](/ja/ja/api/policy-check) を使用します。
+`policy` と `enabled: false` を組み合わせることはできません。適用されたポリシーは応答でエコーバックされます (クラシック エンドポイントでは `metadata.prompt_shield_policy`、`/v1` エンドポイントでは `secureai.prompt_shield_policy`)。モデルを実行せずに呼び出しの判定をプレビューするには、[ポリシー チェック](/ja/api/policy-check) を使用します。
 
 ## 認証
 

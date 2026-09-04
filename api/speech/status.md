@@ -1,14 +1,13 @@
 ---
 sidebar_position: 2
-title: "Get S2S Time Status"
+title: "Estado de Sesión Speech-to-Speech"
 openapi: "GET /speech/s2s/status"
+sidebar_label: "Estado S2S"
 ---
 
+# Obtener estado de tiempo S2S
 
-
-# Get S2S Time Status
-
-Retrieve the current Speech-to-Speech (S2S) time status for the billing user.
+Recupere el estado de tiempo actual de voz a voz (S2S) para el usuario de facturación.
 
 ## Endpoint
 
@@ -16,31 +15,31 @@ Retrieve the current Speech-to-Speech (S2S) time status for the billing user.
 GET /speech/s2s/status
 ```
 
-## Description
+## Descripción
 
-Retrieve the current Speech-to-Speech (S2S) time status for the billing user, including remaining time, total monthly limit, used time, and renewal information.
+Recupere el estado actual del tiempo de Voz a Voz (S2S) para el usuario de facturación, incluido el tiempo restante, el límite mensual total, el tiempo utilizado y la información de renovación.
 
-### S2S Time Quotas
+### Cuotas de tiempo S2S
 
-- Quotas are based on the user's license tier
-- Time resets monthly based on the license assignment date
-- Non-renewable trial licenses don't auto-reset
+- Las cuotas se basan en el nivel de licencia del usuario.
+- El tiempo se restablece mensualmente según la fecha de asignación de la licencia.
+- Las licencias de prueba no renovables no se restablecen automáticamente
 
-## Authentication
+## Autenticación
 
-Required: API Key
+Requerido: Clave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## Parámetros de consulta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `user_id` | string | No | User ID to check status for (defaults to API key owner) |
+| `user_id` | cadena | No | ID de usuario para verificar el estado (el valor predeterminado es el propietario de la clave API) |
 
-## Request Example
+## Ejemplo de solicitud
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/speech/s2s/status?user_id=60a7c8f5e8b4f5001f7a8c23" \
@@ -63,7 +62,7 @@ console.log('Total minutes:', data.total_minutes);
 console.log('Used minutes:', data.used_minutes);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -83,9 +82,9 @@ print('Total minutes:', result['total_minutes'])
 print('Used minutes:', result['used_minutes'])
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -100,22 +99,22 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `remaining_minutes` | number | Remaining S2S time in minutes |
-| `total_minutes` | number | Total monthly S2S time limit |
-| `used_minutes` | number | Used S2S time this month |
-| `has_time_remaining` | boolean | Whether user has any remaining S2S time |
-| `next_renewal_date` | string\|null | When the S2S time quota will reset (null for non-renewable licenses) |
-| `non_renewable` | boolean | Whether this is a non-renewable trial license |
-| `request_id` | string | Request ID for tracking |
+| `success` | booleano | Siempre es cierto para solicitudes exitosas |
+| `remaining_minutes` | número | Tiempo restante de S2S en minutos |
+| `total_minutes` | número | Límite de tiempo total mensual S2S |
+| `used_minutes` | número | Tiempo S2S usado este mes |
+| `has_time_remaining` | booleano | Si al usuario le queda tiempo S2S |
+| `next_renewal_date` | cadena\|nulo | Cuándo se restablecerá la cuota de tiempo S2S (nula para licencias no renovables) |
+| `non_renewable` | booleano | Si se trata de una licencia de prueba no renovable |
+| `request_id` | cadena | Solicitar ID para seguimiento |
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -125,7 +124,7 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -135,7 +134,7 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### 404 Not Found
+### 404 no encontrado
 
 ```json
 {
@@ -145,7 +144,7 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-### 500 Internal Server Error
+### 500 Error interno del servidor
 
 ```json
 {
@@ -155,10 +154,9 @@ print('Used minutes:', result['used_minutes'])
 }
 ```
 
-## Notes
+## Notas
 
-- Check this endpoint before initiating S2S sessions to ensure sufficient time is available
-- The `user_id` parameter allows checking status for a different user (defaults to API key owner)
-- Time quotas are based on the user's license tier
-- Non-renewable trial licenses will have `non_renewable: true` and `next_renewal_date: null`
-
+- Verifique este endpoint antes de iniciar sesiones S2S para garantizar que haya suficiente tiempo disponible
+- El parámetro `user_id` permite verificar el estado de un usuario diferente (el valor predeterminado es el propietario de la clave API)
+- Las cuotas de tiempo se basan en el nivel de licencia del usuario.
+- Las licencias de prueba no renovables tendrán `non_renewable: true` y `next_renewal_date: null`

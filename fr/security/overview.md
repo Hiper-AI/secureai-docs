@@ -84,6 +84,6 @@ SMLTP prend en charge plusieurs modèles de stratégie intégrés :
 
 ## Prochaines étapes
 
-- [SMLTP Deep Dive](/fr/en/security/smltp) - En savoir plus sur SMLTP
-- [Authentification](/fr/en/iam/overview) - Comprendre les méthodes d'authentification
-- [Sécurité API](/fr/en/api) - Consignes d'utilisation de l'API sécurisée
+- [SMLTP Deep Dive](/fr/security/smltp) - En savoir plus sur SMLTP
+- [Authentification](/fr/iam/overview) - Comprendre les méthodes d'authentification
+- [Sécurité API](/fr/api) - Consignes d'utilisation de l'API sécurisée

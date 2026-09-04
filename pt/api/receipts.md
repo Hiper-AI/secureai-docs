@@ -1,47 +1,45 @@
 ---
-title: "Compliance Receipts"
-sidebar_label: "Receipts"
-description: "Fetch the signed SMLTP compliance receipt for a completion"
+title: "Recibos Criptográficos SMLTP"
+sidebar_label: "Recibos SMLTP"
+description: "Obtenha o recibo de conformidade SMLTP assinado para conclusão"
 openapi: "GET /receipts/{bundleId}"
 ---
 
+# Recibos de Conformidade
 
+Quando uma conclusão é roteada através do gateway **SMLTP**, a SecureAI produz um **recibo** de conformidade assinado — prova criptográfica da política que regeu a chamada. Este endpoint busca esse recibo por seu ID de pacote.
 
-# Compliance Receipts
+Os recibos existem apenas para implantações roteadas por gateway. Em implantações de provedor direto, não há gateway para assinar recibos e esse endpoint retorna `404`.
 
-When a completion is routed through the **SMLTP gateway**, SecureAI produces a signed compliance **receipt** — cryptographic proof of the policy that governed the call. This endpoint fetches that receipt by its bundle id.
-
-Receipts exist only for gateway-routed deployments. On direct-provider deployments there is no gateway to sign receipts, and this endpoint returns `404`.
-
-## Endpoint
+## Ponto final
 
 ```
 GET /receipts/:bundleId
 ```
 
-## Where the bundle id comes from
+## De onde vem o ID do pacote
 
-Completion responses expose the bundle id whenever an SMLTP entitlement is minted for the call:
+As respostas de conclusão expõem o ID do pacote sempre que um direito SMLTP é criado para a chamada:
 
-- Classic endpoint: `metadata.smltp.bundle_id` (and a ready-made `metadata.smltp.receipt_url`).
-- OpenAI-compatible endpoint: `secureai.smltp_bundle_id`.
+- Endpoint clássico: `metadata.smltp.bundle_id` (e um `metadata.smltp.receipt_url` pronto).
+- Endpoint compatível com OpenAI: `secureai.smltp_bundle_id`.
 
-The bundle id (an entitlement id such as `jti-…`) is returned even on native/direct-provider deployments. The **signed receipt** at that id, however, only exists when traffic is routed through the SMLTP gateway — on direct deployments this endpoint returns `404` (see below).
+O ID do pacote (um ID de autorização como `jti-…`) é retornado mesmo em implantações de provedor nativo/direto. O **recibo assinado** nesse ID, no entanto, só existe quando o tráfego é roteado através do gateway SMLTP — em implantações diretas, esse endpoint retorna `404` (veja abaixo).
 
-## Authentication
+## Autenticação
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Example
+## Exemplo de solicitação
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c...e71" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Resposta
 
 ### 200 OK
 
@@ -55,9 +53,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 }
 ```
 
-The `receipt` object is the signed payload emitted by the gateway. See [SMLTP Security](/pt/en/security/smltp) for how receipts fit into the transparency and audit model.
+O objeto `receipt` é a carga assinada emitida pelo gateway. Consulte [SMLTP Segurança](/pt/security/smltp) para saber como os recibos se enquadram no modelo de transparência e auditoria.
 
-### 404 Not Found
+### 404 não encontrado
 
 ```json
 {
@@ -67,17 +65,17 @@ The `receipt` object is the signed payload emitted by the gateway. See [SMLTP Se
 }
 ```
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
-Returned when the bundle id is missing or longer than 128 characters.
+Retornado quando o ID do pacote está ausente ou tem mais de 128 caracteres.
 
-## Notes
+## Notas
 
-- Receipts are held in the gateway's in-memory store for a limited time. For long-term proof, rely on the **hash-chained audit log** — the authoritative, immutable record. See [Immutable Logs](/pt/en/security/immutable-logs).
-- Not every deployment routes through the gateway; treat a `404` as "no gateway receipt for this call," not an error in your integration.
+- Os recibos são mantidos no armazenamento na memória do gateway por tempo limitado. Para provas de longo prazo, confie no **log de auditoria encadeado por hash** — o registro oficial e imutável. Veja [Logs Imutáveis](/pt/security/immutable-logs).
+- Nem toda implantação passa pelo gateway; trate um `404` como "sem recebimento de gateway para esta chamada", e não como um erro em sua integração.
 
-## Related
+## Relacionado
 
-- [SMLTP Security](/pt/en/security/smltp)
-- [Immutable Logs](/pt/en/security/immutable-logs)
-- [Chat Completion](/pt/en/api/chat/completions)
+- [SMLTP Segurança](/pt/security/smltp)
+- [Logs imutáveis](/pt/security/immutable-logs)
+- [Conclusão do bate-papo](/pt/api/chat/completions)

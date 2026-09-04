@@ -1,17 +1,15 @@
 ---
-title: "Compliance Receipts"
-sidebar_label: "Receipts"
-description: "Fetch the signed SMLTP compliance receipt for a completion"
+title: "Recibos Criptográficos SMLTP"
+sidebar_label: "Recibos SMLTP"
+description: "Obtenga el recibo de cumplimiento SMLTP firmado para completarlo"
 openapi: "GET /receipts/{bundleId}"
 ---
 
+# Recibos de cumplimiento
 
+Cuando una finalización se enruta a través de la **puerta de enlace SMLTP**, SecureAI produce un **recibo** de cumplimiento firmado: prueba criptográfica de la política que regía la llamada. Este endpoint recupera ese recibo por su identificación de paquete.
 
-# Compliance Receipts
-
-When a completion is routed through the **SMLTP gateway**, SecureAI produces a signed compliance **receipt** — cryptographic proof of the policy that governed the call. This endpoint fetches that receipt by its bundle id.
-
-Receipts exist only for gateway-routed deployments. On direct-provider deployments there is no gateway to sign receipts, and this endpoint returns `404`.
+Los recibos existen solo para implementaciones enrutadas por puerta de enlace. En implementaciones de proveedor directo no hay una puerta de enlace para firmar recibos y este endpoint devuelve `404`.
 
 ## Endpoint
 
@@ -19,31 +17,31 @@ Receipts exist only for gateway-routed deployments. On direct-provider deploymen
 GET /receipts/:bundleId
 ```
 
-## Where the bundle id comes from
+## De dónde viene la identificación del paquete
 
-Completion responses expose the bundle id whenever an SMLTP entitlement is minted for the call:
+Las respuestas de finalización exponen la identificación del paquete cada vez que se crea un derecho SMLTP para la llamada:
 
-- Classic endpoint: `metadata.smltp.bundle_id` (and a ready-made `metadata.smltp.receipt_url`).
-- OpenAI-compatible endpoint: `secureai.smltp_bundle_id`.
+- Endpoint clásico: `metadata.smltp.bundle_id` (y un `metadata.smltp.receipt_url` ya preparado).
+- Endpoint compatible con OpenAI: `secureai.smltp_bundle_id`.
 
-The bundle id (an entitlement id such as `jti-…`) is returned even on native/direct-provider deployments. The **signed receipt** at that id, however, only exists when traffic is routed through the SMLTP gateway — on direct deployments this endpoint returns `404` (see below).
+La identificación del paquete (una identificación de derecho como `jti-…`) se devuelve incluso en implementaciones nativas/de proveedor directo. Sin embargo, el **recibo firmado** en esa identificación solo existe cuando el tráfico se enruta a través de la puerta de enlace SMLTP; en implementaciones directas, este endpoint devuelve `404` (ver más abajo).
 
-## Authentication
+## Autenticación
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Example
+## Ejemplo de solicitud
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c...e71" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Respuesta
 
-### 200 OK
+### 200 bien
 
 ```json
 {
@@ -55,9 +53,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 }
 ```
 
-The `receipt` object is the signed payload emitted by the gateway. See [SMLTP Security](/en/security/smltp) for how receipts fit into the transparency and audit model.
+El objeto `receipt` es la carga útil firmada emitida por la puerta de enlace. Consulte [Seguridad SMLTP](/security/smltp) para saber cómo encajan los recibos en el modelo de transparencia y auditoría.
 
-### 404 Not Found
+### 404 no encontrado
 
 ```json
 {
@@ -67,17 +65,17 @@ The `receipt` object is the signed payload emitted by the gateway. See [SMLTP Se
 }
 ```
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
-Returned when the bundle id is missing or longer than 128 characters.
+Se devuelve cuando falta la identificación del paquete o tiene más de 128 caracteres.
 
-## Notes
+## Notas
 
-- Receipts are held in the gateway's in-memory store for a limited time. For long-term proof, rely on the **hash-chained audit log** — the authoritative, immutable record. See [Immutable Logs](/en/security/immutable-logs).
-- Not every deployment routes through the gateway; treat a `404` as "no gateway receipt for this call," not an error in your integration.
+- Los recibos se guardan en el almacén en memoria de la puerta de enlace por un tiempo limitado. Para obtener pruebas a largo plazo, confíe en el **registro de auditoría encadenado mediante hash**, el registro autorizado e inmutable. Consulte [Registros inmutables](/security/immutable-logs).
+- No todas las rutas de implementación pasan por la puerta de enlace; Trate un `404` como "sin recibo de puerta de enlace para esta llamada", no como un error en su integración.
 
-## Related
+## Relacionado
 
-- [SMLTP Security](/en/security/smltp)
-- [Immutable Logs](/en/security/immutable-logs)
-- [Chat Completion](/en/api/chat/completions)
+- [Seguridad SMLTP](/seguridad/smltp)
+- [Registros inmutables](/security/immutable-logs)
+- [Finalización del chat](/api/chat/completions)

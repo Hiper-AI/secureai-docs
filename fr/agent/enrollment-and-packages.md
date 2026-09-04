@@ -18,13 +18,13 @@ Dans **Admin → Agent Registry → OS Agents**, créez un package avec :
 | **Plateforme** | Windows/Linux/MacOS. |
 | **Type de forfait** | `standalone`. |
 | **Balises de point de terminaison** | Étiquettes appliquées aux appareils inscrits avec ce package. |
-| **Groupe d'inscription** | Le [groupe](/fr/en/agent/policies-and-groups) auquel un appareil est épinglé lors de la première inscription. |
+| **Groupe d'inscription** | Le [groupe](/fr/agent/policies-and-groups) auquel un appareil est épinglé lors de la première inscription. |
 
 Lors de l'enregistrement, SecureAI **génère automatiquement une clé API dédiée dont la portée est `agent:enroll`** et la stocke en tant que clé d'inscription du package, de sorte que la commande d'installation ne nécessite aucun identifiant distinct. La suppression du package désactive cette clé.
 
 ## Groupes d'inscription (épinglage automatique)
 
-Le **groupe d'inscription** du package est une épingle fixe : un appareil qui s'inscrit avec le package est lié à ce groupe au premier contact. L’appartenance au groupe détermine ensuite la [politique](/fr/en/agent/policies-and-groups) que l’appareil résout.
+Le **groupe d'inscription** du package est une épingle fixe : un appareil qui s'inscrit avec le package est lié à ce groupe au premier contact. L’appartenance au groupe détermine ensuite la [politique](/fr/agent/policies-and-groups) que l’appareil résout.
 
 ## La poignée de main d'inscription
 
@@ -46,6 +46,6 @@ Depuis l'onglet Agents du système d'exploitation, vous pouvez, par appareil : 
 
 ## Connexes
 
-- [Installation de l'Agent](/fr/en/agent/installation)
-- [Politiques & Groupes](/fr/en/agent/policies-and-groups)
-- [Auto-mise à jour et anti-altération](/fr/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper)
+- [Installation de l'Agent](/fr/agent/installation)
+- [Politiques & Groupes](/fr/agent/policies-and-groups)
+- [Auto-mise à jour et anti-altération](/fr/agent/quarantine-and-fleet-ops#self-update--anti-tamper)

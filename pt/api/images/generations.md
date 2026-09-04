@@ -1,56 +1,55 @@
 ---
 sidebar_position: 1
-title: "Generate Images"
+title: "Geração de Imagens"
 openapi: "POST /images/generations"
+sidebar_label: "Gerar Imagens"
 ---
 
+# Gerar imagens
 
+Gere novas imagens a partir de prompts de texto ou transforme imagens existentes usando o Google Gemini 2.5 Flash Image.
 
-# Generate Images
-
-Generate new images from text prompts or transform existing images using Google Gemini 2.5 Flash Image.
-
-## Endpoint
+## Ponto final
 
 ```
 POST /images/generations
 ```
 
-## Description
+## Descrição
 
-Generate new images from text descriptions or transform existing images. This endpoint supports:
+Gere novas imagens a partir de descrições de texto ou transforme imagens existentes. Este ponto de extremidade suporta:
 
-- **Text-to-Image**: Generate images from text descriptions
-- **Image-to-Image**: Transform or edit existing images (upload an image file)
+- **Text-to-Image**: Gere imagens a partir de descrições de texto
+- **Image-to-Image**: Transforme ou edite imagens existentes (faça upload de um arquivo de imagem)
 
-All prompts and responses are automatically processed through SMLTP for audit logging and compliance.
+Todos os prompts e respostas são processados automaticamente por meio do SMLTP para registro de auditoria e conformidade.
 
-## Authentication
+## Autenticação
 
-Required: API Key
+Obrigatório: Chave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Corpo da solicitação
 
-This endpoint accepts both `multipart/form-data` (for file uploads) and `application/json` formats.
+Este endpoint aceita os formatos `multipart/form-data` (para uploads de arquivos) e `application/json`.
 
-### Parameters
+### Parâmetros
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `prompt` | string | Yes | Text prompt describing the image to generate or how to transform the uploaded image (1-4000 characters) |
-| `image` | binary | No | Image file for image-to-image generation (JPEG, PNG, WEBP, or GIF, max 10MB) |
-| `smltp_policy` | string | No | SMLTP security policy (default: "internal") |
-| `response_format` | string | No | Response format: "url" or "b64_json" (default: "url") |
-| `size` | string | No | Image size (default: "1024x1024") |
-| `n` | integer | No | Number of images to generate (1-4, default: 1) |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `prompt` | corda | Sim | Prompt de texto descrevendo a imagem a ser gerada ou como transformar a imagem enviada (1-4000 caracteres) |
+| `image` | binário | Não | Arquivo de imagem para geração de imagem para imagem (JPEG, PNG, WEBP ou GIF, máximo de 10 MB) |
+| `smltp_policy` | corda | Não | Política de segurança SMLTP (padrão: "interno") |
+| `response_format` | corda | Não | Formato de resposta: "url" ou "b64_json" (padrão: "url") |
+| `size` | corda | Não | Tamanho da imagem (padrão: "1024x1024") |
+| `n` | inteiro | Não | Número de imagens a serem geradas (1-4, padrão: 1) |
 
-## Request Examples
+## Exemplos de solicitação
 
-### Text-to-Image (JSON)
+### Texto para imagem (JSON)
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/generations" \
@@ -64,7 +63,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/generations
   }'
 ```
 
-### Image-to-Image (Multipart Form Data)
+### Imagem para imagem (dados de formulário multipartes)
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/generations" \
@@ -75,7 +74,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/generations
   -F "response_format=url"
 ```
 
-### JavaScript/Node.js
+###JavaScript/Node.js
 
 ```javascript
 // Text-to-Image
@@ -115,7 +114,7 @@ const data2 = await response2.json();
 console.log('Edited image URL:', data2.data[0].url);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -150,9 +149,9 @@ with open('image.jpg', 'rb') as f:
     print('Edited image URL:', result['data'][0]['url'])
 ```
 
-## Response
+## Resposta
 
-### Success Response (200)
+### Resposta de sucesso (200)
 
 ```json
 {
@@ -179,41 +178,41 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `id` | string | Unique request identifier |
-| `object` | string | Object type: "image.generation" |
-| `created` | integer | Unix timestamp of when images were created |
-| `data` | array | Array of generated images |
-| `metadata` | object | Additional metadata including SMLTP tracking |
+| `success` | booleano | Sempre verdadeiro para solicitações bem-sucedidas |
+| `id` | corda | Identificador único do pedido |
+| `object` | corda | Tipo de objeto: "image.generação" |
+| `created` | inteiro | Carimbo de data e hora Unix de quando as imagens foram criadas |
+| `data` | matriz | Matriz de imagens geradas |
+| `metadata` | objeto | Metadados adicionais, incluindo rastreamento SMLTP |
 
-### Image Object
+### Objeto de imagem
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `url` | string | URL to access the generated image (when response_format is "url") |
-| `b64_json` | string | Base64-encoded image data (when response_format is "b64_json") |
-| `revised_prompt` | string | The prompt actually used for generation (may differ from input) |
+| `url` | corda | URL para acessar a imagem gerada (quando response_format for "url") |
+| `b64_json` | corda | Dados de imagem codificados em Base64 (quando response_format é "b64_json") |
+| `revised_prompt` | corda | O prompt realmente usado para geração (pode ser diferente da entrada) |
 
-### Metadata Object
+### Objeto de metadados
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `model` | string | Model used: "google/gemini-2.5-flash-image-preview" |
-| `provider` | string | Provider: "Google" |
-| `total_images` | integer | Total number of images generated |
-| `is_image_to_image` | boolean | Whether this was an image-to-image generation |
-| `text_response` | string\|null | Optional text response from the model |
-| `smltp_trace_id` | string | SMLTP trace ID for audit tracking |
-| `smltp_bundle_id` | string | SMLTP bundle ID for audit tracking |
-| `smltp_policy` | string | SMLTP policy that was applied |
+| `model` | corda | Modelo usado: "google/gemini-2.5-flash-image-preview" |
+| `provider` | corda | Provedor: "Google" |
+| `total_images` | inteiro | Número total de imagens geradas |
+| `is_image_to_image` | booleano | Se esta foi uma geração imagem a imagem |
+| `text_response` | string\|nulo | Resposta de texto opcional do modelo |
+| `smltp_trace_id` | corda | SMLTP ID de rastreamento para rastreamento de auditoria |
+| `smltp_bundle_id` | corda | ID do pacote SMLTP para rastreamento de auditoria |
+| `smltp_policy` | corda | Política SMLTP que foi aplicada |
 
-## Error Responses
+## Respostas de erro
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
 ```json
 {
@@ -224,7 +223,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -234,7 +233,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
 ```json
 {
@@ -244,7 +243,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 413 Payload Too Large
+### 413 Carga útil muito grande
 
 ```json
 {
@@ -255,7 +254,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 500 Internal Server Error
+### 500 Erro interno do servidor
 
 ```json
 {
@@ -265,7 +264,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 503 Service Unavailable
+### 503 Serviço indisponível
 
 ```json
 {
@@ -276,12 +275,11 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-## Notes
+## Notas
 
-- Supported image formats for upload: JPEG, PNG, WEBP, GIF
-- Maximum file size: 10MB per image
-- When uploading an image, the prompt describes how to transform it
-- Gemini typically generates 1-4 images per request
-- All requests are processed through SMLTP for security and compliance
-- Use `response_format: "b64_json"` to receive base64-encoded image data instead of URLs
-
+- Formatos de imagem suportados para upload: JPEG, PNG, WEBP, GIF
+- Tamanho máximo do arquivo: 10 MB por imagem
+- Ao fazer upload de uma imagem, o prompt descreve como transformá-la
+- Gemini normalmente gera de 1 a 4 imagens por solicitação
+- Todas as solicitações são processadas através de SMLTP para segurança e conformidade
+- Use `response_format: "b64_json"` para receber dados de imagem codificados em base64 em vez de URLs

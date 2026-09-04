@@ -1,54 +1,52 @@
 ---
 sidebar_position: 3
-title: "Enrollment & Installer Packages"
-sidebar_label: "Enrollment & Packages"
-description: "How SecureAI OS Agent installer packages, enrollment keys, and device tokens work"
+title: "Pacotes de Instalação e Registro"
+sidebar_label: "Pacotes e Registro"
+description: "Como funcionam os pacotes de instalação do SecureAI OS Agent, chaves de registro e tokens de dispositivo"
 ---
 
+# Pacotes de inscrição e instalação
 
+Um **pacote de instalação** é a unidade que você cria para implementar o agente. Ele agrupa a plataforma, as tags e o grupo ao qual um dispositivo deve ingressar e uma chave de registro dedicada – portanto, o comando de instalação é independente.
 
-# Enrollment & Installer Packages
+## Criando um pacote
 
-An **installer package** is the unit you build to deploy the agent. It bundles the platform, the tags and group a device should join, and a dedicated enrollment key — so the install command is self-contained.
+Em **Admin → Agent Registry → OS Agents**, crie um pacote com:
 
-## Creating a package
+| Campo | Descrição |
+|-------|------------|
+| **Nome/descrição** | Identifique o pacote (por exemplo, "Laptops de engenharia"). |
+| **Plataforma** | Windows/Linux/macOS. |
+| **Tipo de pacote** | `standalone`. |
+| **Tags de endpoint** | Etiquetas aplicadas a dispositivos inscritos neste pacote. |
+| **Grupo de inscrição** | O [grupo](/pt/agent/policies-and-groups) ao qual um dispositivo é fixado na primeira inscrição. |
 
-In **Admin → Agent Registry → OS Agents**, create a package with:
+Ao salvar, SecureAI **gera automaticamente uma chave de API dedicada com escopo para `agent:enroll`** e a armazena como a chave de inscrição do pacote, portanto, o comando de instalação não precisa de credencial separada. Excluir o pacote desativa essa chave.
 
-| Field | Description |
-|-------|-------------|
-| **Name / description** | Identify the package (e.g. "Engineering laptops"). |
-| **Platform** | Windows / Linux / macOS. |
-| **Package type** | `standalone`. |
-| **Endpoint tags** | Labels applied to devices enrolled with this package. |
-| **Enrollment group** | The [group](/pt/en/agent/policies-and-groups) a device is pinned to on first enroll. |
+## Grupos de inscrição (fixação automática)
 
-On save, SecureAI **auto-generates a dedicated API key scoped to `agent:enroll`** and stores it as the package's enrollment key, so the install command needs no separate credential. Deleting the package deactivates that key.
+O **grupo de inscrição** do pacote é um hard pin: um dispositivo que se inscreve no pacote é vinculado a esse grupo no primeiro contato. A associação ao grupo determina qual [política](/pt/agent/policies-and-groups) o dispositivo resolve.
 
-## Enrollment groups (auto-pin)
+## O handshake de inscrição
 
-The package's **enrollment group** is a hard pin: a device that enrolls with the package is bound to that group on first contact. Group membership then drives which [policy](/pt/en/agent/policies-and-groups) the device resolves.
+Quando o agente é executado pela primeira vez, ele chama `POST /enroll` usando a chave de inscrição e envia seu ID de máquina, nome de host, sistema operacional, arquitetura, versão, impressão digital e recursos. O back-end:
 
-## The enrollment handshake
+1. Registra (ou corresponde) o dispositivo.
+2. Emite um **token por dispositivo**, mostrado uma vez, que autentica todas as chamadas subsequentes.
+3. Retorna a **configuração** do tempo de execução (política resolvida, configurações de saída, roteamento, etc.).
 
-When the agent first runs it calls `POST /enroll` using the enrollment key and sends its machine id, hostname, OS, architecture, version, fingerprint, and capabilities. The backend:
+O token por dispositivo **rotaciona a cada inscrição**. Um dispositivo que foi **revogado** não pode ser registrado novamente — a resposta de inscrição informa `revoked: true` e o dispositivo permanece desligado até que um administrador o reative.
 
-1. Registers (or matches) the device.
-2. Issues a **per-device token**, shown once, that authenticates all subsequent calls.
-3. Returns the runtime **configuration** (resolved policy, egress settings, routing, etc.).
+## Resolução de URL de back-end
 
-The per-device token **rotates on every enroll**. A device that has been **revoked** cannot re-enroll — the enroll response reports `revoked: true`, and the device stays cut off until an admin re-enables it.
+O agente liga para casa para `BACKEND_URL`. No lado do servidor, o URL efetivo é resolvido a partir de cabeçalhos encaminhados/de origem da solicitação e pode ser substituído pela variável de ambiente `SECUREAI_AGENT_URL`, que é útil por trás de proxies reversos.
 
-## Backend URL resolution
+## Gerenciando dispositivos inscritos
 
-The agent calls home to `BACKEND_URL`. On the server side the effective URL is resolved from forwarded/request-origin headers and can be overridden with the `SECUREAI_AGENT_URL` environment variable, which is useful behind reverse proxies.
+Na guia Agentes de SO, você pode, por dispositivo: enviar um comando, **revogar** / **reativar**, excluir, atribuir um grupo e vincular/desvincular um usuário proprietário. Operações em massa são suportadas. A entrega do comando é feita por meio de um canal WebSocket com um fallback de fila de pulsação (comandos enfileirados enquanto um dispositivo está offline são entregues em sua próxima pulsação, com um TTL de 1 hora).
 
-## Managing enrolled devices
+## Relacionado
 
-From the OS Agents tab you can, per device: send a command, **revoke** / **re-enable**, delete, assign a group, and link/unlink an owner user. Bulk operations are supported. Command delivery is over a WebSocket channel with a heartbeat-queue fallback (commands queued while a device is offline are delivered on its next heartbeat, with a 1-hour TTL).
-
-## Related
-
-- [Installing the Agent](/pt/en/agent/installation)
-- [Policies & Groups](/pt/en/agent/policies-and-groups)
-- [Self-update & anti-tamper](/pt/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper)
+- [Instalando o Agente](/pt/agent/installation)
+- [Políticas e Grupos](/pt/agent/policies-and-groups)
+- [Autoatualização e anti-adulteração](/pt/agent/quarantine-and-fleet-ops#self-update--anti-tamper)

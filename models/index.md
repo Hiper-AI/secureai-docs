@@ -1,84 +1,83 @@
 ---
 sidebar_position: 1
-title: "Models"
+title: "Modelos Disponibles"
+sidebar_label: "Modelos"
 ---
 
+# Modelos
 
+Modelos disponibles en SecureAI.
 
-# Models
+SecureAI brinda acceso a los últimos modelos de IA de los principales proveedores, brindándole las mejores herramientas para sus necesidades específicas.
 
-Available models in SecureAI.
+Para obtener disponibilidad del modelo en tiempo real para su clave API, utilice el endpoint externo `GET /api/external/models`.
 
-SecureAI provides access to the latest AI models from all major providers, giving you the best tools for your specific needs.
+## Comparación de modelos
 
-To get real-time model availability for your API key, use the external endpoint `GET /api/external/models`.
-
-## Model Comparison
-
-| Bucket | Current Models |
+| Cubo | Modelos actuales |
 |--------|----------------|
-| Standard | openai/gpt-oss-120b, openai/gpt-5-nano, google/gemini-3.1-flash-lite-preview, google/gemini-3-flash-preview, deepseek/deepseek-r1-distill-llama-70b, deepseek/deepseek-r1, deepseek/deepseek-v3.2, meta-llama/llama-3.3-70b-instruct, meta-llama/llama-4-maverick, meta-llama/llama-4-scout, mistralai/mistral-7b-instruct, mistralai/mistral-nemo, mistralai/ministral-14b-2512, mistralai/mistral-large-2512, x-ai/grok-3-mini, qwen/qwen3-235b-a22b-2507, qwen/qwen3-coder, qwen/qwen3-coder-next, qwen/qwen3.5-397b-a17b |
-| Premium | anthropic/claude-3.7-sonnet, anthropic/claude-sonnet-4.6, anthropic/claude-opus-4.6, openai/o4-mini-high, openai/o4-mini, openai/gpt-5.2, openai/gpt-5.3-codex, openai/gpt-5.1, google/gemini-3.1-pro-preview, x-ai/grok-4 |
+| Estándar | openai/gpt-oss-120b, openai/gpt-5-nano, google/gemini-3.1-flash-lite-preview, google/gemini-3-flash-preview, deepseek/deepseek-r1-distill-llama-70b, deepseek/deepseek-r1, deepseek/deepseek-v3.2, meta-llama/llama-3.3-70b-instruct, meta-llama/llama-4-maverick, meta-llama/llama-4-scout, mistralai/mistral-7b-instruct, mistralai/mistral-nemo, mistralai/ministral-14b-2512, mistralai/mistral-large-2512, x-ai/grok-3-mini, qwen/qwen3-235b-a22b-2507, qwen/qwen3-coder, qwen/qwen3-coder-next, qwen/qwen3.5-397b-a17b |
+| Prémium | antrópico/claude-3.7-soneto, antrópico/claude-soneto-4.6, antrópico/claude-opus-4.6, openai/o4-mini-high, openai/o4-mini, openai/gpt-5.2, openai/gpt-5.3-codex, openai/gpt-5.1, google/gemini-3.1-pro-preview, x-ai/grok-4 |
 
-## Bucket Types
+## Tipos de cubos
 
-### Standard Bucket
-- **Usage**: Everyday tasks and general conversations
-- **Cost**: More cost-effective for regular use
-- **Speed**: Optimized for faster responses
-- **Best For**: Quick questions, simple tasks, and routine work
+### Cucharón estándar
+- **Uso**: Tareas cotidianas y conversaciones generales.
+- **Costo**: Más rentable para uso regular
+- **Velocidad**: optimizado para respuestas más rápidas
+- **Mejor para**: preguntas rápidas, tareas sencillas y trabajo rutinario
 
-### Premium Bucket
-- **Usage**: Complex reasoning and advanced analysis
-- **Cost**: Higher cost for enhanced capabilities
-- **Speed**: May take longer but provides superior results
-- **Best For**: Complex problem-solving, detailed analysis, and specialized tasks
+### Cubo premium
+- **Uso**: razonamiento complejo y análisis avanzado
+- **Costo**: mayor costo para capacidades mejoradas
+- **Velocidad**: puede llevar más tiempo pero proporciona resultados superiores
+- **Mejor para**: resolución de problemas complejos, análisis detallado y tareas especializadas
 
-## Model Selection Guide
+## Guía de selección de modelos
 
-### For Complex Reasoning
-- **anthropic/claude-opus-4.6** - Best for deep analytical tasks
-- **openai/gpt-5.2** - Strong reasoning and synthesis
-- **google/gemini-3.1-pro-preview** - Advanced reasoning capabilities
+### Para razonamiento complejo
+- **anthropic/claude-opus-4.6** - Ideal para tareas analíticas profundas
+- **openai/gpt-5.2** - Fuerte razonamiento y síntesis
+- **google/gemini-3.1-pro-preview** - Capacidades de razonamiento avanzadas
 
-### For Fast Development
-- **openai/gpt-5-nano** - Quick responses for straightforward tasks
-- **google/gemini-3-flash-preview** - Strong speed/cost balance
-- **x-ai/grok-3-mini** - Fast iteration and prototyping
+### Para un desarrollo rápido
+- **openai/gpt-5-nano** - Respuestas rápidas para tareas sencillas
+- **google/gemini-3-flash-preview** - Fuerte equilibrio entre velocidad y costos
+- **x-ai/grok-3-mini** - Iteración y creación de prototipos rápidas
 
-### For Code Generation
-- **openai/gpt-5.3-codex** - Specialized coding workflows
-- **qwen/qwen3-coder-next** - Strong code generation and edits
-- **deepseek/deepseek-r1** - Reasoning-heavy code analysis
+### Para generación de código
+- **openai/gpt-5.3-codex** - Flujos de trabajo de codificación especializados
+- **qwen/qwen3-coder-next** - Fuerte generación y edición de código
+- **deepseek/deepseek-r1** - Análisis de código con mucho razonamiento
 
-### For Large Context
-- **openai/gpt-5.1** - Large-context analysis tasks
-- **anthropic/claude-sonnet-4.6** - Strong long-form context handling
-- **google/gemini-3.1-pro-preview** - Comprehensive document analysis
+### Para contexto amplio
+- **openai/gpt-5.1** - Tareas de análisis de contexto grande
+- **anthropic/claude-sonnet-4.6** - Fuerte manejo del contexto de formato largo
+- **google/gemini-3.1-pro-preview** - Análisis completo de documentos
 
-## Model Capabilities
+## Capacidades del modelo
 
-### Context Windows
-- **Standard Context**: Most models support 16k-200k tokens
-- **Extended Context**: Some models support unlimited context
-- **Optimized Processing**: Models are optimized for your specific use cases
+### Ventanas de contexto
+- **Contexto estándar**: la mayoría de los modelos admiten entre 16.000 y 200.000 tokens
+- **Contexto extendido**: algunos modelos admiten contexto ilimitado
+- **Procesamiento optimizado**: los modelos están optimizados para sus casos de uso específicos
 
-### Capability Features
-- **🧠 Standard AI**: Text generation, reasoning, coding
-- **📊 Analysis**: Data analysis and interpretation
-- **💻 Code**: Specialized code generation and review
-- **🎯 Specialized**: Task-specific optimizations
+### Funciones de capacidad
+- **🧠 IA estándar**: generación de texto, razonamiento, codificación
+- **📊 Análisis**: Análisis e interpretación de datos
+- **💻 Código**: generación y revisión de código especializado
+- **🎯 Especializado**: optimizaciones específicas de tareas
 
-## Auto-Selection
+## Selección automática
 
-SecureAI includes an **Auto-Select** feature that automatically chooses the best model for your specific task, optimizing for:
-- **Task Complexity**: Matches model capabilities to your needs
-- **Response Speed**: Balances speed with quality
-- **Cost Efficiency**: Optimizes for your budget
-- **Context Requirements**: Selects models with appropriate context windows
+SecureAI incluye una función de **Selección automática** que elige automáticamente el mejor modelo para su tarea específica, optimizando para:
+- **Complejidad de la tarea**: adapta las capacidades del modelo a sus necesidades
+- **Velocidad de respuesta**: equilibra la velocidad con la calidad
+- **Eficiencia de costos**: optimiza su presupuesto
+- **Requisitos de contexto**: selecciona modelos con ventanas de contexto apropiadas
 
-## Next Steps
+## Próximos pasos
 
-- [API Reference](/en/api) - Learn how to use models via API
-- [Quickstart](/en/quickstart) - Get started with your first model
-- [Security Overview](/en/security/overview) - Understand model security features 
+- [Referencia de API](/api) - Aprenda a utilizar modelos a través de API
+- [Inicio rápido](/quickstart) - Comience con su primer modelo
+- [Descripción general de seguridad](/security/overview) - Comprender las características de seguridad del modelo

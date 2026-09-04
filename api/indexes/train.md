@@ -1,14 +1,13 @@
 ---
 sidebar_position: 3
-title: "Train Index with Documents"
+title: "Entrenar Índice con Documentos"
 openapi: "POST /indexes/{indexName}/train"
+sidebar_label: "Entrenar Índice"
 ---
 
+# Entrenar Índice con Documentos.
 
-
-# Train Index with Documents
-
-Train an index by uploading documents (files) or providing text inputs.
+Entrene un índice cargando documentos (archivos) o proporcionando entradas de texto.
 
 ## Endpoint
 
@@ -16,49 +15,49 @@ Train an index by uploading documents (files) or providing text inputs.
 POST /indexes/{indexName}/train
 ```
 
-## Description
+## Descripción
 
-Train an index by uploading documents (files) or providing text inputs. This endpoint supports multiple file formats and can process up to 20 files at once.
+Entrene un índice cargando documentos (archivos) o proporcionando entradas de texto. Este terminal admite múltiples formatos de archivos y puede procesar hasta 20 archivos a la vez.
 
-### Supported File Formats
+### Formatos de archivo admitidos
 
-- TXT
+- Texto
 - PDF
 - DOCX
 - DOC
-- JSON
-- CSV
-- XLS
-- XLSX
+-JSON
+-CSV
+-XLS
+-XLSX
 
-## Authentication
+## Autenticación
 
-Required: API Key
+Requerido: Clave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## Parámetros de ruta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `indexName` | string | Yes | Name of the index to train |
+| `indexName` | cadena | Sí | Nombre del índice a entrenar |
 
-## Request Body
+## Cuerpo de solicitud
 
-This endpoint accepts `multipart/form-data` format.
+Este endpoint acepta el formato `multipart/form-data`.
 
-### Parameters
+### Parámetros
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `files` | array of binary | No | Document files to upload (up to 20 files, 50MB each) |
-| `text_inputs` | string | No | JSON string array of text inputs. Each item should have: name, type, content, size |
+| `files` | matriz de binarios | No | Archivos de documentos para cargar (hasta 20 archivos, 50 MB cada uno) |
+| `text_inputs` | cadena | No | Matriz de cadenas JSON de entradas de texto. Cada elemento debe tener: nombre, tipo, contenido, tamaño |
 
-### Text Input Format
+### Formato de entrada de texto
 
-When using `text_inputs`, provide a JSON string array with objects containing:
+Cuando utilice `text_inputs`, proporcione una matriz de cadenas JSON con objetos que contengan:
 
 ```json
 [
@@ -71,9 +70,9 @@ When using `text_inputs`, provide a JSON string array with objects containing:
 ]
 ```
 
-## Request Examples
+## Ejemplos de solicitudes
 
-### Upload Files (Multipart Form Data)
+### Cargar archivos (datos de formulario de varias partes)
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowledge-base/train" \
@@ -104,7 +103,7 @@ console.log('Files processed:', data.results.files_processed);
 console.log('Documents indexed:', data.results.documents_indexed);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -126,7 +125,7 @@ print('Files processed:', result['results']['files_processed'])
 print('Documents indexed:', result['results']['documents_indexed'])
 ```
 
-### Using Text Inputs
+### Uso de entradas de texto
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowledge-base/train" \
@@ -134,9 +133,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
   -F 'text_inputs=[{"name":"doc1.txt","type":"text/plain","content":"Document content here","size":20}]'
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -155,30 +154,30 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `message` | string | Success message |
-| `request_id` | string | Request ID for tracking |
-| `results` | object | Training results |
+| `success` | booleano | Siempre es cierto para solicitudes exitosas |
+| `message` | cadena | Mensaje de éxito |
+| `request_id` | cadena | Solicitar ID para seguimiento |
+| `results` | objeto | Resultados del entrenamiento |
 
-### Results Object
+### Objeto de resultados
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `files_processed` | integer | Number of files processed |
-| `documents_extracted` | integer | Number of documents extracted from files |
-| `documents_indexed` | integer | Number of documents successfully indexed |
-| `total_vectors` | integer | Total number of vectors stored in Pinecone |
-| `total_chunks` | integer | Total number of text chunks created |
-| `index_name` | string | Name of the trained index |
-| `namespace` | string | Namespace of the index |
+| `files_processed` | entero | Número de expedientes procesados ​​|
+| `documents_extracted` | entero | Número de documentos extraídos de expedientes |
+| `documents_indexed` | entero | Número de documentos indexados con éxito |
+| `total_vectors` | entero | Número total de vectores almacenados en Pinecone |
+| `total_chunks` | entero | Número total de fragmentos de texto creados |
+| `index_name` | cadena | Nombre del índice entrenado |
+| `namespace` | cadena | Espacio de nombres del índice |
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -188,7 +187,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -198,7 +197,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -208,7 +207,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
 }
 ```
 
-### 404 Not Found
+### 404 no encontrado
 
 ```json
 {
@@ -218,7 +217,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
 }
 ```
 
-### 413 Payload Too Large
+### 413 Carga útil demasiado grande
 
 ```json
 {
@@ -228,7 +227,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
 }
 ```
 
-### 500 Internal Server Error
+### 500 Error interno del servidor
 
 ```json
 {
@@ -238,13 +237,12 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowled
 }
 ```
 
-## Notes
+## Notas
 
-- Maximum 20 files per request
-- Maximum 50MB per file
-- Files can be uploaded as multipart/form-data
-- Text inputs can be provided as a JSON string array
-- Documents are automatically chunked and vectorized for semantic search
-- The index must exist before training
-- Training results show how many documents were successfully indexed
-
+- Máximo 20 archivos por solicitud
+- Máximo 50 MB por archivo
+- Los archivos se pueden cargar como datos de formulario/multiparte
+- Las entradas de texto se pueden proporcionar como una matriz de cadenas JSON
+- Los documentos se fragmentan y vectorizan automáticamente para la búsqueda semántica.
+- El índice debe existir antes del entrenamiento.
+- Los resultados de la capacitación muestran cuántos documentos se indexaron exitosamente

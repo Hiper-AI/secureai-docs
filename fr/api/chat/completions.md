@@ -18,7 +18,7 @@ POST /chat/completions
 Le point de terminaison principal pour les discussions IA avec récupération facultative de la base de connaissances (RAG). Il prend en charge :
 
 - **Deux formulaires de saisie** — une seule chaîne `prompt` (héritée) **ou** un tableau `messages` de style OpenAI.
-- **Redondance du modèle** — une chaîne de basculement définie par l'appelant (primaire + jusqu'à 2 solutions de secours). Voir [Redondance & Failover](/fr/en/api/redundancy).
+- **Redondance du modèle** — une chaîne de basculement définie par l'appelant (primaire + jusqu'à 2 solutions de secours). Voir [Redondance & Failover](/fr/api/redundancy).
 - **Sécurité par appel** — Sélection de stratégie SMLTP et remplacement du Prompt Shield en ligne.
 - **Streaming** — Événements envoyés par le serveur (SSE).
 - **Reçus signés** — une référence de reçu de conformité SMLTP sur les réponses acheminées via la passerelle.
@@ -26,7 +26,7 @@ Le point de terminaison principal pour les discussions IA avec récupération fa
 <Tip>
 **Compatibilité avec le SDK OpenAI**
 
-Si vous souhaitez insérer SecureAI dans une intégration OpenAI existante avec **zéro changement de code**, utilisez plutôt le [point de terminaison compatible OpenAI](/fr/en/api/chat/openai-compatible) sur `/api/external/v1/chat/completions`. Ce point de terminaison classique est le seul à prendre en charge RAG.
+Si vous souhaitez insérer SecureAI dans une intégration OpenAI existante avec **zéro changement de code**, utilisez plutôt le [point de terminaison compatible OpenAI](/fr/api/chat/openai-compatible) sur `/api/external/v1/chat/completions`. Ce point de terminaison classique est le seul à prendre en charge RAG.
 </Tip>
 
 ## Authentification
@@ -64,7 +64,7 @@ Fournissez **soit** `prompt` **ou** `messages` — pas les deux.
 | `model` | chaîne | Conditionnel | Modèle d'IA (par exemple `"openai/gpt-5-nano"`). Obligatoire sauf si `models` est fourni. |
 | `models` | tableau | Non | Chaîne de basculement explicite (remplace `model`). Jusqu'à 3 entrées distinctes ; chaque entrée est une chaîne de modèle ou `{ model, timeout_ms, first_token_timeout_ms }`. |
 | `fallback_models` | tableau | Non | Solutions de secours ajoutées après `model`. Ne peut pas être combiné avec `models`. |
-| `redundancy` | objet | Non | Options à l'échelle de la chaîne : `{ timeout_ms, first_token_timeout_ms, on: [...] }`. Voir [Redondance & Failover](/fr/en/api/redundancy). |
+| `redundancy` | objet | Non | Options à l'échelle de la chaîne : `{ timeout_ms, first_token_timeout_ms, on: [...] }`. Voir [Redondance & Failover](/fr/api/redundancy). |
 
 ### Paramètres de récupération et de génération
 
@@ -73,12 +73,12 @@ Fournissez **soit** `prompt` **ou** `messages` — pas les deux.
 | `index` | chaîne | **Oui** | Nom de la base de connaissances à interroger. Utilisez `"Zero-Knowledge"` pour l'IA directe sans RAG. Ce champ est obligatoire — une requête sans `index` renvoie `400 "Index required"`. |
 | `use_rag` | booléen | Non | Activer la récupération des connaissances (par défaut : `true`). Le réglage de `use_rag: false` ne supprime **pas** l'exigence de `index` – envoyer `index: "Zero-Knowledge"`. |
 | `smltp_policy` | chaîne | Non | Stratégie de sécurité (`"internal"`, `"public"`, `"confidential"` ou une stratégie personnalisée de locataire). |
-| `prompt_shield` | objet | Non | Contrôle du bouclier d'invite par appel : `{ enabled?: boolean, policy?: string }`. Voir [API Prompt Shield](/fr/en/api/threat-defense/prompt-shield#per-call-control-on-completions). |
+| `prompt_shield` | objet | Non | Contrôle du bouclier d'invite par appel : `{ enabled?: boolean, policy?: string }`. Voir [API Prompt Shield](/fr/api/threat-defense/prompt-shield#per-call-control-on-completions). |
 | `temperature` | numéro | Non | Contrôle du caractère aléatoire (0–2, par défaut : 0,7). |
 | `max_tokens` | entier | Non | Nombre maximum de jetons de réponse (par défaut : 1 000, plafonné à 4 000). |
 | `stream` | booléen | Non | Diffusez la réponse en tant que SSE (par défaut : `false`). |
 | `conversation_id` | chaîne | Non | ID de conversation facultatif pour le suivi. |
-| `user_id` | chaîne | Non | MongoDB ObjectId de l'utilisateur à qui facturer cette demande (admin-gated ; voir [Billing Modes](/fr/en/api/billing-modes)). |
+| `user_id` | chaîne | Non | MongoDB ObjectId de l'utilisateur à qui facturer cette demande (admin-gated ; voir [Billing Modes](/fr/api/billing-modes)). |
 
 ## Exemple de demande
 
@@ -158,8 +158,8 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 | `prompt_shield_policy` | objet \| nul | La politique Prompt Shield s'est appliquée à cet appel, le cas échéant. |
 | `served_model` | chaîne | Modèle qui a réellement produit la réponse. |
 | `requested_model` | chaîne | Premier modèle de la chaîne demandée. |
-| `failover` | objet | **Présent uniquement lors de l'exécution d'une chaîne multimodèle.** `{ occurred, attempts[] }` — voir [Redondance et basculement](/fr/en/api/redundancy). |
-| `smltp` | objet | Présent lorsqu’un droit SMLTP est émis pour l’appel. `{ bundle_id, receipt_url }`. Le `bundle_id` (un identifiant de droit, par exemple `jti-…`) est renvoyé même sur les déploiements natifs/directs ; le reçu signé à `receipt_url` n'est récupérable que lorsque le trafic est acheminé via la passerelle SMLTP (sinon [Receipts](/fr/en/api/receipts) renvoie `404`). |
+| `failover` | objet | **Présent uniquement lors de l'exécution d'une chaîne multimodèle.** `{ occurred, attempts[] }` — voir [Redondance et basculement](/fr/api/redundancy). |
+| `smltp` | objet | Présent lorsqu’un droit SMLTP est émis pour l’appel. `{ bundle_id, receipt_url }`. Le `bundle_id` (un identifiant de droit, par exemple `jti-…`) est renvoyé même sur les déploiements natifs/directs ; le reçu signé à `receipt_url` n'est récupérable que lorsque le trafic est acheminé via la passerelle SMLTP (sinon [Receipts](/fr/api/receipts) renvoie `404`). |
 | `rag_enabled` | booléen | Si RAG a été utilisé. |
 | `documents_retrieved` | entier | Nombre de documents récupérés. |
 | `sources` | tableau | Jusqu'à 3 sources de documents récupérés `{ source, score }`. |
@@ -300,5 +300,5 @@ print("Response:", result["choices"][0]["message"]["content"])
 - `index` est requis. Envoyez `index: "Zero-Knowledge"` pour des réponses directes de l'IA sans RAG.
 - Le paramètre `user_id` facture la requête à un autre compte utilisateur (admin-gated).
 - La température est fixée à 0–2 ; `max_tokens` est plafonné à 4 000.
-- Pour valider une demande par rapport à chaque politique **sans** appeler un modèle ou dépenser des points, utilisez [Policy Check](/fr/en/api/policy-check).
-- Pour la sémantique de la chaîne de basculement (déclencheurs, délais d'attente, comportement de streaming, codes d'état d'épuisement), voir [Redondance & Failover](/fr/en/api/redundancy).
+- Pour valider une demande par rapport à chaque politique **sans** appeler un modèle ou dépenser des points, utilisez [Policy Check](/fr/api/policy-check).
+- Pour la sémantique de la chaîne de basculement (déclencheurs, délais d'attente, comportement de streaming, codes d'état d'épuisement), voir [Redondance & Failover](/fr/api/redundancy).

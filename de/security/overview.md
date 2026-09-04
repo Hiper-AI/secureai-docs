@@ -84,6 +84,6 @@ SMLTP unterstützt mehrere integrierte Richtlinienvorlagen:
 
 ## Nächste Schritte
 
-- [SMLTP Deep Dive](/de/en/security/smltp) - Erfahren Sie mehr über SMLTP
-- [Authentifizierung](/de/en/iam/overview) - Authentifizierungsmethoden verstehen
-- [API-Sicherheit](/de/en/api) – Richtlinien zur sicheren API-Nutzung
+- [SMLTP Deep Dive](/de/security/smltp) - Erfahren Sie mehr über SMLTP
+- [Authentifizierung](/de/iam/overview) - Authentifizierungsmethoden verstehen
+- [API-Sicherheit](/de/api) – Richtlinien zur sicheren API-Nutzung

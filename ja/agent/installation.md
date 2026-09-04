@@ -6,7 +6,7 @@ description: "Windows、Linux、macOS エンドポイントに SecureAI OS エ�
 ---
 # エージェントのインストール
 
-SecureAI OS エージェントは、**[管理] → [エージェント レジストリ] → [OS エージェント]** で構築した **インストーラー パッケージ**からインストールされます。このパッケージは、**バックエンド URL** とスコープ付き **登録キー**という 2 つの値を含む、すぐに実行できるコマンド (Windows) またはスクリプト (Linux/macOS) を生成します。完全なパッケージ ビルダーと登録の仕組みについては、[登録とインストーラー パッケージ](/ja/en/agent/enrollment-and-packages) を参照してください。
+SecureAI OS エージェントは、**[管理] → [エージェント レジストリ] → [OS エージェント]** で構築した **インストーラー パッケージ**からインストールされます。このパッケージは、**バックエンド URL** とスコープ付き **登録キー**という 2 つの値を含む、すぐに実行できるコマンド (Windows) またはスクリプト (Linux/macOS) を生成します。完全なパッケージ ビルダーと登録の仕組みについては、[登録とインストーラー パッケージ](/ja/agent/enrollment-and-packages) を参照してください。
 
 ## Windows (MSI)
 
@@ -41,10 +41,10 @@ sudo ./secureai-agent-install.sh
 
 ## 最初の実行時に何が起こるか
 
-最初の起動時にエージェントは**登録**します。エージェントは登録キーを提示し、デバイスを登録し、デバイスごとのトークンとその実行時設定を受け取ります。次に、ハートビートを開始し、解決された [ポリシー](/ja/en/agent/policies-and-groups) を適用します。バックエンド URL の解決方法やデバイス トークンのローテーション方法などの詳細については、[登録とインストーラー パッケージ](/ja/ja/agent/enrollment-and-packages) を参照してください。
+最初の起動時にエージェントは**登録**します。エージェントは登録キーを提示し、デバイスを登録し、デバイスごとのトークンとその実行時設定を受け取ります。次に、ハートビートを開始し、解決された [ポリシー](/ja/agent/policies-and-groups) を適用します。バックエンド URL の解決方法やデバイス トークンのローテーション方法などの詳細については、[登録とインストーラー パッケージ](/ja/agent/enrollment-and-packages) を参照してください。
 
 ## 関連
 
-- [登録およびインストーラーパッケージ](/ja/ja/agent/enrollment-and-packages)
-- [ポリシーとグループ](/ja/ja/agent/policies-and-groups)
-- [エンドポイントエージェント概要](/ja/ja/agent/overview)
+- [登録およびインストーラーパッケージ](/ja/agent/enrollment-and-packages)
+- [ポリシーとグループ](/ja/agent/policies-and-groups)
+- [エンドポイントエージェント概要](/ja/agent/overview)

@@ -1,57 +1,55 @@
 ---
 sidebar_position: 6
-title: "Remote Endpoints"
+title: "远程端点"
 ---
+# 远程端点
 
+远程端点可让您通过 AI Gateway 控件将外部或自托管模型服务器连接到 SecureAI。
 
-# Remote Endpoints
+当您的组织运行自己的模型基础架构并且仍然需要集中式安全治理时，这非常有用。
 
-Remote Endpoints let you connect external or self-hosted model servers to SecureAI through AI Gateway controls.
+## 在哪里配置
 
-This is useful when your organization runs its own model infrastructure and still wants centralized security governance.
+转至 **管理 → AI 网关 → 远程端点**。
 
-## Where To Configure
+## 注册选项
 
-Go to **Admin → AI Gateway → Remote Endpoints**.
+- **快速安装**：生成单命令安装流程的引导向导。
+- **手动注册**：
+  - **粘贴 JSON**
+  - **手动输入**字段
 
-## Registration Options
+## 连接模式
 
-- **Quick Install**: guided wizard that generates a one-command setup flow.
-- **Manual Registration**:
-  - **Paste JSON**
-  - **Manual Entry** fields
+- **反向连接**：建议大多数部署使用；出站连接，没有打开的入站端口。
+- **Cloudflare Tunnel**：使用隧道令牌和主机名的零信任连接。
 
-## Connectivity Modes
+## 日常运营
 
-- **Reverse Connect**: recommended for most deployments; outbound connection, no open inbound ports.
-- **Cloudflare Tunnel**: zero-trust connectivity using tunnel token and hostname.
+对于每个端点，管理员可以：
 
-## Daily Operations
+- 运行**健康检查**
+- 运行**验证 mTLS**
+- 检查端点详细信息（区域、指纹、型号、上次检查）
+- 退役时删除端点
 
-For each endpoint, admins can:
+## 建议的入职流程
 
-- run **Health Check**
-- run **Verify mTLS**
-- inspect endpoint details (region, fingerprint, models, last check)
-- remove endpoint when decommissioned
+1. 从**快速安装**开始。
+2. 选择连接模式。
+3. 选择需要的型号。
+4. 完成注册。
+5. 运行运行状况检查并验证 mTLS。
+6. 5 到 10 分钟后确认端点保持健康。
 
-## Suggested Onboarding Flow
+## 故障排除清单
 
-1. Start with **Quick Install**.
-2. Choose connectivity mode.
-3. Select required models.
-4. Complete registration.
-5. Run Health Check and Verify mTLS.
-6. Confirm endpoint remains healthy after 5 to 10 minutes.
+- 端点无法访问：验证连接模式和主机名值。
+- TLS 通过但不健康：检查远程网关/模型服务状态。
+- 未连接：确认远程服务正在运行且注册有效。
 
-## Troubleshooting Checklist
+## 最佳实践
 
-- Endpoint unreachable: verify connectivity mode and hostname values.
-- TLS passed but unhealthy: check remote gateway/model service status.
-- Not connected: confirm remote service is running and registration is valid.
-
-## Best Practices
-
-- Prefer Reverse Connect unless your architecture requires tunnel mode.
-- Keep endpoint ownership clear by organization/team.
-- Re-check endpoint health after policy or key changes.
+- 首选反向连接，除非您的架构需要隧道模式。
+- 保持组织/团队明确的端点所有权。
+- 策略或密钥更改后重新检查端点运行状况。

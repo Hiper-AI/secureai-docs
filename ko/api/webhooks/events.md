@@ -6,7 +6,7 @@ description: "SecureAI 웹훅 이벤트 카탈로그"
 ---
 # 웹훅 이벤트
 
-[웹훅 엔드포인트](/ko/en/api/webhooks/overview)를 생성하거나 업데이트할 때 하나 이상의 이벤트 유형을 구독합니다. 모든 이벤트를 수신하려면 `"*"`을 사용하세요.
+[웹훅 엔드포인트](/ko/api/webhooks/overview)를 생성하거나 업데이트할 때 하나 이상의 이벤트 유형을 구독합니다. 모든 이벤트를 수신하려면 `"*"`을 사용하세요.
 
 ## 이벤트 카탈로그
 
@@ -19,7 +19,7 @@ description: "SecureAI 웹훅 이벤트 카탈로그"
 | `dlp:incident` | 데이터 손실 방지 규칙이 일치했습니다. |
 | `pii:incident` | PII가 감지/수정되었습니다. |
 | `api:limit_reached` | API 키가 일일/월간/비율 제한에 도달했습니다. |
-| `api:model_failover` | [중복](/ko/en/api/redundancy) 체인이 한 모델에서 다른 모델로 장애 조치되었습니다. |
+| `api:model_failover` | [중복](/ko/api/redundancy) 체인이 한 모델에서 다른 모델로 장애 조치되었습니다. |
 
 알 수 없는 이벤트 이름에 대한 구독은 생성/업데이트 시 거부됩니다.
 
@@ -58,4 +58,4 @@ description: "SecureAI 웹훅 이벤트 카탈로그"
 
 ## 관련
 
-- [Webhooks 개요](/ko/ko/api/webhooks/overview) — 전달 형식, 서명 확인, 신뢰성.
+- [Webhooks 개요](/ko/api/webhooks/overview) — 전달 형식, 서명 확인, 신뢰성.

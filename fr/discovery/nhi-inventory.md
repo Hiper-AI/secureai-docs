@@ -1,12 +1,12 @@
 ---
 sidebar_position: 4
-title: "Inventaire de l'INSA"
-sidebar_label: "Inventaire de l'INSA"
+title: "Inventaire des NHI"
+sidebar_label: "Inventaire des NHI"
 description: "Inventoriez et gérez les identités non humaines (clés API et comptes de service) derrière vos agents IA et vos charges de travail"
 ---
 # Inventaire NHI
 
-L'**Inventaire NHI** (Administrateur → Registre des agents → **Identités non humaines**) est l'inventaire des informations d'identification de la machine derrière votre IA : les clés API, les comptes de service et les clés BYOK que les agents, les serveurs MCP et les charges de travail utilisent. Il regroupe les identités découvertes par chaque connecteur [Cloud AI Provider](/fr/en/integrations/cloud/overview), évalue leur risque et vous donne des contrôles pour les bloquer ou les révoquer.
+L'**Inventaire NHI** (Administrateur → Registre des agents → **Identités non humaines**) est l'inventaire des informations d'identification de la machine derrière votre IA : les clés API, les comptes de service et les clés BYOK que les agents, les serveurs MCP et les charges de travail utilisent. Il regroupe les identités découvertes par chaque connecteur [Cloud AI Provider](/fr/integrations/cloud/overview), évalue leur risque et vous donne des contrôles pour les bloquer ou les révoquer.
 
 ## Ce que montre chaque identité
 
@@ -48,6 +48,6 @@ Le balayeur de gouvernance calcule un score composite de 0 à 100 à partir de f
 
 ## Connexes
 
-- [Cloud AI Providers](/fr/en/integrations/cloud/overview) — la source des identités découvertes.
-- [Capteurs Cloud](/fr/en/discovery/cloud-sensors)
-- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/en/discovery/overview)
+- [Cloud AI Providers](/fr/integrations/cloud/overview) — la source des identités découvertes.
+- [Capteurs Cloud](/fr/discovery/cloud-sensors)
+- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/discovery/overview)

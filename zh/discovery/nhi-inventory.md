@@ -1,55 +1,53 @@
 ---
 sidebar_position: 4
-title: "NHI Inventory"
-sidebar_label: "NHI Inventory"
-description: "Inventory and govern the Non-Human Identities — API keys and service accounts — behind your AI agents and workloads"
+title: "国民健康保险库存"
+sidebar_label: "国民健康保险库存"
+description: "盘点并管理 AI 代理和工作负载背后的非人类身份（API 密钥和服务帐户）"
 ---
+# NHI 库存
 
+**NHI 清单**（管理员 → 代理注册表 → **非人类身份**）是 AI 背后的机器凭据清单 - API 密钥、服务帐户以及代理、MCP 服务器和工作负载使用的 BYOK 密钥。它会汇总每个[云 AI 提供商](/zh/integrations/cloud/overview) 连接器发现的身份，对其风险进行评分，并为您提供阻止或撤销它们的控制权。
 
-# NHI Inventory
+## 每个身份显示什么
 
-The **NHI Inventory** (Admin → Agent Registry → **Non-Human Identities**) is the inventory of the machine credentials behind your AI — the API keys, service accounts, and BYOK keys that agents, MCP servers, and workloads use. It rolls up identities discovered by every [Cloud AI Provider](/zh/integrations/cloud/overview) connector, scores their risk, and gives you controls to block or revoke them.
+- **提供商**（SecureAI / OpenAI / Anthropic / Azure / GCP / AWS）和**类型**（代理/ mcp /工作负载）。
+- **风险评分** (0–100) 以及影响因素（见下文）。
+- **SMLTP 判决**芯片（阻止/强制/监控）和收据计数。
+- **使用者**、**上次使用**（闲置天数）、**轮换**和**到期倒计时**。
+- **状态**：健康/补救/严重。
 
-## What each identity shows
+## 控制级别
 
-- **Provider** (SecureAI / OpenAI / Anthropic / Azure / GCP / AWS) and **type** (agent / mcp / workload).
-- **Risk score** (0–100) with contributing factors (see below).
-- **SMLTP verdict** chip (blocked / enforced / monitor) and receipt count.
-- **Used-by**, **last-used** (idle days), **rotation**, and an **expiry countdown**.
-- **Status**: healthy / remediation / critical.
+您可以对某个身份“做”多少事情取决于它是如何被发现的：
 
-## Control levels
+|水平|这意味着什么 |可用行动|
+|--------|-------------|------------------|
+| **管理** | SecureAI 颁发的（非云）身份。 | **在网关处阻止/取消阻止** — 拒绝或恢复通过该身份验证的任何请求，并推送网关撤销列表。 |
+| **可撤销** |云发现**并且**在源头可执行。 | **撤销** — 挂锁（“candadito”）：删除/禁用提供商**的密钥。不可逆转；标记身份被阻止/关键。 |
+| **仅监控** |云发现但不可强制执行。 |只读。仅休眠永远不会将其升级为严重（它增加了一个仅用于监控的小风险因素）。 |
 
-How much you can *do* to an identity depends on how it was discovered:
+### 哪些云是可撤销的
 
-| Level | What it means | Action available |
-|-------|---------------|------------------|
-| **Managed** | A SecureAI-issued (non-cloud) identity. | **Block / Unblock** at the gateway — denies or restores any request authenticated by that identity, and pushes the gateway revocation list. |
-| **Revocable** | Cloud-discovered **and** enforceable at the source. | **Revoke** — the padlock ("candadito"): deletes/disables the key **at the provider**. Irreversible; marks the identity blocked/critical. |
-| **Monitor-only** | Cloud-discovered but not enforceable. | Read-only. Dormancy alone never escalates it to critical (it adds a small monitor-only risk factor). |
+|身份类型|可从源头撤销 |仅监控|
+|----------------|---------------------|--------------|
+| **API 密钥** | OpenAI、Anthropic、GCP、Azure、AWS | — |
+| **服务帐户/BYOK 密钥** |人类、GCP、Azure | OpenAI、AWS |
 
-### Which clouds are revocable
+## 行动
 
-| Identity type | Revocable at source | Monitor-only |
-|---------------|---------------------|--------------|
-| **API keys** | OpenAI, Anthropic, GCP, Azure, AWS | — |
-| **Service accounts / BYOK keys** | Anthropic, GCP, Azure | OpenAI, AWS |
-
-## Actions
-
-| Action | Effect |
+|行动|效果|
 |--------|--------|
-| **Block / Unblock** | Deny/restore requests authenticated by a managed identity's SecureAI key (gateway revocation list). |
-| **Revoke** | Cut a revocable identity at the provider. Requires the identity be enforceable with an external id; otherwise returns "not revocable at the source." |
-| **Mark rotated** | Record that a key was rotated. |
-| **Register / rotate signing key** | Manage SET signing keys for the identity. |
+| **阻止/解除阻止** |拒绝/恢复由托管身份的 SecureAI 密钥（网关吊销列表）进行身份验证的请求。 |
+| **撤销** |在提供商处删除可撤销的身份。要求身份可通过外部 ID 强制执行；否则返回“不可在源处撤销”。 |
+| **标记旋转** |记录密钥已轮换。 |
+| **注册/轮换签名密钥** |管理身份的 SET 签名密钥。 |
 
-## Risk scoring
+## 风险评分
 
-The governance sweeper computes a composite 0–100 score from factors including: dormant / dormant-critical, rotation-overdue / rotation-critical, expired / expiring-soon, broad scopes, no owner, reactivated, and monitor-only. Reactivation of a previously-dormant identity raises an alert.
+治理清理器根据以下因素计算 0-100 分的综合分数：休眠/休眠关键、轮换逾期/轮换关键、过期/即将过期、范围广泛、无所有者、重新激活和仅监控。重新激活先前休眠的身份会引发警报。
 
-## Related
+## 相关
 
-- [Cloud AI Providers](/zh/integrations/cloud/overview) — the source of discovered identities.
-- [Cloud Sensors](/zh/discovery/cloud-sensors)
-- [AI Discovery & Inventory Overview](/zh/discovery/overview)
+- [Cloud AI Providers](/zh/integrations/cloud/overview) — 已发现身份的来源。
+- [云传感器](/zh/discovery/cloud-sensors)
+- [AI发现与库存概述](/zh/discovery/overview)

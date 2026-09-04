@@ -1,7 +1,9 @@
 ---
 title: "Bienvenido a SecureAI"
 description: "Plataforma empresarial de Inteligencia Artificial segura, conforme a normativas y con control total de gobernanza."
+sidebar_label: "Bienvenido"
 ---
+
 
 SecureAI es una plataforma empresarial diseñada para desplegar y consumir modelos de Inteligencia Artificial con las máximas garantías de seguridad, privacidad y observabilidad. 
 

@@ -1,68 +1,66 @@
 ---
 sidebar_position: 4
-title: "Azure AI Foundry"
+title: "Integração com Azure AI Foundry"
 sidebar_label: "Azure AI Foundry"
-description: "Connect Azure AI Foundry / Azure OpenAI so SecureAI can inventory agents, models, identities, RBAC, usage, and cost"
+description: "Conecte o Azure AI Foundry/Azure OpenAI para que a SecureAI possa inventariar agentes, modelos, identidades, RBAC, uso e custo"
 ---
-
-
 
 # Azure AI Foundry
 
-Connect your Azure tenant so SecureAI can inventory Azure OpenAI / AI Foundry agents, AI Search, Bot Service and ML endpoints, along with the Entra identities and RBAC that govern them.
+Conecte seu locatário do Azure para que a SecureAI possa inventariar agentes Azure OpenAI/AI Foundry, AI Search, Bot Service e endpoints de ML, juntamente com as identidades Entra e RBAC que os governam.
 
-## What SecureAI imports
+## O que o SecureAI importa
 
-- **Azure OpenAI / AI Foundry agents, AI Search, Bot Service, and ML endpoints**
-- **NHIs** — Entra service principals, app secrets & certificates, and managed identities (revocable — see [NHI Inventory](/pt/en/discovery/nhi-inventory))
-- **Azure RBAC** role assignments
-- **Activity logs**
-- **Usage, tokens, and spend** for the last 30 days
+- **Agentes Azure OpenAI/AI Foundry, AI Search, Bot Service e endpoints de ML**
+- **NHIs** — Entras de serviço, segredos e certificados de aplicativos e identidades gerenciadas (revogáveis — consulte [NHI Inventário](/pt/discovery/nhi-inventory))
+- **Azure RBAC** atribuições de função
+- **Registros de atividades**
+- **Uso, tokens e gastos** nos últimos 30 dias
 
-## Prerequisites
+## Pré-requisitos
 
-- An **Entra ID (Azure AD) app registration** (service principal) with a client secret.
-- **Microsoft Graph application permissions** granted with admin consent:
-  - `Application.Read.All`, `Directory.Read.All`, `AuditLog.Read.All` (read).
-  - `Application.ReadWrite.All` — **only** if you want SecureAI to revoke identities at the source.
-- The service principal assigned a **Reader** role on the relevant subscription(s)/resource groups.
+- Um **registro de aplicativo Entra ID (Azure AD)** (principal de serviço) com um segredo do cliente.
+- **Permissões do aplicativo Microsoft Graph** concedidas com consentimento do administrador:
+  - `Application.Read.All`, `Directory.Read.All`, `AuditLog.Read.All` (ler).
+  - `Application.ReadWrite.All` — **somente** se você deseja que o SecureAI revogue identidades na origem.
+- A entidade de serviço atribuiu uma função de **Leitor** nas assinaturas/grupos de recursos relevantes.
 
-## Credentials
+## Credenciais
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `tenantId` | Yes | Directory (tenant) ID. |
-| `clientId` | Yes | Application (client) ID of the app registration. |
-| `clientSecret` | Yes | Client secret. Encrypted at rest. |
-| `subscriptionId` | No | Scope discovery to a specific subscription. |
+| Campo | Obrigatório | Descrição |
+|-------|----------|------------|
+| `tenantId` | Sim | ID do diretório (locatário). |
+| `clientId` | Sim | ID do aplicativo (cliente) do registro do aplicativo. |
+| `clientSecret` | Sim | Segredo do cliente. Criptografado em repouso. |
+| `subscriptionId` | Não | Escopo a descoberta para uma assinatura específica. |
 
-SecureAI authenticates via OAuth2 (client-credentials service-principal flow).
+SecureAI autentica via OAuth2 (fluxo principal de serviço de credenciais de cliente).
 
-### Where to get them
+### Onde obtê-los
 
-1. In the [Azure portal](https://portal.azure.com/), go to **Microsoft Entra ID → App registrations → New registration**.
-2. Copy the **Directory (tenant) ID** and **Application (client) ID** from the app's Overview.
-3. Under **Certificates & secrets**, create a **client secret** and copy its value.
-4. Under **API permissions**, add the Microsoft Graph permissions above and **Grant admin consent**.
-5. Assign the app the **Reader** role on the target subscription (**Subscriptions → Access control (IAM)**).
+1. No [portal do Azure](https://portal.azure.com/), acesse **Microsoft Entra ID → Registros de aplicativos → Novo registro**.
+2. Copie o **ID do diretório (locatário)** e o **ID do aplicativo (cliente)** da Visão geral do aplicativo.
+3. Em **Certificados e segredos**, crie um **segredo do cliente** e copie seu valor.
+4. Em **Permissões de API**, adicione as permissões do Microsoft Graph acima e **Conceda consentimento do administrador**.
+5. Atribua ao aplicativo a função **Leitor** na assinatura de destino (**Assinaturas → Controle de acesso (IAM)**).
 
-## Connect
+## Conectar
 
-1. **Admin → Integrations → Cloud → Azure AI Foundry → Connect.**
-2. Enter tenant, client, secret (and optional subscription).
-3. **Test**, then **Save**.
-4. **Sync** (Azure syncs can take several minutes — multi-service + Graph + activity-log sweeps).
+1. **Administrador → Integrações → Nuvem → Azure AI Foundry → Conectar.**
+2. Insira inquilino, cliente, segredo (e assinatura opcional).
+3. **Teste** e **Salve**.
+4. **Sincronização** (as sincronizações do Azure podem levar vários minutos — multisserviço + gráfico + varreduras de log de atividades).
 
-## Verify
+## Verifique
 
-Open [Cloud Sensors](/pt/en/discovery/cloud-sensors) for discovered agents/endpoints and [NHI Inventory](/pt/en/discovery/nhi-inventory) for service principals, secrets, and managed identities. Insights show RBAC, usage, and spend.
+Abra [Cloud Sensors](/pt/discovery/cloud-sensors) para agentes/endpoints descobertos e [NHI Inventário](/pt/discovery/nhi-inventory) para entidades de serviço, segredos e identidades gerenciadas. Os insights mostram RBAC, uso e gastos.
 
-## Revocation
+## Revogação
 
-Entra service principals, app secrets/certs, and managed identities are **revocable** via Microsoft Graph from [NHI Inventory](/pt/en/discovery/nhi-inventory) — this requires the `Application.ReadWrite.All` permission above.
+Entras de serviço, segredos/certificados de aplicativos e identidades gerenciadas são **revogáveis** via Microsoft Graph do [NHI Inventário](/pt/discovery/nhi-inventory) — isso requer a permissão `Application.ReadWrite.All` acima.
 
-## Related
+## Relacionado
 
-- [Cloud AI Providers Overview](/pt/en/integrations/cloud/overview)
-- [Microsoft Entra ID SSO](/pt/en/iam/microsoft-entra-id)
-- [NHI Inventory](/pt/en/discovery/nhi-inventory)
+- [Visão geral dos provedores de IA em nuvem](/pt/integrations/cloud/overview)
+- [ID de entrada da Microsoft SSO](/pt/iam/microsoft-entra-id)
+- [NHI Inventário](/pt/discovery/nhi-inventory)

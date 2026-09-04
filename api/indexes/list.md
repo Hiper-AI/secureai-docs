@@ -1,16 +1,14 @@
 ---
 id: list
-title: "List All Indexes"
-sidebar_label: "List All Indexes"
-description: "Retrieve all available knowledge base indexes"
+title: "Listar Índices RAG"
+sidebar_label: "Listar Índices"
+description: "Recuperar todos los índices de la base de conocimientos disponibles"
 openapi: "GET /indexes/all"
 ---
 
+# Listar todos los índices
 
-
-# List All Indexes
-
-Retrieve a comprehensive list of all available knowledge base indexes in the system.
+Recupere una lista completa de todos los índices de la base de conocimientos disponibles en el sistema.
 
 ## Endpoint
 
@@ -18,39 +16,39 @@ Retrieve a comprehensive list of all available knowledge base indexes in the sys
 GET /indexes/all
 ```
 
-## Description
+## Descripción
 
-This endpoint returns all knowledge base indexes available in the SecureAI system. It provides detailed information about each index including its type, status, creation date, and metadata. This is useful for discovering available knowledge bases and their capabilities.
+Este endpoint devuelve todos los índices de la base de conocimientos disponibles en el sistema SecureAI. Proporciona información detallada sobre cada índice, incluido su tipo, estado, fecha de creación y metadatos. Esto es útil para descubrir bases de conocimiento disponibles y sus capacidades.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key
+**Requerido**: Clave API
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## Parámetros de consulta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `page` | integer | No | 1 | Page number for pagination |
-| `limit` | integer | No | 50 | Number of indexes per page (1-100) |
-| `search` | string | No | - | Search term for index name or shared index name |
-| `type` | string | No | - | Filter by index type (personal, general, group) |
-| `status` | string | No | active | Filter by index status (active, deleted, all) |
-| `sortBy` | string | No | createdAt | Field to sort by |
-| `sortOrder` | string | No | desc | Sort order (asc, desc) |
+| `page` | entero | No | 1 | Número de página para paginación |
+| `limit` | entero | No | 50 | Número de índices por página (1-100) |
+| `search` | cadena | No | - | Término de búsqueda para nombre de índice o nombre de índice compartido |
+| `type` | cadena | No | - | Filtrar por tipo de índice (personal, general, grupo) |
+| `status` | cadena | No | activo | Filtrar por estado del índice (activo, eliminado, todo) |
+| `sortBy` | cadena | No | creadoEn | Campo para ordenar por |
+| `sortOrder` | cadena | No | desc | Orden de clasificación (asc, desc) |
 
-## Example Request
+## Solicitud de ejemplo
 
 ```bash
 GET /indexes/all?type=personal&limit=20&page=1
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `200 OK`
+**Código de estado**: `200 OK`
 
 ```json
 {
@@ -84,44 +82,44 @@ GET /indexes/all?type=personal&limit=20&page=1
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `indexes[]` | array | Array of index objects |
-| `indexes[].id` | string | Unique index identifier |
-| `indexes[].name` | string | Index name |
-| `indexes[].sharedIndexName` | string | Shared index name |
-| `indexes[].namespace` | string | Index namespace |
-| `indexes[].type` | string | Index type (personal, general, group, unknown) |
-| `indexes[].assignedUser` | object | Assigned user information (if personal) |
-| `indexes[].assignedGroup` | object | Assigned group information (if group) |
-| `indexes[].userId` | string | User ID |
-| `indexes[].isActive` | boolean | Whether index is active |
-| `indexes[].createdAt` | string | Creation timestamp |
-| `indexes[].updatedAt` | string | Last update timestamp |
-| `indexes[].deletedAt` | string | Deletion timestamp (if deleted) |
-| `pagination` | object | Pagination information |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `indexes[]` | matriz | Matriz de objetos de índice |
+| `indexes[].id` | cadena | Identificador de índice único |
+| `indexes[].name` | cadena | Nombre del índice |
+| `indexes[].sharedIndexName` | cadena | Nombre del índice compartido |
+| `indexes[].namespace` | cadena | Espacio de nombres de índice |
+| `indexes[].type` | cadena | Tipo de índice (personal, general, grupal, desconocido) |
+| `indexes[].assignedUser` | objeto | Información de usuario asignada (si es personal) |
+| `indexes[].assignedGroup` | objeto | Información del grupo asignado (si es grupo) |
+| `indexes[].userId` | cadena | ID de usuario |
+| `indexes[].isActive` | booleano | Si el índice está activo |
+| `indexes[].createdAt` | cadena | Marca de tiempo de creación |
+| `indexes[].updatedAt` | cadena | Marca de tiempo de la última actualización |
+| `indexes[].deletedAt` | cadena | Marca de tiempo de eliminación (si se elimina) |
+| `pagination` | objeto | Información de paginación |
 
-## Index Types
+## Tipos de índice
 
-| Type | Description | Access |
+| Tipo | Descripción | Acceso |
 |------|-------------|--------|
-| `personal` | User-created personal indexes | Full access for owner |
-| `general` | Shared organizational indexes | Varies by permissions |
-| `group` | Group-assigned indexes | Group members |
-| `unknown` | Indexes with unclear assignment | Varies |
+| `personal` | Índices personales creados por el usuario | Acceso completo para el propietario |
+| `general` | Índices organizativos compartidos | Varía según los permisos |
+| `group` | Índices asignados por grupos | Miembros del grupo |
+| `unknown` | Índices con asignación poco clara | Varía |
 
-## Index Status
+## Estado del índice
 
-| Status | Description |
+| Estado | Descripción |
 |--------|-------------|
-| `active` | Index is available for use |
-| `deleted` | Index has been deleted |
-| `all` | Include both active and deleted |
+| `active` | El índice está disponible para su uso |
+| `deleted` | El índice ha sido eliminado |
+| `all` | Incluir activos y eliminados |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -149,7 +147,7 @@ const result = await listIndexes({
 console.log(result.indexes);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -174,16 +172,16 @@ result = list_indexes(params)
 print(result["indexes"])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/all?type=personal&limit=10&page=1" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -195,7 +193,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/all?type=pe
 }
 ```
 
-### 429 Too Many Requests
+### 429 Demasiadas solicitudes
 
 ```json
 {
@@ -208,9 +206,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/all?type=pe
 }
 ```
 
-## Filtering Examples
+## Ejemplos de filtrado
 
-### Filter by Type
+### Filtrar por tipo
 
 ```bash
 # Get only personal indexes
@@ -220,7 +218,7 @@ GET /indexes/all?type=personal
 GET /indexes/all?type=group
 ```
 
-### Filter by Status
+### Filtrar por estado
 
 ```bash
 # Get only active indexes
@@ -230,7 +228,7 @@ GET /indexes/all?status=active
 GET /indexes/all?status=deleted
 ```
 
-### Pagination
+### Paginación
 
 ```bash
 # Get first 20 indexes
@@ -240,25 +238,25 @@ GET /indexes/all?limit=20&page=1
 GET /indexes/all?limit=20&page=2
 ```
 
-## Use Cases
+## Casos de uso
 
-- **Discovery**: Find available knowledge bases for RAG operations
-- **Management**: List indexes for administrative purposes
-- **Integration**: Discover indexes for application integration
-- **Monitoring**: Check index status and metadata
-- **Filtering**: Find specific types of indexes (system, personal, etc.)
+- **Descubrimiento**: encuentre bases de conocimiento disponibles para operaciones RAG
+- **Gestión**: Listar índices para fines administrativos
+- **Integración**: Descubra índices para la integración de aplicaciones
+- **Monitoreo**: Verifique el estado del índice y los metadatos
+- **Filtrado**: busque tipos específicos de índices (sistema, personal, etc.)
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **Predeterminado**: 100 solicitudes por minuto
+- **Diario**: 10.000 solicitudes por día
+- **Mensual**: 300.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- This endpoint is only accessible by administrators
-- Personal indexes are only visible to their owners
-- Group indexes are visible to group members
-- The response includes assigned user and group information
-- Pagination uses page parameter, not offset
-- Filtering by type and status helps narrow down results 
+- Solo los administradores pueden acceder a este endpoint.
+- Los índices personales sólo son visibles para sus propietarios.
+- Los índices del grupo son visibles para los miembros del grupo.
+- La respuesta incluye información de usuario y grupo asignado.
+- La paginación utiliza el parámetro de página, no el desplazamiento.
+- Filtrar por tipo y estado ayuda a limitar los resultados

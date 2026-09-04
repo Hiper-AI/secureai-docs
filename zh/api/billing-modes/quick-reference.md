@@ -1,59 +1,56 @@
 ---
-title: "Billing Modes Quick Reference"
+title: "计费模式快速参考"
 ---
+# 计费模式快速参考
 
+用于在“用户完成次数”和“按模型使用情况”计费模式之间进行选择的快速比较指南。
 
+## 快速比较
 
-# Billing Modes Quick Reference
+|特色|用户完成次数 |按型号使用 |
+|--------------------|--------------------------------|----------------|
+| **默认模式** | ✅ 是的 | ❌ 否 |
+| **成本结构** |固定（许可证配额）|变量（每个令牌）|
+| **用户权限** |不需要|必须启用 |
+| **成本跟踪** |完成计数 |代币数量 + 成本 |
+| **最适合** |可预测的成本|大容量使用 |
+| **后备支持** | ✅ 是的 | ❌ 否 |
 
-A quick comparison guide for choosing between User Completions and Usage by Model billing modes.
+## 何时使用每种模式
 
-## Quick Comparison
+### 用户完成模式
 
-| Feature | User Completions | Usage by Model |
-|---------|------------------|----------------|
-| **Default Mode** | ✅ Yes | ❌ No |
-| **Cost Structure** | Fixed (license quota) | Variable (per token) |
-| **User Permission** | Not required | Must be enabled |
-| **Cost Tracking** | Completion counts | Token counts + costs |
-| **Best For** | Predictable costs | High-volume usage |
-| **Fallback Support** | ✅ Yes | ❌ No |
+**在以下情况下选择此选项：**
+- ✅ 您想要可预测的固定成本
+- ✅ 您在现有许可限制内
+- ✅ 您正在构建内部工具
+- ✅ 您想要使用现有的配额分配
+- ✅ 您需要简单的成本管理
 
-## When to Use Each Mode
+**用例示例：**
+- 内部聊天机器人
+- 开发和测试
+- 小批量应用
+- 固定预算项目
 
-### User Completions Mode
+### 按模型模式使用
 
-**Choose this when:**
-- ✅ You want predictable, fixed costs
-- ✅ You're within existing license limits
-- ✅ You're building internal tools
-- ✅ You want to use existing quota allocations
-- ✅ You need simple cost management
+**在以下情况下选择此选项：**
+- ✅ 您需要详细的成本跟踪
+- ✅ 您经常使用昂贵的型号
+- ✅ 您只想为实际使用付费
+- ✅ 您需要精细的使用情况分析
+- ✅ 您有大量需求
 
-**Example Use Cases:**
-- Internal chatbots
-- Development and testing
-- Low-volume applications
-- Fixed-budget projects
+**用例示例：**
+- 生产应用
+- 大容量人工智能服务
+- 成本敏感型项目
+- 多模型应用
 
-### Usage by Model Mode
+## API 使用
 
-**Choose this when:**
-- ✅ You need detailed cost tracking
-- ✅ You're using expensive models frequently
-- ✅ You want to pay only for actual usage
-- ✅ You need granular usage analytics
-- ✅ You have high-volume requirements
-
-**Example Use Cases:**
-- Production applications
-- High-volume AI services
-- Cost-sensitive projects
-- Multi-model applications
-
-## API Usage
-
-When using the external API with billing modes:
+当使用具有计费模式的外部 API 时：
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -66,29 +63,29 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## Rate Limits
+## 速率限制
 
-### Default Rate Limits
-- **Requests per minute**: 60 (configurable)
-- **Requests per hour**: 1,000 (configurable)
-- **Daily limits**: 100 requests (configurable)
-- **Monthly limits**: 10,000 requests (configurable)
+### 默认速率限制
+- **每分钟请求数**：60（可配置）
+- **每小时请求**：1,000（可配置）
+- **每日限制**：100 个请求（可配置）
+- **每月限制**：10,000 个请求（可配置）
 
-### Billing Mode Specific Limits
-- **User Completions**: Based on license quota
-- **Usage by Model**: Additional dollar-based limits
+### 计费模式具体限制
+- **用户完成数**：基于许可证配额
+- **按型号使用**：额外的基于美元的限制
 
-## SMLTP Policy Integration
+## SMLTP 策略集成
 
-Both billing modes support SMLTP policy enforcement:
+两种计费模式都支持 SMLTP 策略执行：
 
-| Policy | Description | Use Case |
+|政策 |描述 |使用案例|
 |--------|-------------|----------|
-| `public` | For non-sensitive data | Public-facing applications |
-| `internal` | For company data | Internal tools and processes |
-| `confidential` | For sensitive information | Restricted access applications |
+| `public` |对于非敏感数据 |面向公众的应用程序 |
+| `internal` |对于公司数据 |内部工具和流程|
+| `confidential` |对于敏感信息 |限制访问应用程序 |
 
-### SMLTP Configuration Example
+### SMLTP 配置示例
 
 ```json
 {
@@ -99,9 +96,9 @@ Both billing modes support SMLTP policy enforcement:
 }
 ```
 
-## Configuration Examples
+## 配置示例
 
-### User Completions Configuration
+### 用户完成配置
 
 ```json
 {
@@ -117,7 +114,7 @@ Both billing modes support SMLTP policy enforcement:
 }
 ```
 
-### Usage by Model Configuration
+### 按模型配置使用
 
 ```json
 {
@@ -137,34 +134,34 @@ Both billing modes support SMLTP policy enforcement:
 }
 ```
 
-## Error Scenarios
+## 错误场景
 
-### User Completions Errors
+### 用户完成错误
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| `Completion limit exceeded` | Monthly quota reached | Enable Usage by Model or increase quota |
-| `Daily limit exceeded` | Daily limit reached | Wait for reset or increase limit |
-| `User not found` | Invalid user ID | Verify user exists |
+|错误|原因 |解决方案 |
+|--------|--------|----------|
+| `Completion limit exceeded` |每月配额已达 |启用按模型使用或增加配额 |
+| `Daily limit exceeded` |每日限额已达 |等待重置或增加限额 |
+| `User not found` |无效的用户 ID |验证用户是否存在 |
 
-### Usage by Model Errors
+### 模型错误的使用情况
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| `Usage by Model required` | User doesn't have it enabled | Enable Usage by Model for user |
-| `Usage by Model budget exceeded` | Monthly budget reached | Increase dollar limit |
-| `Invalid billing mode` | Invalid mode specified | Use `"usage-by-model"` or `"user-completions"` |
+|错误|原因 |解决方案 |
+|--------|--------|----------|
+| `Usage by Model required` |用户没有启用它 |为用户启用按模型使用 |
+| `Usage by Model budget exceeded` |每月预算达到|提高美元限额 |
+| `Invalid billing mode` |指定的模式无效 |使用 `"usage-by-model"` 或 `"user-completions"` |
 
-## Migration Guide
+## 迁移指南
 
-### From User Completions to Usage by Model
+### 从用户完成到按模型使用
 
-1. **Enable Usage by Model for the user**
+1. **为用户启用按模型使用**
    ```bash
    # Admin panel: Users > Edit User > Enable Usage by Model
    ```
 
-2. **Update API key configuration**
+2. **更新API密钥配置**
    ```json
    {
      "billingMode": "usage-by-model",
@@ -175,18 +172,18 @@ Both billing modes support SMLTP policy enforcement:
    }
    ```
 
-3. **Monitor usage and costs**
-   - Track token usage
-   - Monitor monthly spending
-   - Adjust limits as needed
+3. **监控使用情况和成本**
+   - 跟踪代币使用情况
+   - 监控每月支出
+   - 根据需要调整限制
 
-### From Usage by Model to User Completions
+### 从模型使用到用户完成
 
-1. **Verify user has sufficient quota**
-   - Check license tier
-   - Verify monthly limits
+1. **验证用户有足够的配额**
+   - 检查许可证等级
+   - 验证每月限额
 
-2. **Update API key configuration**
+2. **更新API密钥配置**
    ```json
    {
      "billingMode": "user-completions",
@@ -195,71 +192,71 @@ Both billing modes support SMLTP policy enforcement:
    }
    ```
 
-3. **Monitor completion usage**
-   - Track completion counts
-   - Ensure fallback behavior works
+3. **监控完成使用情况**
+   - 跟踪完成计数
+   - 确保后备行为有效
 
-## Cost Estimation
+## 成本估算
 
-### User Completions Costs
+### 用户完成成本
 
-- **Fixed cost**: Based on license tier
-- **No additional charges**: Beyond existing license
-- **Predictable**: Same as web interface usage
+- **固定成本**：基于许可证级别
+- **无额外费用**：超出现有许可证
+- **可预测**：与 Web 界面使用相同
 
-### Usage by Model Costs
+### 按模型成本划分的使用情况
 
-- **Variable cost**: Based on token usage
-- **Model-specific pricing**: Different rates per model
-- **Example costs**:
-  - GPT-5.1: provider pricing applies
-  - Claude Sonnet 4.6: provider pricing applies
-  - GPT-5 Nano: provider pricing applies
+- **可变成本**：基于代币使用情况
+- **特定于型号的定价**：每个型号的费率不同
+- **成本示例**：
+  - GPT-5.1：适用提供商定价
+  - Claude Sonnet 4.6：供应商定价适用
+  - GPT-5 Nano：适用提供商定价
 
-## Monitoring Tips
+## 监控技巧
 
-### User Completions Monitoring
+### 用户完成情况监控
 
-- Track completion counts daily
-- Monitor quota consumption
-- Set alerts for approaching limits
-- Review usage patterns monthly
+- 每天跟踪完成计数
+- 监控配额消耗
+- 设置接近极限的警报
+- 每月审查使用模式
 
-### Usage by Model Monitoring
+### 模型监控的使用情况
 
-- Track token usage and costs
-- Monitor monthly spending
-- Set dollar limit alerts
-- Review cost breakdown by model
+- 跟踪代币使用情况和成本
+- 监控每月支出
+- 设置美元限额警报
+- 按型号查看成本明细
 
-## Security Considerations
+## 安全考虑
 
-### Both Modes
+### 两种模式
 
-- Use IP restrictions for sensitive apps
-- Rotate API keys regularly
-- Monitor for unusual activity
-- Implement proper error handling
+- 对敏感应用程序使用IP限制
+- 定期轮换 API 密钥
+- 监控异常活动
+- 实施适当的错误处理
 
-### Usage by Model Specific
+### 按特定型号使用
 
-- Set appropriate dollar limits
-- Monitor for cost spikes
-- Review model usage patterns
-- Track expensive model usage
+- 设置适当的美元限额
+- 监控成本峰值
+- 审查模型使用模式
+- 跟踪昂贵模型的使用情况
 
-## Support Resources
+## 支持资源
 
-### Documentation
-- [Billing Modes Overview](../billing-modes.md)
-- [Limits & Quotas](/zh/en/api/limits-and-quotas) - Understand platform limits
+### 文档
+- [计费模式概述](../billing-modes.md)
+- [限制与配额](/zh/api/limits-and-quotas) - 了解平台限制
 
-### Admin Panel
-- **APIs Section**: Create and manage API keys
-- **Users Section**: Enable Usage by Model
+### 管理面板
+- **API 部分**：创建和管理 API 密钥
+- **用户部分**：启用按模型使用
 
-### Common Issues
-1. **Usage by Model not working**: Check user permissions
-2. **Quota exceeded**: Enable Usage by Model or increase limits
-3. **Cost spikes**: Review model usage and set limits
-4. **Authentication errors**: Verify API key and permissions 
+### 常见问题
+1. **按模型使用不起作用**：检查用户权限
+2. **超出配额**：启用按模型使用或增加限制
+3. **成本峰值**：审查模型使用情况并设置限制
+4. **身份验证错误**：验证 API 密钥和权限

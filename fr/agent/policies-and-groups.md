@@ -17,9 +17,9 @@ Une stratégie (`AgentPolicy`) contient :
 | **Mode** | `monitor` (observer uniquement) ou `block` (appliquer). |
 | **Ensembles de règles** | Listes d'autorisation/refus pour `mcps`, `apps`, `providers` et `models`. |
 | **Flux de menaces** | Indique si l'appareil consomme le flux des menaces de l'organisation. |
-| **Application de la loi sur les sorties** | `off` / `kill` / `block` / `lockdown` (+ liste verte, bloc-distant-MCP). Voir [Egress Enforcement](/fr/en/agent/egress-enforcement). |
+| **Application de la loi sur les sorties** | `off` / `kill` / `block` / `lockdown` (+ liste verte, bloc-distant-MCP). Voir [Egress Enforcement](/fr/agent/egress-enforcement). |
 | **Garde comportementale** | Surveillance comportementale de l'IA : activée, sensibilité et action par défaut (`alert`, `quarantine`, `kill`, `block`, `require_approval`), pour le point de terminaison et/ou la passerelle. |
-| **Routage Claude Code** | Paramètres de proxy transparent. Voir [Proxy Transparent](/fr/en/agent/transparent-proxy). |
+| **Routage Claude Code** | Paramètres de proxy transparent. Voir [Proxy Transparent](/fr/agent/transparent-proxy). |
 | **Protection contre l'effraction** | Exigence de clé de désinstallation (voir ci-dessous). |
 | **Déploiement** | Configuration du déploiement par étapes (voir [Déploiements sécurisés](#safe-rollouts)). |
 
@@ -50,10 +50,10 @@ Les modifications de politique sont transmises via un flux de travail contrôlé
 
 ## Protection contre la falsification et clé de désinstallation
 
-Une stratégie peut nécessiter une **clé de désinstallation** (`tamperProtection.uninstallRequiresKey`) afin que l'agent ne puisse pas être supprimé par un utilisateur local sans cette clé. L'exigence (et une clé hachée avec un sel/hachage hors ligne) est transmise au point final afin qu'il puisse valider même hors réseau. Les tentatives de désinstallation sont validées via un point de terminaison public de validation de jeton (d'abord par clé de stratégie, puis par repli à l'échelle de la flotte) ; les échecs sont audités. Voir [Auto-mise à jour et anti-altération](/fr/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper).
+Une stratégie peut nécessiter une **clé de désinstallation** (`tamperProtection.uninstallRequiresKey`) afin que l'agent ne puisse pas être supprimé par un utilisateur local sans cette clé. L'exigence (et une clé hachée avec un sel/hachage hors ligne) est transmise au point final afin qu'il puisse valider même hors réseau. Les tentatives de désinstallation sont validées via un point de terminaison public de validation de jeton (d'abord par clé de stratégie, puis par repli à l'échelle de la flotte) ; les échecs sont audités. Voir [Auto-mise à jour et anti-altération](/fr/agent/quarantine-and-fleet-ops#self-update--anti-tamper).
 
 ## Connexes
 
-- [Egress Enforcement](/fr/en/agent/egress-enforcement)
-- [Quarantine & Fleet Ops](/fr/en/agent/quarantine-and-fleet-ops)
-- [Proxy Transparent](/fr/en/agent/transparent-proxy)
+- [Egress Enforcement](/fr/agent/egress-enforcement)
+- [Quarantine & Fleet Ops](/fr/agent/quarantine-and-fleet-ops)
+- [Proxy Transparent](/fr/agent/transparent-proxy)

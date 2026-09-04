@@ -1,85 +1,83 @@
 ---
 sidebar_position: 5
-title: "API Reference"
+title: "API参考"
 ---
+# API 参考
 
+SecureAI 外部 API 提供 AI 聊天完成功能，包括知识库检索、安全策略和全面的使用情况跟踪。此 API 专为使用 API 密钥身份验证的外部开发人员和集成而设计。
 
-# API Reference
+## 主要特点
 
-SecureAI External API provides AI chat completion capabilities with knowledge base retrieval, security policies, and comprehensive usage tracking. This API is designed for external developers and integrations using API key authentication.
+- **RAG（检索增强生成）**：自动搜索知识库中的相关上下文
+- **多模型支持**：OpenAI、Anthropic、Google、Meta 和其他 AI 模型
+- **模型冗余和故障转移**：调用者定义的故障转移链（主要 + 后备）以及每次尝试超时
+- **OpenAI 兼容端点**：将任何 OpenAI SDK 指向 `/api/external/v1` — 无需更改代码
+- **图像生成**：使用 Google Gemini 2.5 Flash Image 生成和编辑图像
+- **语音到语音 (S2S)**：使用 OpenAI Realtime API 和 WebRTC 进行实时语音对话
+- **安全策略**：SMLTP 策略执行、每次调用 Prompt Shield 以及签署的合规收据
+- **Webhooks**：安全和平台事件的签名实时交付
+- **使用情况跟踪**：全面的使用情况监控、自助配额和速率限制
+- **知识库集成**：访问个人和共享知识库
+- **用户管理**：完整的用户、组和角色管理功能
+- **审核日志记录**：全面的活动和安全审核日志
 
-## Key Features
+## 身份验证
 
-- **RAG (Retrieval-Augmented Generation)**: Automatically search knowledge bases for relevant context
-- **Multi-Model Support**: OpenAI, Anthropic, Google, Meta, and other AI models
-- **Model Redundancy & Failover**: Caller-defined failover chains (primary + fallbacks) with per-attempt timeouts
-- **OpenAI-Compatible Endpoint**: Point any OpenAI SDK at `/api/external/v1` — no code changes
-- **Image Generation**: Generate and edit images using Google Gemini 2.5 Flash Image
-- **Speech-to-Speech (S2S)**: Real-time voice conversations using OpenAI Realtime API with WebRTC
-- **Security Policies**: SMLTP policy enforcement, per-call Prompt Shield, and signed compliance receipts
-- **Webhooks**: Signed, real-time delivery of security and platform events
-- **Usage Tracking**: Comprehensive usage monitoring, self-service quota, and rate limiting
-- **Knowledge Base Integration**: Access to personal and shared knowledge bases
-- **User Management**: Complete user, group, and role management capabilities
-- **Audit Logging**: Comprehensive activity and security audit logs
-
-## Authentication
-
-All endpoints (except health check) require API key authentication using Bearer token:
+所有端点（健康检查除外）都需要使用不记名令牌进行 API 密钥身份验证：
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Base URL
+## 基本网址
 
 ```
 https://{customer.name}.hiperai.ai/api/external
 ```
 
-For the OpenAI-compatible surface, point your SDK's base URL at:
+对于 OpenAI 兼容表面，请将 SDK 的基本 URL 指向：
 
 ```
 https://{customer.name}.hiperai.ai/api/external/v1
 ```
 
-## Billing and Usage
+## 计费和使用
 
-By default, API requests are billed to the user account that owns the API key. You can specify a different user to bill by including the `user_id` parameter in your request. This allows for:
+默认情况下，API 请求将记入拥有 API 密钥的用户帐户。您可以通过在请求中包含 `user_id` 参数来指定要计费的不同用户。这允许：
 
-- Multi-tenant applications with per-user billing
-- Flexible completion limit management
-- Per-user "Usage by Model" settings
+- 具有按用户计费的多租户应用程序
+- 灵活的完成限额管理
+- 每个用户的“按模型使用情况”设置
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 60 requests per minute, 1000 requests per hour
-- **Daily limits**: 100 requests (configurable)
-- **Monthly limits**: 10,000 requests (configurable)
+- **默认**：每分钟 60 个请求，每小时 1000 个请求
+- **每日限制**：100 个请求（可配置）
+- **每月限制**：10,000 个请求（可配置）
 
-## Quick Start
+## 快速入门
 
-### 1. Health Check
+### 1.健康检查
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 ```
 
-### 2. Get Available Models
+### 2. 获取可用型号
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 3. Get Available Knowledge Bases
+### 3. 获取可用的知识库
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 4. Create a Chat Completion
+### 4. 创建聊天完成
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -96,68 +94,68 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## API Endpoints
+## API 端点
 
-### System
-- [Health Check](/zh/api/system/health) - Check API status
+###系统
+- [健康检查](/zh/api/system/health) - 检查API状态
 
-### Discovery
-- [Get Available Models](/zh/api/discovery/models) - List available AI models
-- [Get Available Knowledge Bases](/zh/api/discovery/indexes) - List accessible knowledge bases
-- [Get Security Policies](/zh/api/discovery/smltp-policies) - List available SMLTP policies
+### 发现
+- [获取可用模型](/zh/api/discovery/models) - 列出可用的AI模型
+- [获取可用的知识库](/zh/api/discovery/indexes) - 列出可访问的知识库
+- [获取安全策略](/zh/api/discovery/smltp-policies) - 列出可用的 SMLTP 策略
 
-### Chat
-- [Chat Completion](/zh/api/chat/completions) - Main AI chat endpoint with RAG
-- [OpenAI-Compatible Endpoint](/zh/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` for OpenAI SDKs
-- [Redundancy & Failover](/zh/api/redundancy) - Model failover chains
-- [Policy Check](/zh/api/policy-check) - Dry-run the security pipeline without calling a model
-- [Usage](/zh/api/usage) - Self-service quota, budget, and rate limits
-- [Receipts](/zh/api/receipts) - Fetch signed SMLTP compliance receipts
+### 聊天
+- [聊天完成](/zh/api/chat/completions) - 主要 AI 聊天端点 RAG
+- [OpenAI 兼容端点](/zh/api/chat/openai-兼容) - OpenAI SDK 的插入 `/v1/chat/completions`
+- [冗余和故障转移](/zh/api/redundancy) - 模型故障转移链
+- [Policy Check](/zh/api/policy-check) - 试运行安全管道而不调用模型
+- [使用情况](/zh/api/usage) - 自助服务配额、预算和速率限制
+- [收据](/zh/api/receipts) - 获取签名的 SMLTP 合规收据
 
-### Webhooks
-- [Webhooks Overview](/zh/api/webhooks/overview) - Signed real-time event delivery
-- [Webhook Events](/zh/api/webhooks/events) - Event catalog and payloads
+### 网络钩子
+- [Webhooks 概述](/zh/api/webhooks/overview) - 签名实时事件传递
+- [Webhook 事件](/zh/api/webhooks/events) - 事件目录和负载
 
-### Images
-- [Generate Images](/zh/api/images/generations) - Generate images from text or edit existing images
-- [Edit Images](/zh/api/images/edits) - Image-to-image editing with text instructions
+### 图片
+- [生成图像](/zh/api/images/ Generations) - 从文本生成图像或编辑现有图像
+- [编辑图像](/zh/api/images/edits) - 使用文本指令进行图像到图像的编辑
 
-### Speech/S2S
-- [Initiate S2S WebRTC Session](/zh/api/speech/webrtc) - Establish real-time voice conversations
-- [Get S2S Time Status](/zh/api/speech/status) - Check remaining S2S time quota
-- [Log S2S Session Duration](/zh/api/speech/log-session) - Log session duration and deduct time
+### 语音/S2S
+- [发起S2S WebRTC会话](/zh/api/speech/webrtc) - 建立实时语音对话
+- [获取S2S时间状态](/zh/api/speech/status) - 查看剩余S2S时间配额
+- [记录S2S会话时长](/zh/api/speech/log-session) - 记录会话时长并扣除时间
 
-### User Management
-- [Get All Users](/zh/api/users/list) - Retrieve users with pagination
-- [Create User](/zh/api/users/create) - Create new user account
-- [Update User](/zh/api/users/update) - Update existing user
-- [Get License Availability](/zh/api/billing-modes/licenses-availability) - Retrieve license pool limits and usage
+### 用户管理
+- [获取所有用户](/zh/api/users/list) - 分页检索用户
+- [创建用户](/zh/api/users/create) - 创建新用户帐户
+- [更新用户](/zh/api/users/update) - 更新现有用户
+- [获取许可证可用性](/zh/api/billing-modes/licenses-availability) - 检索许可证池限制和使用情况
 
-### Index Management
-- [Get All Indexes](/zh/api/indexes/list) - Retrieve all knowledge bases
-- [Create Index](/zh/api/indexes/create) - Create new knowledge base
-- [Update Index](/zh/api/indexes/update) - Update existing index
-- [Train Index with Documents](/zh/api/indexes/train) - Train index by uploading documents
-- [Search Index for Documents](/zh/api/indexes/search) - Search documents using semantic search
+### 指数管理
+- [获取所有索引](/zh/api/indexes/list) - 检索所有知识库
+- [创建索引](/zh/api/indexes/create) - 创建新的知识库
+- [更新索引](/zh/api/indexes/update) - 更新现有索引
+- [通过文档训练索引](/zh/api/indexes/train) - 通过上传文档训练索引
+- [文档搜索索引](/zh/api/indexes/search) - 使用语义搜索来搜索文档
 
-### Group Management
-- [Get All Groups](/zh/api/groups/list) - Retrieve all groups
-- [Create Group](/zh/api/groups/create) - Create new group
-- [Update Group](/zh/api/groups/update) - Update existing group
+### 集团管理
+- [获取所有组](/zh/api/groups/list) - 检索所有组
+- [创建组](/zh/api/groups/create) - 创建新组
+- [更新组](/zh/api/groups/update) - 更新现有组
 
-### SMLTP Security
-- [Get All SMLTP Policies](/zh/api/smltp/policies) - List all security policies
-- [Get Active Policy](/zh/api/smltp/active) - Get current active policy
-- [Create Custom Policy](/zh/api/smltp/create) - Create custom SMLTP policy
-- [Audit Logs](/zh/api/smltp/audit-logs) - Retrieve SMLTP audit logs
+### SMLTP 安全
+- [获取所有SMLTP策略](/zh/api/smltp/policies) - 列出所有安全策略
+- [获取活动策略](/zh/api/smltp/active) - 获取当前活动策略
+- [创建自定义策略](/zh/api/smltp/create) - 创建自定义 SMLTP 策略
+- [审核日志](/zh/api/smltp/audit-logs) - 检索 SMLTP 审核日志
 
-### Role Management
-- [Get All Roles](/zh/api/roles/list) - Retrieve all roles
-- [Create Role](/zh/api/roles/create) - Create new custom role
+### 角色管理
+- [获取所有角色](/zh/api/roles/list) - 检索所有角色
+- [创建角色](/zh/api/roles/create) - 创建新的自定义角色
 
-## Error Handling
+## 错误处理
 
-### Error Response Format
+### 错误响应格式
 
 ```json
 {
@@ -168,7 +166,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Rate Limit Error
+### 速率限制错误
 
 ```json
 {
@@ -179,23 +177,23 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Common HTTP Status Codes
+### 常见 HTTP 状态代码
 
-| Code | Description |
+|代码|描述 |
 |------|-------------|
-| `200` | Success |
-| `201` | Created successfully |
-| `400` | Bad request - invalid parameters |
-| `401` | Unauthorized - invalid API key |
-| `403` | Forbidden - insufficient permissions |
-| `404` | Not found |
-| `409` | Conflict - resource already exists |
-| `413` | Payload Too Large - file size exceeded |
-| `429` | Rate limit exceeded |
-| `500` | Internal server error |
-| `503` | Service Unavailable - service not configured |
+| `200` |成功|
+| `201` |创建成功 |
+| `400` |错误请求 - 无效参数 |
+| `401` |未经授权 - API 密钥无效 |
+| `403` |禁止-权限不足|
+| `404` |没有找到|
+| `409` |冲突 - 资源已存在 |
+| `413` |有效负载太大 - 文件大小超出 |
+| `429` |超出速率限制 |
+| `500` |内部服务器错误 |
+| `503` |服务不可用-服务未配置|
 
-## SDK Examples
+## SDK 示例
 
 ### JavaScript/Node.js
 
@@ -221,7 +219,7 @@ const data = await response.json();
 console.log(data.choices[0].message.content);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -245,7 +243,7 @@ result = response.json()
 print(result['choices'][0]['message']['content'])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -260,21 +258,21 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
     "max_tokens": 1000
 ```
 
-### 2. Get Available Models
+### 2. 获取可用型号
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 3. Get Available Knowledge Bases
+### 3. 获取可用的知识库
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 4. Create a Chat Completion
+### 4. 创建聊天完成
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -291,68 +289,68 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## API Endpoints
+## API 端点
 
-### System
-- [Health Check](/zh/api/system/health) - Check API status
+###系统
+- [健康检查](/zh/api/system/health) - 检查API状态
 
-### Discovery
-- [Get Available Models](/zh/api/discovery/models) - List available AI models
-- [Get Available Knowledge Bases](/zh/api/discovery/indexes) - List accessible knowledge bases
-- [Get Security Policies](/zh/api/discovery/smltp-policies) - List available SMLTP policies
+### 发现
+- [获取可用模型](/zh/api/discovery/models) - 列出可用的AI模型
+- [获取可用的知识库](/zh/api/discovery/indexes) - 列出可访问的知识库
+- [获取安全策略](/zh/api/discovery/smltp-policies) - 列出可用的 SMLTP 策略
 
-### Chat
-- [Chat Completion](/zh/api/chat/completions) - Main AI chat endpoint with RAG
-- [OpenAI-Compatible Endpoint](/zh/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` for OpenAI SDKs
-- [Redundancy & Failover](/zh/api/redundancy) - Model failover chains
-- [Policy Check](/zh/api/policy-check) - Dry-run the security pipeline without calling a model
-- [Usage](/zh/api/usage) - Self-service quota, budget, and rate limits
-- [Receipts](/zh/api/receipts) - Fetch signed SMLTP compliance receipts
+### 聊天
+- [聊天完成](/zh/api/chat/completions) - 主要 AI 聊天端点 RAG
+- [OpenAI 兼容端点](/zh/api/chat/openai-兼容) - OpenAI SDK 的插入 `/v1/chat/completions`
+- [冗余和故障转移](/zh/api/redundancy) - 模型故障转移链
+- [Policy Check](/zh/api/policy-check) - 试运行安全管道而不调用模型
+- [使用情况](/zh/api/usage) - 自助服务配额、预算和速率限制
+- [收据](/zh/api/receipts) - 获取签名的 SMLTP 合规收据
 
-### Webhooks
-- [Webhooks Overview](/zh/api/webhooks/overview) - Signed real-time event delivery
-- [Webhook Events](/zh/api/webhooks/events) - Event catalog and payloads
+### 网络钩子
+- [Webhooks 概述](/zh/api/webhooks/overview) - 签名实时事件传递
+- [Webhook 事件](/zh/api/webhooks/events) - 事件目录和负载
 
-### Images
-- [Generate Images](/zh/api/images/generations) - Generate images from text or edit existing images
-- [Edit Images](/zh/api/images/edits) - Image-to-image editing with text instructions
+### 图片
+- [生成图像](/zh/api/images/ Generations) - 从文本生成图像或编辑现有图像
+- [编辑图像](/zh/api/images/edits) - 使用文本指令进行图像到图像的编辑
 
-### Speech/S2S
-- [Initiate S2S WebRTC Session](/zh/api/speech/webrtc) - Establish real-time voice conversations
-- [Get S2S Time Status](/zh/api/speech/status) - Check remaining S2S time quota
-- [Log S2S Session Duration](/zh/api/speech/log-session) - Log session duration and deduct time
+### 语音/S2S
+- [发起S2S WebRTC会话](/zh/api/speech/webrtc) - 建立实时语音对话
+- [获取S2S时间状态](/zh/api/speech/status) - 查看剩余S2S时间配额
+- [记录S2S会话时长](/zh/api/speech/log-session) - 记录会话时长并扣除时间
 
-### User Management
-- [Get All Users](/zh/api/users/list) - Retrieve users with pagination
-- [Create User](/zh/api/users/create) - Create new user account
-- [Update User](/zh/api/users/update) - Update existing user
-- [Get License Availability](/zh/api/billing-modes/licenses-availability) - Retrieve license pool limits and usage
+### 用户管理
+- [获取所有用户](/zh/api/users/list) - 分页检索用户
+- [创建用户](/zh/api/users/create) - 创建新用户帐户
+- [更新用户](/zh/api/users/update) - 更新现有用户
+- [获取许可证可用性](/zh/api/billing-modes/licenses-availability) - 检索许可证池限制和使用情况
 
-### Index Management
-- [Get All Indexes](/zh/api/indexes/list) - Retrieve all knowledge bases
-- [Create Index](/zh/api/indexes/create) - Create new knowledge base
-- [Update Index](/zh/api/indexes/update) - Update existing index
-- [Train Index with Documents](/zh/api/indexes/train) - Train index by uploading documents
-- [Search Index for Documents](/zh/api/indexes/search) - Search documents using semantic search
+### 指数管理
+- [获取所有索引](/zh/api/indexes/list) - 检索所有知识库
+- [创建索引](/zh/api/indexes/create) - 创建新的知识库
+- [更新索引](/zh/api/indexes/update) - 更新现有索引
+- [通过文档训练索引](/zh/api/indexes/train) - 通过上传文档训练索引
+- [文档搜索索引](/zh/api/indexes/search) - 使用语义搜索来搜索文档
 
-### Group Management
-- [Get All Groups](/zh/api/groups/list) - Retrieve all groups
-- [Create Group](/zh/api/groups/create) - Create new group
-- [Update Group](/zh/api/groups/update) - Update existing group
+### 集团管理
+- [获取所有组](/zh/api/groups/list) - 检索所有组
+- [创建组](/zh/api/groups/create) - 创建新组
+- [更新组](/zh/api/groups/update) - 更新现有组
 
-### SMLTP Security
-- [Get All SMLTP Policies](/zh/api/smltp/policies) - List all security policies
-- [Get Active Policy](/zh/api/smltp/active) - Get current active policy
-- [Create Custom Policy](/zh/api/smltp/create) - Create custom SMLTP policy
-- [Audit Logs](/zh/api/smltp/audit-logs) - Retrieve SMLTP audit logs
+### SMLTP 安全
+- [获取所有SMLTP策略](/zh/api/smltp/policies) - 列出所有安全策略
+- [获取活动策略](/zh/api/smltp/active) - 获取当前活动策略
+- [创建自定义策略](/zh/api/smltp/create) - 创建自定义 SMLTP 策略
+- [审核日志](/zh/api/smltp/audit-logs) - 检索SMLTP审核日志
 
-### Role Management
-- [Get All Roles](/zh/api/roles/list) - Retrieve all roles
-- [Create Role](/zh/api/roles/create) - Create new custom role
+### 角色管理
+- [获取所有角色](/zh/api/roles/list) - 检索所有角色
+- [创建角色](/zh/api/roles/create) - 创建新的自定义角色
 
-## Error Handling
+## 错误处理
 
-### Error Response Format
+### 错误响应格式
 
 ```json
 {
@@ -363,7 +361,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Rate Limit Error
+### 速率限制错误
 
 ```json
 {
@@ -374,23 +372,23 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Common HTTP Status Codes
+### 常见 HTTP 状态代码
 
-| Code | Description |
+|代码|描述 |
 |------|-------------|
-| `200` | Success |
-| `201` | Created successfully |
-| `400` | Bad request - invalid parameters |
-| `401` | Unauthorized - invalid API key |
-| `403` | Forbidden - insufficient permissions |
-| `404` | Not found |
-| `409` | Conflict - resource already exists |
-| `413` | Payload Too Large - file size exceeded |
-| `429` | Rate limit exceeded |
-| `500` | Internal server error |
-| `503` | Service Unavailable - service not configured |
+| `200` |成功|
+| `201` |创建成功 |
+| `400` |错误请求 - 无效参数 |
+| `401` |未经授权 - API 密钥无效 |
+| `403` |禁止-权限不足|
+| `404` |没有找到|
+| `409` |冲突 - 资源已存在 |
+| `413` |有效负载太大 - 文件大小超出 |
+| `429` |超出速率限制 |
+| `500` |内部服务器错误 |
+| `503` |服务不可用-服务未配置|
 
-## SDK Examples
+## SDK 示例
 
 ### JavaScript/Node.js
 
@@ -416,7 +414,7 @@ const data = await response.json();
 console.log(data.choices[0].message.content);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -440,7 +438,7 @@ result = response.json()
 print(result['choices'][0]['message']['content'])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -456,7 +454,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## Next Steps
+## 后续步骤
 
-- [Knowledge Base & RAG](/zh/indexes/overview) - Learn about Knowledge Bases and RAG
-```
+- [知识库和RAG](/zh/indexes/overview) - 了解知识库和RAG
+````

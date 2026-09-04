@@ -1,87 +1,85 @@
 ---
 sidebar_position: 3
-title: "Document Processing"
+title: "文件处理"
 ---
+# 文件处理
+
+SecureAI 允许您上传和处理各种文档类型，以创建您的个人知识库以增强 AI 响应。
+
+## 支持的文件类型
+
+### **文档格式**
+- **PDF文档**：文本提取和处理
+- **Word 文档**：DOC、DOCX 文件
+- **文本文件**：纯文本和 Markdown
+- **结构化数据**：CSV、JSON 文件
+
+### **文件大小限制**
+- **最大文件大小**：每个文件 10MB
+- **批量上传**：一次上传多个文件
+- **处理时间**：根据文件大小和复杂性而变化
+
+## 上传过程
+
+### **第 1 步：选择您的知识库**
+- 选择现有的知识库或创建新的知识库
+- 为您的知识库命名以便于识别
+
+### **第2步：上传文件**
+- **拖放**：只需将文件拖到上传区域即可
+- **文件浏览器**：点击浏览并选择文件
+- **批量选择**：一次选择多个文件
+- **进度跟踪**：实时查看上传进度
+
+### **第 3 步：处理状态**
+- **上传确认**：文件上传成功
+- **处理指示器**：观察文档的处理情况
+
+## 你可以做什么
+
+### **文档管理**
+- **上传文档**：将文件添加到您的知识库
+- **查看上传的文件**：查看知识库中的所有文档
+
+### **知识库组织**
+- **创建多个基础**：按主题或项目组织文档
+- **命名您的基础**：为您的知识库指定有意义的名称
+
+## 最佳实践
+
+### **文件准备**
+- 使用高质量、可读的文档
+- 确保文本清晰且格式良好
+- 删除不必要的格式或图像
+- 使用描述性文件名
+
+### **组织**
+- 将相关文档分组到同一知识库中
+- 使用一致的命名约定
+- 为不同的项目创建单独的知识库
+- 定期审查和清理旧文件
+
+### **上传提示**
+- 批量上传文件以提高效率
+- 监控大文件的处理状态
+- 将文件大小保持在 10MB 以下以加快处理速度
+
+## 常见问题
+
+|问题 |解决方案 |
+|--------|----------|
+|文件太大 |分割成较小的文件或压缩 |
+|处理失败 |检查文件格式并重试 |
+|上传卡住|刷新页面并重试 |
+
+## 开始使用
+
+1. **创建知识库**：首先创建一个新的知识库
+2. **上传文档**：添加您的第一个文档
+3. **等待处理**：让系统处理您的文件
+4. **开始聊天**：在对话中使用您的知识库
+
+## 后续步骤
 
 
-# Document Processing
-
-SecureAI allows you to upload and process various document types to create your personal knowledge base for enhanced AI responses.
-
-## Supported File Types
-
-### **Document Formats**
-- **PDF Documents**: Text extraction and processing
-- **Word Documents**: DOC, DOCX files
-- **Text Files**: Plain text and markdown
-- **Structured Data**: CSV, JSON files
-
-### **File Size Limits**
-- **Maximum File Size**: 10MB per file
-- **Batch Upload**: Upload multiple files at once
-- **Processing Time**: Varies based on file size and complexity
-
-## Upload Process
-
-### **Step 1: Select Your Knowledge Base**
-- Choose an existing knowledge base or create a new one
-- Name your knowledge base for easy identification
-
-### **Step 2: Upload Documents**
-- **Drag and Drop**: Simply drag files into the upload area
-- **File Browser**: Click to browse and select files
-- **Batch Selection**: Select multiple files at once
-- **Progress Tracking**: See upload progress in real-time
-
-### **Step 3: Processing Status**
-- **Upload Confirmation**: Files are uploaded successfully
-- **Processing Indicator**: Watch as documents are processed
-
-## What You Can Do
-
-### **Document Management**
-- **Upload Documents**: Add files to your knowledge base
-- **View Uploaded Files**: See all documents in your knowledge base
-
-### **Knowledge Base Organization**
-- **Create Multiple Bases**: Organize documents by topic or project
-- **Name Your Bases**: Give meaningful names to your knowledge bases
-
-## Best Practices
-
-### **Document Preparation**
-- Use high-quality, readable documents
-- Ensure text is clear and well-formatted
-- Remove unnecessary formatting or images
-- Use descriptive file names
-
-### **Organization**
-- Group related documents in the same knowledge base
-- Use consistent naming conventions
-- Create separate knowledge bases for different projects
-- Regularly review and clean up old documents
-
-### **Upload Tips**
-- Upload documents in batches for efficiency
-- Monitor processing status for large files
-- Keep file sizes under 10MB for faster processing
-
-## Common Issues
-
-| Issue | Solution |
-|-------|----------|
-| File too large | Split into smaller files or compress |
-| Processing failed | Check file format and try again |
-| Upload stuck | Refresh page and try again |
-
-## Getting Started
-
-1. **Create Knowledge Base**: Start by creating a new knowledge base
-2. **Upload Documents**: Add your first documents
-3. **Wait for Processing**: Let the system process your files
-4. **Start Chatting**: Use your knowledge base in conversations
-
-## Next Steps
-
-
-- [Indexes](/zh/indexes/overview) - Manage your knowledge bases 
+- [索引](/zh/indexes/overview) - 管理您的知识库

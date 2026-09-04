@@ -1,16 +1,14 @@
 ---
 id: create
-title: "Create Group"
-sidebar_label: "Create Group"
-description: "Create a new user group"
+title: "Crear Grupo"
+sidebar_label: "Crear Grupo"
+description: "Crear un nuevo grupo de usuarios"
 openapi: "POST /groups"
 ---
 
+# Crear grupo
 
-
-# Create Group
-
-Create a new user group for organizing users and managing access permissions.
+Cree un nuevo grupo de usuarios para organizar usuarios y administrar permisos de acceso.
 
 ## Endpoint
 
@@ -18,28 +16,28 @@ Create a new user group for organizing users and managing access permissions.
 POST /groups
 ```
 
-## Description
+## Descripción
 
-This endpoint allows administrators to create new user groups. Groups are used to organize users, manage permissions, and control access to different parts of the system. You can specify the group name, description, and metadata during creation.
+Este endpoint permite a los administradores crear nuevos grupos de usuarios. Los grupos se utilizan para organizar usuarios, administrar permisos y controlar el acceso a diferentes partes del sistema. Puede especificar el nombre del grupo, la descripción y los metadatos durante la creación.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Cuerpo de solicitud
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `name` | string | Yes | Group name |
-| `description` | string | Yes | Group description |
-| `users` | array | No | Array of user IDs to add to the group |
-| `status` | string | No | Group status (defaults to "Active") |
+| `name` | cadena | Sí | Nombre del grupo |
+| `description` | cadena | Sí | Descripción del grupo |
+| `users` | matriz | No | Matriz de ID de usuario para agregar al grupo |
+| `status` | cadena | No | Estado del grupo (por defecto "Activo") |
 
-## Example Request
+## Solicitud de ejemplo
 
 ```json
 {
@@ -50,9 +48,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `201 Created`
+**Código de estado**: `201 Created`
 
 ```json
 {
@@ -81,25 +79,25 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `group` | object | Created group object |
-| `group.id` | string | Unique group identifier |
-| `group.name` | string | Group name |
-| `group.description` | string | Group description |
-| `group.status` | string | Group status |
-| `group.userCount` | integer | Number of users in the group |
-| `group.users` | array | Array of user objects in the group |
-| `group.users[].id` | string | User ID |
-| `group.users[].name` | string | User name |
-| `group.users[].email` | string | User email |
-| `group.createdAt` | string | Creation timestamp |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `message` | cadena | Mensaje de éxito |
+| `group` | objeto | Objeto de grupo creado |
+| `group.id` | cadena | Identificador de grupo único |
+| `group.name` | cadena | Nombre del grupo |
+| `group.description` | cadena | Descripción del grupo |
+| `group.status` | cadena | Estado del grupo |
+| `group.userCount` | entero | Número de usuarios en el grupo |
+| `group.users` | matriz | Matriz de objetos de usuario en el grupo |
+| `group.users[].id` | cadena | ID de usuario |
+| `group.users[].name` | cadena | Nombre de usuario |
+| `group.users[].email` | cadena | Correo electrónico del usuario |
+| `group.createdAt` | cadena | Marca de tiempo de creación |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -129,7 +127,7 @@ const result = await createGroup(groupData);
 console.log('Created group:', result.group.id);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -156,7 +154,7 @@ result = create_group(group_data)
 print("Created group:", result["group"]["id"])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
@@ -170,9 +168,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
   }'
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -188,7 +186,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -200,7 +198,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -212,7 +210,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 409 Conflict
+### 409 Conflicto
 
 ```json
 {
@@ -224,7 +222,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-### 429 Too Many Requests
+### 429 Demasiadas solicitudes
 
 ```json
 {
@@ -237,26 +235,26 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/groups" \
 }
 ```
 
-## Use Cases
+## Casos de uso
 
-- **User Organization**: Create groups to organize users by department or function
-- **Access Control**: Establish groups for managing permissions and access
-- **Team Management**: Create groups for different teams or projects
-- **Reporting**: Organize users for reporting and analytics
-- **Integration**: Create groups for third-party system integration
+- **Organización de usuarios**: cree grupos para organizar a los usuarios por departamento o función
+- **Control de acceso**: Establece grupos para gestionar permisos y accesos
+- **Gestión de equipos**: crea grupos para diferentes equipos o proyectos
+- **Informes**: organiza a los usuarios para generar informes y análisis
+- **Integración**: cree grupos para la integración de sistemas de terceros
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **Predeterminado**: 50 solicitudes por minuto
+- **Diario**: 5000 solicitudes por día
+- **Mensual**: 150.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- This endpoint is only accessible by administrators
-- Required Fields: Both name and description are required
-- User Assignment: Can assign users to the group during creation
-- Status: Defaults to "Active" if not specified
-- Validation: User IDs are validated before assignment
-- Flat Response: Response is not nested under data object
-- The group is immediately available for use after creation 
+- Solo los administradores pueden acceder a este endpoint.
+- Campos obligatorios: tanto el nombre como la descripción son obligatorios
+- Asignación de usuarios: puede asignar usuarios al grupo durante la creación
+- Estado: El valor predeterminado es "Activo" si no se especifica
+- Validación: las identificaciones de usuario se validan antes de la asignación.
+- Respuesta plana: la respuesta no está anidada en el objeto de datos
+- El grupo está disponible inmediatamente para su uso después de su creación.

@@ -11,7 +11,7 @@ Die **Agent-Registrierung** (Admin → Agent-Registrierung → **KI-Agenten**) i
 <Info>
 **Nicht die Endpunktflotte**
 
-Bei der Agentenregistrierung geht es um *logische* KI-Agenten (einen Support-Chatbot, einen internen Copiloten). Es unterscheidet sich von der **OS Agents**-Flotte – der auf Endpunkten installierten SecureAI-Software, dokumentiert unter [Endpoint Agent](/de/en/agent/overview).
+Bei der Agentenregistrierung geht es um *logische* KI-Agenten (einen Support-Chatbot, einen internen Copiloten). Es unterscheidet sich von der **OS Agents**-Flotte – der auf Endpunkten installierten SecureAI-Software, dokumentiert unter [Endpoint Agent](/de/agent/overview).
 </Info>
 
 ## Was pro Agent aufgezeichnet wird
@@ -30,11 +30,11 @@ Bei der Agentenregistrierung geht es um *logische* KI-Agenten (einen Support-Cha
 - **Import**-Agenten zum Bootstrapping des Inventars.
 - Überprüfen Sie **Beziehungen** zwischen Agenten, ihren Tools und ihren Daten.
 - **Vorgeschlagene Autonomie anwenden** – Akzeptieren Sie eine empfohlene Autonomiestufe für einen Agenten.
-- Chatbots zur Überwachung registrieren; Ein Chatbot, der zum ersten Mal über die [Prompt Shield API](/de/en/api/threat-defense/prompt-shield) gesehen wurde, wird hier automatisch als `observed` für Ihre Überprüfung registriert.
+- Chatbots zur Überwachung registrieren; Ein Chatbot, der zum ersten Mal über die [Prompt Shield API](/de/api/threat-defense/prompt-shield) gesehen wurde, wird hier automatisch als `observed` für Ihre Überprüfung registriert.
 
 ## Verwandte
 
-- [Endpoint Agent](/de/en/agent/overview) – die Agentenflotte auf Betriebssystemebene (im Gegensatz dazu).
-- [NHI Inventory](/de/en/discovery/nhi-inventory) – die Identitäten, mit denen sich Agenten authentifizieren.
-- [Prompt Shield API](/de/en/api/threat-defense/prompt-shield) – registriert Chatbots automatisch.
-- [AI Discovery & Inventory Overview](/de/en/discovery/overview)
+- [Endpoint Agent](/de/agent/overview) – die Agentenflotte auf Betriebssystemebene (im Gegensatz dazu).
+- [NHI Inventory](/de/discovery/nhi-inventory) – die Identitäten, mit denen sich Agenten authentifizieren.
+- [Prompt Shield API](/de/api/threat-defense/prompt-shield) – registriert Chatbots automatisch.
+- [AI Discovery & Inventory Overview](/de/discovery/overview)

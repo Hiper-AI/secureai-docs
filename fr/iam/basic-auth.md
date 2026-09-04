@@ -98,6 +98,6 @@ L'authentification de base fournit une méthode simple d'authentification par no
 
 ## Prochaines étapes
 
-- [Google Workspace](/fr/en/iam/google-workspace) - Intégration à Google Workspace
-- [Microsoft Entra ID](/fr/en/iam/microsoft-entra-id) - Connectez-vous avec Microsoft Entra ID
-- [Présentation IAM](/fr/en/iam/overview) - En savoir plus sur la gestion des identités
+- [Google Workspace](/fr/iam/google-workspace) - Intégration à Google Workspace
+- [Microsoft Entra ID](/fr/iam/microsoft-entra-id) - Connectez-vous avec Microsoft Entra ID
+- [Présentation IAM](/fr/iam/overview) - En savoir plus sur la gestion des identités

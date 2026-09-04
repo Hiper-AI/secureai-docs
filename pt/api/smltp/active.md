@@ -1,44 +1,42 @@
 ---
 id: active
-title: "Active SMLTP Policies"
-sidebar_label: "Active SMLTP Policies"
-description: "Retrieve currently active SMLTP policies"
+title: "Políticas SMLTP Ativas"
+sidebar_label: "Políticas Ativas"
+description: "Recuperar políticas SMLTP atualmente ativas"
 openapi: "GET /smltp-policies/active"
 ---
 
+# Políticas SMLTP ativas
 
+Recupere as políticas SMLTP (Secure Model Language Transfer Protocol) atualmente ativas para sua conta.
 
-# Active SMLTP Policies
-
-Retrieve the currently active SMLTP (Secure Model Language Transfer Protocol) policies for your account.
-
-## Endpoint
+## Ponto final
 
 ```
 GET /smltp-policies/active
 ```
 
-## Description
+## Descrição
 
-Retrieve the currently active SMLTP policy configuration. **Admin only access required.**
+Recupere a configuração da política SMLTP atualmente ativa. **É necessário acesso apenas de administrador.**
 
-## Authentication
+## Autenticação
 
-**Required**: API Key with admin privileges
+**Obrigatório**: Chave de API com privilégios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Example Request
+## Exemplo de solicitação
 
 ```bash
 GET /smltp-policies/active
 ```
 
-## Success Response
+## Resposta de sucesso
 
-**Status Code**: `200 OK`
+**Código de status**: `200 OK`
 
 ```json
 {
@@ -53,17 +51,17 @@ GET /smltp-policies/active
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `data` | object | Response data object |
-| `data.template` | string | Currently active policy template ID |
-| `data.policy` | object | Current policy configuration object |
-| `data.lastUpdated` | string | Last update timestamp |
+| `success` | booleano | Indica se a operação foi bem sucedida |
+| `data` | objeto | Objeto de dados de resposta |
+| `data.template` | corda | ID do modelo de política atualmente ativo |
+| `data.policy` | objeto | Objeto de configuração de política atual |
+| `data.lastUpdated` | corda | Carimbo de data/hora da última atualização |
 
-## Example Usage
+## Exemplo de uso
 
 ### JavaScript
 
@@ -85,7 +83,7 @@ console.log('Active template:', result.data.template);
 console.log('Policy config:', result.data.policy);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -105,16 +103,16 @@ print("Active template:", result["data"]["template"])
 print("Policy config:", result["data"]["policy"])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/active" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## Respostas de erro
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -126,7 +124,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/acti
 }
 ```
 
-### 429 Too Many Requests
+### 429 Muitas solicitações
 
 ```json
 {
@@ -140,25 +138,25 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/smltp-policies/acti
 ```
 
 
-## Use Cases
+## Casos de uso
 
-- **Policy Review**: Check which policy template is currently active
-- **Configuration Check**: Review current policy configuration
-- **Template Management**: Understand which policy template is being used
-- **Troubleshooting**: Understand current policy settings
-- **Audit Preparation**: Review active policy for compliance audits
+- **Revisão da política**: verifique qual modelo de política está ativo no momento
+- **Verificação de configuração**: revise a configuração da política atual
+- **Gerenciamento de modelos**: entenda qual modelo de política está sendo usado
+- **Solução de problemas**: entenda as configurações atuais da política
+- **Preparação para auditoria**: revisar a política ativa para auditorias de conformidade
 
-## Rate Limits
+## Limites de taxa
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **Padrão**: 100 solicitações por minuto
+- **Diariamente**: 10.000 solicitações por dia
+- **Mensal**: 300.000 solicitações por mês
 
-## Notes
+## Notas
 
-- This endpoint requires admin privileges
-- Single Policy: Returns the currently active policy template and configuration
-- No Arrays: Does not return an array of policies, just the active one
-- Template ID: Shows which policy template is currently active
-- Policy Config: Returns the actual policy configuration object
-- Nested Response: Response is nested under data object 
+- Este endpoint requer privilégios de administrador
+- Política única: retorna o modelo e a configuração da política atualmente ativa
+- No Arrays: Não retorna um array de políticas, apenas a ativa
+- ID do modelo: mostra qual modelo de política está ativo no momento
+- Configuração de política: retorna o objeto de configuração de política real
+- Resposta aninhada: a resposta está aninhada no objeto de dados

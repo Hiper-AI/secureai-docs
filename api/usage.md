@@ -1,15 +1,13 @@
 ---
-title: "Usage & Quota"
-sidebar_label: "Usage"
-description: "Self-service points, budget, and rate-limit snapshot for an API key"
+title: "Métricas de Uso y Consumo"
+sidebar_label: "Uso y Consumo"
+description: "Instantánea de puntos de autoservicio, presupuesto y límite de tarifa para una clave API"
 openapi: "GET /usage"
 ---
 
+# Uso y cuota
 
-
-# Usage & Quota
-
-Return a self-service snapshot of the calling API key's quota and usage: the billed user's points bucket, the Usage-by-Model budget when enabled, and the key's own request limits and rate limits. This is the same data you'd otherwise read from the admin panel, exposed to the key holder.
+Devuelve una instantánea de autoservicio de la cuota y el uso de la clave API de llamada: el depósito de puntos del usuario facturado, el presupuesto de uso por modelo cuando está habilitado y los límites de solicitud y de tasa de la propia clave. Estos son los mismos datos que de otro modo leerías en el panel de administración, expuestos al poseedor de la clave.
 
 ## Endpoint
 
@@ -17,20 +15,20 @@ Return a self-service snapshot of the calling API key's quota and usage: the bil
 GET /usage
 ```
 
-## Authentication
+## Autenticación
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Example
+## Ejemplo de solicitud
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Respuesta
 
 ```json
 {
@@ -57,26 +55,26 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 }
 ```
 
-### Fields
+### Campos
 
-| Field | Description |
+| Campo | Descripción |
 |-------|-------------|
-| `points.remaining` | Points left in the billed user's bucket. |
-| `points.monthly_limit` | The user's monthly points allowance. |
-| `points.next_renewal` | ISO timestamp of the next points renewal. |
-| `usage_by_model` | When the billed user is on the Usage-by-Model billing mode: `dollar_limit`, `current_spend`, `remaining_budget`. Otherwise `{ "enabled": false }`. |
-| `api_key.billing_mode` | `user-completions` or `usage-by-model` — see [Billing Modes](/en/api/billing-modes). |
-| `api_key.daily` / `api_key.monthly` | The key's request counters (`used`, `limit`, `remaining`). |
-| `api_key.rate_limit` | Per-minute and per-hour request ceilings. |
-| `api_key.expires_at` | ISO expiry timestamp, or `null` if the key never expires. |
+| `points.remaining` | Puntos que quedan en el depósito del usuario facturado. |
+| `points.monthly_limit` | La asignación de puntos mensual del usuario. |
+| `points.next_renewal` | Marca de tiempo ISO de la próxima renovación de puntos. |
+| `usage_by_model` | Cuando el usuario facturado está en el modo de facturación Uso por modelo: `dollar_limit`, `current_spend`, `remaining_budget`. De lo contrario `{ "enabled": false }`. |
+| `api_key.billing_mode` | `user-completions` o `usage-by-model` — consulte [Modos de facturación](/api/billing-modes). |
+| `api_key.daily` / `api_key.monthly` | Los contadores de solicitudes de la clave (`used`, `limit`, `remaining`). |
+| `api_key.rate_limit` | Límites de solicitud por minuto y por hora. |
+| `api_key.expires_at` | Marca de tiempo de vencimiento ISO, o `null` si la clave nunca caduca. |
 
-## Notes
+## Notas
 
-- Values reflect the **billed** user, which may differ from the key owner when requests use `user_id` on-behalf-of billing.
-- To preview whether a *specific* request would pass its quota (without spending), use [Policy Check](/en/api/policy-check) and read `checks.quota`.
+- Los valores reflejan el usuario **facturado**, que puede diferir del propietario de la clave cuando las solicitudes utilizan `user_id` facturación en nombre de.
+- Para obtener una vista previa de si una solicitud *específica* superará su cuota (sin gasto), use [Policy Check](/api/policy-check) y lea `checks.quota`.
 
-## Related
+## Relacionado
 
-- [Billing Modes](/en/api/billing-modes)
-- [Authentication Overview](/en/api/auth/overview)
-- [Policy Check](/en/api/policy-check)
+- [Modos de facturación](/api/billing-modes)
+- [Descripción general de autenticación](/api/auth/overview)
+- [Verificación de políticas](/api/policy-check)

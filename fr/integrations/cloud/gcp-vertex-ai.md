@@ -11,7 +11,7 @@ Connectez votre projet Google Cloud afin que SecureAI puisse inventorier les ag
 ## Ce que SecureAI importe
 
 - **Agents, points de terminaison et modèles Vertex AI**
-- **NHI** — comptes de service, clés de compte de service et clés API (révocables — voir [NHI Inventory](/fr/en/discovery/nhi-inventory))
+- **NHI** — comptes de service, clés de compte de service et clés API (révocables — voir [NHI Inventory](/fr/discovery/nhi-inventory))
 - Liaisons de rôle **IAM**
 - **Journaux d'audit cloud**
 - **Demandes, jetons et coûts** pour les 30 derniers jours (réels à partir de l'exportation de la facturation BigQuery ou estimés)
@@ -53,14 +53,14 @@ Connectez votre projet Google Cloud afin que SecureAI puisse inventorier les ag
 
 ## Vérifier
 
-Ouvrez [Cloud Sensors](/fr/en/discovery/cloud-sensors) pour les agents/endpoints/modèles découverts et [NHI Inventory](/fr/en/discovery/nhi-inventory) pour les comptes et les clés de service. Les insights montrent les liaisons IAM, leur utilisation et leur coût.
+Ouvrez [Cloud Sensors](/fr/discovery/cloud-sensors) pour les agents/endpoints/modèles découverts et [NHI Inventory](/fr/discovery/nhi-inventory) pour les comptes et les clés de service. Les insights montrent les liaisons IAM, leur utilisation et leur coût.
 
 ## Révocation
 
-Les comptes de service GCP, les clés SA et les clés API sont **révocables** depuis [NHI Inventory](/fr/en/discovery/nhi-inventory) lorsque le connecteur dispose des rôles d'administrateur clé/SA facultatifs.
+Les comptes de service GCP, les clés SA et les clés API sont **révocables** depuis [NHI Inventory](/fr/discovery/nhi-inventory) lorsque le connecteur dispose des rôles d'administrateur clé/SA facultatifs.
 
 ## Connexes
 
-- [Présentation des fournisseurs Cloud AI](/fr/en/integrations/cloud/overview)
-- [Google Workspace SSO](/fr/en/iam/google-workspace)
-- [Inventaire NHI](/fr/en/discovery/nhi-inventory)
+- [Présentation des fournisseurs Cloud AI](/fr/integrations/cloud/overview)
+- [Google Workspace SSO](/fr/iam/google-workspace)
+- [Inventaire NHI](/fr/discovery/nhi-inventory)

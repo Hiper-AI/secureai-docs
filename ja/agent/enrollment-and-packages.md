@@ -18,13 +18,13 @@ description: "SecureAI OS Agent インストーラー パッケージ、登録�
 | **プラットフォーム** | Windows / Linux / macOS。 |
 | **パッケージの種類** | `standalone`。 |
 | **エンドポイント タグ** |このパッケージに登録されたデバイスに適用されるラベル。 |
-| **登録グループ** |最初の登録時にデバイスが固定される [グループ](/ja/en/agent/policies-and-groups)。 |
+| **登録グループ** |最初の登録時にデバイスが固定される [グループ](/ja/agent/policies-and-groups)。 |
 
 保存時に、SecureAI **`agent:enroll`** を範囲とする専用の API キーを自動生成し、それをパッケージの登録キーとして保存するため、インストール コマンドには別の認証情報が必要ありません。パッケージを削除すると、そのキーが非アクティブ化されます。
 
 ## 登録グループ (自動固定)
 
-パッケージの **登録グループ** はハード ピンです。パッケージに登録するデバイスは、最初の接続時にそのグループにバインドされます。グループのメンバーシップによって、デバイスがどの [ポリシー](/ja/en/agent/policies-and-groups) を解決するかが決まります。
+パッケージの **登録グループ** はハード ピンです。パッケージに登録するデバイスは、最初の接続時にそのグループにバインドされます。グループのメンバーシップによって、デバイスがどの [ポリシー](/ja/agent/policies-and-groups) を解決するかが決まります。
 
 ## 登録ハンドシェイク
 
@@ -46,6 +46,6 @@ description: "SecureAI OS Agent インストーラー パッケージ、登録�
 
 ## 関連
 
-・[エージェントのインストール](/ja/ja/agent/installation)
-- [ポリシーとグループ](/ja/ja/agent/policies-and-groups)
-- [自己更新と改ざん防止](/ja/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper)
+・[エージェントのインストール](/ja/agent/installation)
+- [ポリシーとグループ](/ja/agent/policies-and-groups)
+- [自己更新と改ざん防止](/ja/agent/quarantine-and-fleet-ops#self-update--anti-tamper)

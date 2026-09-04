@@ -97,61 +97,61 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 ## API エンドポイント
 
 ### システム
-- [ヘルスチェック](/ja/ja/api/system/health) - APIのステータスを確認します
+- [ヘルスチェック](/ja/api/system/health) - APIのステータスを確認します
 
 ### 発見
-- [利用可能なモデルを取得](/ja/ja/api/discovery/models) - 利用可能な AI モデルを一覧表示
-- [利用可能なナレッジベースを取得](/ja/ja/api/discovery/indexes) - アクセス可能なナレッジベースを一覧表示します
-- [セキュリティ ポリシーの取得](/ja/ja/api/discovery/smltp-policies) - 利用可能な SMLTP ポリシーの一覧を表示します。
+- [利用可能なモデルを取得](/ja/api/discovery/models) - 利用可能な AI モデルを一覧表示
+- [利用可能なナレッジベースを取得](/ja/api/discovery/indexes) - アクセス可能なナレッジベースを一覧表示します
+- [セキュリティ ポリシーの取得](/ja/api/discovery/smltp-policies) - 利用可能な SMLTP ポリシーの一覧を表示します。
 
 ### チャット
-- [チャット完了](/ja/ja/api/chat/completions) - RAG とのメイン AI チャット エンドポイント
-- [OpenAI互換エンドポイント](/ja/ja/api/chat/openai-compatibility) - OpenAI SDK用ドロップイン`/v1/chat/completions`
-- [冗長性とフェイルオーバー](/ja/ja/api/redundancy) - フェイルオーバーチェーンのモデル化
-- [ポリシーチェック](/ja/ja/api/policy-check) - モデルを呼び出さずにセキュリティパイプラインをドライランします
-- [使用方法](/ja/ja/api/usage) - セルフサービスの割り当て、予算、レート制限
-- [Receipts](/ja/ja/api/receipts) - 署名されたSMLTP準拠のレシートを取得します
+- [チャット完了](/ja/api/chat/completions) - RAG とのメイン AI チャット エンドポイント
+- [OpenAI互換エンドポイント](/ja/api/chat/openai-compatibility) - OpenAI SDK用ドロップイン`/v1/chat/completions`
+- [冗長性とフェイルオーバー](/ja/api/redundancy) - フェイルオーバーチェーンのモデル化
+- [ポリシーチェック](/ja/api/policy-check) - モデルを呼び出さずにセキュリティパイプラインをドライランします
+- [使用方法](/ja/api/usage) - セルフサービスの割り当て、予算、レート制限
+- [Receipts](/ja/api/receipts) - 署名されたSMLTP準拠のレシートを取得します
 
 ### Webhook
-- [Webhook概要](/ja/ja/api/webhooks/overview) - 署名付きリアルタイムイベント配信
-- [Webhook イベント](/ja/ja/api/webhooks/events) - イベントカタログとペイロード
+- [Webhook概要](/ja/api/webhooks/overview) - 署名付きリアルタイムイベント配信
+- [Webhook イベント](/ja/api/webhooks/events) - イベントカタログとペイロード
 
 ### 画像
-- [画像の生成](/ja/ja/api/images/generations) - テキストから画像を生成、または既存の画像を編集
-- [画像編集](/ja/ja/api/images/edits) - テキスト指示による画像間の編集
+- [画像の生成](/ja/api/images/generations) - テキストから画像を生成、または既存の画像を編集
+- [画像編集](/ja/api/images/edits) - テキスト指示による画像間の編集
 
 ### スピーチ/S2S
-- [S2S WebRTC セッションの開始](/ja/ja/api/speech/webrtc) - リアルタイムの音声会話を確立します
-- [S2S 時間ステータスの取得](/ja/ja/api/speech/status) - S2S 時間割り当ての残りを確認する
-- [S2S セッション期間をログに記録](/ja/ja/api/speech/log-session) - セッション期間をログに記録し、時間を差し引く
+- [S2S WebRTC セッションの開始](/ja/api/speech/webrtc) - リアルタイムの音声会話を確立します
+- [S2S 時間ステータスの取得](/ja/api/speech/status) - S2S 時間割り当ての残りを確認する
+- [S2S セッション期間をログに記録](/ja/api/speech/log-session) - セッション期間をログに記録し、時間を差し引く
 
 ### ユーザー管理
-- [すべてのユーザーを取得](/ja/ja/api/users/list) - ページネーションを使用してユーザーを取得
-- [ユーザーの作成](/ja/ja/api/users/create) - 新しいユーザーアカウントを作成します
-- [ユーザーの更新](/ja/ja/api/users/update) - 既存のユーザーを更新します
-- [ライセンスの可用性を取得](/ja/ja/api/billing-modes/licenses-availability) - ライセンスプールの制限と使用量を取得
+- [すべてのユーザーを取得](/ja/api/users/list) - ページネーションを使用してユーザーを取得
+- [ユーザーの作成](/ja/api/users/create) - 新しいユーザーアカウントを作成します
+- [ユーザーの更新](/ja/api/users/update) - 既存のユーザーを更新します
+- [ライセンスの可用性を取得](/ja/api/billing-modes/licenses-availability) - ライセンスプールの制限と使用量を取得
 
 ### インデックス管理
-- [すべてのインデックスを取得](/ja/ja/api/indexes/list) - すべてのナレッジベースを取得します
-- [インデックスの作成](/ja/ja/api/indexes/create) - ナレッジベースの新規作成
-- [インデックスの更新](/ja/ja/api/indexes/update) - 既存のインデックスを更新します
-- [ドキュメントでインデックスをトレーニング](/ja/ja/api/indexes/train) - ドキュメントをアップロードしてインデックスをトレーニングします
-- [文書のインデックス検索](/ja/ja/api/indexes/search) - セマンティック検索を使用して文書を検索
+- [すべてのインデックスを取得](/ja/api/indexes/list) - すべてのナレッジベースを取得します
+- [インデックスの作成](/ja/api/indexes/create) - ナレッジベースの新規作成
+- [インデックスの更新](/ja/api/indexes/update) - 既存のインデックスを更新します
+- [ドキュメントでインデックスをトレーニング](/ja/api/indexes/train) - ドキュメントをアップロードしてインデックスをトレーニングします
+- [文書のインデックス検索](/ja/api/indexes/search) - セマンティック検索を使用して文書を検索
 
 ### グループ経営
-- [すべてのグループを取得](/ja/ja/api/groups/list) - すべてのグループを取得します
-- [グループの作成](/ja/ja/api/groups/create) - 新規グループの作成
-- [グループの更新](/ja/ja/api/groups/update) - 既存のグループを更新します
+- [すべてのグループを取得](/ja/api/groups/list) - すべてのグループを取得します
+- [グループの作成](/ja/api/groups/create) - 新規グループの作成
+- [グループの更新](/ja/api/groups/update) - 既存のグループを更新します
 
 ### SMLTP セキュリティ
-- [すべてのSMLTPポリシーを取得](/ja/ja/api/smltp/policies) - すべてのセキュリティポリシーを一覧表示します
-- [アクティブなポリシーを取得](/ja/ja/api/smltp/active) - 現在のアクティブなポリシーを取得します
-- [カスタムポリシーの作成](/ja/ja/api/smltp/create) - カスタムSMLTPポリシーの作成
-- [監査ログ](/ja/ja/api/smltp/audit-logs) - SMLTP監査ログの取得
+- [すべてのSMLTPポリシーを取得](/ja/api/smltp/policies) - すべてのセキュリティポリシーを一覧表示します
+- [アクティブなポリシーを取得](/ja/api/smltp/active) - 現在のアクティブなポリシーを取得します
+- [カスタムポリシーの作成](/ja/api/smltp/create) - カスタムSMLTPポリシーの作成
+- [監査ログ](/ja/api/smltp/audit-logs) - SMLTP監査ログの取得
 
 ### 役割管理
-- [すべてのロールを取得](/ja/ja/api/roles/list) - すべてのロールを取得します
-- [ロールの作成](/ja/ja/api/roles/create) - 新しいカスタムロールを作成します
+- [すべてのロールを取得](/ja/api/roles/list) - すべてのロールを取得します
+- [ロールの作成](/ja/api/roles/create) - 新しいカスタムロールを作成します
 
 ## エラー処理
 
@@ -292,61 +292,61 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 ## API エンドポイント
 
 ### システム
-- [ヘルスチェック](/ja/ja/api/system/health) - APIのステータスを確認します
+- [ヘルスチェック](/ja/api/system/health) - APIのステータスを確認します
 
 ### 発見
-- [利用可能なモデルを取得](/ja/ja/api/discovery/models) - 利用可能な AI モデルを一覧表示
-- [利用可能なナレッジベースを取得](/ja/ja/api/discovery/indexes) - アクセス可能なナレッジベースを一覧表示します
-- [セキュリティ ポリシーの取得](/ja/ja/api/discovery/smltp-policies) - 利用可能な SMLTP ポリシーの一覧を表示します。
+- [利用可能なモデルを取得](/ja/api/discovery/models) - 利用可能な AI モデルを一覧表示
+- [利用可能なナレッジベースを取得](/ja/api/discovery/indexes) - アクセス可能なナレッジベースを一覧表示します
+- [セキュリティ ポリシーの取得](/ja/api/discovery/smltp-policies) - 利用可能な SMLTP ポリシーの一覧を表示します。
 
 ### チャット
-- [チャット完了](/ja/ja/api/chat/completions) - RAG とのメイン AI チャット エンドポイント
-- [OpenAI互換エンドポイント](/ja/ja/api/chat/openai-compatibility) - OpenAI SDK用ドロップイン`/v1/chat/completions`
-- [冗長性とフェイルオーバー](/ja/ja/api/redundancy) - フェイルオーバーチェーンのモデル化
-- [ポリシーチェック](/ja/ja/api/policy-check) - モデルを呼び出さずにセキュリティパイプラインをドライランします
-- [使用方法](/ja/ja/api/usage) - セルフサービスの割り当て、予算、レート制限
-- [Receipts](/ja/ja/api/receipts) - 署名されたSMLTP準拠のレシートを取得します
+- [チャット完了](/ja/api/chat/completions) - RAG とのメイン AI チャット エンドポイント
+- [OpenAI互換エンドポイント](/ja/api/chat/openai-compatibility) - OpenAI SDK用ドロップイン`/v1/chat/completions`
+- [冗長性とフェイルオーバー](/ja/api/redundancy) - フェイルオーバーチェーンのモデル化
+- [ポリシーチェック](/ja/api/policy-check) - モデルを呼び出さずにセキュリティパイプラインをドライランします
+- [使用方法](/ja/api/usage) - セルフサービスの割り当て、予算、レート制限
+- [Receipts](/ja/api/receipts) - 署名されたSMLTP準拠のレシートを取得します
 
 ### Webhook
-- [Webhook概要](/ja/ja/api/webhooks/overview) - 署名付きリアルタイムイベント配信
-- [Webhook イベント](/ja/ja/api/webhooks/events) - イベントカタログとペイロード
+- [Webhook概要](/ja/api/webhooks/overview) - 署名付きリアルタイムイベント配信
+- [Webhook イベント](/ja/api/webhooks/events) - イベントカタログとペイロード
 
 ### 画像
-- [画像の生成](/ja/ja/api/images/generations) - テキストから画像を生成、または既存の画像を編集
-- [画像編集](/ja/ja/api/images/edits) - テキスト指示による画像間の編集
+- [画像の生成](/ja/api/images/generations) - テキストから画像を生成、または既存の画像を編集
+- [画像編集](/ja/api/images/edits) - テキスト指示による画像間の編集
 
 ### スピーチ/S2S
-- [S2S WebRTC セッションの開始](/ja/ja/api/speech/webrtc) - リアルタイムの音声会話を確立します
-- [S2S 時間ステータスの取得](/ja/ja/api/speech/status) - S2S 時間割り当ての残りを確認する
-- [S2S セッション期間をログに記録](/ja/ja/api/speech/log-session) - セッション期間をログに記録し、時間を差し引く
+- [S2S WebRTC セッションの開始](/ja/api/speech/webrtc) - リアルタイムの音声会話を確立します
+- [S2S 時間ステータスの取得](/ja/api/speech/status) - S2S 時間割り当ての残りを確認する
+- [S2S セッション期間をログに記録](/ja/api/speech/log-session) - セッション期間をログに記録し、時間を差し引く
 
 ### ユーザー管理
-- [すべてのユーザーを取得](/ja/ja/api/users/list) - ページネーションを使用してユーザーを取得
-- [ユーザーの作成](/ja/ja/api/users/create) - 新しいユーザーアカウントを作成します
-- [ユーザーの更新](/ja/ja/api/users/update) - 既存のユーザーを更新します
-- [ライセンスの可用性を取得](/ja/ja/api/billing-modes/licenses-availability) - ライセンスプールの制限と使用量を取得
+- [すべてのユーザーを取得](/ja/api/users/list) - ページネーションを使用してユーザーを取得
+- [ユーザーの作成](/ja/api/users/create) - 新しいユーザーアカウントを作成します
+- [ユーザーの更新](/ja/api/users/update) - 既存のユーザーを更新します
+- [ライセンスの可用性を取得](/ja/api/billing-modes/licenses-availability) - ライセンスプールの制限と使用量を取得
 
 ### インデックス管理
-- [すべてのインデックスを取得](/ja/ja/api/indexes/list) - すべてのナレッジベースを取得します
-- [インデックスの作成](/ja/ja/api/indexes/create) - ナレッジベースの新規作成
-- [インデックスの更新](/ja/ja/api/indexes/update) - 既存のインデックスを更新します
-- [ドキュメントでインデックスをトレーニング](/ja/ja/api/indexes/train) - ドキュメントをアップロードしてインデックスをトレーニングします
-- [文書のインデックス検索](/ja/ja/api/indexes/search) - セマンティック検索を使用して文書を検索
+- [すべてのインデックスを取得](/ja/api/indexes/list) - すべてのナレッジベースを取得します
+- [インデックスの作成](/ja/api/indexes/create) - ナレッジベースの新規作成
+- [インデックスの更新](/ja/api/indexes/update) - 既存のインデックスを更新します
+- [ドキュメントでインデックスをトレーニング](/ja/api/indexes/train) - ドキュメントをアップロードしてインデックスをトレーニングします
+- [文書のインデックス検索](/ja/api/indexes/search) - セマンティック検索を使用して文書を検索
 
 ### グループ経営
-- [すべてのグループを取得](/ja/ja/api/groups/list) - すべてのグループを取得します
-- [グループの作成](/ja/ja/api/groups/create) - 新規グループの作成
-- [グループの更新](/ja/ja/api/groups/update) - 既存のグループを更新します
+- [すべてのグループを取得](/ja/api/groups/list) - すべてのグループを取得します
+- [グループの作成](/ja/api/groups/create) - 新規グループの作成
+- [グループの更新](/ja/api/groups/update) - 既存のグループを更新します
 
 ### SMLTP セキュリティ
-- [すべてのSMLTPポリシーを取得](/ja/ja/api/smltp/policies) - すべてのセキュリティポリシーを一覧表示します
-- [アクティブなポリシーを取得](/ja/ja/api/smltp/active) - 現在のアクティブなポリシーを取得します
-- [カスタムポリシーの作成](/ja/ja/api/smltp/create) - カスタムSMLTPポリシーの作成
-- [監査ログ](/ja/ja/api/smltp/audit-logs) - SMLTP監査ログの取得
+- [すべてのSMLTPポリシーを取得](/ja/api/smltp/policies) - すべてのセキュリティポリシーを一覧表示します
+- [アクティブなポリシーを取得](/ja/api/smltp/active) - 現在のアクティブなポリシーを取得します
+- [カスタムポリシーの作成](/ja/api/smltp/create) - カスタムSMLTPポリシーの作成
+- [監査ログ](/ja/api/smltp/audit-logs) - SMLTP監査ログの取得
 
 ### 役割管理
-- [すべてのロールを取得](/ja/ja/api/roles/list) - すべてのロールを取得します
-- [ロールの作成](/ja/ja/api/roles/create) - 新しいカスタムロールを作成します
+- [すべてのロールを取得](/ja/api/roles/list) - すべてのロールを取得します
+- [ロールの作成](/ja/api/roles/create) - 新しいカスタムロールを作成します
 
 ## エラー処理
 
@@ -456,5 +456,5 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 
 ## 次のステップ
 
-- [ナレッジベースとRAG](/ja/ja/indexes/overview) - ナレッジベースとRAGについて学びます
+- [ナレッジベースとRAG](/ja/indexes/overview) - ナレッジベースとRAGについて学びます
 「」

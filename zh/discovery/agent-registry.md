@@ -1,42 +1,40 @@
 ---
 sidebar_position: 5
-title: "Agent Registry"
-sidebar_label: "Agent Registry"
-description: "Govern your logical AI agents and chatbots — owners, purpose, autonomy level, risk, and bindings"
+title: "代理登记处"
+sidebar_label: "代理登记处"
+description: "管理您的逻辑 AI 代理和聊天机器人 — 所有者、目的、自主级别、风险和绑定"
 ---
+# 代理注册
 
-
-# Agent Registry
-
-The **Agent Registry** (Admin → Agent Registry → **AI Agents**) is the governance inventory of your **logical** AI agents and chatbots — the applications and assistants your organization builds and runs. It records the metadata you need to govern each one: who owns it, what it's for, how autonomous it is, and what it's connected to.
+**代理注册表**（管理→代理注册表→**人工智能代理**）是您的**逻辑**人工智能代理和聊天机器人（您的组织构建和运行的应用程序和助手）的治理清单。它记录了管理每个设备所需的元数据：谁拥有它、它的用途、它的自治程度以及它与什么相关。
 
 <Info>
-**Not the endpoint fleet**
+**不是端点舰队**
 
-The Agent Registry is about *logical* AI agents (a support chatbot, an internal copilot). It's different from the **OS Agents** fleet — the SecureAI software installed on endpoints, documented under [Endpoint Agent](/zh/agent/overview).
+代理注册表是关于*逻辑*人工智能代理（支持聊天机器人，内部副驾驶）。它与 **OS Agents** 队列不同 - 安装在端点上的 SecureAI 软件，记录在 [Endpoint Agent](/zh/agent/overview) 下。
 </Info>
 
-## What's recorded per agent
+## 每个代理记录的内容
 
-| Field | Description |
-|-------|-------------|
-| **Owner** | The accountable user/team. |
-| **Purpose** | What the agent does. |
-| **Autonomy** | Level **L1–L3**, from assistive to fully autonomous. |
-| **Risk** | Governance risk rating. |
-| **Bindings** | Connected MCP servers and datasets/knowledge bases. |
-| **Monitoring** | For chatbots, the monitoring/Prompt-Shield configuration. |
+|领域 |描述 |
+|--------|-------------|
+| **所有者** |负责任的用户/团队。 |
+| **目的** |代理做什么。 |
+| **自治** | **L1–L3** 级别，从辅助到完全自主。 |
+| **风险** |治理风险评级。 |
+| **绑定** |连接的 MCP 服务器和数据集/知识库。 |
+| **监控** |对于聊天机器人，监控/提示屏蔽配置。 |
 
-## Working with the registry
+## 使用注册表
 
-- **Import** agents to bootstrap the inventory.
-- Review **relationships** between agents, their tools, and their data.
-- **Apply suggested autonomy** — accept a recommended autonomy level for an agent.
-- Register chatbots for monitoring; a chatbot first seen through the [Prompt Shield API](/zh/api/threat-defense/prompt-shield) is auto-registered here as `observed` for your review.
+- **导入**代理以引导库存。
+- 审查代理、其工具和数据之间的**关系**。
+- **应用建议的自治** — 接受代理的建议自治级别。
+- 注册聊天机器人进行监控；通过 [Prompt Shield API](/zh/api/threat-defense/prompt-shield) 首次看到的聊天机器人会在此处自动注册为 `observed` 供您审核。
 
-## Related
+## 相关
 
-- [Endpoint Agent](/zh/agent/overview) — the OS-level agent fleet (distinct from this).
-- [NHI Inventory](/zh/discovery/nhi-inventory) — the identities agents authenticate with.
-- [Prompt Shield API](/zh/api/threat-defense/prompt-shield) — auto-registers chatbots.
-- [AI Discovery & Inventory Overview](/zh/discovery/overview)
+- [Endpoint Agent](/zh/agent/overview) — 操作系统级代理队列（与此不同）。
+- [NHI Inventory](/zh/discovery/nhi-inventory) — 代理进行身份验证的身份。
+- [Prompt Shield API](/zh/api/threat-defense/prompt-shield) — 自动注册聊天机器人。
+- [AI发现与库存概述](/zh/discovery/overview)

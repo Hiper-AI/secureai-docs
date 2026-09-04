@@ -1,21 +1,20 @@
 ---
 title: "Prompt Shield API"
+sidebar_label: "Prompt Shield API"
 ---
 
+# API Prompt Shield
 
+A API Prompt Shield permite verificar prompts e respostas de qualquer aplicativo. Você não precisa usar a infraestrutura de chatbot integrada do SecureAI. Integre o mecanismo de verificação ao seu próprio pipeline LLM com três endpoints REST.
 
-# Prompt Shield API
+O Prompt Shield pode ser usado de duas maneiras:
 
-The Prompt Shield API lets you scan prompts and responses from any application. You do not need to use SecureAI's built-in chatbot infrastructure. Integrate the scanning engine into your own LLM pipeline with three REST endpoints.
+1. **API de varredura autônoma** — os endpoints `/scan`, `/scan-output` e `/scan-conversation` documentados abaixo, para seu próprio pipeline LLM.
+2. **Inline nas conclusões** — quando você chama [Chat Completion](/pt/api/chat/completions) ou o [endpoint compatível com OpenAI](/pt/api/chat/openai-compatível), o Prompt Shield é executado automaticamente e pode ser ajustado por chamada. Consulte [Controle por chamada nas conclusões](#per-call-control-on-completions).
 
-Prompt Shield can be used two ways:
+## Controle por chamada nas conclusões
 
-1. **Standalone scanning API** — the `/scan`, `/scan-output`, and `/scan-conversation` endpoints documented below, for your own LLM pipeline.
-2. **Inline on completions** — when you call [Chat Completion](/pt/en/api/chat/completions) or the [OpenAI-compatible endpoint](/pt/en/api/chat/openai-compatible), Prompt Shield runs automatically and can be tuned per call. See [Per-call control on completions](#per-call-control-on-completions).
-
-## Per-call control on completions
-
-Completion requests scan input (and output) through Prompt Shield automatically when the API key has it enabled. You can override the behavior for a single call with a `prompt_shield` object in the request body:
+A conclusão solicita entrada (e saída) de varredura por meio do Prompt Shield automaticamente quando a chave de API está habilitada. Você pode substituir o comportamento de uma única chamada por um objeto `prompt_shield` no corpo da solicitação:
 
 ```json
 {
@@ -26,26 +25,26 @@ Completion requests scan input (and output) through Prompt Shield automatically 
 }
 ```
 
-| Field | Description |
-|-------|-------------|
-| `enabled` | Set `false` to opt this call out of scanning. Opt-out is **fail-closed**: it is only honored if the API key is allowed to opt out; otherwise the call is rejected. |
-| `policy` | Select a specific Prompt Shield policy (id or name) for this call, from the key's allowed policies. |
+| Campo | Descrição |
+|-------|------------|
+| `enabled` | Defina `false` para desativar esta chamada da varredura. A desativação é **fechada com falha**: ela só será respeitada se a chave da API tiver permissão para desativação; caso contrário, a chamada será rejeitada. |
+| `policy` | Selecione uma política específica do Prompt Shield (id ou nome) para esta chamada, nas políticas permitidas da chave. |
 
-You cannot combine `policy` with `enabled: false`. The applied policy is echoed back on the response (`metadata.prompt_shield_policy` on the classic endpoint, `secureai.prompt_shield_policy` on the `/v1` endpoint). To preview a call's verdict without running the model, use [Policy Check](/pt/en/api/policy-check).
+Você não pode combinar `policy` com `enabled: false`. A política aplicada é ecoada na resposta (`metadata.prompt_shield_policy` no endpoint clássico, `secureai.prompt_shield_policy` no endpoint `/v1`). Para visualizar o veredicto de uma chamada sem executar o modelo, use [Policy Check](/pt/api/policy-check).
 
-## Authentication
+## Autenticação
 
-All Prompt Shield API requests require a SecureAI API key in the `Authorization` header:
+Todas as solicitações da API Prompt Shield requerem uma chave de API SecureAI no cabeçalho `Authorization`:
 
 ```http
 Authorization: Bearer sk-<your-api-key>
 ```
 
-API keys are created and managed in **Admin -> API Keys**. To enable Prompt Shield for an API key, edit the key and toggle **Enable Prompt Shield**. You can optionally bind a specific [policy](../../threat-defense/overview) to the key.
+As chaves de API são criadas e gerenciadas em **Admin -> Chaves de API**. Para ativar o Prompt Shield para uma chave de API, edite a chave e alterne **Ativar Prompt Shield**. Opcionalmente, você pode vincular uma [política](../../threat-defense/overview) específica à chave.
 
 ---
 
-## Base URL
+##URL base
 
 ```
 https://<your-secureai-instance>/api/external/prompt-shield
@@ -53,11 +52,11 @@ https://<your-secureai-instance>/api/external/prompt-shield
 
 ---
 
-## POST /scan
+## POSTAR /scan
 
-Scan a single user prompt for injection attacks before sending it to your LLM.
+Analise um único prompt do usuário em busca de ataques de injeção antes de enviá-lo ao seu LLM.
 
-### Request
+### Solicitação
 
 ```http
 POST /api/external/prompt-shield/scan
@@ -81,17 +80,17 @@ Content-Type: application/json
 }
 ```
 
-| Field | Required | Description |
+| Campo | Obrigatório | Descrição |
 |---|---|---|
-| `prompt` | Yes | The user's raw message text |
-| `context.chatbotId` | No | Associates the scan with a chatbot for policy resolution and analytics |
-| `context.conversationId` | No | Correlation ID for multi-turn conversation tracking |
-| `context.language` | No | ISO 639-1 language code used for language-specific pattern selection |
-| `options.sensitivityLevel` | No | Override: `strict`, `balanced`, or `permissive` |
-| `options.detectionLayers` | No | Array of layers to enable: `["regex"]`, `["regex", "heuristic"]`, or `["regex", "heuristic", "ml"]` |
-| `options.returnDetails` | No | `true` to include per-pattern detection details in the response. Default: `true` |
+| `prompt` | Sim | O texto bruto da mensagem do usuário |
+| `context.chatbotId` | Não | Associa a verificação a um chatbot para resolução e análise de políticas |
+| `context.conversationId` | Não | ID de correlação para rastreamento de conversas multiturno |
+| `context.language` | Não | Código de idioma ISO 639-1 utilizado para seleção de padrões específicos de idioma |
+| `options.sensitivityLevel` | Não | Substituir: `strict`, `balanced` ou `permissive` |
+| `options.detectionLayers` | Não | Matriz de camadas para ativar: `["regex"]`, `["regex", "heuristic"]` ou `["regex", "heuristic", "ml"]` |
+| `options.returnDetails` | Não | `true` para incluir detalhes de detecção por padrão na resposta. Padrão: `true` |
 
-### Response
+### Resposta
 
 ```json
 {
@@ -117,20 +116,20 @@ Content-Type: application/json
 }
 ```
 
-| Field | Description |
+| Campo | Descrição |
 |---|---|
-| `riskScore` | Integer 0-100 |
-| `verdict` | `ALLOW`, `LOG`, `FLAG`, or `BLOCK` |
-| `attackCategory` | Primary attack category key |
-| `categoryLabel` | Human-readable category name |
-| `confidence` | Float 0-1 |
-| `severity` | `critical`, `high`, `medium`, or `low` |
-| `recommendation` | Plain-text guidance on what action to take |
-| `traceId` | Unique identifier for this scan, use in support tickets |
-| `latencyMs` | Engine processing time in milliseconds |
-| `details` | Array of individual detections when `returnDetails: true` |
+| `riskScore` | Inteiro 0-100 |
+| `verdict` | `ALLOW`, `LOG`, `FLAG` ou `BLOCK` |
+| `attackCategory` | Chave da categoria de ataque primário |
+| `categoryLabel` | Nome da categoria legível por humanos |
+| `confidence` | Flutuador 0-1 |
+| `severity` | `critical`, `high`, `medium` ou `low` |
+| `recommendation` | Orientação em texto simples sobre quais ações tomar |
+| `traceId` | Identificador exclusivo para esta verificação, usado em tickets de suporte |
+| `latencyMs` | Tempo de processamento do mecanismo em milissegundos |
+| `details` | Matriz de detecções individuais quando `returnDetails: true` |
 
-### Recommended Integration Pattern
+### Padrão de integração recomendado
 
 ```javascript
 async function sendMessage(userMessage, chatbotId) {
@@ -178,11 +177,11 @@ async function sendMessage(userMessage, chatbotId) {
 
 ---
 
-## POST /scan-output
+## POST /saída de digitalização
 
-Scan an LLM response for evidence of compromise, including system prompt leakage, canary token leakage, or role drift.
+Examine uma resposta do LLM em busca de evidências de comprometimento, incluindo vazamento de prompt do sistema, vazamento de token canário ou desvio de função.
 
-### Request
+### Solicitação
 
 ```http
 POST /api/external/prompt-shield/scan-output
@@ -200,13 +199,13 @@ Content-Type: application/json
 }
 ```
 
-| Field | Required | Description |
+| Campo | Obrigatório | Descrição |
 |---|---|---|
-| `output` | Yes | The raw LLM response text |
-| `chatbotId` | No | If provided, active canary tokens for this chatbot are automatically loaded and checked |
-| `systemPromptSnippets` | No | Short strings from the system prompt to check for verbatim leakage |
+| `output` | Sim | O texto bruto da resposta do LLM |
+| `chatbotId` | Não | Se fornecidos, os tokens canary ativos para este chatbot são carregados e verificados automaticamente |
+| `systemPromptSnippets` | Não | Sequências curtas do prompt do sistema para verificar vazamento literal |
 
-### Response
+### Resposta
 
 ```json
 {
@@ -227,11 +226,11 @@ Content-Type: application/json
 
 ---
 
-## POST /scan-conversation
+## POST /scan-conversa
 
-Scan an entire multi-turn conversation at once. This is useful for batch analysis or for evaluating historical conversations for retroactive detection.
+Digitalize uma conversa inteira de várias voltas de uma só vez. Isso é útil para análise em lote ou para avaliar conversas históricas para detecção retroativa.
 
-### Request
+### Solicitação
 
 ```http
 POST /api/external/prompt-shield/scan-conversation
@@ -250,12 +249,12 @@ Content-Type: application/json
 }
 ```
 
-| Field | Required | Description |
+| Campo | Obrigatório | Descrição |
 |---|---|---|
-| `messages` | Yes | Array of `{ role, content }` objects. Only `user` messages are scanned |
-| `chatbotId` | No | Associates scans with a chatbot for policy resolution |
+| `messages` | Sim | Matriz de objetos `{ role, content }`. Apenas mensagens `user` são verificadas |
+| `chatbotId` | Não | Associa varreduras a um chatbot para resolução de políticas |
 
-### Response
+### Resposta
 
 ```json
 {
@@ -275,43 +274,43 @@ Content-Type: application/json
 }
 ```
 
-| Field | Description |
+| Campo | Descrição |
 |---|---|
-| `conversationRiskScore` | The highest individual message risk score in the conversation |
-| `conversationVerdict` | The verdict of the highest-scoring message |
-| `flaggedMessages` | Array of messages with `riskScore > 0`, sorted by descending score |
-| `flaggedMessages[].messageIndex` | Zero-based index into your `messages` array |
+| `conversationRiskScore` | A maior pontuação de risco de mensagem individual na conversa |
+| `conversationVerdict` | O veredicto da mensagem com maior pontuação |
+| `flaggedMessages` | Matriz de mensagens com `riskScore > 0`, ordenadas por pontuação decrescente |
+| `flaggedMessages[].messageIndex` | Índice baseado em zero em seu array `messages` |
 
 ---
 
-## Error Responses
+## Respostas de erro
 
-| HTTP Status | Error | Cause |
+| Status HTTP | Erro | Causa |
 |---|---|---|
-| `400 Bad Request` | `"prompt is required and must be a string"` | Missing or non-string `prompt` field |
-| `401 Unauthorized` | `"Invalid API key"` | Missing or invalid `Authorization` header |
-| `403 Forbidden` | `"Prompt Shield not enabled for this key"` | The API key does not have Prompt Shield enabled |
-| `503 Service Unavailable` | `"Scanning service temporarily unavailable"` | Circuit breaker is OPEN or a scan error occurred |
-| `500 Internal Server Error` | `"Internal scanning error"` | Unexpected engine failure |
+| `400 Bad Request` | `"prompt is required and must be a string"` | Campo `prompt` ausente ou sem string |
+| `401 Unauthorized` | `"Invalid API key"` | Cabeçalho `Authorization` ausente ou inválido |
+| `403 Forbidden` | `"Prompt Shield not enabled for this key"` | A chave de API não tem o Prompt Shield ativado |
+| `503 Service Unavailable` | `"Scanning service temporarily unavailable"` | O disjuntor está ABERTO ou ocorreu um erro de digitalização |
+| `500 Internal Server Error` | `"Internal scanning error"` | Falha inesperada do motor |
 
 ---
 
-## Rate Limits & Performance
+## Limites de taxa e desempenho
 
-- Scan latency is typically **1-5 ms** for the regex and heuristic layers.
-- Adding the ML layer increases latency to **20-50 ms** depending on the embedding provider.
-- The external API shares rate limits with the rest of your API key allocation.
-- The circuit breaker returns `503` responses if the engine experiences 5 consecutive failures within 30 seconds.
+- A latência de varredura normalmente é de **1 a 5 ms** para as camadas regex e heurística.
+- Adicionar a camada de ML aumenta a latência para **20-50 ms** dependendo do provedor de incorporação.
+- A API externa compartilha limites de taxa com o restante da sua alocação de chaves de API.
+- O disjuntor retorna respostas `503` se o motor apresentar 5 falhas consecutivas em 30 segundos.
 
 ---
 
-## Enabling Prompt Shield on an API Key
+## Habilitando Prompt Shield em uma chave de API
 
-1. Go to **Admin -> API Keys**.
-2. Edit the API key you use for external calls.
-3. Toggle **Enable Prompt Shield** on.
-4. Optionally set **Prompt Shield Sensitivity** to `strict`, `balanced`, or `permissive`.
-5. Optionally set **Prompt Shield Policy** to bind a specific policy to this key.
-6. Save.
+1. Vá para **Administrador -> Chaves de API**.
+2. Edite a chave de API usada para chamadas externas.
+3. Ative **Ativar Prompt Shield**.
+4. Opcionalmente, defina **Sensibilidade da blindagem de alerta** para `strict`, `balanced` ou `permissive`.
+5. Opcionalmente, defina **Prompt Shield Policy** para vincular uma política específica a esta chave.
+6. Salve.
 
-All `/api/external/prompt-shield/*` requests made with this key go through the engine with the configured policy.
+Todas as solicitações `/api/external/prompt-shield/*` feitas com esta chave passam pelo mecanismo com a política configurada.

@@ -7,7 +7,7 @@ openapi: "POST /v1/chat/completions"
 ---
 # OpenAI 호환 엔드포인트
 
-SecureAI는 OpenAI 호환 표면을 노출하므로 코드 변경 없이 **기본 URL과 API 키만 변경하여 모든 OpenAI SDK**와 통합할 수 있습니다. 전체 SecureAI 보안 스택(API 키 인증, 모델/인덱스 허용 목록, SMLTP 정책 시행 + 권한, Prompt Shield, PII/DLP, 포인트 청구 및 [모델 중복 엔진](/ko/en/api/redundancy))이 아래에서 실행됩니다.
+SecureAI는 OpenAI 호환 표면을 노출하므로 코드 변경 없이 **기본 URL과 API 키만 변경하여 모든 OpenAI SDK**와 통합할 수 있습니다. 전체 SecureAI 보안 스택(API 키 인증, 모델/인덱스 허용 목록, SMLTP 정책 시행 + 권한, Prompt Shield, PII/DLP, 포인트 청구 및 [모델 중복 엔진](/ko/api/redundancy))이 아래에서 실행됩니다.
 
 ## 엔드포인트
 
@@ -25,7 +25,7 @@ https://{customer.name}.hiperai.ai/api/external/v1
 <Info>
 **영지식만 해당**
 
-이 표면은 RAG/지식 기반을 지원하지 **않습니다**. 요청은 `Zero-Knowledge`에 고정되어 있습니다. 지식 기반 검색이 필요한 경우 클래식 [채팅 완료](/ko/en/api/chat/completions) 엔드포인트를 사용하세요.
+이 표면은 RAG/지식 기반을 지원하지 **않습니다**. 요청은 `Zero-Knowledge`에 고정되어 있습니다. 지식 기반 검색이 필요한 경우 클래식 [채팅 완료](/ko/api/chat/completions) 엔드포인트를 사용하세요.
 </Info>
 
 ## 인증
@@ -95,7 +95,7 @@ OpenAI SDK의 `extra_body`을 통해 추가 본문 필드로 다음을 보냅니
 |-------|-------------|
 | `smltp_policy` | 이 통화에 대한 SMLTP 보안 정책입니다. |
 | `prompt_shield` | `{ enabled?, policy? }` — 호출별 프롬프트 쉴드 재정의. |
-| `models` / `fallback_models` | 모델 [redundancy](/ko/en/api/redundancy) 체인. |
+| `models` / `fallback_models` | 모델 [redundancy](/ko/api/redundancy) 체인. |
 | `redundancy` | `{ timeout_ms, first_token_timeout_ms, on[] }`. |
 | `user_id` | 다른 사용자에게 청구합니다(관리자 지정). |
 
@@ -126,7 +126,7 @@ OpenAI SDK의 `extra_body`을 통해 추가 본문 필드로 다음을 보냅니
 }
 ```
 
-`secureai.smltp_bundle_id`(있는 경우)는 서명된 규정 준수 [영수증](/ko/en/api/receipts)으로 교환될 수 있습니다.
+`secureai.smltp_bundle_id`(있는 경우)는 서명된 규정 준수 [영수증](/ko/api/receipts)으로 교환될 수 있습니다.
 
 ### 스트리밍
 
@@ -144,6 +144,6 @@ OpenAI SDK의 `extra_body`을 통해 추가 본문 필드로 다음을 보냅니
 
 ## 관련
 
-- [채팅 완료](/ko/en/api/chat/completions) — 클래식 표면(RAG 추가).
-- [이중화 및 장애 조치](/ko/ko/api/redundancy)
-- [Prompt Shield API](/ko/ko/api/threat-defense/prompt-shield)
+- [채팅 완료](/ko/api/chat/completions) — 클래식 표면(RAG 추가).
+- [이중화 및 장애 조치](/ko/api/redundancy)
+- [Prompt Shield API](/ko/api/threat-defense/prompt-shield)

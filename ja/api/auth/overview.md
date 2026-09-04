@@ -29,7 +29,7 @@ Authorization: Bearer sk-your-api-key-here
 |----------|---------------|
 | `name` |人間が判読できるラベル。 |
 | `userId` |このキーが属する/請求の対象となるユーザー アカウント。 |
-| `billingMode` | `user-completions` (ユーザーの完了手当から差し引く) または `usage-by-model` (モデルのコストによって予算を差し引く)。 [課金モード](/ja/ja/api/billing-modes) を参照してください。 |
+| `billingMode` | `user-completions` (ユーザーの完了手当から差し引く) または `usage-by-model` (モデルのコストによって予算を差し引く)。 [課金モード](/ja/api/billing-modes) を参照してください。 |
 
 呼び出し元は、`user_id` 本体パラメーター (管理者ゲート) を使用して、**異なる** ユーザーに個別のリクエストを請求できます。
 
@@ -60,15 +60,15 @@ Authorization: Bearer sk-your-api-key-here
 | `promptShieldPolicyId` |特定の Prompt Shield ポリシーをキーにバインドします。 |
 | `allowedPromptShieldPolicies[]` |発信者が `prompt_shield.policy` を介して通話ごとに選択できるポリシー。 |
 
-[プロンプト シールド API](/ja/ja/api/threat-defense/prompt-shield) を参照してください。
+[プロンプト シールド API](/ja/api/threat-defense/prompt-shield) を参照してください。
 
 ### 冗長性のデフォルト
 
-`failoverDefaults` は、デフォルト モデル [フェイルオーバー チェーン](/ja/en/api/redundancy) をキーに接続します: `models[]` (最大 3)、`timeout_ms` (1000 ～ 300000)、`first_token_timeout_ms` (500 ～ 60000)、および `on[]` トリガー。その後、呼び出し元はリクエストごとにチェーンを送信せずにフェイルオーバーを取得します。
+`failoverDefaults` は、デフォルト モデル [フェイルオーバー チェーン](/ja/api/redundancy) をキーに接続します: `models[]` (最大 3)、`timeout_ms` (1000 ～ 300000)、`first_token_timeout_ms` (500 ～ 60000)、および `on[]` トリガー。その後、呼び出し元はリクエストごとにチェーンを送信せずにフェイルオーバーを取得します。
 
 ## べき等性
 
-補完 `POST` は `Idempotency-Key` ヘッダーを受け入れます。同じキーを使用して再試行すると、2 回目の請求ではなく元の結果が返されます。ネットワーク再試行を安全にするために使用します。 [チャット補完](/ja/ja/api/chat/completions) を参照してください。
+補完 `POST` は `Idempotency-Key` ヘッダーを受け入れます。同じキーを使用して再試行すると、2 回目の請求ではなく元の結果が返されます。ネットワーク再試行を安全にするために使用します。 [チャット補完](/ja/api/chat/completions) を参照してください。
 
 ## レート制限
 
@@ -79,7 +79,7 @@ Authorization: Bearer sk-your-api-key-here
 - **毎日**: 100 件のリクエスト
 - **毎月**: 10,000 リクエスト
 
-キー所有者は、[`GET /usage`](/api/usage) を介して独自のライブ クォータと制限を読み取ることができます。
+キー所有者は、[`GET /usage`](/ja/api/usage) を介して独自のライブ クォータと制限を読み取ることができます。
 
 ## セキュリティ機能
 
@@ -123,7 +123,7 @@ Authorization: Bearer sk-your-api-key-here
 
 ## 次のステップ
 
-- [API リファレンス](/ja/en/api) — 利用可能なすべての外部エンドポイントを調べます。
-- [チャット補完](/ja/ja/api/chat/completions) — 補完の統合を開始します。
-- [OpenAI互換エンドポイント](/ja/ja/api/chat/openai-compatibility) — 既存のOpenAI SDKを再利用します。
-- [使用法](/ja/ja/api/usage) — クォータと制限を確認します。
+- [API リファレンス](/ja/api) — 利用可能なすべての外部エンドポイントを調べます。
+- [チャット補完](/ja/api/chat/completions) — 補完の統合を開始します。
+- [OpenAI互換エンドポイント](/ja/api/chat/openai-compatibility) — 既存のOpenAI SDKを再利用します。
+- [使用法](/ja/api/usage) — クォータと制限を確認します。

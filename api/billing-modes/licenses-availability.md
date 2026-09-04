@@ -1,16 +1,14 @@
 ---
 id: licenses-availability
-title: "Licenses Availability"
-sidebar_label: "Licenses Availability"
-description: "Retrieve current license pool limits, usage, and remaining (admin only)"
+title: "Disponibilidad de Licencias"
+sidebar_label: "Disponibilidad de Licencias"
+description: "Recuperar los límites, el uso y el resto del grupo de licencias actuales (solo administrador)"
 openapi: "GET /licenses/availability"
 ---
 
+# Disponibilidad de licencias
 
-
-# Licenses Availability
-
-Retrieve license pool limits, current usage, and remaining licenses for each tier.
+Recupere los límites del grupo de licencias, el uso actual y las licencias restantes para cada nivel.
 
 ## Endpoint
 
@@ -18,28 +16,28 @@ Retrieve license pool limits, current usage, and remaining licenses for each tie
 GET /licenses/availability
 ```
 
-## Description
+## Descripción
 
-Returns the license pool status for all license tiers, including limits, current usage, and remaining capacity. Admin-only endpoint.
+Devuelve el estado del grupo de licencias para todos los niveles de licencia, incluidos los límites, el uso actual y la capacidad restante. Endpoint solo para administradores.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## Solicitud
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availability" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -50,18 +48,18 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availabili
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `limits` | object | License pool configured limits per tier |
-| `usage` | object | Current assigned/used licenses per tier |
-| `remaining` | object | Remaining licenses per tier |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `limits` | objeto | Límites configurados del grupo de licencias por nivel |
+| `usage` | objeto | Licencias actualmente asignadas/usadas por nivel |
+| `remaining` | objeto | Licencias restantes por nivel |
 
-## Error Responses
+## Respuestas de error
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -71,7 +69,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availabili
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -81,8 +79,8 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/licenses/availabili
 }
 ```
 
-## Notes
+## Notas
 
-- Admin-only endpoint
-- Remaining may be reported as `Infinity` when no pool limit is enforced for that tier
-- Values are organization-wide aggregates
+- Endpoint solo para administradores
+- El resto se puede informar como `Infinity` cuando no se aplica ningún límite de grupo para ese nivel
+- Los valores son agregados de toda la organización.

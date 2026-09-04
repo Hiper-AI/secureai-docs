@@ -6,7 +6,7 @@ description: "L'inventaire en lecture seule des agents et des modèles découver
 ---
 # Capteurs cloud
 
-**Cloud Sensors** (Admin → Agent Registry → **Cloud**) est l'inventaire des agents, modèles et déploiements découverts au sein de vos plateformes d'IA cloud connectées : **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform et Anthropic Console**. C'est en lecture seule : vous configurez les connecteurs dans [Intégrations](/fr/en/integrations/cloud/overview) et Cloud Sensors affiche ce qu'ils ont trouvé.
+**Cloud Sensors** (Admin → Agent Registry → **Cloud**) est l'inventaire des agents, modèles et déploiements découverts au sein de vos plateformes d'IA cloud connectées : **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform et Anthropic Console**. C'est en lecture seule : vous configurez les connecteurs dans [Intégrations](/fr/integrations/cloud/overview) et Cloud Sensors affiche ce qu'ils ont trouvé.
 
 ## KPI
 
@@ -38,6 +38,6 @@ Exécutez **Sync** pour un seul fournisseur ou **Sync All**. Chaque fournisseur 
 
 ## Connexes
 
-- [Cloud AI Providers](/fr/en/integrations/cloud/overview) — connectez et configurez les fournisseurs.
-- [NHI Inventory](/fr/en/discovery/nhi-inventory) — identités découvertes par les mêmes connecteurs.
-- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/en/discovery/overview)
+- [Cloud AI Providers](/fr/integrations/cloud/overview) — connectez et configurez les fournisseurs.
+- [NHI Inventory](/fr/discovery/nhi-inventory) — identités découvertes par les mêmes connecteurs.
+- [Aperçu de la découverte et de l'inventaire de l'IA](/fr/discovery/overview)

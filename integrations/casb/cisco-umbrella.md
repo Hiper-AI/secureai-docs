@@ -1,59 +1,57 @@
 ---
 sidebar_position: 2
-title: "Cisco Umbrella"
+title: "Integración con Cisco Umbrella"
 sidebar_label: "Cisco Umbrella"
-description: "Detect shadow AI from Cisco Umbrella DNS activity via the Reporting API v2"
+description: "Detecte la IA oculta de la actividad DNS de Cisco Umbrella a través de la API de informes v2"
 ---
-
-
 
 # Cisco Umbrella
 
-Connect Cisco Umbrella so SecureAI can detect which corporate sources are resolving LLM/AI domains, using Umbrella's **Reporting API v2**. Umbrella is a DNS-layer source: it confirms that a device *resolved* an AI domain (not the full TLS payload), which is exactly what shadow-AI discovery needs.
+Conecte Cisco Umbrella para que SecureAI pueda detectar qué fuentes corporativas están resolviendo dominios LLM/AI, utilizando **Reporting API v2** de Umbrella. Umbrella es una fuente de capa DNS: confirma que un dispositivo *resolvió* un dominio de IA (no la carga útil TLS completa), que es exactamente lo que necesita el descubrimiento de IA en la sombra.
 
-SecureAI runs two passes for maximum coverage:
+SecureAI ejecuta dos pases para una cobertura máxima:
 
-1. A curated list of known LLM/AI domains.
-2. Umbrella's **content category `212` ("Generative AI")**, so newly popular AI services are caught even before they're in the curated list.
+1. Una lista seleccionada de dominios LLM/AI conocidos.
+2. La **categoría de contenido `212` de Umbrella ("IA generativa")**, por lo que los servicios de IA recientemente populares se detectan incluso antes de que estén en la lista seleccionada.
 
-## Prerequisites
+## Requisitos previos
 
-- An Umbrella package that includes the **Reporting API** and DNS activity logs.
-- **Umbrella API credentials** (API key + secret) and your **Organization ID**.
+- Un paquete general que incluye **API de informes** y registros de actividad de DNS.
+- **Credenciales API de Umbrella** (clave API + secreto) y su **ID de organización**.
 
-## Credentials
+## Credenciales
 
-| Field | Required | Description |
+| Campo | Requerido | Descripción |
 |-------|----------|-------------|
-| `apiKey` | Yes | Umbrella Reporting API key. |
-| `apiSecret` | Yes | Umbrella Reporting API secret. Encrypted at rest. |
-| `orgId` | Yes | Your Umbrella Organization ID. |
+| `apiKey` | Sí | Clave API de informes generales. |
+| `apiSecret` | Sí | Secreto de la API de informes generales. Cifrado en reposo. |
+| `orgId` | Sí | Su ID de organización paraguas. |
 
-### Where to get them
+### Dónde conseguirlos
 
-1. Sign in to the [Umbrella dashboard](https://dashboard.umbrella.com/).
-2. Go to **Admin → API Keys** and create a key with **Reporting** scope. Copy the key and secret (shown once).
-3. Your **Organization ID** is the numeric id in the dashboard URL (`.../o/<orgId>/#/...`).
+1. Inicie sesión en el [panel de Umbrella] (https://dashboard.umbrella.com/).
+2. Vaya a **Administrador → Claves API** y cree una clave con alcance de **Informes**. Copie la clave y el secreto (se muestran una vez).
+3. Su **ID de organización** es el ID numérico en la URL del panel (`.../o/<orgId>/#/...`).
 
-SecureAI authenticates with `POST https://api.umbrella.com/auth/v2/token` (Basic `apiKey:apiSecret`, `client_credentials`) and reads `GET /reports/v2/activity/dns`.
+SecureAI se autentica con `POST https://api.umbrella.com/auth/v2/token` (Básico `apiKey:apiSecret`, `client_credentials`) y lee `GET /reports/v2/activity/dns`.
 
-## Connect
+## Conectar
 
-1. **Admin → Integrations → Network → Cisco Umbrella → Connect.**
-2. Enter the API key, secret, and Organization ID.
-3. **Test**, then **Save**.
-4. **Sync** — the first sync backfills recent DNS activity in the background.
+1. **Administrador → Integraciones → Red → Cisco Umbrella → Conectar.**
+2. Ingrese la clave API, el secreto y el ID de la organización.
+3. **Probar**, luego **Guardar**.
+4. **Sincronización**: la primera sincronización repone la actividad DNS reciente en segundo plano.
 
-## Notes
+## Notas
 
-- Umbrella is **DNS-layer**: a match confirms domain resolution, not a completed API call. It is ideal for breadth (every device behind Umbrella) but does not carry request payloads.
-- If Umbrella egress must go through a proxy, set `UMBRELLA_PROXY_URL` (or the standard `HTTPS_PROXY`) on the SecureAI backend.
+- Umbrella es **capa DNS**: una coincidencia confirma la resolución del dominio, no una llamada API completa. Es ideal para su amplitud (todos los dispositivos detrás de Umbrella) pero no lleva cargas útiles de solicitud.
+- Si la salida de Umbrella debe pasar por un proxy, configure `UMBRELLA_PROXY_URL` (o el estándar `HTTPS_PROXY`) en el backend de SecureAI.
 
-## Verify
+## Verificar
 
-After the first sync, open [Network Sources](/en/discovery/network-sources) — sources that resolved AI domains appear with their provider(s), call counts, and severity.
+Después de la primera sincronización, abra [Fuentes de red](/discovery/network-sources): las fuentes que resolvieron dominios de IA aparecen con su(s) proveedor(es), recuento de llamadas y gravedad.
 
-## Related
+## Relacionado
 
-- [CASB & Network Overview](/en/integrations/casb/overview)
-- [Network Sources](/en/discovery/network-sources)
+- [CASB y descripción general de la red](/integrations/casb/overview)
+- [Fuentes de red](/discovery/network-sources)

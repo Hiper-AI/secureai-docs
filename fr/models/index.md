@@ -76,6 +76,6 @@ SecureAI inclut une fonctionnalité **Auto-Select** qui choisit automatiquement 
 
 ## Prochaines étapes
 
-- [Référence API](/fr/en/api) - Apprenez à utiliser les modèles via API
-- [Quickstart](/fr/en/quickstart) - Commencez avec votre premier modèle
-- [Présentation de la sécurité](/fr/en/security/overview) - Comprendre les fonctionnalités de sécurité du modèle
+- [Référence API](/fr/api) - Apprenez à utiliser les modèles via API
+- [Quickstart](/fr/quickstart) - Commencez avec votre premier modèle
+- [Présentation de la sécurité](/fr/security/overview) - Comprendre les fonctionnalités de sécurité du modèle

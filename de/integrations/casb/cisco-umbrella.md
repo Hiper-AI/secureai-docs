@@ -48,9 +48,9 @@ SecureAI authentifiziert sich mit `POST https://api.umbrella.com/auth/v2/token` 
 
 ## Überprüfen
 
-Öffnen Sie nach der ersten Synchronisierung [Netzwerkquellen](/de/en/discovery/network-sources) – Quellen, die KI-Domänen aufgelöst haben, werden mit ihren Anbietern, Anrufzahlen und Schweregrad angezeigt.
+Öffnen Sie nach der ersten Synchronisierung [Netzwerkquellen](/de/discovery/network-sources) – Quellen, die KI-Domänen aufgelöst haben, werden mit ihren Anbietern, Anrufzahlen und Schweregrad angezeigt.
 
 ## Verwandte
 
-- [CASB & Netzwerkübersicht](/de/en/integrations/casb/overview)
-- [Netzwerkquellen](/de/en/discovery/network-sources)
+- [CASB & Netzwerkübersicht](/de/integrations/casb/overview)
+- [Netzwerkquellen](/de/discovery/network-sources)

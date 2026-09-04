@@ -1,52 +1,50 @@
 ---
 sidebar_position: 2
-title: "Installing the Agent"
-sidebar_label: "Installation"
-description: "Install the SecureAI OS Agent on Windows, Linux, and macOS endpoints"
+title: "安装代理"
+sidebar_label: "安装"
+description: "在 Windows、Linux 和 macOS 端点上安装 SecureAI OS Agent"
 ---
+# 安装代理
 
-
-# Installing the Agent
-
-The SecureAI OS Agent is installed from an **installer package** you build in **Admin → Agent Registry → OS Agents**. The package produces a ready-to-run command (Windows) or script (Linux/macOS) that carries two values: the **backend URL** and a scoped **enrollment key**. For the full package builder and enrollment mechanics, see [Enrollment & Installer Packages](/zh/agent/enrollment-and-packages).
+SecureAI OS Agent 是从您在 **Admin → Agent Registry → OS Agents** 中构建的 **安装程序包** 进行安装的。该包会生成一个可立即运行的命令 (Windows) 或脚本 (Linux/macOS)，其中包含两个值：**后端 URL** 和范围内的**注册密钥**。有关完整的包构建器和注册机制，请参阅[注册和安装程序包](/zh/agent/enrollment-and-packages)。
 
 ## Windows (MSI)
 
-Windows uses a **code-signed MSI**. The MSI is never modified when it's downloaded, so its Authenticode signature stays valid — configuration is passed at install time on the `msiexec` command line instead of being baked into the file.
+Windows 使用**代码签名的 MSI**。 MSI 在下载时从未被修改，因此其 Authenticode 签名保持有效 - 配置在安装时通过 `msiexec` 命令行传递，而不是烘焙到文件中。
 
 ```powershell
 msiexec /i "secureai-agent.msi" /qb BACKEND_URL=https://{customer.name}.hiperai.ai ENROLL_KEY=sk-...
 ```
 
-| Property | Description |
+|物业 |描述 |
 |----------|-------------|
-| `BACKEND_URL` | Your SecureAI backend origin (the endpoint calls home here). |
-| `ENROLL_KEY` | The scoped `agent:enroll` key from the installer package. |
+| `BACKEND_URL` |您的 SecureAI 后端源（端点在此处调用）。 |
+| `ENROLL_KEY` |安装程序包中的范围 `agent:enroll` 密钥。 |
 
-The installer panel shows the exact command with your values pre-filled — copy it directly.
+安装程序面板显示精确的命令以及预先填充的值 - 直接复制它。
 
 <Tip>
-**Deploy at scale**
+**大规模部署**
 
-Push the same `msiexec` command through your existing MDM/RMM (Intune, GPO, SCCM, etc.). Because the URL and key are command-line properties, one signed MSI works for every tenant and group.
+通过现有的 MDM/RMM（Intune、GPO、SCCM 等）推送相同的 `msiexec` 命令。由于 URL 和密钥是命令行属性，因此一个签名的 MSI 适用于每个租户和组。
 </Tip>
 
-## Linux / macOS (script)
+## Linux / macOS（脚本）
 
-Download the self-contained shell script from the installer package and run it. The script pulls the appropriate `.deb`/`.pkg` and writes the agent configuration (e.g. `/etc/secureai-agent.toml` on Linux, a LaunchAgent plist on macOS).
+从安装程序包中下载独立的 shell 脚本并运行它。该脚本提取适当的 `.deb`/`.pkg` 并写入代理配置（例如，Linux 上的 `/etc/secureai-agent.toml`，macOS 上的 LaunchAgent plist）。
 
 ```bash
 sudo ./secureai-agent-install.sh
 ```
 
-The backend URL and enrollment key are already embedded in the script generated for your package.
+后端 URL 和注册密钥已嵌入为您的包生成的脚本中。
 
-## What happens on first run
+## 第一次运行时会发生什么
 
-On first launch the agent **enrolls**: it presents the enrollment key, registers the device, and receives a per-device token and its runtime configuration. It then begins heartbeating and applying its resolved [policy](/zh/agent/policies-and-groups). See [Enrollment & Installer Packages](/zh/agent/enrollment-and-packages) for the details, including how the backend URL is resolved and how device tokens rotate.
+首次启动时，代理**注册**：它提供注册密钥、注册设备并接收每个设备的令牌及其运行时配置。然后它开始检测信号并应用其解析的[策略](/zh/agent/policies-and-groups)。有关详细信息，请参阅[注册和安装程序包](/zh/agent/enrollment-and-packages)，包括如何解析后端 URL 以及如何轮换设备令牌。
 
-## Related
+## 相关
 
-- [Enrollment & Installer Packages](/zh/agent/enrollment-and-packages)
-- [Policies & Groups](/zh/agent/policies-and-groups)
-- [Endpoint Agent Overview](/zh/agent/overview)
+- [注册和安装程序包](/zh/agent/enrollment-and-packages)
+- [策略和组](/zh/agent/policies-and-groups)
+- [端点代理概述](/zh/agent/overview)

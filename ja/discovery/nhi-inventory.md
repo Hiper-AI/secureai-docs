@@ -6,7 +6,7 @@ description: "AI エージェントとワークロードの背後にある人間
 ---
 # 国民健康保険の在庫
 
-**NHI インベントリ** (管理者 → エージェント レジストリ → **非人間 ID**) は、AI の背後にあるマシン認証情報のインベントリです。つまり、エージェント、MCP サーバー、およびワークロードが使用する API キー、サービス アカウント、BYOK キーです。すべての [Cloud AI Provider](/ja/en/integrations/cloud/overview) コネクタによって検出された ID をロールアップし、そのリスクをスコアリングして、それらをブロックまたは取り消すための制御を提供します。
+**NHI インベントリ** (管理者 → エージェント レジストリ → **非人間 ID**) は、AI の背後にあるマシン認証情報のインベントリです。つまり、エージェント、MCP サーバー、およびワークロードが使用する API キー、サービス アカウント、BYOK キーです。すべての [Cloud AI Provider](/ja/integrations/cloud/overview) コネクタによって検出された ID をロールアップし、そのリスクをスコアリングして、それらをブロックまたは取り消すための制御を提供します。
 
 ## それぞれのアイデンティティが示すもの
 
@@ -48,6 +48,6 @@ description: "AI エージェントとワークロードの背後にある人間
 
 ## 関連
 
-- [クラウド AI プロバイダー](/ja/en/integrations/cloud/overview) — 発見された ID のソース。
-- [クラウドセンサー](/ja/ja/discovery/cloud-sensors)
-- [AI ディスカバリーとインベントリーの概要](/ja/ja/discovery/overview)
+- [クラウド AI プロバイダー](/ja/integrations/cloud/overview) — 発見された ID のソース。
+- [クラウドセンサー](/ja/discovery/cloud-sensors)
+- [AI ディスカバリーとインベントリーの概要](/ja/discovery/overview)

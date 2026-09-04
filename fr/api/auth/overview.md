@@ -29,7 +29,7 @@ Les administrateurs créent des clés dans **Admin → Clés API** (base API `/a
 |---------|-------------|
 | `name` | Étiquette lisible par l'homme. |
 | `userId` | Le compte utilisateur auquel cette clé appartient/pour lequel elle est facturée. |
-| `billingMode` | `user-completions` (à déduire de l'allocation d'achèvement de l'utilisateur) ou `usage-by-model` (à déduire un budget en dollars par coût du modèle). Voir [Modes de facturation](/fr/en/api/billing-modes). |
+| `billingMode` | `user-completions` (à déduire de l'allocation d'achèvement de l'utilisateur) ou `usage-by-model` (à déduire un budget en dollars par coût du modèle). Voir [Modes de facturation](/fr/api/billing-modes). |
 
 Les appelants peuvent facturer une demande individuelle à un utilisateur **différent** avec le paramètre de corps `user_id` (admin-gated).
 
@@ -60,15 +60,15 @@ Les appelants peuvent facturer une demande individuelle à un utilisateur **diff
 | `promptShieldPolicyId` | Liez une stratégie Prompt Shield spécifique à la clé. |
 | `allowedPromptShieldPolicies[]` | Politiques que l'appelant peut sélectionner par appel via `prompt_shield.policy`. |
 
-Voir [API Prompt Shield](/fr/en/api/threat-defense/prompt-shield).
+Voir [API Prompt Shield](/fr/api/threat-defense/prompt-shield).
 
 ### Valeurs par défaut de redondance
 
-`failoverDefaults` attache un modèle par défaut [chaîne de basculement] (/fr/en/api/redundancy) à la clé : `models[]` (jusqu'à 3), `timeout_ms` (1 000 à 300 000), `first_token_timeout_ms` (500 à 60 000) et `on[]` déclencheurs. Les appelants bénéficient alors d’un basculement sans envoyer de chaîne à chaque demande.
+`failoverDefaults` attache un modèle par défaut [chaîne de basculement] (/en/api/redundancy) à la clé : `models[]` (jusqu'à 3), `timeout_ms` (1 000 à 300 000), `first_token_timeout_ms` (500 à 60 000) et `on[]` déclencheurs. Les appelants bénéficient alors d’un basculement sans envoyer de chaîne à chaque demande.
 
 ## Idempotence
 
-Les `POST` de complétion acceptent un en-tête `Idempotency-Key`. Réessayer avec la même clé renvoie le résultat d'origine au lieu de facturer une seconde fois : utilisez-la pour sécuriser les nouvelles tentatives sur le réseau. Voir [Achèvement du chat](/fr/en/api/chat/completions).
+Les `POST` de complétion acceptent un en-tête `Idempotency-Key`. Réessayer avec la même clé renvoie le résultat d'origine au lieu de facturer une seconde fois : utilisez-la pour sécuriser les nouvelles tentatives sur le réseau. Voir [Achèvement du chat](/fr/api/chat/completions).
 
 ## Limitation du débit
 
@@ -79,7 +79,7 @@ Plafonds par défaut (configurables par touche) :
 - **Quotidien** : 100 demandes
 - **Mensuel** : 10 000 demandes
 
-Un détenteur de clé peut lire son propre quota et ses limites en direct via [`GET /usage`](/api/usage).
+Un détenteur de clé peut lire son propre quota et ses limites en direct via [`GET /usage`](/fr/api/usage).
 
 ## Fonctionnalités de sécurité
 
@@ -123,7 +123,7 @@ Un détenteur de clé peut lire son propre quota et ses limites en direct via [`
 
 ## Prochaines étapes
 
-- [Référence API](/fr/en/api) — Explorez tous les points de terminaison externes disponibles.
-- [Chat Completions](/fr/en/api/chat/completions) — Commencez à intégrer les complétions.
-- [OpenAI-Compatible Endpoint](/fr/en/api/chat/openai-compatible) — Réutilisez un SDK OpenAI existant.
-- [Usage](/fr/en/api/usage) — Vérifiez le quota et les limites.
+- [Référence API](/fr/api) — Explorez tous les points de terminaison externes disponibles.
+- [Chat Completions](/fr/api/chat/completions) — Commencez à intégrer les complétions.
+- [OpenAI-Compatible Endpoint](/fr/api/chat/openai-compatible) — Réutilisez un SDK OpenAI existant.
+- [Usage](/fr/api/usage) — Vérifiez le quota et les limites.

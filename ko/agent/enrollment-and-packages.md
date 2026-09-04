@@ -18,13 +18,13 @@ description: "SecureAI OS Agent 설치 프로그램 패키지, 등록 키 및 �
 | **플랫폼** | 윈도우/리눅스/macOS. |
 | **패키지 유형** | `standalone`. |
 | **엔드포인트 태그** | 이 패키지에 등록된 기기에 적용되는 라벨입니다. |
-| **등록 그룹** | 처음 등록 시 기기가 고정된 [그룹](/ko/en/agent/policies-and-groups). |
+| **등록 그룹** | 처음 등록 시 기기가 고정된 [그룹](/ko/agent/policies-and-groups). |
 
 저장 시 SecureAI는 **`agent:enroll`** 범위의 전용 API 키를 자동 생성하여 패키지의 등록 키로 저장하므로 설치 명령에는 별도의 자격 증명이 필요하지 않습니다. 패키지를 삭제하면 해당 키가 비활성화됩니다.
 
 ## 등록 그룹(자동 고정)
 
-패키지의 **등록 그룹**은 하드 핀입니다. 패키지에 등록하는 장치는 첫 번째 연결 시 해당 그룹에 바인딩됩니다. 그런 다음 그룹 멤버십은 장치가 어떤 [정책](/ko/en/agent/policies-and-groups)을 해결하는지 결정합니다.
+패키지의 **등록 그룹**은 하드 핀입니다. 패키지에 등록하는 장치는 첫 번째 연결 시 해당 그룹에 바인딩됩니다. 그런 다음 그룹 멤버십은 장치가 어떤 [정책](/ko/agent/policies-and-groups)을 해결하는지 결정합니다.
 
 ## 등록 악수
 
@@ -46,6 +46,6 @@ OS 에이전트 탭에서 장치별로 다음 작업을 수행할 수 있습니�
 
 ## 관련
 
-- [에이전트 설치](/ko/ko/agent/installation)
-- [정책 및 그룹](/ko/ko/agent/policies-and-groups)
-- [자체 업데이트 및 변조 방지](/ko/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper)
+- [에이전트 설치](/ko/agent/installation)
+- [정책 및 그룹](/ko/agent/policies-and-groups)
+- [자체 업데이트 및 변조 방지](/ko/agent/quarantine-and-fleet-ops#self-update--anti-tamper)

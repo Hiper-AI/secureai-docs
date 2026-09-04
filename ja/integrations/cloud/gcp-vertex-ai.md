@@ -11,7 +11,7 @@ Google Cloud プロジェクトに接続すると、SecureAI は Vertex AI エ�
 ## SecureAI がインポートするもの
 
 - **Vertex AI エージェント、エンドポイント、モデル**
-- **NHI** — サービス アカウント、サービス アカウント キー、および API キー (取り消し可能 — [NHI Inventory](/ja/en/discovery/nhi-inventory) を参照)
+- **NHI** — サービス アカウント、サービス アカウント キー、および API キー (取り消し可能 — [NHI Inventory](/ja/discovery/nhi-inventory) を参照)
 - **IAM** ロール バインディング
 - **クラウド監査ログ**
 - 過去 30 日間の **リクエスト、トークン、費用**（BigQuery の請求書エクスポートからの実際値、または推定値）
@@ -53,14 +53,14 @@ Google Cloud プロジェクトに接続すると、SecureAI は Vertex AI エ�
 
 ## 確認する
 
-検出されたエージェント/エンドポイント/モデルについては [Cloud Sensors](/ja/ja/discovery/cloud-sensors) を開き、サービス アカウントとキーについては [NHI Inventory](/ja/ja/discovery/nhi-inventory) を開きます。 Insights show IAM bindings, usage, and cost.
+検出されたエージェント/エンドポイント/モデルについては [Cloud Sensors](/ja/discovery/cloud-sensors) を開き、サービス アカウントとキーについては [NHI Inventory](/ja/discovery/nhi-inventory) を開きます。 Insights show IAM bindings, usage, and cost.
 
 ## 失効
 
-コネクタにオプションのキー/SA 管理者ロールがある場合、GCP サービス アカウント、SA キー、API キーは [NHI インベントリ](/ja/en/discovery/nhi-inventory) から**取り消し可能**です。
+コネクタにオプションのキー/SA 管理者ロールがある場合、GCP サービス アカウント、SA キー、API キーは [NHI インベントリ](/ja/discovery/nhi-inventory) から**取り消し可能**です。
 
 ## 関連
 
-- [クラウド AI プロバイダーの概要](/ja/ja/integrations/cloud/overview)
-- [Google Workspace SSO](/ja/ja/iam/google-workspace)
-- [国民健康保険の目録](/ja/ja/discovery/nhi-inventory)
+- [クラウド AI プロバイダーの概要](/ja/integrations/cloud/overview)
+- [Google Workspace SSO](/ja/iam/google-workspace)
+- [国民健康保険の目録](/ja/discovery/nhi-inventory)

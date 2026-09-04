@@ -199,7 +199,7 @@ Dans le menu de gauche, cliquez sur **Tables**, puis sur **Créer** et sélectio
 
 **Télécharger un exemple de fichier** : vous pouvez également télécharger l'exemple de fichier JSON complet à utiliser directement :
 
-<a href="/fr/en/sample-json.json" download>📥 exemple.json</a>
+<a href="/fr/sample-json.json" download>📥 exemple.json</a>
 
 #### 5. Appliquer la transformation
 

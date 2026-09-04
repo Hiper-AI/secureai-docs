@@ -1,50 +1,48 @@
 ---
 id: update
-title: "Update Index"
-sidebar_label: "Update Index"
-description: "Update an existing knowledge base index"
+title: "更新索引"
+sidebar_label: "更新索引"
+description: "更新现有知识库索引"
 openapi: "PUT /indexes/{indexId}"
 ---
+# 更新索引
 
+使用新设置、元数据或配置更新现有知识库索引。
 
-# Update Index
-
-Update an existing knowledge base index with new settings, metadata, or configuration.
-
-## Endpoint
+## 端点
 
 ```
 PUT /indexes/{indexId}
 ```
 
-## Description
+## 说明
 
-This endpoint allows administrators to update an existing knowledge base index. You can modify the index name and reassign it to different users or groups. Only administrators can update indexes.
+该端点允许管理员更新现有的知识库索引。您可以修改索引名称并将其重新分配给不同的用户或组。只有管​​理员可以更新索引。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## 路径参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `indexId` | string | Yes | The unique identifier of the index to update |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `indexId` |字符串|是的 |要更新的索引的唯一标识符 |
 
-## Request Body
+## 请求正文
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | No | New name for the index |
-| `assignedUser` | string | No | User ID to assign the index to (MongoDB ObjectId) |
-| `assignedGroup` | string | No | Group ID to assign the index to (MongoDB ObjectId) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `name` |字符串|没有 |索引的新名称 |
+| `assignedUser` |字符串|没有 |将索引分配给的用户 ID (MongoDB ObjectId) |
+| `assignedGroup` |字符串|没有 |将索引分配给的组 ID (MongoDB ObjectId) |
 
 
-## Example Request
+## 请求示例
 
 ```json
 {
@@ -53,9 +51,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `200 OK`
+**状态代码**：`200 OK`
 
 ```json
 {
@@ -79,24 +77,24 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `index` | object | Updated index object |
-| `index.id` | string | Unique index identifier |
-| `index.name` | string | Updated index name |
-| `index.sharedIndexName` | string | Shared index name |
-| `index.namespace` | string | Index namespace |
-| `index.type` | string | Index type (personal, general, group, unknown) |
-| `index.assignedUser` | object | Assigned user information (if personal) |
-| `index.assignedGroup` | object | Assigned group information (if group) |
-| `index.createdAt` | string | Original creation timestamp |
-| `index.updatedAt` | string | Last update timestamp |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `message` |字符串|成功留言|
+| `index` |对象|更新的索引对象 |
+| `index.id` |字符串|唯一索引标识符 |
+| `index.name` |字符串|更新索引名称 |
+| `index.sharedIndexName` |字符串|共享索引名称 |
+| `index.namespace` |字符串|索引命名空间|
+| `index.type` |字符串|索引类型（个人、一般、团体、未知）|
+| `index.assignedUser` |对象|分配的用户信息（如果是个人信息）|
+| `index.assignedGroup` |对象|分配的组信息（如果组） |
+| `index.createdAt` |字符串|原创时间戳 |
+| `index.updatedAt` |字符串|最后更新时间戳 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -124,7 +122,7 @@ const result = await updateIndex('60a7c8f5e8b4f5001f7a8c23', updateData);
 console.log('Updated index:', result.index);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -149,7 +147,7 @@ result = update_index("60a7c8f5e8b4f5001f7a8c23", update_data)
 print("Updated index:", result["index"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b4f5001f7a8c23" \
@@ -161,9 +159,9 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
   }'
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -178,20 +176,20 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-## Validations and Business Rules
+## 验证和业务规则
 
-- **Assigning to a user (`assignedUser`)**:
-  - Enforce user index quota via `checkUserIndexQuota` when converting to personal or changing the assignee. Exceeded quota returns 403.
-- **Assigning to a group (`assignedGroup`)**:
-  - Group must exist and be active (`status != 'Archived'`); invalid/inactive groups return 400.
+- **分配给用户 (`assignedUser`)**：
+  - 当转换为个人或更改受让人时，通过`checkUserIndexQuota`强制执行用户索引配额。超出配额返回403。
+- **分配给一个组（`assignedGroup`）**：
+  - 组必须存在并且处于活动状态（`status != 'Archived'`）；无效/不活动的组返回 400。
 
-## Normalization and Storage
+## 标准化和存储
 
-- When renaming, `name` continues to be stored normalized; `sharedIndexName` defaults to the normalized name if not explicitly set.
+- 重命名时，`name`继续标准化存储；如果未显式设置，`sharedIndexName` 默认为规范化名称。
 
-## Typical Error Shapes
+## 典型错误形状
 
-### 403 Index Quota Exceeded
+### 403 超出索引配额
 
 ```json
 {
@@ -201,7 +199,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 400 Group Invalid/Inactive
+### 400 组无效/无效
 
 ```json
 {
@@ -211,7 +209,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -223,7 +221,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -235,7 +233,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 404 Not Found
+### 404 未找到
 
 ```json
 {
@@ -247,7 +245,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 409 Conflict
+### 409 冲突
 
 ```json
 {
@@ -259,7 +257,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -272,33 +270,33 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-## Updateable Fields
+## 可更新字段
 
-| Field | Description | Notes |
-|-------|-------------|-------|
-| `name` | Index name | Must be unique across the system |
-| `assignedUser` | User assignment | Assigns index to a specific user |
-| `assignedGroup` | Group assignment | Assigns index to a specific group |
+|领域 |描述 |笔记|
+|--------|-------------|--------|
+| `name` |索引名称|在整个系统中必须是唯一的 |
+| `assignedUser` |用户分配|将索引分配给特定用户 |
+| `assignedGroup` |小组作业|将索引分配给特定组 |
 
-## Use Cases
+## 用例
 
-- **Name Changes**: Rename indexes for better organization
-- **User Assignment**: Reassign indexes to different users
-- **Group Assignment**: Reassign indexes to different groups
-- **Ownership Transfer**: Change index ownership between users
+- **名称更改**：重命名索引以更好地组织
+- **用户分配**：将索引重新分配给不同的用户
+- **组分配**：将索引重新分配给不同的组
+- **所有权转让**：更改用户之间的索引所有权
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **默认**：每分钟 50 个请求
+- **每日**：每天 5,000 个请求
+- **每月**：每月 150,000 个请求
 
-## Notes
+## 注释
 
-- This endpoint is only accessible by administrators
-- Limited Fields: Only name, assignedUser, and assignedGroup can be updated
-- Assignment Logic: Assigning to a user clears group assignment and vice versa
-- Validation: User and group IDs are validated before assignment
-- No Settings: Cannot update settings, metadata, or other configuration
-- The `updatedAt` timestamp is automatically updated
-- Index names must remain unique across the system 
+- 该端点只能由管理员访问
+- 有限字段：只能更新名称、分配用户和分配组
+- 分配逻辑：分配给用户会清除组分配，反之亦然
+- 验证：在分配之前验证用户和组 ID
+- 无设置：无法更新设置、元数据或其他配置
+- `updatedAt`时间戳自动更新
+- 索引名称在整个系统中必须保持唯一

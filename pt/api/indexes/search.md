@@ -1,55 +1,54 @@
 ---
 sidebar_position: 4
-title: "Search Index for Documents"
+title: "Busca Semântica no Índice"
 openapi: "GET /indexes/{indexName}/search"
+sidebar_label: "Buscar no Índice"
 ---
 
+# Índice de pesquisa de documentos
 
+Pesquise documentos em um índice usando pesquisa semântica.
 
-# Search Index for Documents
-
-Search documents within an index using semantic search.
-
-## Endpoint
+## Ponto final
 
 ```
 GET /indexes/{indexName}/search
 ```
 
-## Description
+## Descrição
 
-Search documents within an index using semantic search. Returns matching documents with relevance scores, sorted by relevance.
+Pesquise documentos em um índice usando pesquisa semântica. Retorna documentos correspondentes com pontuações de relevância, classificados por relevância.
 
-## Authentication
+## Autenticação
 
-Required: API Key
+Obrigatório: Chave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## Parâmetros de caminho
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `indexName` | string | Yes | Name of the index to search |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `indexName` | corda | Sim | Nome do índice a pesquisar |
 
-## Query Parameters
+## Parâmetros de consulta
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | Yes | Search query text |
-| `top_k` | integer | No | Maximum number of results to return (1-50, default: 10) |
-| `min_score` | float | No | Minimum relevance score threshold (0.0-1.0, default: 0.0) |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `query` | corda | Sim | Texto da consulta de pesquisa |
+| `top_k` | inteiro | Não | Número máximo de resultados a devolver (1-50, predefinição: 10) |
+| `min_score` | flutuar | Não | Limite mínimo de pontuação de relevância (0,0-1,0, padrão: 0,0) |
 
-## Request Example
+## Exemplo de solicitação
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/my-knowledge-base/search?query=What%20is%20machine%20learning?&top_k=10&min_score=0.5" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### JavaScript/Node.js
+###JavaScript/Node.js
 
 ```javascript
 const query = encodeURIComponent('What is machine learning?');
@@ -67,7 +66,7 @@ data.results.matches.forEach(match => {
 });
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -89,9 +88,9 @@ for match in result['results']['matches']:
     print(f"Rank {match['rank']}: {match['content'][:100]}... (score: {match['score']})")
 ```
 
-## Response
+## Resposta
 
-### Success Response (200)
+### Resposta de sucesso (200)
 
 ```json
 {
@@ -135,46 +134,46 @@ for match in result['results']['matches']:
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `request_id` | string | Request ID for tracking |
-| `query` | string | The search query that was used |
-| `results` | object | Search results |
-| `index` | object | Index information |
+| `success` | booleano | Sempre verdadeiro para solicitações bem-sucedidas |
+| `request_id` | corda | Solicitar ID para rastreamento |
+| `query` | corda | A consulta de pesquisa usada |
+| `results` | objeto | Resultados da pesquisa |
+| `index` | objeto | Informações do índice |
 
-### Results Object
+### Objeto de resultados
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `matches` | array | Array of matching documents, sorted by relevance |
-| `total` | integer | Total number of matches found |
-| `top_k` | integer | Requested top_k value |
+| `matches` | matriz | Matriz de documentos correspondentes, classificados por relevância |
+| `total` | inteiro | Número total de correspondências encontradas |
+| `top_k` | inteiro | Valor top_k solicitado |
 
-### Match Object
+### Corresponder objeto
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `rank` | integer | Result rank (1-based) |
-| `score` | float | Relevance score (0.0-1.0, higher is more relevant) |
-| `source` | string | Document source identifier |
-| `content` | string | Content preview (truncated to 500 characters) |
-| `metadata` | object | Additional metadata |
+| `rank` | inteiro | Classificação do resultado (com base em 1) |
+| `score` | flutuar | Pontuação de relevância (0,0-1,0, quanto maior, mais relevante) |
+| `source` | corda | Identificador da origem do documento |
+| `content` | corda | Visualização do conteúdo (truncado para 500 caracteres) |
+| `metadata` | objeto | Metadados adicionais |
 
-### Metadata Object
+### Objeto de metadados
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `page` | integer\|null | Page number (if from PDF) |
-| `chunkIndex` | integer\|null | Chunk index within document |
-| `title` | string\|null | Document title |
-| `documentId` | string\|null | Document ID |
+| `page` | inteiro\|nulo | Número da página (se for PDF) |
+| `chunkIndex` | inteiro\|nulo | Índice de pedaços no documento |
+| `title` | string\|nulo | Título do documento |
+| `documentId` | string\|nulo | ID do documento |
 
-## Error Responses
+## Respostas de erro
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
 ```json
 {
@@ -184,7 +183,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -194,7 +193,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
 ```json
 {
@@ -204,7 +203,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 404 Not Found
+### 404 não encontrado
 
 ```json
 {
@@ -214,7 +213,7 @@ for match in result['results']['matches']:
 }
 ```
 
-### 500 Internal Server Error
+### 500 Erro interno do servidor
 
 ```json
 {
@@ -224,12 +223,11 @@ for match in result['results']['matches']:
 }
 ```
 
-## Notes
+## Notas
 
-- Semantic search uses vector similarity to find relevant documents
-- Results are sorted by relevance score (highest first)
-- Use `min_score` to filter out low-relevance results
-- Content previews are truncated to 500 characters
-- The `top_k` parameter limits the number of results returned
-- Metadata includes information about the document source and location
-
+- A pesquisa semântica usa similaridade vetorial para encontrar documentos relevantes
+- Os resultados são classificados por pontuação de relevância (o mais alto primeiro)
+- Use `min_score` para filtrar resultados de baixa relevância
+- As visualizações de conteúdo são truncadas para 500 caracteres
+- O parâmetro `top_k` limita o número de resultados retornados
+- Os metadados incluem informações sobre a origem e localização do documento

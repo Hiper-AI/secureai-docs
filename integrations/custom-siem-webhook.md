@@ -1,102 +1,100 @@
 ---
 id: custom-siem-webhook
-title: "Custom SIEM / Webhook Integration"
-sidebar_label: "Custom SIEM / Webhook"
-description: "Generic SIEM (HTTP/Webhook) integration for sending SecureAI security logs to any custom HTTP endpoint"
+title: "Integración con SIEM Personalizado vía Webhook"
+sidebar_label: "SIEM / Webhook Custom"
+description: "Integración genérica SIEM (HTTP/Webhook) para enviar registros de seguridad SecureAI a cualquier endpoint HTTP personalizado"
 ---
 
+# Integración genérica SIEM (HTTP/Webhook)
 
+## Descripción general
 
-# Generic SIEM (HTTP/Webhook) Integration
+La integración genérica SIEM (HTTP/Webhook) le permite enviar registros de seguridad SecureAI a cualquier endpoint HTTP personalizado. Esto es perfecto para integrarse con sistemas SIEM que no tienen soporte nativo, herramientas de seguridad personalizadas ni ningún sistema de registro basado en HTTP.
 
-## Overview
+## Casos de uso
 
-The Generic SIEM (HTTP/Webhook) integration allows you to send SecureAI security logs to any custom HTTP endpoint. This is perfect for integrating with SIEM systems that don't have native support, custom security tools, or any HTTP-based logging system.
+- **Sistemas SIEM personalizados**: envíe registros a sus herramientas internas de monitoreo de seguridad
+- **Plataformas de seguridad de terceros**: Integre con herramientas de seguridad que acepten webhooks
+- **Paneles de control personalizados**: cree su propia visualización de eventos de seguridad
+- **Pruebas y desarrollo**: utilice servicios de prueba de webhook para verificar la entrega de registros
+- **Sistemas heredados**: conéctese a herramientas de seguridad más antiguas que solo admiten endpoints HTTP
 
-## Use Cases
+## Pasos de configuración
 
-- **Custom SIEM Systems**: Send logs to your in-house security monitoring tools
-- **Third-party Security Platforms**: Integrate with security tools that accept webhooks
-- **Custom Dashboards**: Build your own security event visualization
-- **Testing & Development**: Use webhook testing services to verify log delivery
-- **Legacy Systems**: Connect to older security tools that only support HTTP endpoints
+### 1. Obtenga un endpoint de prueba
 
-## Configuration Steps
+Para fines de prueba, recomendamos utilizar webhook.site:
 
-### 1. Get a Test Endpoint
-
-For testing purposes, we recommend using webhook.site:
-
-1. Visit [https://webhook.site](https://webhook.site)
-2. Copy your unique URL (e.g., `https://webhook.site/ae0761ed-7939-4d86-be2f-ed58d0e65dd3`)
-3. Keep this page open to monitor incoming webhooks
+1. Visite [https://webhook.site](https://webhook.site)
+2. Copie su URL única (por ejemplo, `https://webhook.site/ae0761ed-7939-4d86-be2f-ed58d0e65dd3`)
+3. Mantenga esta página abierta para monitorear los webhooks entrantes.
 
 <div class="mac-window">
-  ![Webhook.site Test Endpoint](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%201.png)
+  ![Endpoint de prueba de Webhook.site](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%201.png)
 </div>
 
-### 2. Configure the Integration
+### 2. Configurar la integración
 
-1. Navigate to **Integrations** in your SecureAI admin panel
-2. Find **"Generic SIEM (HTTP/Webhook)"** in the SIEM category
-3. Click **"Connect Integration"**
+1. Navegue hasta **Integraciones** en su panel de administración de SecureAI
+2. Busque **"SIEM genérico (HTTP/Webhook)"** en la categoría SIEM
+3. Haga clic en **"Conectar integración"**
 
-### 3. Fill in the Configuration
+### 3. Complete la configuración
 
-#### Basic Settings
+#### Configuración básica
 
-- **Integration Name**: `Test Generic SIEM` (or any descriptive name)
-- **Endpoint URL**: `https://webhook.site/ae0761ed-7939-4d86-be2f-ed58d0e65dd3`
-- **HTTP Method**: `POST` (recommended for most SIEM platforms)
-- **HTTP Headers**: `{"Content-Type": "application/json"}`
+- **Nombre de integración**: `Test Generic SIEM` (o cualquier nombre descriptivo)
+- **URL del endpoint**: `https://webhook.site/ae0761ed-7939-4d86-be2f-ed58d0e65dd3`
+- **Método HTTP**: `POST` (recomendado para la mayoría de las plataformas SIEM)
+- **Encabezados HTTP**: `{"Content-Type": "application/json"}`
 
 <div class="mac-window">
-  ![HTTP Headers Configuration](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%202.png)
+  ![Configuración de encabezados HTTP](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%202.png)
 </div>
 
-#### Event Categories
+#### Categorías de eventos
 
-Select which types of events to forward:
+Seleccione qué tipos de eventos reenviar:
 
-✅ **Recommended for Testing:**
-- Authentication & Login
-- API & Model Usage
-- Data Access & PHI
-- SMLTP & Policies
-- Billing & Usage Limits
-- Analytics
+✅ **Recomendado para pruebas:**
+- Autenticación e inicio de sesión
+- API y uso de modelos
+- Acceso a datos y PHI
+- SMLTP y políticas
+- Límites de facturación y uso
+- Análisis
 
-⚠️ **Optional (may generate high volume):**
-- Security & Violations
-- System & Infrastructure
-- Configuration Changes
+⚠️ **Opcional (puede generar un gran volumen):**
+- Seguridad y violaciones
+- Sistema e infraestructura
+- Cambios de configuración
 
-### 4. Test the Connection
+### 4. Pruebe la conexión
 
-1. Click **"Test Connection"** to verify connectivity
+1. Haga clic en **"Probar conexión"** para verificar la conectividad.
 
 <div class="mac-window">
-  ![Test Connection Button](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%203.png)
+  ![Botón de conexión de prueba](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%203.png)
 </div>
 
-2. Check webhook.site - you should see a test request
-3. Verify the response shows success
+2. Verifique webhook.site; debería ver una solicitud de prueba
+3. Verifique que la respuesta sea exitosa.
 
 <div class="mac-window">
-  ![Success Response Verification](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%204.png)
+  ![Verificación de respuesta exitosa](/img/generic%20siem%20-%20Images/Generic%20SIEM%20-%204.png)
 </div>
 
-### 5. Save and Monitor
+### 5. Guardar y monitorear
 
-1. Click **"Connect"** to save the configuration
-2. Perform actions in your SecureAI system (login, API calls, etc.)
-3. Monitor webhook.site to see real-time logs
+1. Haga clic en **"Conectar"** para guardar la configuración.
+2. Realice acciones en su sistema SecureAI (inicio de sesión, llamadas API, etc.)
+3. Supervise webhook.site para ver registros en tiempo real
 
-## Advanced Configuration
+## Configuración avanzada
 
-### Custom Headers
+### Encabezados personalizados
 
-You can add custom headers for authentication or specific requirements:
+Puede agregar encabezados personalizados para autenticación o requisitos específicos:
 
 ```json
 {
@@ -106,51 +104,51 @@ You can add custom headers for authentication or specific requirements:
 }
 ```
 
-### When to Use Custom SIEM
+### Cuándo utilizar SIEM personalizado
 
-The Custom SIEM integration is particularly useful in these scenarios:
+La integración SIEM personalizada es particularmente útil en estos escenarios:
 
-- **No SIEM System**: If you don't currently use any SIEM platform, this provides a simple way to start collecting security logs
-- **Additional Data Destinations**: Send data to multiple locations simultaneously (e.g., your primary SIEM + a backup system)
-- **Custom Tools**: Integrate with specialized security tools, data centers, or custom dashboards
-- **Communication Platforms**: Send alerts to Teams channels, Slack, or other collaboration tools
-- **Legacy Systems**: Connect to older security tools that only support HTTP endpoints
-- **Testing & Development**: Use webhook testing services to verify log delivery before production deployment
+- **Sin sistema SIEM**: si actualmente no utiliza ninguna plataforma SIEM, esto proporciona una forma sencilla de comenzar a recopilar registros de seguridad.
+- **Destinos de datos adicionales**: envíe datos a múltiples ubicaciones simultáneamente (por ejemplo, su SIEM principal + un sistema de respaldo)
+- **Herramientas personalizadas**: Integre con herramientas de seguridad especializadas, centros de datos o paneles personalizados
+- **Plataformas de comunicación**: envíe alertas a canales de Teams, Slack u otras herramientas de colaboración
+- **Sistemas heredados**: conéctese a herramientas de seguridad más antiguas que solo admiten endpoints HTTP
+- **Pruebas y desarrollo**: utilice servicios de prueba de webhook para verificar la entrega de registros antes de la implementación en producción.
 
-**Note**: If you already have a supported SIEM (Splunk, Microsoft Sentinel, Elastic), we recommend using our native integrations for optimal performance and features.
+**Nota**: Si ya tiene un SIEM compatible (Splunk, Microsoft Sentinel, Elastic), le recomendamos utilizar nuestras integraciones nativas para obtener características y rendimiento óptimos.
 
-## Troubleshooting
+## Solución de problemas
 
-### Common Issues
+### Problemas comunes
 
-1. **Connection Timeout**: Check if the endpoint is accessible and responding
-2. **Authentication Errors**: Verify API keys and authentication headers
-3. **SSL/TLS Issues**: Ensure proper certificate validation for HTTPS endpoints
+1. **Tiempo de espera de conexión**: compruebe si el endpoint es accesible y responde
+2. **Errores de autenticación**: verifique las claves API y los encabezados de autenticación
+3. **Problemas SSL/TLS**: garantice la validación adecuada del certificado para los endpoints HTTPS
 
-### Monitoring
+### Monitoreo
 
-- Check the integration status in your SecureAI admin panel
-- Monitor webhook delivery success rates
-- Review failed webhook attempts in the logs
-- Verify endpoint availability and response times
+- Verifique el estado de la integración en su panel de administración de SecureAI
+- Supervisar las tasas de éxito de la entrega de webhooks
+- Revisar los intentos fallidos de webhook en los registros
+- Verificar la disponibilidad de los terminales y los tiempos de respuesta.
 
-## Security Considerations
+## Consideraciones de seguridad
 
-- **HTTPS Only**: Always use HTTPS endpoints in production
-- **Authentication**: Implement proper authentication for your webhook endpoints
-- **Rate Limiting**: Configure appropriate rate limits on your endpoints
-- **Log Retention**: Implement proper log retention policies for compliance
-- **Access Control**: Restrict access to webhook endpoints to authorized systems only
+- **Solo HTTPS**: use siempre endpoints HTTPS en producción
+- **Autenticación**: implemente la autenticación adecuada para sus endpoints de webhook
+- **Limitación de velocidad**: configure límites de velocidad adecuados en sus endpoints
+- **Retención de registros**: implementar políticas de retención de registros adecuadas para el cumplimiento
+- **Control de acceso**: restrinja el acceso a los endpoints de webhook solo a sistemas autorizados
 
-## Best Practices
+## Mejores prácticas
 
-1. **Start Small**: Begin with essential event categories and expand gradually
-2. **Test Thoroughly**: Use webhook.site or similar services for initial testing
-3. **Monitor Performance**: Watch for webhook delivery delays or failures
-4. **Document Configuration**: Keep detailed records of your webhook setup
-5. **Regular Review**: Periodically review and update webhook configurations
-6. **Backup Plans**: Have alternative logging methods in case webhooks fail
+1. **Empiece poco a poco**: comience con categorías de eventos esenciales y amplíe gradualmente
+2. **Pruebe minuciosamente**: utilice webhook.site o servicios similares para la prueba inicial.
+3. **Supervisar el rendimiento**: esté atento a retrasos o fallas en la entrega del webhook
+4. **Configuración del documento**: mantenga registros detallados de la configuración de su webhook
+5. **Revisión periódica**: revise y actualice periódicamente las configuraciones del webhook
+6. **Planes de respaldo**: tenga métodos de registro alternativos en caso de que los webhooks fallen
 
-## Done! 
+## ¡Listo! 
 
-With these steps, your Custom Webhook instance is fully configured to integrate with SecureAI 😎.
+Con estos pasos, su instancia de Webhook personalizado estará completamente configurada para integrarse con SecureAI 😎.

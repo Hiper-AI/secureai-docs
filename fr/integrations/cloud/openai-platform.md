@@ -11,7 +11,7 @@ Connectez votre organisation OpenAI afin que SecureAI puisse inventorier les pro
 ## Ce que SecureAI importe
 
 - **Projets, modèles, membres, rôles et groupes**
-- **NHIs** — Clés API et comptes de service (révocables — voir [NHI Inventory](/fr/en/discovery/nhi-inventory))
+- **NHIs** — Clés API et comptes de service (révocables — voir [NHI Inventory](/fr/discovery/nhi-inventory))
 - **Alertes de dépenses, limites de débit, certificats et paramètres de conservation des données**
 - **Journaux d'audit**
 - **Utilisation et coût** au cours des 30 derniers jours, y compris les dépenses par utilisateur
@@ -44,13 +44,13 @@ Connectez votre organisation OpenAI afin que SecureAI puisse inventorier les pro
 
 ## Vérifier
 
-Après la première synchronisation, ouvrez [Cloud Sensors](/fr/en/discovery/cloud-sensors) pour voir les modèles/assistants découverts, et [NHI Inventory](/fr/en/discovery/nhi-inventory) pour voir les clés et les comptes de service. Les **Insights** par fournisseur indiquent l'utilisation, le coût et les dépenses par utilisateur.
+Après la première synchronisation, ouvrez [Cloud Sensors](/fr/discovery/cloud-sensors) pour voir les modèles/assistants découverts, et [NHI Inventory](/fr/discovery/nhi-inventory) pour voir les clés et les comptes de service. Les **Insights** par fournisseur indiquent l'utilisation, le coût et les dépenses par utilisateur.
 
 ## Révocation
 
-Les clés API OpenAI sont **révocables** depuis [NHI Inventory](/fr/en/discovery/nhi-inventory) : SecureAI peut désactiver une clé à la source. (Pour les comptes de service, les identités OpenAI sont uniquement réservées au moniteur.)
+Les clés API OpenAI sont **révocables** depuis [NHI Inventory](/fr/discovery/nhi-inventory) : SecureAI peut désactiver une clé à la source. (Pour les comptes de service, les identités OpenAI sont uniquement réservées au moniteur.)
 
 ## Connexes
 
-- [Présentation des fournisseurs Cloud AI](/fr/en/integrations/cloud/overview)
-- [Inventaire NHI](/fr/en/discovery/nhi-inventory)
+- [Présentation des fournisseurs Cloud AI](/fr/integrations/cloud/overview)
+- [Inventaire NHI](/fr/discovery/nhi-inventory)

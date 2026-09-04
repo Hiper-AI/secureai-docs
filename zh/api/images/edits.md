@@ -1,54 +1,52 @@
 ---
 sidebar_position: 2
-title: "Edit Images"
+title: "编辑图像"
 openapi: "POST /images/edits"
 ---
+# 编辑图像
 
+使用带有文本说明的 Google Gemini 2.5 Flash Image 编辑现有图像。
 
-# Edit Images
-
-Edit existing images using Google Gemini 2.5 Flash Image with text instructions.
-
-## Endpoint
+## 端点
 
 ```
 POST /images/edits
 ```
 
-## Description
+## 说明
 
-Edit existing images using Google Gemini 2.5 Flash Image with text instructions. This endpoint is specifically designed for **image-to-image editing** where:
+使用带有文本说明的 Google Gemini 2.5 Flash Image 编辑现有图像。该端点专为**图像到图像编辑**而设计，其中：
 
-- An image file is **required** (unlike `/images/generations` where it's optional)
-- A text prompt describes how to edit or transform the image
-- The edited image is returned with the same quality and format options
+- 图像文件是**必需的**（与 `/images/generations` 不同，它是可选的）
+- 文本提示描述如何编辑或转换图像
+- 编辑后的图像以相同的质量和格式选项返回
 
-All prompts and responses are automatically processed through SMLTP for audit logging and compliance.
+所有提示和响应均通过 SMLTP 自动处理，以进行审核记录和合规性。
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## 请求正文
 
-This endpoint accepts `multipart/form-data` format.
+该端点接受 `multipart/form-data` 格式。
 
-### Parameters
+### 参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `prompt` | string | Yes | Text instructions describing how to edit or transform the uploaded image (1-4000 characters) |
-| `image` | binary | Yes | Image file to edit (JPEG, PNG, WEBP, or GIF, max 10MB) |
-| `smltp_policy` | string | No | SMLTP security policy (default: "internal") |
-| `response_format` | string | No | Response format: "url" or "b64_json" (default: "url") |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `prompt` |字符串|是的 |描述如何编辑或转换上传图像的文本说明（1-4000 个字符）|
+| `image` |二进制|是的 |要编辑的图像文件（JPEG、PNG、WEBP 或 GIF，最大 10MB）|
+| `smltp_policy` |字符串|没有 | SMLTP 安全策略（默认：“内部”）|
+| `response_format` |字符串|没有 |响应格式：“url”或“b64_json”（默认：“url”）|
 
-## Request Examples
+## 请求示例
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/edits" \
@@ -80,7 +78,7 @@ const data = await response.json();
 console.log('Edited image URL:', data.data[0].url);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -102,9 +100,9 @@ with open('image.jpg', 'rb') as f:
     print('Edited image URL:', result['data'][0]['url'])
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -131,41 +129,41 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `id` | string | Unique request identifier |
-| `object` | string | Object type: "image.edit" |
-| `created` | integer | Unix timestamp of when image was edited |
-| `data` | array | Array of edited images |
-| `metadata` | object | Additional metadata including SMLTP tracking |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |对于成功的请求始终如此 |
+| `id` |字符串|唯一的请求标识符 |
+| `object` |字符串|对象类型：“image.edit”|
+| `created` |整数 |编辑图像时的 Unix 时间戳 |
+| `data` |数组|编辑图像数组 |
+| `metadata` |对象|其他元数据包括 SMLTP 跟踪 |
 
-### Image Object
+### 图像对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `url` | string | URL to access the edited image (when response_format is "url") |
-| `b64_json` | string | Base64-encoded image data (when response_format is "b64_json") |
-| `revised_prompt` | string | The prompt actually used for editing (may differ from input) |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `url` |字符串|访问已编辑图像的 URL（当 response_format 为“url”时）|
+| `b64_json` |字符串| Base64编码的图像数据（当response_format为“b64_json”时）|
+| `revised_prompt` |字符串|实际用于编辑的提示（可能与输入不同）|
 
-### Metadata Object
+### 元数据对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `model` | string | Model used: "google/gemini-2.5-flash-image-preview" |
-| `provider` | string | Provider: "Google" |
-| `total_images` | integer | Total number of images (always 1 for edits) |
-| `is_image_to_image` | boolean | Always true for this endpoint |
-| `text_response` | string\|null | Optional text response from the model |
-| `smltp_trace_id` | string | SMLTP trace ID for audit tracking |
-| `smltp_bundle_id` | string | SMLTP bundle ID for audit tracking |
-| `smltp_policy` | string | SMLTP policy that was applied |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `model` |字符串|使用的模型：“google/gemini-2.5-flash-image-preview”|
+| `provider` |字符串|提供商：“谷歌” |
+| `total_images` |整数 |图像总数（编辑时始终为 1）|
+| `is_image_to_image` |布尔 |此端点始终为 true |
+| `text_response` |字符串\|空|模型的可选文本响应 |
+| `smltp_trace_id` |字符串| SMLTP 用于审核跟踪的跟踪 ID |
+| `smltp_bundle_id` |字符串| SMLTP 用于审核跟踪的捆绑包 ID |
+| `smltp_policy` |字符串| SMLTP 已应用的策略 |
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -176,7 +174,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -186,7 +184,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -196,7 +194,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 413 Payload Too Large
+### 413 有效负载太大
 
 ```json
 {
@@ -207,7 +205,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 500 Internal Server Error
+### 500 内部服务器错误
 
 ```json
 {
@@ -217,7 +215,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 503 Service Unavailable
+### 503 服务不可用
 
 ```json
 {
@@ -228,12 +226,11 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-## Notes
+## 注释
 
-- Supported image formats: JPEG, PNG, WEBP, GIF
-- Maximum file size: 10MB per image
-- The image file is **required** for this endpoint (unlike `/images/generations`)
-- The prompt describes how to edit or transform the uploaded image
-- All requests are processed through SMLTP for security and compliance
-- Use `response_format: "b64_json"` to receive base64-encoded image data instead of URLs
-
+- 支持的图像格式：JPEG、PNG、WEBP、GIF
+- 最大文件大小：每张图像 10MB
+- 此端点**需要**图像文件（与`/images/generations`不同）
+- 提示描述如何编辑或转换上传的图片
+- 所有请求均通过 SMLTP 处理，以确保安全性和合规性
+- 使用`response_format: "b64_json"`接收base64编码的图像数据而不是URL

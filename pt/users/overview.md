@@ -1,49 +1,48 @@
 ---
 sidebar_position: 1
-title: "User & Access Management"
+title: "Gestão de Usuários e Acessos"
+sidebar_label: "Usuários e Acessos"
 ---
 
+# Gerenciamento de usuários e acesso
 
-
-# User & Access Management
-
-SecureAI provides enterprise-grade user administration, role-based access control (RBAC), permission tiers, and license allocation.
+SecureAI fornece administração de usuários de nível empresarial, controle de acesso baseado em funções (RBAC), níveis de permissão e alocação de licenças.
 
 ---
 
-## System Roles
+## Funções do sistema
 
-SecureAI includes built-in system roles to govern platform access:
+SecureAI inclui funções de sistema integradas para controlar o acesso à plataforma:
 
-| Role | Access Level | Description |
+| Função | Nível de acesso | Descrição |
 |---|---|---|
-| **Admin** | Full Control | Full administrative privileges: manage users, create custom roles, configure SMLTP/AI Gateway policies, view logs, and configure SSO. |
-| **User** | Standard | Regular user access: chat with AI models, create and manage personal indexes, upload documents. |
-| **Global Reader** | Read-Only | Same capabilities as standard User plus read-only visibility into admin panels and system status. Cannot modify settings. |
+| **Administrador** | Controle total | Privilégios administrativos completos: gerenciar usuários, criar funções personalizadas, configurar políticas do SMLTP/AI Gateway, visualizar registros e configurar o SSO. |
+| **Usuário** | Padrão | Acesso regular do usuário: converse com modelos de IA, crie e gerencie índices pessoais, carregue documentos. |
+| **Leitor Global** | Somente leitura | Os mesmos recursos do usuário padrão, além de visibilidade somente leitura nos painéis de administração e no status do sistema. Não é possível modificar as configurações. |
 
-### Custom Roles & Granular Permissions
-Administrators can create custom roles with tailored permission levels (**None**, **Reader**, **Admin**) across specific modules:
-- **User & Group Management**: User creation, editing, group assignment.
-- **Index Management**: Document upload, index creation, index training.
-- **Security & SMLTP**: Security policies, incident response, audit verification.
-- **Integrations & AI Gateway**: Connecting cloud providers, API keys, and endpoints.
+### Funções personalizadas e permissões granulares
+Os administradores podem criar funções personalizadas com níveis de permissão personalizados (**Nenhum**, **Leitor**, **Administrador**) em módulos específicos:
+- **Gerenciamento de usuários e grupos**: criação de usuários, edição, atribuição de grupos.
+- **Gerenciamento de índices**: upload de documentos, criação de índices, treinamento de índices.
+- **Segurança e SMLTP**: Políticas de segurança, resposta a incidentes, verificação de auditoria.
+- **Integrações e gateway de IA**: conectando provedores de nuvem, chaves de API e endpoints.
 
 ---
 
-## License Management
+## Gerenciamento de licenças
 
-User accounts are provisioned under organizational license tiers:
+As contas de usuário são provisionadas sob níveis de licença organizacional:
 
-| Tier | Included Features |
+| Nível | Recursos incluídos |
 |---|---|
-| **Ultra** | Full platform features, unlimited indexes, priority model throughput, custom SMLTP compliance policies, dedicated support. |
-| **Growth** | Team collaboration tools, group indexes, standard SMLTP security policies, standard support. |
-| **Essential** | Core chat interface, personal indexes, basic model access, community support. |
+| **Ultra** | Recursos completos da plataforma, índices ilimitados, taxa de transferência de modelo prioritário, políticas de conformidade SMLTP personalizadas, suporte dedicado. |
+| **Crescimento** | Ferramentas de colaboração em equipe, índices de grupo, políticas de segurança padrão SMLTP, suporte padrão. |
+| **Essencial** | Interface central de chat, índices pessoais, acesso ao modelo básico, suporte da comunidade. |
 
 ---
 
-## Common Administrative Tasks
+## Tarefas Administrativas Comuns
 
-- **Create a User**: Go to **Admin ? Users ? Create User**. Set email, role, and license tier.
-- **Assign to Groups**: Navigate to **Admin ? Groups** to organize users into collaborative teams with shared group indexes.
-- **Configure SSO**: Connect your enterprise Identity Provider (Google Workspace or Microsoft Entra ID) under the **Authentication** settings.
+- **Crie um usuário**: Vá para **Admin ? Usuários ? Criar usuário**. Defina e-mail, função e nível de licença.
+- **Atribuir a grupos**: Navegue até **Admin ? Grupos** para organizar usuários em equipes colaborativas com índices de grupo compartilhados.
+- **Configurar SSO**: conecte seu provedor de identidade empresarial (Google Workspace ou Microsoft Entra ID) nas configurações de **Autenticação**.

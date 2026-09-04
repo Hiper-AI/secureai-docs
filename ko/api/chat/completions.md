@@ -18,7 +18,7 @@ POST /chat/completions
 선택적 RAG(지식 기반 검색)를 사용하여 AI 채팅 완료를 위한 기본 엔드포인트입니다. 다음을 지원합니다:
 
 - **두 가지 입력 형식** — 단일 `prompt` 문자열(레거시) **또는** OpenAI 스타일 `messages` 배열.
-- **모델 중복성** — 호출자가 정의한 장애 조치 체인(기본 + 최대 2개의 대체) [이중화 및 장애 조치](/ko/ko/api/redundancy)를 참조하세요.
+- **모델 중복성** — 호출자가 정의한 장애 조치 체인(기본 + 최대 2개의 대체) [이중화 및 장애 조치](/ko/api/redundancy)를 참조하세요.
 - **호출별 보안** — SMLTP 정책 선택 및 인라인 Prompt Shield 재정의.
 - **스트리밍** — 서버에서 보낸 이벤트(SSE).
 - **서명된 영수증** — 게이트웨이를 통해 라우팅된 응답에 대한 SMLTP 준수 영수증 참조입니다.
@@ -26,7 +26,7 @@ POST /chat/completions
 <Tip>
 **OpenAI SDK 호환성**
 
-**코드 변경 없음**으로 기존 OpenAI 통합에 SecureAI를 추가하려면 `/api/external/v1/chat/completions`에서 [OpenAI 호환 엔드포인트](/ko/en/api/chat/openai-호환)를 대신 사용하세요. 이 클래식 엔드포인트는 RAG를 지원하는 유일한 엔드포인트입니다.
+**코드 변경 없음**으로 기존 OpenAI 통합에 SecureAI를 추가하려면 `/api/external/v1/chat/completions`에서 [OpenAI 호환 엔드포인트](/ko/api/chat/openai-호환)를 대신 사용하세요. 이 클래식 엔드포인트는 RAG를 지원하는 유일한 엔드포인트입니다.
 </Tip>
 
 ## 인증
@@ -64,7 +64,7 @@ Authorization: Bearer sk-your-api-key-here
 | `model` | 문자열 | 조건부 | AI 모델(예: `"openai/gpt-5-nano"`). `models`이 제공되지 않는 한 필수입니다. |
 | `models` | 배열 | 아니요 | 명시적 장애 조치 체인(`model` 재정의). 최대 3개의 개별 항목; 각 항목은 모델 문자열 또는 `{ model, timeout_ms, first_token_timeout_ms }`입니다. |
 | `fallback_models` | 배열 | 아니요 | `model` 뒤에 대체가 추가되었습니다. `models`와 결합할 수 없습니다. |
-| `redundancy` | 개체 | 아니요 | 체인 전체 옵션: `{ timeout_ms, first_token_timeout_ms, on: [...] }`. [이중화 및 장애 조치](/ko/ko/api/redundancy)를 참조하세요. |
+| `redundancy` | 개체 | 아니요 | 체인 전체 옵션: `{ timeout_ms, first_token_timeout_ms, on: [...] }`. [이중화 및 장애 조치](/ko/api/redundancy)를 참조하세요. |
 
 ### 검색 및 생성 매개변수
 
@@ -73,12 +73,12 @@ Authorization: Bearer sk-your-api-key-here
 | `index` | 문자열 | **예** | 쿼리할 기술 자료 이름입니다. RAG가 없는 직접 AI에는 `"Zero-Knowledge"`을 사용하세요. 이 필드는 필수입니다. `index`가 없는 요청은 `400 "Index required"`를 반환합니다. |
 | `use_rag` | 부울 | 아니요 | 지식 검색을 활성화합니다(기본값: `true`). `use_rag: false` 설정은 `index` 요구 사항을 포기하지 **않습니다** — `index: "Zero-Knowledge"`를 보냅니다. |
 | `smltp_policy` | 문자열 | 아니요 | 보안 정책(`"internal"`, `"public"`, `"confidential"` 또는 테넌트 사용자 지정 정책). |
-| `prompt_shield` | 개체 | 아니요 | 호출별 프롬프트 쉴드 제어: `{ enabled?: boolean, policy?: string }`. [Prompt Shield API](/ko/en/api/threat-defense/prompt-shield#per-call-control-on-completions)를 참조하세요. |
+| `prompt_shield` | 개체 | 아니요 | 호출별 프롬프트 쉴드 제어: `{ enabled?: boolean, policy?: string }`. [Prompt Shield API](/ko/api/threat-defense/prompt-shield#per-call-control-on-completions)를 참조하세요. |
 | `temperature` | 번호 | 아니요 | 무작위성 제어(0–2, 기본값: 0.7). |
 | `max_tokens` | 정수 | 아니요 | 최대 응답 토큰(기본값: 1000, 최대 4000) |
 | `stream` | 부울 | 아니요 | 응답을 SSE로 스트리밍합니다(기본값: `false`). |
 | `conversation_id` | 문자열 | 아니요 | 추적을 위한 선택적 대화 ID입니다. |
-| `user_id` | 문자열 | 아니요 | 이 요청을 청구할 사용자의 MongoDB ObjectId입니다(관리자 관리, [청구 모드](/ko/en/api/billing-modes) 참조). |
+| `user_id` | 문자열 | 아니요 | 이 요청을 청구할 사용자의 MongoDB ObjectId입니다(관리자 관리, [청구 모드](/ko/api/billing-modes) 참조). |
 
 ## 요청 예시
 
@@ -158,8 +158,8 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 | `prompt_shield_policy` | 개체 \| null | 이 통화에 Prompt Shield 정책이 적용됩니다(있는 경우). |
 | `served_model` | 문자열 | 실제로 그 답을 만들어낸 모델. |
 | `requested_model` | 문자열 | 요청한 체인의 첫 번째 모델입니다. |
-| `failover` | 개체 | **다중 모델 체인이 실행된 경우에만 표시됩니다.** `{ occurred, attempts[] }` — [중복성 및 장애 조치](/ko/en/api/redundancy)를 참조하세요. |
-| `smltp` | 개체 | 통화에 대해 SMLTP 권한이 부여될 때 표시됩니다. `{ bundle_id, receipt_url }`. `bundle_id`(자격 ID, 예: `jti-…`)는 기본/직접 배포에서도 반환됩니다. `receipt_url`에 서명된 영수증은 트래픽이 SMLTP 게이트웨이를 통해 라우팅되는 경우에만 검색할 수 있습니다. 그렇지 않으면 [Receipts](/ko/en/api/receipts)가 `404`를 반환합니다. |
+| `failover` | 개체 | **다중 모델 체인이 실행된 경우에만 표시됩니다.** `{ occurred, attempts[] }` — [중복성 및 장애 조치](/ko/api/redundancy)를 참조하세요. |
+| `smltp` | 개체 | 통화에 대해 SMLTP 권한이 부여될 때 표시됩니다. `{ bundle_id, receipt_url }`. `bundle_id`(자격 ID, 예: `jti-…`)는 기본/직접 배포에서도 반환됩니다. `receipt_url`에 서명된 영수증은 트래픽이 SMLTP 게이트웨이를 통해 라우팅되는 경우에만 검색할 수 있습니다. 그렇지 않으면 [Receipts](/ko/api/receipts)가 `404`를 반환합니다. |
 | `rag_enabled` | 부울 | RAG 사용 여부. |
 | `documents_retrieved` | 정수 | 검색된 문서 수입니다. |
 | `sources` | 배열 | 검색된 문서 소스는 최대 3개입니다`{ source, score }`. |
@@ -300,5 +300,5 @@ print("Response:", result["choices"][0]["message"]["content"])
 - `index`이 필요합니다. RAG 없이 직접 AI 응답을 위해 `index: "Zero-Knowledge"`를 보냅니다.
 - `user_id` 매개변수는 요청을 다른 사용자 계정(관리자 관리)으로 청구합니다.
 - 온도는 0~2로 고정됩니다. `max_tokens`는 4000으로 제한됩니다.
-- 모델 호출이나 포인트 지출 없이**모든 정책에 대해 요청을 검증하려면 [정책 확인](/ko/en/api/policy-check)을 사용하세요.
-- 장애 조치 체인 의미(트리거, 시간 초과, 스트리밍 동작, 소진 상태 코드)는 [Redundancy & Failover](/ko/en/api/redundancy)를 참조하세요.
+- 모델 호출이나 포인트 지출 없이**모든 정책에 대해 요청을 검증하려면 [정책 확인](/ko/api/policy-check)을 사용하세요.
+- 장애 조치 체인 의미(트리거, 시간 초과, 스트리밍 동작, 소진 상태 코드)는 [Redundancy & Failover](/ko/api/redundancy)를 참조하세요.

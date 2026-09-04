@@ -1,55 +1,53 @@
 ---
 id: list
-title: "List All Indexes"
-sidebar_label: "List All Indexes"
-description: "Retrieve all available knowledge base indexes"
+title: "列出所有索引"
+sidebar_label: "列出所有索引"
+description: "检索所有可用的知识库索引"
 openapi: "GET /indexes/all"
 ---
+# 列出所有索引
 
+检索系统中所有可用知识库索引的综合列表。
 
-# List All Indexes
-
-Retrieve a comprehensive list of all available knowledge base indexes in the system.
-
-## Endpoint
+## 端点
 
 ```
 GET /indexes/all
 ```
 
-## Description
+## 说明
 
-This endpoint returns all knowledge base indexes available in the SecureAI system. It provides detailed information about each index including its type, status, creation date, and metadata. This is useful for discovering available knowledge bases and their capabilities.
+该端点返回 SecureAI 系统中可用的所有知识库索引。它提供有关每个索引的详细信息，包括其类型、状态、创建日期和元数据。这对于发现可用的知识库及其功能非常有用。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key
+**必填**：API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## 查询参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `page` | integer | No | 1 | Page number for pagination |
-| `limit` | integer | No | 50 | Number of indexes per page (1-100) |
-| `search` | string | No | - | Search term for index name or shared index name |
-| `type` | string | No | - | Filter by index type (personal, general, group) |
-| `status` | string | No | active | Filter by index status (active, deleted, all) |
-| `sortBy` | string | No | createdAt | Field to sort by |
-| `sortOrder` | string | No | desc | Sort order (asc, desc) |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `page` |整数 |没有 | 1 |分页页码|
+| `limit` |整数 |没有 | 50 | 50每页索引数 (1-100) |
+| `search` |字符串|没有 | - |索引名称或共享索引名称的搜索词|
+| `type` |字符串|没有 | - |按索引类型过滤（个人、一般、团体）|
+| `status` |字符串|没有 |活跃 |按索引状态过滤（活动、已删除、全部）|
+| `sortBy` |字符串|没有 |创建于 |排序依据的字段 |
+| `sortOrder` |字符串|没有 |描述 |排序顺序（升序、降序）|
 
-## Example Request
+## 请求示例
 
 ```bash
 GET /indexes/all?type=personal&limit=20&page=1
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `200 OK`
+**状态代码**：`200 OK`
 
 ```json
 {
@@ -83,44 +81,44 @@ GET /indexes/all?type=personal&limit=20&page=1
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `indexes[]` | array | Array of index objects |
-| `indexes[].id` | string | Unique index identifier |
-| `indexes[].name` | string | Index name |
-| `indexes[].sharedIndexName` | string | Shared index name |
-| `indexes[].namespace` | string | Index namespace |
-| `indexes[].type` | string | Index type (personal, general, group, unknown) |
-| `indexes[].assignedUser` | object | Assigned user information (if personal) |
-| `indexes[].assignedGroup` | object | Assigned group information (if group) |
-| `indexes[].userId` | string | User ID |
-| `indexes[].isActive` | boolean | Whether index is active |
-| `indexes[].createdAt` | string | Creation timestamp |
-| `indexes[].updatedAt` | string | Last update timestamp |
-| `indexes[].deletedAt` | string | Deletion timestamp (if deleted) |
-| `pagination` | object | Pagination information |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `indexes[]` |数组|索引对象数组 |
+| `indexes[].id` |字符串|唯一索引标识符 |
+| `indexes[].name` |字符串|索引名称|
+| `indexes[].sharedIndexName` |字符串|共享索引名称 |
+| `indexes[].namespace` |字符串|索引命名空间|
+| `indexes[].type` |字符串|索引类型（个人、一般、团体、未知）|
+| `indexes[].assignedUser` |对象|分配的用户信息（如果是个人信息）|
+| `indexes[].assignedGroup` |对象|分配的组信息（如果组） |
+| `indexes[].userId` |字符串|用户名 |
+| `indexes[].isActive` |布尔 |索引是否活跃 |
+| `indexes[].createdAt` |字符串|创建时间戳 |
+| `indexes[].updatedAt` |字符串|最后更新时间戳 |
+| `indexes[].deletedAt` |字符串|删除时间戳（如果已删除）|
+| `pagination` |对象|分页信息|
 
-## Index Types
+## 索引类型
 
-| Type | Description | Access |
+|类型 |描述 |访问 |
 |------|-------------|--------|
-| `personal` | User-created personal indexes | Full access for owner |
-| `general` | Shared organizational indexes | Varies by permissions |
-| `group` | Group-assigned indexes | Group members |
-| `unknown` | Indexes with unclear assignment | Varies |
+| `personal` |用户创建的个人索引|所有者的完全访问权限 |
+| `general` |共享组织索引 |因权限而异 |
+| `group` |组分配索引|团体成员 |
+| `unknown` |分配不明确的索引 |变化 |
 
-## Index Status
+## 索引状态
 
-| Status | Description |
+|状态 |描述 |
 |--------|-------------|
-| `active` | Index is available for use |
-| `deleted` | Index has been deleted |
-| `all` | Include both active and deleted |
+| `active` |索引可供使用|
+| `deleted` |索引已被删除 |
+| `all` |包括活动的和已删除的 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -148,7 +146,7 @@ const result = await listIndexes({
 console.log(result.indexes);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -173,16 +171,16 @@ result = list_indexes(params)
 print(result["indexes"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/all?type=personal&limit=10&page=1" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -194,7 +192,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/all?type=pe
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -207,9 +205,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes/all?type=pe
 }
 ```
 
-## Filtering Examples
+## 过滤示例
 
-### Filter by Type
+### 按类型过滤
 
 ```bash
 # Get only personal indexes
@@ -219,7 +217,7 @@ GET /indexes/all?type=personal
 GET /indexes/all?type=group
 ```
 
-### Filter by Status
+### 按状态过滤
 
 ```bash
 # Get only active indexes
@@ -229,7 +227,7 @@ GET /indexes/all?status=active
 GET /indexes/all?status=deleted
 ```
 
-### Pagination
+### 分页
 
 ```bash
 # Get first 20 indexes
@@ -239,25 +237,25 @@ GET /indexes/all?limit=20&page=1
 GET /indexes/all?limit=20&page=2
 ```
 
-## Use Cases
+## 用例
 
-- **Discovery**: Find available knowledge bases for RAG operations
-- **Management**: List indexes for administrative purposes
-- **Integration**: Discover indexes for application integration
-- **Monitoring**: Check index status and metadata
-- **Filtering**: Find specific types of indexes (system, personal, etc.)
+- **发现**：查找 RAG 操作的可用知识库
+- **管理**：出于管理目的列出索引
+- **集成**：发现应用程序集成的索引
+- **监控**：检查索引状态和元数据
+- **过滤**：查找特定类型的索引（系统、个人等）
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **默认**：每分钟 100 个请求
+- **每日**：每天 10,000 个请求
+- **每月**：每月 300,000 个请求
 
-## Notes
+## 注释
 
-- This endpoint is only accessible by administrators
-- Personal indexes are only visible to their owners
-- Group indexes are visible to group members
-- The response includes assigned user and group information
-- Pagination uses page parameter, not offset
-- Filtering by type and status helps narrow down results 
+- 该端点只能由管理员访问
+- 个人索引仅对其所有者可见
+- 群组索引对群组成员可见
+- 响应包括分配的用户和组信息
+- 分页使用页面参数，而不是偏移量
+- 按类型和状态过滤有助于缩小结果范围

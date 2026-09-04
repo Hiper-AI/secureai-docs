@@ -1,88 +1,86 @@
 ---
 sidebar_position: 1
-title: "Chat Completion"
+title: "聊天完成"
 openapi: "POST /chat/completions"
 ---
+# 聊天完成
 
+AI 聊天完成的主要端点，具有可选的知识库检索 (RAG)、模型冗余/故障转移、每次调用安全策略和流。
 
-# Chat Completion
-
-The main endpoint for AI chat completions with optional knowledge base retrieval (RAG), model redundancy/failover, per-call security policies, and streaming.
-
-## Endpoint
+## 端点
 
 ```
 POST /chat/completions
 ```
 
-## Description
+## 说明
 
-The main endpoint for AI chat completions with optional knowledge base retrieval (RAG). It supports:
+具有可选知识库检索 (RAG) 的 AI 聊天完成的主要端点。它支持：
 
-- **Two input forms** — a single `prompt` string (legacy) **or** an OpenAI-style `messages` array.
-- **Model redundancy** — a caller-defined failover chain (primary + up to 2 fallbacks). See [Redundancy & Failover](/zh/api/redundancy).
-- **Per-call security** — SMLTP policy selection and an inline Prompt Shield override.
-- **Streaming** — Server-Sent Events (SSE).
-- **Signed receipts** — an SMLTP compliance receipt reference on responses routed through the gateway.
+- **两种输入形式** — 单个 `prompt` 字符串（旧版）**或** OpenAI 样式的 `messages` 数组。
+- **模型冗余** — 调用者定义的故障转移链（主要 + 最多 2 个后备）。请参见[冗余与故障转移](/zh/api/redundancy)。
+- **每次呼叫安全性** — SMLTP 策略选择和内联提示屏蔽覆盖。
+- **流式传输** — 服务器发送的事件 (SSE)。
+- **签名收据** — 通过网关路由的响应的 SMLTP 合规收据参考。
 
 <Tip>
-**OpenAI SDK compatibility**
+**OpenAI SDK 兼容性**
 
-If you want to drop SecureAI into an existing OpenAI integration with **zero code changes**, use the [OpenAI-compatible endpoint](/zh/api/chat/openai-compatible) at `/api/external/v1/chat/completions` instead. This classic endpoint is the only one that supports RAG.
+如果您想将 SecureAI 放入现有的 OpenAI 集成中并实现**零代码更改**，请改用 `/api/external/v1/chat/completions` 处的 [OpenAI 兼容端点](/zh/api/chat/openai-company)。这一经典端点是唯一支持 RAG 的端点。
 </Tip>
 
-## Authentication
+## 身份验证
 
-Required: API Key
+必需：API 密钥
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Headers
+## 标题
 
-| Header | Required | Description |
+|标题|必填|描述 |
 |--------|----------|-------------|
-| `Authorization` | Yes | `Bearer sk-...` |
-| `Content-Type` | Yes | `application/json` |
-| `Idempotency-Key` | No | A unique key that makes a completion POST safe to retry. Repeating a request with the same key returns the original result instead of billing twice. |
+| `Authorization` |是的 | `Bearer sk-...` |
+| `Content-Type` |是的 | `application/json` |
+| `Idempotency-Key` |没有 |使完成 POST 可以安全重试的唯一密钥。使用相同密钥重复请求将返回原始结果，而不是计费两次。 |
 
-## Request Body
+## 请求正文
 
-### Input parameters
+### 输入参数
 
-Provide **either** `prompt` **or** `messages` — not both.
+提供**`prompt` **或** `messages` — 不能同时提供。
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `prompt` | string | Conditional | User's message (legacy single-turn form). |
-| `messages` | array | Conditional | OpenAI-style array of `{ role, content }`. `role` is `system`, `user`, or `assistant`. At most one `system` message, and only as the first entry. Max 100 messages, 256&nbsp;KB total content. |
-| `system_message` | string | No | Custom system prompt (legacy). Cannot be combined with an in-band `system` role in `messages`. |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `prompt` |字符串|有条件|用户的消息（传统单轮形式）。 |
+| `messages` |数组|有条件| OpenAI 风格的 `{ role, content }` 数组。 `role` 是`system`、`user` 或`assistant`。最多一条 `system` 消息，并且仅作为第一个条目。最多 100 条消息，总内容 256 KB。 |
+| `system_message` |字符串|没有 |自定义系统提示（旧版）。无法与 `messages` 中的带内 `system` 角色组合。 |
 
-### Model & redundancy parameters
+### 模型和冗余参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `model` | string | Conditional | AI model (e.g. `"openai/gpt-5-nano"`). Required unless `models` is supplied. |
-| `models` | array | No | Explicit failover chain (overrides `model`). Up to 3 distinct entries; each entry is a model string or `{ model, timeout_ms, first_token_timeout_ms }`. |
-| `fallback_models` | array | No | Fallbacks appended after `model`. Cannot be combined with `models`. |
-| `redundancy` | object | No | Chain-wide options: `{ timeout_ms, first_token_timeout_ms, on: [...] }`. See [Redundancy & Failover](/zh/api/redundancy). |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `model` |字符串|有条件| AI模型（例如`"openai/gpt-5-nano"`）。除非提供 `models`，否则是必需的。 |
+| `models` |数组|没有 |显式故障转移链（覆盖 `model`）。最多 3 个不同的条目；每个条目都是一个模型字符串或 `{ model, timeout_ms, first_token_timeout_ms }`。 |
+| `fallback_models` |数组|没有 |在 `model` 之后附加后备。不能与`models`组合。 |
+| `redundancy` |对象|没有 |链范围选项：`{ timeout_ms, first_token_timeout_ms, on: [...] }`。请参见[冗余与故障转移](/zh/api/redundancy)。 |
 
-### Retrieval & generation parameters
+### 检索和生成参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `index` | string | **Yes** | Knowledge base name to query. Use `"Zero-Knowledge"` for direct AI with no RAG. This field is required — a request without `index` returns `400 "Index required"`. |
-| `use_rag` | boolean | No | Enable knowledge retrieval (default: `true`). Setting `use_rag: false` does **not** waive the `index` requirement — send `index: "Zero-Knowledge"`. |
-| `smltp_policy` | string | No | Security policy (`"internal"`, `"public"`, `"confidential"`, or a tenant custom policy). |
-| `prompt_shield` | object | No | Per-call Prompt Shield control: `{ enabled?: boolean, policy?: string }`. See [Prompt Shield API](/zh/api/threat-defense/prompt-shield#per-call-control-on-completions). |
-| `temperature` | number | No | Randomness control (0–2, default: 0.7). |
-| `max_tokens` | integer | No | Max response tokens (default: 1000, capped at 4000). |
-| `stream` | boolean | No | Stream the response as SSE (default: `false`). |
-| `conversation_id` | string | No | Optional conversation ID for tracking. |
-| `user_id` | string | No | MongoDB ObjectId of the user to bill this request to (admin-gated; see [Billing Modes](/zh/api/billing-modes)). |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `index` |字符串| **是** |要查询的知识库名称。使用 `"Zero-Knowledge"` 进行直接 AI，无需 RAG。此字段是必填字段 — 没有 `index` 的请求将返回 `400 "Index required"`。 |
+| `use_rag` |布尔 |没有 |启用知识检索（默认值：`true`）。设置 `use_rag: false` **不会**放弃 `index` 要求 — 发送 `index: "Zero-Knowledge"`。 |
+| `smltp_policy` |字符串|没有 |安全策略（`"internal"`、`"public"`、`"confidential"` 或租户自定义策略）。 |
+| `prompt_shield` |对象|没有 |每次呼叫提示屏蔽控制：`{ enabled?: boolean, policy?: string }`。请参阅[Prompt Shield API](/zh/api/threat-defense/prompt-shield#per-call-control-on-completions)。 |
+| `temperature` |数量 |没有 |随机性控制（0–2，默认值：0.7）。 |
+| `max_tokens` |整数 |没有 |最大响应令牌（默认值：1000，上限为 4000）。 |
+| `stream` |布尔 |没有 |将响应流式传输为 SSE（默认值：`false`）。 |
+| `conversation_id` |字符串|没有 |用于跟踪的可选对话 ID。 |
+| `user_id` |字符串|没有 |用于向该请求计费的用户的 MongoDB ObjectId（管理员控制；请参阅[计费模式](/zh/api/billing-modes)）。 |
 
-## Request Example
+## 请求示例
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -104,9 +102,9 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -148,34 +146,34 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Metadata Object
+### 元数据对象
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `conversation_id` | string | Conversation ID (echoed or generated). |
-| `index_used` | string | Knowledge base used. |
-| `smltp_policy_used` | string | Applied SMLTP policy name. |
-| `smltp_policy_source` | string | Where the policy came from (`request`, key default, etc.). |
-| `smltp_policy_hash` | string \| null | Hash of the applied policy for verification. |
-| `prompt_shield_policy` | object \| null | Prompt Shield policy applied to this call, if any. |
-| `served_model` | string | Model that actually produced the answer. |
-| `requested_model` | string | First model in the requested chain. |
-| `failover` | object | **Present only when a multi-model chain ran.** `{ occurred, attempts[] }` — see [Redundancy & Failover](/zh/api/redundancy). |
-| `smltp` | object | Present when an SMLTP entitlement is minted for the call. `{ bundle_id, receipt_url }`. The `bundle_id` (an entitlement id, e.g. `jti-…`) is returned even on native/direct deployments; the signed receipt at `receipt_url` is only retrievable when traffic is routed through the SMLTP gateway (otherwise [Receipts](/zh/api/receipts) returns `404`). |
-| `rag_enabled` | boolean | Whether RAG was used. |
-| `documents_retrieved` | integer | Number of documents retrieved. |
-| `sources` | array | Up to 3 retrieved document sources `{ source, score }`. |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `conversation_id` |字符串|对话 ID（回显或生成）。 |
+| `index_used` |字符串|使用的知识库。 |
+| `smltp_policy_used` |字符串|应用的 SMLTP 策略名称。 |
+| `smltp_policy_source` |字符串|策略来自哪里（`request`、密钥默认值等）。 |
+| `smltp_policy_hash` |字符串\|空 |用于验证的应用策略的哈希值。 |
+| `prompt_shield_policy` |对象\|空 |应用于此呼叫的提示屏蔽策略（如果有）。 |
+| `served_model` |字符串|实际产生答案的模型。 |
+| `requested_model` |字符串|请求链中的第一个模型。 |
+| `failover` |对象| **仅在多模型链运行时出现。** `{ occurred, attempts[] }` — 请参阅[冗余和故障转移](/zh/api/redundancy)。 |
+| `smltp` |对象|当为呼叫创建 SMLTP 权利时出现。 `{ bundle_id, receipt_url }`。即使在本机/直接部署中也会返回 `bundle_id`（权利 ID，例如 `jti-…`）；仅当流量通过 SMLTP 网关路由时，才能检索 `receipt_url` 处的签名收据（否则 [Receipts](/zh/api/receipts) 返回 `404`）。 |
+| `rag_enabled` |布尔 |是否使用了RAG。 |
+| `documents_retrieved` |整数 |检索到的文档数量。 |
+| `sources` |数组|最多 3 个检索的文档源 `{ source, score }`。 |
 
-## Streaming
+## 流媒体
 
-Set `"stream": true` to receive Server-Sent Events. Each SSE line is `data: <json>` and the stream ends with `data: [DONE]`. Frames are typed via a `type` field:
+设置 `"stream": true` 以接收服务器发送的事件。每条 SSE 行都是 `data: <json>`，流以 `data: [DONE]` 结尾。帧通过 `type` 字段输入：
 
-| Frame `type` | Payload |
+|框架`type` |有效负载|
 |--------------|---------|
-| `metadata` | The response envelope (`id`, `object`, `created`, `model` = serving model, and the `metadata` object above). Sent first. |
-| `chunk` | An incremental delta: `{ id, object: "chat.completion.chunk", model, choices: [{ index, delta: { role, content }, finish_reason }] }`. |
-| `usage` | Final token usage. |
-| `error` | A mid-stream provider interruption (after the first token, failover is no longer possible). |
+| `metadata` |响应包络（`id`、`object`、`created`、`model` = 服务模型，以及上面的 `metadata` 对象）。先发了。 |
+| `chunk` |增量增量：`{ id, object: "chat.completion.chunk", model, choices: [{ index, delta: { role, content }, finish_reason }] }`。 |
+| `usage` |最终代币使用情况。 |
+| `error` |中流提供程序中断（在第一个令牌之后，不再可能进行故障转移）。 |
 
 ```text
 data: {"type":"metadata","data":{"success":true,"id":"req-abc123","object":"chat.completion","created":1705312200,"model":"openai/gpt-5-nano","metadata":{...}}}
@@ -187,9 +185,9 @@ data: {"type":"usage","data":{"usage":{"prompt_tokens":150,"completion_tokens":2
 data: [DONE]
 ```
 
-## Error Responses
+## 错误响应
 
-### 400 Bad Request
+### 400 错误请求
 
 ```json
 {
@@ -199,7 +197,7 @@ data: [DONE]
 }
 ```
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -209,7 +207,7 @@ data: [DONE]
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -219,9 +217,9 @@ data: [DONE]
 }
 ```
 
-### 429 / 502 — Redundancy chain exhausted
+### 429 / 502 — 冗余链已耗尽
 
-When every model in a redundancy chain fails, the response reports each attempt. The status is `429` if all failures were rate limits, otherwise `502`.
+当冗余链中的每个模型都失败时，响应会报告每次尝试。如果所有故障都是速率限制，则状态为 `429`，否则为 `502`。
 
 ```json
 {
@@ -236,7 +234,7 @@ When every model in a redundancy chain fails, the response reports each attempt.
 }
 ```
 
-### 500 Internal Server Error
+### 500 内部服务器错误
 
 ```json
 {
@@ -246,7 +244,7 @@ When every model in a redundancy chain fails, the response reports each attempt.
 }
 ```
 
-## Example Usage
+## 用法示例
 
 ### JavaScript/Node.js
 
@@ -272,7 +270,7 @@ console.log('Served by:', data.metadata.served_model);
 console.log('Response:', data.choices[0].message.content);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -297,10 +295,10 @@ print("Served by:", result["metadata"]["served_model"])
 print("Response:", result["choices"][0]["message"]["content"])
 ```
 
-## Notes
+## 注释
 
-- `index` is required. Send `index: "Zero-Knowledge"` for direct AI responses without RAG.
-- The `user_id` parameter bills the request to a different user account (admin-gated).
-- Temperature is clamped to 0–2; `max_tokens` is capped at 4000.
-- To validate a request against every policy **without** calling a model or spending points, use [Policy Check](/zh/api/policy-check).
-- For failover chain semantics (triggers, timeouts, streaming behavior, exhaustion status codes), see [Redundancy & Failover](/zh/api/redundancy).
+- `index` 是必需的。发送 `index: "Zero-Knowledge"` 进行直接 AI 响应，无需 RAG。
+- `user_id` 参数将请求记入不同的用户帐户（管理员控制）。
+- 温度固定在0-2； `max_tokens` 的上限为 4000。
+- 要在不调用模型或消费点的情况下验证每个策略的请求，请使用[策略检查](/zh/api/policy-check)。
+- 有关故障转移链语义（触发器、超时、流行为、耗尽状态代码），请参阅[冗余和故障转移](/zh/api/redundancy)。

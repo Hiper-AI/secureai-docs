@@ -1,16 +1,14 @@
 ---
 id: audit-logs
-title: "Audit Logs"
-sidebar_label: "Audit Logs"
-description: "Retrieve SMLTP audit logs"
+title: "Logs de Auditoría Criptográficos"
+sidebar_label: "Logs de Auditoría"
+description: "Recuperar registros de auditoría SMLTP"
 openapi: "GET /audit-logs"
 ---
 
+# Registros de auditoría
 
-
-# Audit Logs
-
-Retrieve SMLTP (Secure Model Language Transfer Protocol) audit logs for security monitoring and compliance.
+Recupere registros de auditoría SMLTP (Protocolo de transferencia de lenguaje de modelo seguro) para monitorear y cumplir con la seguridad.
 
 ## Endpoint
 
@@ -18,40 +16,40 @@ Retrieve SMLTP (Secure Model Language Transfer Protocol) audit logs for security
 GET /audit-logs
 ```
 
-## Description
+## Descripción
 
-This endpoint returns SMLTP audit logs that track security events, policy violations, and compliance activities. This is useful for security monitoring, compliance auditing, and investigating security incidents.
+Este endpoint devuelve registros de auditoría SMLTP que rastrean eventos de seguridad, violaciones de políticas y actividades de cumplimiento. Esto es útil para monitorear la seguridad, auditar el cumplimiento e investigar incidentes de seguridad.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## Parámetros de consulta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `page` | integer | No | 1 | Page number for pagination (default: 1) |
-| `limit` | integer | No | 50 | Number of logs per page (default: 50) |
-| `startDate` | string | No | - | Start date for filtering (ISO 8601 format) |
-| `endDate` | string | No | - | End date for filtering (ISO 8601 format) |
-| `type` | string | No | - | Filter by log type |
-| `severity` | string | No | - | Filter by severity level |
-| `userId` | string | No | - | Filter by user ID |
-| `search` | string | No | - | Search term for description or metadata |
+| `page` | entero | No | 1 | Número de página para paginación (predeterminado: 1) |
+| `limit` | entero | No | 50 | Número de registros por página (predeterminado: 50) |
+| `startDate` | cadena | No | - | Fecha de inicio del filtrado (formato ISO 8601) |
+| `endDate` | cadena | No | - | Fecha de finalización del filtrado (formato ISO 8601) |
+| `type` | cadena | No | - | Filtrar por tipo de registro |
+| `severity` | cadena | No | - | Filtrar por nivel de gravedad |
+| `userId` | cadena | No | - | Filtrar por ID de usuario |
+| `search` | cadena | No | - | Término de búsqueda para descripción o metadatos |
 
-## Example Request
+## Solicitud de ejemplo
 
 ```bash
 GET /audit-logs?startDate=2024-01-01T00:00:00Z&endDate=2024-01-20T23:59:59Z&severity=info&limit=20
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `200 OK`
+**Código de estado**: `200 OK`
 
 ```json
 {
@@ -94,33 +92,33 @@ GET /audit-logs?startDate=2024-01-01T00:00:00Z&endDate=2024-01-20T23:59:59Z&seve
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `data` | object | Response data object |
-| `data.logs` | array | Array of audit log objects |
-| `data.logs[].id` | string | Unique audit log identifier |
-| `data.logs[].timestamp` | string | Log timestamp (ISO 8601) |
-| `data.logs[].type` | string | Type of audit event |
-| `data.logs[].severity` | string | Severity level |
-| `data.logs[].description` | string | Event description |
-| `data.logs[].user` | object | User information (if available) |
-| `data.logs[].user.id` | string | User ID |
-| `data.logs[].user.name` | string | User name |
-| `data.logs[].user.email` | string | User email |
-| `data.logs[].metadata` | object | Additional metadata |
-| `data.logs[].complianceCategory` | string | Compliance category |
-| `data.logs[].outcome` | string | Event outcome |
-| `data.pagination` | object | Pagination information |
-| `data.pagination.page` | integer | Current page number |
-| `data.pagination.limit` | integer | Items per page |
-| `data.pagination.total` | integer | Total number of logs |
-| `data.pagination.pages` | integer | Total number of pages |
-| `data.dateRange` | object | Date range information |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `data` | objeto | Objeto de datos de respuesta |
+| `data.logs` | matriz | Matriz de objetos de registro de auditoría |
+| `data.logs[].id` | cadena | Identificador único de registro de auditoría |
+| `data.logs[].timestamp` | cadena | Marca de tiempo del registro (ISO 8601) |
+| `data.logs[].type` | cadena | Tipo de evento de auditoría |
+| `data.logs[].severity` | cadena | Nivel de gravedad |
+| `data.logs[].description` | cadena | Descripción del evento |
+| `data.logs[].user` | objeto | Información del usuario (si está disponible) |
+| `data.logs[].user.id` | cadena | ID de usuario |
+| `data.logs[].user.name` | cadena | Nombre de usuario |
+| `data.logs[].user.email` | cadena | Correo electrónico del usuario |
+| `data.logs[].metadata` | objeto | Metadatos adicionales |
+| `data.logs[].complianceCategory` | cadena | Categoría de cumplimiento |
+| `data.logs[].outcome` | cadena | Resultado del evento |
+| `data.pagination` | objeto | Información de paginación |
+| `data.pagination.page` | entero | Número de página actual |
+| `data.pagination.limit` | entero | Artículos por página |
+| `data.pagination.total` | entero | Número total de registros |
+| `data.pagination.pages` | entero | Número total de páginas |
+| `data.dateRange` | objeto | Información del rango de fechas |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -149,7 +147,7 @@ const result = await getAuditLogs({
 console.log(result.data.logs);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -175,16 +173,16 @@ result = get_audit_logs(params)
 print(result["data"]["logs"])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDate=2024-01-01T00:00:00Z&endDate=2024-01-20T23:59:59Z&severity=info&limit=20" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -196,7 +194,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDat
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -208,7 +206,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDat
 }
 ```
 
-### 429 Too Many Requests
+### 429 Demasiadas solicitudes
 
 ```json
 {
@@ -222,9 +220,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDat
 ```
 
 
-## Filtering Examples
+## Ejemplos de filtrado
 
-### Date Range
+### Rango de fechas
 
 ```bash
 # Get logs from last 7 days
@@ -234,7 +232,7 @@ GET /audit-logs?startDate=2024-01-13T00:00:00Z&endDate=2024-01-20T23:59:59Z
 GET /audit-logs?startDate=2024-01-20T00:00:00Z&endDate=2024-01-20T23:59:59Z
 ```
 
-### Event Filtering
+### Filtrado de eventos
 
 ```bash
 # Get all SMLTP policy management events
@@ -244,7 +242,7 @@ GET /audit-logs?type=smltp_policy_management
 GET /audit-logs?severity=info
 ```
 
-### User Filtering
+### Filtrado de usuarios
 
 ```bash
 # Get logs for specific user
@@ -254,26 +252,26 @@ GET /audit-logs?userId=60a7c8f5e8b4f5001f7a8c24
 GET /audit-logs?search=policy
 ```
 
-## Use Cases
+## Casos de uso
 
-- **Security Monitoring**: Monitor security events and policy violations
-- **Compliance Auditing**: Track compliance activities and violations
-- **Incident Investigation**: Investigate security incidents and breaches
-- **Policy Analysis**: Analyze policy effectiveness and enforcement
-- **User Activity**: Track user actions and API usage
+- **Monitoreo de seguridad**: supervise eventos de seguridad y violaciones de políticas
+- **Auditoría de cumplimiento**: realice un seguimiento de las actividades y violaciones de cumplimiento
+- **Investigación de incidentes**: investigue incidentes y violaciones de seguridad
+- **Análisis de políticas**: analizar la eficacia y el cumplimiento de las políticas
+- **Actividad del usuario**: seguimiento de las acciones del usuario y el uso de API
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **Predeterminado**: 100 solicitudes por minuto
+- **Diario**: 10.000 solicitudes por día
+- **Mensual**: 300.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- This endpoint requires admin privileges
-- Pagination: Uses page parameter, not offset
-- Date Range: Defaults to last 7 days if no dates provided
-- Search: Searches in description and metadata.operation fields
-- Nested Response: Response is nested under data object
-- User Info: User information is populated when available
-- Logs are retained for compliance purposes 
+- Este endpoint requiere privilegios de administrador
+- Paginación: utiliza el parámetro de página, no el desplazamiento.
+- Rango de fechas: el valor predeterminado es de 7 días si no se proporcionan fechas
+- Búsqueda: Búsquedas en los campos de descripción y metadatos.operación
+- Respuesta anidada: la respuesta está anidada en el objeto de datos.
+- Información del usuario: la información del usuario se completa cuando está disponible
+- Los registros se conservan con fines de cumplimiento.

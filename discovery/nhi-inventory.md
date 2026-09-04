@@ -1,56 +1,54 @@
 ---
 sidebar_position: 4
-title: "NHI Inventory"
-sidebar_label: "NHI Inventory"
-description: "Inventory and govern the Non-Human Identities — API keys and service accounts — behind your AI agents and workloads"
+title: "Inventario de NHIs (Identidades No Humanas)"
+sidebar_label: "Inventario de NHIs"
+description: "Realice un inventario y gobierne las identidades no humanas (claves API y cuentas de servicio) detrás de sus cargas de trabajo y agentes de IA."
 ---
 
+# Inventario del NHI
 
+El **Inventario NHI** (Administrador → Registro de agentes → **Identidades no humanas**) es el inventario de las credenciales de la máquina detrás de su IA: las claves API, las cuentas de servicio y las claves BYOK que utilizan los agentes, los servidores MCP y las cargas de trabajo. Reúne las identidades descubiertas por cada conector [Proveedor de IA en la nube](/integrations/cloud/overview), califica su riesgo y le brinda controles para bloquearlas o revocarlas.
 
-# NHI Inventory
+## Lo que muestra cada identidad
 
-The **NHI Inventory** (Admin → Agent Registry → **Non-Human Identities**) is the inventory of the machine credentials behind your AI — the API keys, service accounts, and BYOK keys that agents, MCP servers, and workloads use. It rolls up identities discovered by every [Cloud AI Provider](/en/integrations/cloud/overview) connector, scores their risk, and gives you controls to block or revoke them.
+- **Proveedor** (SecureAI / OpenAI / Anthropic / Azure / GCP / AWS) y **tipo** (agente/mcp/carga de trabajo).
+- **Puntuación de riesgo** (0–100) con factores contribuyentes (ver más abajo).
+- **Veredicto SMLTP** chip (bloqueado/aplicado/monitorizado) y recuento de recibos.
+- **Usado por**, **último uso** (días de inactividad), **rotación** y una **cuenta regresiva de vencimiento**.
+- **Estado**: saludable/remediación/crítico.
 
-## What each identity shows
+## Niveles de control
 
-- **Provider** (SecureAI / OpenAI / Anthropic / Azure / GCP / AWS) and **type** (agent / mcp / workload).
-- **Risk score** (0–100) with contributing factors (see below).
-- **SMLTP verdict** chip (blocked / enforced / monitor) and receipt count.
-- **Used-by**, **last-used** (idle days), **rotation**, and an **expiry countdown**.
-- **Status**: healthy / remediation / critical.
+Cuánto puedes *hacer* con una identidad depende de cómo se descubrió:
 
-## Control levels
-
-How much you can *do* to an identity depends on how it was discovered:
-
-| Level | What it means | Action available |
+| Nivel | Lo que significa | Acción disponible |
 |-------|---------------|------------------|
-| **Managed** | A SecureAI-issued (non-cloud) identity. | **Block / Unblock** at the gateway — denies or restores any request authenticated by that identity, and pushes the gateway revocation list. |
-| **Revocable** | Cloud-discovered **and** enforceable at the source. | **Revoke** — the padlock ("candadito"): deletes/disables the key **at the provider**. Irreversible; marks the identity blocked/critical. |
-| **Monitor-only** | Cloud-discovered but not enforceable. | Read-only. Dormancy alone never escalates it to critical (it adds a small monitor-only risk factor). |
+| **Administrado** | Una identidad emitida por SecureAI (no en la nube). | **Bloquear/Desbloquear** en la puerta de enlace: niega o restaura cualquier solicitud autenticada por esa identidad y envía la lista de revocación de la puerta de enlace. |
+| **Revocable** | Descubierto en la nube **y** ejecutable en el origen. | **Revocar** — el candado ("candadito"): elimina/inhabilita la clave **en el proveedor**. Irreversible; marca la identidad bloqueada/crítica. |
+| **Solo monitor** | Descubierto en la nube pero no aplicable. | Sólo lectura. La inactividad por sí sola nunca lo convierte en crítico (agrega un pequeño factor de riesgo exclusivo del monitor). |
 
-### Which clouds are revocable
+### ¿Qué nubes son revocables?
 
-| Identity type | Revocable at source | Monitor-only |
+| Tipo de identidad | Revocable en origen | Sólo monitor |
 |---------------|---------------------|--------------|
-| **API keys** | OpenAI, Anthropic, GCP, Azure, AWS | — |
-| **Service accounts / BYOK keys** | Anthropic, GCP, Azure | OpenAI, AWS |
+| **Claves API** | OpenAI, Antrópico, GCP, Azure, AWS | — |
+| **Cuentas de servicio/claves BYOK** | Antrópico, GCP, Azure | OpenAI, AWS |
 
-## Actions
+## Acciones
 
-| Action | Effect |
+| Acción | Efecto |
 |--------|--------|
-| **Block / Unblock** | Deny/restore requests authenticated by a managed identity's SecureAI key (gateway revocation list). |
-| **Revoke** | Cut a revocable identity at the provider. Requires the identity be enforceable with an external id; otherwise returns "not revocable at the source." |
-| **Mark rotated** | Record that a key was rotated. |
-| **Register / rotate signing key** | Manage SET signing keys for the identity. |
+| **Bloquear / Desbloquear** | Solicitudes de denegación/restauración autenticadas mediante la clave SecureAI de una identidad administrada (lista de revocación de puerta de enlace). |
+| **Revocar** | Cortar una identidad revocable en el proveedor. Requiere que la identidad sea ejecutable con una identificación externa; de lo contrario, devuelve "no revocable en la fuente". |
+| **Marca rotada** | Registre que se giró una llave. |
+| **Registrar/rotar clave de firma** | Administre las claves de firma SET para la identidad. |
 
-## Risk scoring
+## Puntuación de riesgo
 
-The governance sweeper computes a composite 0–100 score from factors including: dormant / dormant-critical, rotation-overdue / rotation-critical, expired / expiring-soon, broad scopes, no owner, reactivated, and monitor-only. Reactivation of a previously-dormant identity raises an alert.
+El barredor de gobernanza calcula una puntuación compuesta de 0 a 100 a partir de factores que incluyen: inactivo/inactivo-crítico, rotación vencida/rotación crítica, caducado/caducará pronto, alcances amplios, sin propietario, reactivado y solo monitor. La reactivación de una identidad previamente inactiva genera una alerta.
 
-## Related
+## Relacionado
 
-- [Cloud AI Providers](/en/integrations/cloud/overview) — the source of discovered identities.
-- [Cloud Sensors](/en/discovery/cloud-sensors)
-- [AI Discovery & Inventory Overview](/en/discovery/overview)
+- [Proveedores de IA en la nube](/integrations/cloud/overview): la fuente de las identidades descubiertas.
+- [Sensores de nube](/discovery/cloud-sensors)
+- [Descripción general del inventario y descubrimiento de IA](/discovery/overview)

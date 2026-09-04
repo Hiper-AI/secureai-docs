@@ -11,7 +11,7 @@ SecureAI가 작업 공간, API 키, 서비스 계정, 지출 한도 및 (Enterpr
 ## SecureAI가 가져오는 것
 
 - **작업공간**, 사용량 및 비용
-- **NHIs** — API 키, 서비스 계정 및 BYOK 키(취소 가능 — [NHI 인벤토리](/ko/en/discovery/nhi-inventory) 참조)
+- **NHIs** — API 키, 서비스 계정 및 BYOK 키(취소 가능 — [NHI 인벤토리](/ko/discovery/nhi-inventory) 참조)
 - **지출 한도**
 - **감사 로그**(기업/규정 준수 API)
 - **클로드 코드 분석**
@@ -45,13 +45,13 @@ SecureAI가 작업 공간, API 키, 서비스 계정, 지출 한도 및 (Enterpr
 
 ## 확인
 
-검색된 작업 공간/에이전트의 경우 [클라우드 센서](/ko/en/discovery/cloud-sensors)를 열고 키 및 서비스 계정의 경우 [NHI 인벤토리](/ko/en/discovery/nhi-inventory)를 엽니다. 통찰력에는 사용량, 비용, 지출 한도가 표시됩니다.
+검색된 작업 공간/에이전트의 경우 [클라우드 센서](/ko/discovery/cloud-sensors)를 열고 키 및 서비스 계정의 경우 [NHI 인벤토리](/ko/discovery/nhi-inventory)를 엽니다. 통찰력에는 사용량, 비용, 지출 한도가 표시됩니다.
 
 ## 철회
 
-Anthropic API 키, 서비스 계정, BYOK 키는 [NHI 인벤토리](/ko/en/discovery/nhi-inventory)에서 **취소 가능**합니다.
+Anthropic API 키, 서비스 계정, BYOK 키는 [NHI 인벤토리](/ko/discovery/nhi-inventory)에서 **취소 가능**합니다.
 
 ## 관련
 
-- [클라우드 AI 제공업체 개요](/ko/ko/integrations/cloud/overview)
-- [NHI 인벤토리](/ko/en/discovery/nhi-inventory)
+- [클라우드 AI 제공업체 개요](/ko/integrations/cloud/overview)
+- [NHI 인벤토리](/ko/discovery/nhi-inventory)

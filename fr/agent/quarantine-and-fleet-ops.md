@@ -40,10 +40,10 @@ Le tableau de bord résume l'ensemble du parc : couverture, nombres en ligne/ob
 ## Auto-mise à jour et anti-altération
 
 - **Auto-mise à jour** — l'agent se met à jour via une commande `update` plus un manifeste de version signé (version + somme de contrôle + signature) ; la version la plus récente peut être automatiquement synchronisée avec la flotte.
-- **Clé anti-altération/désinstallation** — une [politique](/fr/en/agent/policies-and-groups#tamper-protection--uninstall-key) peut nécessiter une clé de désinstallation afin que l'agent ne puisse pas être supprimé silencieusement. La validation fonctionne même hors réseau (un sel/hachage hors ligne est transporté jusqu'au point final), avec une clé à l'échelle de la flotte comme solution de repli ; les tentatives de désinstallation ayant échoué sont auditées.
+- **Clé anti-altération/désinstallation** — une [politique](/fr/agent/policies-and-groups#tamper-protection--uninstall-key) peut nécessiter une clé de désinstallation afin que l'agent ne puisse pas être supprimé silencieusement. La validation fonctionne même hors réseau (un sel/hachage hors ligne est transporté jusqu'au point final), avec une clé à l'échelle de la flotte comme solution de repli ; les tentatives de désinstallation ayant échoué sont auditées.
 
 ## Connexes
 
-- [Politiques & Groupes](/fr/en/agent/policies-and-groups)
-- [Egress Enforcement](/fr/en/agent/egress-enforcement)
-- [Défense contre les menaces](/fr/en/threat-defense/overview)
+- [Politiques & Groupes](/fr/agent/policies-and-groups)
+- [Egress Enforcement](/fr/agent/egress-enforcement)
+- [Défense contre les menaces](/fr/threat-defense/overview)

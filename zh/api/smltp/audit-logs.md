@@ -1,56 +1,54 @@
 ---
 id: audit-logs
-title: "Audit Logs"
-sidebar_label: "Audit Logs"
-description: "Retrieve SMLTP audit logs"
+title: "审核日志"
+sidebar_label: "审核日志"
+description: "检索 SMLTP 审核日志"
 openapi: "GET /audit-logs"
 ---
+# 审核日志
 
+检索 SMLTP（安全模型语言传输协议）审核日志以进行安全监控和合规性。
 
-# Audit Logs
-
-Retrieve SMLTP (Secure Model Language Transfer Protocol) audit logs for security monitoring and compliance.
-
-## Endpoint
+## 端点
 
 ```
 GET /audit-logs
 ```
 
-## Description
+## 说明
 
-This endpoint returns SMLTP audit logs that track security events, policy violations, and compliance activities. This is useful for security monitoring, compliance auditing, and investigating security incidents.
+此端点返回跟踪安全事件、策略违规和合规活动的 SMLTP 审核日志。这对于安全监控、合规性审核和调查安全事件非常有用。
 
-## Authentication
+## 身份验证
 
-**Required**: API Key with admin privileges
+**必需**：具有管理员权限的 API 密钥
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Query Parameters
+## 查询参数
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `page` | integer | No | 1 | Page number for pagination (default: 1) |
-| `limit` | integer | No | 50 | Number of logs per page (default: 50) |
-| `startDate` | string | No | - | Start date for filtering (ISO 8601 format) |
-| `endDate` | string | No | - | End date for filtering (ISO 8601 format) |
-| `type` | string | No | - | Filter by log type |
-| `severity` | string | No | - | Filter by severity level |
-| `userId` | string | No | - | Filter by user ID |
-| `search` | string | No | - | Search term for description or metadata |
+|参数|类型 |必填|描述 |
+|------------|------|----------|----------|
+| `page` |整数 |没有 | 1 |分页页码（默认：1）|
+| `limit` |整数 |没有 | 50 | 50每页日志数（默认：50）|
+| `startDate` |字符串|没有 | - |过滤开始日期（ISO 8601 格式）|
+| `endDate` |字符串|没有 | - |过滤结束日期（ISO 8601 格式）|
+| `type` |字符串|没有 | - |按日志类型过滤 |
+| `severity` |字符串|没有 | - |按严重级别过滤 |
+| `userId` |字符串|没有 | - |按用户 ID 过滤 |
+| `search` |字符串|没有 | - |描述或元数据的搜索词 |
 
-## Example Request
+## 请求示例
 
 ```bash
 GET /audit-logs?startDate=2024-01-01T00:00:00Z&endDate=2024-01-20T23:59:59Z&severity=info&limit=20
 ```
 
-## Success Response
+## 成功响应
 
-**Status Code**: `200 OK`
+**状态代码**：`200 OK`
 
 ```json
 {
@@ -93,33 +91,33 @@ GET /audit-logs?startDate=2024-01-01T00:00:00Z&endDate=2024-01-20T23:59:59Z&seve
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `data` | object | Response data object |
-| `data.logs` | array | Array of audit log objects |
-| `data.logs[].id` | string | Unique audit log identifier |
-| `data.logs[].timestamp` | string | Log timestamp (ISO 8601) |
-| `data.logs[].type` | string | Type of audit event |
-| `data.logs[].severity` | string | Severity level |
-| `data.logs[].description` | string | Event description |
-| `data.logs[].user` | object | User information (if available) |
-| `data.logs[].user.id` | string | User ID |
-| `data.logs[].user.name` | string | User name |
-| `data.logs[].user.email` | string | User email |
-| `data.logs[].metadata` | object | Additional metadata |
-| `data.logs[].complianceCategory` | string | Compliance category |
-| `data.logs[].outcome` | string | Event outcome |
-| `data.pagination` | object | Pagination information |
-| `data.pagination.page` | integer | Current page number |
-| `data.pagination.limit` | integer | Items per page |
-| `data.pagination.total` | integer | Total number of logs |
-| `data.pagination.pages` | integer | Total number of pages |
-| `data.dateRange` | object | Date range information |
+|领域 |类型 |描述 |
+|--------|------|-------------|
+| `success` |布尔 |指示操作是否成功 |
+| `data` |对象|响应数据对象 |
+| `data.logs` |数组|审计日志对象数组 |
+| `data.logs[].id` |字符串|唯一的审计日志标识符 |
+| `data.logs[].timestamp` |字符串|日志时间戳（ISO 8601）|
+| `data.logs[].type` |字符串|审计事件类型 |
+| `data.logs[].severity` |字符串|严重程度 |
+| `data.logs[].description` |字符串|活动描述 |
+| `data.logs[].user` |对象|用户信息（如果有）|
+| `data.logs[].user.id` |字符串|用户名 |
+| `data.logs[].user.name` |字符串|用户名 |
+| `data.logs[].user.email` |字符串|用户邮箱 |
+| `data.logs[].metadata` |对象|附加元数据 |
+| `data.logs[].complianceCategory` |字符串|合规类别|
+| `data.logs[].outcome` |字符串|活动结果 |
+| `data.pagination` |对象|分页信息|
+| `data.pagination.page` |整数 |当前页码 |
+| `data.pagination.limit` |整数 |每页项目 |
+| `data.pagination.total` |整数 |日志总数 |
+| `data.pagination.pages` |整数 |总页数 |
+| `data.dateRange` |对象|日期范围信息 |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript
 
@@ -148,7 +146,7 @@ const result = await getAuditLogs({
 console.log(result.data.logs);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -174,16 +172,16 @@ result = get_audit_logs(params)
 print(result["data"]["logs"])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDate=2024-01-01T00:00:00Z&endDate=2024-01-20T23:59:59Z&severity=info&limit=20" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Error Responses
+## 错误响应
 
-### 401 Unauthorized
+### 401 未经授权
 
 ```json
 {
@@ -195,7 +193,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDat
 }
 ```
 
-### 403 Forbidden
+### 403 禁止
 
 ```json
 {
@@ -207,7 +205,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDat
 }
 ```
 
-### 429 Too Many Requests
+### 429 请求过多
 
 ```json
 {
@@ -221,9 +219,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/audit-logs?startDat
 ```
 
 
-## Filtering Examples
+## 过滤示例
 
-### Date Range
+### 日期范围
 
 ```bash
 # Get logs from last 7 days
@@ -233,7 +231,7 @@ GET /audit-logs?startDate=2024-01-13T00:00:00Z&endDate=2024-01-20T23:59:59Z
 GET /audit-logs?startDate=2024-01-20T00:00:00Z&endDate=2024-01-20T23:59:59Z
 ```
 
-### Event Filtering
+### 事件过滤
 
 ```bash
 # Get all SMLTP policy management events
@@ -243,7 +241,7 @@ GET /audit-logs?type=smltp_policy_management
 GET /audit-logs?severity=info
 ```
 
-### User Filtering
+### 用户过滤
 
 ```bash
 # Get logs for specific user
@@ -253,26 +251,26 @@ GET /audit-logs?userId=60a7c8f5e8b4f5001f7a8c24
 GET /audit-logs?search=policy
 ```
 
-## Use Cases
+## 用例
 
-- **Security Monitoring**: Monitor security events and policy violations
-- **Compliance Auditing**: Track compliance activities and violations
-- **Incident Investigation**: Investigate security incidents and breaches
-- **Policy Analysis**: Analyze policy effectiveness and enforcement
-- **User Activity**: Track user actions and API usage
+- **安全监控**：监控安全事件和策略违规
+- **合规审计**：跟踪合规活动和违规行为
+- **事件调查**：调查安全事件和违规行为
+- **政策分析**：分析政策有效性和执行情况
+- **用户活动**：跟踪用户操作和 API 使用情况
 
-## Rate Limits
+## 速率限制
 
-- **Default**: 100 requests per minute
-- **Daily**: 10,000 requests per day
-- **Monthly**: 300,000 requests per month
+- **默认**：每分钟 100 个请求
+- **每日**：每天 10,000 个请求
+- **每月**：每月 300,000 个请求
 
-## Notes
+## 注释
 
-- This endpoint requires admin privileges
-- Pagination: Uses page parameter, not offset
-- Date Range: Defaults to last 7 days if no dates provided
-- Search: Searches in description and metadata.operation fields
-- Nested Response: Response is nested under data object
-- User Info: User information is populated when available
-- Logs are retained for compliance purposes 
+- 该端点需要管理员权限
+- 分页：使用页面参数，而不是偏移量
+- 日期范围：如果未提供日期，则默认为过去 7 天
+- 搜索：在描述和元数据.操作字段中搜索
+- 嵌套响应：响应嵌套在数据对象下
+- 用户信息：用户信息可用时填充
+- 出于合规目的保留日志

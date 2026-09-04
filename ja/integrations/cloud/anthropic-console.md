@@ -11,7 +11,7 @@ Anthropic 組織を接続すると、SecureAI がワークスペース、API キ
 ## SecureAI がインポートするもの
 
 - **ワークスペース**、使用量、およびコスト
-- **NHI** — API キー、サービス アカウント、および BYOK キー (取り消し可能 — [NHI Inventory](/ja/en/discovery/nhi-inventory) を参照)
+- **NHI** — API キー、サービス アカウント、および BYOK キー (取り消し可能 — [NHI Inventory](/ja/discovery/nhi-inventory) を参照)
 - **支出制限**
 - **監査ログ** (エンタープライズ / コンプライアンス API)
 - **クロード コード分析**
@@ -45,13 +45,13 @@ Anthropic 組織を接続すると、SecureAI がワークスペース、API キ
 
 ## 確認する
 
-検出されたワークスペース/エージェントについては [Cloud Sensors](/ja/ja/discovery/cloud-sensors) を開き、キーとサービス アカウントについては [NHI Inventory](/ja/ja/discovery/nhi-inventory) を開きます。分析情報には、使用量、コスト、支出の制限が表示されます。
+検出されたワークスペース/エージェントについては [Cloud Sensors](/ja/discovery/cloud-sensors) を開き、キーとサービス アカウントについては [NHI Inventory](/ja/discovery/nhi-inventory) を開きます。分析情報には、使用量、コスト、支出の制限が表示されます。
 
 ## 失効
 
-Anthropic API キー、サービス アカウント、BYOK キーは、[NHI Inventory](/ja/en/discovery/nhi-inventory) から **取り消し可能**です。
+Anthropic API キー、サービス アカウント、BYOK キーは、[NHI Inventory](/ja/discovery/nhi-inventory) から **取り消し可能**です。
 
 ## 関連
 
-- [クラウド AI プロバイダーの概要](/ja/ja/integrations/cloud/overview)
-- [国民健康保険の目録](/ja/ja/discovery/nhi-inventory)
+- [クラウド AI プロバイダーの概要](/ja/integrations/cloud/overview)
+- [国民健康保険の目録](/ja/discovery/nhi-inventory)

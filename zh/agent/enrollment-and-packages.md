@@ -1,53 +1,51 @@
 ---
 sidebar_position: 3
-title: "Enrollment & Installer Packages"
-sidebar_label: "Enrollment & Packages"
-description: "How SecureAI OS Agent installer packages, enrollment keys, and device tokens work"
+title: "注册和安装包"
+sidebar_label: "报名及套餐"
+description: "SecureAI OS Agent 安装程序包、注册密钥和设备令牌的工作原理"
 ---
+# 注册和安装包
 
+**安装程序包**是您构建用于部署代理的单元。它捆绑了平台、设备应加入的标签和组以及专用注册密钥，因此安装命令是独立的。
 
-# Enrollment & Installer Packages
+## 创建包
 
-An **installer package** is the unit you build to deploy the agent. It bundles the platform, the tags and group a device should join, and a dedicated enrollment key — so the install command is self-contained.
+在 **管理 → 代理注册表 → 操作系统代理** 中，使用以下命令创建一个包：
 
-## Creating a package
+|领域 |描述 |
+|--------|-------------|
+| **名称/描述** |识别包裹（例如“工程笔记本电脑”）。 |
+| **平台** | Windows/Linux/macOS。 |
+| **封装类型** | `standalone`。 |
+| **端点标签** |应用于通过此包注册的设备的标签。 |
+| **报名组** |设备在首次注册时固定到的[组](/zh/agent/policies-and-groups)。 |
 
-In **Admin → Agent Registry → OS Agents**, create a package with:
+保存时，SecureAI **自动生成范围为 `agent:enroll`** 的专用 API 密钥，并将其存储为包的注册密钥，因此安装命令不需要单独的凭据。删除该包会停用该密钥。
 
-| Field | Description |
-|-------|-------------|
-| **Name / description** | Identify the package (e.g. "Engineering laptops"). |
-| **Platform** | Windows / Linux / macOS. |
-| **Package type** | `standalone`. |
-| **Endpoint tags** | Labels applied to devices enrolled with this package. |
-| **Enrollment group** | The [group](/zh/agent/policies-and-groups) a device is pinned to on first enroll. |
+## 注册组（自动固定）
 
-On save, SecureAI **auto-generates a dedicated API key scoped to `agent:enroll`** and stores it as the package's enrollment key, so the install command needs no separate credential. Deleting the package deactivates that key.
+程序包的 **注册组** 是硬引脚：通过程序包注册的设备在第一次联系时绑定到该组。然后，组成员身份将决定设备解析哪些[策略](/zh/agent/policies-and-groups)。
 
-## Enrollment groups (auto-pin)
+## 注册握手
 
-The package's **enrollment group** is a hard pin: a device that enrolls with the package is bound to that group on first contact. Group membership then drives which [policy](/zh/agent/policies-and-groups) the device resolves.
+当代理首次运行时，它使用注册密钥调用 `POST /enroll` 并发送其计算机 ID、主机名、操作系统、体系结构、版本、指纹和功能。后端：
 
-## The enrollment handshake
+1. 注册（或匹配）设备。
+2. 发出**每设备令牌**，显示一次，用于验证所有后续调用。
+3. 返回运行时**配置**（解析的策略、出口设置、路由等）。
 
-When the agent first runs it calls `POST /enroll` using the enrollment key and sends its machine id, hostname, OS, architecture, version, fingerprint, and capabilities. The backend:
+每设备令牌**在每次注册时轮换**。已被 **撤销** 的设备无法重新注册 - 注册响应报告 `revoked: true`，并且设备将保持断开状态，直到管理员重新启用它。
 
-1. Registers (or matches) the device.
-2. Issues a **per-device token**, shown once, that authenticates all subsequent calls.
-3. Returns the runtime **configuration** (resolved policy, egress settings, routing, etc.).
+## 后端URL解析
 
-The per-device token **rotates on every enroll**. A device that has been **revoked** cannot re-enroll — the enroll response reports `revoked: true`, and the device stays cut off until an admin re-enables it.
+特工给`BACKEND_URL`家里打电话。在服务器端，有效 URL 是从转发/请求源标头解析的，并且可以使用 `SECUREAI_AGENT_URL` 环境变量覆盖，这在反向代理后面很有用。
 
-## Backend URL resolution
+## 管理注册设备
 
-The agent calls home to `BACKEND_URL`. On the server side the effective URL is resolved from forwarded/request-origin headers and can be overridden with the `SECUREAI_AGENT_URL` environment variable, which is useful behind reverse proxies.
+在“操作系统代理”选项卡中，您可以针对每个设备：发送命令、**撤销**/**重新启用**、删除、分配组以及链接/取消链接所有者用户。支持批量操作。命令通过具有心跳队列回退功能的 WebSocket 通道进行传递（设备离线时排队的命令将在其下一个心跳时传递，TTL 为 1 小时）。
 
-## Managing enrolled devices
+## 相关
 
-From the OS Agents tab you can, per device: send a command, **revoke** / **re-enable**, delete, assign a group, and link/unlink an owner user. Bulk operations are supported. Command delivery is over a WebSocket channel with a heartbeat-queue fallback (commands queued while a device is offline are delivered on its next heartbeat, with a 1-hour TTL).
-
-## Related
-
-- [Installing the Agent](/zh/agent/installation)
-- [Policies & Groups](/zh/agent/policies-and-groups)
-- [Self-update & anti-tamper](/zh/agent/quarantine-and-fleet-ops#self-update--anti-tamper)
+- [安装代理](/zh/agent/installation)
+- [策略和组](/zh/agent/policies-and-groups)
+- [自我更新&防篡改](/zh/agent/quarantine-and-fleet-ops#self-update--anti-tamper)

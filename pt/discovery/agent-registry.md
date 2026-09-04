@@ -1,43 +1,41 @@
 ---
 sidebar_position: 5
-title: "Agent Registry"
-sidebar_label: "Agent Registry"
-description: "Govern your logical AI agents and chatbots — owners, purpose, autonomy level, risk, and bindings"
+title: "Registro de Agentes e Modelos Locais"
+sidebar_label: "Registro de Agentes"
+description: "Controle seus agentes lógicos de IA e chatbots — proprietários, finalidade, nível de autonomia, risco e vínculos"
 ---
 
+# Registro de Agente
 
-
-# Agent Registry
-
-The **Agent Registry** (Admin → Agent Registry → **AI Agents**) is the governance inventory of your **logical** AI agents and chatbots — the applications and assistants your organization builds and runs. It records the metadata you need to govern each one: who owns it, what it's for, how autonomous it is, and what it's connected to.
+O **Registro de Agentes** (Administrador → Registro de Agentes → **Agentes de IA**) é o inventário de governança de seus agentes e chatbots de IA **lógicos** — os aplicativos e assistentes que sua organização cria e executa. Ele registra os metadados necessários para governar cada um: quem é o proprietário, para que serve, quão autônomo é e a que está conectado.
 
 <Info>
-**Not the endpoint fleet**
+**Não é a frota de endpoints**
 
-The Agent Registry is about *logical* AI agents (a support chatbot, an internal copilot). It's different from the **OS Agents** fleet — the SecureAI software installed on endpoints, documented under [Endpoint Agent](/pt/en/agent/overview).
+O Agent Registry é sobre agentes de IA *lógicos* (um chatbot de suporte, um copiloto interno). É diferente da frota de **OS Agents**: o software SecureAI instalado em endpoints, documentado em [Endpoint Agent](/pt/agent/overview).
 </Info>
 
-## What's recorded per agent
+## O que é registrado por agente
 
-| Field | Description |
-|-------|-------------|
-| **Owner** | The accountable user/team. |
-| **Purpose** | What the agent does. |
-| **Autonomy** | Level **L1–L3**, from assistive to fully autonomous. |
-| **Risk** | Governance risk rating. |
-| **Bindings** | Connected MCP servers and datasets/knowledge bases. |
-| **Monitoring** | For chatbots, the monitoring/Prompt-Shield configuration. |
+| Campo | Descrição |
+|-------|------------|
+| **Proprietário** | O usuário/equipe responsável. |
+| **Objetivo** | O que o agente faz. |
+| **Autonomia** | Nível **L1–L3**, de assistencial a totalmente autônomo. |
+| **Risco** | Classificação de risco de governança. |
+| **Encadernações** | Servidores MCP conectados e conjuntos de dados/bases de conhecimento. |
+| **Monitoramento** | Para chatbots, a configuração de monitoramento/Prompt-Shield. |
 
-## Working with the registry
+## Trabalhando com o registro
 
-- **Import** agents to bootstrap the inventory.
-- Review **relationships** between agents, their tools, and their data.
-- **Apply suggested autonomy** — accept a recommended autonomy level for an agent.
-- Register chatbots for monitoring; a chatbot first seen through the [Prompt Shield API](/pt/en/api/threat-defense/prompt-shield) is auto-registered here as `observed` for your review.
+- **Importar** agentes para inicializar o inventário.
+- Revise **relacionamentos** entre agentes, suas ferramentas e seus dados.
+- **Aplicar autonomia sugerida** — aceite um nível de autonomia recomendado para um agente.
+- Cadastrar chatbots para monitoramento; um chatbot visto pela primeira vez por meio da [API Prompt Shield](/pt/api/threat-defense/prompt-shield) é registrado automaticamente aqui como `observed` para sua análise.
 
-## Related
+## Relacionado
 
-- [Endpoint Agent](/pt/en/agent/overview) — the OS-level agent fleet (distinct from this).
-- [NHI Inventory](/pt/en/discovery/nhi-inventory) — the identities agents authenticate with.
-- [Prompt Shield API](/pt/en/api/threat-defense/prompt-shield) — auto-registers chatbots.
-- [AI Discovery & Inventory Overview](/pt/en/discovery/overview)
+- [Endpoint Agent](/pt/agent/overview) — a frota de agentes no nível do sistema operacional (diferente desta).
+- [NHI Inventário](/pt/discovery/nhi-inventory) — as identidades com as quais os agentes se autenticam.
+- [API Prompt Shield](/pt/api/threat-defense/prompt-shield) — registra automaticamente chatbots.
+- [Visão geral do inventário e descoberta de IA](/pt/discovery/overview)

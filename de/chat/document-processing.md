@@ -82,4 +82,4 @@ Mit SecureAI können Sie verschiedene Dokumenttypen hochladen und verarbeiten, u
 ## Nächste Schritte
 
 
-- [Indizes](/de/en/indexes/overview) – Verwalten Sie Ihre Wissensdatenbanken
+- [Indizes](/de/indexes/overview) – Verwalten Sie Ihre Wissensdatenbanken

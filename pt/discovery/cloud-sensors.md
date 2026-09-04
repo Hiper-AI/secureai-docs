@@ -1,46 +1,44 @@
 ---
 sidebar_position: 2
-title: "Cloud Sensors"
-sidebar_label: "Cloud Sensors"
-description: "The read-only inventory of agents and models discovered inside your connected AI cloud platforms"
+title: "Sensores Cloud para IA"
+sidebar_label: "Sensores Cloud"
+description: "O inventário somente leitura de agentes e modelos descobertos em suas plataformas de nuvem de IA conectadas"
 ---
 
+# Sensores de nuvem
 
-
-# Cloud Sensors
-
-**Cloud Sensors** (Admin → Agent Registry → **Cloud**) is the inventory of agents, models, and deployments discovered inside your connected cloud AI platforms — **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform, and Anthropic Console**. It's read-only: you configure the connectors in [Integrations](/pt/en/integrations/cloud/overview) and Cloud Sensors shows what they found.
+**Cloud Sensors** (Admin → Agent Registry → **Cloud**) é o inventário de agentes, modelos e implantações descobertos dentro de suas plataformas de IA em nuvem conectadas — **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform e Anthropic Console**. É somente leitura: você configura os conectores em [Integrações](/pt/integrations/cloud/overview) e o Cloud Sensors mostra o que encontrou.
 
 ## KPIs
 
-| KPI | Meaning |
+| KPI | Significado |
 |-----|---------|
-| **Connected Providers** | How many cloud providers are configured and connected. |
-| **Discovered Agents** | Total agents/models currently visible across providers. |
-| **Active Cloud Agents** | Agents still present in the latest discovery. |
-| **Auto-Retired** | Agents removed by a recent discovery (they disappeared from the provider). |
+| **Provedores Conectados** | Quantos provedores de nuvem estão configurados e conectados. |
+| **Agentes Descobertos** | Total de agentes/modelos atualmente visíveis em todos os provedores. |
+| **Agentes de nuvem ativos** | Agentes ainda presentes na última descoberta. |
+| **Aposentado automaticamente** | Agentes removidos por uma descoberta recente (desapareceram do provedor). |
 
-Each KPI carries a 30-day sparkline built from sync history.
+Cada KPI carrega um minigráfico de 30 dias criado a partir do histórico de sincronização.
 
-## The inventory table
+## A tabela de inventário
 
-| Column | Description |
-|--------|-------------|
-| **Agent** | Discovered agent/model name. |
-| **Provider** | Azure / AWS / GCP / OpenAI / Anthropic. |
-| **Workspace / Deployment** | Where it lives on the provider. |
-| **Model** | Underlying model. |
-| **Status** | `observed`, `active`, or `retired` (with a `· auto` suffix when auto-retired by discovery). |
-| **Last discovery** | When it was last seen. |
+| Coluna | Descrição |
+|--------|------------|
+| **Agente** | Nome do agente/modelo descoberto. |
+| **Provedor** | Azure/AWS/GCP/OpenAI/Anthropic. |
+| **Espaço de trabalho/implantação** | Onde ele mora no provedor. |
+| **Modelo** | Modelo subjacente. |
+| **Status** | `observed`, `active` ou `retired` (com um sufixo `· auto` quando desativado automaticamente por descoberta). |
+| **Última descoberta** | Quando foi visto pela última vez. |
 
-Filter by provider, status, or free-text search; export the visible rows to CSV.
+Filtre por provedor, status ou pesquisa de texto livre; exporte as linhas visíveis para CSV.
 
-## Syncing
+## Sincronizando
 
-Run **Sync** for a single provider or **Sync All**. Each provider also exposes an **Insights** dialog (usage, cost, governance details specific to that provider). Connector credentials and setup live in **Admin → Integrations → Cloud** — this tab links out to it, and the empty state points you there.
+Execute **Sincronizar** para um único provedor ou **Sincronizar tudo**. Cada provedor também expõe uma caixa de diálogo **Insights** (uso, custo e detalhes de governança específicos desse provedor). As credenciais e a configuração do conector ficam em **Administrador → Integrações → Nuvem** — esta guia está vinculada a ele e o estado vazio aponta para lá.
 
-## Related
+## Relacionado
 
-- [Cloud AI Providers](/pt/en/integrations/cloud/overview) — connect and configure the providers.
-- [NHI Inventory](/pt/en/discovery/nhi-inventory) — identities discovered by the same connectors.
-- [AI Discovery & Inventory Overview](/pt/en/discovery/overview)
+- [Provedores de IA em nuvem](/pt/integrations/cloud/overview) — conecte e configure os provedores.
+- [NHI Inventário](/pt/discovery/nhi-inventory) — identidades descobertas pelos mesmos conectores.
+- [Visão geral do inventário e descoberta de IA](/pt/discovery/overview)

@@ -1,36 +1,34 @@
 ---
 sidebar_position: 1
-title: "Webhooks Overview"
-sidebar_label: "Overview"
-description: "Receive real-time security and platform events from SecureAI via signed HTTP webhooks"
+title: "Webhooks de Eventos — Visión General"
+sidebar_label: "Webhooks"
+description: "Reciba eventos de plataforma y seguridad en tiempo real de SecureAI a través de webhooks HTTP firmados"
 ---
-
-
 
 # Webhooks
 
-SecureAI can push security and platform events to your own HTTP endpoints in real time — Prompt Shield blocks, canary leaks, DLP/PII incidents, API limit events, and model failovers. Every delivery is signed with an HMAC-SHA256 signature so you can verify it came from SecureAI and was not tampered with or replayed.
+SecureAI puede enviar eventos de plataforma y seguridad a sus propios endpoints HTTP en tiempo real: bloqueos de Prompt Shield, fugas canarias, incidentes DLP/PII, eventos de límite de API y conmutaciones por error de modelos. Cada entrega está firmada con una firma HMAC-SHA256 para que pueda verificar que proviene de SecureAI y que no fue manipulada ni reproducida.
 
-Webhook endpoints are managed by administrators in **Admin → Webhooks** (API base `/api/admin/webhooks`).
+Los administradores administran los endpoints de Webhook en **Admin → Webhooks** (base de API `/api/admin/webhooks`).
 
-## Managing endpoints
+## Gestión de endpoints
 
-| Action | Route |
+| Acción | Ruta |
 |--------|-------|
-| List endpoints (+ event catalog) | `GET /api/admin/webhooks` |
-| Create endpoint (returns secret once) | `POST /api/admin/webhooks` |
-| Update endpoint | `PUT /api/admin/webhooks/:id` |
-| Rotate signing secret (returned once) | `POST /api/admin/webhooks/:id/rotate-secret` |
-| Send a test delivery | `POST /api/admin/webhooks/:id/test` |
-| Delete endpoint | `DELETE /api/admin/webhooks/:id` |
+| Listar endpoints (+ catálogo de eventos) | `GET /api/admin/webhooks` |
+| Crear endpoint (devuelve el secreto una vez) | `POST /api/admin/webhooks` |
+| Actualizar endpoint | `PUT /api/admin/webhooks/:id` |
+| Rotar el secreto de firma (devuelto una vez) | `POST /api/admin/webhooks/:id/rotate-secret` |
+| Enviar una entrega de prueba | `POST /api/admin/webhooks/:id/test` |
+| Eliminar endpoint | `DELETE /api/admin/webhooks/:id` |
 
-Create-time inputs: `url`, `description`, `events[]` (see [Events](/en/api/webhooks/events)), and `enabled`. The signing secret (`whsec_...`) is shown **only** on create and rotate — store it securely; you cannot retrieve it again.
+Entradas en el momento de la creación: `url`, `description`, `events[]` (consulte [Eventos](/api/webhooks/events)) y `enabled`. El secreto de firma (`whsec_...`) se muestra **solo** al crear y rotar; guárdelo de forma segura; no puedes recuperarlo de nuevo.
 
-The endpoint `url` is SSRF-validated: only `http(s)` is accepted, and private/loopback/link-local hosts are rejected unless the instance runs with `WEBHOOKS_ALLOW_PRIVATE=true` (self-hosted receivers often need this).
+El endpoint `url` está validado por SSRF: solo se acepta `http(s)` y los hosts privados/loopback/link-local se rechazan a menos que la instancia se ejecute con `WEBHOOKS_ALLOW_PRIVATE=true` (los receptores autohospedados a menudo necesitan esto).
 
-## Delivery format
+## Formato de entrega
 
-Each delivery is an HTTP `POST` with a JSON body:
+Cada entrega es un HTTP `POST` con un cuerpo JSON:
 
 ```json
 {
@@ -41,22 +39,22 @@ Each delivery is an HTTP `POST` with a JSON body:
 }
 ```
 
-And these headers:
+Y estos encabezados:
 
-| Header | Description |
+| Encabezado | Descripción |
 |--------|-------------|
 | `Content-Type` | `application/json` |
-| `X-SecureAI-Event` | The event type (e.g. `promptshield:attack:blocked`). |
-| `X-SecureAI-Delivery` | A unique delivery UUID (use for idempotency). |
+| `X-SecureAI-Event` | El tipo de evento (por ejemplo, `promptshield:attack:blocked`). |
+| `X-SecureAI-Delivery` | Un UUID de entrega único (uso para idempotencia). |
 | `X-SecureAI-Signature` | `t=<unix-seconds>,v1=<hex hmac-sha256(secret, "${t}.${rawBody}")>` |
 
-Your endpoint should return any `2xx` status to acknowledge the delivery.
+Su endpoint debe devolver cualquier estado `2xx` para acusar recibo de la entrega.
 
-## Verifying the signature
+## Verificando la firma
 
-Recompute the HMAC over `` `${t}.${rawBody}` `` using your signing secret and compare it to the `v1` value. Reject the delivery if it doesn't match, or if `t` is outside your tolerance window (replay protection). **Verify against the raw request body** — parsing and re-serializing the JSON first will change the bytes and break the signature.
+Vuelva a calcular el HMAC sobre `` `${t}.${rawBody}` `` using your signing secret and compare it to the `v1` value. Reject the delivery if it doesn't match, or if `t` está fuera de su ventana de tolerancia (protección de reproducción). **Verifique con el cuerpo de la solicitud sin formato**: analizar y volver a serializar el JSON primero cambiará los bytes y romperá la firma.
 
-### Node.js (Express)
+### Node.js (Rápido)
 
 ```javascript
 import crypto from 'crypto';
@@ -88,7 +86,7 @@ app.post('/webhooks/secureai', express.raw({ type: 'application/json' }), (req, 
 });
 ```
 
-### Python (Flask)
+### Python (frasco)
 
 ```python
 import hashlib, hmac, time
@@ -116,15 +114,15 @@ def secureai_webhook():
     return "", 200
 ```
 
-## Reliability
+## Confiabilidad
 
-- **Retries:** up to 3 attempts with 0s / 10s / 60s backoff, 5s timeout each. Any `2xx` acknowledges.
-- **Auto-disable:** after 20 consecutive delivery failures an endpoint is automatically disabled; an admin re-enables it (which also resets the failure counter).
-- **At-least-once:** deliveries may repeat — deduplicate on `X-SecureAI-Delivery` (or the payload `id`).
-- **Fire-and-forget:** webhook delivery never blocks or delays the originating API request.
+- **Reintentos:** hasta 3 intentos con retroceso de 0 s/10 s/60 s, tiempo de espera de 5 s cada uno. Cualquier `2xx` reconoce.
+- **Desactivación automática:** después de 20 errores de entrega consecutivos, un endpoint se desactiva automáticamente; un administrador lo vuelve a habilitar (lo que también restablece el contador de fallas).
+- **Al menos una vez:** las entregas pueden repetirse: deduplicar en `X-SecureAI-Delivery` (o la carga útil `id`).
+- **Dispara y olvida:** la entrega del webhook nunca bloquea ni retrasa la solicitud de API de origen.
 
-## Related
+## Relacionado
 
-- [Webhook Events](/en/api/webhooks/events) — the full event catalog and payloads.
-- [Redundancy & Failover](/en/api/redundancy) — source of `api:model_failover`.
-- [Threat Defense](/en/threat-defense/overview) — source of the `promptshield:*` events.
+- [Eventos Webhook](/api/webhooks/events): el catálogo completo de eventos y las cargas útiles.
+- [Redundancia y conmutación por error](/api/redundancy) — fuente de `api:model_failover`.
+- [Threat Defense](/threat-defense/overview) — fuente de los eventos `promptshield:*`.

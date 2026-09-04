@@ -1,40 +1,38 @@
 ---
 sidebar_position: 1
-title: "AI Discovery & Inventory Overview"
-sidebar_label: "Overview"
-description: "How SecureAI discovers and inventories every AI agent, model, identity, and shadow-AI source across your organization"
+title: "人工智能发现和库存概述"
+sidebar_label: "概述"
+description: "SecureAI 如何发现并清点整个组织中的每个 AI 代理、模型、身份和影子 AI 源"
 ---
+# 人工智能发现和库存
 
+SecureAI 在您的组织中构建一个单一的、持续更新的 AI 清单——您运行的代理和模型、它们背后的身份以及您不知道的影子 AI。它通过**三个互补的发现信号**来实现这一点，所有这些信号都出现在**管理→代理注册表**下。
 
-# AI Discovery & Inventory
+## 三个信号
 
-SecureAI builds a single, continuously-updated inventory of the AI in your organization — the agents and models you run, the identities behind them, and the shadow AI you didn't know about. It does this from **three complementary discovery signals**, all surfaced under **Admin → Agent Registry**.
-
-## The three signals
-
-| Signal | Sees | Fed by |
+|信号|看到 |喂养者 |
 |--------|------|--------|
-| **Cloud APIs** | Agents, models, deployments, and identities inside your AI platforms. | [Cloud AI Provider](/zh/integrations/cloud/overview) connectors → [Cloud Sensors](/zh/discovery/cloud-sensors) |
-| **Network / CASB** | Corporate source IPs calling LLM APIs, with no agent installed. | [CASB / SWG](/zh/integrations/casb/overview) connectors → [Network Sources](/zh/discovery/network-sources) |
-| **Endpoint agent** | AI/MCP activity on managed laptops and servers. | [OS Agent](/zh/agent/overview) |
+| **云 API** | AI 平台内的代理、模型、部署和身份。 | [云 AI 提供商](/zh/integrations/cloud/overview) 连接器 → [云传感器](/zh/discovery/cloud-sensors) |
+| **网络/CASB** |调用 LLM API 的公司源 IP，未安装代理。 | [CASB / SWG](/zh/integrations/casb/overview) 连接器 → [网络资源](/zh/discovery/network-sources) |
+| **端点代理** |托管笔记本电脑和服务器上的 AI/MCP 活动。 | [操作系统代理](/zh/agent/概述) |
 
-Identities discovered across all signals roll up into the [NHI Inventory](/zh/discovery/nhi-inventory), and the logical agents/chatbots you govern live in the [Agent Registry](/zh/discovery/agent-registry).
+在所有信号中发现的身份都会汇总到[NHI库存中，并且您管理的逻辑代理/聊天机器人位于[代理注册表](/zh/discovery/agent-registry)中。
 
-## The inventory tabs
+## 库存选项卡
 
-Under **Admin → Agent Registry** you'll find:
+在**管理 → 代理注册表**下，您会发现：
 
-- **[Cloud Sensors](/zh/discovery/cloud-sensors)** — cloud-discovered agents and models.
-- **[Network Sources](/zh/discovery/network-sources)** — shadow-AI sources found in CASB/SWG logs.
-- **[NHI Inventory](/zh/discovery/nhi-inventory)** — non-human identities (keys, service accounts) with block/revoke controls.
-- **[Agent Registry](/zh/discovery/agent-registry)** — governance metadata for your logical AI agents and chatbots.
+- **[云传感器](/zh/discovery/cloud-sensors)** — 云发现的代理和模型。
+- **[网络源](/zh/discovery/network-sources)** — 在 CASB/SWG 日志中找到的影子 AI 源。
+- **[NHI Inventory](/zh/discovery/nhi-inventory)** — 具有阻止/撤销控制的非人类身份（密钥、服务帐户）。
+- **[代理注册表](/zh/discovery/agent-registry)** — 逻辑 AI 代理和聊天机器人的治理元数据。
 
-## Why it matters
+## 为什么这很重要
 
-You can't govern what you can't see. Discovery gives you the denominator: every model endpoint, every key, every device or workload touching AI — so policy, cost control, and incident response apply to your *whole* estate, not just the parts that were declared.
+你无法管理你看不到的东西。 Discovery 为您提供分母：每个模型端点、每个密钥、每个涉及 AI 的设备或工作负载 - 因此策略、成本控制和事件响应适用于您的“整个”资产，而不仅仅是已声明的部分。
 
-## Related
+## 相关
 
-- [Cloud AI Providers](/zh/integrations/cloud/overview)
-- [CASB & Network (SWG)](/zh/integrations/casb/overview)
-- [Endpoint Agent](/zh/agent/overview)
+- [云人工智能提供商](/zh/integrations/cloud/overview)
+- [CASB 和网络 (SWG)](/zh/integrations/casb/overview)
+- [Endpoint Agent](/zh/agent/概述)

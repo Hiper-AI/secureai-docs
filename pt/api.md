@@ -1,86 +1,85 @@
 ---
 sidebar_position: 5
-title: "API Reference"
+title: "Referência da API Externa"
+sidebar_label: "Referência API"
 ---
 
+# Referência de API
 
+A API externa SecureAI fornece recursos de conclusão de chat de IA com recuperação de base de conhecimento, políticas de segurança e rastreamento de uso abrangente. Esta API foi projetada para desenvolvedores externos e integrações usando autenticação de chave de API.
 
-# API Reference
+## Principais recursos
 
-SecureAI External API provides AI chat completion capabilities with knowledge base retrieval, security policies, and comprehensive usage tracking. This API is designed for external developers and integrations using API key authentication.
+- **RAG (Geração Aumentada de Recuperação)**: Pesquise automaticamente bases de conhecimento para contexto relevante
+- **Suporte a vários modelos**: OpenAI, Anthropic, Google, Meta e outros modelos de IA
+- **Redundância e failover de modelo**: cadeias de failover definidas pelo chamador (primário + substitutos) com tempos limite por tentativa
+- **Endpoint compatível com OpenAI**: aponte qualquer SDK OpenAI para `/api/external/v1` — sem alterações de código
+- **Geração de imagens**: gere e edite imagens usando o Google Gemini 2.5 Flash Image
+- **Speech-to-Speech (S2S)**: conversas de voz em tempo real usando OpenAI Realtime API com WebRTC
+- **Políticas de segurança**: aplicação de políticas SMLTP, Prompt Shield por chamada e recibos de conformidade assinados
+- **Webhooks**: entrega assinada e em tempo real de eventos de segurança e de plataforma
+- **Acompanhamento de uso**: monitoramento abrangente de uso, cota de autoatendimento e limitação de taxa
+- **Integração da base de conhecimento**: acesso a bases de conhecimento pessoais e compartilhadas
+- **Gerenciamento de usuários**: recursos completos de gerenciamento de usuários, grupos e funções
+- **Registro de auditoria**: registros abrangentes de atividades e auditoria de segurança
 
-## Key Features
+## Autenticação
 
-- **RAG (Retrieval-Augmented Generation)**: Automatically search knowledge bases for relevant context
-- **Multi-Model Support**: OpenAI, Anthropic, Google, Meta, and other AI models
-- **Model Redundancy & Failover**: Caller-defined failover chains (primary + fallbacks) with per-attempt timeouts
-- **OpenAI-Compatible Endpoint**: Point any OpenAI SDK at `/api/external/v1` — no code changes
-- **Image Generation**: Generate and edit images using Google Gemini 2.5 Flash Image
-- **Speech-to-Speech (S2S)**: Real-time voice conversations using OpenAI Realtime API with WebRTC
-- **Security Policies**: SMLTP policy enforcement, per-call Prompt Shield, and signed compliance receipts
-- **Webhooks**: Signed, real-time delivery of security and platform events
-- **Usage Tracking**: Comprehensive usage monitoring, self-service quota, and rate limiting
-- **Knowledge Base Integration**: Access to personal and shared knowledge bases
-- **User Management**: Complete user, group, and role management capabilities
-- **Audit Logging**: Comprehensive activity and security audit logs
-
-## Authentication
-
-All endpoints (except health check) require API key authentication using Bearer token:
+Todos os endpoints (exceto verificação de integridade) exigem autenticação de chave de API usando token de portador:
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Base URL
+##URL base
 
 ```
 https://{customer.name}.hiperai.ai/api/external
 ```
 
-For the OpenAI-compatible surface, point your SDK's base URL at:
+Para a superfície compatível com OpenAI, aponte o URL base do seu SDK para:
 
 ```
 https://{customer.name}.hiperai.ai/api/external/v1
 ```
 
-## Billing and Usage
+## Faturamento e uso
 
-By default, API requests are billed to the user account that owns the API key. You can specify a different user to bill by including the `user_id` parameter in your request. This allows for:
+Por padrão, as solicitações de API são cobradas da conta do usuário que possui a chave de API. Você pode especificar um usuário diferente para faturar incluindo o parâmetro `user_id` em sua solicitação. Isso permite:
 
-- Multi-tenant applications with per-user billing
-- Flexible completion limit management
-- Per-user "Usage by Model" settings
+- Aplicativos multilocatários com faturamento por usuário
+- Gerenciamento flexível de limites de conclusão
+- Configurações de "Uso por modelo" por usuário
 
-## Rate Limits
+## Limites de taxa
 
-- **Default**: 60 requests per minute, 1000 requests per hour
-- **Daily limits**: 100 requests (configurable)
-- **Monthly limits**: 10,000 requests (configurable)
+- **Padrão**: 60 solicitações por minuto, 1.000 solicitações por hora
+- **Limites diários**: 100 solicitações (configuráveis)
+- **Limites mensais**: 10.000 solicitações (configuráveis)
 
-## Quick Start
+## Início rápido
 
-### 1. Health Check
+### 1. Exame de saúde
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 ```
 
-### 2. Get Available Models
+### 2. Obtenha modelos disponíveis
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 3. Get Available Knowledge Bases
+### 3. Obtenha bases de conhecimento disponíveis
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 4. Create a Chat Completion
+### 4. Crie uma conclusão de bate-papo
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -97,68 +96,68 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## API Endpoints
+## Terminais de API
 
-### System
-- [Health Check](/pt/en/api/system/health) - Check API status
+### Sistema
+- [Verificação de integridade](/pt/api/system/health) - Verifique o status da API
 
-### Discovery
-- [Get Available Models](/pt/en/api/discovery/models) - List available AI models
-- [Get Available Knowledge Bases](/pt/en/api/discovery/indexes) - List accessible knowledge bases
-- [Get Security Policies](/pt/en/api/discovery/smltp-policies) - List available SMLTP policies
+### Descoberta
+- [Obter modelos disponíveis](/pt/api/discovery/models) - Listar modelos de IA disponíveis
+- [Obter bases de conhecimento disponíveis](/pt/api/discovery/indexes) - Listar bases de conhecimento acessíveis
+- [Obter políticas de segurança](/pt/api/discovery/smltp-policies) - Listar políticas SMLTP disponíveis
 
-### Chat
-- [Chat Completion](/pt/en/api/chat/completions) - Main AI chat endpoint with RAG
-- [OpenAI-Compatible Endpoint](/pt/en/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` for OpenAI SDKs
-- [Redundancy & Failover](/pt/en/api/redundancy) - Model failover chains
-- [Policy Check](/pt/en/api/policy-check) - Dry-run the security pipeline without calling a model
-- [Usage](/pt/en/api/usage) - Self-service quota, budget, and rate limits
-- [Receipts](/pt/en/api/receipts) - Fetch signed SMLTP compliance receipts
+### Bate-papo
+- [Conclusão do bate-papo](/pt/api/chat/completions) - Endpoint principal do bate-papo da IA com RAG
+- [Ponto final compatível com OpenAI](/pt/api/chat/openai-compatível) - Drop-in `/v1/chat/completions` para SDKs OpenAI
+- [Redundância e Failover](/pt/api/redundancy) - Modelar cadeias de failover
+- [Policy Check](/pt/api/policy-check) - Execute o pipeline de segurança sem chamar um modelo
+- [Uso](/pt/api/usage) - Cota de autoatendimento, orçamento e limites de taxa
+- [Recibos](/pt/api/receipts) - Buscar recibos de conformidade assinados SMLTP
 
 ### Webhooks
-- [Webhooks Overview](/pt/en/api/webhooks/overview) - Signed real-time event delivery
-- [Webhook Events](/pt/en/api/webhooks/events) - Event catalog and payloads
+- [Visão geral dos Webhooks](/pt/api/webhooks/overview) - Entrega de eventos assinados em tempo real
+- [Eventos Webhook](/pt/api/webhooks/events) - Catálogo de eventos e cargas úteis
 
-### Images
-- [Generate Images](/pt/en/api/images/generations) - Generate images from text or edit existing images
-- [Edit Images](/pt/en/api/images/edits) - Image-to-image editing with text instructions
+### Imagens
+- [Gerar Imagens](/pt/api/images/generações) - Gerar imagens a partir de texto ou editar imagens existentes
+- [Editar imagens](/pt/api/images/edits) - Edição imagem a imagem com instruções de texto
 
-### Speech/S2S
-- [Initiate S2S WebRTC Session](/pt/en/api/speech/webrtc) - Establish real-time voice conversations
-- [Get S2S Time Status](/pt/en/api/speech/status) - Check remaining S2S time quota
-- [Log S2S Session Duration](/pt/en/api/speech/log-session) - Log session duration and deduct time
+### Fala/S2S
+- [Iniciar sessão S2S WebRTC](/pt/api/speech/webrtc) - Estabelecer conversas de voz em tempo real
+- [Obter status de tempo S2S](/pt/api/speech/status) - Verifique a cota de tempo S2S restante
+- [Registrar duração da sessão S2S](/pt/api/speech/log-session) - Registrar duração da sessão e deduzir o tempo
 
-### User Management
-- [Get All Users](/pt/en/api/users/list) - Retrieve users with pagination
-- [Create User](/pt/en/api/users/create) - Create new user account
-- [Update User](/pt/en/api/users/update) - Update existing user
-- [Get License Availability](/pt/en/api/billing-modes/licenses-availability) - Retrieve license pool limits and usage
+### Gerenciamento de usuários
+- [Obter todos os usuários](/pt/api/users/list) - Recuperar usuários com paginação
+- [Criar usuário](/pt/api/users/create) - Criar nova conta de usuário
+- [Atualizar usuário](/pt/api/users/update) - Atualizar usuário existente
+- [Obter disponibilidade de licença](/pt/api/billing-modes/licenses-availability) - Recuperar limites e uso do pool de licenças
 
-### Index Management
-- [Get All Indexes](/pt/en/api/indexes/list) - Retrieve all knowledge bases
-- [Create Index](/pt/en/api/indexes/create) - Create new knowledge base
-- [Update Index](/pt/en/api/indexes/update) - Update existing index
-- [Train Index with Documents](/pt/en/api/indexes/train) - Train index by uploading documents
-- [Search Index for Documents](/pt/en/api/indexes/search) - Search documents using semantic search
+### Gerenciamento de índice
+- [Obter todos os índices](/pt/api/indexes/list) - Recuperar todas as bases de conhecimento
+- [Criar Índice](/pt/api/indexes/create) - Criar nova base de conhecimento
+- [Atualizar índice](/pt/api/indexes/update) - Atualizar índice existente
+- [Treinar índice com documentos](/pt/api/indexes/train) - Treinar índice enviando documentos
+- [Índice de pesquisa de documentos](/pt/api/indexes/search) - Pesquisa de documentos usando pesquisa semântica
 
-### Group Management
-- [Get All Groups](/pt/en/api/groups/list) - Retrieve all groups
-- [Create Group](/pt/en/api/groups/create) - Create new group
-- [Update Group](/pt/en/api/groups/update) - Update existing group
+### Gerenciamento de Grupo
+- [Obter todos os grupos](/pt/api/groups/list) - Recuperar todos os grupos
+- [Criar Grupo](/pt/api/groups/create) - Criar novo grupo
+- [Atualizar grupo](/pt/api/groups/update) - Atualizar grupo existente
 
-### SMLTP Security
-- [Get All SMLTP Policies](/pt/en/api/smltp/policies) - List all security policies
-- [Get Active Policy](/pt/en/api/smltp/active) - Get current active policy
-- [Create Custom Policy](/pt/en/api/smltp/create) - Create custom SMLTP policy
-- [Audit Logs](/pt/en/api/smltp/audit-logs) - Retrieve SMLTP audit logs
+### SMLTP Segurança
+- [Obter todas as políticas SMLTP](/pt/api/smltp/policies) - Listar todas as políticas de segurança
+- [Obter política ativa](/pt/api/smltp/active) - Obter política ativa atual
+- [Criar política personalizada](/pt/api/smltp/create) - Criar política personalizada SMLTP
+- [Registros de auditoria](/pt/api/smltp/audit-logs) - Recuperar registros de auditoria SMLTP
 
-### Role Management
-- [Get All Roles](/pt/en/api/roles/list) - Retrieve all roles
-- [Create Role](/pt/en/api/roles/create) - Create new custom role
+### Gerenciamento de funções
+- [Obter todas as funções](/pt/api/roles/list) - Recuperar todas as funções
+- [Criar função](/pt/api/roles/create) - Criar nova função personalizada
 
-## Error Handling
+## Tratamento de erros
 
-### Error Response Format
+### Formato de resposta de erro
 
 ```json
 {
@@ -169,7 +168,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Rate Limit Error
+### Erro de limite de taxa
 
 ```json
 {
@@ -180,25 +179,25 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Common HTTP Status Codes
+### Códigos de status HTTP comuns
 
-| Code | Description |
+| Código | Descrição |
 |------|-------------|
-| `200` | Success |
-| `201` | Created successfully |
-| `400` | Bad request - invalid parameters |
-| `401` | Unauthorized - invalid API key |
-| `403` | Forbidden - insufficient permissions |
-| `404` | Not found |
-| `409` | Conflict - resource already exists |
-| `413` | Payload Too Large - file size exceeded |
-| `429` | Rate limit exceeded |
-| `500` | Internal server error |
-| `503` | Service Unavailable - service not configured |
+| `200` | Sucesso |
+| `201` | Criado com sucesso |
+| `400` | Solicitação incorreta - parâmetros inválidos |
+| `401` | Não autorizado – chave de API inválida |
+| `403` | Proibido - permissões insuficientes |
+| `404` | Não encontrado |
+| `409` | Conflito – o recurso já existe |
+| `413` | Carga útil muito grande - tamanho do arquivo excedido |
+| `429` | Limite de taxa excedido |
+| `500` | Erro interno do servidor |
+| `503` | Serviço indisponível - serviço não configurado |
 
-## SDK Examples
+## Exemplos de SDK
 
-### JavaScript/Node.js
+###JavaScript/Node.js
 
 ```javascript
 // Using fetch
@@ -222,7 +221,7 @@ const data = await response.json();
 console.log(data.choices[0].message.content);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -246,7 +245,7 @@ result = response.json()
 print(result['choices'][0]['message']['content'])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -261,21 +260,21 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
     "max_tokens": 1000
 ```
 
-### 2. Get Available Models
+### 2. Obtenha modelos disponíveis
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/models" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 3. Get Available Knowledge Bases
+### 3. Obtenha bases de conhecimento disponíveis
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-### 4. Create a Chat Completion
+### 4. Crie uma conclusão de bate-papo
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -292,68 +291,68 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## API Endpoints
+## Terminais de API
 
-### System
-- [Health Check](/pt/en/api/system/health) - Check API status
+### Sistema
+- [Verificação de integridade](/pt/api/system/health) - Verifique o status da API
 
-### Discovery
-- [Get Available Models](/pt/en/api/discovery/models) - List available AI models
-- [Get Available Knowledge Bases](/pt/en/api/discovery/indexes) - List accessible knowledge bases
-- [Get Security Policies](/pt/en/api/discovery/smltp-policies) - List available SMLTP policies
+### Descoberta
+- [Obter modelos disponíveis](/pt/api/discovery/models) - Listar modelos de IA disponíveis
+- [Obter bases de conhecimento disponíveis](/pt/api/discovery/indexes) - Listar bases de conhecimento acessíveis
+- [Obter políticas de segurança](/pt/api/discovery/smltp-policies) - Listar políticas SMLTP disponíveis
 
-### Chat
-- [Chat Completion](/pt/en/api/chat/completions) - Main AI chat endpoint with RAG
-- [OpenAI-Compatible Endpoint](/pt/en/api/chat/openai-compatible) - Drop-in `/v1/chat/completions` for OpenAI SDKs
-- [Redundancy & Failover](/pt/en/api/redundancy) - Model failover chains
-- [Policy Check](/pt/en/api/policy-check) - Dry-run the security pipeline without calling a model
-- [Usage](/pt/en/api/usage) - Self-service quota, budget, and rate limits
-- [Receipts](/pt/en/api/receipts) - Fetch signed SMLTP compliance receipts
+### Bate-papo
+- [Conclusão do bate-papo](/pt/api/chat/completions) - Endpoint principal do bate-papo da IA com RAG
+- [Endpoint compatível com OpenAI](/pt/api/chat/openai-compatível) - Drop-in `/v1/chat/completions` para SDKs OpenAI
+- [Redundância e Failover](/pt/api/redundancy) - Modelar cadeias de failover
+- [Policy Check](/pt/api/policy-check) - Execute o pipeline de segurança sem chamar um modelo
+- [Uso](/pt/api/usage) - Cota de autoatendimento, orçamento e limites de taxa
+- [Receipts](/pt/api/receipts) - Buscar recibos de conformidade assinados SMLTP
 
 ### Webhooks
-- [Webhooks Overview](/pt/en/api/webhooks/overview) - Signed real-time event delivery
-- [Webhook Events](/pt/en/api/webhooks/events) - Event catalog and payloads
+- [Visão geral dos Webhooks](/pt/api/webhooks/overview) - Entrega de eventos assinados em tempo real
+- [Eventos Webhook](/pt/api/webhooks/events) - Catálogo de eventos e cargas úteis
 
-### Images
-- [Generate Images](/pt/en/api/images/generations) - Generate images from text or edit existing images
-- [Edit Images](/pt/en/api/images/edits) - Image-to-image editing with text instructions
+### Imagens
+- [Gerar Imagens](/pt/api/images/generações) - Gerar imagens a partir de texto ou editar imagens existentes
+- [Editar imagens](/pt/api/images/edits) - Edição imagem a imagem com instruções de texto
 
-### Speech/S2S
-- [Initiate S2S WebRTC Session](/pt/en/api/speech/webrtc) - Establish real-time voice conversations
-- [Get S2S Time Status](/pt/en/api/speech/status) - Check remaining S2S time quota
-- [Log S2S Session Duration](/pt/en/api/speech/log-session) - Log session duration and deduct time
+### Fala/S2S
+- [Iniciar sessão S2S WebRTC](/pt/api/speech/webrtc) - Estabelecer conversas de voz em tempo real
+- [Obter status de tempo S2S](/pt/api/speech/status) - Verifique a cota de tempo S2S restante
+- [Registrar duração da sessão S2S](/pt/api/speech/log-session) - Registrar duração da sessão e deduzir o tempo
 
-### User Management
-- [Get All Users](/pt/en/api/users/list) - Retrieve users with pagination
-- [Create User](/pt/en/api/users/create) - Create new user account
-- [Update User](/pt/en/api/users/update) - Update existing user
-- [Get License Availability](/pt/en/api/billing-modes/licenses-availability) - Retrieve license pool limits and usage
+### Gerenciamento de usuários
+- [Obter todos os usuários](/pt/api/users/list) - Recuperar usuários com paginação
+- [Criar usuário](/pt/api/users/create) - Criar nova conta de usuário
+- [Atualizar usuário](/pt/api/users/update) - Atualizar usuário existente
+- [Obter disponibilidade de licença](/pt/api/billing-modes/licenses-availability) - Recuperar limites e uso do pool de licenças
 
-### Index Management
-- [Get All Indexes](/pt/en/api/indexes/list) - Retrieve all knowledge bases
-- [Create Index](/pt/en/api/indexes/create) - Create new knowledge base
-- [Update Index](/pt/en/api/indexes/update) - Update existing index
-- [Train Index with Documents](/pt/en/api/indexes/train) - Train index by uploading documents
-- [Search Index for Documents](/pt/en/api/indexes/search) - Search documents using semantic search
+### Gerenciamento de índice
+- [Obter todos os índices](/pt/api/indexes/list) - Recuperar todas as bases de conhecimento
+- [Criar Índice](/pt/api/indexes/create) - Criar nova base de conhecimento
+- [Atualizar índice](/pt/api/indexes/update) - Atualizar índice existente
+- [Treinar índice com documentos](/pt/api/indexes/train) - Treinar índice enviando documentos
+- [Índice de pesquisa de documentos](/pt/api/indexes/search) - Pesquisa de documentos usando pesquisa semântica
 
-### Group Management
-- [Get All Groups](/pt/en/api/groups/list) - Retrieve all groups
-- [Create Group](/pt/en/api/groups/create) - Create new group
-- [Update Group](/pt/en/api/groups/update) - Update existing group
+### Gerenciamento de Grupo
+- [Obter todos os grupos](/pt/api/groups/list) - Recuperar todos os grupos
+- [Criar Grupo](/pt/api/groups/create) - Criar novo grupo
+- [Atualizar grupo](/pt/api/groups/update) - Atualizar grupo existente
 
-### SMLTP Security
-- [Get All SMLTP Policies](/pt/en/api/smltp/policies) - List all security policies
-- [Get Active Policy](/pt/en/api/smltp/active) - Get current active policy
-- [Create Custom Policy](/pt/en/api/smltp/create) - Create custom SMLTP policy
-- [Audit Logs](/pt/en/api/smltp/audit-logs) - Retrieve SMLTP audit logs
+### SMLTP Segurança
+- [Obter todas as políticas SMLTP](/pt/api/smltp/policies) - Listar todas as políticas de segurança
+- [Obter política ativa](/pt/api/smltp/active) - Obter política ativa atual
+- [Criar política personalizada](/pt/api/smltp/create) - Criar política personalizada SMLTP
+- [Registros de auditoria](/pt/api/smltp/audit-logs) - Recuperar registros de auditoria SMLTP
 
-### Role Management
-- [Get All Roles](/pt/en/api/roles/list) - Retrieve all roles
-- [Create Role](/pt/en/api/roles/create) - Create new custom role
+### Gerenciamento de funções
+- [Obter todas as funções](/pt/api/roles/list) - Recuperar todas as funções
+- [Criar função](/pt/api/roles/create) - Criar nova função personalizada
 
-## Error Handling
+## Tratamento de erros
 
-### Error Response Format
+### Formato de resposta de erro
 
 ```json
 {
@@ -364,7 +363,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Rate Limit Error
+### Erro de limite de taxa
 
 ```json
 {
@@ -375,25 +374,25 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
 }
 ```
 
-### Common HTTP Status Codes
+### Códigos de status HTTP comuns
 
-| Code | Description |
+| Código | Descrição |
 |------|-------------|
-| `200` | Success |
-| `201` | Created successfully |
-| `400` | Bad request - invalid parameters |
-| `401` | Unauthorized - invalid API key |
-| `403` | Forbidden - insufficient permissions |
-| `404` | Not found |
-| `409` | Conflict - resource already exists |
-| `413` | Payload Too Large - file size exceeded |
-| `429` | Rate limit exceeded |
-| `500` | Internal server error |
-| `503` | Service Unavailable - service not configured |
+| `200` | Sucesso |
+| `201` | Criado com sucesso |
+| `400` | Solicitação incorreta - parâmetros inválidos |
+| `401` | Não autorizado – chave de API inválida |
+| `403` | Proibido - permissões insuficientes |
+| `404` | Não encontrado |
+| `409` | Conflito – o recurso já existe |
+| `413` | Carga útil muito grande - tamanho do arquivo excedido |
+| `429` | Limite de taxa excedido |
+| `500` | Erro interno do servidor |
+| `503` | Serviço indisponível - serviço não configurado |
 
-## SDK Examples
+## Exemplos de SDK
 
-### JavaScript/Node.js
+###JavaScript/Node.js
 
 ```javascript
 // Using fetch
@@ -417,7 +416,7 @@ const data = await response.json();
 console.log(data.choices[0].message.content);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -441,7 +440,7 @@ result = response.json()
 print(result['choices'][0]['message']['content'])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" \
@@ -457,7 +456,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/chat/completions" 
   }'
 ```
 
-## Next Steps
+## Próximas etapas
 
-- [Knowledge Base & RAG](/pt/en/indexes/overview) - Learn about Knowledge Bases and RAG
+- [Base de Conhecimento & RAG](/pt/indexes/overview) - Aprenda sobre Bases de Conhecimento e RAG
 ```

@@ -6,7 +6,7 @@ description: "SecureAI OS Agent を使用してエンドポイントからのア
 ---
 # 出口の強制
 
-出力強制は、エンドポイントが AI プロバイダーと MCP サーバーに何を**送信**できるかを制御します。これは [ポリシー](/ja/en/agent/policies-and-groups) ごとに構成され、エージェントによってローカルに適用されます。
+出力強制は、エンドポイントが AI プロバイダーと MCP サーバーに何を**送信**できるかを制御します。これは [ポリシー](/ja/agent/policies-and-groups) ごとに構成され、エージェントによってローカルに適用されます。
 
 ## モード
 
@@ -28,19 +28,19 @@ description: "SecureAI OS Agent を使用してエンドポイントからのア
 
 ## モードの選択
 
-- **オフ** (または **モニター** モード ポリシー) で開始して、エンドポイントが実際に呼び出すものの正確な状況を構築します。デバイス ドロワーと [AI Discovery](/ja/en/discovery/overview) に表示されます。
+- **オフ** (または **モニター** モード ポリシー) で開始して、エンドポイントが実際に呼び出すものの正確な状況を構築します。デバイス ドロワーと [AI Discovery](/ja/discovery/overview) に表示されます。
 - **ブロック**に移行して、プロセスのネットワークの残りの部分を中断することなく、許可されていない AI の出力を永続的に停止します。
 - 問題のあるプログラムを完全に停止したい場合は、**kill** を使用します。
 - 最も厳格な姿勢には **ロックダウン** を使用します。認可された AI エンドポイント (許可リスト) のみにアクセスできます。
 
-出力モードは [保護プリセット](/ja/en/agent/policies-and-groups#protection-presets) (パッシブ / ノーマル / アグレッシブ) にもバンドルされているため、ワンクリックで全体の姿勢レベルを設定し、そこから微調整することができます。
+出力モードは [保護プリセット](/ja/agent/policies-and-groups#protection-presets) (パッシブ / ノーマル / アグレッシブ) にもバンドルされているため、ワンクリックで全体の姿勢レベルを設定し、そこから微調整することができます。
 
 <Warning>
-`kill`、`block`、および `lockdown` は、エンドポイント トラフィックをアクティブに中断します。フリート全体に適用する前に、**ドライラン シミュレート** と段階的な **ロールアウト リング** ([ポリシーとグループ](/ja/en/agent/policies-and-groups#safe-rollouts)) で変更を検証します。
+`kill`、`block`、および `lockdown` は、エンドポイント トラフィックをアクティブに中断します。フリート全体に適用する前に、**ドライラン シミュレート** と段階的な **ロールアウト リング** ([ポリシーとグループ](/ja/agent/policies-and-groups#safe-rollouts)) で変更を検証します。
 </Warning>
 
 ## 関連
 
-- [ポリシーとグループ](/ja/ja/agent/policies-and-groups)
-- [透過プロキシ](/ja/ja/agent/transparent-proxy) — 許可された AI トラフィックをブロックするのではなく、ゲートウェイ経由でルーティングします。
-- [検疫と艦隊作戦](/ja/en/agent/quarantine-and-fleet-ops)
+- [ポリシーとグループ](/ja/agent/policies-and-groups)
+- [透過プロキシ](/ja/agent/transparent-proxy) — 許可された AI トラフィックをブロックするのではなく、ゲートウェイ経由でルーティングします。
+- [検疫と艦隊作戦](/ja/agent/quarantine-and-fleet-ops)

@@ -6,15 +6,15 @@ description: "에이전트가 필요 없이 LLM API를 호출하는 기업 소�
 ---
 # CASB 및 네트워크(SWG) 통합
 
-이러한 커넥터는 **섀도우 AI 검색** 문제를 해결합니다. 즉, SDK나 [엔드포인트 에이전트](/ko/en/agent/overview)(빌드 서버, 창고 분류기, 계약자의 노트북)를 설치할 수 없는 경우에도 LLM API를 호출하는 모든 회사 장치, 서버 또는 워크로드를 찾습니다. SecureAI는 **CASB/보안 웹 게이트웨이(SWG)/DNS** 플랫폼이 이미 AI 공급자에 대한 트래픽을 수집하고 감지하는 로그를 읽습니다.
+이러한 커넥터는 **섀도우 AI 검색** 문제를 해결합니다. 즉, SDK나 [엔드포인트 에이전트](/ko/agent/overview)(빌드 서버, 창고 분류기, 계약자의 노트북)를 설치할 수 없는 경우에도 LLM API를 호출하는 모든 회사 장치, 서버 또는 워크로드를 찾습니다. SecureAI는 **CASB/보안 웹 게이트웨이(SWG)/DNS** 플랫폼이 이미 AI 공급자에 대한 트래픽을 수집하고 감지하는 로그를 읽습니다.
 
-그 결과 **어떤 소스 IP와 사용자가 어떤 AI 제공업체에 전화하고 있는지**에 대한 실시간 인벤토리가 [네트워크 소스](/ko/en/discovery/network-sources)에 표시됩니다.
+그 결과 **어떤 소스 IP와 사용자가 어떤 AI 제공업체에 전화하고 있는지**에 대한 실시간 인벤토리가 [네트워크 소스](/ko/discovery/network-sources)에 표시됩니다.
 
 ## 지원되는 커넥터
 
 | 커넥터 | 데이터 소스 | 상태 |
 |------------|-------------|---------|
-| [시스코 엄브렐라](/ko/en/integrations/casb/cisco-umbrella) | DNS 계층 보고 API v2 | 가능 |
+| [시스코 엄브렐라](/ko/integrations/casb/cisco-umbrella) | DNS 계층 보고 API v2 | 가능 |
 
 ## 설정 루프
 
@@ -25,7 +25,7 @@ description: "에이전트가 필요 없이 LLM API를 호출하는 기업 소�
 
 ## 발견 창
 
-네트워크 검색은 롤링 기간(**기본적으로 30일**) 동안의 활동을 보고합니다(`NETWORK_DISCOVERY_WINDOW_DAYS` 환경 변수를 통해 구성 가능). 일부 하위 보기(상위 도메인, 상위 사용자, 알 수 없는 도메인)에서는 고정된 7일 기간을 사용합니다. 인벤토리 표시 및 분류 방법은 [네트워크 소스](/ko/en/discovery/network-sources)를 참조하세요.
+네트워크 검색은 롤링 기간(**기본적으로 30일**) 동안의 활동을 보고합니다(`NETWORK_DISCOVERY_WINDOW_DAYS` 환경 변수를 통해 구성 가능). 일부 하위 보기(상위 도메인, 상위 사용자, 알 수 없는 도메인)에서는 고정된 7일 기간을 사용합니다. 인벤토리 표시 및 분류 방법은 [네트워크 소스](/ko/discovery/network-sources)를 참조하세요.
 
 ## 감지되는 내용
 
@@ -33,6 +33,6 @@ description: "에이전트가 필요 없이 LLM API를 호출하는 기업 소�
 
 ## 관련
 
-- [네트워크 소스](/ko/en/discovery/network-sources) — 검색된 인벤토리 및 분류 워크플로우입니다.
-- [엔드포인트 에이전트](/ko/en/agent/overview) — 에이전트를 배포 *할 수* 있는 엔드포인트용입니다.
-- [AI 발견 및 인벤토리 개요](/ko/ko/discovery/overview)
+- [네트워크 소스](/ko/discovery/network-sources) — 검색된 인벤토리 및 분류 워크플로우입니다.
+- [엔드포인트 에이전트](/ko/agent/overview) — 에이전트를 배포 *할 수* 있는 엔드포인트용입니다.
+- [AI 발견 및 인벤토리 개요](/ko/discovery/overview)

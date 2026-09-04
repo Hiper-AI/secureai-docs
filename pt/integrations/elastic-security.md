@@ -1,65 +1,63 @@
 ---
 id: elastic-security
-title: "Elastic Security Integration"
+title: "Integração com Elastic Security"
 sidebar_label: "Elastic Security"
-description: "Integrate HiperAI with Elastic Security for advanced threat detection and security analytics"
+description: "Integre o HiperAI ao Elastic Security para detecção avançada de ameaças e análise de segurança"
 ---
 
+# Integrando SecureAI com Elastic SIEM
 
+Este guia fornece instruções passo a passo sobre como integrar o SecureAI à sua instância do Elastic SIEM. Essa integração permite encaminhar logs de eventos do SecureAI para o Elasticsearch para monitoramento, análise e alertas.
 
-# Integrating SecureAI with Elastic SIEM
+## Etapa 1: Obtenha seu endpoint do Elastic Cloud
 
-This guide provides step-by-step instructions on how to integrate SecureAI with your Elastic SIEM instance. This integration allows you to forward event logs from SecureAI to Elasticsearch for monitoring, analysis, and alerting.
+Primeiro, você precisa obter o URL do endpoint da sua implantação do Elastic Cloud.
 
-## Step 1: Obtain Your Elastic Cloud Endpoint
-
-First, you need to get the endpoint URL from your Elastic Cloud deployment.
-
-1. Log in to your Elastic Cloud account.
-2. From the homepage, locate your desired deployment.
-3. Find the Elasticsearch endpoint URL and copy it. You will need this for the SecureAI configuration later.
+1. Faça login em sua conta do Elastic Cloud.
+2. Na página inicial, localize a implantação desejada.
+3. Encontre o URL do endpoint do Elasticsearch e copie-o. Você precisará disso para a configuração do SecureAI posteriormente.
 
 <div class="mac-window">
-  ![Elastic Cloud Endpoint](/img/elastic%20images/Elastic%20-%201.png)
+  ![Ponto final da nuvem elástica](/img/elastic%20images/Elastic%20-%201.png)
 </div>
 
-## Step 2: Create an API Key in Elasticsearch
+## Etapa 2: Crie uma chave de API no Elasticsearch
 
-An API key is required for SecureAI to securely send data to your Elasticsearch cluster.
+Uma chave de API é necessária para que o SecureAI envie dados com segurança para seu cluster Elasticsearch.
 
-1. In your Kibana dashboard, navigate to **Management** > **API Keys**.
-2. Click the **Create API key** button.
+1. No painel do Kibana, navegue até **Gerenciamento** > **Chaves de API**.
+2. Clique no botão **Criar chave de API**.
 
 <div class="mac-window">
-  ![Create API Key Button](/img/elastic%20images/Elastic%20-%202.png)
+  ![Botão Criar chave de API](/img/elastic%20images/Elastic%20-%202.png)
 </div>
 
-3. Configure the API key with the following details:
+3. Configure a chave API com os seguintes detalhes:
 
 <div class="mac-window">
-  ![Configure API Key](/img/elastic%20images/Elastic%20-%203.png)
+  ![Configurar chave de API](/img/elastic%20images/Elastic%20-%203.png)
 </div>
 
-   - **Name**: `secureai-siem-integration` (or another descriptive name).
-   - **Role**: Assign a role that has the necessary privileges to write to indices. For simplicity in this guide, we are not setting an expiration date or specific role restrictions.
-4. Click **Create API key**.
+   - **Nome**: `secureai-siem-integration` (ou outro nome descritivo).
+   - **Role**: Atribua uma função que tenha os privilégios necessários para gravar em índices. Para simplificar neste guia, não definimos uma data de expiração ou restrições de funções específicas.
+4. Clique em **Criar chave de API**.
 
 <div class="mac-window">
-  ![Click Create API Key](/img/elastic%20images/Elastic%20-%204.png)
+  ![Clique em Criar chave de API](/img/elastic%20images/Elastic%20-%204.png)
 </div>
 
-5. Your key will be generated and displayed. Copy the Base64 encoded API key and save it in a secure location. You will not be able to see it again after you leave this screen.
+5. Sua chave será gerada e exibida. Copie a chave API codificada em Base64 e salve-a em um local seguro. Você não poderá vê-lo novamente depois de sair desta tela.
 
 <div class="mac-window">
-  ![API Key Generated](/img/elastic%20images/Elastic%20-%205.png)
+  ![Chave de API gerada](/img/elastic%20images/Elastic%20-%205.png)
 </div>
 
-## Step 3: Create the Target Index in Elasticsearch
+## Etapa 3: Crie o índice de destino no Elasticsearch
 
-You must create and map an index in Elasticsearch where the SecureAI events will be stored.
+Você deve criar e mapear um índice no Elasticsearch onde os eventos SecureAI serão armazenados.
 
-1. In Kibana, navigate to **Developer Tools**.
-2. In the console, execute the following command to create the `secureai-events` index with the appropriate field mappings:
+1. No Kibana, navegue até **Ferramentas do desenvolvedor**.
+2. No console, execute o seguinte comando para criar o índice `secureai-events` com os mapeamentos de campo apropriados:
 
 ```json
 PUT /secureai-events
@@ -81,48 +79,48 @@ PUT /secureai-events
 ```
 
 <div class="mac-window">
-  ![Create Index in Developer Tools](/img/elastic%20images/Elastic%20-%206.png)
+  ![Criar índice nas ferramentas do desenvolvedor](/img/elastic%20images/Elastic%20-%206.png)
 </div>
 
-## Step 4: Configure the Elastic SIEM Integration in SecureAI
+## Etapa 4: Configurar a integração do Elastic SIEM no SecureAI
 
-Now, enter the Elastic details into the SecureAI integrations panel.
+Agora, insira os detalhes do Elastic no painel de integrações SecureAI.
 
-1. In your SecureAI dashboard, navigate to **Integrations**.
-2. Locate the **Elastic SIEM** integration card and click **Configure**.
-3. Fill in the configuration fields as follows:
-   - **Integration Name**: `secureai-app-elastic`
-   - **Elastic URL**: Paste the endpoint you copied in Step 1.
-   - **Elastic API Key**: Paste the Base64 encoded API key you created in Step 2.
-   - **Elastic Index**: `secureai-events`
-   - **Select Event Categories**: Check all the boxes to forward all available event types to your Elastic SIEM.
-4. Click **Update** to save the configuration.
+1. No painel do SecureAI, navegue até **Integrações**.
+2. Localize a placa de integração **Elastic SIEM** e clique em **Configurar**.
+3. Preencha os campos de configuração da seguinte forma:
+   - **Nome da integração**: `secureai-app-elastic`
+   - **URL elástico**: cole o endpoint que você copiou na Etapa 1.
+   - **Chave de API Elastic**: cole a chave de API codificada em Base64 que você criou na Etapa 2.
+   - **Índice Elástico**: `secureai-events`
+   - **Selecionar categorias de eventos**: marque todas as caixas para encaminhar todos os tipos de eventos disponíveis para seu Elastic SIEM.
+4. Clique em **Atualizar** para salvar a configuração.
 
 <div class="mac-window">
-  ![Click Update to Save Configuration](/img/elastic%20images/Elastic%20-%207.png)
+  ![Clique em Atualizar para salvar a configuração](/img/elastic%20images/Elastic%20-%207.png)
 </div>
 
-## Step 5: Test and Verify the Connection
+## Etapa 5: teste e verifique a conexão
 
-After saving the configuration, test the connection to ensure SecureAI can communicate with your Elastic instance.
+Depois de salvar a configuração, teste a conexão para garantir que o SecureAI possa se comunicar com sua instância Elastic.
 
-1. In the integration settings modal, click the **Test Connection** button.
-2. You should see a success message: "Test successful! Connection verified."
+1. No modal de configurações de integração, clique no botão **Testar Conexão**.
+2. Você deverá ver uma mensagem de sucesso: "Teste bem-sucedido! Conexão verificada."
 
 <div class="mac-window">
-  ![Test Successful Message](/img/elastic%20images/Elastic%20-%208.png)
+  ![Mensagem de teste bem-sucedido](/img/elastic%20images/Elastic%20-%208.png)
 </div>
 
-3. To confirm the test data was received, go to **Discover** in Kibana.
-4. Select the `secureai-events` data view (index pattern).
-5. You should see a test event log from SecureAI, which confirms that the integration is working correctly.
+3. Para confirmar que os dados do teste foram recebidos, acesse **Discover** no Kibana.
+4. Selecione a visualização de dados `secureai-events` (padrão de índice).
+5. Você deverá ver um log de eventos de teste do SecureAI, que confirma que a integração está funcionando corretamente.
 
 <div class="mac-window">
-  ![Test Event Log Confirmation](/img/elastic%20images/Elastic%20-%209.png)
+  ![Confirmação do log de eventos de teste](/img/elastic%20images/Elastic%20-%209.png)
 </div>
 
-Your SecureAI and Elastic SIEM integration is now active. Events will be logged in your `secureai-events` index as they occur.
+Sua integração SecureAI e Elastic SIEM agora está ativa. Os eventos serão registrados em seu índice `secureai-events` à medida que ocorrerem.
 
-## Done!
+## Feito!
 
-With these steps, your Elastic instance is fully configured to integrate with SecureAI 😎.
+Com essas etapas, sua instância Elastic está totalmente configurada para integração com SecureAI 😎.

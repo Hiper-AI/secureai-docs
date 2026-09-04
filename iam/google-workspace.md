@@ -1,297 +1,296 @@
 ---
 sidebar_position: 2
 title: "Google Workspace (SSO)"
+sidebar_label: "Google Workspace (SSO)"
 ---
 
+# Integración de Google Workspace (SSO)
 
+Esta guía lo guiará a través del proceso de configuración de Google Workspace para el inicio de sesión único (SSO) con SecureAI. Aprenderá cómo obtener las credenciales necesarias de Google Cloud Console y enviarlas para completar la integración.
 
-# Google Workspace (SSO) Integration
+## Requisitos previos
 
-This guide will walk you through the process of configuring Google Workspace for single sign-on (SSO) with SecureAI. You'll learn how to obtain the necessary credentials from Google Cloud Console and submit them to complete the integration.
+- Acceso de administrador a Google Cloud Console
+- Una cuenta de Google Workspace para su organización
+- Acceso a la consola de administración de Google Workspace de su organización (si usa restricciones de dominio)
+- Acceso de administrador a SecureAI
 
-## Prerequisites
+## Paso 1: crear un proyecto en Google Cloud Console
 
-- Administrator access to Google Cloud Console
-- A Google Workspace account for your organization
-- Access to your organization's Google Workspace admin console (if using domain restrictions)
-- Administrator access to SecureAI
-
-## Step 1: Create a Project in Google Cloud Console
-
-1. Sign in to [Google Cloud Console](https://console.cloud.google.com)
-2. Click on the project dropdown at the top of the page
-3. Click **New Project**
+1. Inicie sesión en [Google Cloud Console](https://console.cloud.google.com)
+2. Haga clic en el menú desplegable del proyecto en la parte superior de la página.
+3. Haga clic en **Nuevo proyecto**
 
 <div class="mac-window">
-  ![New Project](/img/google%20sso%20images/google%20-%201.png)
+  ![Nuevo proyecto](/img/google%20sso%20images/google%20-%201.png)
 </div>
 
-4. Enter a project name (e.g., "SecureAI SSO")
-5. Click **Create**
+4. Ingrese un nombre de proyecto (por ejemplo, "SecureAI SSO")
+5. Haga clic en **Crear**
 
 <div class="mac-window">
-  ![Create Project](/img/google%20sso%20images/google%20-%202.png)
+  ![Crear proyecto](/img/google%20sso%20images/google%20-%202.png)
 </div>
 
-## Step 2: Enable the Google+ API (if needed)
+## Paso 2: habilite la API de Google+ (si es necesario)
 
-1. In your project, go to **APIs & Services** > **Library**
-2. Search for "Google+ API" or "Google Identity"
-3. Click on it and click **Enable** (if not already enabled)
-4. **Note**: Modern Google OAuth may not require this, but enabling it ensures compatibility
+1. En su proyecto, vaya a **API y servicios** > **Biblioteca**
+2. Busque "API de Google+" o "Identidad de Google".
+3. Haga clic en él y haga clic en **Habilitar** (si aún no está habilitado)
+4. **Nota**: Es posible que Google OAuth moderno no requiera esto, pero habilitarlo garantiza la compatibilidad.
 
-## Step 3: Configure the OAuth Consent Screen
+## Paso 3: Configurar la pantalla de consentimiento de OAuth
 
-1. Go to **APIs & Services** > **OAuth consent screen**
+1. Vaya a **API y servicios** > **Pantalla de consentimiento de OAuth**
 
 <div class="mac-window">
-  ![OAuth Consent Screen](/img/google%20sso%20images/google%20-%203.png)
+  ![Pantalla de consentimiento de OAuth](/img/google%20sso%20images/google%20-%203.png)
 </div>
 
-2. Fill in the required information:
-   - **App name**: Enter a name (e.g., "SecureAI")
-   - **User support email**: Select a support email address
-   - **Contact information**: Add a contact email address
+2. Complete la información requerida:
+   - **Nombre de la aplicación**: ingrese un nombre (por ejemplo, "SecureAI")
+   - **Correo electrónico de soporte al usuario**: seleccione una dirección de correo electrónico de soporte
+   - **Información de contacto**: agregue una dirección de correo electrónico de contacto
 
-3. Choose **User Type**:
-   - **Internal**: Only for users in your Google Workspace organization (recommended for company use)
-   - **External**: For users outside your organization
+3. Elija **Tipo de usuario**:
+   - **Interno**: solo para usuarios de su organización de Google Workspace (recomendado para uso empresarial)
+   - **Externo**: para usuarios fuera de su organización
 
-4. Click **Create**
+4. Haga clic en **Crear**
 
 <div class="mac-window">
-  ![Create OAuth Consent](/img/google%20sso%20images/google%20-%204.png)
+  ![Crear consentimiento de OAuth](/img/google%20sso%20images/google%20-%204.png)
 </div>
 
-5. **Branding**:
-   - Go to the **Branding** section in the left menu
-   - Find **Authorized domains** and add your company domain
-   - This allows users to sign in with their company email address
-   - (Additionally, you can add your homepage URL, privacy policy, and terms of service if desired)
+5. **Marca**:
+   - Vaya a la sección **Marca** en el menú de la izquierda
+   - Busque **Dominios autorizados** y agregue el dominio de su empresa
+   - Esto permite a los usuarios iniciar sesión con la dirección de correo electrónico de su empresa.
+   - (Además, puede agregar la URL de su página de inicio, política de privacidad y términos de servicio si lo desea)
 
 <div class="mac-window">
-  ![Authorized Domains](/img/google%20sso%20images/google%20-%205.png)
+  ![Dominios autorizados](/img/google%20sso%20images/google%20-%205.png)
 </div>
 
-6. **Scopes**:
-   - In the left menu, click on the **Data Access** section
-   - Within the Data Access section, click **Add or Remove Scopes**
-   - A window will open from the left side where you can search for roles
-   - Search for the role **"openid"** and select it
-   - Click **Update**
-   - Then click **Save** in the Data Access section
-   - **Note**: The `openid` scope automatically includes `profile` and `email` access - you don't need to add them separately
-   - If you see other scope options, you only need **OpenID** for SecureAI SSO
+6. **Ámbitos**:
+   - En el menú de la izquierda, haga clic en la sección **Acceso a datos**
+   - Dentro de la sección Acceso a datos, haga clic en **Agregar o quitar ámbitos**
+   - Se abrirá una ventana desde el lado izquierdo donde podrás buscar roles.
+   - Busque el rol **"openid"** y selecciónelo
+   - Haga clic en **Actualizar**
+   - Luego haga clic en **Guardar** en la sección Acceso a datos
+   - **Nota**: El alcance `openid` incluye automáticamente el acceso `profile` y `email`; no es necesario agregarlos por separado.
+   - Si ve otras opciones de alcance, solo necesita **OpenID** para SecureAI SSO
 
 <div class="mac-window">
-  ![OpenID Scope Selection](/img/google%20sso%20images/google%20-%206.png)
+  ![Selección de alcance de OpenID](/img/google%20sso%20images/google%20-%206.png)
 </div>
 
-   - **Important**: The OpenID scope provides access to:
-     - User's email address
-     - Basic profile information
-     - This is all that's needed for SecureAI authentication
+   - **Importante**: El alcance de OpenID proporciona acceso a:
+     - Dirección de correo electrónico del usuario
+     - Información básica del perfil.
+     - Esto es todo lo que se necesita para la autenticación SecureAI
 
-7. **Test users** (if using External):
-   - Add test users if needed during testing
-   - Click **Save and Continue**
+7. **Usuarios de prueba** (si usa Externo):
+   - Agregue usuarios de prueba si es necesario durante la prueba
+   - Haga clic en **Guardar y continuar**
 
-8. **Summary**:
-   - Review your configuration
-   - Click **Back to Dashboard**
+8. **Resumen**:
+   - Revisa tu configuración
+   - Haga clic en **Volver al panel**
 
-## Step 4: Create OAuth 2.0 Credentials
+## Paso 4: Crear credenciales OAuth 2.0
 
-1. Go to **APIs & Services** > **Credentials**
-2. Click **+ Create Credentials** > **OAuth client ID**
+1. Vaya a **API y servicios** > **Credenciales**
+2. Haga clic en **+ Crear credenciales** > **ID de cliente OAuth**
 
 <div class="mac-window">
-  ![Create OAuth Client ID](/img/google%20sso%20images/google%20-%207.png)
+  ![Crear ID de cliente OAuth](/img/google%20sso%20images/google%20-%207.png)
 </div>
-3. **Application type**: Select **Web application**
-4. **Name**: Enter a descriptive name (e.g., "SecureAI SSO Client")
-5. **Authorized redirect URIs**: Click **+ Add URI** and enter:
+3. **Tipo de aplicación**: seleccione **Aplicación web**
+4. **Nombre**: ingrese un nombre descriptivo (por ejemplo, "Cliente SSO SecureAI")
+5. **URI de redireccionamiento autorizado**: haga clic en **+ Agregar URI** e ingrese:
    - `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-   - **Important**: The URL must match exactly (including `https://` and `/api/auth/google/callback`)
+   - **Importante**: La URL debe coincidir exactamente (incluidos `https://` y `/api/auth/google/callback`)
 
 <div class="mac-window">
-  ![Authorized Redirect URIs](/img/google%20sso%20images/google%20-%208.png)
+  ![URI de redireccionamiento autorizado](/img/google%20sso%20images/google%20-%208.png)
 </div>
 
-6. Click **Create**
+6. Haga clic en **Crear**
 
-## Step 5: Get Your Credentials
+## Paso 5: Obtenga sus credenciales
 
-After creating the OAuth client:
+Después de crear el cliente OAuth:
 
-1. A popup will appear with your credentials
+1. Aparecerá una ventana emergente con tus credenciales.
 
 <div class="mac-window">
-  ![OAuth Credentials Popup](/img/google%20sso%20images/google%20-%209.png)
+  ![Ventana emergente de credenciales de OAuth](/img/google%20sso%20images/google%20-%209.png)
 </div>
-2. **Client ID**:
-   - Looks like: `123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com`
-   - **Copy this value** - you will need it later
-3. **Client secret**:
-   - Looks like: `GOCSPX-abcdefghijklmnopqrstuvwxyz`
-   - **Copy this value immediately**
-   - **WARNING**: This secret is only shown once in the popup. If you lose it, you will need to create a new OAuth client
+2. **ID de cliente**:
+   - Parece: `123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com`
+   - **Copia este valor** - lo necesitarás más tarde
+3. **Secreto del cliente**:
+   - Parece: `GOCSPX-abcdefghijklmnopqrstuvwxyz`
+   - **Copia este valor inmediatamente**
+   - **ADVERTENCIA**: Este secreto solo se muestra una vez en la ventana emergente. Si lo pierde, deberá crear un nuevo cliente OAuth
 
-## Step 6: Send Variables to the Hiper AI Team
+## Paso 6: Enviar variables al equipo de Hiper AI
 
-Once you have created the OAuth client in Google Cloud Console and followed the steps above, you will have obtained the following critical pieces of information:
+Una vez que haya creado el cliente OAuth en Google Cloud Console y haya seguido los pasos anteriores, habrá obtenido la siguiente información crítica:
 
-1. **Client ID** (from Step 5)
-2. **Client Secret** (from Step 5)
-3. **Redirect URI**: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
+1. **ID de cliente** (del paso 5)
+2. **Secreto del cliente** (del paso 5)
+3. **URI de redireccionamiento**: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
 
-You must send these values to the Hiper AI team to complete the SSO integration.
+Debes enviar estos valores al equipo de Hiper AI para completar la integración de SSO.
 
-### A. Access the Admin Panel
+### A. Acceda al Panel de administración
 
-1. Log in to your SecureAI instance as an administrator
-2. Navigate to `https://{enterprise.name}.hiperai.ai/admin/home`
-3. In the upper right corner, click on your admin profile picture
-4. This will open a dropdown menu with various options
+1. Inicie sesión en su instancia de SecureAI como administrador
+2. Navegue hasta `https://{enterprise.name}.hiperai.ai/admin/home`
+3. En la esquina superior derecha, haz clic en tu foto de perfil de administrador.
+4. Esto abrirá un menú desplegable con varias opciones.
 
-### B. Submit the Support Request
+### B. Enviar la solicitud de soporte
 
-1. Click **"Get Support"** from the dropdown menu
+1. Haga clic en **"Obtener soporte"** en el menú desplegable.
 
 <div class="mac-window">
-  ![Get Support Menu](/img/microsoft%20entraid%20sso%20images/10%20-%20azure.png)
+  ![Obtener menú de soporte](/img/microsoft%20entraid%20sso%20images/10%20-%20azure.png)
 </div>
 
-2. A popup window will appear with a support ticket form
-3. Fill in the form with the following information:
-   - **Category**: Select **"Integrations and Implementations"**
+2. Aparecerá una ventana emergente con un formulario de ticket de soporte.
+3. Rellena el formulario con la siguiente información:
+   - **Categoría**: seleccione **"Integraciones e implementaciones"**
 
 <div class="mac-window">
-  ![Support Form Category](/img/microsoft%20entraid%20sso%20images/11%20-%20azure.png)
+  ![Categoría de formulario de soporte](/img/microsoft%20entraid%20sso%20images/11%20-%20azure.png)
 </div>
 
-   - **Subject**: Enter **"Google Workspace SSO Integration"**
-   - **Description**: Paste the values you copied during the setup process:
-     - Client ID
-     - Client Secret
-     - Redirect URI: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-4. Click the **"Submit request"** button
+   - **Asunto**: introduzca **"Integración SSO de Google Workspace"**
+   - **Descripción**: Pegue los valores que copió durante el proceso de configuración:
+     - Identificación del cliente
+     - Secreto del cliente
+     - URI de redireccionamiento: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
+4. Haga clic en el botón **"Enviar solicitud"**
 
-### C. Wait for Confirmation
+### C. Espere la confirmación
 
-- You will receive an email confirmation within **24 to 72 hours** (depending on availability)
-- The email will confirm that your SSO has been successfully configured
-- Once configured, you will be able to access your SecureAI instance using the **"Continue with Google"** login button on the sign-in page
+- Recibirás un correo electrónico de confirmación en un plazo de **24 a 72 horas** (según disponibilidad)
+- El correo electrónico confirmará que su SSO se ha configurado correctamente
+- Una vez configurado, podrá acceder a su instancia de SecureAI utilizando el botón de inicio de sesión **"Continuar con Google"** en la página de inicio de sesión.
 
-**Important**: Keep your credentials secure until the integration is complete. Do not share them through insecure channels.
+**Importante**: Mantenga sus credenciales seguras hasta que se complete la integración. No los compartas a través de canales inseguros.
 
-## User Configuration
+## Configuración de usuario
 
-### Existing Users
+### Usuarios existentes
 
-Users who already have accounts in SecureAI (regardless of whether they use basic authentication) **do not need to be recreated**. They can continue using their existing accounts and will also be able to sign in using Google Workspace SSO once it's configured.
+Los usuarios que ya tienen cuentas en SecureAI (independientemente de si usan autenticación básica) **no es necesario volver a crearlas**. Pueden continuar usando sus cuentas existentes y también podrán iniciar sesión usando Google Workspace SSO una vez que esté configurado.
 
-**Important**: The user's email in Google Workspace must match exactly with the email in SecureAI for SSO to work.
+**Importante**: El correo electrónico del usuario en Google Workspace debe coincidir exactamente con el correo electrónico en SecureAI para que SSO funcione.
 
-### Creating New SSO Users
+### Creación de nuevos usuarios de SSO
 
-For new users who should access SecureAI exclusively through SSO:
+Para nuevos usuarios que deberían acceder a SecureAI exclusivamente a través de SSO:
 
-1. Navigate to **User Management** in the SecureAI admin panel
-2. Click to create a new user
-3. When creating the user, select the **"Business Account / SSO"** option
-4. This configuration ensures that:
-   - The new user **will not receive an email** to generate a password
-   - The user will be able to access SecureAI **directly using the Google Workspace SSO** login button
-   - The user's email in Google Workspace must match exactly with the email entered in SecureAI
+1. Navegue hasta **Administración de usuarios** en el panel de administración de SecureAI.
+2. Haga clic para crear un nuevo usuario.
+3. Al crear el usuario, seleccione la opción **"Cuenta Empresarial/SSO"**
+4. Esta configuración garantiza que:
+   - El nuevo usuario **no recibirá un correo electrónico** para generar una contraseña
+   - El usuario podrá acceder a SecureAI **directamente usando el botón de inicio de sesión SSO de Google Workspace**
+   - El correo electrónico del usuario en Google Workspace debe coincidir exactamente con el correo electrónico ingresado en SecureAI
 
-## Troubleshooting
+## Solución de problemas
 
 ### Error: "redirect_uri_mismatch"
 
-- Verify that the Redirect URI in Google Cloud Console matches exactly with what is configured on the server
-- Make sure to include `https://` (not `http://` in production)
-- The redirect URI must be exactly: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-- Check for trailing slashes or typos
+- Verifique que el URI de redireccionamiento en Google Cloud Console coincida exactamente con lo que está configurado en el servidor
+- Asegúrese de incluir `https://` (no `http://` en producción)
+- El URI de redireccionamiento debe ser exactamente: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
+- Compruebe si hay barras diagonales o errores tipográficos
 
-### Error: "User not found in SecureAI database"
+### Error: "Usuario no encontrado en la base de datos SecureAI"
 
-- The user must be previously registered in SecureAI
-- Contact the SecureAI administrator to create the user account
-- Verify that the email address in Google Workspace matches the email in SecureAI exactly
+- El usuario debe estar previamente registrado en SecureAI
+- Póngase en contacto con el administrador de SecureAI para crear la cuenta de usuario.
+- Verifique que la dirección de correo electrónico en Google Workspace coincida exactamente con el correo electrónico en SecureAI
 
-### Error: "Email domain not allowed for Google Workspace login"
+### Error: "El dominio de correo electrónico no está permitido para iniciar sesión en Google Workspace"
 
-- The user's email domain is not in the allowed domains list
-- Contact your development team to add your domain to the allowed list
-- Or verify that the domain restriction configuration is correct
+- El dominio de correo electrónico del usuario no está en la lista de dominios permitidos.
+- Póngase en contacto con su equipo de desarrollo para agregar su dominio a la lista permitida
+- O verificar que la configuración de restricción de dominio sea correcta
 
-### Error: "access_denied" or "unauthorized_client"
+### Error: "acceso_deniado" o "cliente_no autorizado"
 
-- Verify that the OAuth consent screen is properly configured
-- Check that your application is approved (if using External user type)
-- Ensure the Client ID and Client Secret are correct
+- Verificar que la pantalla de consentimiento de OAuth esté configurada correctamente
+- Verifique que su solicitud esté aprobada (si utiliza el tipo de usuario externo)
+- Asegúrese de que el ID del cliente y el secreto del cliente sean correctos
 
-### Error: "invalid_client"
+### Error: "cliente_inválido"
 
-- The Client Secret may have been reset or is incorrect
-- Verify the Client Secret in Google Cloud Console
-- Create a new Client Secret if needed and provide the new value to your development team
+- Es posible que el secreto del cliente se haya restablecido o sea incorrecto
+- Verificar el secreto del cliente en Google Cloud Console
+- Cree un nuevo secreto de cliente si es necesario y proporcione el nuevo valor a su equipo de desarrollo.
 
-## Client Secret Security Best Practices
+## Mejores prácticas de seguridad de secretos del cliente
 
-1. **Never commit secrets to code repositories**
-2. **Rotate secrets periodically** (recommended: every 90 days)
-3. **Limit access** to Google Cloud Console credentials page
-4. **Use secure channels** when sharing secrets with your development team
-5. **Monitor usage** in Google Cloud Console for suspicious activity
+1. **Nunca envíes secretos a repositorios de código**
+2. **Rote los secretos periódicamente** (recomendado: cada 90 días)
+3. **Limitar el acceso** a la página de credenciales de Google Cloud Console
+4. **Utilice canales seguros** cuando comparta secretos con su equipo de desarrollo
+5. **Monitorear el uso** en Google Cloud Console para detectar actividad sospechosa
 
-## Client Secret Renewal
+## Renovación del secreto del cliente
 
-To rotate your Client Secret (recommended every 90 days):
+Para rotar su secreto de cliente (recomendado cada 90 días):
 
-1. Go to **APIs & Services** > **Credentials**
-2. Find your OAuth 2.0 Client ID
-3. Click the **pencil icon** (Edit)
-4. In the **Client secret** section, click **Reset Secret**
-5. **Immediately copy** the new secret value
-6. Provide the new secret to your development team through the admin panel support request
-7. They will update the configuration without interrupting the service
-8. After confirming the new secret works, you can optionally delete the old secret
+1. Vaya a **API y servicios** > **Credenciales**
+2. Encuentre su ID de cliente de OAuth 2.0
+3. Haga clic en el **ícono de lápiz** (Editar)
+4. En la sección **Secreto del cliente**, haga clic en **Restablecer secreto**
+5. **Copia inmediatamente** el nuevo valor secreto
+6. Proporcione el nuevo secreto a su equipo de desarrollo a través de la solicitud de soporte del panel de administración.
+7. Actualizarán la configuración sin interrumpir el servicio
+8. Después de confirmar que el nuevo secreto funciona, opcionalmente puede eliminar el antiguo secreto.
 
-**Note**: There is a brief overlap period during rotation where both secrets work, allowing for a smooth transition.
+**Nota**: Hay un breve período de superposición durante la rotación en el que ambos secretos funcionan, lo que permite una transición sin problemas.
 
-## Testing SSO Login
+## Prueba de inicio de sesión SSO
 
-After configuration is complete:
+Una vez completada la configuración:
 
-1. Go to your SecureAI login page
-2. Click **Continue with Google**
-3. Select your Google Workspace account
-4. Grant permissions if prompted
-5. You should be redirected to SecureAI and logged in
+1. Vaya a su página de inicio de sesión de SecureAI
+2. Haga clic en **Continuar con Google**
+3. Selecciona tu cuenta de Google Workspace
+4. Otorgue permisos si se le solicita
+5. Deberías ser redirigido a SecureAI e iniciar sesión.
 
-If you encounter issues:
-- Clear your browser cookies and try again
-- Verify you're using the correct Google Workspace account
-- Check that your email exists in SecureAI
+Si tiene problemas:
+- Borra las cookies de tu navegador y vuelve a intentarlo.
+- Verifica que estás usando la cuenta correcta de Google Workspace
+- Verifique que su correo electrónico exista en SecureAI
 
-## Support
+## Soporte
 
-If you encounter problems during configuration:
+Si encuentra problemas durante la configuración:
 
-1. Verify that you have administrator permissions in Google Cloud Console
-2. Verify that you have Google Workspace admin access (if domain restrictions are used)
-3. Contact your development team through the admin panel support request with:
-   - Screenshots of the errors
-   - The Client ID (you can share this - it's not sensitive)
-   - The complete error message
-   - Any relevant browser console errors
+1. Verifique que tenga permisos de administrador en Google Cloud Console
+2. Verifique que tenga acceso de administrador de Google Workspace (si se utilizan restricciones de dominio)
+3. Comuníquese con su equipo de desarrollo a través de la solicitud de soporte del panel de administración con:
+   - Capturas de pantalla de los errores.
+   - El ID del cliente (puedes compartirlo, no es confidencial)
+   - El mensaje de error completo.
+   - Cualquier error relevante en la consola del navegador.
 
-**Never share your Client Secret in support requests** - only share it through secure channels after establishing identity verification.
+**Nunca comparta su secreto de cliente en solicitudes de soporte**; compártalo únicamente a través de canales seguros después de establecer la verificación de identidad.
 
-## Additional Resources
+## Recursos adicionales
 
-- [Google Cloud Console Documentation](https://cloud.google.com/docs)
-- [Google OAuth 2.0 Documentation](https://developers.google.com/identity/protocols/oauth2)
-- [Google Workspace Admin Help](https://support.google.com/a)
+- [Documentación de la consola de Google Cloud] (https://cloud.google.com/docs)
+- [Documentación de Google OAuth 2.0](https://developers.google.com/identity/protocols/oauth2)
+- [Ayuda para administradores de Google Workspace](https://support.google.com/a)

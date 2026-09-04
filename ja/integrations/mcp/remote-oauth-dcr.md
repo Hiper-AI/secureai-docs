@@ -30,5 +30,5 @@ description: "SecureAI が OAuth 2.1、PKCE、および動的クライアント�
 
 ## 関連
 
-- [MCP コネクタの概要](/ja/ja/integrations/mcp/overview)
-- [AI ゲートウェイ — リモート エンドポイント](/ja/ja/ai-gateway/remote-endpoints)
+- [MCP コネクタの概要](/ja/integrations/mcp/overview)
+- [AI ゲートウェイ — リモート エンドポイント](/ja/ai-gateway/remote-endpoints)

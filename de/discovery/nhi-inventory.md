@@ -6,7 +6,7 @@ description: "Inventarisieren und verwalten Sie die nichtmenschlichen Identität
 ---
 # NHI-Inventar
 
-Das **NHI-Inventar** (Admin → Agent Registry → **Non-Human Identities**) ist das Inventar der Maschinenanmeldeinformationen hinter Ihrer KI – die API-Schlüssel, Dienstkonten und BYOK-Schlüssel, die Agenten, MCP-Server und Workloads verwenden. Es fasst die von jedem [Cloud AI Provider](/de/en/integrations/cloud/overview)-Connector entdeckten Identitäten zusammen, bewertet deren Risiko und gibt Ihnen die Möglichkeit, sie zu blockieren oder zu widerrufen.
+Das **NHI-Inventar** (Admin → Agent Registry → **Non-Human Identities**) ist das Inventar der Maschinenanmeldeinformationen hinter Ihrer KI – die API-Schlüssel, Dienstkonten und BYOK-Schlüssel, die Agenten, MCP-Server und Workloads verwenden. Es fasst die von jedem [Cloud AI Provider](/de/integrations/cloud/overview)-Connector entdeckten Identitäten zusammen, bewertet deren Risiko und gibt Ihnen die Möglichkeit, sie zu blockieren oder zu widerrufen.
 
 ## Was jede Identität zeigt
 
@@ -48,6 +48,6 @@ Der Governance-Sweeper berechnet eine zusammengesetzte Bewertung von 0–100 aus
 
 ## Verwandte
 
-- [Cloud AI Providers](/de/en/integrations/cloud/overview) – die Quelle der entdeckten Identitäten.
-- [Cloud-Sensoren](/de/en/discovery/cloud-sensors)
-- [AI Discovery & Inventory Overview](/de/en/discovery/overview)
+- [Cloud AI Providers](/de/integrations/cloud/overview) – die Quelle der entdeckten Identitäten.
+- [Cloud-Sensoren](/de/discovery/cloud-sensors)
+- [AI Discovery & Inventory Overview](/de/discovery/overview)

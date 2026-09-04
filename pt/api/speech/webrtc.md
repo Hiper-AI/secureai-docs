@@ -1,74 +1,73 @@
 ---
 sidebar_position: 1
-title: "Initiate Speech-to-Speech WebRTC Session"
+title: "Sessão WebRTC Speech-to-Speech"
 openapi: "POST /speech/s2s/webrtc"
+sidebar_label: "Sessão WebRTC (S2S)"
 ---
 
+# Iniciar sessão WebRTC de fala para fala
 
+Estabeleça uma conexão WebRTC para conversas de voz em tempo real usando a API OpenAI Realtime.
 
-# Initiate Speech-to-Speech WebRTC Session
-
-Establish a WebRTC connection for real-time speech-to-speech conversations using OpenAI Realtime API.
-
-## Endpoint
+## Ponto final
 
 ```
 POST /speech/s2s/webrtc
 ```
 
-## Description
+## Descrição
 
-Establishes a WebRTC connection for real-time speech-to-speech conversations using OpenAI Realtime API. This endpoint accepts a WebRTC SDP offer and returns an SDP answer that can be used to establish a peer connection with OpenAI's Realtime API.
+Estabelece uma conexão WebRTC para conversas de fala em voz em tempo real usando a API OpenAI Realtime. Este endpoint aceita uma oferta WebRTC SDP e retorna uma resposta SDP que pode ser usada para estabelecer uma conexão peer com a API Realtime da OpenAI.
 
-### Usage Flow
+### Fluxo de uso
 
-1. Client creates a WebRTC offer (RTCPeerConnection.createOffer)
-2. Client sends the SDP offer to this endpoint
-3. This endpoint proxies the offer to OpenAI Realtime API
-4. Client receives SDP answer and establishes WebRTC connection
-5. Client can then have real-time voice conversations with the AI
+1. O cliente cria uma oferta WebRTC (RTCPeerConnection.createOffer)
+2. O cliente envia a oferta SDP para este endpoint
+3. Este endpoint faz proxy da oferta para OpenAI Realtime API
+4. O cliente recebe resposta SDP e estabelece conexão WebRTC
+5. O cliente pode então ter conversas de voz em tempo real com a IA
 
-### S2S Time Tracking
+### Rastreamento de tempo S2S
 
-- Each user has a monthly S2S time quota based on their license
-- Time is tracked in minutes and deducted when sessions are logged
-- Use `/speech/s2s/status` to check remaining time
-- Use `/speech/s2s/log-session` to log session duration and deduct time
+- Cada usuário tem uma cota mensal de tempo S2S com base em sua licença
+- O tempo é monitorado em minutos e deduzido quando as sessões são registradas
+- Use `/speech/s2s/status` para verificar o tempo restante
+- Use `/speech/s2s/log-session` para registrar a duração da sessão e deduzir o tempo
 
-### SMLTP Integration
+### SMLTP Integração
 
-- All requests are processed through SMLTP for security and compliance
-- Model validation is enforced based on the specified SMLTP policy
-- Requests are audited and logged for compliance tracking
+- Todas as solicitações são processadas através de SMLTP para segurança e conformidade
+- A validação do modelo é aplicada com base na política SMLTP especificada
+- As solicitações são auditadas e registradas para rastreamento de conformidade
 
-## Authentication
+## Autenticação
 
-Required: API Key
+Obrigatório: Chave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Corpo da solicitação
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `sdp` | string | Yes | WebRTC SDP offer from the client's RTCPeerConnection |
-| `model` | string | No | OpenAI Realtime model (default: "gpt-4o-mini-realtime-preview") |
-| `voice` | string | No | Voice to use for AI response (default: "alloy") |
-| `smltp_policy` | string | No | SMLTP policy (default: "internal") |
-| `output_audio` | boolean | No | Whether to enable audio output (default: true) |
-| `user_id` | string | No | User ID to bill this session to (defaults to API key owner) |
-| `instructions` | string | No | Optional system instructions for the AI assistant |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `sdp` | corda | Sim | Oferta WebRTC SDP do RTCPeerConnection do cliente |
+| `model` | corda | Não | Modelo OpenAI Realtime (padrão: "gpt-4o-mini-realtime-preview") |
+| `voice` | corda | Não | Voz a ser usada para resposta de IA (padrão: "alloy") |
+| `smltp_policy` | corda | Não | Política SMLTP (padrão: "interna") |
+| `output_audio` | booleano | Não | Se a saída de áudio deve ser habilitada (padrão: true) |
+| `user_id` | corda | Não | ID do usuário para cobrar esta sessão (o padrão é o proprietário da chave de API) |
+| `instructions` | corda | Não | Instruções opcionais do sistema para o assistente de IA |
 
-### Available Models
+### Modelos Disponíveis
 
 - `gpt-4o-mini-realtime-preview`
 - `gpt-4o-realtime-preview`
 
-### Available Voices
+### Vozes disponíveis
 
-- `alloy` (default)
+- `alloy` (padrão)
 - `echo`
 - `fable`
 - `onyx`
@@ -78,17 +77,17 @@ Authorization: Bearer sk-your-api-key-here
 - `ballad`
 - `coral`
 
-### Available SMLTP Policies
+### Políticas SMLTP disponíveis
 
 - `public`
-- `internal` (default)
+- `internal` (padrão)
 - `internal-strict`
 - `confidential`
 - `hipaa`
 - `gdpr`
 - `pci-dss`
 
-## Request Example
+## Exemplo de solicitação
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/speech/s2s/webrtc" \
@@ -104,7 +103,7 @@ curl -X POST "https://{customer.name}.hiperai.ai/api/external/speech/s2s/webrtc"
   }'
 ```
 
-### JavaScript/Node.js
+###JavaScript/Node.js
 
 ```javascript
 // Create WebRTC peer connection
@@ -143,7 +142,7 @@ await pc.setRemoteDescription(new RTCSessionDescription({
 // Now you can have real-time voice conversations
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -167,13 +166,13 @@ sdp_answer = response.text
 print('SDP Answer:', sdp_answer)
 ```
 
-## Response
+## Resposta
 
-### Success Response (200)
+### Resposta de sucesso (200)
 
-**Content-Type**: `application/sdp`
+**Tipo de conteúdo**: `application/sdp`
 
-The response is an SDP answer string that can be used with `RTCPeerConnection.setRemoteDescription()`.
+A resposta é uma string de resposta SDP que pode ser usada com `RTCPeerConnection.setRemoteDescription()`.
 
 ```
 v=0
@@ -183,9 +182,9 @@ t=0 0
 ...
 ```
 
-## Error Responses
+## Respostas de erro
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
 ```json
 {
@@ -196,9 +195,9 @@ t=0 0
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
-#### S2S Time Limit Reached
+#### Limite de tempo S2S atingido
 
 ```json
 {
@@ -211,7 +210,7 @@ t=0 0
 }
 ```
 
-#### Model Validation Failed
+#### Falha na validação do modelo
 
 ```json
 {
@@ -222,7 +221,7 @@ t=0 0
 }
 ```
 
-### 500 Internal Server Error
+### 500 Erro interno do servidor
 
 ```json
 {
@@ -233,12 +232,11 @@ t=0 0
 }
 ```
 
-## Notes
+## Notas
 
-- The SDP offer must be a valid WebRTC SDP offer string
-- After receiving the SDP answer, use it to set the remote description on your RTCPeerConnection
-- Check S2S time status before initiating sessions using `/speech/s2s/status`
-- Log session duration after completion using `/speech/s2s/log-session`
-- All requests are processed through SMLTP for security and compliance
-- The `user_id` parameter allows billing to a different user account
-
+- A oferta SDP deve ser uma string de oferta WebRTC SDP válida
+- Após receber a resposta SDP, use-a para definir a descrição remota em seu RTCPeerConnection
+- Verifique o status do horário S2S antes de iniciar sessões usando `/speech/s2s/status`
+- Registrar a duração da sessão após a conclusão usando `/speech/s2s/log-session`
+- Todas as solicitações são processadas através de SMLTP para segurança e conformidade
+- O parâmetro `user_id` permite o faturamento para uma conta de usuário diferente

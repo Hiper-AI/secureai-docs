@@ -62,7 +62,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 | `points.monthly_limit` | L'allocation mensuelle de points de l'utilisateur. |
 | `points.next_renewal` | Horodatage ISO du prochain renouvellement des points. |
 | `usage_by_model` | Lorsque l'utilisateur facturé est en mode de facturation Utilisation par modèle : `dollar_limit`, `current_spend`, `remaining_budget`. Sinon `{ "enabled": false }`. |
-| `api_key.billing_mode` | `user-completions` ou `usage-by-model` — voir [Modes de facturation](/fr/en/api/billing-modes). |
+| `api_key.billing_mode` | `user-completions` ou `usage-by-model` — voir [Modes de facturation](/fr/api/billing-modes). |
 | `api_key.daily` / `api_key.monthly` | Les compteurs de requêtes de la clé (`used`, `limit`, `remaining`). |
 | `api_key.rate_limit` | Plafonds de demande par minute et par heure. |
 | `api_key.expires_at` | Horodatage d'expiration ISO, ou `null` si la clé n'expire jamais. |
@@ -70,10 +70,10 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 ## Remarques
 
 - Les valeurs reflètent l'utilisateur **facturé**, qui peut différer du propriétaire de la clé lorsque les demandes utilisent `user_id` pour le compte de la facturation.
-- Pour prévisualiser si une requête *spécifique* dépassera son quota (sans dépenses), utilisez [Policy Check](/fr/en/api/policy-check) et lisez `checks.quota`.
+- Pour prévisualiser si une requête *spécifique* dépassera son quota (sans dépenses), utilisez [Policy Check](/fr/api/policy-check) et lisez `checks.quota`.
 
 ## Connexes
 
-- [Modes de facturation](/fr/en/api/billing-modes)
-- [Présentation de l'authentification](/fr/en/api/auth/overview)
-- [Policy Check](/fr/en/api/policy-check)
+- [Modes de facturation](/fr/api/billing-modes)
+- [Présentation de l'authentification](/fr/api/auth/overview)
+- [Policy Check](/fr/api/policy-check)

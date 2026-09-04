@@ -11,7 +11,7 @@ description: "論理的な AI エージェントとチャットボットを管�
 <Info>
 **エンドポイント フリートではありません**
 
-エージェント レジストリは、*論理* AI エージェント (サポート チャットボット、内部副操縦士) に関するものです。これは、[エンドポイント エージェント](/ja/en/agent/overview) に記載されている、エンドポイントにインストールされる SecureAI ソフトウェアである **OS エージェント** フリートとは異なります。
+エージェント レジストリは、*論理* AI エージェント (サポート チャットボット、内部副操縦士) に関するものです。これは、[エンドポイント エージェント](/ja/agent/overview) に記載されている、エンドポイントにインストールされる SecureAI ソフトウェアである **OS エージェント** フリートとは異なります。
 </Info>
 
 ## エージェントごとに記録される内容
@@ -30,11 +30,11 @@ description: "論理的な AI エージェントとチャットボットを管�
 - **エージェントをインポート**してインベントリをブートストラップします。
 - エージェント、ツール、データ間の**関係**を確認します。
 - **提案された自律性を適用** — エージェントに推奨される自律性レベルを受け入れます。
-- 監視用にチャットボットを登録します。 [Prompt Shield API](/ja/en/api/threat-defense/prompt-shield) を通じて最初に確認されたチャットボットは、レビューのためにここに `observed` として自動登録されます。
+- 監視用にチャットボットを登録します。 [Prompt Shield API](/ja/api/threat-defense/prompt-shield) を通じて最初に確認されたチャットボットは、レビューのためにここに `observed` として自動登録されます。
 
 ## 関連
 
-- [エンドポイント エージェント](/ja/en/agent/overview) — OS レベルのエージェント フリート (これとは異なります)。
-- [NHI Inventory](/ja/en/discovery/nhi-inventory) — エージェントが認証に使用する ID。
-- [Prompt Shield API](/ja/ja/api/threat-defense/prompt-shield) — チャットボットを自動登録します。
-- [AI ディスカバリーとインベントリーの概要](/ja/ja/discovery/overview)
+- [エンドポイント エージェント](/ja/agent/overview) — OS レベルのエージェント フリート (これとは異なります)。
+- [NHI Inventory](/ja/discovery/nhi-inventory) — エージェントが認証に使用する ID。
+- [Prompt Shield API](/ja/api/threat-defense/prompt-shield) — チャットボットを自動登録します。
+- [AI ディスカバリーとインベントリーの概要](/ja/discovery/overview)

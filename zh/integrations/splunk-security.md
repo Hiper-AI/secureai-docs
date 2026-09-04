@@ -1,173 +1,171 @@
 ---
 id: splunk-security
-title: "Splunk Security Integration"
-sidebar_label: "Splunk Security"
-description: "Integration Guide: Connecting Splunk SIEM with HiperAI via HTTP Event Collector (HEC)"
+title: "Splunk 安全集成"
+sidebar_label: "Splunk安全"
+description: "集成指南：通过 HTTP 事件收集器 (HEC) 连接 Splunk SIEM 与 HiperAI"
 ---
+# Splunk 安全集成
 
+集成指南：将 Splunk SIEM 与 HiperAI 连接
 
-# Splunk Security Integration
+本指南介绍了配置 Splunk 以通过 HTTP 事件收集器 (HEC) 从 HiperAI 接收安全日志的必要步骤。
 
-Integration Guide: Connecting Splunk SIEM with HiperAI
+## 第 1 步：创建新索引
 
-This guide describes the necessary steps to configure Splunk to receive security logs from HiperAI via the HTTP Event Collector (HEC).
+首先，我们将创建一个专用空间来存储应用程序的日志。
 
-## Step 1: Create a New Index
-
-First, we will create a dedicated space to store the application's logs.
-
-### A. From the Splunk home screen, navigate to Settings > Indexes.
+### A. 从 Splunk 主屏幕，导航至设置 > 索引。
 
 <div class="mac-window">
-  ![Splunk Settings Indexes](/img/splunk%20images/1%20-%20Splunk%20Integration.png)
+  ![Splunk 设置索引](/img/splunk%20images/1%20-%20Splunk%20Integration.png)
 </div>
 
-### B. Click the New Index button in the top-right corner.
+### B. 单击右上角的“新建索引”按钮。
 
-### C. Configure the index:
+### C.配置索引：
 
-- **Index Name**: `secureai_events`
-- Leave all other options with their default values for a standard configuration.
-- Click **Save**.
+- **索引名称**：`secureai_events`
+- 将所有其他选项保留为标准配置的默认值。
+- 单击**保存**。
 
 <div class="mac-window">
-  ![Splunk Index Configuration](/img/splunk%20images/2%20-%20Splunk%20Integration.png)
+  ![Splunk 索引配置](/img/splunk%20images/2%20-%20Splunk%20Integration.png)
 </div>
 
-Your new index is now created and ready to receive data.
+您的新索引现已创建并准备好接收数据。
 
-## Step 2: Enable the HTTP Event Collector (HEC)
+## 步骤 2：启用 HTTP 事件收集器 (HEC)
 
-Next, we will ensure that Splunk is listening for incoming data requests.
+接下来，我们将确保 Splunk 正在侦听传入的数据请求。
 
-### A. Go to Settings > Data Inputs.
+### A. 转至设置 > 数据输入。
 
 <div class="mac-window">
-  ![Splunk Data Inputs](/img/splunk%20images/3%20-%20Splunk%20Integration.png)
+  ![Splunk 数据输入](/img/splunk%20images/3%20-%20Splunk%20Integration.png)
 </div>
 
-### B. Under "Local inputs," click on HTTP Event Collector.
+### B. 在“本地输入”下，单击 HTTP 事件收集器。
 
 <div class="mac-window">
-  ![Splunk HTTP Event Collector](/img/splunk%20images/4%20-%20Splunk%20Integration.png)
+  ![Splunk HTTP 事件收集器](/img/splunk%20images/4%20-%20Splunk%20Integration.png)
 </div>
 
-### C. In the top-right corner, click Global Settings.
+### C. 在右上角，单击全局设置。
 
-### D. Verify the following configuration:
+### D. 验证以下配置：
 
-- **All Tokens**: Must be Enabled.
-- **Enable SSL**: (Optional) This is recommended for production environments but can be disabled for initial testing.
-- **HTTP Port Number**: Ensure the port is 8088.
-- Click **Save**.
+- **所有令牌**：必须启用。
+- **启用 SSL**：（可选）建议在生产环境中使用此选项，但可以在初始测试中禁用。
+- **HTTP 端口号**：确保端口为 8088。
+- 单击**保存**。
 
 <div class="mac-window">
-  ![Splunk HEC Global Settings](/img/splunk%20images/5%20-%20Splunk%20Integration.png)
+  ![Splunk HEC 全局设置](/img/splunk%20images/5%20-%20Splunk%20Integration.png)
 </div>
 
-## Step 3: Create the HEC Token
+## 步骤 3：创建 HEC 令牌
 
-The token is the secure access key that our application will use to authenticate with Splunk.
+该令牌是我们的应用程序将用于通过 Splunk 进行身份验证的安全访问密钥。
 
-### A. Return to the HTTP Event Collector page (Settings > Data Inputs > HTTP Event Collector).
+### A. 返回 HTTP 事件收集器页面（设置 > 数据输入 > HTTP 事件收集器）。
 
-### B. Click the New Token button.
+### B. 单击“新建令牌”按钮。
 
 <div class="mac-window">
-  ![Splunk New Token Button](/img/splunk%20images/6%20-%20Splunk%20Integration.png)
+  ![Splunk 新令牌按钮](/img/splunk%20images/6%20-%20Splunk%20Integration.png)
 </div>
 
-### C. Token Configuration (Tab 1):
+### C. 令牌配置（选项卡 1）：
 
-- **Name**: `token_secureai_app`
-- **Description**: (Optional) Add a brief description.
-- **Enable indexer acknowledgment**: **IMPORTANT**: Ensure this checkbox is unchecked.
-- Click **Next**.
+- **姓名**：`token_secureai_app`
+- **描述**：（可选）添加简短描述。
+- **启用索引器确认**：**重要**：确保取消选中此复选框。
+- 单击**下一步**。
 
 <div class="mac-window">
-  ![Splunk Token Configuration](/img/splunk%20images/7%20-%20Splunk%20Integration.png)
+  ![Splunk 令牌配置](/img/splunk%20images/7%20-%20Splunk%20Integration.png)
 </div>
 
-### D. Input Settings (Tab 2):
+### D. 输入设置（选项卡 2）：
 
-- **Source Type**: Click Select. In the search field, type `_json` and select it from the list. This tells Splunk to expect data in JSON format.
-- **Allowed Indexes**: In the "Available indexes" column, find the index we created (`secureai_events`) and click it to move it to the "Selected indexes" column.
-- **Default Index**: Select `secureai_events` from the dropdown menu.
+- **来源类型**：单击选择。在搜索字段中，输入 `_json` 并从列表中选择它。这告诉 Splunk 期望 JSON 格式的数据。
+- **允许的索引**：在“可用索引”列中，找到我们创建的索引（`secureai_events`）并单击它，将其移动到“选定索引”列。
+- **默认索引**：从下拉菜单中选择`secureai_events`。
 
 <div class="mac-window">
-  ![Splunk Input Settings](/img/splunk%20images/8%20-%20Splunk%20Integration.png)
+  ![Splunk 输入设置](/img/splunk%20images/8%20-%20Splunk%20Integration.png)
 </div>
 
-- Click **Review** and then **Submit**.
+- 点击“**审核**”，然后点击“**提交**”。
 
 <div class="mac-window">
-  ![Splunk Review and Submit](/img/splunk%20images/9%20-%20Splunk%20Integration.png)
+  ![Splunk 审核并提交](/img/splunk%20images/9%20-%20Splunk%20Integration.png)
 </div>
 
-### E. Copy the Token Value!
+### E. 复制令牌值！
 
-Splunk will now display the token value. Copy it immediately and save it in a secure location. This is the token you will need to configure in our application.
+Splunk 现在将显示令牌值。立即复制并将其保存在安全位置。这是您需要在我们的应用程序中配置的令牌。
 
 <div class="mac-window">
-  ![Splunk Token Value](/img/splunk%20images/10%20-%20Splunk%20Integration.png)
+  ![Splunk 令牌值](/img/splunk%20images/10%20-%20Splunk%20Integration.png)
 </div>
 
-## Step 4: Finalize and Share Information
+## 步骤 4：最终确定并共享信息
 
-You're almost done. Just one final step.
+你快完成了。只是最后一步。
 
-### A. Gather the Information
+### A. 收集信息
 
-To complete the integration, the application needs the following three pieces of information:
+为了完成集成，应用程序需要以下三条信息：
 
-1. **HEC URL**: The address of your Splunk server and the HEC port (e.g., `http://splunk.yourcompany.com:8088/services/collector`).
-2. **The HEC Token**: The value you copied in the previous step.
-3. **The Index Name**: The name of the index you created (`secureai_events`).
+1. **HEC URL**：Splunk 服务器的地址和 HEC 端口（例如 `http://splunk.yourcompany.com:8088/services/collector`）。
+2. **HEC 令牌**：您在上一步中复制的值。
+3. **索引名称**：您创建的索引的名称（`secureai_events`）。
 
 <div class="mac-window">
-  ![Splunk Index Information](/img/splunk%20images/11%20-%20Splunk%20Integration.png)
+  ![Splunk 索引信息](/img/splunk%20images/11%20-%20Splunk%20Integration.png)
 </div>
 
-### B. Review Firewall Rules
+### B. 查看防火墙规则
 
-Ensure that any firewall between the application server and your Splunk server allows traffic on the HEC port (typically TCP 8088).
+确保应用程序服务器和 Splunk 服务器之间的任何防火墙都允许 HEC 端口（通常为 TCP 8088）上的流量。
 
-## Step 4: Note on Data Format (Sourcetype)
+## 步骤 4：数据格式注意事项（Sourcetype）
 
-To ensure data is correctly identified and parsed, our application sends logs in a specific structured JSON format.
+为了确保正确识别和解析数据，我们的应用程序以特定的结构化 JSON 格式发送日志。
 
-**Important**: All events sent from SecureAI will have the sourcetype `secureai:json`.
+**重要**：从 SecureAI 发送的所有事件都将具有源类型 `secureai:json`。
 
-This value is set directly in the data payload sent by our application, so it will automatically override the default sourcetype (`_json`) you selected for the token. No further action is required, but it is important for you to know that you will find the data under the sourcetype="secureai:json" in your searches.
+该值直接在我们的应用程序发送的数据有效负载中设置，因此它将自动覆盖您为令牌选择的默认源类型（`_json`）。不需要采取进一步的操作，但重要的是您要知道您将在搜索中找到 sourcetype="secureai:json" 下的数据。
 
-## Step 6: Verify the Integration
+## 步骤 6：验证集成
 
-Once you have entered the integration details into the SecureAI application, you can verify that the connection is working correctly.
+将集成详细信息输入 SecureAI 应用程序后，您可以验证连接是否正常工作。
 
-### A. Test the Connection
+### A. 测试连接
 
-Use the "Test Connection" button within our application. This will send a test event to your Splunk index.
+使用我们的应用程序中的“测试连接”按钮。这会将测试事件发送到您的 Splunk 索引。
 
 <div class="mac-window">
-  ![Splunk Test Connection](/img/splunk%20images/12%20-%20Splunk%20Integration.png)
+  ![Splunk 测试连接](/img/splunk%20images/12%20-%20Splunk%20Integration.png)
 </div>
 
-You will see a success message if the event was sent correctly or an error message if any of the provided data is incorrect.
+如果事件发送正确，您将看到一条成功消息；如果提供的任何数据不正确，您将看到一条错误消息。
 
-### B. Find the Test Event in Splunk
+### B. 在 Splunk 中查找测试事件
 
-To see if the event arrived in Splunk, go to the Search & Reporting app.
+要查看事件是否已到达 Splunk，请转至搜索和报告应用程序。
 
-In the search bar, run a search for your index (e.g., `index="secureai_events"`).
+在搜索栏中，搜索您的索引（例如 `index="secureai_events"`）。
 
-Set the Time Range to "Last 24 hours". You should see the test log appear in the results.
+将时间范围设置为“过去 24 小时”。您应该看到测试日志出现在结果中。
 
 <div class="mac-window">
-  ![Splunk Search Results](/img/splunk%20images/13%20-%20Splunk%20Integration.png)
+  ![Splunk 搜索结果](/img/splunk%20images/13%20-%20Splunk%20Integration.png)
 </div>
 
-**Note**: Depending on network traffic and system load, it can sometimes take up to 10 minutes for logs to appear in Splunk.
+**注意**：根据网络流量和系统负载，日志有时可能需要长达 10 分钟才能显示在 Splunk 中。
 
-## Done!
+## 完成！
 
-With these steps, your Splunk instance is fully configured to integrate with SecureAI 😎.
+通过这些步骤，您的 Splunk 实例已完全配置为与 SecureAI 集成。

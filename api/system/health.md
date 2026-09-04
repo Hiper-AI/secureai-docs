@@ -1,14 +1,13 @@
 ---
 sidebar_position: 1
-title: "Health Check"
+title: "Health Check (Estado del Sistema)"
 openapi: "GET /health"
+sidebar_label: "Health Check"
 ---
 
+# Control de salud
 
-
-# Health Check
-
-Check if the API is running and healthy. No authentication required.
+Compruebe si la API está funcionando y en buen estado. No se requiere autenticación.
 
 ## Endpoint
 
@@ -16,19 +15,19 @@ Check if the API is running and healthy. No authentication required.
 GET /health
 ```
 
-## Description
+## Descripción
 
-This endpoint allows you to verify that the SecureAI External API is running and healthy. No authentication is required for this endpoint.
+Este endpoint le permite verificar que la API externa SecureAI esté funcionando y en buen estado. No se requiere autenticación para este endpoint.
 
-## Request
+## Solicitud
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -39,16 +38,16 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descripción | Ejemplo |
 |-------|------|-------------|---------|
-| `success` | boolean | Always true for successful health check | `true` |
-| `status` | string | Health status of the API | `"healthy"` |
-| `timestamp` | string | Current server timestamp in ISO 8601 format | `"2024-01-15T10:30:00.000Z"` |
-| `version` | string | Current API version | `"1.0.0"` |
+| `success` | booleano | Siempre es cierto para un control de salud exitoso | `true` |
+| `status` | cadena | Estado de salud de la API | `"healthy"` |
+| `timestamp` | cadena | Marca de tiempo actual del servidor en formato ISO 8601 | `"2024-01-15T10:30:00.000Z"` |
+| `version` | cadena | Versión API actual | `"1.0.0"` |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript/Node.js
 
@@ -58,7 +57,7 @@ const data = await response.json();
 console.log('API Status:', data.status);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -68,14 +67,14 @@ data = response.json()
 print('API Status:', data['status'])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 ```
 
-## Notes
+## Notas
 
-- This endpoint does not require authentication
-- Use this endpoint to monitor API availability
-- The response includes the current API version for compatibility checking 
+- Este endpoint no requiere autenticación
+- Utilice este endpoint para monitorear la disponibilidad de API
+- La respuesta incluye la versión actual de la API para comprobar la compatibilidad.

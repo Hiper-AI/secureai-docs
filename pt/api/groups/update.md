@@ -1,51 +1,49 @@
 ---
 id: update
-title: "Update Group"
-sidebar_label: "Update Group"
-description: "Update an existing user group"
+title: "Atualizar Grupo"
+sidebar_label: "Atualizar Grupo"
+description: "Atualizar um grupo de usuários existente"
 openapi: "PUT /groups/{groupId}"
 ---
 
+# Atualizar grupo
 
+Atualize um grupo de usuários existente com novas informações, descrições ou metadados.
 
-# Update Group
-
-Update an existing user group with new information, description, or metadata.
-
-## Endpoint
+## Ponto final
 
 ```
 PUT /groups/{groupId}
 ```
 
-## Description
+## Descrição
 
-This endpoint allows administrators to update an existing user group. You can modify the group name, description, metadata, and other properties. The group must exist and you must have appropriate permissions to update it.
+Este endpoint permite que os administradores atualizem um grupo de usuários existente. Você pode modificar o nome do grupo, a descrição, os metadados e outras propriedades. O grupo deve existir e você deve ter permissões apropriadas para atualizá-lo.
 
-## Authentication
+## Autenticação
 
-**Required**: API Key with admin privileges
+**Obrigatório**: Chave de API com privilégios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## Parâmetros de caminho
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `groupId` | string | Yes | The unique identifier of the group to update |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `groupId` | corda | Sim | O identificador exclusivo do grupo a ser atualizado |
 
-## Request Body
+## Corpo da solicitação
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | No | New name for the group |
-| `description` | string | No | New description for the group |
-| `users` | array | No | Array of user IDs to assign to the group |
-| `status` | string | No | Group status |
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|----------|------------|
+| `name` | corda | Não | Novo nome do grupo |
+| `description` | corda | Não | Nova descrição para o grupo |
+| `users` | matriz | Não | Matriz de IDs de usuário a serem atribuídos ao grupo |
+| `status` | corda | Não | Estado do grupo |
 
-## Example Request
+## Exemplo de solicitação
 
 ```json
 {
@@ -56,9 +54,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## Resposta de sucesso
 
-**Status Code**: `200 OK`
+**Código de status**: `200 OK`
 
 ```json
 {
@@ -93,26 +91,26 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description |
+| Campo | Tipo | Descrição |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `group` | object | Updated group object |
-| `group.id` | string | Unique group identifier |
-| `group.name` | string | Updated group name |
-| `group.description` | string | Updated group description |
-| `group.status` | string | Group status |
-| `group.userCount` | integer | Number of users in the group |
-| `group.users` | array | Array of user objects in the group |
-| `group.users[].id` | string | User ID |
-| `group.users[].name` | string | User name |
-| `group.users[].email` | string | User email |
-| `group.createdAt` | string | Original creation timestamp |
-| `group.updatedAt` | string | Last update timestamp |
+| `success` | booleano | Indica se a operação foi bem sucedida |
+| `message` | corda | Mensagem de sucesso |
+| `group` | objeto | Objeto de grupo atualizado |
+| `group.id` | corda | Identificador único de grupo |
+| `group.name` | corda | Nome do grupo atualizado |
+| `group.description` | corda | Descrição atualizada do grupo |
+| `group.status` | corda | Estado do grupo |
+| `group.userCount` | inteiro | Número de usuários do grupo |
+| `group.users` | matriz | Matriz de objetos de usuário no grupo |
+| `group.users[].id` | corda | ID do usuário |
+| `group.users[].name` | corda | Nome de usuário |
+| `group.users[].email` | corda | E-mail do usuário |
+| `group.createdAt` | corda | Carimbo de data/hora de criação original |
+| `group.updatedAt` | corda | Carimbo de data/hora da última atualização |
 
-## Example Usage
+## Exemplo de uso
 
 ### JavaScript
 
@@ -142,7 +140,7 @@ const result = await updateGroup('60a7c8f5e8b4f5001f7a8c25', updateData);
 console.log('Updated group:', result.group);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -169,7 +167,7 @@ result = update_group("60a7c8f5e8b4f5001f7a8c25", update_data)
 print("Updated group:", result["group"])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4f5001f7a8c25" \
@@ -183,9 +181,9 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4
   }'
 ```
 
-## Error Responses
+## Respostas de erro
 
-### 400 Bad Request
+### 400 Solicitação incorreta
 
 ```json
 {
@@ -201,7 +199,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4
 }
 ```
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -213,7 +211,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4
 }
 ```
 
-### 403 Forbidden
+### 403 Proibido
 
 ```json
 {
@@ -225,7 +223,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4
 }
 ```
 
-### 404 Not Found
+### 404 não encontrado
 
 ```json
 {
@@ -237,7 +235,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4
 }
 ```
 
-### 409 Conflict
+### 409 Conflito
 
 ```json
 {
@@ -249,7 +247,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4
 }
 ```
 
-### 429 Too Many Requests
+### 429 Muitas solicitações
 
 ```json
 {
@@ -262,26 +260,26 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/groups/60a7c8f5e8b4
 }
 ```
 
-## Use Cases
+## Casos de uso
 
-- **Group Management**: Update group information and descriptions
-- **User Assignment**: Assign new users to the group
-- **Name Changes**: Rename groups for better clarity
-- **Status Updates**: Change group status
-- **Team Updates**: Update group information when team structure changes
+- **Gerenciamento de grupo**: atualize informações e descrições do grupo
+- **Atribuição de usuário**: atribua novos usuários ao grupo
+- **Alterações de nome**: renomeie grupos para melhor clareza
+- **Atualizações de status**: alterar o status do grupo
+- **Atualizações da equipe**: atualize as informações do grupo quando a estrutura da equipe mudar
 
-## Rate Limits
+## Limites de taxa
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **Padrão**: 50 solicitações por minuto
+- **Diariamente**: 5.000 solicitações por dia
+- **Mensal**: 150.000 solicitações por mês
 
-## Notes
+## Notas
 
-- This endpoint is only accessible by administrators
-- Partial Updates: Only include fields you want to change
-- User Assignment: Can assign new users to the group
-- Name Validation: Group names must be unique
-- Flat Response: Response is not nested under data object
-- User Validation: User IDs are validated before assignment
-- The `updatedAt` timestamp is automatically updated 
+- Este endpoint só é acessível por administradores
+- Atualizações parciais: inclua apenas os campos que você deseja alterar
+- Atribuição de usuário: pode atribuir novos usuários ao grupo
+- Validação de nome: os nomes dos grupos devem ser exclusivos
+- Resposta simples: a resposta não está aninhada no objeto de dados
+- Validação do usuário: IDs de usuário são validados antes da atribuição
+- O carimbo de data/hora `updatedAt` é atualizado automaticamente

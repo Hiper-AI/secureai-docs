@@ -62,7 +62,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 | `points.monthly_limit` | Das monatliche Punktekontingent des Benutzers. |
 | `points.next_renewal` | ISO-Zeitstempel der nächsten Punkteverlängerung. |
 | `usage_by_model` | Wenn sich der abgerechnete Benutzer im Abrechnungsmodus „Nutzung nach Modell“ befindet: `dollar_limit`, `current_spend`, `remaining_budget`. Ansonsten `{ "enabled": false }`. |
-| `api_key.billing_mode` | `user-completions` oder `usage-by-model` – siehe [Abrechnungsmodi](/de/en/api/billing-modes). |
+| `api_key.billing_mode` | `user-completions` oder `usage-by-model` – siehe [Abrechnungsmodi](/de/api/billing-modes). |
 | `api_key.daily` / `api_key.monthly` | Die Anforderungszähler des Schlüssels (`used`, `limit`, `remaining`). |
 | `api_key.rate_limit` | Anfrageobergrenzen pro Minute und Stunde. |
 | `api_key.expires_at` | ISO-Ablaufzeitstempel oder `null`, wenn der Schlüssel nie abläuft. |
@@ -70,10 +70,10 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/usage" \
 ## Notizen
 
 – Die Werte spiegeln den **abgerechneten** Benutzer wider, der sich vom Schlüsseleigentümer unterscheiden kann, wenn Anfragen `user_id` im Auftrag der Abrechnung verwenden.
-- Um eine Vorschau zu erhalten, ob eine *bestimmte* Anfrage ihr Kontingent erreichen würde (ohne Ausgaben), verwenden Sie [Policy Check](/de/en/api/policy-check) und lesen Sie `checks.quota`.
+- Um eine Vorschau zu erhalten, ob eine *bestimmte* Anfrage ihr Kontingent erreichen würde (ohne Ausgaben), verwenden Sie [Policy Check](/de/api/policy-check) und lesen Sie `checks.quota`.
 
 ## Verwandte
 
-- [Abrechnungsmodi](/de/en/api/billing-modes)
-- [Authentifizierungsübersicht](/de/en/api/auth/overview)
-- [Policy Check](/de/en/api/policy-check)
+- [Abrechnungsmodi](/de/api/billing-modes)
+- [Authentifizierungsübersicht](/de/api/auth/overview)
+- [Policy Check](/de/api/policy-check)

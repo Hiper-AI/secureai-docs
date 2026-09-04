@@ -1,51 +1,49 @@
 ---
 sidebar_position: 6
-title: "Quarantine & Fleet Ops"
-sidebar_label: "Quarantine & Fleet Ops"
-description: "Respond to endpoint threats — quarantine, restore, isolate, incidents, and fleet-wide operations"
+title: "检疫和舰队行动"
+sidebar_label: "检疫和舰队行动"
+description: "响应端点威胁 - 隔离、恢复、隔离、事件和整个车队的操作"
 ---
+# 检疫和舰队行动
 
+除了执行之外，代理队列还具有响应和操作层：隔离和恢复、端点隔离、事件作战室、隔离库、威胁调整和队列仪表板。
 
-# Quarantine & Fleet Ops
+## 设备命令和角色
 
-Beyond enforcement, the agent fleet has a response and operations layer: quarantine and restore, endpoint isolation, an incident War Room, a quarantine vault, threat tuning, and a fleet dashboard.
+破坏性设备命令需要提升的系统 **admin** 角色（比一般管理面板访问更严格）：
 
-## Device commands & roles
-
-Destructive device commands require the elevated system **admin** role (tighter than general admin-panel access):
-
-| Command | Effect |
+|命令|效果|
 |---------|--------|
-| `quarantine` | Moves and encrypts a malicious file and kills its process tree. **Destructive.** |
-| `kill_process` / `kill_mcp` / `kill_network` | Terminate a process, an MCP server, or a network connection. |
-| `isolate` / `unisolate` | Cut the endpoint off from the network / restore it. |
-| `revoke` | Revoke the device (it can no longer enroll or call home). |
+| `quarantine` |移动和加密恶意文件并杀死其进程树。 **具有破坏性。** |
+| `kill_process` / `kill_mcp` / `kill_network` |终止进程、MCP 服务器或网络连接。 |
+| `isolate` / `unisolate` |将端点与网络断开/恢复。 |
+| `revoke` |撤销设备（它不能再注册或打电话回家）。 |
 
-`restore` (recovering a quarantined file) is a recovery action and is available to any admin operator. The agent confirms quarantine/restore results back to the backend.
+`restore`（恢复隔离文件）是一项恢复操作，任何管理员操作员都可以使用。代理将隔离/恢复结果确认回后端。
 
-## Quarantine vault
+## 隔离库
 
-Quarantined items are retained in a **vault** with a configurable retention period (**30 days** by default). From the vault you can filter by machine, severity, restored/reviewed state, mark items reviewed, and **restore** items in bulk.
+隔离的项目保留在**保管库**中，保留期限可配置（**默认为 30 天**）。在保管库中，您可以按计算机、严重性、已恢复/已审阅状态进行筛选、标记已审阅的项目以及批量**恢复**项目。
 
-## Threat tuning
+## 威胁调整
 
-The **review queue** collects self-quarantined files and recent policy auto-kills awaiting human false-positive review, each row carrying the device's resolved policy so you can tune the right rule. From an incident you can **blocklist** or **whitelist** a detection — globally in the org catalog or scoped to a policy.
+**审核队列**收集自我隔离的文件和最近的策略自动删除等待人工误报审核，每一行都包含设备已解决的策略，以便您可以调整正确的规则。从事件中，您可以将检测列入**阻止名单**或**白名单** - 在组织目录中全局或限制在策略范围内。
 
-## Incidents (War Room)
+## 事件（作战室）
 
-Endpoint incidents are triaged in the War Room as runbooks. Device-level actions include **ack-clear** (clear recorded violations, recompute posture, and close the related threat runbooks) and threat blocklist/whitelist.
+端点事件在作战室中作为运行手册进行分类。设备级操作包括**确认清除**（清除记录的违规行为、重新计算态势并关闭相关威胁运行手册）和威胁阻止列表/白名单。
 
-## Fleet dashboard
+## 车队仪表板
 
-The dashboard summarizes the whole fleet: coverage, online/stale counts by OS, posture distribution, average risk, active-incident facets, a per-device heatmap, a per-day threat timeline, top threats, and top risks.
+仪表板总结了整个机群：覆盖范围、操作系统的在线/过时计数、状态分布、平均风险、活动事件方面、每台设备的热图、每日威胁时间表、主要威胁和主要风险。
 
-## Self-update & anti-tamper
+## 自更新和防篡改
 
-- **Self-update** — the agent updates itself via an `update` command plus a signed release manifest (version + checksum + signature); the newest build can be auto-synced to the fleet.
-- **Anti-tamper / uninstall key** — a [policy](/zh/agent/policies-and-groups#tamper-protection--uninstall-key) can require an uninstall key so the agent can't be silently removed. Validation works even off-network (an offline salt/hash is carried to the endpoint), with a fleet-wide key as fallback; failed uninstall attempts are audited.
+- **自我更新** — 代理通过 `update` 命令加上签名的发布清单（版本 + 校验和 + 签名）来更新自身；最新版本可以自动同步到舰队。
+- **防篡改/卸载密钥** — [策略](/zh/agent/policies-and-groups#tamper-protection--uninstall-key) 可能需要卸载密钥，以便无法静默删除代理。验证甚至可以在离线状态下进行（离线盐/散列被传送到端点），并使用舰队范围的密钥作为后备；审核失败的卸载尝试。
 
-## Related
+## 相关
 
-- [Policies & Groups](/zh/agent/policies-and-groups)
-- [Egress Enforcement](/zh/agent/egress-enforcement)
-- [Threat Defense](/zh/threat-defense/overview)
+- [策略和组](/zh/agent/policies-and-groups)
+- [出口执行](/zh/agent/egress-enforcement)
+- [威胁防御](/zh/threat-defense/overview)

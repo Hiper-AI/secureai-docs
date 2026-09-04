@@ -52,7 +52,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 }
 ```
 
-`receipt` 객체는 게이트웨이에서 내보내는 서명된 페이로드입니다. 영수증이 투명성 및 감사 모델에 어떻게 부합하는지 알아보려면 [SMLTP 보안](/ko/en/security/smltp)을 참조하세요.
+`receipt` 객체는 게이트웨이에서 내보내는 서명된 페이로드입니다. 영수증이 투명성 및 감사 모델에 어떻게 부합하는지 알아보려면 [SMLTP 보안](/ko/security/smltp)을 참조하세요.
 
 ### 404 찾을 수 없음
 
@@ -70,11 +70,11 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 
 ## 메모
 
-- 영수증은 게이트웨이의 인메모리 저장소에 한정된 시간 동안 보관됩니다. 장기적인 증거를 위해 신뢰할 수 있고 변경할 수 없는 기록인 **해시 체인 감사 로그**를 활용하세요. [불변 로그](/ko/ko/security/immutable-logs)를 참조하세요.
+- 영수증은 게이트웨이의 인메모리 저장소에 한정된 시간 동안 보관됩니다. 장기적인 증거를 위해 신뢰할 수 있고 변경할 수 없는 기록인 **해시 체인 감사 로그**를 활용하세요. [불변 로그](/ko/security/immutable-logs)를 참조하세요.
 - 모든 배포 경로가 게이트웨이를 통과하는 것은 아닙니다. `404`을 통합 오류가 아닌 "이 호출에 대한 게이트웨이 수신 없음"으로 처리합니다.
 
 ## 관련
 
-- [SMLTP 보안](/ko/ko/security/smltp)
-- [불변 로그](/ko/ko/security/immutable-logs)
-- [채팅 완료](/ko/ko/api/chat/completions)
+- [SMLTP 보안](/ko/security/smltp)
+- [불변 로그](/ko/security/immutable-logs)
+- [채팅 완료](/ko/api/chat/completions)

@@ -1,52 +1,50 @@
 ---
 sidebar_position: 6
-title: "Quarantine & Fleet Ops"
-sidebar_label: "Quarantine & Fleet Ops"
-description: "Respond to endpoint threats — quarantine, restore, isolate, incidents, and fleet-wide operations"
+title: "Operaciones de Cuarentena y Gestión de Flota"
+sidebar_label: "Cuarentena y Flota"
+description: "Responda a las amenazas a los endpoints: ponga en cuarentena, restaure, aísle, incidentes y operaciones en toda la flota"
 ---
 
+# Cuarentena y operaciones de flota
 
+Más allá de la aplicación de la ley, la flota de agentes tiene una capa de respuesta y operaciones: cuarentena y restauración, aislamiento de endpoints, una sala de guerra de incidentes, una bóveda de cuarentena, ajuste de amenazas y un panel de control de la flota.
 
-# Quarantine & Fleet Ops
+## Comandos y funciones del dispositivo
 
-Beyond enforcement, the agent fleet has a response and operations layer: quarantine and restore, endpoint isolation, an incident War Room, a quarantine vault, threat tuning, and a fleet dashboard.
+Los comandos destructivos de dispositivos requieren la función elevada de **admin** del sistema (más estricta que el acceso general al panel de administración):
 
-## Device commands & roles
-
-Destructive device commands require the elevated system **admin** role (tighter than general admin-panel access):
-
-| Command | Effect |
+| Comando | Efecto |
 |---------|--------|
-| `quarantine` | Moves and encrypts a malicious file and kills its process tree. **Destructive.** |
-| `kill_process` / `kill_mcp` / `kill_network` | Terminate a process, an MCP server, or a network connection. |
-| `isolate` / `unisolate` | Cut the endpoint off from the network / restore it. |
-| `revoke` | Revoke the device (it can no longer enroll or call home). |
+| `quarantine` | Mueve y cifra un archivo malicioso y elimina su árbol de procesos. **Destructivo.** |
+| `kill_process` / `kill_mcp` / `kill_network` | Finalice un proceso, un servidor MCP o una conexión de red. |
+| `isolate` / `unisolate` | Corte el endpoint de la red/restáurelo. |
+| `revoke` | Revocar el dispositivo (ya no podrá inscribirse ni llamar a casa). |
 
-`restore` (recovering a quarantined file) is a recovery action and is available to any admin operator. The agent confirms quarantine/restore results back to the backend.
+`restore` (recuperar un archivo en cuarentena) es una acción de recuperación y está disponible para cualquier operador administrador. El agente confirma los resultados de la cuarentena/restauración al backend.
 
-## Quarantine vault
+## Bóveda de cuarentena
 
-Quarantined items are retained in a **vault** with a configurable retention period (**30 days** by default). From the vault you can filter by machine, severity, restored/reviewed state, mark items reviewed, and **restore** items in bulk.
+Los elementos en cuarentena se conservan en una **bóveda** con un período de retención configurable (**30 días** de forma predeterminada). Desde el almacén puede filtrar por máquina, gravedad, estado restaurado/revisado, marcar elementos como revisados ​​y **restaurar** elementos de forma masiva.
 
-## Threat tuning
+## Ajuste de amenazas
 
-The **review queue** collects self-quarantined files and recent policy auto-kills awaiting human false-positive review, each row carrying the device's resolved policy so you can tune the right rule. From an incident you can **blocklist** or **whitelist** a detection — globally in the org catalog or scoped to a policy.
+La **cola de revisión** recopila archivos en cuarentena automática y políticas recientes que se eliminan automáticamente en espera de una revisión humana de falsos positivos; cada fila contiene la política resuelta del dispositivo para que pueda ajustar la regla correcta. A partir de un incidente, puede **poner en lista bloqueada** o **en lista blanca** una detección, globalmente en el catálogo de la organización o en el ámbito de una política.
 
-## Incidents (War Room)
+## Incidentes (Sala de Guerra)
 
-Endpoint incidents are triaged in the War Room as runbooks. Device-level actions include **ack-clear** (clear recorded violations, recompute posture, and close the related threat runbooks) and threat blocklist/whitelist.
+Los incidentes de endpoints se clasifican en War Room como runbooks. Las acciones a nivel de dispositivo incluyen **ack-clear** (borrar infracciones registradas, volver a calcular la postura y cerrar los runbooks de amenazas relacionados) y la lista blanca o bloqueada de amenazas.
 
-## Fleet dashboard
+## Panel de flota
 
-The dashboard summarizes the whole fleet: coverage, online/stale counts by OS, posture distribution, average risk, active-incident facets, a per-device heatmap, a per-day threat timeline, top threats, and top risks.
+El panel resume toda la flota: cobertura, recuentos en línea/obsoletos por sistema operativo, distribución de postura, riesgo promedio, facetas de incidentes activos, un mapa de calor por dispositivo, un cronograma de amenazas por día, amenazas principales y riesgos principales.
 
-## Self-update & anti-tamper
+## Autoactualización y antimanipulación
 
-- **Self-update** — the agent updates itself via an `update` command plus a signed release manifest (version + checksum + signature); the newest build can be auto-synced to the fleet.
-- **Anti-tamper / uninstall key** — a [policy](/en/agent/policies-and-groups#tamper-protection--uninstall-key) can require an uninstall key so the agent can't be silently removed. Validation works even off-network (an offline salt/hash is carried to the endpoint), with a fleet-wide key as fallback; failed uninstall attempts are audited.
+- **Autoactualización**: el agente se actualiza a sí mismo mediante un comando `update` más un manifiesto de lanzamiento firmado (versión + suma de verificación + firma); la versión más nueva se puede sincronizar automáticamente con la flota.
+- **Clave antimanipulación/desinstalación**: una [política](/agent/policies-and-groups#tamper-protection--uninstall-key) puede requerir una clave de desinstalación para que el agente no pueda eliminarse silenciosamente. La validación funciona incluso fuera de la red (se lleva un salt/hash fuera de línea al endpoint), con una clave para toda la flota como alternativa; Se auditan los intentos fallidos de desinstalación.
 
-## Related
+## Relacionado
 
-- [Policies & Groups](/en/agent/policies-and-groups)
-- [Egress Enforcement](/en/agent/egress-enforcement)
-- [Threat Defense](/en/threat-defense/overview)
+- [Políticas y grupos](/agent/policies-and-groups)
+- [Aplicación de salida](/agent/egress-enforcement)
+- [Defensa contra amenazas](/threat-defense/overview)

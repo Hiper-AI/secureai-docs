@@ -10,8 +10,8 @@ Cloud AI Provider 커넥터를 사용하면 SecureAI가 조직에서 이미 사�
 
 연결되면 커넥터는 다음을 검색하고 지속적으로 동기화합니다.
 
-- 플랫폼에서 실행되는 **에이전트, 모델 및 배포** → [클라우드 센서](/ko/en/discovery/cloud-sensors)에 표시됩니다.
-- **NHI(Non-Human Identities)** — API 키, 서비스 계정 및 (지원되는 경우) BYOK 키 → [NHI Inventory](/ko/en/discovery/nhi-inventory)에 표시되며 차단/해지 제어가 가능합니다.
+- 플랫폼에서 실행되는 **에이전트, 모델 및 배포** → [클라우드 센서](/ko/discovery/cloud-sensors)에 표시됩니다.
+- **NHI(Non-Human Identities)** — API 키, 서비스 계정 및 (지원되는 경우) BYOK 키 → [NHI Inventory](/ko/discovery/nhi-inventory)에 표시되며 차단/해지 제어가 가능합니다.
 - 지난 30일 동안의 **사용량, 토큰 및 비용**입니다.
 - **거버넌스 신호** — 공급자별 통찰력에 표시되는 IAM/RBAC 바인딩, 지출 한도 및 감사 로그입니다.
 
@@ -27,7 +27,7 @@ Cloud AI Provider 커넥터를 사용하면 SecureAI가 조직에서 이미 사�
 <Info>
 **사물이 나타나는 곳**
 
-커넥터 **설정**은 **관리 → 통합**에 있습니다. 생성된 **인벤토리**는 **관리자 → 에이전트 레지스트리**에 표시됩니다. [클라우드 센서](/ko/en/discovery/cloud-sensors)에서 검색된 에이전트/모델, [NHI 인벤토리](/ko/en/discovery/nhi-inventory)에서 검색된 ID입니다. 어느 위치에서든 동기화를 다시 실행할 수 있습니다.
+커넥터 **설정**은 **관리 → 통합**에 있습니다. 생성된 **인벤토리**는 **관리자 → 에이전트 레지스트리**에 표시됩니다. [클라우드 센서](/ko/discovery/cloud-sensors)에서 검색된 에이전트/모델, [NHI 인벤토리](/ko/discovery/nhi-inventory)에서 검색된 ID입니다. 어느 위치에서든 동기화를 다시 실행할 수 있습니다.
 </Info>
 
 ## 자격 증명 선택
@@ -40,13 +40,13 @@ Cloud AI Provider 커넥터를 사용하면 SecureAI가 조직에서 이미 사�
 
 | 공급자 | 자격 증명 유형 |
 |------------|----|
-| [OpenAI 플랫폼](/ko/ko/integrations/cloud/openai-platform) | 조직 관리자 API 키 |
-| [인트로픽 콘솔](/ko/ko/integrations/cloud/anthropic-console) | 관리 API 키(+ 선택적 작업공간/규정 준수 키) |
-| [Azure AI Foundry](/ko/en/integrations/cloud/azure-ai-foundry) | Entra 서비스 주체(테넌트/클라이언트/비밀) |
-| [구글 버텍스 AI](/ko/en/integrations/cloud/gcp-vertex-ai) | 서비스 계정 JSON |
+| [OpenAI 플랫폼](/ko/integrations/cloud/openai-platform) | 조직 관리자 API 키 |
+| [인트로픽 콘솔](/ko/integrations/cloud/anthropic-console) | 관리 API 키(+ 선택적 작업공간/규정 준수 키) |
+| [Azure AI Foundry](/ko/integrations/cloud/azure-ai-foundry) | Entra 서비스 주체(테넌트/클라이언트/비밀) |
+| [구글 버텍스 AI](/ko/integrations/cloud/gcp-vertex-ai) | 서비스 계정 JSON |
 
 ## 관련
 
-- [클라우드 센서](/ko/en/discovery/cloud-sensors) — 검색된 에이전트/모델 인벤토리입니다.
-- [NHI 인벤토리](/ko/en/discovery/nhi-inventory) — 발견된 ID 인벤토리 및 취소 제어.
-- [AI 발견 및 인벤토리 개요](/ko/ko/discovery/overview)
+- [클라우드 센서](/ko/discovery/cloud-sensors) — 검색된 에이전트/모델 인벤토리입니다.
+- [NHI 인벤토리](/ko/discovery/nhi-inventory) — 발견된 ID 인벤토리 및 취소 제어.
+- [AI 발견 및 인벤토리 개요](/ko/discovery/overview)

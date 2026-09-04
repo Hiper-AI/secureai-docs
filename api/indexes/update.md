@@ -1,16 +1,14 @@
 ---
 id: update
-title: "Update Index"
-sidebar_label: "Update Index"
-description: "Update an existing knowledge base index"
+title: "Actualizar Índice RAG"
+sidebar_label: "Actualizar Índice"
+description: "Actualizar un índice de base de conocimientos existente"
 openapi: "PUT /indexes/{indexId}"
 ---
 
+# Actualizar índice
 
-
-# Update Index
-
-Update an existing knowledge base index with new settings, metadata, or configuration.
+Actualice un índice de base de conocimientos existente con nuevas configuraciones, metadatos o configuración.
 
 ## Endpoint
 
@@ -18,34 +16,34 @@ Update an existing knowledge base index with new settings, metadata, or configur
 PUT /indexes/{indexId}
 ```
 
-## Description
+## Descripción
 
-This endpoint allows administrators to update an existing knowledge base index. You can modify the index name and reassign it to different users or groups. Only administrators can update indexes.
+Este endpoint permite a los administradores actualizar un índice de base de conocimientos existente. Puede modificar el nombre del índice y reasignarlo a diferentes usuarios o grupos. Sólo los administradores pueden actualizar los índices.
 
-## Authentication
+## Autenticación
 
-**Required**: API Key with admin privileges
+**Requerido**: Clave API con privilegios de administrador
 
 ```
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Path Parameters
+## Parámetros de ruta
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `indexId` | string | Yes | The unique identifier of the index to update |
+| `indexId` | cadena | Sí | El identificador único del índice a actualizar |
 
-## Request Body
+## Cuerpo de solicitud
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `name` | string | No | New name for the index |
-| `assignedUser` | string | No | User ID to assign the index to (MongoDB ObjectId) |
-| `assignedGroup` | string | No | Group ID to assign the index to (MongoDB ObjectId) |
+| `name` | cadena | No | Nuevo nombre para el índice |
+| `assignedUser` | cadena | No | ID de usuario al que asignar el índice (MongoDB ObjectId) |
+| `assignedGroup` | cadena | No | ID de grupo al que asignar el índice (MongoDB ObjectId) |
 
 
-## Example Request
+## Solicitud de ejemplo
 
 ```json
 {
@@ -54,9 +52,9 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-## Success Response
+## Respuesta exitosa
 
-**Status Code**: `200 OK`
+**Código de estado**: `200 OK`
 
 ```json
 {
@@ -80,24 +78,24 @@ Authorization: Bearer sk-your-api-key-here
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Indicates if the operation was successful |
-| `message` | string | Success message |
-| `index` | object | Updated index object |
-| `index.id` | string | Unique index identifier |
-| `index.name` | string | Updated index name |
-| `index.sharedIndexName` | string | Shared index name |
-| `index.namespace` | string | Index namespace |
-| `index.type` | string | Index type (personal, general, group, unknown) |
-| `index.assignedUser` | object | Assigned user information (if personal) |
-| `index.assignedGroup` | object | Assigned group information (if group) |
-| `index.createdAt` | string | Original creation timestamp |
-| `index.updatedAt` | string | Last update timestamp |
+| `success` | booleano | Indica si la operación fue exitosa |
+| `message` | cadena | Mensaje de éxito |
+| `index` | objeto | Objeto de índice actualizado |
+| `index.id` | cadena | Identificador de índice único |
+| `index.name` | cadena | Nombre del índice actualizado |
+| `index.sharedIndexName` | cadena | Nombre del índice compartido |
+| `index.namespace` | cadena | Espacio de nombres de índice |
+| `index.type` | cadena | Tipo de índice (personal, general, grupal, desconocido) |
+| `index.assignedUser` | objeto | Información de usuario asignada (si es personal) |
+| `index.assignedGroup` | objeto | Información del grupo asignado (si es grupo) |
+| `index.createdAt` | cadena | Marca de tiempo de creación original |
+| `index.updatedAt` | cadena | Marca de tiempo de la última actualización |
 
-## Example Usage
+## Ejemplo de uso
 
 ### JavaScript
 
@@ -125,7 +123,7 @@ const result = await updateIndex('60a7c8f5e8b4f5001f7a8c23', updateData);
 console.log('Updated index:', result.index);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -150,7 +148,7 @@ result = update_index("60a7c8f5e8b4f5001f7a8c23", update_data)
 print("Updated index:", result["index"])
 ```
 
-### cURL
+### rizo
 
 ```bash
 curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b4f5001f7a8c23" \
@@ -162,9 +160,9 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
   }'
 ```
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -179,20 +177,20 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-## Validations and Business Rules
+## Validaciones y reglas de negocio
 
-- **Assigning to a user (`assignedUser`)**:
-  - Enforce user index quota via `checkUserIndexQuota` when converting to personal or changing the assignee. Exceeded quota returns 403.
-- **Assigning to a group (`assignedGroup`)**:
-  - Group must exist and be active (`status != 'Archived'`); invalid/inactive groups return 400.
+- **Asignación a un usuario (`assignedUser`)**:
+  - Aplicar cuota de índice de usuarios a través de `checkUserIndexQuota` al convertir a personal o cambiar el cesionario. La cuota excedida devuelve 403.
+- **Asignación a un grupo (`assignedGroup`)**:
+  - El grupo debe existir y estar activo (`status != 'Archived'`); los grupos no válidos/inactivos devuelven 400.
 
-## Normalization and Storage
+## Normalización y almacenamiento
 
-- When renaming, `name` continues to be stored normalized; `sharedIndexName` defaults to the normalized name if not explicitly set.
+- Al cambiar el nombre, `name` continúa almacenándose normalizado; `sharedIndexName` tiene por defecto el nombre normalizado si no se establece explícitamente.
 
-## Typical Error Shapes
+## Formas de error típicas
 
-### 403 Index Quota Exceeded
+### Cuota de índice 403 excedida
 
 ```json
 {
@@ -202,7 +200,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 400 Group Invalid/Inactive
+### 400 Grupo no válido/inactivo
 
 ```json
 {
@@ -212,7 +210,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -224,7 +222,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -236,7 +234,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 404 Not Found
+### 404 no encontrado
 
 ```json
 {
@@ -248,7 +246,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 409 Conflict
+### 409 Conflicto
 
 ```json
 {
@@ -260,7 +258,7 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-### 429 Too Many Requests
+### 429 Demasiadas solicitudes
 
 ```json
 {
@@ -273,33 +271,33 @@ curl -X PUT "https://{customer.name}.hiperai.ai/api/external/indexes/60a7c8f5e8b
 }
 ```
 
-## Updateable Fields
+## Campos actualizables
 
-| Field | Description | Notes |
+| Campo | Descripción | Notas |
 |-------|-------------|-------|
-| `name` | Index name | Must be unique across the system |
-| `assignedUser` | User assignment | Assigns index to a specific user |
-| `assignedGroup` | Group assignment | Assigns index to a specific group |
+| `name` | Nombre del índice | Debe ser único en todo el sistema |
+| `assignedUser` | Asignación de usuario | Asigna índice a un usuario específico |
+| `assignedGroup` | Asignación grupal | Asigna índice a un grupo específico |
 
-## Use Cases
+## Casos de uso
 
-- **Name Changes**: Rename indexes for better organization
-- **User Assignment**: Reassign indexes to different users
-- **Group Assignment**: Reassign indexes to different groups
-- **Ownership Transfer**: Change index ownership between users
+- **Cambios de nombre**: cambie el nombre de los índices para una mejor organización
+- **Asignación de usuarios**: reasignar índices a diferentes usuarios
+- **Asignación de grupo**: reasignar índices a diferentes grupos
+- **Transferencia de propiedad**: cambiar la propiedad del índice entre usuarios
 
-## Rate Limits
+## Límites de tarifas
 
-- **Default**: 50 requests per minute
-- **Daily**: 5,000 requests per day
-- **Monthly**: 150,000 requests per month
+- **Predeterminado**: 50 solicitudes por minuto
+- **Diario**: 5000 solicitudes por día
+- **Mensual**: 150.000 solicitudes por mes
 
-## Notes
+## Notas
 
-- This endpoint is only accessible by administrators
-- Limited Fields: Only name, assignedUser, and assignedGroup can be updated
-- Assignment Logic: Assigning to a user clears group assignment and vice versa
-- Validation: User and group IDs are validated before assignment
-- No Settings: Cannot update settings, metadata, or other configuration
-- The `updatedAt` timestamp is automatically updated
-- Index names must remain unique across the system 
+- Solo los administradores pueden acceder a este endpoint.
+- Campos limitados: solo se pueden actualizar el nombre, el usuario asignado y el grupo asignado
+- Lógica de asignación: la asignación a un usuario borra la asignación de grupo y viceversa
+- Validación: las identificaciones de usuarios y grupos se validan antes de la asignación.
+- Sin configuración: no se pueden actualizar configuraciones, metadatos u otras configuraciones
+- La marca de tiempo `updatedAt` se actualiza automáticamente
+- Los nombres de los índices deben permanecer únicos en todo el sistema.

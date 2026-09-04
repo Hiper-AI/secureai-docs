@@ -6,7 +6,7 @@ description: "SecureAI OS 에이전트를 사용하여 엔드포인트의 아웃
 ---
 # 송신 시행
 
-송신 시행은 엔드포인트가 AI 공급자 및 MCP 서버로 **송신**하도록 허용되는 항목을 제어합니다. 이는 [정책](/ko/en/agent/policies-and-groups)별로 구성되며 에이전트에 의해 로컬로 시행됩니다.
+송신 시행은 엔드포인트가 AI 공급자 및 MCP 서버로 **송신**하도록 허용되는 항목을 제어합니다. 이는 [정책](/ko/agent/policies-and-groups)별로 구성되며 에이전트에 의해 로컬로 시행됩니다.
 
 ## 모드
 
@@ -28,19 +28,19 @@ description: "SecureAI OS 에이전트를 사용하여 엔드포인트의 아웃
 
 ## 모드 선택
 
-- **해제**(또는 **모니터** 모드 정책)에서 시작하여 엔드포인트가 실제로 호출하는 내용에 대한 정확한 그림을 구축합니다. 이는 장치 서랍과 [AI Discovery](/ko/en/discovery/overview)에 표시됩니다.
+- **해제**(또는 **모니터** 모드 정책)에서 시작하여 엔드포인트가 실제로 호출하는 내용에 대한 정확한 그림을 구축합니다. 이는 장치 서랍과 [AI Discovery](/ko/discovery/overview)에 표시됩니다.
 - 프로세스의 나머지 네트워킹을 방해하지 않고 허용되지 않은 AI 송신을 지속적으로 중지하려면 **차단**으로 이동하세요.
 - 문제가 되는 프로그램을 완전히 중지하려면 **kill**을 사용하세요.
 - 가장 엄격한 상태를 위해 **잠금**을 사용합니다. 승인된 AI 엔드포인트(허용 목록)에만 연결할 수 있습니다.
 
-송신 모드도 [보호 사전 설정](/ko/en/agent/policies-and-groups#protection-presets)(Passive / Normal / Aggressive)에 번들로 포함되어 있어 한 번의 클릭으로 전체 상태 수준을 설정하고 거기에서 미세 조정할 수 있습니다.
+송신 모드도 [보호 사전 설정](/ko/agent/policies-and-groups#protection-presets)(Passive / Normal / Aggressive)에 번들로 포함되어 있어 한 번의 클릭으로 전체 상태 수준을 설정하고 거기에서 미세 조정할 수 있습니다.
 
 <Warning>
-`kill`, `block` 및 `lockdown`는 끝점 트래픽을 적극적으로 중단합니다. 전체에 적용하기 전에 **모의 실행 시뮬레이션** 및 단계적 **롤아웃 링**([정책 및 그룹](/ko/en/agent/policies-and-groups#safe-rollouts))을 사용하여 변경 사항을 검증합니다.
+`kill`, `block` 및 `lockdown`는 끝점 트래픽을 적극적으로 중단합니다. 전체에 적용하기 전에 **모의 실행 시뮬레이션** 및 단계적 **롤아웃 링**([정책 및 그룹](/ko/agent/policies-and-groups#safe-rollouts))을 사용하여 변경 사항을 검증합니다.
 </Warning>
 
 ## 관련
 
-- [정책 및 그룹](/ko/ko/agent/policies-and-groups)
-- [투명 프록시](/ko/en/agent/transparent-proxy) — 허용된 AI 트래픽을 차단하는 대신 게이트웨이를 통해 라우팅합니다.
-- [격리 및 함대 작전](/ko/en/agent/quarantine-and-fleet-ops)
+- [정책 및 그룹](/ko/agent/policies-and-groups)
+- [투명 프록시](/ko/agent/transparent-proxy) — 허용된 AI 트래픽을 차단하는 대신 게이트웨이를 통해 라우팅합니다.
+- [격리 및 함대 작전](/ko/agent/quarantine-and-fleet-ops)

@@ -6,7 +6,7 @@ description: "Le catalogue d'événements du webhook SecureAI"
 ---
 # Événements Webhook
 
-Lors de la création ou de la mise à jour d'un [point de terminaison webhook](/fr/en/api/webhooks/overview), vous l'abonnez à un ou plusieurs types d'événements. Utilisez `"*"` pour recevoir chaque événement.
+Lors de la création ou de la mise à jour d'un [point de terminaison webhook](/fr/api/webhooks/overview), vous l'abonnez à un ou plusieurs types d'événements. Utilisez `"*"` pour recevoir chaque événement.
 
 ## Catalogue d'événements
 
@@ -19,7 +19,7 @@ Lors de la création ou de la mise à jour d'un [point de terminaison webhook](/
 | `dlp:incident` | Une règle de prévention contre la perte de données correspond. |
 | `pii:incident` | Les informations personnelles ont été détectées/expurgées. |
 | `api:limit_reached` | Une clé API atteint une limite quotidienne/mensuelle/tarive. |
-| `api:model_failover` | Une chaîne de [redondance](/fr/en/api/redundancy) basculée d'un modèle à un autre. |
+| `api:model_failover` | Une chaîne de [redondance](/fr/api/redundancy) basculée d'un modèle à un autre. |
 
 L'abonnement à un nom d'événement inconnu est rejeté au moment de la création/mise à jour.
 
@@ -58,4 +58,4 @@ Le bouton **Envoyer un événement de test** (ou `POST /api/admin/webhooks/:id/t
 
 ## Connexes
 
-- [Webhooks Overview](/fr/en/api/webhooks/overview) — format de livraison, vérification de signature, fiabilité.
+- [Webhooks Overview](/fr/api/webhooks/overview) — format de livraison, vérification de signature, fiabilité.

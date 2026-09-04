@@ -7,7 +7,7 @@ openapi: "POST /v1/chat/completions"
 ---
 # OpenAI-kompatibler Endpunkt
 
-SecureAI stellt eine OpenAI-kompatible Oberfläche bereit, sodass Sie **jedes OpenAI SDK integrieren können, indem Sie nur die Basis-URL und den API-Schlüssel ändern** – keine Codeänderungen. Darunter läuft der vollständige SecureAI-Sicherheitsstack (API-Schlüsselauthentifizierung, Modell-/Index-Zulassungslisten, SMLTP-Richtliniendurchsetzung + Berechtigungen, Prompt Shield, PII/DLP, Punkteabrechnung und die [Modellredundanz-Engine](/de/en/api/redundancy)).
+SecureAI stellt eine OpenAI-kompatible Oberfläche bereit, sodass Sie **jedes OpenAI SDK integrieren können, indem Sie nur die Basis-URL und den API-Schlüssel ändern** – keine Codeänderungen. Darunter läuft der vollständige SecureAI-Sicherheitsstack (API-Schlüsselauthentifizierung, Modell-/Index-Zulassungslisten, SMLTP-Richtliniendurchsetzung + Berechtigungen, Prompt Shield, PII/DLP, Punkteabrechnung und die [Modellredundanz-Engine](/de/api/redundancy)).
 
 ## Endpunkt
 
@@ -25,7 +25,7 @@ https://{customer.name}.hiperai.ai/api/external/v1
 <Info>
 **Nur Zero-Knowledge**
 
-Diese Oberfläche unterstützt RAG/Wissensdatenbanken **nicht**. Anfragen werden an `Zero-Knowledge` angeheftet. Wenn Sie den Abruf einer Wissensdatenbank benötigen, verwenden Sie den klassischen Endpunkt [Chat Completion](/de/en/api/chat/completions).
+Diese Oberfläche unterstützt RAG/Wissensdatenbanken **nicht**. Anfragen werden an `Zero-Knowledge` angeheftet. Wenn Sie den Abruf einer Wissensdatenbank benötigen, verwenden Sie den klassischen Endpunkt [Chat Completion](/de/api/chat/completions).
 </Info>
 
 ## Authentifizierung
@@ -95,7 +95,7 @@ Senden Sie diese als zusätzliche Textfelder (über `extra_body` in den OpenAI S
 |-------|-------------|
 | `smltp_policy` | SMLTP-Sicherheitsrichtlinie für diesen Anruf. |
 | `prompt_shield` | `{ enabled?, policy? }` – Prompt Shield-Überschreibung pro Anruf. |
-| `models` / `fallback_models` | Modellieren Sie die [Redundanz](/de/en/api/redundancy)-Kette. |
+| `models` / `fallback_models` | Modellieren Sie die [Redundanz](/de/api/redundancy)-Kette. |
 | `redundancy` | `{ timeout_ms, first_token_timeout_ms, on[] }`. |
 | `user_id` | Abrechnung an einen anderen Benutzer (administriert). |
 
@@ -126,7 +126,7 @@ Standard-OpenAI-Form `chat.completion` plus ein `secureai`-Erweiterungsobjekt.
 }
 ```
 
-`secureai.smltp_bundle_id` (falls vorhanden) kann gegen eine unterschriebene Compliance-[Receipt](/de/en/api/receipts) eingetauscht werden.
+`secureai.smltp_bundle_id` (falls vorhanden) kann gegen eine unterschriebene Compliance-[Receipt](/de/api/receipts) eingetauscht werden.
 
 ### Streaming
 
@@ -144,6 +144,6 @@ Wenn eine gesamte Redundanzkette ausfällt, verwendet der Fehler `code: "all_mod
 
 ## Verwandte
 
-- [Chat Completion](/de/en/api/chat/completions) – die klassische Oberfläche (fügt RAG hinzu).
-- [Redundanz & Failover](/de/en/api/redundancy)
-- [Prompt Shield API](/de/en/api/threat-defense/prompt-shield)
+- [Chat Completion](/de/api/chat/completions) – die klassische Oberfläche (fügt RAG hinzu).
+- [Redundanz & Failover](/de/api/redundancy)
+- [Prompt Shield API](/de/api/threat-defense/prompt-shield)

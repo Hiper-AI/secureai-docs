@@ -40,10 +40,10 @@ description: "엔드포인트 위협에 대응 - 격리, 복원, 격리, 사고 
 ## 자동 업데이트 및 변조 방지
 
 - **자체 업데이트** - 에이전트는 `update` 명령과 서명된 릴리스 매니페스트(버전 + 체크섬 + 서명)를 통해 자체적으로 업데이트됩니다. 최신 빌드는 플릿에 자동으로 동기화될 수 있습니다.
-- **변조 방지/제거 키** — [정책](/ko/en/agent/policies-and-groups#tamper-protection--uninstall-key)에는 에이전트가 자동으로 제거될 수 없도록 제거 키가 필요할 수 있습니다. 검증은 플릿 전체 키를 폴백으로 사용하여 네트워크 외부에서도 작동합니다(오프라인 솔트/해시가 엔드포인트로 전달됨). 실패한 제거 시도는 감사됩니다.
+- **변조 방지/제거 키** — [정책](/ko/agent/policies-and-groups#tamper-protection--uninstall-key)에는 에이전트가 자동으로 제거될 수 없도록 제거 키가 필요할 수 있습니다. 검증은 플릿 전체 키를 폴백으로 사용하여 네트워크 외부에서도 작동합니다(오프라인 솔트/해시가 엔드포인트로 전달됨). 실패한 제거 시도는 감사됩니다.
 
 ## 관련
 
-- [정책 및 그룹](/ko/ko/agent/policies-and-groups)
-- [송신 집행](/ko/ko/agent/egress-enforcement)
-- [위협방어](/ko/ko/threat-defense/overview)
+- [정책 및 그룹](/ko/agent/policies-and-groups)
+- [송신 집행](/ko/agent/egress-enforcement)
+- [위협방어](/ko/threat-defense/overview)

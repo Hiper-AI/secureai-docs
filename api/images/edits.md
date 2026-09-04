@@ -1,14 +1,13 @@
 ---
 sidebar_position: 2
-title: "Edit Images"
+title: "Edición de Imágenes"
 openapi: "POST /images/edits"
+sidebar_label: "Editar Imágenes"
 ---
 
+# Editar imágenes
 
-
-# Edit Images
-
-Edit existing images using Google Gemini 2.5 Flash Image with text instructions.
+Edite imágenes existentes utilizando Google Gemini 2.5 Flash Image con instrucciones de texto.
 
 ## Endpoint
 
@@ -16,40 +15,40 @@ Edit existing images using Google Gemini 2.5 Flash Image with text instructions.
 POST /images/edits
 ```
 
-## Description
+## Descripción
 
-Edit existing images using Google Gemini 2.5 Flash Image with text instructions. This endpoint is specifically designed for **image-to-image editing** where:
+Edite imágenes existentes utilizando Google Gemini 2.5 Flash Image con instrucciones de texto. Este endpoint está diseñado específicamente para **edición de imagen a imagen** donde:
 
-- An image file is **required** (unlike `/images/generations` where it's optional)
-- A text prompt describes how to edit or transform the image
-- The edited image is returned with the same quality and format options
+- Un archivo de imagen es **obligatorio** (a diferencia de `/images/generations` donde es opcional)
+- Un mensaje de texto describe cómo editar o transformar la imagen.
+- La imagen editada se devuelve con la misma calidad y opciones de formato.
 
-All prompts and responses are automatically processed through SMLTP for audit logging and compliance.
+Todas las indicaciones y respuestas se procesan automáticamente a través de SMLTP para el registro de auditoría y el cumplimiento.
 
-## Authentication
+## Autenticación
 
-Required: API Key
+Requerido: Clave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request Body
+## Cuerpo de solicitud
 
-This endpoint accepts `multipart/form-data` format.
+Este endpoint acepta el formato `multipart/form-data`.
 
-### Parameters
+### Parámetros
 
-| Parameter | Type | Required | Description |
+| Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|----------|-------------|
-| `prompt` | string | Yes | Text instructions describing how to edit or transform the uploaded image (1-4000 characters) |
-| `image` | binary | Yes | Image file to edit (JPEG, PNG, WEBP, or GIF, max 10MB) |
-| `smltp_policy` | string | No | SMLTP security policy (default: "internal") |
-| `response_format` | string | No | Response format: "url" or "b64_json" (default: "url") |
+| `prompt` | cadena | Sí | Instrucciones de texto que describen cómo editar o transformar la imagen cargada (1-4000 caracteres) |
+| `image` | binario | Sí | Archivo de imagen para editar (JPEG, PNG, WEBP o GIF, máximo 10 MB) |
+| `smltp_policy` | cadena | No | Política de seguridad SMLTP (predeterminada: "interna") |
+| `response_format` | cadena | No | Formato de respuesta: "url" o "b64_json" (predeterminado: "url") |
 
-## Request Examples
+## Ejemplos de solicitudes
 
-### cURL
+### rizo
 
 ```bash
 curl -X POST "https://{customer.name}.hiperai.ai/api/external/images/edits" \
@@ -81,7 +80,7 @@ const data = await response.json();
 console.log('Edited image URL:', data.data[0].url);
 ```
 
-### Python
+### Pitón
 
 ```python
 import requests
@@ -103,9 +102,9 @@ with open('image.jpg', 'rb') as f:
     print('Edited image URL:', result['data'][0]['url'])
 ```
 
-## Response
+## Respuesta
 
-### Success Response (200)
+### Respuesta exitosa (200)
 
 ```json
 {
@@ -132,41 +131,41 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### Response Fields
+### Campos de respuesta
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `success` | boolean | Always true for successful requests |
-| `id` | string | Unique request identifier |
-| `object` | string | Object type: "image.edit" |
-| `created` | integer | Unix timestamp of when image was edited |
-| `data` | array | Array of edited images |
-| `metadata` | object | Additional metadata including SMLTP tracking |
+| `success` | booleano | Siempre es cierto para solicitudes exitosas |
+| `id` | cadena | Identificador de solicitud único |
+| `object` | cadena | Tipo de objeto: "imagen.edit" |
+| `created` | entero | Marca de tiempo Unix de cuando se editó la imagen |
+| `data` | matriz | Conjunto de imágenes editadas |
+| `metadata` | objeto | Metadatos adicionales, incluido el seguimiento SMLTP |
 
-### Image Object
+### Objeto de imagen
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `url` | string | URL to access the edited image (when response_format is "url") |
-| `b64_json` | string | Base64-encoded image data (when response_format is "b64_json") |
-| `revised_prompt` | string | The prompt actually used for editing (may differ from input) |
+| `url` | cadena | URL para acceder a la imagen editada (cuando el formato_respuesta es "url") |
+| `b64_json` | cadena | Datos de imagen codificados en Base64 (cuando el formato_respuesta es "b64_json") |
+| `revised_prompt` | cadena | El mensaje realmente utilizado para la edición (puede diferir del ingresado) |
 
-### Metadata Object
+### Objeto de metadatos
 
-| Field | Type | Description |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `model` | string | Model used: "google/gemini-2.5-flash-image-preview" |
-| `provider` | string | Provider: "Google" |
-| `total_images` | integer | Total number of images (always 1 for edits) |
-| `is_image_to_image` | boolean | Always true for this endpoint |
-| `text_response` | string\|null | Optional text response from the model |
-| `smltp_trace_id` | string | SMLTP trace ID for audit tracking |
-| `smltp_bundle_id` | string | SMLTP bundle ID for audit tracking |
-| `smltp_policy` | string | SMLTP policy that was applied |
+| `model` | cadena | Modelo utilizado: "google/gemini-2.5-flash-image-preview" |
+| `provider` | cadena | Proveedor: "Google" |
+| `total_images` | entero | Número total de imágenes (siempre 1 para ediciones) |
+| `is_image_to_image` | booleano | Siempre es cierto para este endpoint |
+| `text_response` | cadena\|nulo | Respuesta de texto opcional del modelo |
+| `smltp_trace_id` | cadena | ID de seguimiento SMLTP para seguimiento de auditoría |
+| `smltp_bundle_id` | cadena | ID de paquete SMLTP para seguimiento de auditorías |
+| `smltp_policy` | cadena | Política SMLTP que se aplicó |
 
-## Error Responses
+## Respuestas de error
 
-### 400 Bad Request
+### 400 Solicitud incorrecta
 
 ```json
 {
@@ -177,7 +176,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 401 Unauthorized
+### 401 No autorizado
 
 ```json
 {
@@ -187,7 +186,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 403 Forbidden
+### 403 Prohibido
 
 ```json
 {
@@ -197,7 +196,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 413 Payload Too Large
+### 413 Carga útil demasiado grande
 
 ```json
 {
@@ -208,7 +207,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 500 Internal Server Error
+### 500 Error interno del servidor
 
 ```json
 {
@@ -218,7 +217,7 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-### 503 Service Unavailable
+### Servicio 503 no disponible
 
 ```json
 {
@@ -229,12 +228,11 @@ with open('image.jpg', 'rb') as f:
 }
 ```
 
-## Notes
+## Notas
 
-- Supported image formats: JPEG, PNG, WEBP, GIF
-- Maximum file size: 10MB per image
-- The image file is **required** for this endpoint (unlike `/images/generations`)
-- The prompt describes how to edit or transform the uploaded image
-- All requests are processed through SMLTP for security and compliance
-- Use `response_format: "b64_json"` to receive base64-encoded image data instead of URLs
-
+- Formatos de imagen admitidos: JPEG, PNG, WEBP, GIF
+- Tamaño máximo de archivo: 10 MB por imagen
+- El archivo de imagen es **obligatorio** para este endpoint (a diferencia de `/images/generations`)
+- El mensaje describe cómo editar o transformar la imagen cargada.
+- Todas las solicitudes se procesan a través de SMLTP por motivos de seguridad y cumplimiento.
+- Utilice `response_format: "b64_json"` para recibir datos de imágenes codificados en base64 en lugar de URL

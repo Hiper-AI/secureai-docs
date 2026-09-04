@@ -1,60 +1,58 @@
 ---
 sidebar_position: 3
-title: "Anthropic Console"
+title: "Integração com Anthropic Console"
 sidebar_label: "Anthropic Console"
-description: "Connect the Anthropic Console so SecureAI can inventory workspaces, keys, usage, cost, and audit activity"
+description: "Conecte o Anthropic Console para que a SecureAI possa inventariar espaços de trabalho, chaves, uso, custo e atividades de auditoria"
 ---
 
+#Console Antrópico
 
+Conecte sua organização Anthropic para que a SecureAI possa inventariar espaços de trabalho, chaves de API, contas de serviço, limites de gastos e (no Enterprise) o log de auditoria e análises do Claude Code.
 
-# Anthropic Console
+## O que o SecureAI importa
 
-Connect your Anthropic organization so SecureAI can inventory workspaces, API keys, service accounts, spend limits, and (on Enterprise) the audit log and Claude Code analytics.
+- **Espaços de trabalho**, uso e custo
+- **NHIs** — Chaves de API, contas de serviço e chaves BYOK (revogáveis — consulte [NHI Inventário](/pt/discovery/nhi-inventory))
+- **Limites de gastos**
+- **Registro de auditoria** (API Corporativa/Conformidade)
+- **Análise do Claude Code **
 
-## What SecureAI imports
+## Pré-requisitos
 
-- **Workspaces**, usage, and cost
-- **NHIs** — API keys, service accounts, and BYOK keys (revocable — see [NHI Inventory](/pt/en/discovery/nhi-inventory))
-- **Spend limits**
-- **Audit log** (Enterprise / Compliance API)
-- **Claude Code analytics**
+- **Administrador** no Console Antrópico.
+- Uma **chave de API de administrador** (`sk-ant-admin…`).
+- *(Opcional)* uma **chave de espaço de trabalho** para desbloquear dados da plataforma do agente e uma **chave de API de conformidade** (Enterprise) para desbloquear o log de auditoria.
 
-## Prerequisites
+## Credenciais
 
-- **Admin** on the Anthropic Console.
-- An **Admin API key** (`sk-ant-admin…`).
-- *(Optional)* a **workspace key** to unlock Agent Platform data, and a **Compliance API key** (Enterprise) to unlock the Audit Log.
+| Campo | Obrigatório | Descrição |
+|-------|----------|------------|
+| `adminApiKey` | Sim | Chave de administração da organização, formato `sk-ant-admin…`. Criptografado em repouso. |
+| `apiKey` | Não | Chave do espaço de trabalho — desbloqueia o inventário da Agent Platform. |
+| `complianceApiKey` | Não | Chave de API de conformidade empresarial — desbloqueia o log de auditoria. |
 
-## Credentials
+### Onde obter a chave de administrador
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `adminApiKey` | Yes | Organization admin key, format `sk-ant-admin…`. Encrypted at rest. |
-| `apiKey` | No | Workspace key — unlocks Agent Platform inventory. |
-| `complianceApiKey` | No | Enterprise Compliance API key — unlocks the Audit Log. |
+1. Faça login no [Anthropic Console](https://console.anthropic.com/) como administrador.
+2. Vá para **Configurações → Chaves de administrador** (nível da organização).
+3. Crie uma chave de administrador e copie-a.
 
-### Where to get the admin key
+## Conectar
 
-1. Sign in to the [Anthropic Console](https://console.anthropic.com/) as an admin.
-2. Go to **Settings → Admin keys** (organization-level).
-3. Create an admin key and copy it.
+1. **Admin → Integrações → Nuvem → Anthropic Console → Connect.**
+2. Cole a chave admin (e quaisquer chaves opcionais).
+3. **Teste** e **Salve**.
+4. **Sincronizar**.
 
-## Connect
+## Verifique
 
-1. **Admin → Integrations → Cloud → Anthropic Console → Connect.**
-2. Paste the admin key (and any optional keys).
-3. **Test**, then **Save**.
-4. **Sync**.
+Abra [Cloud Sensors](/pt/discovery/cloud-sensors) para espaços de trabalho/agentes descobertos e [NHI Inventário](/pt/discovery/nhi-inventory) para chaves e contas de serviço. Os insights mostram limites de uso, custo e gastos.
 
-## Verify
+## Revogação
 
-Open [Cloud Sensors](/pt/en/discovery/cloud-sensors) for discovered workspaces/agents and [NHI Inventory](/pt/en/discovery/nhi-inventory) for keys and service accounts. Insights show usage, cost, and spend limits.
+As chaves de API, contas de serviço e chaves BYOK da Anthropic são **revogáveis** do [NHI Inventário](/pt/discovery/nhi-inventory).
 
-## Revocation
+## Relacionado
 
-Anthropic API keys, service accounts, and BYOK keys are **revocable** from [NHI Inventory](/pt/en/discovery/nhi-inventory).
-
-## Related
-
-- [Cloud AI Providers Overview](/pt/en/integrations/cloud/overview)
-- [NHI Inventory](/pt/en/discovery/nhi-inventory)
+- [Visão geral dos provedores de IA em nuvem](/pt/integrations/cloud/overview)
+- [NHI Inventário](/pt/discovery/nhi-inventory)

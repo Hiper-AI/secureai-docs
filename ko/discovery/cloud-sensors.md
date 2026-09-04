@@ -6,7 +6,7 @@ description: "연결된 AI 클라우드 플랫폼 내에서 검색된 에이전�
 ---
 # 클라우드 센서
 
-**클라우드 센서**(관리자 → 에이전트 레지스트리 → **클라우드**)는 연결된 클라우드 AI 플랫폼(**Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform 및 Anthropic Console**) 내에서 검색된 에이전트, 모델 및 배포의 인벤토리입니다. 읽기 전용입니다. [통합](/ko/en/integrations/cloud/overview)에서 커넥터를 구성하면 Cloud Sensor가 발견한 내용을 표시합니다.
+**클라우드 센서**(관리자 → 에이전트 레지스트리 → **클라우드**)는 연결된 클라우드 AI 플랫폼(**Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform 및 Anthropic Console**) 내에서 검색된 에이전트, 모델 및 배포의 인벤토리입니다. 읽기 전용입니다. [통합](/ko/integrations/cloud/overview)에서 커넥터를 구성하면 Cloud Sensor가 발견한 내용을 표시합니다.
 
 ## KPI
 
@@ -38,6 +38,6 @@ description: "연결된 AI 클라우드 플랫폼 내에서 검색된 에이전�
 
 ## 관련
 
-- [클라우드 AI 공급자](/ko/en/integrations/cloud/overview) — 공급자를 연결하고 구성합니다.
-- [NHI 인벤토리](/ko/en/discovery/nhi-inventory) — 동일한 커넥터에 의해 발견된 ID입니다.
-- [AI 발견 및 인벤토리 개요](/ko/ko/discovery/overview)
+- [클라우드 AI 공급자](/ko/integrations/cloud/overview) — 공급자를 연결하고 구성합니다.
+- [NHI 인벤토리](/ko/discovery/nhi-inventory) — 동일한 커넥터에 의해 발견된 ID입니다.
+- [AI 발견 및 인벤토리 개요](/ko/discovery/overview)

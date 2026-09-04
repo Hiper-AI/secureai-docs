@@ -10,8 +10,8 @@ description: "OpenAI、Anthropic、Azure、AWS、GCP AI プラットフォーム
 
 接続されると、コネクタは以下を検出し、継続的に同期します。
 
-- プラットフォーム上で実行されている **エージェント、モデル、およびデプロイメント** → [Cloud Sensors](/ja/en/discovery/cloud-sensors) に表示されます。
-- **非人間 ID (NHI)** — API キー、サービス アカウント、および (サポートされている場合) BYOK キー → [NHI インベントリ](/ja/en/discovery/nhi-inventory) に表示され、ブロック/取り消し制御が行われます。
+- プラットフォーム上で実行されている **エージェント、モデル、およびデプロイメント** → [Cloud Sensors](/ja/discovery/cloud-sensors) に表示されます。
+- **非人間 ID (NHI)** — API キー、サービス アカウント、および (サポートされている場合) BYOK キー → [NHI インベントリ](/ja/discovery/nhi-inventory) に表示され、ブロック/取り消し制御が行われます。
 - 過去 30 日間の **使用量、トークン、およびコスト**。
 - **ガバナンスシグナル** - プロバイダーごとのインサイトに表示される、IAM/RBAC バインディング、支出制限、監査ログ。
 
@@ -27,7 +27,7 @@ description: "OpenAI、Anthropic、Azure、AWS、GCP AI プラットフォーム
 <Info>
 **物事が現れる場所**
 
-コネクタ **setup** は **Admin → Integrations** にあります。生成される **インベントリ** は **Admin → Agent Registry** に表示されます。検出されたエージェント/モデルは [Cloud Sensors](/ja/en/discovery/cloud-sensors) の下にあり、検出されたアイデンティティは [NHI Inventory](/ja/en/discovery/nhi-inventory) の下にあります。どちらの場所からでも同期を再実行できます。
+コネクタ **setup** は **Admin → Integrations** にあります。生成される **インベントリ** は **Admin → Agent Registry** に表示されます。検出されたエージェント/モデルは [Cloud Sensors](/ja/discovery/cloud-sensors) の下にあり、検出されたアイデンティティは [NHI Inventory](/ja/discovery/nhi-inventory) の下にあります。どちらの場所からでも同期を再実行できます。
 </Info>
 
 ## 認証情報の選択
@@ -40,13 +40,13 @@ description: "OpenAI、Anthropic、Azure、AWS、GCP AI プラットフォーム
 
 |プロバイダー |資格情報の種類 |
 |----------|------|
-| [OpenAI プラットフォーム](/ja/ja/integrations/cloud/openai-platform) |組織管理者 API キー |
-| [Anthropic コンソール](/ja/ja/integrations/cloud/anthropic-console) |管理者 API キー (+ オプションのワークスペース/コンプライアンス キー) |
-| [Azure AI Foundry](/ja/ja/integrations/cloud/azure-ai-foundry) | Entra サービス プリンシパル (テナント/クライアント/シークレット) |
-| [Google Vertex AI](/ja/ja/integrations/cloud/gcp-vertex-ai) |サービスアカウント JSON |
+| [OpenAI プラットフォーム](/ja/integrations/cloud/openai-platform) |組織管理者 API キー |
+| [Anthropic コンソール](/ja/integrations/cloud/anthropic-console) |管理者 API キー (+ オプションのワークスペース/コンプライアンス キー) |
+| [Azure AI Foundry](/ja/integrations/cloud/azure-ai-foundry) | Entra サービス プリンシパル (テナント/クライアント/シークレット) |
+| [Google Vertex AI](/ja/integrations/cloud/gcp-vertex-ai) |サービスアカウント JSON |
 
 ## 関連
 
-- [Cloud Sensors](/ja/en/discovery/cloud-sensors) — 検出されたエージェント/モデルのインベントリ。
-- [NHI Inventory](/ja/en/discovery/nhi-inventory) — 検出された ID インベントリと取り消しコントロール。
-- [AI ディスカバリーとインベントリーの概要](/ja/ja/discovery/overview)
+- [Cloud Sensors](/ja/discovery/cloud-sensors) — 検出されたエージェント/モデルのインベントリ。
+- [NHI Inventory](/ja/discovery/nhi-inventory) — 検出された ID インベントリと取り消しコントロール。
+- [AI ディスカバリーとインベントリーの概要](/ja/discovery/overview)

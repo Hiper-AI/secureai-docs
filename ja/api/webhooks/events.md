@@ -6,7 +6,7 @@ description: "SecureAI Webhook イベント カタログ"
 ---
 # Webhook イベント
 
-[Webhook エンドポイント](/ja/en/api/webhooks/overview) を作成または更新するときは、それを 1 つ以上のイベント タイプにサブスクライブします。すべてのイベントを受信するには `"*"` を使用します。
+[Webhook エンドポイント](/ja/api/webhooks/overview) を作成または更新するときは、それを 1 つ以上のイベント タイプにサブスクライブします。すべてのイベントを受信するには `"*"` を使用します。
 
 ## イベントカタログ
 
@@ -19,7 +19,7 @@ description: "SecureAI Webhook イベント カタログ"
 | `dlp:incident` |データ損失防止ルールが一致しました。 |
 | `pii:incident` | PII が検出/編集されました。 |
 | `api:limit_reached` | API キーが日次/月次/レート制限に達しました。 |
-| `api:model_failover` | [冗長性](/ja/en/api/redundancy) チェーンは、あるモデルから別のモデルにフェイルオーバーしました。 |
+| `api:model_failover` | [冗長性](/ja/api/redundancy) チェーンは、あるモデルから別のモデルにフェイルオーバーしました。 |
 
 不明なイベント名のサブスクライブは、作成時または更新時に拒否されます。
 
@@ -58,4 +58,4 @@ description: "SecureAI Webhook イベント カタログ"
 
 ## 関連
 
-- [Webhook 概要](/ja/ja/api/webhooks/overview) — 配信形式、署名検証、信頼性。
+- [Webhook 概要](/ja/api/webhooks/overview) — 配信形式、署名検証、信頼性。

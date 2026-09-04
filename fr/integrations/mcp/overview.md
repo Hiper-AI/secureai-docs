@@ -18,7 +18,7 @@ Chaque connecteur déclare comment SecureAI l'atteint et comment il s'authentifi
 |---------|-----------|------|----------|
 | Processus local | `stdio` | Clé API (en environnement) | Notion, Cloudflare (bin local), Azure (`npx @azure/mcp`), AWS (`uvx awslabs.aws-api-mcp-server`), serveurs de référence (Sequential Thinking, Web Fetch, Time). |
 | À distance (jeton) | `streamable_http` | Clé API/porteur (en env) | MCP officiel de GitHub, la famille Google Cloud (BigQuery, Compute, Logging, Vertex AI, Cloud Run, GKE,…), Microsoft Learn. |
-| À distance (OAuth) | `streamable_http` | OAuth 2.1 + PKCE, avec enregistrement client dynamique | Cloudflare (MCP distant officiel). Voir [MCP distant avec OAuth & DCR](/fr/en/integrations/mcp/remote-oauth-dcr). |
+| À distance (OAuth) | `streamable_http` | OAuth 2.1 + PKCE, avec enregistrement client dynamique | Cloudflare (MCP distant officiel). Voir [MCP distant avec OAuth & DCR](/fr/integrations/mcp/remote-oauth-dcr). |
 
 Certains connecteurs distants basés sur des jetons (par exemple, la famille Google Cloud) transportent également un flux OAuth afin qu'un utilisateur puisse autoriser avec son propre client Google OAuth via une fenêtre contextuelle, plutôt que de coller un jeton statique.
 
@@ -35,5 +35,5 @@ Chaque connecteur déclare des **modèles d'outils bloqués** – opérations d
 
 ## Connexes
 
-- [MCP distant avec OAuth & DCR](/fr/en/integrations/mcp/remote-oauth-dcr)
-- [AI Gateway — Points de terminaison distants](/fr/en/ai-gateway/remote-endpoints)
+- [MCP distant avec OAuth & DCR](/fr/integrations/mcp/remote-oauth-dcr)
+- [AI Gateway — Points de terminaison distants](/fr/ai-gateway/remote-endpoints)

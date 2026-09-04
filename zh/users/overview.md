@@ -1,48 +1,46 @@
 ---
 sidebar_position: 1
-title: "User & Access Management"
+title: "用户和访问管理"
+---
+# 用户和访问管理
+
+SecureAI 提供企业级用户管理、基于角色的访问控制 (RBAC)、权限层和许可证分配。
+
 ---
 
+## 系统角色
 
-# User & Access Management
+SecureAI 包含用于管理平台访问的内置系统角色：
 
-SecureAI provides enterprise-grade user administration, role-based access control (RBAC), permission tiers, and license allocation.
-
----
-
-## System Roles
-
-SecureAI includes built-in system roles to govern platform access:
-
-| Role | Access Level | Description |
+|角色 |访问级别|描述 |
 |---|---|---|
-| **Admin** | Full Control | Full administrative privileges: manage users, create custom roles, configure SMLTP/AI Gateway policies, view logs, and configure SSO. |
-| **User** | Standard | Regular user access: chat with AI models, create and manage personal indexes, upload documents. |
-| **Global Reader** | Read-Only | Same capabilities as standard User plus read-only visibility into admin panels and system status. Cannot modify settings. |
+| **管理员** |完全控制|完全管理权限：管理用户、创建自定义角色、配置 SMLTP/AI Gateway 策略、查看日志和配置 SSO。 |
+| **用户** |标准|常规用户访问：与人工智能模型聊天、创建和管理个人索引、上传文档。 |
+| **全球读者** |只读 |与标准用户相同的功能以及对管理面板和系统状态的只读可见性。无法修改设置。 |
 
-### Custom Roles & Granular Permissions
-Administrators can create custom roles with tailored permission levels (**None**, **Reader**, **Admin**) across specific modules:
-- **User & Group Management**: User creation, editing, group assignment.
-- **Index Management**: Document upload, index creation, index training.
-- **Security & SMLTP**: Security policies, incident response, audit verification.
-- **Integrations & AI Gateway**: Connecting cloud providers, API keys, and endpoints.
+### 自定义角色和细化权限
+管理员可以跨特定模块创建具有定制权限级别（**无**、**读者**、**管理员**）的自定义角色：
+- **用户和组管理**：用户创建、编辑、组分配。
+- **索引管理**：文档上传、索引创建、索引训练。
+- **安全和 SMLTP**：安全策略、事件响应、审核验证。
+- **集成和 AI Gateway**：连接云提供商、API 密钥和端点。
 
 ---
 
-## License Management
+## 许可证管理
 
-User accounts are provisioned under organizational license tiers:
+用户帐户是在组织许可级别下配置的：
 
-| Tier | Included Features |
+|等级 |包含的功能 |
 |---|---|
-| **Ultra** | Full platform features, unlimited indexes, priority model throughput, custom SMLTP compliance policies, dedicated support. |
-| **Growth** | Team collaboration tools, group indexes, standard SMLTP security policies, standard support. |
-| **Essential** | Core chat interface, personal indexes, basic model access, community support. |
+| **超** |完整的平台功能、无限索引、优先模型吞吐量、自定义 SMLTP 合规策略、专门支持。 |
+| **增长** |团队协作工具、组索引、标准 SMLTP 安全策略、标准支持。 |
+| **必备** |核心聊天界面、个人索引、基本模型访问、社区支持。 |
 
 ---
 
-## Common Administrative Tasks
+## 常见管理任务
 
-- **Create a User**: Go to **Admin ? Users ? Create User**. Set email, role, and license tier.
-- **Assign to Groups**: Navigate to **Admin ? Groups** to organize users into collaborative teams with shared group indexes.
-- **Configure SSO**: Connect your enterprise Identity Provider (Google Workspace or Microsoft Entra ID) under the **Authentication** settings.
+- **创建用户**：转到**管理员？用户？创建用户**。设置电子邮件、角色和许可证层。
+- **分配给组**：导航到 **管理员？组** 将用户组织到具有共享组索引的协作团队中。
+- **配置 SSO**：在 **身份验证** 设置下连接您的企业身份提供程序（Google Workspace 或 Microsoft Entra ID）。

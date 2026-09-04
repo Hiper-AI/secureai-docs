@@ -199,7 +199,7 @@ Azure 검색 창에서 **데이터 수집 끝점**을 검색하여 선택합니�
 
 **샘플 파일 다운로드**: 전체 샘플 JSON 파일을 다운로드하여 직접 사용할 수도 있습니다.
 
-<a href="/ko/en/sample-json.json" download>📥 샘플.json</a>
+<a href="/ko/sample-json.json" download>📥 샘플.json</a>
 
 #### 5. 변환 적용
 

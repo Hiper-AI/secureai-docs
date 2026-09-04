@@ -18,7 +18,7 @@ SecureAI는 **MCP(Model Context Protocol)** 서버에 연결할 수 있으므로
 |---------|------------|------|----------|
 | 로컬 프로세스 | `stdio` | API 키(env 내) | Notion, Cloudflare(로컬 빈), Azure(`npx @azure/mcp`), AWS(`uvx awslabs.aws-api-mcp-server`), 참조 서버(Sequential Thinking, Web Fetch, Time). |
 | 원격(토큰) | `streamable_http` | API 키/전달자(env 내) | GitHub 공식 MCP, Google Cloud 제품군(BigQuery, Compute, Logging, Vertex AI, Cloud Run, GKE 등), Microsoft Learn. |
-| 원격(OAuth) | `streamable_http` | OAuth 2.1 + PKCE(동적 클라이언트 등록 포함) | Cloudflare(공식 원격 MCP). [OAuth 및 DCR을 사용하는 원격 MCP](/ko/en/integrations/mcp/remote-oauth-dcr)를 참조하세요. |
+| 원격(OAuth) | `streamable_http` | OAuth 2.1 + PKCE(동적 클라이언트 등록 포함) | Cloudflare(공식 원격 MCP). [OAuth 및 DCR을 사용하는 원격 MCP](/ko/integrations/mcp/remote-oauth-dcr)를 참조하세요. |
 
 일부 토큰 기반 원격 커넥터(예: Google Cloud 제품군)도 OAuth 흐름을 제공하므로 사용자는 정적 토큰을 붙여넣는 대신 팝업을 통해 자체 Google OAuth 클라이언트로 인증할 수 있습니다.
 
@@ -35,5 +35,5 @@ SecureAI는 **MCP(Model Context Protocol)** 서버에 연결할 수 있으므로
 
 ## 관련
 
-- [OAuth 및 DCR을 사용한 원격 MCP](/ko/ko/integrations/mcp/remote-oauth-dcr)
-- [AI 게이트웨이 - 원격 엔드포인트](/ko/en/ai-gateway/remote-endpoints)
+- [OAuth 및 DCR을 사용한 원격 MCP](/ko/integrations/mcp/remote-oauth-dcr)
+- [AI 게이트웨이 - 원격 엔드포인트](/ko/ai-gateway/remote-endpoints)

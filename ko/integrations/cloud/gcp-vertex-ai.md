@@ -11,7 +11,7 @@ SecureAI가 Vertex AI 에이전트, 엔드포인트, 모델과 함께 서비스 
 ## SecureAI가 가져오는 것
 
 - **Vertex AI 에이전트, 엔드포인트 및 모델**
-- **NHIs** — 서비스 계정, 서비스 계정 키, API 키(취소 가능 — [NHI 인벤토리](/ko/en/discovery/nhi-inventory) 참조)
+- **NHIs** — 서비스 계정, 서비스 계정 키, API 키(취소 가능 — [NHI 인벤토리](/ko/discovery/nhi-inventory) 참조)
 - **IAM** 역할 결합
 - **클라우드 감사 로그**
 - 지난 30일 동안의 **요청, 토큰, 비용**(BigQuery 결제 내보내기의 실제 또는 예상)
@@ -53,14 +53,14 @@ SecureAI가 Vertex AI 에이전트, 엔드포인트, 모델과 함께 서비스 
 
 ## 확인
 
-검색된 에이전트/엔드포인트/모델은 [클라우드 센서](/ko/en/discovery/cloud-sensors)를 열고 서비스 계정 및 키는 [NHI 인벤토리](/ko/en/discovery/nhi-inventory)를 엽니다. 통찰력에는 IAM 바인딩, 사용량, 비용이 표시됩니다.
+검색된 에이전트/엔드포인트/모델은 [클라우드 센서](/ko/discovery/cloud-sensors)를 열고 서비스 계정 및 키는 [NHI 인벤토리](/ko/discovery/nhi-inventory)를 엽니다. 통찰력에는 IAM 바인딩, 사용량, 비용이 표시됩니다.
 
 ## 철회
 
-커넥터에 선택적 키/SA 관리자 역할이 있는 경우 GCP 서비스 계정, SA 키, API 키는 [NHI 인벤토리](/ko/en/discovery/nhi-inventory)에서 **취소 가능**합니다.
+커넥터에 선택적 키/SA 관리자 역할이 있는 경우 GCP 서비스 계정, SA 키, API 키는 [NHI 인벤토리](/ko/discovery/nhi-inventory)에서 **취소 가능**합니다.
 
 ## 관련
 
-- [클라우드 AI 제공업체 개요](/ko/ko/integrations/cloud/overview)
-- [Google Workspace SSO](/ko/en/iam/google-workspace)
-- [NHI 인벤토리](/ko/en/discovery/nhi-inventory)
+- [클라우드 AI 제공업체 개요](/ko/integrations/cloud/overview)
+- [Google Workspace SSO](/ko/iam/google-workspace)
+- [NHI 인벤토리](/ko/discovery/nhi-inventory)

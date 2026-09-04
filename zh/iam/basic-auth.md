@@ -1,111 +1,103 @@
 ---
 sidebar_position: 4
-title: "Basic Auth"
+title: "基本认证"
 ---
+# 基本身份验证
 
+基本身份验证为SecureAI提供了简单的用户名和密码身份验证方法。用户使用其凭据对我们的数据库进行身份验证，并具有可选的多因素身份验证支持。
 
-# Basic Authentication
+## 什么是基本身份验证？
 
-Basic authentication provides a simple username and password authentication method for SecureAI. Users authenticate against our database using their credentials, with optional multi-factor authentication support.
+**基本身份验证**是一种简单的身份验证方法，它使用用户名和密码凭据根据我们的数据库对用户进行身份验证。这是 SecureAI 中最简单的身份验证方法。
 
-## What is Basic Authentication?
+## 主要特点
 
-**Basic authentication** is a simple authentication method that uses username and password credentials to authenticate users against our database. It's the most straightforward authentication method available in SecureAI.
+### **简单登录**
+- **用户名和密码**：用户提供登录凭据
+- **数据库身份验证**：根据我们的数据库验证凭据
+- **安全存储**：密码被安全地散列和存储
 
-## Key Features
+### **多重身份验证 (MFA)**
+- **Google Authenticator**：用户可以注册其 Google Authenticator 应用程序
+- **Microsoft Authenticator**：支持 Microsoft Authenticator 应用程序
+- **QR 码设置**：使用 QR 码轻松注册过程
+- **备份代码**：帐户访问的恢复代码
 
-### **Simple Login**
-- **Username and Password**: Users provide their credentials to log in
-- **Database Authentication**: Credentials are verified against our database
-- **Secure Storage**: Passwords are securely hashed and stored
+### **电子邮件 OTP 配置**
+- **默认电子邮件 OTP**：默认启用电子邮件 OTP 作为第二个因素
+- **每用户禁用**：管理员可以禁用特定用户的电子邮件 OTP
+- **MFA 替代方案**：用户可以从电子邮件 OTP 切换到身份验证器应用程序
 
-### **Multi-Factor Authentication (MFA)**
-- **Google Authenticator**: Users can enroll their Google Authenticator app
-- **Microsoft Authenticator**: Support for Microsoft Authenticator app
-- **QR Code Setup**: Easy enrollment process with QR codes
-- **Backup Codes**: Recovery codes for account access
+## 它是如何工作的
 
-### **Email OTP Configuration**
-- **Default Email OTP**: Email OTP is enabled by default as second factor
-- **Per-User Disable**: Admins can disable email OTP for specific users
-- **MFA Alternative**: Users can switch from email OTP to authenticator apps
+### **身份验证流程**
+1. **用户登录**：用户输入用户名和密码
+2. **凭证验证**：系统根据数据库检查凭证
+3. **第二个因素**：已发送电子邮件 OTP 或需要 MFA 应用程序代码
+4. **授予访问权限**：用户获得 SecureAI 平台的访问权限
 
-## How It Works
+### **第二因素行为**
+- **在 MFA 设置之前**：电子邮件 OTP 始终需要作为第二个因素
+- **MFA 设置后**：用户可以选择电子邮件 OTP 或 MFA 代码
+- **登录选项**：用户在登录期间选择首选的第二因素方法
+- **后备**：电子邮件 OTP 仍然可用作备份选项
 
-### **Authentication Flow**
-1. **User Login**: User enters username and password
-2. **Credential Verification**: System checks credentials against database
-3. **Second Factor**: Email OTP sent or MFA app code required
-4. **Access Granted**: User gains access to SecureAI platform
+## 用户体验
 
-### **Second Factor Behavior**
-- **Before MFA Setup**: Email OTP is always required as second factor
-- **After MFA Setup**: User can choose between email OTP or MFA code
-- **Login Options**: User selects preferred second factor method during login
-- **Fallback**: Email OTP remains available as backup option
+### **首次登录（MFA 之前）**
+- 输入用户名和密码
+- 接收电子邮件 OTP 作为第二因素
+- 访问SecureAI平台
 
-## User Experience
+### **MFA 设置流程**
+1. **导航到聊天**：转到“/chat-ai/new-chat”或任何聊天页面
+2. **打开个人资料菜单**：点击右上角的个人资料图片
+3. **访问设置**：从下拉列表中选择“设置”
+4. **转到安全**：单击“安全”选项卡
+5. **启用MFA**：点击“启用多重身份验证”
+6. **扫描二维码**：使用Google或Microsoft Authenticator扫描二维码
+7. **输入代码**：输入验证器应用程序中的 6 位代码
+8. **保存备份代码**：安全存储生成的备份代码
 
-### **First Time Login (Before MFA)**
-- Enter username and password
-- Receive email OTP as second factor
-- Access SecureAI platform
+### **MFA 设置后登录**
+- 输入用户名和密码
+- 选择第二因素方法：
+  - **电子邮件 OTP**：通过电子邮件接收代码
+  - **MFA 代码**：从验证器应用程序输入代码
+- 访问SecureAI平台
 
-### **MFA Setup Process**
-1. **Navigate to Chat**: Go to "/chat-ai/new-chat" or any chat page
-2. **Open Profile Menu**: Click profile image in top-right corner
-3. **Access Settings**: Select "Settings" from dropdown
-4. **Go to Security**: Click on "Security" tab
-5. **Enable MFA**: Click "Enable Multi-Factor Authentication"
-6. **Scan QR Code**: Use Google or Microsoft Authenticator to scan QR code
-7. **Enter Code**: Input the 6-digit code from your authenticator app
-8. **Save Backup Codes**: Store the generated backup codes securely
+### **备份代码使用**
+- 如果身份验证器应用程序不可用，请使用备用代码
+- 每个备份代码只能使用一次
+- 如果需要，生成新的备份代码
 
-### **Login After MFA Setup**
-- Enter username and password
-- Choose second factor method:
-  - **Email OTP**: Receive code via email
-  - **MFA Code**: Enter code from authenticator app
-- Access SecureAI platform
+## 安全特性
 
-### **Backup Code Usage**
-- Use backup codes if authenticator app is unavailable
-- Each backup code can only be used once
-- Generate new backup codes if needed
+### **密码安全**
+- **强哈希**：密码经过安全哈希处理
+- **数据库存储**：存储在我们数据库中的凭证
+- **安全传输**：所有身份验证数据均已加密
 
+### **MFA 安全**
+- **基于时间的代码**：身份验证器应用程序生成基于时间的代码
+- **安全注册**：基于二维码的安全设置
+- **备份恢复**：用于帐户恢复的备份代码
 
+### **会话管理**
+- **安全会话**：加密会话管理
+- **超时保护**：自动会话超时
+- **并发会话控制**：管理多个活动会话
 
-## Security Features
+## 开始使用
 
-### **Password Security**
-- **Strong Hashing**: Passwords are securely hashed
-- **Database Storage**: Credentials stored in our database
-- **Secure Transmission**: All authentication data encrypted
+1. **启用基本身份验证**：在管理面板中配置
+2. **创建用户帐户**：设置用户凭据
+3. **配置MFA**：启用多重身份验证
+4. **用户培训**：对用户进行登录流程教育
+5. **监控使用情况**：跟踪身份验证模式
 
-### **MFA Security**
-- **Time-based Codes**: Authenticator apps generate time-based codes
-- **Secure Enrollment**: QR code-based secure setup
-- **Backup Recovery**: Backup codes for account recovery
+## 后续步骤
 
-### **Session Management**
-- **Secure Sessions**: Encrypted session management
-- **Timeout Protection**: Automatic session timeout
-- **Concurrent Session Control**: Manage multiple active sessions
-
-
-
-
-
-## Getting Started
-
-1. **Enable Basic Auth**: Configure in admin panel
-2. **Create User Accounts**: Set up user credentials
-3. **Configure MFA**: Enable multi-factor authentication
-4. **User Training**: Educate users on login process
-5. **Monitor Usage**: Track authentication patterns
-
-## Next Steps
-
-- [Google Workspace](/zh/iam/google-workspace) - Integrate with Google Workspace
-- [Microsoft Entra ID](/zh/iam/microsoft-entra-id) - Connect with Microsoft Entra ID
-- [IAM Overview](/zh/iam/overview) - Learn about identity management 
+- [Google Workspace](/zh/iam/google-workspace) - 与 Google Workspace 集成
+- [Microsoft Entra ID](/zh/iam/microsoft-entra-id) - 与 Microsoft Entra ID 连接
+- [IAM 概述](/zh/iam/overview) - 了解身份管理

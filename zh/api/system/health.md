@@ -1,33 +1,31 @@
 ---
 sidebar_position: 1
-title: "Health Check"
+title: "健康检查"
 openapi: "GET /health"
 ---
+# 健康检查
 
+检查 API 是否正在运行且健康。无需身份验证。
 
-# Health Check
-
-Check if the API is running and healthy. No authentication required.
-
-## Endpoint
+## 端点
 
 ```
 GET /health
 ```
 
-## Description
+## 说明
 
-This endpoint allows you to verify that the SecureAI External API is running and healthy. No authentication is required for this endpoint.
+此端点允许您验证 SecureAI 外部 API 是否正在运行且正常。此端点不需要身份验证。
 
-## Request
+## 请求
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 ```
 
-## Response
+## 回应
 
-### Success Response (200)
+### 成功响应 (200)
 
 ```json
 {
@@ -38,16 +36,16 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 }
 ```
 
-### Response Fields
+### 响应字段
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `success` | boolean | Always true for successful health check | `true` |
-| `status` | string | Health status of the API | `"healthy"` |
-| `timestamp` | string | Current server timestamp in ISO 8601 format | `"2024-01-15T10:30:00.000Z"` |
-| `version` | string | Current API version | `"1.0.0"` |
+|领域 |类型 |描述 |示例|
+|--------|------|-------------|---------|
+| `success` |布尔 |成功健康检查始终如此 | `true` |
+| `status` |字符串| API健康状况| `"healthy"` |
+| `timestamp` |字符串| ISO 8601 格式的当前服务器时间戳 | `"2024-01-15T10:30:00.000Z"` |
+| `version` |字符串|当前 API 版本 | `"1.0.0"` |
 
-## Example Usage
+## 用法示例
 
 ### JavaScript/Node.js
 
@@ -57,7 +55,7 @@ const data = await response.json();
 console.log('API Status:', data.status);
 ```
 
-### Python
+###Python
 
 ```python
 import requests
@@ -67,14 +65,14 @@ data = response.json()
 print('API Status:', data['status'])
 ```
 
-### cURL
+### 卷曲
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/health"
 ```
 
-## Notes
+## 注释
 
-- This endpoint does not require authentication
-- Use this endpoint to monitor API availability
-- The response includes the current API version for compatibility checking 
+- 该端点不需要身份验证
+- 使用此端点监控API可用性
+- 响应包括当前 API 版本以进行兼容性检查

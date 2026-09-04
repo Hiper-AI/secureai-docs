@@ -17,9 +17,9 @@ description: "정책, 그룹, 보호 사전 설정 및 안전 롤아웃을 통�
 | **모드** | `monitor`(관찰만) 또는 `block`(시행). |
 | **규칙 세트** | `mcps`, `apps`, `providers` 및 `models`에 대한 허용/거부 목록입니다. |
 | **위협 피드** | 장치가 조직 위협 피드를 소비하는지 여부입니다. |
-| **송신 시행** | `off` / `kill` / `block` / `lockdown` (+ 허용 목록, 차단-원격-MCP). [송신 집행](/ko/en/agent/egress-enforcement)을 참조하세요. |
+| **송신 시행** | `off` / `kill` / `block` / `lockdown` (+ 허용 목록, 차단-원격-MCP). [송신 집행](/ko/agent/egress-enforcement)을 참조하세요. |
 | **행동 보호** | 행동 AI 감독: 엔드포인트 및/또는 게이트웨이에 대해 활성화, 민감도 및 기본 작업(`alert`, `quarantine`, `kill`, `block`, `require_approval`). |
-| **클로드 코드 라우팅** | 투명 프록시 설정. [투명프록시](/ko/ko/agent/transparent-proxy)를 참고하세요. |
+| **클로드 코드 라우팅** | 투명 프록시 설정. [투명프록시](/ko/agent/transparent-proxy)를 참고하세요. |
 | **무단 변경 방지** | 제거 키 요구 사항(아래 참조) |
 | **출시** | 단계적 출시 구성([안전한 출시](#safe-rollouts) 참조). |
 
@@ -50,10 +50,10 @@ description: "정책, 그룹, 보호 사전 설정 및 안전 롤아웃을 통�
 
 ## 변조 방지 및 제거 키
 
-정책에서는 **제거 키**(`tamperProtection.uninstallRequiresKey`)를 요구할 수 있으므로 이 키가 없으면 로컬 사용자가 에이전트를 제거할 수 없습니다. 요구 사항(및 오프라인 솔트/해시가 포함된 해시 키)이 엔드포인트에 전달되므로 네트워크 외부에서도 유효성을 검사할 수 있습니다. 제거 시도는 공개 토큰 검증 엔드포인트를 통해 검증됩니다(정책별 키를 먼저 사용한 다음 플릿 전체 대체). 실패는 감사됩니다. [자체 업데이트 및 변조 방지](/ko/en/agent/quarantine-and-fleet-ops#self-update--anti-tamper)를 참조하세요.
+정책에서는 **제거 키**(`tamperProtection.uninstallRequiresKey`)를 요구할 수 있으므로 이 키가 없으면 로컬 사용자가 에이전트를 제거할 수 없습니다. 요구 사항(및 오프라인 솔트/해시가 포함된 해시 키)이 엔드포인트에 전달되므로 네트워크 외부에서도 유효성을 검사할 수 있습니다. 제거 시도는 공개 토큰 검증 엔드포인트를 통해 검증됩니다(정책별 키를 먼저 사용한 다음 플릿 전체 대체). 실패는 감사됩니다. [자체 업데이트 및 변조 방지](/ko/agent/quarantine-and-fleet-ops#self-update--anti-tamper)를 참조하세요.
 
 ## 관련
 
-- [송신 집행](/ko/ko/agent/egress-enforcement)
-- [격리 및 함대 작전](/ko/en/agent/quarantine-and-fleet-ops)
-- [투명프록시](/ko/ko/agent/transparent-proxy)
+- [송신 집행](/ko/agent/egress-enforcement)
+- [격리 및 함대 작전](/ko/agent/quarantine-and-fleet-ops)
+- [투명프록시](/ko/agent/transparent-proxy)

@@ -1,36 +1,34 @@
 ---
-title: "Redundancy & Failover"
-sidebar_label: "Redundancy & Failover"
-description: "Caller-defined model failover chains for the SecureAI Completions API"
+title: "Redundância e Failover Automático"
+sidebar_label: "Redundância & Failover"
+description: "Cadeias de failover de modelo definidas pelo chamador para a API SecureAI Completions"
 ---
 
+# Redundância e failover
 
+A API Completions pode **fazer failover** automaticamente de um modelo para outro quando uma chamada de provedor falha. Você define uma cadeia ordenada – um modelo primário mais até dois substitutos – e o SecureAI tenta cada um deles até obter sucesso. Isso oferece resiliência contra interrupções do provedor, limites de taxa e tempos limite sem qualquer lógica de nova tentativa em seu próprio código.
 
-# Redundancy & Failover
+A redundância está disponível no endpoint [clássico `/chat/completions`](/pt/api/chat/completions) e no endpoint [compatível com OpenAI `/v1/chat/completions`](/pt/api/chat/openai-compatível).
 
-The Completions API can automatically **fail over** from one model to another when a provider call fails. You define an ordered chain — a primary model plus up to two fallbacks — and SecureAI tries each in turn until one succeeds. This gives you resilience against provider outages, rate limits, and timeouts without any retry logic in your own code.
+## Como uma cadeia é definida
 
-Redundancy is available on both the [classic `/chat/completions`](/api/chat/completions) endpoint and the [OpenAI-compatible `/v1/chat/completions`](/api/chat/openai-compatible) endpoint.
+Existem três maneiras de solicitar uma cadeia, em ordem de precedência:
 
-## How a chain is defined
-
-There are three ways to request a chain, in precedence order:
-
-| # | You send | Resulting chain |
+| # | Você envia | Cadeia resultante |
 |---|----------|-----------------|
-| 1 | `models: ["a", "b", "c"]` | Exactly that chain (overrides `model`). |
+| 1 | `models: ["a", "b", "c"]` | Exatamente essa cadeia (substitui `model`). |
 | 2 | `model: "a"` + `fallback_models: ["b", "c"]` | `a → b → c`. |
-| 3 | `model: "a"` alone | Uses the API key's admin-configured `failoverDefaults` if `a` appears in them (the chain starts at `a`'s position); otherwise a single attempt. |
+| 3 | `model: "a"` sozinho | Usa o `failoverDefaults` configurado pelo administrador da chave API se `a` aparecer neles (a cadeia começa na posição de `a`); caso contrário, uma única tentativa. |
 
-A chain may contain **at most 3 distinct models**. Duplicate entries are collapsed. Each chain entry can be a plain model string or an object with per-attempt timeouts:
+Uma rede pode conter **no máximo 3 modelos distintos**. As entradas duplicadas são recolhidas. Cada entrada da cadeia pode ser uma string de modelo simples ou um objeto com tempos limite por tentativa:
 
 ```json
 { "model": "openai/gpt-5-nano", "timeout_ms": 30000, "first_token_timeout_ms": 5000 }
 ```
 
-You cannot combine `models` and `fallback_models` in the same request.
+Você não pode combinar `models` e `fallback_models` na mesma solicitação.
 
-## Chain-wide options (`redundancy`)
+## Opções para toda a cadeia (`redundancy`)
 
 ```json
 {
@@ -42,37 +40,37 @@ You cannot combine `models` and `fallback_models` in the same request.
 }
 ```
 
-| Field | Range | Description |
+| Campo | Alcance | Descrição |
 |-------|-------|-------------|
-| `timeout_ms` | 1000–300000 | Per-attempt overall timeout. |
-| `first_token_timeout_ms` | 500–60000 | For streaming: how long to wait for the first content token before failing over. |
-| `on` | subset of the triggers below | Which failure classes trigger failover. Defaults to all four. |
+| `timeout_ms` | 1.000–300.000 | Tempo limite geral por tentativa. |
+| `first_token_timeout_ms` | 500–60000 | Para streaming: quanto tempo esperar pelo primeiro token de conteúdo antes de fazer failover. |
+| `on` | subconjunto dos gatilhos abaixo | Quais classes de falha acionam o failover. O padrão é todos os quatro. |
 
-Per-attempt timeouts (set inside a `models[]` entry) override the chain-wide values for that attempt.
+Os tempos limite por tentativa (definidos dentro de uma entrada `models[]`) substituem os valores de toda a cadeia para essa tentativa.
 
-## Failover triggers
+## Gatilhos de failover
 
-A failed attempt is classified into one of these reasons; failover happens only if the reason is in your `on` list **and** there is another model left in the chain:
+Uma tentativa fracassada é classificada em um destes motivos; o failover acontece apenas se o motivo estiver na sua lista `on` **e** houver outro modelo restante na cadeia:
 
-| Reason | Cause |
-|--------|-------|
-| `connection_error` | Connection refused/reset, DNS/fetch failure. |
-| `server_error` | Provider returned HTTP 5xx. |
-| `rate_limit` | Provider returned HTTP 429. |
-| `timeout` | The attempt exceeded `timeout_ms` (or `first_token_timeout_ms` while streaming). |
+| Razão | Causa |
+|-------|-------|
+| `connection_error` | Conexão recusada/redefinida, falha de DNS/busca. |
+| `server_error` | O provedor retornou HTTP 5xx. |
+| `rate_limit` | O provedor retornou HTTP 429. |
+| `timeout` | A tentativa excedeu `timeout_ms` (ou `first_token_timeout_ms` durante a transmissão). |
 
-Failures that are **not** retryable never trigger failover — for example an intentional gateway rate-limit/token-budget block, an open circuit breaker, or a policy/validation rejection. A fallback would fail identically or the block is deliberate.
+Falhas que **não** podem ser repetidas nunca acionam failover — por exemplo, um bloco intencional de limite de taxa/orçamento de token do gateway, um disjuntor aberto ou uma rejeição de política/validação. Um substituto falharia de forma idêntica ou o bloqueio seria deliberado.
 
-## Streaming behavior
+## Comportamento de streaming
 
-For streaming requests, **failover is only possible before the first content token arrives.** SecureAI pulls the upstream stream until the first token (bounded by `first_token_timeout_ms`); if that fails, it fails over to the next model. Once the first token has been sent to your client, the serving model is locked in — a later mid-stream interruption is surfaced as an `error` frame, not a failover.
+Para solicitações de streaming, **o failover só é possível antes da chegada do primeiro token de conteúdo.** SecureAI puxa o fluxo upstream até o primeiro token (delimitado por `first_token_timeout_ms`); se isso falhar, ele fará failover para o próximo modelo. Depois que o primeiro token for enviado ao seu cliente, o modelo de serviço será bloqueado — uma interrupção posterior no meio do fluxo aparecerá como um quadro `error`, não como um failover.
 
-## What you get back
+## O que você recebe de volta
 
-When a multi-model chain runs, the response includes a **failover report**:
+Quando uma cadeia multimodelo é executada, a resposta inclui um **relatório de failover**:
 
-- Classic endpoint: `metadata.failover`
-- OpenAI-compatible endpoint: `secureai.failover`
+- Endpoint clássico: `metadata.failover`
+- Endpoint compatível com OpenAI: `secureai.failover`
 
 ```json
 "failover": {
@@ -84,14 +82,14 @@ When a multi-model chain runs, the response includes a **failover report**:
 }
 ```
 
-`metadata.served_model` / `secureai.served_model` tells you which model actually answered, and `requested_model` is the first model in the chain. A single-model (legacy) request produces no failover report.
+`metadata.served_model` / `secureai.served_model` informa qual modelo realmente respondeu e `requested_model` é o primeiro modelo da cadeia. Uma solicitação de modelo único (legado) não produz nenhum relatório de failover.
 
-## When the whole chain fails
+## Quando toda a cadeia falha
 
-If every attempt fails, the request returns an error listing all attempts:
+Se todas as tentativas falharem, a solicitação retornará um erro listando todas as tentativas:
 
-- **429** if *every* failure was a rate limit.
-- **502** otherwise.
+- **429** se *cada* falha fosse um limite de taxa.
+- **502** caso contrário.
 
 ```json
 {
@@ -102,26 +100,26 @@ If every attempt fails, the request returns an error listing all attempts:
 }
 ```
 
-On the OpenAI-compatible endpoint the same condition returns the OpenAI error envelope with `code: "all_models_failed"`.
+No endpoint compatível com OpenAI, a mesma condição retorna o envelope de erro OpenAI com `code: "all_models_failed"`.
 
-## Admin defaults (`failoverDefaults`)
+## Padrões de administrador (`failoverDefaults`)
 
-An administrator can attach a default chain to an API key so callers get failover without sending a chain on every request. Configured in **Admin → API Keys**, the payload is validated and clamped:
+Um administrador pode anexar uma cadeia padrão a uma chave de API para que os chamadores obtenham failover sem enviar uma cadeia em cada solicitação. Configurada em **Admin → Chaves de API**, a carga útil é validada e fixada:
 
-- `models`: up to 3 distinct model names.
-- `timeout_ms`: 1000–300000.
+- `models`: até 3 nomes de modelos distintos.
+- `timeout_ms`: 1.000–300.000.
 - `first_token_timeout_ms`: 500–60000.
-- `on`: any subset of the four triggers.
+- `on`: qualquer subconjunto dos quatro gatilhos.
 
-When a caller sends just `model: "a"` and `a` is present in `failoverDefaults.models`, the chain starts at `a`'s position and continues through the remaining defaults.
+Quando um chamador envia apenas `model: "a"` e `a` está presente em `failoverDefaults.models`, a cadeia começa na posição de `a` e continua através dos padrões restantes.
 
-## Security & billing per attempt
+## Segurança e cobrança por tentativa
 
-Every attempt is a full, independent call through the SMLTP wrapper — policy enforcement, egress/residency governance, and the Signed Entitlement Token mint all re-run per attempt, bound to that attempt's model and exact request bytes. Billing reflects the model that actually served the response. Each failover also emits an `api:model_failover` security event (delivered to any subscribed [webhooks](/pt/en/api/webhooks/overview)) and an audit-log entry.
+Cada tentativa é uma chamada completa e independente por meio do wrapper SMLTP - aplicação de política, governança de saída/residência e o Signed Entitlement Token mint, todos executados novamente por tentativa, vinculados ao modelo dessa tentativa e aos bytes de solicitação exatos. O faturamento reflete o modelo que realmente atendeu à resposta. Cada failover também emite um evento de segurança `api:model_failover` (entregue a qualquer [webhooks](/pt/api/webhooks/overview) inscrito) e uma entrada de log de auditoria.
 
-## Related
+## Relacionado
 
-- [Chat Completion](/pt/en/api/chat/completions)
-- [OpenAI-compatible Endpoint](/pt/en/api/chat/openai-compatible)
-- [Policy Check](/pt/en/api/policy-check) — preview the whole chain's access without spending points.
-- [Webhooks](/pt/en/api/webhooks/overview) — subscribe to `api:model_failover`.
+- [Conclusão do bate-papo](/pt/api/chat/completions)
+- [Endpoint compatível com OpenAI](/pt/api/chat/openai-compatível)
+- [Policy Check](/pt/api/policy-check) — visualize o acesso de toda a rede sem gastar pontos.
+- [Webhooks](/pt/api/webhooks/overview) — inscreva-se em `api:model_failover`.

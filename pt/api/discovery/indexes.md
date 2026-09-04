@@ -1,43 +1,42 @@
 ---
 sidebar_position: 2
-title: "Available Knowledge Bases"
+title: "Bases de Conhecimento Disponíveis"
 openapi: "GET /indexes"
+sidebar_label: "Bases Disponíveis"
 ---
 
+# Obtenha bases de conhecimento disponíveis
 
+Recupere bases de conhecimento (índices) disponíveis que sua chave de API pode acessar.
 
-# Get Available Knowledge Bases
-
-Retrieve available knowledge bases (indexes) that your API key can access.
-
-## Endpoint
+## Ponto final
 
 ```
 GET /indexes
 ```
 
-## Description
+## Descrição
 
-Retrieve available knowledge bases (indexes) that your API key can access. Includes personal indexes, shared indexes, and the Zero-Knowledge option.
+Recupere bases de conhecimento (índices) disponíveis que sua chave de API pode acessar. Inclui índices pessoais, índices compartilhados e a opção Conhecimento Zero.
 
-## Authentication
+## Autenticação
 
-Required: API Key
+Obrigatório: Chave API
 
 ```bash
 Authorization: Bearer sk-your-api-key-here
 ```
 
-## Request
+## Solicitação
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Response
+## Resposta
 
-### Success Response (200)
+### Resposta de sucesso (200)
 
 ```json
 {
@@ -62,41 +61,41 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-### Response Fields
+### Campos de resposta
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descrição | Exemplo |
 |-------|------|-------------|---------|
-| `success` | boolean | Always true for successful requests | `true` |
-| `indexes` | array | List of available knowledge bases | See example |
-| `restrictions` | object | Index access restrictions | See example |
+| `success` | booleano | Sempre verdadeiro para solicitações bem-sucedidas | `true` |
+| `indexes` | matriz | Lista de bases de conhecimento disponíveis | Veja exemplo |
+| `restrictions` | objeto | Restrições de acesso ao índice | Veja exemplo |
 
-### Index Object
+### Objeto de índice
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descrição | Exemplo |
 |-------|------|-------------|---------|
-| `id` | string | Unique index identifier | `"my-knowledge-base"` |
-| `name` | string | Index display name | `"my-knowledge-base"` |
-| `type` | string | Index type | `"personal"` |
-| `namespace` | string | Index namespace (optional) | `"user-namespace"` |
-| `description` | string | Index description (optional) | `"Direct AI responses..."` |
+| `id` | corda | Identificador de índice único | `"my-knowledge-base"` |
+| `name` | corda | Nome de exibição do índice | `"my-knowledge-base"` |
+| `type` | corda | Tipo de índice | `"personal"` |
+| `namespace` | corda | Namespace de índice (opcional) | `"user-namespace"` |
+| `description` | corda | Descrição do índice (opcional) | `"Direct AI responses..."` |
 
-### Index Types
+### Tipos de índice
 
-| Type | Description |
+| Tipo | Descrição |
 |------|-------------|
-| `system` | System-provided indexes (e.g., Zero-Knowledge) |
-| `personal` | User's personal knowledge bases |
-| `general` | Shared knowledge bases |
+| `system` | Índices fornecidos pelo sistema (por exemplo, Zero-Knowledge) |
+| `personal` | Bases de conhecimento pessoal do usuário |
+| `general` | Bases de conhecimento compartilhadas |
 
-### Restrictions Object
+### Objeto de restrições
 
-| Field | Type | Description | Example |
+| Campo | Tipo | Descrição | Exemplo |
 |-------|------|-------------|---------|
-| `allowed_indexes` | string | Description of allowed indexes | `"all user indexes"` |
+| `allowed_indexes` | corda | Descrição dos índices permitidos | `"all user indexes"` |
 
-## Error Responses
+## Respostas de erro
 
-### 401 Unauthorized
+### 401 Não autorizado
 
 ```json
 {
@@ -106,9 +105,9 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
 }
 ```
 
-## Example Usage
+## Exemplo de uso
 
-### JavaScript/Node.js
+###JavaScript/Node.js
 
 ```javascript
 const response = await fetch('https://{customer.name}.hiperai.ai/api/external/indexes', {
@@ -121,7 +120,7 @@ const data = await response.json();
 console.log('Available Indexes:', data.indexes);
 ```
 
-### Python
+###Píton
 
 ```python
 import requests
@@ -136,26 +135,26 @@ data = response.json()
 print('Available Indexes:', data['indexes'])
 ```
 
-### cURL
+###cURL
 
 ```bash
 curl -X GET "https://{customer.name}.hiperai.ai/api/external/indexes" \
   -H "Authorization: Bearer sk-your-api-key-here"
 ```
 
-## Special Indexes
+## Índices Especiais
 
-### Zero-Knowledge
+### Conhecimento Zero
 
-The `Zero-Knowledge` index is a special system index that provides direct AI responses without knowledge base retrieval. Use this when you want:
+O índice `Zero-Knowledge` é um índice de sistema especial que fornece respostas diretas de IA sem recuperação da base de conhecimento. Use isso quando quiser:
 
-- Pure AI responses without RAG
-- Testing AI model capabilities
-- General conversation without specific context
+- Respostas puras de IA sem RAG
+- Testando capacidades do modelo de IA
+- Conversa geral sem contexto específico
 
-## Notes
+## Notas
 
-- The Zero-Knowledge index is always available
-- Personal indexes are created by the user
-- Access to indexes depends on your permissions
-- Use the index ID in chat completion requests 
+- O índice Zero-Knowledge está sempre disponível
+- Índices pessoais são criados pelo usuário
+- O acesso aos índices depende das suas permissões
+- Use o ID do índice em solicitações de conclusão de chat

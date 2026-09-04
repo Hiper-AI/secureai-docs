@@ -1,58 +1,57 @@
 ---
 sidebar_position: 6
-title: "Remote Endpoints"
+title: "Endpoints Remotos e Conectividade"
+sidebar_label: "Endpoints Remotos"
 ---
 
+# Terminais Remotos
 
+Os endpoints remotos permitem conectar servidores de modelos externos ou auto-hospedados ao SecureAI por meio de controles do AI Gateway.
 
-# Remote Endpoints
+Isto é útil quando a sua organização executa a sua própria infraestrutura de modelo e ainda pretende uma governação de segurança centralizada.
 
-Remote Endpoints let you connect external or self-hosted model servers to SecureAI through AI Gateway controls.
+## Onde configurar
 
-This is useful when your organization runs its own model infrastructure and still wants centralized security governance.
+Acesse **Administrador → AI Gateway → Endpoints remotos**.
 
-## Where To Configure
+## Opções de registro
 
-Go to **Admin → AI Gateway → Remote Endpoints**.
+- **Instalação rápida**: assistente guiado que gera um fluxo de configuração com um comando.
+- **Registro Manual**:
+  - **Colar JSON**
+  - **Campos de entrada manual**
 
-## Registration Options
+## Modos de conectividade
 
-- **Quick Install**: guided wizard that generates a one-command setup flow.
-- **Manual Registration**:
-  - **Paste JSON**
-  - **Manual Entry** fields
+- **Reverse Connect**: recomendado para a maioria das implantações; conexão de saída, sem portas de entrada abertas.
+- **Túnel Cloudflare**: conectividade de confiança zero usando token de túnel e nome de host.
 
-## Connectivity Modes
+## Operações Diárias
 
-- **Reverse Connect**: recommended for most deployments; outbound connection, no open inbound ports.
-- **Cloudflare Tunnel**: zero-trust connectivity using tunnel token and hostname.
+Para cada endpoint, os administradores podem:
 
-## Daily Operations
+- execute **Verificação de integridade**
+- execute **Verificar mTLS**
+- inspecionar detalhes do endpoint (região, impressão digital, modelos, última verificação)
+- remover endpoint quando desativado
 
-For each endpoint, admins can:
+## Fluxo de integração sugerido
 
-- run **Health Check**
-- run **Verify mTLS**
-- inspect endpoint details (region, fingerprint, models, last check)
-- remove endpoint when decommissioned
+1. Comece com **Instalação rápida**.
+2. Escolha o modo de conectividade.
+3. Selecione os modelos necessários.
+4. Conclua o registro.
+5. Execute a verificação de integridade e verifique o mTLS.
+6. Confirme se o endpoint permanece íntegro após 5 a 10 minutos.
 
-## Suggested Onboarding Flow
+## Lista de verificação para solução de problemas
 
-1. Start with **Quick Install**.
-2. Choose connectivity mode.
-3. Select required models.
-4. Complete registration.
-5. Run Health Check and Verify mTLS.
-6. Confirm endpoint remains healthy after 5 to 10 minutes.
+- Endpoint inacessível: verifique o modo de conectividade e os valores do nome do host.
+- TLS aprovado, mas não íntegro: verifique o status do gateway remoto/serviço de modelo.
+- Não conectado: confirme se o serviço remoto está em execução e se o registro é válido.
 
-## Troubleshooting Checklist
+## Melhores práticas
 
-- Endpoint unreachable: verify connectivity mode and hostname values.
-- TLS passed but unhealthy: check remote gateway/model service status.
-- Not connected: confirm remote service is running and registration is valid.
-
-## Best Practices
-
-- Prefer Reverse Connect unless your architecture requires tunnel mode.
-- Keep endpoint ownership clear by organization/team.
-- Re-check endpoint health after policy or key changes.
+- Prefira Reverse Connect, a menos que sua arquitetura exija modo túnel.
+- Mantenha clara a propriedade do endpoint por organização/equipe.
+- Verifique novamente a integridade do endpoint após alterações importantes ou de política.

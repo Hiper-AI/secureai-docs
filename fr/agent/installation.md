@@ -6,7 +6,7 @@ description: "Installez l'agent SecureAI OS sur les points de terminaison Window
 ---
 # Installation de l'agent
 
-L'agent du système d'exploitation SecureAI est installé à partir d'un **package d'installation** que vous créez dans **Admin → Registre des agents → Agents du système d'exploitation**. Le package produit une commande (Windows) ou un script (Linux/macOS) prêt à l'emploi qui contient deux valeurs : l'**URL backend** et une **clé d'inscription** de portée. Pour le générateur de packages complet et les mécanismes d'inscription, voir [Packages d'inscription et d'installation](/fr/en/agent/enrollment-and-packages).
+L'agent du système d'exploitation SecureAI est installé à partir d'un **package d'installation** que vous créez dans **Admin → Registre des agents → Agents du système d'exploitation**. Le package produit une commande (Windows) ou un script (Linux/macOS) prêt à l'emploi qui contient deux valeurs : l'**URL backend** et une **clé d'inscription** de portée. Pour le générateur de packages complet et les mécanismes d'inscription, voir [Packages d'inscription et d'installation](/fr/agent/enrollment-and-packages).
 
 ## Windows (MSI)
 
@@ -41,10 +41,10 @@ L'URL du backend et la clé d'inscription sont déjà intégrées dans le script
 
 ## Que se passe-t-il lors de la première exécution
 
-Au premier lancement, l'agent **s'inscrit** : il présente la clé d'inscription, enregistre l'appareil et reçoit un jeton par appareil et sa configuration d'exécution. Il commence alors à battre et à appliquer sa [politique](/fr/en/agent/policies-and-groups) résolue. Voir [Packages d'inscription et d'installation](/fr/en/agent/enrollment-and-packages) pour plus de détails, y compris la manière dont l'URL du backend est résolue et la rotation des jetons d'appareil.
+Au premier lancement, l'agent **s'inscrit** : il présente la clé d'inscription, enregistre l'appareil et reçoit un jeton par appareil et sa configuration d'exécution. Il commence alors à battre et à appliquer sa [politique](/fr/agent/policies-and-groups) résolue. Voir [Packages d'inscription et d'installation](/fr/agent/enrollment-and-packages) pour plus de détails, y compris la manière dont l'URL du backend est résolue et la rotation des jetons d'appareil.
 
 ## Connexes
 
-- [Packages d'inscription et d'installation](/fr/en/agent/enrollment-and-packages)
-- [Politiques & Groupes](/fr/en/agent/policies-and-groups)
-- [Présentation de l'agent Endpoint](/fr/en/agent/overview)
+- [Packages d'inscription et d'installation](/fr/agent/enrollment-and-packages)
+- [Politiques & Groupes](/fr/agent/policies-and-groups)
+- [Présentation de l'agent Endpoint](/fr/agent/overview)

@@ -52,7 +52,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 }
 ```
 
-`receipt` オブジェクトは、ゲートウェイによって発行される署名付きペイロードです。領収書が透明性と監査モデルにどのように適合するかについては、[SMLTP Security](/ja/en/security/smltp) を参照してください。
+`receipt` オブジェクトは、ゲートウェイによって発行される署名付きペイロードです。領収書が透明性と監査モデルにどのように適合するかについては、[SMLTP Security](/ja/security/smltp) を参照してください。
 
 ### 404 見つかりません
 
@@ -70,11 +70,11 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/receipts/bnd_9f2c..
 
 ## 注意事項
 
-- レシートは、ゲートウェイのメモリ内ストアに一定期間保持されます。長期的な証拠については、**ハッシュチェーン監査ログ** (信頼できる不変の記録) を利用してください。 [不変ログ](/ja/ja/security/immutable-logs) を参照してください。
+- レシートは、ゲートウェイのメモリ内ストアに一定期間保持されます。長期的な証拠については、**ハッシュチェーン監査ログ** (信頼できる不変の記録) を利用してください。 [不変ログ](/ja/security/immutable-logs) を参照してください。
 - すべての展開がゲートウェイを経由するわけではありません。 `404` は、統合のエラーではなく、「この呼び出しに対するゲートウェイ受信なし」として扱います。
 
 ## 関連
 
-- [SMLTPセキュリティ](/ja/ja/security/smltp)
-- [不変ログ](/ja/ja/security/immutable-logs)
-- [チャット補完](/ja/ja/api/chat/completions)
+- [SMLTPセキュリティ](/ja/security/smltp)
+- [不変ログ](/ja/security/immutable-logs)
+- [チャット補完](/ja/api/chat/completions)
