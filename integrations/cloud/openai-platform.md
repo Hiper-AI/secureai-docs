@@ -28,20 +28,47 @@ Conecte su organización OpenAI para que SecureAI pueda inventariar proyectos, m
 |-------|----------|-------------|
 | `adminApiKey` | Sí | Clave **admin** de la organización, formato `sk-admin-…`. Cifrado en reposo. |
 | `projectApiKey` | No | Una o más claves de proyecto (una por línea), solo necesarias para el inventario de Asistentes heredado. |
-| `organizationId` | No | Su identificación `org-…`; elimina la ambigüedad cuando una clave abarca varias organizaciones. |
+| `organizationId` | Sí | Su identificación `org-…`; elimina la ambigüedad cuando una clave abarca varias organizaciones. |
 
 ### Dónde obtener la clave de administrador
 
-1. Inicie sesión en la [Plataforma OpenAI](https://platform.openai.com/) como propietario de una organización.
-2. Vaya a **Configuración → Organización → Claves de administrador**.
-3. Cree una nueva clave de administrador y cópiela (se muestra una vez).
+1. Inicie sesión en la [Plataforma OpenAI](https://platform.openai.com/) como propietario de una organización y vaya a **Organization settings** (menú inferior izquierdo).
+
+   <div class="mac-window">
+   ![Organization settings en OpenAI Platform](/img/cloud/openai-platform/1%20-%20OpenAI%20Platform%20Integration.png)
+   </div>
+
+2. Vaya a **Admin keys → Create new admin key**. Póngale un nombre (por ejemplo `SecureAI`), deje **Vencimiento** en `Nunca` y elija **Restricted** con estos permisos:
+
+   | Grupo | Nivel | Por qué |
+   |-------|-------|---------|
+   | **Organization Administration** | Write | El conector lee proyectos/miembros/roles/grupos/certificados/retención, y además **escribe**: revoca API keys (NHI), crea/actualiza/borra spend alerts y actualiza rate limits |
+   | **Usage API Scope** | Read | Solo hace `GET` a usage/costs de los últimos 30 días |
+   | **Audit Logs Scope** | Read | Solo hace `GET /v1/organization/audit_logs` |
+   | **Fine-tuning Checkpoints** | Opcional | El conector no llama ningún endpoint de fine-tuning; puede dejarlo en `Read` (valor por defecto) sin que tenga efecto |
+
+   <div class="mac-window">
+   ![Crear admin key con permisos restringidos](/img/cloud/openai-platform/2%20-%20OpenAI%20Platform%20Integration.png)
+   </div>
+
+3. Haga clic en **Create admin key** y copie el valor (se muestra una sola vez, formato `sk-admin-…`).
+
+4. Busque el `organizationId` en **Organization settings → General → Organization ID** (formato `org-…`).
+
+   <div class="mac-window">
+   ![Organization ID en OpenAI Platform](/img/cloud/openai-platform/3%20-%20OpenAI%20Platform%20Integration.png)
+   </div>
 
 ## Conectar
 
-1. **Administrador → Integraciones → Nube → Plataforma OpenAI → Conectar.**
-2. Pegue la clave API de administrador (y los campos opcionales).
-3. **Probar**, luego **Guardar**.
-4. **Sincronización**.
+1. **Administrador → Integraciones → Nube → Plataforma OpenAI → Connect Integration.**
+2. Pegue la clave API de administrador y el `organizationId`, y haga clic en **Connect**.
+
+   <div class="mac-window">
+   ![Modal de configuración de OpenAI Platform en SecureAI](/img/cloud/openai-platform/4%20-%20OpenAI%20Platform%20Integration.png)
+   </div>
+
+3. Espere a la primera sincronización.
 
 ## Verificar
 
