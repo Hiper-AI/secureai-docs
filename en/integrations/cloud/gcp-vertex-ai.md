@@ -1,15 +1,17 @@
 ---
 sidebar_position: 6
-title: "Google Vertex AI"
-sidebar_label: "Google Vertex AI"
-description: "Connect Google Vertex AI so SecureAI can inventory agents, models, service accounts, IAM, usage, and cost"
+title: "Google Cloud — Discovery"
+sidebar_label: "Google Cloud — Discovery"
+description: "Connect Google Cloud so SecureAI can inventory Vertex AI agents, models, service accounts, IAM, usage, and cost"
 ---
 
-
-
-# Google Vertex AI
+# Google Cloud — Discovery
 
 Connect your Google Cloud project so SecureAI can inventory Vertex AI agents, endpoints, and models, along with the service accounts, IAM bindings, audit logs, usage, and billing that surround them.
+
+<Info>
+This card **only reads** the project and never sends a prompt. If you want to run SecureAI's LLM traffic on your own Google Cloud account, see [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference).
+</Info>
 
 ## What SecureAI imports
 
@@ -49,7 +51,7 @@ Connect your Google Cloud project so SecureAI can inventory Vertex AI agents, en
 
 ## Connect
 
-1. **Admin → Integrations → Cloud → Google Vertex AI → Connect.**
+1. **Admin → Integrations → Cloud → Google Cloud — Discovery → Connect.**
 2. Enter project, location, and the service-account JSON (plus optional billing fields).
 3. **Test**, then **Save**.
 4. **Sync**.
@@ -64,6 +66,7 @@ GCP service accounts, SA keys, and API keys are **revocable** from [NHI Inventor
 
 ## Related
 
+- [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference)
 - [Cloud AI Providers Overview](/en/integrations/cloud/overview)
 - [Google Workspace SSO](/en/iam/google-workspace)
 - [NHI Inventory](/en/discovery/nhi-inventory)

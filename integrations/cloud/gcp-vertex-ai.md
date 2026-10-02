@@ -1,13 +1,17 @@
 ---
 sidebar_position: 6
-title: "Integración con Google Cloud Vertex AI"
-sidebar_label: "Google Cloud Vertex AI"
-description: "Conecte Google Vertex AI para que SecureAI pueda inventariar agentes, modelos, cuentas de servicio, IAM, uso y costos."
+title: "Google Cloud — Descubrimiento"
+sidebar_label: "Google Cloud — Descubrimiento"
+description: "Conecte Google Cloud para que SecureAI pueda inventariar agentes, modelos, cuentas de servicio, IAM, uso y costos de Vertex AI."
 ---
 
-# Google Vértice AI
+# Google Cloud — Descubrimiento
 
 Conecte su proyecto de Google Cloud para que SecureAI pueda inventariar los agentes, endpoints y modelos de Vertex AI, junto con las cuentas de servicio, enlaces de IAM, registros de auditoría, uso y facturación que los rodean.
+
+<Info>
+Esta tarjeta **solo lee** el proyecto y nunca envía un prompt. Si lo que busca es ejecutar el tráfico de LLM de SecureAI en su propia cuenta de Google Cloud, consulte [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference).
+</Info>
 
 ## Qué importa SecureAI
 
@@ -47,7 +51,7 @@ Conecte su proyecto de Google Cloud para que SecureAI pueda inventariar los agen
 
 ## Conectar
 
-1. **Administrador → Integraciones → Nube → Google Vertex AI → Conectar.**
+1. **Administrador → Integraciones → Nube → Google Cloud — Descubrimiento → Conectar.**
 2. Ingrese el proyecto, la ubicación y el JSON de la cuenta de servicio (más los campos de facturación opcionales).
 3. **Probar**, luego **Guardar**.
 4. **Sincronización**.
@@ -62,6 +66,7 @@ Las cuentas de servicio de GCP, las claves SA y las claves API son **revocables*
 
 ## Relacionado
 
+- [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference)
 - [Descripción general de los proveedores de IA en la nube](/integrations/cloud/overview)
 - [SSO de Google Workspace](/iam/google-workspace)
 - [Inventario NHI](/discovery/nhi-inventory)

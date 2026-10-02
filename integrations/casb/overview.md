@@ -15,7 +15,7 @@ El resultado es un inventario en vivo de **qué IP de origen y qué usuarios lla
 
 | Conector | Fuente de datos | Estado |
 |-----------|-------------|--------|
-| [Cisco Umbrella](/integraciones/casb/cisco-umbrella) | API de informes de capa DNS v2 | Disponible |
+| [Cisco Umbrella](/integrations/casb/cisco-umbrella) | API de informes de capa DNS v2 | Disponible |
 
 ## El bucle de configuración
 

@@ -44,7 +44,11 @@ Todos los secretos que ingresa (secretos de cliente, JSON de cuenta de servicio,
 | [Plataforma OpenAI](/integrations/cloud/openai-platform) | Clave API de administración de la organización |
 | [Anthropic Console](/integrations/cloud/anthropic-console) | Clave API de administración (+ claves opcionales de espacio de trabajo/cumplimiento) |
 | [Azure AI Foundry](/integrations/cloud/azure-ai-foundry) | Principal de servicio de entrada (inquilino/cliente/secreto) |
-| [Google Vertex AI](/integrations/cloud/gcp-vertex-ai) | JSON de cuenta de servicio |
+| [Google Cloud — Descubrimiento](/integrations/cloud/gcp-vertex-ai) | JSON de cuenta de servicio |
+
+## Inferencia en su propia cuenta
+
+Además de inventariar, SecureAI puede **ejecutar el tráfico de LLM en su propia cuenta de Google Cloud**, para que Google le facture directamente y aproveche su gasto comprometido (CUDs). Es una integración distinta, en **Integraciones → Proveedores de IA**: [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference).
 
 ## Relacionado
 

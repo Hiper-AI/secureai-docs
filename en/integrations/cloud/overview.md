@@ -46,7 +46,11 @@ All secrets you enter (client secrets, service-account JSON, admin API keys) are
 | [OpenAI Platform](/en/integrations/cloud/openai-platform) | Organization admin API key |
 | [Anthropic Console](/en/integrations/cloud/anthropic-console) | Admin API key (+ optional workspace / compliance keys) |
 | [Azure AI Foundry](/en/integrations/cloud/azure-ai-foundry) | Entra service principal (tenant/client/secret) |
-| [Google Vertex AI](/en/integrations/cloud/gcp-vertex-ai) | Service-account JSON |
+| [Google Cloud — Discovery](/en/integrations/cloud/gcp-vertex-ai) | Service-account JSON |
+
+## Inference on your own account
+
+Besides inventorying, SecureAI can **run LLM traffic on your own Google Cloud account**, so Google bills you directly and you can use your committed spend (CUDs). It is a separate integration, under **Integrations → AI providers**: [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference).
 
 ## Related
 
