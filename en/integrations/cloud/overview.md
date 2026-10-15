@@ -46,7 +46,7 @@ All secrets you enter (client secrets, service-account JSON, admin API keys) are
 | [OpenAI Platform](/en/integrations/cloud/openai-platform) | Organization admin API key |
 | [Anthropic Console](/en/integrations/cloud/anthropic-console) | Admin API key (+ optional workspace / compliance keys) |
 | [Azure AI Foundry](/en/integrations/cloud/azure-ai-foundry) | Entra service principal (tenant/client/secret) |
-| [Google Cloud — Discovery](/en/integrations/cloud/gcp-vertex-ai) | Service-account JSON |
+| [Google Cloud — Discovery](/en/integrations/cloud/gcp-vertex-ai) | Service-account JSON key, or keyless impersonation |
 
 ## Inference on your own account
 

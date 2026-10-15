@@ -23,7 +23,7 @@ Wie viel Sie mit einer Identität *tun* können, hängt davon ab, wie sie entdec
 | Ebene | Was es bedeutet | Aktion verfügbar |
 |-------|--------------|----|
 | **Verwaltet** | Eine von SecureAI ausgestellte (nicht cloudbasierte) Identität. | **Blockieren/Entsperren** am Gateway – lehnt jede von dieser Identität authentifizierte Anfrage ab oder stellt sie wieder her und verschiebt die Gateway-Sperrliste. |
-| **Widerruflich** | Von der Cloud erkannt **und** an der Quelle durchsetzbar. | **Revoke** – das Vorhängeschloss („candadito“): löscht/deaktiviert den Schlüssel **beim Anbieter**. Irreversibel; Markiert die Identität als blockiert/kritisch. |
+| **Widerruflich** | Von der Cloud erkannt **und** an der Quelle durchsetzbar. | **Revoke** – das Vorhängeschloss („candadito“): löscht oder deaktiviert die Anmeldeinformation **beim Anbieter** und markiert die Identität als blockiert/kritisch. Das Löschen eines Schlüssels ist irreversibel. In Google Cloud kann ein deaktiviertes Dienstkonto wieder aktiviert und ein gelöschter API-Schlüssel 30 Tage lang wiederhergestellt werden; die Identität, die der Connector selbst verwendet, ist nie widerrufbar ([Details](/de/integrations/cloud/gcp-vertex-ai#widerruf)). |
 | **Nur Monitor** | Von der Cloud erkannt, aber nicht durchsetzbar. | Schreibgeschützt. Die Ruhephase allein führt nie zu einer kritischen Eskalation (sie fügt einen kleinen Risikofaktor hinzu, der nur auf den Monitor beschränkt ist). |
 
 ### Welche Clouds sind widerrufbar?

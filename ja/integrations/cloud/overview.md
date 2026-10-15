@@ -43,7 +43,7 @@ description: "OpenAI、Anthropic、Azure、AWS、GCP AI プラットフォーム
 | [OpenAI プラットフォーム](/ja/integrations/cloud/openai-platform) |組織管理者 API キー |
 | [Anthropic コンソール](/ja/integrations/cloud/anthropic-console) |管理者 API キー (+ オプションのワークスペース/コンプライアンス キー) |
 | [Azure AI Foundry](/ja/integrations/cloud/azure-ai-foundry) | Entra サービス プリンシパル (テナント/クライアント/シークレット) |
-| [Google Vertex AI](/ja/integrations/cloud/gcp-vertex-ai) |サービスアカウント JSON |
+| [Google Cloud — ディスカバリー](/ja/integrations/cloud/gcp-vertex-ai) | サービス アカウントの JSON キー、またはキーなしの権限借用 |
 
 ## 関連
 

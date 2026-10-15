@@ -43,7 +43,7 @@ Tous les secrets que vous saisissez (secrets client, JSON du compte de service, 
 | [Plateforme OpenAI](/fr/integrations/cloud/openai-platform) | Clé API d'administration de l'organisation |
 | [Console Anthropique](/fr/integrations/cloud/anthropic-console) | Clé API d'administration (+ espace de travail / clés de conformité facultatives) |
 | [Azure AI Foundry](/fr/integrations/cloud/azure-ai-foundry) | Principal du service Entra (locataire/client/secret) |
-| [Google Vertex AI](/fr/integrations/cloud/gcp-vertex-ai) | Compte de service JSON |
+| [Google Cloud — Discovery](/fr/integrations/cloud/gcp-vertex-ai) | Clé JSON de compte de service, ou emprunt d'identité sans clé |
 
 ## Connexes
 

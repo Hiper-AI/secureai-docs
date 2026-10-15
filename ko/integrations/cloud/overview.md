@@ -43,7 +43,7 @@ Cloud AI Provider 커넥터를 사용하면 SecureAI가 조직에서 이미 사�
 | [OpenAI 플랫폼](/ko/integrations/cloud/openai-platform) | 조직 관리자 API 키 |
 | [인트로픽 콘솔](/ko/integrations/cloud/anthropic-console) | 관리 API 키(+ 선택적 작업공간/규정 준수 키) |
 | [Azure AI Foundry](/ko/integrations/cloud/azure-ai-foundry) | Entra 서비스 주체(테넌트/클라이언트/비밀) |
-| [구글 버텍스 AI](/ko/integrations/cloud/gcp-vertex-ai) | 서비스 계정 JSON |
+| [Google Cloud — 디스커버리](/ko/integrations/cloud/gcp-vertex-ai) | 서비스 계정 JSON 키 또는 키 없는 가장 |
 
 ## 관련
 
