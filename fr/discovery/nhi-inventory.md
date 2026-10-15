@@ -23,7 +23,7 @@ Tout ce que vous pouvez *faire* sur une identité dépend de la manière dont el
 | Niveau | Qu'est-ce que cela signifie | Action disponible |
 |-------|---------------|------------------|
 | **Géré** | Une identité émise par SecureAI (non cloud). | **Bloquer/Débloquer** au niveau de la passerelle : refuse ou restaure toute demande authentifiée par cette identité et envoie la liste de révocation de la passerelle. |
-| **Révocable** | Découvert dans le cloud **et** exécutoire à la source. | **Révoquer** — le cadenas ("candadito") : supprime/désactive la clé **chez le fournisseur**. Irréversible; marque l'identité bloquée/critique. |
+| **Révocable** | Découvert dans le cloud **et** exécutoire à la source. | **Révoquer** — le cadenas ("candadito") : supprime ou désactive l'identifiant **chez le fournisseur** et marque l'identité bloquée/critique. La suppression d'une clé est irréversible. Sur Google Cloud, un compte de service désactivé peut être réactivé, une clé API supprimée peut être restaurée pendant 30 jours, et l'identité utilisée par le connecteur lui-même n'est jamais révocable ([détails](/fr/integrations/cloud/gcp-vertex-ai#révocation)). |
 | **Moniteur uniquement** | Découvert dans le cloud mais non applicable. | Lecture seule. La dormance seule ne le fait jamais passer au niveau critique (elle ajoute un petit facteur de risque lié au moniteur uniquement). |
 
 ### Quels nuages sont révocables

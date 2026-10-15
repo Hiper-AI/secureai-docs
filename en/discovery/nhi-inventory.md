@@ -26,7 +26,7 @@ How much you can *do* to an identity depends on how it was discovered:
 | Level | What it means | Action available |
 |-------|---------------|------------------|
 | **Managed** | A SecureAI-issued (non-cloud) identity. | **Block / Unblock** at the gateway — denies or restores any request authenticated by that identity, and pushes the gateway revocation list. |
-| **Revocable** | Cloud-discovered **and** enforceable at the source. | **Revoke** — the padlock ("candadito"): deletes/disables the key **at the provider**. Irreversible; marks the identity blocked/critical. |
+| **Revocable** | Cloud-discovered **and** enforceable at the source. | **Revoke** — the padlock ("candadito"): deletes or disables the credential **at the provider** and marks the identity blocked/critical. Deleting a key is irreversible. On Google Cloud a disabled service account can be re-enabled, a deleted API key can be restored for 30 days, and the identity the connector itself uses is never revocable ([details](/en/integrations/cloud/gcp-vertex-ai#revocation)). |
 | **Monitor-only** | Cloud-discovered but not enforceable. | Read-only. Dormancy alone never escalates it to critical (it adds a small monitor-only risk factor). |
 
 ### Which clouds are revocable

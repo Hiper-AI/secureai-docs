@@ -24,7 +24,7 @@ O quanto você pode *fazer* com uma identidade depende de como ela foi descobert
 | Nível | O que significa | Ação disponível |
 |-------|---------------|------------------|
 | **Gerenciado** | Uma identidade emitida pela SecureAI (não na nuvem). | **Bloquear/Desbloquear** no gateway — nega ou restaura qualquer solicitação autenticada por essa identidade e envia a lista de revogação do gateway. |
-| **Revogável** | Descoberto na nuvem **e** aplicável na origem. | **Revogar** — o cadeado ("candadito"): apaga/desativa a chave **no provedor**. Irreversível; marca a identidade bloqueada/crítica. |
+| **Revogável** | Descoberto na nuvem **e** aplicável na origem. | **Revogar** — o cadeado ("candadito"): exclui ou desativa a credencial **no provedor** e marca a identidade bloqueada/crítica. Excluir uma chave é irreversível. No Google Cloud, uma conta de serviço desativada pode ser reativada, uma chave de API excluída pode ser restaurada por 30 dias, e a identidade que o próprio conector usa nunca é revogável ([detalhes](/pt/integrations/cloud/gcp-vertex-ai#revogação)). |
 | **Somente monitor** | Descoberto na nuvem, mas não aplicável. | Somente leitura. A dormência por si só nunca a torna crítica (ela adiciona um pequeno fator de risco exclusivo ao monitor). |
 
 ### Quais nuvens são revogáveis

@@ -24,7 +24,7 @@ Cuánto puedes *hacer* con una identidad depende de cómo se descubrió:
 | Nivel | Lo que significa | Acción disponible |
 |-------|---------------|------------------|
 | **Administrado** | Una identidad emitida por SecureAI (no en la nube). | **Bloquear/Desbloquear** en la puerta de enlace: niega o restaura cualquier solicitud autenticada por esa identidad y envía la lista de revocación de la puerta de enlace. |
-| **Revocable** | Descubierto en la nube **y** ejecutable en el origen. | **Revocar** — el candado ("candadito"): elimina/inhabilita la clave **en el proveedor**. Irreversible; marca la identidad bloqueada/crítica. |
+| **Revocable** | Descubierto en la nube **y** ejecutable en el origen. | **Revocar** — el candado ("candadito"): elimina o inhabilita la credencial **en el proveedor** y marca la identidad bloqueada/crítica. Borrar una clave es irreversible. En Google Cloud, una cuenta de servicio inhabilitada se puede volver a habilitar, una clave API borrada se puede restaurar durante 30 días y la identidad que usa el propio conector nunca es revocable ([detalle](/integrations/cloud/gcp-vertex-ai#revocación)). |
 | **Solo monitor** | Descubierto en la nube pero no aplicable. | Sólo lectura. La inactividad por sí sola nunca lo convierte en crítico (agrega un pequeño factor de riesgo exclusivo del monitor). |
 
 ### ¿Qué nubes son revocables?

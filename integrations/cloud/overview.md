@@ -44,7 +44,7 @@ Todos los secretos que ingresa (secretos de cliente, JSON de cuenta de servicio,
 | [Plataforma OpenAI](/integrations/cloud/openai-platform) | Clave API de administración de la organización |
 | [Anthropic Console](/integrations/cloud/anthropic-console) | Clave API de administración (+ claves opcionales de espacio de trabajo/cumplimiento) |
 | [Azure AI Foundry](/integrations/cloud/azure-ai-foundry) | Principal de servicio de entrada (inquilino/cliente/secreto) |
-| [Google Cloud — Descubrimiento](/integrations/cloud/gcp-vertex-ai) | JSON de cuenta de servicio |
+| [Google Cloud — Descubrimiento](/integrations/cloud/gcp-vertex-ai) | Clave JSON de cuenta de servicio, o suplantación sin clave |
 
 ## Inferencia en su propia cuenta
 
