@@ -153,6 +153,21 @@ Si su organización no permite CloudFormation, cree el rol a mano en **IAM → R
         "bedrock:GetInferenceProfile"
       ],
       "Resource": "*"
+    },
+    {
+      "Sid": "ApplyYourGuardrails",
+      "Effect": "Allow",
+      "Action": "bedrock:ApplyGuardrail",
+      "Resource": [
+        "arn:aws:bedrock:*:<account id>:guardrail/*",
+        "arn:aws:bedrock:*:<account id>:guardrail-profile/*"
+      ]
+    },
+    {
+      "Sid": "ListYourGuardrails",
+      "Effect": "Allow",
+      "Action": "bedrock:ListGuardrails",
+      "Resource": "*"
     }
   ]
 }
@@ -201,6 +216,45 @@ El **alcance de inferencia** decide dónde puede AWS procesar los prompts:
 | **Global** | Perfiles `global.` | En cualquier Región comercial de AWS. Máxima capacidad, pero **no fija residencia**: la política de residencia de SecureAI lo trata como sin residencia fijada. |
 
 SecureAI aplica la política de residencia de datos de su organización sobre la geografía resultante. Si necesita residencia, use **Geografía** o **Solo dentro de la Región**.
+
+## Su propio Bedrock Guardrail (opcional)
+
+Si su organización ya usa [Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html), puede pedirle a SecureAI que aplique uno de sus guardrails a **cada llamada** que hace por esta conexión. Es una **segunda capa** sobre el DLP de SecureAI: Bedrock evalúa el prompt y la respuesta con sus propios temas denegados, filtros de contenido, filtros de palabras, filtros de información sensible y verificaciones de fundamentación. Aplica igual a Claude y a los modelos de Chat Completions (gpt-oss, DeepSeek, Mistral, Qwen, GPT‑5.x).
+
+1. En la consola de Bedrock (**Guardrails**), cree o elija el guardrail en la **misma Región** que configuró en SecureAI y **publique una versión** (**Create version**).
+2. En el panel de Amazon Bedrock de SecureAI, en **Tu Bedrock Guardrail (opcional)**, haga clic en **Listar mis guardrails** y elija el guardrail y la versión. Si el rol no puede listarlos, escriba el **id** del guardrail (o su ARN) y el número de versión.
+3. Haga clic en **Guardar** y luego en **Probar conexión**: la prueba pasa por el guardrail igual que el tráfico real.
+
+Para quitarlo, elija **Ninguno** en el guardrail y guarde.
+
+| Qué pasa cuando… | Resultado |
+|------------------|-----------|
+| El guardrail deja pasar la llamada | El usuario recibe la respuesta del modelo, sin cambios. |
+| El guardrail bloquea el prompt o la respuesta | El usuario recibe el **mensaje de bloqueo que usted configuró en el guardrail**. Para integraciones por API, la respuesta llega con `finish_reason: "content_filter"`. Cada intervención queda registrada (`SAI-BEDROCK-006`). |
+| El rol no puede aplicar el guardrail, o la versión no existe | La llamada se **rechaza**. Nunca se reintenta en los proveedores de SecureAI, **aunque haya permitido el fallback**: ese camino no puede aplicar su guardrail. |
+
+<Warning>
+**Use una versión publicada en producción.** `DRAFT` es la copia de trabajo del guardrail: cualquiera que la edite en la consola cambia lo que se aplica acá, sin crear una versión nueva. SecureAI lo permite, pero lo advierte.
+</Warning>
+
+<Info>
+**Permisos.** El rol necesita `bedrock:ApplyGuardrail` sobre sus guardrails y, para la lista, `bedrock:ListGuardrails`. La plantilla de CloudFormation de SecureAI los incluye desde esta versión: si desplegó el stack antes, **actualícelo** con la plantilla nueva (o agregue las dos declaraciones de la política del rol manual). Si el guardrail usa inferencia entre Regiones, la plantilla también cubre sus *guardrail profiles*.
+
+**Cómo se aplica.** SecureAI envía el id y la versión en los encabezados `X-Amzn-Bedrock-GuardrailIdentifier` y `X-Amzn-Bedrock-GuardrailVersion`, **dentro de la firma** Signature V4 de cada solicitud: nadie en el camino puede quitarlos sin que AWS rechace la llamada, y ningún usuario ni integración puede elegir otro guardrail. SecureAI no activa el *trace* del guardrail, así que el contenido que lo disparó no vuelve en la respuesta.
+
+**Registros de AWS.** Si tiene activado el registro de invocaciones de Bedrock, AWS guarda el contenido original aunque el guardrail lo enmascare. Cifre esos registros con KMS y restrinja su acceso.
+</Info>
+
+## Prompt caching de Claude
+
+En los modelos Claude, SecureAI usa automáticamente el [prompt caching de Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) para que su cuenta pague menos y responda más rápido cuando una conversación reutiliza contexto largo. No hay nada que configurar.
+
+- SecureAI marca hasta dos puntos de caché por solicitud: el **prompt de sistema** y el **último bloque largo** de la conversación (un documento pegado, el contexto de una búsqueda, el resultado largo de una herramienta).
+- Solo los marca cuando el contenido anterior alcanza el **mínimo de tokens del modelo** (por ejemplo 1.024 en Claude Sonnet 4.6 y 4.096 en Claude Haiku 4.5). Los prompts cortos se envían exactamente igual que antes.
+- La caché dura **5 minutos** desde el último uso. Leer de caché cuesta alrededor del **10 %** de un token de entrada; escribirla cuesta un **25 % más** que un token normal, y solo se paga sobre contenido que alcanza el mínimo. Conviene a partir de **dos llamadas** con el mismo contexto en esa ventana, lo habitual en una conversación.
+- El uso de cada turno separa los tokens leídos de caché y los escritos, así que puede verlos en la analítica y en su factura de AWS.
+
+Los modelos que no son Claude no se ven afectados.
 
 ## Paso 4. Elija qué corre en Bedrock
 
@@ -253,7 +307,7 @@ Los modelos servidos por su Bedrock muestran la insignia **Tu Bedrock** en el se
 
 - **Sin secretos guardados.** Con el rol, SecureAI no guarda ninguna credencial de AWS: obtiene credenciales temporales de una hora y las renueva automáticamente. Si usa una access key, el secreto se guarda cifrado y nunca se devuelve al navegador.
 - **Confianza acotada.** La política de confianza admite **solo** al principal de SecureAI y **solo** con `sts:ExternalId` igual al External ID de su organización.
-- **Permisos mínimos.** El rol de inferencia solo puede invocar modelos (`bedrock:InvokeModel`, `bedrock:InvokeModelWithResponseStream`) y leer el catálogo de modelos. No puede leer sus datos, su IAM ni su facturación.
+- **Permisos mínimos.** El rol de inferencia solo puede invocar modelos (`bedrock:InvokeModel`, `bedrock:InvokeModelWithResponseStream`), leer el catálogo de modelos y listar y aplicar los Bedrock Guardrails de su cuenta. No puede leer sus datos, su IAM ni su facturación.
 - **Compatible con sus SCP.** SecureAI firma con Signature V4 y credenciales temporales; no necesita claves API de Bedrock.
 - **El camino sigue protegido.** Cada llamada pasa por el gateway SMLTP de SecureAI: DLP sobre el prompt y sobre la respuesta (también en streaming), token de autorización por solicitud y **recibo firmado** verificable.
 - **Falla cerrado.** Si no se puede leer la configuración o asumir el rol, la solicitud se rechaza; no se envía a otro proveedor salvo que usted haya permitido el fallback.
@@ -278,6 +332,8 @@ Estos son los motivos que muestra **Probar conexión**:
 | Modelo no habilitado para la cuenta | AWS todavía no abrió ese modelo a su cuenta o Región | Pídalo a su equipo de cuenta de AWS; mientras tanto, elija otro modelo. |
 | Modelo no disponible | El id no se ofrece en esa Región o alcance de inferencia | Actualice la lista de modelos, elija otro id o amplíe el alcance. |
 | Cuota | Bedrock limitó las solicitudes (throttling) | Reintente más tarde o pida una cuota mayor en **Service Quotas**. |
+| Sin permiso para aplicar el guardrail | Al rol le falta `bedrock:ApplyGuardrail` sobre el guardrail elegido | Actualice el stack de SecureAI con la plantilla nueva, u otorgue el permiso sobre el guardrail. |
+| Guardrail no encontrado | El id o la versión del guardrail no existen en esa Región | Vuelva a elegirlo de la lista, o revise el id y que la versión esté publicada. |
 | Bloqueado por tu política de modelos SMLTP | La política de SecureAI no permite el modelo | Agregue el modelo a la política permitida. |
 | Amazon Bedrock devolvió un error | Falla del lado de AWS | Reintente; si persiste, revise el estado de AWS. |
 | Gateway SMLTP de Bedrock inalcanzable / Error TLS | Problema de infraestructura de SecureAI | Contacte a soporte. No depende de su cuenta de AWS. |
