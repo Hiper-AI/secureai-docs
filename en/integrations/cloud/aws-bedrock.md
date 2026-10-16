@@ -2,7 +2,7 @@
 sidebar_position: 9
 title: "AWS — Discovery"
 sidebar_label: "AWS — Discovery"
-description: "Connect AWS so SecureAI can inventory Bedrock Agents, AgentCore, knowledge bases, guardrails, models, IAM identities, CloudTrail activity, and Bedrock usage and cost, in one account or across your AWS Organization"
+description: "Connect AWS so SecureAI can inventory Bedrock Agents, AgentCore, SageMaker, knowledge bases, guardrails, models, IAM identities, CloudTrail activity, and Bedrock usage and cost, and detect Bedrock use outside SecureAI, in one account or across your AWS Organization"
 ---
 
 # AWS — Discovery
@@ -19,15 +19,17 @@ For each account and each region you choose:
 
 - **Agents**: Bedrock Agents (classic) and their aliases, and **AgentCore** runtimes, with their gateways and memories.
 - **Bedrock resources**: knowledge bases, guardrails, custom and imported models, provisioned throughput, and inference profiles (system and application).
+- **SageMaker**: real-time inference endpoints and models.
 - **Model-invocation logging**: whether it is enabled in each region. Off means prompts are not recorded, and it is shown as a gap.
 - **Usage** over the last 30 days per model, from CloudWatch: invocations, input and output tokens, and errors.
 - **Cost** of Bedrock over the last 30 days, from Cost Explorer: by region and, in AWS Organizations mode, by linked account.
 - **Audit**: CloudTrail events of Bedrock and AgentCore over the last 30 days (up to 100 per source and region).
 - **NHIs**: IAM users and their access keys with last use (date, service, and region); IAM roles that AI services (Bedrock, AgentCore, SageMaker) can assume, and roles or users whose policies allow invoking Bedrock, with each role's last use. The model each identity used comes from CloudTrail, when that read was complete. Shown in the [NHI Inventory](/en/discovery/nhi-inventory).
-- **Who can invoke Bedrock**: an access map that tells explicit grants apart from wildcards (`*`, `bedrock:*`, `NotAction`).
+- **Who can invoke Bedrock**: an access map that tells explicit grants apart from wildcards (`*`, `bedrock:*`, `NotAction`), and the **effective access** of each of those identities according to the IAM policy simulator.
+- **Bedrock used outside SecureAI**: the identities that invoked Bedrock models without going through SecureAI, with model, region, volume, and date. See [Bedrock used outside SecureAI](#bedrock-used-outside-secureai).
 
 <Note>
-The access map is built from the **Allow** statements of IAM policies (inline, customer managed, and AWS managed policies, which are recognized by name). It **does not evaluate** Deny statements, conditions, SCPs, or permission boundaries: it shows who the policies allow, not proof of effective access.
+The access map is first built from the **Allow** statements of IAM policies (inline, customer managed, and AWS managed policies, which are recognized by name). SecureAI then confirms each identity with the **IAM policy simulator** (`iam:SimulatePrincipalPolicy`), first with no specific resource and then on the most-used model. The simulator **does evaluate** Deny statements, conditions, permission boundaries and, when the account belongs to an AWS Organization, SCPs. It **does not simulate** resource control policies (RCPs), VPC endpoint policies, or session policies. A condition that depends on the request context (for example, source IP or MFA) is shown as **Depends on context**, never as confirmed access. Up to 25 identities are simulated per account and sync, explicit grants first.
 </Note>
 
 ## Prerequisites
@@ -38,13 +40,16 @@ A read-only role in your account that SecureAI assumes with your organization's 
 |-------|-------------|-----------------|
 | Bedrock | `bedrock:ListFoundationModels`, `ListCustomModels`, `ListImportedModels`, `ListProvisionedModelThroughputs`, `ListInferenceProfiles`, `ListGuardrails`, `GetGuardrail`, `GetModelInvocationLoggingConfiguration`, `ListAgents`, `GetAgent`, `ListAgentAliases`, `ListKnowledgeBases`, `GetKnowledgeBase` | Agents, aliases, knowledge bases, guardrails, models, provisioned throughput, inference profiles, and invocation logging |
 | AgentCore | `bedrock-agentcore:ListAgentRuntimes`, `ListGateways`, `ListMemories`, `GetAgentRuntime` | AgentCore runtimes, gateways, and memories |
-| IAM | `iam:GetAccountAuthorizationDetails`, `ListUsers`, `ListRoles`, `GetRole`, `ListAccessKeys`, `GetAccessKeyLastUsed` | Users, roles, access keys and their last use; who can invoke Bedrock |
+| IAM | `iam:GetAccountAuthorizationDetails`, `ListUsers`, `ListRoles`, `GetRole`, `ListAccessKeys`, `GetAccessKeyLastUsed`, `SimulatePrincipalPolicy` | Users, roles, access keys and their last use; who can invoke Bedrock and their effective access |
+| SageMaker | `sagemaker:ListEndpoints`, `ListModels` | SageMaker endpoints and models |
 | CloudTrail | `cloudtrail:LookupEvents` | Audit events and model used per identity |
 | CloudWatch | `cloudwatch:ListMetrics`, `GetMetricData` | Invocations and tokens per model |
 | Cost Explorer | `ce:GetCostAndUsage` | Bedrock cost |
 | Organizations | `organizations:DescribeOrganization`, `ListAccounts` | Member account list (only in the management or delegated administrator account) |
 
-`GetAgent` and `GetKnowledgeBase` let SecureAI read an agent or knowledge base by the id CloudTrail names when the listing itself is blocked.
+`GetAgent` and `GetKnowledgeBase` let SecureAI read an agent or knowledge base by the id CloudTrail names when the listing itself is blocked. `iam:SimulatePrincipalPolicy` only evaluates policies: it changes nothing in the account.
+
+If you deployed the stack before `iam:SimulatePrincipalPolicy` and the SageMaker permissions were added, **update the stack** with the new template. Until then, effective access and SageMaker show up as optional gaps naming the missing action.
 
 To **deactivate access keys from SecureAI** (optional), deploy the stack with `AllowRevokeAccessKeys=true`: it adds `iam:UpdateAccessKey` on the account's IAM users. It is off by default.
 
@@ -86,10 +91,30 @@ An account SecureAI cannot read is listed as a **gap**, and nothing of it is ret
 
 ## Verify
 
-- [Cloud Sensors](/en/discovery/cloud-sensors) lists the discovered agents. Click the AWS card to open **AWS Bedrock — Insights**: Bedrock usage and cost, agents (Bedrock Agents and AgentCore runtimes), what is wired to them (aliases, knowledge bases, guardrails, gateways and memories, throughput and profiles), the accounts and regions read with their invocation logging, access keys, IAM roles, **Who can invoke Bedrock**, and CloudTrail activity.
+- [Cloud Sensors](/en/discovery/cloud-sensors) lists the discovered agents. Click the AWS card to open **AWS Bedrock — Insights**: Bedrock usage and cost, agents (Bedrock Agents and AgentCore runtimes), what is wired to them (aliases, knowledge bases, guardrails, gateways and memories, throughput, profiles, and SageMaker endpoints), the accounts and regions read with their invocation logging, access keys, IAM roles, **Bedrock used outside SecureAI**, **Who can invoke Bedrock**, **Effective access**, and CloudTrail activity.
 - The [NHI Inventory](/en/discovery/nhi-inventory) shows the users, access keys, and roles.
 
 If a sync fails (for example, the stack was deleted), the card shows the error and SecureAI retries with backoff, keeping the last inventory. A partial read never retires agents or removes identities.
+
+## Bedrock used outside SecureAI
+
+From the CloudTrail events it already reads (`InvokeModel`, `InvokeModelWithResponseStream`, `Converse`, `ConverseStream`, and the OpenAI- and Anthropic-compatible APIs of `bedrock-runtime`), SecureAI separates the calls made by **its own inference identity** — the role or access key of the [Amazon Bedrock — Inference on your account](/en/integrations/cloud/aws-bedrock-inference) connection — from the calls made by **any other identity**. Those other calls went through no DLP, model policy, or signed receipt.
+
+Under **Identity & Access → Bedrock used outside SecureAI** you see, per identity:
+
+- the IAM role or user (and the access key, masked, when it was a long-lived key);
+- the models it invoked and how many times each;
+- the account and regions;
+- the total calls and when it was last seen.
+
+It is also an **Insights** finding (*Amazon Bedrock is being used outside SecureAI*): **critical** when the caller is an IAM user access key or the root account, **moderate** when it is a role.
+
+Details:
+
+- SecureAI recognizes its inference identity by the **role ARN or access key ID** it has configured, never by the session name: a role with the same name that is not the configured one is still reported.
+- If SecureAI has no Bedrock inference connection, **every** invocation is outside SecureAI.
+- CloudTrail is read up to 100 events per source and region. When that cap was reached (or a region could not be read), calls are shown with **+**: they are a minimum, not the total.
+- Failed calls (for example, `AccessDenied`) do not count as use.
 
 ## Coverage gaps
 
@@ -119,9 +144,20 @@ With `AllowRevokeAccessKeys=true` in the stack, IAM access keys can be **deactiv
 
 Safeguards:
 
-- SecureAI refuses to deactivate the access key its own connection uses — that would cut discovery off. Rotate it in IAM.
+- SecureAI refuses to deactivate the access key its own connection uses (that would cut discovery off) and the access key of the [Bedrock inference](/en/integrations/cloud/aws-bedrock-inference) connection (that would stop every governed call). Rotate them in IAM. If SecureAI cannot check which key the inference connection uses, it deactivates nothing.
 - IAM roles are monitored, but not revoked from SecureAI.
 - Without `AllowRevokeAccessKeys=true`, the error says `iam:UpdateAccessKey` is missing and how to update the stack.
+
+### Automatic NHI policies
+
+The **automatic NHI policies** (NHI Inventory → **Automatic policies**) also apply to AWS access keys, with the same rules as Google Cloud service-account keys:
+
+| Rule | On AWS |
+|------|--------|
+| **Unused key** | Access key with no known use in N days (per `GetAccessKeyLastUsed`). A key with no recorded last use is never touched. |
+| **Old key** | Access key created more than N days ago, used or not. |
+
+In **Revoke** mode the cut is the same as the manual one: the key is set to **Inactive** and can be reactivated. The same safeguards apply: simulation on by default, a revocation cap per run, only over complete listings, exclusions, and never the keys SecureAI itself uses (discovery and inference). IAM roles are never cut.
 
 To revoke SecureAI's access to your account, **delete the stack** (or the `SecureAI-Discovery` role).
 
