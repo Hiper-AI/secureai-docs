@@ -166,7 +166,7 @@ Copy the ARN of the role you created.
 As an alternative, SecureAI accepts the access key of a **dedicated IAM user** (Access key ID and Secret access key). Give the user the same permissions policy as the manual role.
 
 <Warning>
-A long-lived access key is **less safe than the role**: it never expires, and anyone holding it can call Bedrock as you until you rotate it. SecureAI stores the secret **encrypted** and never shows it again. Temporary (`ASIA…`) keys are refused because they expire within hours. We recommend the role.
+A long-lived access key is **less safe than the role**: it never expires, and anyone holding it can call Bedrock as you until you rotate it. SecureAI stores the secret **encrypted** and never shows it again. Temporary (`ASIA…`) keys are refused because they expire within hours. We recommend the role: if you switch to it later, SecureAI deletes the stored access key.
 </Warning>
 
 </Tab>

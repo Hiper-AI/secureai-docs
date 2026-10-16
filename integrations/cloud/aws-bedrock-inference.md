@@ -166,7 +166,7 @@ Copie el ARN del rol creado.
 Como alternativa, SecureAI acepta la access key de un **usuario IAM dedicado** (Access key ID y Secret access key). Dele al usuario la misma política de permisos que al rol manual.
 
 <Warning>
-Una access key de larga duración es **menos segura que el rol**: no vence, y quien la tenga puede llamar a Bedrock en su nombre hasta que la rote. SecureAI guarda el secreto **cifrado** y no lo vuelve a mostrar. Las claves temporales (`ASIA…`) se rechazan, porque vencen en horas. Recomendamos el rol.
+Una access key de larga duración es **menos segura que el rol**: no vence, y quien la tenga puede llamar a Bedrock en su nombre hasta que la rote. SecureAI guarda el secreto **cifrado** y no lo vuelve a mostrar. Las claves temporales (`ASIA…`) se rechazan, porque vencen en horas. Recomendamos el rol: si más adelante cambia a él, SecureAI borra la access key guardada.
 </Warning>
 
 </Tab>
