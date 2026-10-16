@@ -50,7 +50,7 @@ All secrets you enter (client secrets, service-account JSON, admin API keys) are
 
 ## Inference on your own account
 
-Besides inventorying, SecureAI can **run LLM traffic on your own Google Cloud account**, so Google bills you directly and you can use your committed spend (CUDs). It is a separate integration, under **Integrations → AI providers**: [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference).
+Besides inventorying, SecureAI can **run LLM traffic on your own Google Cloud account**, so Google bills you directly and you can use your committed spend (CUDs). It is a separate integration, under **Integrations → AI providers**: [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference). The same applies to Azure: [Azure AI Foundry — Inference on your account](/en/integrations/cloud/azure-ai-foundry-inference) runs LLM traffic on your own Foundry resource so Microsoft bills you and you draw down your Azure commitment (MACC).
 
 ## Related
 

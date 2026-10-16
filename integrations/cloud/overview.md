@@ -48,7 +48,7 @@ Todos los secretos que ingresa (secretos de cliente, JSON de cuenta de servicio,
 
 ## Inferencia en su propia cuenta
 
-Además de inventariar, SecureAI puede **ejecutar el tráfico de LLM en su propia cuenta de Google Cloud**, para que Google le facture directamente y aproveche su gasto comprometido (CUDs). Es una integración distinta, en **Integraciones → Proveedores de IA**: [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference).
+Además de inventariar, SecureAI puede **ejecutar el tráfico de LLM en su propia cuenta de Google Cloud**, para que Google le facture directamente y aproveche su gasto comprometido (CUDs). Es una integración distinta, en **Integraciones → Proveedores de IA**: [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference). Lo mismo aplica a Azure: [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference) ejecuta el tráfico de LLM en su propio recurso de Foundry para que Microsoft le facture directamente y descuente de su compromiso de Azure (MACC).
 
 ## Relacionado
 
