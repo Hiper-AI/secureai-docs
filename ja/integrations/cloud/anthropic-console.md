@@ -54,4 +54,4 @@ Anthropic API キー、サービス アカウント、BYOK キーは、[NHI Inve
 ## 関連
 
 - [クラウド AI プロバイダーの概要](/ja/integrations/cloud/overview)
-- [国民健康保険の目録](/ja/discovery/nhi-inventory)
+- [NHI インベントリ](/ja/discovery/nhi-inventory)

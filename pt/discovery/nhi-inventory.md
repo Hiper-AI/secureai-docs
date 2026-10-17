@@ -50,5 +50,5 @@ O varredor de governança calcula uma pontuação composta de 0 a 100 a partir d
 ## Relacionado
 
 - [Provedores de IA em nuvem](/pt/integrations/cloud/overview) — a fonte das identidades descobertas.
-- [Sensores de Nuvem](/pt/discovery/cloud-sensors)
+- [Sensores Cloud](/pt/discovery/cloud-sensors)
 - [Visão geral do inventário e descoberta de IA](/pt/discovery/overview)

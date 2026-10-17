@@ -1,10 +1,10 @@
 ---
 sidebar_position: 4
-title: "国民健康保险库存"
-sidebar_label: "国民健康保险库存"
+title: "NHI 清单"
+sidebar_label: "NHI 清单"
 description: "盘点并管理 AI 代理和工作负载背后的非人类身份（API 密钥和服务帐户）"
 ---
-# NHI 库存
+# NHI 清单
 
 **NHI 清单**（管理员 → 代理注册表 → **非人类身份**）是 AI 背后的机器凭据清单 - API 密钥、服务帐户以及代理、MCP 服务器和工作负载使用的 BYOK 密钥。它会汇总每个[云 AI 提供商](/zh/integrations/cloud/overview) 连接器发现的身份，对其风险进行评分，并为您提供阻止或撤销它们的控制权。
 
