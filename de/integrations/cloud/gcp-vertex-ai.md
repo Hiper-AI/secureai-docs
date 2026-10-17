@@ -246,7 +246,7 @@ Um einen Widerruf rückgängig zu machen, öffnen Sie im NHI-Inventar das Menü 
 Schutzmechanismen:
 
 - Das Dienstkonto, das der Connector verwendet, und seine Schlüssel können nicht über SecureAI widerrufen werden – das würde die Erkennung unterbrechen. Dasselbe gilt für das Dienstkonto für den Widerruf. Rotieren Sie sie in Google Cloud.
-- Ebenso wenig kann das Dienstkonto (oder der Schlüssel) widerrufen werden, mit dem sich die Verbindung für [Vertex AI-Inferenz](/de/integrations/cloud/vertex-ai-inference) authentifiziert: Das würde jeden gesteuerten Aufruf stoppen. Kann SecureAI nicht prüfen, um welches es sich handelt, widerruft es nichts.
+- Ebenso wenig kann das Dienstkonto widerrufen werden, mit dem sich die Verbindung für [Vertex AI-Inferenz](/de/integrations/cloud/vertex-ai-inference) authentifiziert, oder der Schlüssel, mit dem sie signiert: Das würde jeden gesteuerten Aufruf stoppen. Bei der schlüssellosen Option (Identitätswechsel) ist nur das Dienstkonto geschützt: Seine Schlüssel können weiterhin widerrufen werden, da SecureAI mit keinem davon signiert. Kann SecureAI nicht prüfen, welche Identität die Inferenzverbindung verwendet, widerruft es kein Dienstkonto und keinen Dienstkontoschlüssel (API-Schlüssel sind davon nicht betroffen).
 - Die Standarddienstkonten von Google (Compute Engine-Standarddienstkonto, App Engine, Cloud Build, Dienst-Agents) verlangen eine zweite Bestätigung: Wird eines davon deaktiviert, stoppt jede VM, App oder jeder Build, die bzw. der unter diesem Konto läuft.
 - Fehlt dem Connector die Rolle für eine Aktion, nennt die Fehlermeldung diese Rolle.
 

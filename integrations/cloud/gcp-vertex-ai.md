@@ -246,7 +246,7 @@ Para deshacer una revocación, abra el menú de la identidad en el Inventario de
 Protecciones:
 
 - La cuenta de servicio que usa el conector, y sus claves, no se pueden revocar desde SecureAI: cortaría el descubrimiento. Lo mismo vale para la cuenta de servicio para revocar. Rótelas en Google Cloud.
-- Tampoco se puede revocar la cuenta de servicio (ni la clave) con la que se autentica la conexión de [inferencia de Vertex AI](/integrations/cloud/vertex-ai-inference): cortaría todas las llamadas gobernadas. Si SecureAI no puede comprobar cuál es, no revoca nada.
+- Tampoco se puede revocar la cuenta de servicio con la que se autentica la conexión de [inferencia de Vertex AI](/integrations/cloud/vertex-ai-inference), ni la clave con la que firma: cortaría todas las llamadas gobernadas. Con la opción sin clave (impersonación) solo se protege la cuenta de servicio: sus claves se pueden revocar, porque SecureAI no firma con ninguna. Si SecureAI no puede comprobar qué identidad usa la conexión de inferencia, no revoca ninguna cuenta de servicio ni clave de cuenta de servicio (las claves API no se ven afectadas).
 - Las cuentas de servicio predeterminadas de Google (la predeterminada de Compute Engine, App Engine, Cloud Build, agentes de servicio) piden una segunda confirmación: deshabilitar una detiene cada VM, aplicación o build que se ejecuta con ella.
 - Si al conector le falta el rol de una acción, el error indica cuál.
 

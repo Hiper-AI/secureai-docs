@@ -246,7 +246,7 @@ To undo a revocation, open the identity's menu in the NHI Inventory and choose *
 Safeguards:
 
 - The service account the connector uses, and its keys, cannot be revoked from SecureAI — that would cut discovery off. The same goes for the service account for revocation. Rotate them in Google Cloud.
-- Nor can the service account (or the key) that the [Vertex AI inference](/en/integrations/cloud/vertex-ai-inference) connection authenticates with be revoked: it would stop every governed call. If SecureAI cannot check which one it is, it revokes nothing.
+- Nor can the service account that the [Vertex AI inference](/en/integrations/cloud/vertex-ai-inference) connection authenticates with be revoked, nor the key it signs with: it would stop every governed call. With the keyless (impersonation) option only the service account is protected: its keys can still be revoked, because SecureAI signs with none of them. If SecureAI cannot check which identity the inference connection uses, it does not revoke any service account or service-account key (API keys are unaffected).
 - Google's default service accounts (Compute Engine default, App Engine, Cloud Build, service agents) ask for a second confirmation: disabling one stops every VM, app, or build that runs as it.
 - If the connector lacks the role for an action, the error names the role.
 
