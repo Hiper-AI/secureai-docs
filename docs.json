@@ -90,6 +90,13 @@
                 ]
               },
               {
+                "group": "Integraciones: Archivos (Drive y SharePoint)",
+                "pages": [
+                  "integrations/files/google-drive",
+                  "integrations/files/sharepoint"
+                ]
+              },
+              {
                 "group": "Integraciones: SIEMs, Red y MCP",
                 "pages": [
                   "integrations/splunk-security",
@@ -270,6 +277,13 @@
                 ]
               },
               {
+                "group": "Integrations: Files (Drive & SharePoint)",
+                "pages": [
+                  "en/integrations/files/google-drive",
+                  "en/integrations/files/sharepoint"
+                ]
+              },
+              {
                 "group": "Integrations: SIEMs, Network & MCP",
                 "pages": [
                   "en/integrations/splunk-security",
@@ -442,6 +456,13 @@
                   "zh/integrations/cloud/anthropic-console",
                   "zh/integrations/cloud/azure-ai-foundry",
                   "zh/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "集成：文件（Drive 和 SharePoint）",
+                "pages": [
+                  "zh/integrations/files/google-drive",
+                  "zh/integrations/files/sharepoint"
                 ]
               },
               {
@@ -620,6 +641,13 @@
                 ]
               },
               {
+                "group": "Integrações: Arquivos (Drive e SharePoint)",
+                "pages": [
+                  "pt/integrations/files/google-drive",
+                  "pt/integrations/files/sharepoint"
+                ]
+              },
+              {
                 "group": "Integrações: SIEMs, Rede & MCP",
                 "pages": [
                   "pt/integrations/splunk-security",
@@ -792,6 +820,13 @@
                   "ja/integrations/cloud/anthropic-console",
                   "ja/integrations/cloud/azure-ai-foundry",
                   "ja/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "統合: ファイル (Drive と SharePoint)",
+                "pages": [
+                  "ja/integrations/files/google-drive",
+                  "ja/integrations/files/sharepoint"
                 ]
               },
               {
@@ -970,6 +1005,13 @@
                 ]
               },
               {
+                "group": "Intégrations : Fichiers (Drive et SharePoint)",
+                "pages": [
+                  "fr/integrations/files/google-drive",
+                  "fr/integrations/files/sharepoint"
+                ]
+              },
+              {
                 "group": "Intégrations : SIEM, Réseau & MCP",
                 "pages": [
                   "fr/integrations/splunk-security",
@@ -1145,6 +1187,13 @@
                 ]
               },
               {
+                "group": "Integrationen: Dateien (Drive & SharePoint)",
+                "pages": [
+                  "de/integrations/files/google-drive",
+                  "de/integrations/files/sharepoint"
+                ]
+              },
+              {
                 "group": "Integrationen: SIEMs, Netzwerk & MCP",
                 "pages": [
                   "de/integrations/splunk-security",
@@ -1317,6 +1366,13 @@
                   "ko/integrations/cloud/anthropic-console",
                   "ko/integrations/cloud/azure-ai-foundry",
                   "ko/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "통합: 파일 (Drive 및 SharePoint)",
+                "pages": [
+                  "ko/integrations/files/google-drive",
+                  "ko/integrations/files/sharepoint"
                 ]
               },
               {
