@@ -242,7 +242,7 @@ Esta referência é baseada no mapeamento de bucket de back-end ativo.
 ## Provedores disponíveis
 
 - **OpenAI**
-- **Antrópico**
+- **Anthropic**
 - **Google**
 - ** Meta **
 - **Mistral**

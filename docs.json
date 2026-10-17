@@ -455,7 +455,8 @@
                   "zh/integrations/cloud/openai-platform",
                   "zh/integrations/cloud/anthropic-console",
                   "zh/integrations/cloud/azure-ai-foundry",
-                  "zh/integrations/cloud/gcp-vertex-ai"
+                  "zh/integrations/cloud/gcp-vertex-ai",
+                  "zh/integrations/cloud/vertex-ai-inference"
                 ]
               },
               {
@@ -637,7 +638,8 @@
                   "pt/integrations/cloud/openai-platform",
                   "pt/integrations/cloud/anthropic-console",
                   "pt/integrations/cloud/azure-ai-foundry",
-                  "pt/integrations/cloud/gcp-vertex-ai"
+                  "pt/integrations/cloud/gcp-vertex-ai",
+                  "pt/integrations/cloud/vertex-ai-inference"
                 ]
               },
               {
@@ -819,7 +821,8 @@
                   "ja/integrations/cloud/openai-platform",
                   "ja/integrations/cloud/anthropic-console",
                   "ja/integrations/cloud/azure-ai-foundry",
-                  "ja/integrations/cloud/gcp-vertex-ai"
+                  "ja/integrations/cloud/gcp-vertex-ai",
+                  "ja/integrations/cloud/vertex-ai-inference"
                 ]
               },
               {
@@ -1001,7 +1004,8 @@
                   "fr/integrations/cloud/openai-platform",
                   "fr/integrations/cloud/anthropic-console",
                   "fr/integrations/cloud/azure-ai-foundry",
-                  "fr/integrations/cloud/gcp-vertex-ai"
+                  "fr/integrations/cloud/gcp-vertex-ai",
+                  "fr/integrations/cloud/vertex-ai-inference"
                 ]
               },
               {
@@ -1183,7 +1187,8 @@
                   "de/integrations/cloud/openai-platform",
                   "de/integrations/cloud/anthropic-console",
                   "de/integrations/cloud/azure-ai-foundry",
-                  "de/integrations/cloud/gcp-vertex-ai"
+                  "de/integrations/cloud/gcp-vertex-ai",
+                  "de/integrations/cloud/vertex-ai-inference"
                 ]
               },
               {
@@ -1365,7 +1370,8 @@
                   "ko/integrations/cloud/openai-platform",
                   "ko/integrations/cloud/anthropic-console",
                   "ko/integrations/cloud/azure-ai-foundry",
-                  "ko/integrations/cloud/gcp-vertex-ai"
+                  "ko/integrations/cloud/gcp-vertex-ai",
+                  "ko/integrations/cloud/vertex-ai-inference"
                 ]
               },
               {

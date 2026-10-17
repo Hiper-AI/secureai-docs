@@ -1,10 +1,10 @@
 ---
 sidebar_position: 4
-title: "국민건강보험 재고"
-sidebar_label: "국민건강보험 재고"
+title: "NHI 인벤토리"
+sidebar_label: "NHI 인벤토리"
 description: "AI 에이전트 및 워크로드 뒤에 있는 비인간 ID(API 키 및 서비스 계정)를 관리하고 관리합니다."
 ---
-# NHI 재고
+# NHI 인벤토리
 
 **NHI 인벤토리**(관리자 → 에이전트 레지스트리 → **비인간 ID**)는 AI 뒤에 있는 시스템 자격 증명, 즉 에이전트, MCP 서버 및 워크로드가 사용하는 API 키, 서비스 계정 및 BYOK 키의 인벤토리입니다. 모든 [클라우드 AI 제공업체](/ko/integrations/cloud/overview) 커넥터에서 발견한 ID를 롤업하고 위험 점수를 매기고 이를 차단하거나 취소할 수 있는 제어 기능을 제공합니다.
 
@@ -30,8 +30,8 @@ description: "AI 에이전트 및 워크로드 뒤에 있는 비인간 ID(API �
 
 | 신원 유형 | 소스에서 취소 가능 | 모니터 전용 |
 |---------------|---------|-------------|
-| **API 키** | OpenAI, 인류학, GCP, Azure, AWS | — |
-| **서비스 계정/BYOK 키** | 인류학, GCP, Azure | 오픈AI, AWS |
+| **API 키** | OpenAI, Anthropic, GCP, Azure, AWS | — |
+| **서비스 계정/BYOK 키** | Anthropic, GCP, Azure | OpenAI, AWS |
 
 ## 작업
 

@@ -240,7 +240,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 ## 利用可能なプロバイダー
 
 - **OpenAI**
-- **人類学**
+- **Anthropic**
 - **Google**
 - **メタ**
 - **ミストラル**

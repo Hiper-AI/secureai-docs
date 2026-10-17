@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: "人择控制台"
-sidebar_label: "人择控制台"
+title: "Anthropic Console"
+sidebar_label: "Anthropic Console"
 description: "连接 Anthropic 控制台，以便 SecureAI 可以清点工作空间、密钥、使用情况、成本和审核活动"
 ---
 # Anthropic Console
@@ -11,7 +11,7 @@ description: "连接 Anthropic 控制台，以便 SecureAI 可以清点工作空
 ## SecureAI 导入什么
 
 - **工作空间**、使用情况和成本
-- **NHIs** — API 密钥、服务帐户和 BYOK 密钥（可撤销 — 请参阅 [NHI 库存](/zh/discovery/nhi-inventory)）
+- **NHIs** — API 密钥、服务帐户和 BYOK 密钥（可撤销 — 请参阅 [NHI 清单](/zh/discovery/nhi-inventory)）
 - **支出限制**
 - **审核日志**（企业/合规性 API）
 - **Claude Code 分析**
@@ -49,9 +49,9 @@ description: "连接 Anthropic 控制台，以便 SecureAI 可以清点工作空
 
 ## 撤销
 
-Anthropic API 密钥、服务帐户和 BYOK 密钥可从 [NHI 库存](/zh/discovery/nhi-inventory) **撤销**。
+Anthropic API 密钥、服务帐户和 BYOK 密钥可从 [NHI 清单](/zh/discovery/nhi-inventory) **撤销**。
 
 ## 相关
 
 - [云人工智能提供商概述](/zh/integrations/cloud/overview)
-- [NHI 库存](/zh/discovery/nhi-inventory)
+- [NHI 清单](/zh/discovery/nhi-inventory)

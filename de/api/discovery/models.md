@@ -240,7 +240,7 @@ Diese Referenz basiert auf der aktiven Backend-Bucket-Zuordnung.
 ## Verfügbare Anbieter
 
 - **OpenAI**
-- **Anthropisch**
+- **Anthropic**
 - **Google**
 - **Meta**
 - **Mistral**

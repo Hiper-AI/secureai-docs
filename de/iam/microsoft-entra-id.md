@@ -27,7 +27,7 @@ SecureAI akzeptiert nur Tokens, die von **Ihrem** Mandanten ausgestellt wurden: 
 
 1. Melden Sie sich als Administrator bei SecureAI an.
 2. Gehen Sie zu **Admin → Integrationen** und filtern Sie nach der Kategorie **IAM**.
-3. Klicken Sie auf der Karte **Microsoft Entra ID (SSO)** auf **Integration verbinden**.
+3. Klicken Sie auf der Karte **Microsoft Entra ID (SSO)** auf **Integration verbinden** (oder auf **Neu konfigurieren**, wenn die Karte **Configured by Hiper AI** anzeigt).
 4. Klicken Sie im Abschnitt **1. Register SecureAI in Microsoft Entra ID** neben der **Redirect URI** (Umleitungs-URI) auf **Copy**.
 
 Die URI sieht so aus (mit der Domain Ihrer Instanz):
@@ -137,10 +137,15 @@ Kehren Sie zu **Admin → Integrationen → Microsoft Entra ID (SSO)** zurück:
    | Directory (tenant) ID | Microsoft kennt diesen Mandanten nicht (`AADSTS90002`). Kopieren Sie die Verzeichnis-ID von der Seite „Übersicht“. |
    | Application (client) ID | Im Mandanten gibt es keine solche Anwendung (`AADSTS700016`). Prüfen Sie die Client-ID und ob die App im selben Mandanten liegt. |
    | Client secret | Der Schlüssel ist ungültig (`AADSTS7000215`) oder abgelaufen (`AADSTS7000222`). Fügen Sie den **Wert** ein oder erstellen Sie einen neuen Schlüssel. |
+   | Redirect URI registered on the app | Die URI aus Schritt 1 ist nicht in der App-Registrierung eingetragen (der Fehler `AADSTS50011`, den ein Benutzer bei der Anmeldung erhalten würde). Öffnen Sie in der App **Authentifizierung → Plattform hinzufügen → Web** (*Authentication → Add a platform → Web*), fügen Sie sie exakt ein und speichern Sie. |
 
    Der Test verwendet die Eingaben im Formular, Sie können also vor dem Speichern testen. Wenn Ihr Mandant eine Richtlinie für bedingten Zugriff hat, die reine App-Tokens blockiert, wird der Schlüssel möglicherweise als „could not be verified automatically“ (konnte nicht automatisch überprüft werden) angezeigt: Das ist kein Fehler – bestätigen Sie es mit einer echten Anmeldung.
 
-3. Aktivieren Sie **Show "Continue with Microsoft" on the login page** („Continue with Microsoft“ auf der Anmeldeseite anzeigen).
+   <Note>
+   Der Test bestätigt, dass die URI registriert ist, aber nicht, ob sie unter der Plattform **Web** oder unter **Single-Page-Webanwendung (SPA)** registriert wurde. Als SPA registriert, besteht sie den Test, und die Anmeldung schlägt mit „Single sign-on could not be completed“ fehl. Prüfen Sie, dass die URI unter **Authentifizierung** bei **Web** aufgeführt ist.
+   </Note>
+
+3. Prüfen Sie, dass **Show "Continue with Microsoft" on the login page** („Continue with Microsoft“ auf der Anmeldeseite anzeigen) aktiviert ist (beim ersten Mal ist es bereits aktiviert).
 4. Klicken Sie auf **Save**.
 
 Ab diesem Moment zeigt die Karte **Active on the login page** an, und die Schaltfläche **Continue with Microsoft** erscheint auf der Anmeldeseite Ihrer Instanz.
@@ -193,13 +198,13 @@ Anmeldefehler werden auf der SecureAI-Anmeldeseite angezeigt (auf Englisch):
 | "This account is not allowed to sign in here…" | Die Domain der E-Mail-Adresse ist nicht unter **Allowed email domains** eingetragen, oder das Token stammt aus einem anderen Mandanten. |
 | "This sign-in method is not enabled for your organization." | Die Integration ist deaktiviert oder unvollständig. Prüfen Sie die Karte unter Integrationen. |
 | "Your identity provider did not complete the sign-in…" | Microsoft hat einen Fehler zurückgegeben: Der Benutzer hat abgebrochen, die Administratorzustimmung fehlt (Schritt 4), oder der Benutzer ist der Anwendung nicht zugewiesen. |
-| "Single sign-on could not be completed…" | Der Codeaustausch ist fehlgeschlagen, meist weil der Schlüssel abgelaufen ist oder ersetzt wurde. Verwenden Sie **Test connection**. |
+| "Single sign-on could not be completed…" | Der Codeaustausch ist fehlgeschlagen: meist ein abgelaufener oder ersetzter Schlüssel (verwenden Sie **Test connection**) oder eine Umleitungs-URI, die als **Single-Page-Webanwendung** statt als **Web** registriert wurde (verschieben Sie sie unter **Authentifizierung** zu **Web**). |
 | "Your account is inactive…" | Das Konto ist in SecureAI deaktiviert. |
 | "The sign-in session expired or was not started from this browser…" | Es sind mehr als 10 Minuten vergangen, oder die Anmeldung wurde in einem anderen Tab/Browser gestartet. Versuchen Sie es erneut von der Anmeldeseite aus. |
 
 Von Microsoft angezeigte Fehler (vor der Rückkehr zu SecureAI):
 
-- **AADSTS50011 – Die Umleitungs-URI stimmt nicht überein**: Die in Entra ID registrierte URI entspricht nicht exakt der, die SecureAI in Schritt 1 anzeigt, oder sie wurde als „Single-Page-Webanwendung“ statt als **Web** registriert.
+- **AADSTS50011 – Die Umleitungs-URI stimmt nicht überein**: Die in Entra ID registrierte URI entspricht nicht exakt der, die SecureAI in Schritt 1 anzeigt (schon ein zusätzlicher Schrägstrich am Ende reicht, damit sie nicht übereinstimmt). **Test connection** erkennt das vor der ersten Anmeldung.
 - **AADSTS65001 / „Genehmigung durch Administrator erforderlich“** (*Need admin approval*): Erteilen Sie die Administratorzustimmung (Schritt 4).
 - **AADSTS50105 – Der angemeldete Benutzer ist keiner Rolle für die Anwendung zugewiesen**: Bei der Unternehmensanwendung ist **Zuweisung erforderlich?** (*Assignment required?*) auf **Ja** gesetzt. Weisen Sie den Benutzer oder eine Gruppe unter **Unternehmensanwendungen → SecureAI SSO → Benutzer und Gruppen** (*Enterprise applications → SecureAI SSO → Users and groups*) zu.
 - **AADSTS7000215 / AADSTS7000222**: ungültiger oder abgelaufener Schlüssel. Tragen Sie einen neuen ein.

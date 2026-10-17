@@ -13,7 +13,7 @@ SecureAI cria um inventário único e continuamente atualizado da IA em sua orga
 
 | Sinal | Vê | Alimentado por |
 |----|------|--------|
-| **APIs de nuvem** | Agentes, modelos, implantações e identidades dentro de suas plataformas de IA. | Conectores [Provedor de IA em nuvem](/pt/integrations/cloud/overview) → [Sensores de nuvem](/pt/discovery/cloud-sensors) |
+| **APIs de nuvem** | Agentes, modelos, implantações e identidades dentro de suas plataformas de IA. | Conectores [Provedor de IA em nuvem](/pt/integrations/cloud/overview) → [Sensores Cloud](/pt/discovery/cloud-sensors) |
 | **Rede / CASB** | IPs de origem corporativos chamando APIs LLM, sem nenhum agente instalado. | Conectores [CASB / SWG](/pt/integrations/casb/overview) → [Fontes de rede](/pt/discovery/network-sources) |
 | **Agente de endpoint** | Atividade de AI/MCP em laptops e servidores gerenciados. | [Agente SO](/pt/agent/overview) |
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
-title: "雲センサー"
-sidebar_label: "雲センサー"
+title: "Cloud Sensors"
+sidebar_label: "Cloud Sensors"
 description: "接続された AI クラウド プラットフォーム内で検出されたエージェントとモデルの読み取り専用インベントリ"
 ---
 # クラウドセンサー

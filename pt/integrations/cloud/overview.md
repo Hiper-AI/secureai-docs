@@ -28,7 +28,7 @@ Cada provedor segue as mesmas quatro etapas:
 <Info>
 **Onde as coisas aparecem**
 
-A **configuração** do conector fica em **Administrador → Integrações**. O **inventário** que ele produz aparece em **Admin → Registro de Agente**: agentes/modelos descobertos em [Sensores de Nuvem](/pt/discovery/cloud-sensors) e identidades descobertas em [NHI Inventário](/pt/discovery/nhi-inventory). Você pode executar novamente uma sincronização em qualquer lugar.
+A **configuração** do conector fica em **Administrador → Integrações**. O **inventário** que ele produz aparece em **Admin → Registro de Agente**: agentes/modelos descobertos em [Sensores Cloud](/pt/discovery/cloud-sensors) e identidades descobertas em [NHI Inventário](/pt/discovery/nhi-inventory). Você pode executar novamente uma sincronização em qualquer lugar.
 </Info>
 
 ## Escolhendo credenciais
@@ -42,8 +42,8 @@ Todos os segredos inseridos (segredos do cliente, JSON da conta de serviço, cha
 | Provedor | Tipo de credencial |
 |----------|-----------------|
 | [Plataforma OpenAI](/pt/integrations/cloud/openai-platform) | Chave de API do administrador da organização |
-| [Console Antrópico](/pt/integrations/cloud/anthropic-console) | Chave de API Admin (+ espaço de trabalho opcional/chaves de conformidade) |
-| [Azure AI Foundry](/pt/integrations/cloud/azure-ai-foundry) | Entrar entidade de serviço (locatário/cliente/segredo) |
+| [Anthropic Console](/pt/integrations/cloud/anthropic-console) | Chave de API Admin (+ espaço de trabalho opcional/chaves de conformidade) |
+| [Azure — Descoberta](/pt/integrations/cloud/azure-ai-foundry) | Entrar entidade de serviço (locatário/cliente/segredo) |
 | [Google Cloud — Discovery](/pt/integrations/cloud/gcp-vertex-ai) | Chave JSON da conta de serviço ou personificação sem chave |
 
 ## Relacionado

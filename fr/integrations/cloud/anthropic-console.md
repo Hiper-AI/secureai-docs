@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
-title: "Console anthropique"
-sidebar_label: "Console anthropique"
+title: "Anthropic Console"
+sidebar_label: "Anthropic Console"
 description: "Connectez la console Anthropic pour que SecureAI puisse inventorier les espaces de travail, les clés, l'utilisation, les coûts et les activités d'audit."
 ---
-# Console anthropique
+# Anthropic Console
 
 Connectez votre organisation Anthropic afin que SecureAI puisse inventorier les espaces de travail, les clés API, les comptes de service, les limites de dépenses et (sur Enterprise) le journal d'audit et les analyses Claude Code.
 

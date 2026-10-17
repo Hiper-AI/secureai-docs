@@ -6,7 +6,7 @@ description: "OpenAI, Anthropic, Azure, AWS 및 GCP AI 플랫폼을 연결하면
 ---
 # 클라우드 AI 제공업체
 
-Cloud AI Provider 커넥터를 사용하면 SecureAI가 조직에서 이미 사용하고 있는 AI 플랫폼(**OpenAI Platform, Anthropic Console, Azure AI Foundry 및 Google Vertex AI**)에 접근하고 그곳에서 실행되는 모든 항목을 자동으로 목록화할 수 있습니다. 공급자 측에는 에이전트나 SDK를 배포할 필요가 없습니다. SecureAI는 사용자가 제공하는 읽기 전용 자격 증명을 사용하여 각 공급자의 관리 API를 폴링합니다.
+Cloud AI Provider 커넥터를 사용하면 SecureAI가 조직에서 이미 사용하고 있는 AI 플랫폼(**OpenAI Platform, Anthropic Console, Azure AI Foundry 및 Google Vertex AI**)에 접근하고 그곳에서 실행되는 모든 항목을 자동으로 목록화할 수 있습니다. 공급자 측에는 에이전트나 SDK를 배포할 필요가 없습니다. SecureAI는 사용자가 제공하는 주로 읽기 권한의 자격 증명을 사용하여 각 공급자의 관리 API를 폴링합니다.
 
 연결되면 커넥터는 다음을 검색하고 지속적으로 동기화합니다.
 
@@ -42,7 +42,7 @@ Cloud AI Provider 커넥터를 사용하면 SecureAI가 조직에서 이미 사�
 |------------|----|
 | [OpenAI 플랫폼](/ko/integrations/cloud/openai-platform) | 조직 관리자 API 키 |
 | [인트로픽 콘솔](/ko/integrations/cloud/anthropic-console) | 관리 API 키(+ 선택적 작업공간/규정 준수 키) |
-| [Azure AI Foundry](/ko/integrations/cloud/azure-ai-foundry) | Entra 서비스 주체(테넌트/클라이언트/비밀) |
+| [Azure — 검색](/ko/integrations/cloud/azure-ai-foundry) | Entra 서비스 주체(테넌트/클라이언트/비밀) |
 | [Google Cloud — 디스커버리](/ko/integrations/cloud/gcp-vertex-ai) | 서비스 계정 JSON 키 또는 키 없는 가장 |
 
 ## 관련

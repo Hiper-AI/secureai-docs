@@ -27,7 +27,7 @@ SecureAI n'accepte que les jetons émis par **votre** locataire : la connexion 
 
 1. Connectez-vous à SecureAI en tant qu'administrateur.
 2. Allez dans **Admin → Intégrations** et filtrez par la catégorie **IAM**.
-3. Sur la carte **Microsoft Entra ID (SSO)**, cliquez sur **Connecter l'Intégration**.
+3. Sur la carte **Microsoft Entra ID (SSO)**, cliquez sur **Connecter l'Intégration** (ou sur **Reconfigurer**, si la carte affiche **Configured by Hiper AI**).
 4. Dans la section **1. Register SecureAI in Microsoft Entra ID**, cliquez sur **Copy** à côté de **Redirect URI** (URI de redirection).
 
 L'URI ressemble à ceci (avec le domaine de votre instance) :
@@ -137,10 +137,15 @@ Revenez dans **Admin → Intégrations → Microsoft Entra ID (SSO)** :
    | Directory (tenant) ID | Microsoft ne connaît pas ce locataire (`AADSTS90002`). Copiez l'ID de l'annuaire depuis la page Vue d'ensemble. |
    | Application (client) ID | Aucune application de ce type n'existe dans le locataire (`AADSTS700016`). Vérifiez l'ID client et que l'application se trouve dans le même locataire. |
    | Client secret | Le secret est invalide (`AADSTS7000215`) ou expiré (`AADSTS7000222`). Collez la **Valeur** ou créez-en un nouveau. |
+   | Redirect URI registered on the app | L'URI de l'étape 1 ne figure pas dans l'inscription d'application (l'erreur `AADSTS50011` qu'un utilisateur obtiendrait à la connexion). Dans l'application, ouvrez **Authentification → Ajouter une plateforme → Web** (*Authentication → Add a platform → Web*), collez-la à l'identique et enregistrez. |
 
    Le test utilise ce qui est saisi dans le formulaire : vous pouvez donc tester avant d'enregistrer. Si votre locataire dispose d'une stratégie d'accès conditionnel qui bloque les jetons d'application seule, le secret peut s'afficher comme « could not be verified automatically » (n'a pas pu être vérifié automatiquement) : ce n'est pas une erreur — confirmez avec une vraie connexion.
 
-3. Activez **Show "Continue with Microsoft" on the login page** (afficher « Continue with Microsoft » sur la page de connexion).
+   <Note>
+   Le test confirme que l'URI est enregistrée, mais pas si elle l'a été sous la plateforme **Web** ou sous **Application monopage (SPA)**. Enregistrée comme SPA, l'URI passe le test et la connexion échoue avec « Single sign-on could not be completed ». Vérifiez que, dans **Authentification**, l'URI apparaît sous **Web**.
+   </Note>
+
+3. Vérifiez que **Show "Continue with Microsoft" on the login page** (afficher « Continue with Microsoft » sur la page de connexion) est activé (il l'est par défaut la première fois).
 4. Cliquez sur **Save**.
 
 Dès lors, la carte affiche **Active on the login page**, et le bouton **Continue with Microsoft** apparaît sur la page de connexion de votre instance.
@@ -193,13 +198,13 @@ Les erreurs de connexion s'affichent sur la page de connexion de SecureAI (en an
 | "This account is not allowed to sign in here…" | Le domaine de l'adresse e-mail ne figure pas dans **Allowed email domains**, ou le jeton provient d'un autre locataire. |
 | "This sign-in method is not enabled for your organization." | L'intégration est désactivée ou incomplète. Vérifiez la carte dans Intégrations. |
 | "Your identity provider did not complete the sign-in…" | Microsoft a renvoyé une erreur : l'utilisateur a annulé, le consentement administrateur est manquant (étape 4), ou l'utilisateur n'est pas affecté à l'application. |
-| "Single sign-on could not be completed…" | L'échange de code a échoué, généralement parce que le secret a expiré ou a été remplacé. Utilisez **Test connection**. |
+| "Single sign-on could not be completed…" | L'échange de code a échoué : généralement un secret expiré ou remplacé (utilisez **Test connection**), ou l'URI de redirection enregistrée comme **Application monopage** au lieu de **Web** (déplacez-la vers **Web** dans **Authentification**). |
 | "Your account is inactive…" | Le compte est désactivé dans SecureAI. |
 | "The sign-in session expired or was not started from this browser…" | Plus de 10 minutes se sont écoulées, ou la connexion a été lancée dans un autre onglet/navigateur. Réessayez depuis la page de connexion. |
 
 Erreurs affichées par Microsoft (avant le retour vers SecureAI) :
 
-- **AADSTS50011 – L'URI de redirection ne correspond pas** : l'URI enregistrée dans Entra ID n'est pas exactement celle que SecureAI affiche à l'étape 1, ou elle a été enregistrée comme « Application monopage » au lieu de **Web**.
+- **AADSTS50011 – L'URI de redirection ne correspond pas** : l'URI enregistrée dans Entra ID n'est pas exactement celle que SecureAI affiche à l'étape 1 (une barre oblique finale en trop suffit à empêcher la correspondance). **Test connection** le détecte avant la première connexion.
 - **AADSTS65001 / « Approbation de l'administrateur nécessaire »** (*Need admin approval*) : accordez le consentement administrateur (étape 4).
 - **AADSTS50105 – L'utilisateur connecté n'est affecté à aucun rôle pour l'application** : l'application d'entreprise a l'option **Affectation obligatoire ?** (*Assignment required?*) réglée sur **Oui**. Affectez l'utilisateur ou un groupe sous **Applications d'entreprise → SecureAI SSO → Utilisateurs et groupes** (*Enterprise applications → SecureAI SSO → Users and groups*).
 - **AADSTS7000215 / AADSTS7000222** : secret invalide ou expiré. Saisissez-en un nouveau.

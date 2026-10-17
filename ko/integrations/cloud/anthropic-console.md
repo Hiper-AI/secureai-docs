@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
-title: "인류 콘솔"
-sidebar_label: "인류 콘솔"
+title: "Anthropic Console"
+sidebar_label: "Anthropic Console"
 description: "SecureAI가 작업 공간, 키, 사용량, 비용 및 감사 활동을 인벤토리화할 수 있도록 Anthropic 콘솔을 연결하세요."
 ---
-# 인류 콘솔
+# Anthropic Console
 
 SecureAI가 작업 공간, API 키, 서비스 계정, 지출 한도 및 (Enterprise의 경우) 감사 로그 및 Claude Code 분석을 인벤토리할 수 있도록 Anthropic 조직을 연결하세요.
 

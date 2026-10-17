@@ -134,7 +134,7 @@ Anthropic base URL:  https://<your-host>/api/claude-code
 
 SecureAI는 채팅 인터페이스에서 사용할 수 있는 동일한 모델 카탈로그를 공개합니다. 위의 환경 변수에 아래 표의 `id` 값을 사용하세요.
 
-### 인류학(클로드)
+### Anthropic (Claude)
 | 모델 ID | 표시 이름 |
 |---|---|
 | `anthropic/claude-sonnet-4.6` | 클로드 소네트 4.6 |

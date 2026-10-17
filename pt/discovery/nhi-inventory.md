@@ -31,8 +31,8 @@ O quanto você pode *fazer* com uma identidade depende de como ela foi descobert
 
 | Tipo de identidade | Revogável na fonte | Somente monitor |
 |---------------|---------------------|-------------|
-| **Chaves de API** | OpenAI, Antrópico, GCP, Azure, AWS | — |
-| **Contas de serviço/chaves BYOK** | Antrópico, GCP, Azure | OpenAI, AWS |
+| **Chaves de API** | OpenAI, Anthropic, GCP, Azure, AWS | — |
+| **Contas de serviço/chaves BYOK** | Anthropic, GCP, Azure | OpenAI, AWS |
 
 ## Ações
 
@@ -50,5 +50,5 @@ O varredor de governança calcula uma pontuação composta de 0 a 100 a partir d
 ## Relacionado
 
 - [Provedores de IA em nuvem](/pt/integrations/cloud/overview) — a fonte das identidades descobertas.
-- [Sensores de Nuvem](/pt/discovery/cloud-sensors)
+- [Sensores Cloud](/pt/discovery/cloud-sensors)
 - [Visão geral do inventário e descoberta de IA](/pt/discovery/overview)

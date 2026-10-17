@@ -135,7 +135,7 @@ Eso confirma que todo el tráfico se dirige a través de SecureAI.
 
 SecureAI expone el mismo catálogo de modelos disponible en la interfaz de chat. Utilice cualquier valor `id` de la siguiente tabla en las variables de entorno anteriores.
 
-### Antrópico (Claude)
+### Anthropic (Claude)
 | Identificación del modelo | Nombre para mostrar |
 |---|---|
 | `anthropic/claude-sonnet-4.6` | Claude Soneto 4.6 |

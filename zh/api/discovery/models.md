@@ -240,7 +240,7 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 ## 可用的提供商
 
 - **开放人工智能**
-- **人择**
+- **Anthropic**
 - **谷歌**
 - **元**
 - **米斯特拉尔**

@@ -5,7 +5,7 @@ sidebar_label: "Sensores Cloud"
 description: "El inventario de solo lectura de agentes y modelos descubiertos dentro de sus plataformas de nube de IA conectadas"
 ---
 
-# Sensores de nubes
+# Sensores Cloud
 
 **Sensores de nube** (Administrador → Registro de agentes → **Nube**) es el inventario de agentes, modelos e implementaciones descubiertos dentro de sus plataformas de IA en la nube conectadas: **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform y Anthropic Console**. Es de solo lectura: configura los conectores en [Integraciones](/integrations/cloud/overview) y Cloud Sensors muestra lo que encontraron.
 
@@ -25,7 +25,7 @@ Cada KPI lleva un minigráfico de 30 días creado a partir del historial de sinc
 | Columna | Descripción |
 |--------|-------------|
 | **Agente** | Nombre del agente/modelo descubierto. |
-| **Proveedor** | Azure / AWS / GCP / OpenAI / Antrópico. |
+| **Proveedor** | Azure / AWS / GCP / OpenAI / Anthropic. |
 | **Espacio de trabajo/Implementación** | Dónde vive en el proveedor. |
 | **Modelo** | Modelo subyacente. |
 | **Estado** | `observed`, `active` o `retired` (con un sufijo `· auto` cuando se retira automáticamente por descubrimiento). |

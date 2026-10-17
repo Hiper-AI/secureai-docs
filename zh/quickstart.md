@@ -55,7 +55,7 @@ description: "只需几分钟即可开始使用 SecureAI：访问平台、配置
   <Step title="连接发现和可见性源（云、CASB 和代理）">
     为了获得完整的可见性并审核组织中的 AI 使用情况，我们建议启用三个主要发现源：
 
-    - **集成云和 AI 提供商（NHI 库存）：在[云提供商](/zh/integrations/cloud/overview) 中连接 OpenAI、Anthropic、AWS 或 Azure AI 等控制台。这使您可以自动跟踪 **非人类身份 (NHIs)**、孤立 API 密钥和云消耗。**
+    - **集成云和 AI 提供商（NHI 清单）：在[云提供商](/zh/integrations/cloud/overview) 中连接 OpenAI、Anthropic、AWS 或 Azure AI 等控制台。这使您可以自动跟踪 **非人类身份 (NHIs)**、孤立 API 密钥和云消耗。**
     - **集成 CASB 和网络安全 (SWG)：连接 [Cisco Umbrella](/zh/integrations/casb/overview) 或其他代理来监控企业到外部 AI 服务的流量。**
     - **在设备上部署 SecureAI Agent：在团队计算机上安装 [SecureAI Endpoint Agent](/zh/agent/installation) 以审核本地应用程序、检测 **MCP（模型上下文协议）** 服务器和连接器、自治代理，并应用出口强制策略。**
 

@@ -6,7 +6,7 @@ description: "OpenAI、Anthropic、Azure、AWS、GCP AI プラットフォーム
 ---
 # クラウド AI プロバイダー
 
-クラウド AI プロバイダー コネクタを使用すると、SecureAI は組織がすでに使用している AI プラットフォーム (**OpenAI Platform、Anthropic Console、Azure AI Foundry、Google Vertex AI**) にアクセスし、そこで実行されているすべてのインベントリを自動的に作成できます。プロバイダー側​​にエージェントや SDK を展開する必要はありません。 SecureAI は、提供されたほとんどの読み取り資格情報を使用して各プロバイダーの管理 API をポーリングします。
+クラウド AI プロバイダー コネクタを使用すると、SecureAI は組織がすでに使用している AI プラットフォーム (**OpenAI Platform、Anthropic Console、Azure AI Foundry、Google Vertex AI**) にアクセスし、そこで実行されているすべてのインベントリを自動的に作成できます。プロバイダー側​​にエージェントや SDK を展開する必要はありません。 SecureAI は、お客様が提供する主に読み取り専用の資格情報を使用して、各プロバイダーの管理 API をポーリングします。
 
 接続されると、コネクタは以下を検出し、継続的に同期します。
 
@@ -42,7 +42,7 @@ description: "OpenAI、Anthropic、Azure、AWS、GCP AI プラットフォーム
 |----------|------|
 | [OpenAI プラットフォーム](/ja/integrations/cloud/openai-platform) |組織管理者 API キー |
 | [Anthropic コンソール](/ja/integrations/cloud/anthropic-console) |管理者 API キー (+ オプションのワークスペース/コンプライアンス キー) |
-| [Azure AI Foundry](/ja/integrations/cloud/azure-ai-foundry) | Entra サービス プリンシパル (テナント/クライアント/シークレット) |
+| [Azure — 検出](/ja/integrations/cloud/azure-ai-foundry) | Entra サービス プリンシパル (テナント/クライアント/シークレット) |
 | [Google Cloud — ディスカバリー](/ja/integrations/cloud/gcp-vertex-ai) | サービス アカウントの JSON キー、またはキーなしの権限借用 |
 
 ## 関連

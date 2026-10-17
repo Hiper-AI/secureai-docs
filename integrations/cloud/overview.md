@@ -7,7 +7,7 @@ description: "Conecte sus plataformas de IA OpenAI, Anthropic, Azure, AWS y GCP 
 
 # Proveedores de IA en la nube
 
-Los conectores de proveedor de IA en la nube permiten a SecureAI acceder a las plataformas de IA que su organización ya utiliza (**OpenAI Platform, Anthropic Console, Azure AI Foundry, Google Vertex AI y AWS Bedrock**) e inventariar automáticamente todo lo que se ejecuta allí. No es necesario implementar ningún agente o SDK en el lado del proveedor; SecureAI sondea la API de administración de cada proveedor con las credenciales de lectura mayoritaria que usted proporciona.
+Los conectores de proveedor de IA en la nube permiten a SecureAI acceder a las plataformas de IA que su organización ya utiliza (**OpenAI Platform, Anthropic Console, Azure AI Foundry, Google Vertex AI y AWS Bedrock**) e inventariar automáticamente todo lo que se ejecuta allí. No es necesario implementar ningún agente o SDK en el lado del proveedor; SecureAI sondea la API de administración de cada proveedor con las credenciales, principalmente de lectura, que usted proporciona.
 
 Una vez conectado, un conector descubre y sincroniza continuamente:
 
@@ -43,7 +43,7 @@ Todos los secretos que ingresa (secretos de cliente, JSON de cuenta de servicio,
 |----------|-----------------|
 | [Plataforma OpenAI](/integrations/cloud/openai-platform) | Clave API de administración de la organización |
 | [Anthropic Console](/integrations/cloud/anthropic-console) | Clave API de administración (+ claves opcionales de espacio de trabajo/cumplimiento) |
-| [Azure AI Foundry](/integrations/cloud/azure-ai-foundry) | Principal de servicio de entrada (inquilino/cliente/secreto) |
+| [Azure — Descubrimiento](/integrations/cloud/azure-ai-foundry) | Principal de servicio de Entra (inquilino/cliente/secreto) |
 | [Google Cloud — Descubrimiento](/integrations/cloud/gcp-vertex-ai) | Clave JSON de cuenta de servicio, o suplantación sin clave |
 | [AWS — Descubrimiento](/integrations/cloud/aws-bedrock) | Rol IAM de solo lectura con External ID (stack de CloudFormation), o access key de usuario IAM |
 

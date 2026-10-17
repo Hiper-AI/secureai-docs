@@ -27,7 +27,7 @@ SecureAI only accepts tokens issued by **your** tenant: sign-in is pinned to you
 
 1. Sign in to SecureAI as an administrator.
 2. Go to **Admin → Integrations** and filter by the **IAM** category.
-3. On the **Microsoft Entra ID (SSO)** card, click **Connect Integration**.
+3. On the **Microsoft Entra ID (SSO)** card, click **Connect Integration** (or **Reconfigure**, if the card says **Configured by Hiper AI**).
 4. In section **1. Register SecureAI in Microsoft Entra ID**, click **Copy** next to the **Redirect URI**.
 
 The URI looks like this (with your instance's domain):
@@ -137,10 +137,15 @@ Go back to **Admin → Integrations → Microsoft Entra ID (SSO)**:
    | Directory (tenant) ID | Microsoft does not know that tenant (`AADSTS90002`). Copy the Directory ID from the Overview page. |
    | Application (client) ID | No such application exists in the tenant (`AADSTS700016`). Check the client ID and that the app lives in the same tenant. |
    | Client secret | The secret is invalid (`AADSTS7000215`) or expired (`AADSTS7000222`). Paste the **Value** or create a new one. |
+   | Redirect URI registered on the app | The URI from step 1 is not on the app registration (the `AADSTS50011` error a user would get at sign-in). In the app open **Authentication → Add a platform → Web**, paste it exactly and save. |
 
    The test uses what is typed in the form, so you can test before saving. If your tenant has a Conditional Access policy that blocks app-only tokens, the secret may show as "could not be verified automatically": that is not an error — confirm with a real sign-in.
 
-3. Turn on **Show "Continue with Microsoft" on the login page**.
+   <Note>
+   The test confirms the URI is registered, but not whether it was registered under the **Web** platform or under **Single-page application (SPA)**. Registered as SPA, the test passes and sign-in fails with "Single sign-on could not be completed". Check that under **Authentication** the URI is listed under **Web**.
+   </Note>
+
+3. Check that **Show "Continue with Microsoft" on the login page** is on (it starts on the first time).
 4. Click **Save**.
 
 From then on the card shows **Active on the login page**, and the **Continue with Microsoft** button appears on your instance's login page.
@@ -193,13 +198,13 @@ Sign-in errors are shown on the SecureAI login page:
 | "This account is not allowed to sign in here…" | The email's domain is not in **Allowed email domains**, or the token came from another tenant. |
 | "This sign-in method is not enabled for your organization." | The integration is disabled or incomplete. Check the card in Integrations. |
 | "Your identity provider did not complete the sign-in…" | Microsoft returned an error: the user cancelled, admin consent is missing (step 4), or the user is not assigned to the application. |
-| "Single sign-on could not be completed…" | The code exchange failed, usually because the secret expired or was replaced. Use **Test connection**. |
+| "Single sign-on could not be completed…" | The code exchange failed: usually an expired or replaced secret (use **Test connection**), or the redirect URI registered as **Single-page application** instead of **Web** (move it to **Web** under **Authentication**). |
 | "Your account is inactive…" | The account is deactivated in SecureAI. |
 | "The sign-in session expired or was not started from this browser…" | More than 10 minutes passed, or the sign-in started in another tab/browser. Try again from the login page. |
 
 Errors shown by Microsoft (before returning to SecureAI):
 
-- **AADSTS50011 – The redirect URI does not match**: the URI registered in Entra ID is not exactly the one SecureAI shows in step 1, or it was registered as "Single-page application" instead of **Web**.
+- **AADSTS50011 – The redirect URI does not match**: the URI registered in Entra ID is not exactly the one SecureAI shows in step 1 (one extra trailing slash is enough to break the match). **Test connection** catches it before the first sign-in.
 - **AADSTS65001 / "Need admin approval"**: grant admin consent (step 4).
 - **AADSTS50105 – The signed in user is not assigned to a role for the application**: the enterprise application has **Assignment required?** set to **Yes**. Assign the user or a group under **Enterprise applications → SecureAI SSO → Users and groups**.
 - **AADSTS7000215 / AADSTS7000222**: invalid or expired secret. Enter a new one.

@@ -31,7 +31,7 @@ Wie viel Sie mit einer Identität *tun* können, hängt davon ab, wie sie entdec
 | Identitätstyp | Widerruflich an der Quelle | Nur Monitor |
 |---------------|------|--------------|
 | **API-Schlüssel** | OpenAI, Anthropic, GCP, Azure, AWS | — |
-| **Dienstkonten/BYOK-Schlüssel** | Anthropisch, GCP, Azure | OpenAI, AWS |
+| **Dienstkonten/BYOK-Schlüssel** | Anthropic, GCP, Azure | OpenAI, AWS |
 
 ## Aktionen
 
