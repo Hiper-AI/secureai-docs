@@ -31,8 +31,8 @@ O quanto você pode *fazer* com uma identidade depende de como ela foi descobert
 
 | Tipo de identidade | Revogável na fonte | Somente monitor |
 |---------------|---------------------|-------------|
-| **Chaves de API** | OpenAI, Antrópico, GCP, Azure, AWS | — |
-| **Contas de serviço/chaves BYOK** | Antrópico, GCP, Azure | OpenAI, AWS |
+| **Chaves de API** | OpenAI, Anthropic, GCP, Azure, AWS | — |
+| **Contas de serviço/chaves BYOK** | Anthropic, GCP, Azure | OpenAI, AWS |
 
 ## Ações
 

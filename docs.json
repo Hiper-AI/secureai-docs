@@ -83,7 +83,17 @@
                   "integrations/cloud/anthropic-console",
                   "integrations/cloud/azure-ai-foundry",
                   "integrations/cloud/gcp-vertex-ai",
-                  "integrations/cloud/vertex-ai-inference"
+                  "integrations/cloud/aws-bedrock",
+                  "integrations/cloud/vertex-ai-inference",
+                  "integrations/cloud/azure-ai-foundry-inference",
+                  "integrations/cloud/aws-bedrock-inference"
+                ]
+              },
+              {
+                "group": "Integraciones: Archivos (Drive y SharePoint)",
+                "pages": [
+                  "integrations/files/google-drive",
+                  "integrations/files/sharepoint"
                 ]
               },
               {
@@ -260,7 +270,17 @@
                   "en/integrations/cloud/anthropic-console",
                   "en/integrations/cloud/azure-ai-foundry",
                   "en/integrations/cloud/gcp-vertex-ai",
-                  "en/integrations/cloud/vertex-ai-inference"
+                  "en/integrations/cloud/aws-bedrock",
+                  "en/integrations/cloud/vertex-ai-inference",
+                  "en/integrations/cloud/azure-ai-foundry-inference",
+                  "en/integrations/cloud/aws-bedrock-inference"
+                ]
+              },
+              {
+                "group": "Integrations: Files (Drive & SharePoint)",
+                "pages": [
+                  "en/integrations/files/google-drive",
+                  "en/integrations/files/sharepoint"
                 ]
               },
               {
@@ -435,7 +455,15 @@
                   "zh/integrations/cloud/openai-platform",
                   "zh/integrations/cloud/anthropic-console",
                   "zh/integrations/cloud/azure-ai-foundry",
-                  "zh/integrations/cloud/gcp-vertex-ai"
+                  "zh/integrations/cloud/gcp-vertex-ai",
+                  "zh/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "集成：文件（Drive 和 SharePoint）",
+                "pages": [
+                  "zh/integrations/files/google-drive",
+                  "zh/integrations/files/sharepoint"
                 ]
               },
               {
@@ -610,7 +638,15 @@
                   "pt/integrations/cloud/openai-platform",
                   "pt/integrations/cloud/anthropic-console",
                   "pt/integrations/cloud/azure-ai-foundry",
-                  "pt/integrations/cloud/gcp-vertex-ai"
+                  "pt/integrations/cloud/gcp-vertex-ai",
+                  "pt/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "Integrações: Arquivos (Drive e SharePoint)",
+                "pages": [
+                  "pt/integrations/files/google-drive",
+                  "pt/integrations/files/sharepoint"
                 ]
               },
               {
@@ -785,7 +821,15 @@
                   "ja/integrations/cloud/openai-platform",
                   "ja/integrations/cloud/anthropic-console",
                   "ja/integrations/cloud/azure-ai-foundry",
-                  "ja/integrations/cloud/gcp-vertex-ai"
+                  "ja/integrations/cloud/gcp-vertex-ai",
+                  "ja/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "統合: ファイル (Drive と SharePoint)",
+                "pages": [
+                  "ja/integrations/files/google-drive",
+                  "ja/integrations/files/sharepoint"
                 ]
               },
               {
@@ -960,7 +1004,15 @@
                   "fr/integrations/cloud/openai-platform",
                   "fr/integrations/cloud/anthropic-console",
                   "fr/integrations/cloud/azure-ai-foundry",
-                  "fr/integrations/cloud/gcp-vertex-ai"
+                  "fr/integrations/cloud/gcp-vertex-ai",
+                  "fr/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "Intégrations : Fichiers (Drive et SharePoint)",
+                "pages": [
+                  "fr/integrations/files/google-drive",
+                  "fr/integrations/files/sharepoint"
                 ]
               },
               {
@@ -1135,7 +1187,15 @@
                   "de/integrations/cloud/openai-platform",
                   "de/integrations/cloud/anthropic-console",
                   "de/integrations/cloud/azure-ai-foundry",
-                  "de/integrations/cloud/gcp-vertex-ai"
+                  "de/integrations/cloud/gcp-vertex-ai",
+                  "de/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "Integrationen: Dateien (Drive & SharePoint)",
+                "pages": [
+                  "de/integrations/files/google-drive",
+                  "de/integrations/files/sharepoint"
                 ]
               },
               {
@@ -1310,7 +1370,15 @@
                   "ko/integrations/cloud/openai-platform",
                   "ko/integrations/cloud/anthropic-console",
                   "ko/integrations/cloud/azure-ai-foundry",
-                  "ko/integrations/cloud/gcp-vertex-ai"
+                  "ko/integrations/cloud/gcp-vertex-ai",
+                  "ko/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "통합: 파일 (Drive 및 SharePoint)",
+                "pages": [
+                  "ko/integrations/files/google-drive",
+                  "ko/integrations/files/sharepoint"
                 ]
               },
               {

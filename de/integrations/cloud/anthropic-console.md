@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
-title: "Anthropische Konsole"
-sidebar_label: "Anthropische Konsole"
+title: "Anthropic Console"
+sidebar_label: "Anthropic Console"
 description: "Verbinden Sie die Anthropic Console, damit SecureAI Arbeitsbereiche, Schlüssel, Nutzung, Kosten und Prüfaktivitäten inventarisieren kann"
 ---
-# Anthropische Konsole
+# Anthropic Console
 
 Verbinden Sie Ihre Anthropic-Organisation, damit SecureAI Arbeitsbereiche, API-Schlüssel, Dienstkonten, Ausgabenlimits und (auf Enterprise) das Audit-Protokoll und die Claude-Code-Analysen inventarisieren kann.
 

@@ -242,7 +242,7 @@ Esta referencia se basa en la asignación de depósitos de backend activos.
 ## Proveedores disponibles
 
 - **AI abierta**
-- **Antrópico**
+- **Anthropic**
 - **Google**
 - **Meta**
 - **Mistral**

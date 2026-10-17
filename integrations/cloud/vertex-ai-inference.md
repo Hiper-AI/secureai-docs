@@ -28,16 +28,32 @@ SecureAI sigue en el camino de cada solicitud: **DLP, políticas de modelos, res
 
 Modelos disponibles hoy: **Gemini** y los modelos abiertos servidos como MaaS en Vertex (**gpt-oss, DeepSeek, Llama y Qwen**). **Claude y Mistral en Vertex todavía no están soportados**; esos modelos se atienden según la configuración de fallback (ver más abajo).
 
+## Cuántos proveedores de nube puede usar
+
+| Plan | Proveedores de inferencia habilitados al mismo tiempo |
+|------|-------------------------------------------------------|
+| **Scale** | 1 (Google Vertex AI, Azure AI Foundry **o** Amazon Bedrock) |
+| **Enterprise** | Hasta 3, por ejemplo Vertex AI para Gemini, Foundry para GPT y Bedrock para Claude |
+
+Con más de un proveedor habilitado, cada uno atiende familias de modelos **distintas**: una familia solo puede tomarla un proveedor activo, y solo un proveedor puede estar en **Remapear todo**. Al guardar la integración encendida, SecureAI la rechaza en dos casos y lo explica en el panel:
+
+| Caso | Mensaje del panel |
+|------|-------------------|
+| El enrutamiento se superpone con otro proveedor activo (una familia que ya toma otro, o un segundo **Remapear todo**) | *Este enrutamiento se superpone con otro proveedor de nube activo: …*, seguido de la familia o el modo que colisiona. |
+| Su plan no admite otro proveedor habilitado | *Alcanzaste el límite de proveedores de nube propios de tu plan (… de … en uso). Desactivá otro proveedor o mejorá el plan.* |
+
 ## Requisitos previos
 
 - Un **proyecto de Google Cloud** con facturación activa.
-- La **Agent Platform API** habilitada en ese proyecto (el servicio `aiplatform.googleapis.com`).
-- Una **cuenta de servicio** de su proyecto con el rol **Agent Platform User** (`roles/aiplatform.user`) y una **clave JSON** de esa cuenta.
+- La **Agent Platform API (Vertex AI API)** habilitada en ese proyecto (el servicio `aiplatform.googleapis.com`).
+- Una **cuenta de servicio** de su proyecto con el rol **Agent Platform User** (`roles/aiplatform.user`), y una de estas dos formas de que SecureAI actúe con ella:
+  - **Opción A — clave JSON** de esa cuenta de servicio.
+  - **Opción B — sin clave (impersonación)**: usted le otorga a la cuenta de servicio de SecureAI que muestra el panel el rol **Service Account Token Creator** (`roles/iam.serviceAccountTokenCreator`) sobre su cuenta de servicio, y no se guarda ninguna clave. Esta opción está disponible solo si su despliegue de SecureAI la ofrece; si no, el panel la muestra deshabilitada con el aviso *El acceso sin clave no está habilitado en este despliegue.*
 - Permiso de **administrador** en la sección Integraciones de SecureAI. Con permiso de lectura puede ver la configuración pero no cambiarla.
 
 ## Paso 1. Prepare el proyecto en Google Cloud
 
-Puede hacerlo con la línea de comandos (rápido) o desde la consola (con capturas).
+Puede hacerlo con la línea de comandos (rápido) o desde la consola (con capturas). Los pasos 1 a 3 son iguales para las dos opciones de autenticación; el paso 4 (la clave JSON) es solo para la opción A.
 
 <Tabs>
 <Tab title="gcloud (Cloud Shell)">
@@ -47,7 +63,7 @@ Desde [Cloud Shell](https://shell.cloud.google.com/) o con `gcloud` instalado. R
 ```bash
 gcloud config set project MI_PROYECTO
 
-# 1. Habilitar la Agent Platform API
+# 1. Habilitar la Agent Platform API (Vertex AI API)
 gcloud services enable aiplatform.googleapis.com
 
 # 2. Crear una cuenta de servicio dedicada para SecureAI
@@ -58,7 +74,7 @@ gcloud projects add-iam-policy-binding MI_PROYECTO \
   --member="serviceAccount:secureai-vertex@MI_PROYECTO.iam.gserviceaccount.com" \
   --role="roles/aiplatform.user"
 
-# 4. Generar la clave JSON
+# 4. Solo opción A: generar la clave JSON
 gcloud iam service-accounts keys create key.json \
   --iam-account=secureai-vertex@MI_PROYECTO.iam.gserviceaccount.com
 ```
@@ -66,7 +82,7 @@ gcloud iam service-accounts keys create key.json \
 </Tab>
 <Tab title="Consola de Google Cloud">
 
-1. En la [consola de Google Cloud](https://console.cloud.google.com/), seleccione su proyecto y abra **APIs y servicios → Biblioteca**. Busque **Agent Platform API** y haga clic en **Habilitar**. Si ya figura como **API habilitada**, no hace falta hacer nada.
+1. En la [consola de Google Cloud](https://console.cloud.google.com/), seleccione su proyecto y abra **APIs y servicios → Biblioteca**. Busque **Agent Platform API** (antes **Vertex AI API**) y haga clic en **Habilitar**. Si ya figura como **API habilitada**, no hace falta hacer nada.
 
    <div class="mac-window">
    ![Agent Platform API habilitada en Google Cloud](/img/cloud/vertex-ai-inference/1%20-%20Vertex%20AI%20Inference.png)
@@ -84,7 +100,7 @@ gcloud iam service-accounts keys create key.json \
    ![Asignar el rol Agent Platform User](/img/cloud/vertex-ai-inference/3%20-%20Vertex%20AI%20Inference.png)
    </div>
 
-4. Abra la cuenta de servicio, vaya a la pestaña **Claves → Agregar clave → Crear clave nueva**, elija el tipo **JSON** y haga clic en **Crear**. El archivo se descarga una sola vez.
+4. **Solo opción A.** Abra la cuenta de servicio, vaya a la pestaña **Claves → Agregar clave → Crear clave nueva**, elija el tipo **JSON** y haga clic en **Crear**. El archivo se descarga una sola vez.
 
    <div class="mac-window">
    ![Crear la clave JSON](/img/cloud/vertex-ai-inference/4%20-%20Vertex%20AI%20Inference.png)
@@ -98,8 +114,23 @@ Trate el archivo JSON como una contraseña. SecureAI lo guarda **cifrado** y no 
 </Warning>
 
 <Warning>
-**Si no puede crear la clave.** Si el paso 4 falla con `iam.disableServiceAccountKeyCreation`, la política de su organización de Google Cloud prohíbe las claves de cuenta de servicio (es el valor por defecto en organizaciones nuevas). Esta integración necesita la clave JSON, así que un administrador de políticas de la organización debe permitir la creación de claves para ese proyecto (restricción `iam.disableServiceAccountKeyCreation`) antes de continuar.
+**Si no puede crear la clave.** Si el paso 4 falla con `iam.disableServiceAccountKeyCreation`, la política de su organización de Google Cloud prohíbe las claves de cuenta de servicio (es el valor por defecto en organizaciones nuevas). Use la **opción B, sin clave**, si su despliegue la ofrece; si no, pida a un administrador de políticas de la organización una excepción a la restricción `iam.disableServiceAccountKeyCreation` para ese proyecto.
 </Warning>
+
+### Opción B: autorice a SecureAI sin clave
+
+Con la opción B no se crea ninguna clave. En su lugar:
+
+1. En SecureAI, abra el panel de Vertex AI (vea el paso 2), elija **Sin clave (impersonación)** e ingrese el email de su cuenta de servicio en **Tu service account a impersonar**.
+2. El panel muestra el comando que hay que ejecutar, ya completo con la cuenta de servicio de SecureAI de su despliegue. Cópielo con **Copiar** y ejecútelo en Cloud Shell. Tiene esta forma:
+
+   ```bash
+   gcloud iam service-accounts add-iam-policy-binding secureai-vertex@MI_PROYECTO.iam.gserviceaccount.com \
+     --member="serviceAccount:CUENTA_DE_SECUREAI" \
+     --role="roles/iam.serviceAccountTokenCreator"
+   ```
+
+   El rol se otorga **sobre su cuenta de servicio**, no sobre el proyecto: SecureAI solo puede actuar como esa cuenta, que a su vez solo tiene `roles/aiplatform.user`.
 
 ### Modelos abiertos (Llama, DeepSeek, Qwen, gpt-oss)
 
@@ -113,8 +144,8 @@ Trate el archivo JSON como una contraseña. SecureAI lo guarda **cifrado** y no 
    | Campo | Qué ingresar |
    |-------|--------------|
    | **ID del proyecto de Google Cloud** | El ID del proyecto (por ejemplo `mi-proyecto-123`), no el nombre. |
-   | **Ubicación de Vertex AI** | Para empezar deje `global`: es donde están los Gemini 3 *preview* de los modelos por defecto. Si necesita **residencia de datos**, ponga una región (`us-central1`, `europe-west4`…): fija **dónde se procesan los prompts**, mientras que `global` deja que Google elija y no la garantiza. Los modelos abiertos necesitan una región. |
-   | **Autenticación** | Deje seleccionada **Clave de service account (JSON)** y pegue el contenido **completo** de `key.json`. |
+   | **Ubicación de Vertex AI** | Para empezar deje `global`: es donde están los Gemini 3 *preview* de los modelos por defecto. Si necesita **residencia de datos**, ponga una región (`us-central1`, `europe-west4`…): SecureAI envía cada solicitud al endpoint regional elegido, y dónde la procesa Google depende de sus compromisos de residencia de datos. Con `global`, Google elige la región. Los modelos abiertos necesitan una región. |
+   | **Autenticación** | **Opción A:** deje seleccionada **Clave de service account (JSON)** y pegue el contenido **completo** de `key.json` en **JSON de la clave de service account**. **Opción B:** elija **Sin clave (impersonación)**, ingrese el email de su cuenta de servicio en **Tu service account a impersonar** y ejecute el comando que muestra el panel (vea **Opción B: autorice a SecureAI sin clave**, más arriba). |
 
    <div class="mac-window">
    ![Sección Conexión del panel de Vertex AI](/img/cloud/vertex-ai-inference/5%20-%20Vertex%20AI%20Inference.png)
@@ -123,11 +154,11 @@ Trate el archivo JSON como una contraseña. SecureAI lo guarda **cifrado** y no 
 3. Haga clic en **Guardar**. Todavía **no** se enruta tráfico: la integración se guarda apagada para que pueda probarla antes.
 
 <Info>
-**Recomendación para el primer día:** deje el modo **Solo estas familias de modelos** con solo **Gemini**, los modelos por defecto sin cambios y el fallback y las cuotas apagados. Es lo más predecible. Deje **Remapear todo** para cuando esto ya esté validado.
+**Recomendación para el primer día:** deje el modo **Solo estas familias de modelos** con solo **Gemini**, los modelos por defecto sin cambios, y apagados el fallback y el tope de gasto por asiento. Es lo más predecible. Deje **Remapear todo** para cuando esto ya esté validado.
 </Info>
 
 <Info>
-La clave pegada nunca vuelve a mostrarse. Para reemplazarla, pegue una nueva; si deja el campo vacío al guardar, se conserva la actual.
+Con la opción A, la clave pegada nunca vuelve a mostrarse. Para reemplazarla, pegue una nueva; si deja el campo vacío al guardar, se conserva la actual.
 </Info>
 
 ## Paso 3. Elija qué corre en Vertex
@@ -151,7 +182,7 @@ Además hay dos opciones:
 | Opción | Apagada (recomendado) | Encendida |
 |--------|----------------------|-----------|
 | **Permitir fallback a modelos administrados por SecureAI** | Si Vertex falla o un modelo no tiene equivalente, la solicitud se **rechaza** en lugar de enviarse a otro proveedor. | Esas solicitudes se reintentan **una vez** en proveedores administrados por SecureAI. El reintento queda auditado. |
-| **Aplicar cuotas de puntos de usuario al uso de Vertex** | El uso de Vertex no consume los puntos de los usuarios. | Se mantienen los límites de puntos por usuario también para Vertex. |
+| **Aplicar el tope de gasto de cada asiento a los turnos servidos en tu cuenta** | Los turnos servidos en su Vertex no cuentan contra el tope de gasto del asiento de cada usuario. | Esos turnos cuentan contra el tope de gasto del asiento (el mensual y el de ráfaga de 4 horas), a precio de lista, igual que los turnos que sirve SecureAI. |
 
 <div class="mac-window">
 
@@ -174,6 +205,17 @@ Los modelos disponibles dependen de la **ubicación**. Los modelos por defecto (
 
 3. Si algún modelo falla, el panel indica el motivo. Consulte la sección **Solución de problemas** al final de esta página.
 
+### Qué más puede hacer la identidad
+
+La prueba también verifica qué más puede hacer la identidad de la conexión en el proyecto, con `projects:testIamPermissions` y el mismo token del carril: no hace falta ningún rol extra y no cambia nada. El panel muestra uno de estos avisos:
+
+| Aviso del panel | Qué significa |
+|-----------------|---------------|
+| *Permisos: roles/aiplatform.user — puede llamar a modelos y también desplegar o borrar recursos de Vertex AI, y ninguno de los permisos fuera de IA que SecureAI verifica.* | Es lo esperado con `roles/aiplatform.user`. |
+| *Mínimo privilegio: esta identidad puede llamar a modelos y nada más de lo que SecureAI verificó.* | Ni siquiera tiene los permisos de despliegue de `roles/aiplatform.user` (por ejemplo, un rol personalizado). |
+| *Esta identidad puede hacer mucho más que llamar a modelos: …* (advertencia, con la lista de permisos) | Tiene permisos fuera de IA, por ejemplo cambiar la política de IAM, crear claves de cuentas de servicio o leer datos de Storage, BigQuery o Secret Manager. El registro de actividad guarda la prueba como advertencia. Déle a la cuenta de servicio solo `roles/aiplatform.user`. |
+| *No se pudo verificar qué más puede hacer esta identidad en el proyecto …* | Google no respondió; por ejemplo, la API de Cloud Resource Manager está deshabilitada. |
+
 <Info>
 La prueba envía unas pocas solicitudes de un token y **se factura a su cuenta de Google** (centavos).
 </Info>
@@ -181,7 +223,7 @@ La prueba envía unas pocas solicitudes de un token y **se factura a su cuenta d
 ## Paso 5. Revise el enrutamiento y active
 
 1. Abra **Vista previa del enrutamiento → Ver qué carril sirve cada modelo**. Muestra, para cada modelo del catálogo, si lo servirá **su Vertex** (y con qué modelo de Vertex) o **SecureAI**, y cuáles quedarán **ocultos para los usuarios**. La vista previa simula la integración encendida, así que puede revisar el efecto antes de activarla.
-2. Cuando la prueba pase, encienda **Enrutar tráfico a Vertex AI** y haga clic en **Guardar** otra vez. **Si no guarda, el interruptor no queda activo.** Para activarla se exige tener el proyecto y una credencial configurados.
+2. Cuando la prueba pase, encienda **Enrutar tráfico a Vertex AI** y haga clic en **Guardar** otra vez. **Si no guarda, el interruptor no queda activo.** Para activarla se exige tener el proyecto y una credencial configurados. Si su plan no admite otro proveedor de nube o el enrutamiento se superpone con otro, SecureAI lo rechaza y explica por qué (vea **Cuántos proveedores de nube puede usar**, más arriba).
 
    <div class="mac-window">
    ![Interruptor Enrutar tráfico a Vertex AI activado](/img/cloud/vertex-ai-inference/8%20-%20Vertex%20AI%20Inference.png)
@@ -206,22 +248,27 @@ En el modo **Remapear todo** sin fallback, el selector **solo ofrece** los model
 
 - **El consumo de LLM lo factura Google a su cuenta**, no SecureAI. Verá el cargo en su facturación de Google Cloud, con sus descuentos y CUDs aplicados.
 - SecureAI muestra el costo de los turnos servidos en Vertex como una **estimación a precio de lista** solo para analítica. Es una referencia: **no incluye** sus descuentos, así que la cifra real de Google puede ser menor.
-- Los turnos en Vertex **no descuentan puntos** de los usuarios, salvo que active **Aplicar cuotas de puntos de usuario**.
+- Los turnos servidos en su Vertex **no cuentan contra el tope de gasto del asiento** de cada usuario, salvo que active **Aplicar el tope de gasto de cada asiento a los turnos servidos en tu cuenta**. El **nivel del asiento** se aplica igual: un usuario solo puede usar modelos de su nivel o inferiores, aunque los sirva su Vertex.
+- Un asiento **Govern BYO** solo puede usar modelos servidos en la infraestructura de su organización: los que atiende su Vertex (u otro proveedor de nube conectado) y los modelos autoalojados en sus servidores. Cualquier otro modelo se rechaza, y el selector no le ofrece **Auto**.
 
 ## Seguridad y cumplimiento
 
-- **Credenciales cifradas.** La clave de la cuenta de servicio se guarda cifrada (AES-256-GCM) y nunca se devuelve al navegador, ni siquiera a un administrador. La pantalla solo muestra el correo de la cuenta.
+- **Credenciales cifradas, o ninguna.** Con la opción A, la clave de la cuenta de servicio se guarda cifrada (AES-256-GCM) y nunca se devuelve al navegador, ni siquiera a un administrador; la pantalla solo muestra el correo de la cuenta. Con la opción B no se guarda ninguna clave: SecureAI le pide a Google tokens de corta duración que actúan como su cuenta de servicio.
 - **El camino sigue protegido.** Cada llamada pasa por el gateway SMLTP de SecureAI: DLP, token de autorización firmado por solicitud y **recibo firmado** verificable.
-- **Residencia de datos.** Con una región fija (por ejemplo `europe-west4`), los prompts se procesan en esa región y se aplican las políticas de residencia de su organización.
+- **Residencia de datos.** Con una región fija (por ejemplo `europe-west4`), SecureAI envía cada solicitud al endpoint regional de esa región y aplica las políticas de residencia de su organización. Dónde procesa Google la solicitud depende de sus compromisos de residencia de datos.
 - **Falla cerrado.** Si no se puede leer la configuración o obtener el token de Google, la solicitud se rechaza; no se envía a otro proveedor salvo que usted haya permitido el fallback.
 - **Auditoría.** Guardar, probar o desconectar la integración queda en el registro de actividad, con los nombres de los campos cambiados y nunca con la clave.
+- **Mínimo privilegio a la vista.** La prueba de conexión verifica qué más puede hacer la identidad de la conexión en el proyecto y advierte si tiene permisos fuera de IA (vea **Qué más puede hacer la identidad**, en el paso 4).
 - **Permisos mínimos.** Para inferencia basta `roles/aiplatform.user`; la integración no necesita leer su IAM ni su facturación.
 
 ## Desconectar
 
 **Desconectar** (pie del panel) elimina la configuración y la clave guardada. Desde ese momento, **todo el tráfico vuelve a los proveedores administrados por SecureAI**. También puede apagar solo el interruptor **Enrutar tráfico a Vertex AI** para pausar el enrutamiento conservando la conexión.
 
-Si dejó de usar la clave, **revóquela también en Google Cloud** (Cuentas de servicio → Claves).
+Después, retire también el acceso en Google Cloud:
+
+- **Opción A:** si dejó de usar la clave, **revóquela** (Cuentas de servicio → Claves).
+- **Opción B:** quite el rol `roles/iam.serviceAccountTokenCreator` que le otorgó a la cuenta de servicio de SecureAI sobre su cuenta de servicio (Cuentas de servicio → su cuenta → **Permisos**).
 
 ## Solución de problemas
 
@@ -229,34 +276,38 @@ Estos son los motivos que muestra **Probar conexión**:
 
 | Motivo | Causa probable | Qué hacer |
 |--------|----------------|-----------|
-| Credencial rechazada o no utilizable | JSON incompleto o inválido, o clave revocada | Vuelva a pegar el JSON completo o genere una clave nueva. |
+| Credencial rechazada o no utilizable | JSON incompleto o inválido, o clave revocada. Sin clave: la cuenta de SecureAI no tiene `roles/iam.serviceAccountTokenCreator` sobre su cuenta de servicio, o el email está mal escrito | Vuelva a pegar el JSON completo o genere una clave nueva. Sin clave: ejecute el comando que muestra el panel y revise el email. |
 | No autenticado | Google rechazó el token | Verifique que la cuenta de servicio exista y esté activa. |
-| La API de Vertex AI no está habilitada en el proyecto | Falta el paso 1.1 | Habilite la **Agent Platform API** (`aiplatform.googleapis.com`) en el proyecto. |
+| La API de Vertex AI no está habilitada en el proyecto | Falta el paso 1.1 | Habilite la **Agent Platform API (Vertex AI API)** (`aiplatform.googleapis.com`) en el proyecto. |
 | Falta roles/aiplatform.user | Permiso insuficiente | Otorgue el rol **Agent Platform User** (`roles/aiplatform.user`) a la cuenta de servicio en ese proyecto. |
 | Modelo no disponible en esta ubicación | El modelo no existe en la región elegida, o es un modelo abierto cuyos términos no se aceptaron en Model Garden | Cambie la región o ese modelo por defecto; para modelos abiertos, acepte los términos en Model Garden. |
 | Cuota excedida | Cuota de Vertex agotada | Revise las cuotas del proyecto o pida un aumento a Google. |
 | Google devolvió un error | Falla del lado de Google | Reintente; si persiste, revise el estado de Google Cloud. |
 | Bloqueado por tu política de modelos SMLTP | La política de SecureAI no permite el modelo | Agregue el modelo a la política permitida. |
 | Gateway SMLTP de Vertex inaccesible / Error TLS | Problema de infraestructura de SecureAI | Contacte a soporte. No depende de su proyecto de Google. |
+| Error inesperado | Una falla que SecureAI no pudo clasificar | Reintente. Si persiste, contacte a soporte con el mensaje que muestra el panel. |
+| No hay modelos por defecto configurados | Los cuatro modelos por defecto están vacíos, así que no hay nada que probar | Complete al menos uno en **Modelos de Vertex por defecto**, guarde y vuelva a probar. |
 
 Errores que pueden ver los usuarios en el chat:
 
 | Código | Significado |
 |--------|-------------|
 | `SAI-VERTEX-001` | El modelo elegido no tiene equivalente en Vertex y el fallback está apagado. Elija otro modelo, o permita el fallback. |
-| `SAI-VERTEX-002` | No se pudo obtener el acceso a Google (clave inválida o revocada). Renueve la credencial. |
+| `SAI-VERTEX-002` | No se pudo obtener el acceso a Google (clave inválida o revocada o, sin clave, permiso de impersonación retirado). Renueve la credencial. |
 | `SAI-VERTEX-005` | No se pudo leer la configuración y se rechazó por seguridad. Reintente en unos segundos. |
 
 ## Limitaciones actuales
 
 - **Claude y Mistral en Vertex** no están soportados (usan una API distinta).
 - **Embeddings, re-ranking, OCR, asistente de administración, generación de imágenes y voz en tiempo real** siguen en proveedores administrados por SecureAI.
-- **Una sola conexión** por organización (un proyecto y una ubicación a la vez).
-- La autenticación es **solo con clave JSON** de cuenta de servicio.
+- **Un solo proyecto y una sola ubicación de Vertex** por organización.
+- La cantidad de proveedores de inferencia que puede habilitar a la vez depende del plan (Scale: 1, Enterprise: hasta 3). Consulte [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference) y [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference).
 - El proxy de **Claude Code** usa Anthropic de forma directa y no pasa por Vertex.
 
 ## Relacionado
 
 - [Google Cloud — Descubrimiento](/integrations/cloud/gcp-vertex-ai) — inventario de agentes, modelos, identidades y costos del proyecto.
+- [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference)
+- [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference)
 - [Descripción general de los proveedores de IA en la nube](/integrations/cloud/overview)
 - [Recibos firmados](/api/receipts)
