@@ -43,6 +43,6 @@ As contas de usuário são provisionadas sob níveis de licença organizacional:
 
 ## Tarefas Administrativas Comuns
 
-- **Crie um usuário**: Vá para **Admin ? Usuários ? Criar usuário**. Defina e-mail, função e nível de licença.
-- **Atribuir a grupos**: Navegue até **Admin ? Grupos** para organizar usuários em equipes colaborativas com índices de grupo compartilhados.
-- **Configurar SSO**: conecte seu provedor de identidade empresarial (Google Workspace ou Microsoft Entra ID) nas configurações de **Autenticação**.
+- **Crie um usuário**: Vá para **Admin → Gestao IAM → Gerenciamento de usuários → Adicionar usuário**. Defina e-mail, função e nível de licença.
+- **Atribuir a grupos**: Navegue até **Admin → Gestao IAM → Gerenciamento de grupos** para organizar usuários em equipes colaborativas com índices de grupo compartilhados.
+- **Configurar SSO**: conecte seu provedor de identidade empresarial em **Admin → Integrações → IAM**. A configuração é self-service: consulte [Google Workspace (SSO)](/pt/iam/google-workspace) e [Microsoft Entra ID (SSO)](/pt/iam/microsoft-entra-id).
