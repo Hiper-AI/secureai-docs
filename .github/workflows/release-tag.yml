@@ -1,0 +1,53 @@
+name: Release tag
+
+# Numeración automática de versiones (CalVer): cada push a main crea el tag vAA.MM.DD (o vAA.MM.DD.N si ese día
+# ya hubo otro) y su GitHub Release. release/beta y features-qa no se versionan. Mismo esquema que Hiper-AI/secureai;
+# la lógica vive en scripts/release/nextTag.mjs.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+# Dos promociones seguidas no se pisan: la segunda ve el tag de la primera.
+concurrency:
+  group: release-tag
+  cancel-in-progress: false
+
+jobs:
+  release-tag:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # todos los tags: nextTag.mjs los lee para numerar
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Compute next tag
+        id: next
+        run: |
+          node scripts/release/nextTag.mjs | tee next.json
+          echo "tag=$(jq -r '.tag // empty' next.json)" >> "$GITHUB_OUTPUT"
+          echo "notes_start=$(jq -r '.notesStartTag // empty' next.json)" >> "$GITHUB_OUTPUT"
+          echo "reason=$(jq -r '.reason' next.json)" >> "$GITHUB_OUTPUT"
+      - name: Tag and publish the release
+        if: ${{ steps.next.outputs.tag != '' }}
+        env:
+          TAG: ${{ steps.next.outputs.tag }}
+          NOTES_START: ${{ steps.next.outputs.notes_start }}
+          REASON: ${{ steps.next.outputs.reason }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "$TAG ($REASON)" "$SHA"
+          git push origin "refs/tags/$TAG"
+          FLAGS=(--verify-tag --title "$TAG" --generate-notes --latest)
+          [ -n "$NOTES_START" ] && FLAGS+=(--notes-start-tag "$NOTES_START")
+          gh release create "$TAG" "${FLAGS[@]}"
+          echo "### $TAG" >> "$GITHUB_STEP_SUMMARY"
+          echo "Publicado desde main @ \`${SHA::8}\` — $REASON." >> "$GITHUB_STEP_SUMMARY"
