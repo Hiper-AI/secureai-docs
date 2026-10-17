@@ -1,214 +1,212 @@
 ---
 sidebar_position: 3
-title: "Identifiant Microsoft Entra (SSO)"
+title: "Microsoft Entra ID (SSO)"
+sidebar_label: "Microsoft Entra ID (SSO)"
 ---
+
 # Intégration Microsoft Entra ID (SSO)
 
-Ce guide vous guidera tout au long du processus de configuration de Microsoft Entra ID (anciennement Azure Active Directory) pour l'authentification unique (SSO) avec SecureAI. Vous apprendrez comment obtenir les informations d’identification nécessaires auprès d’Azure et les soumettre pour terminer l’intégration.
+Grâce à cette intégration, les utilisateurs de votre organisation se connectent à SecureAI avec leur compte professionnel Microsoft (le bouton **Continue with Microsoft**). La configuration est **en libre-service** : un administrateur de votre organisation inscrit SecureAI dans votre propre locataire Microsoft Entra ID (anciennement Azure Active Directory) et saisit les informations dans **Admin → Intégrations**. Aucun ticket à ouvrir, rien à attendre de Hiper AI : le bouton apparaît sur votre page de connexion dès que vous enregistrez.
+
+Durée estimée : 10 minutes.
 
 ## Prérequis
 
-- Accès administrateur au portail Azure
-- Un locataire Azure Entra ID (Azure AD)
-- Accès administrateur à SecureAI
+- Un rôle Microsoft Entra autorisé à créer des inscriptions d'applications (par exemple **Développeur d'applications** ou **Administrateur d'application**). Accorder le consentement administrateur (étape 4) nécessite le rôle **Administrateur d'applications cloud**, **Administrateur d'application** ou **Administrateur général**.
+- Un accès administrateur à SecureAI, avec l'autorisation **Administrateur** sur la section **Intégrations**.
 
-## Étape 1 : Créer une application dans le portail Azure
+## Fonctionnement
 
-1. Connectez-vous au [Portail Azure](https://portal.azure.com)
-2. Recherchez et sélectionnez **Azure Active Directory** ou **Microsoft Entra ID**.
+1. Vous créez une **inscription d'application** dans votre locataire Entra ID. SecureAI utilise OpenID Connect (flux de code d'autorisation) avec un **secret client**.
+2. Dans SecureAI, vous saisissez l'**ID de l'annuaire (locataire)**, l'**ID d'application (client)** et la **valeur du secret client**. Le secret est stocké chiffré et n'est plus jamais affiché.
+3. Lorsqu'un utilisateur clique sur **Continue with Microsoft**, Microsoft l'authentifie (en appliquant vos stratégies MFA et d'accès conditionnel) et SecureAI le laisse entrer si son adresse e-mail correspond à un compte SecureAI **actif**.
 
-<div class="mac-window">
-  ![Recherche sur le portail Azure](/img/microsoft%20entraid%20sso%20images/1%20-%20azure.png)
-</div>
+SecureAI n'accepte que les jetons émis par **votre** locataire : la connexion est liée à votre annuaire, et les points de terminaison multilocataires (`common` / `organizations`) ne sont jamais utilisés.
 
-3. Dans le menu latéral, sélectionnez **Inscriptions d'applications**
+## Étape 1 : Copier l'URI de redirection depuis SecureAI
 
-<div class="mac-window">
-  ![Menu d'inscription des applications](/img/microsoft%20entraid%20sso%20images/2%20-%20azure.png)
-</div>
+1. Connectez-vous à SecureAI en tant qu'administrateur.
+2. Allez dans **Admin → Intégrations** et filtrez par la catégorie **IAM**.
+3. Sur la carte **Microsoft Entra ID (SSO)**, cliquez sur **Connecter l'Intégration** (ou sur **Reconfigurer**, si la carte affiche **Configured by Hiper AI**).
+4. Dans la section **1. Register SecureAI in Microsoft Entra ID**, cliquez sur **Copy** à côté de **Redirect URI** (URI de redirection).
 
-4. Cliquez sur **+ Nouvelle inscription**
+L'URI ressemble à ceci (avec le domaine de votre instance) :
 
-<div class="mac-window">
-  ![Nouveau bouton d'inscription](/img/microsoft%20entraid%20sso%20images/3%20-%20azure.png)
-</div>
+```
+https://<your-company>.hiperai.ai/api/auth/azure/callback
+```
 
-## Étape 2 : Configurer l'application
+Utilisez toujours l'URI affichée par votre instance : elle doit correspondre caractère pour caractère, y compris `https://`.
 
-1. **Nom** : saisissez un nom descriptif (par exemple, "SecureAI SSO")
-2. **Types de comptes pris en charge** :
-   - Sélectionnez **Comptes dans cet annuaire organisationnel uniquement**
-   - Ou **Comptes dans n'importe quel répertoire d'organisation** si vous devez prendre en charge plusieurs organisations
-3. **URI de redirection** :
-   - Plateforme : **Web**
-   -URI : `https://your-backend-domain.com/api/auth/azure/callback`
-   - **Remarque** : Vous obtiendrez cette URL auprès de votre équipe de développement
-4. Cliquez sur **S'inscrire**
+Gardez cette fenêtre ouverte ; vous y reviendrez pour coller les informations.
+
+## Étape 2 : Inscrire l'application dans Microsoft Entra ID
+
+1. Ouvrez le [centre d'administration Microsoft Entra](https://entra.microsoft.com) (ou le [portail Azure](https://portal.azure.com) → **Microsoft Entra ID**).
 
 <div class="mac-window">
-  ![Bouton d'inscription](/img/microsoft%20entraid%20sso%20images/4%20-%20azure.png)
+  ![Searching for Microsoft Entra ID in the Azure portal](/img/microsoft%20entraid%20sso%20images/1%20-%20azure.png)
 </div>
 
-## Étape 3 : Obtenez l'ID de l'application (client)
-
-1. Sur la page **Aperçu** de votre candidature
-2. Copiez la valeur **ID d'application (client)**
-   - Il s'agit d'un GUID qui ressemble à ceci : `b96ee19f-5a15-4a85-b936-****-****`
-   - **Enregistrez cette valeur** - vous en aurez besoin plus tard
-
-## Étape 4 : Obtenez l'ID d'annuaire (locataire)
-
-1. Sur la même page **Présentation**
-2. Copiez la valeur **ID d'annuaire (locataire)**
-   - Il s'agit d'un GUID qui ressemble à ceci : `155812d2-1112-46c8-bf52-****-****`
-   - **Enregistrez cette valeur** - vous en aurez besoin plus tard
-
-## Étape 5 : Créer une clé secrète client
-
-1. Dans le menu latéral de votre application, sélectionnez **Certificats et secrets**
+2. Allez dans **Applications → Inscriptions d'applications** (*Applications → App registrations*).
 
 <div class="mac-window">
-  ![Menu Certificats et secrets](/img/microsoft%20entraid%20sso%20images/5%20-%20azure.png)
+  ![App registrations menu](/img/microsoft%20entraid%20sso%20images/2%20-%20azure.png)
 </div>
 
-2. Dans la section **Secrets client**, cliquez sur **+ Nouveau secret client**.
-3. **Description** : saisissez une description (par exemple, "SecureAI SSO Secret")
-4. **Expire** :
-   - Sélectionnez une période d'expiration (recommandé : 24 mois)
-   - **IMPORTANT** : Assurez-vous de renouveler le secret avant son expiration
-5. Cliquez sur **Ajouter**
+3. Cliquez sur **+ Nouvelle inscription** (*+ New registration*).
 
 <div class="mac-window">
-  ![Ajouter un bouton secret client](/img/microsoft%20entraid%20sso%20images/6%20-%20azure.png)
+  ![New registration button](/img/microsoft%20entraid%20sso%20images/3%20-%20azure.png)
 </div>
 
-6. **IMMÉDIATEMENT** copiez la **Valeur** du secret
-   - Cela ressemblera à ceci : `plm8Q~************************************`
+4. Remplissez le formulaire :
+   - **Nom** (*Name*) : un nom explicite, par exemple `SecureAI SSO`. Les utilisateurs le voient sur l'écran de consentement.
+   - **Types de comptes pris en charge** (*Supported account types*) : **Comptes dans cet annuaire d'organisation uniquement (locataire unique)** (*Accounts in this organizational directory only (Single tenant)*).
+   - **URI de redirection** (*Redirect URI*) : plateforme **Web** (et non « Application monopage »), puis collez l'URI copiée à l'étape 1.
+5. Cliquez sur **S'inscrire** (*Register*).
 
 <div class="mac-window">
-  ![Valeur secrète client](/img/microsoft%20entraid%20sso%20images/7%20-%20azure.png)
+  ![Application registration form](/img/microsoft%20entraid%20sso%20images/4%20-%20azure.png)
 </div>
-   - **AVERTISSEMENT** : Cette valeur n'est affichée qu'une seule fois. Si vous le perdez, vous devrez créer un nouveau secret
-   - **Stockez cette valeur en toute sécurité**
 
-## Étape 6 : Configurer les autorisations de l'API
+6. Sur la page **Vue d'ensemble** (*Overview*) de l'application, copiez :
+   - **ID d'application (client)** (*Application (client) ID*) — un GUID tel que `b96ee19f-5a15-4a85-b936-xxxxxxxxxxxx`.
+   - **ID de l'annuaire (locataire)** (*Directory (tenant) ID*) — un autre GUID, tel que `155812d2-1112-46c8-bf52-xxxxxxxxxxxx`.
 
-1. Dans le menu latéral, sélectionnez **Autorisations API**
-2. Cliquez sur **+ Ajouter une autorisation**
-3. Sélectionnez **Microsoft Graph**
-4. Sélectionnez **Autorisations déléguées**
-5. Vérifiez les autorisations suivantes :
-   - `openid` (automatiquement inclus)
-   - `profile`
-   - `email`
-6. Cliquez sur **Ajouter des autorisations**
+## Étape 3 : Créer un secret client
+
+1. Dans le menu de l'application, ouvrez **Certificats & secrets** (*Certificates & secrets*).
 
 <div class="mac-window">
-  ![Ajouter un bouton d'autorisations](/img/microsoft%20entraid%20sso%20images/8%20-%20azure.png)
+  ![Certificates & secrets menu](/img/microsoft%20entraid%20sso%20images/5%20-%20azure.png)
 </div>
 
-7. Si votre organisation requiert le consentement de l'administrateur :
-   - Cliquez sur ** Accorder le consentement de l'administrateur **
+2. Sous **Secrets client** (*Client secrets*), cliquez sur **+ Nouveau secret client** (*+ New client secret*).
+3. Saisissez une description (par exemple `SecureAI SSO`) et choisissez une durée d'expiration (Microsoft recommande moins de 12 mois ; le maximum est de 24).
+4. Cliquez sur **Ajouter** (*Add*).
 
 <div class="mac-window">
-  ![Bouton Accorder le consentement de l'administrateur](/img/microsoft%20entraid%20sso%20images/9%20-%20azure.png)
+  ![Add a client secret](/img/microsoft%20entraid%20sso%20images/6%20-%20azure.png)
 </div>
 
-## Étape 7 : Envoyer des variables à l'équipe Hiper AI
-
-Une fois que vous avez créé l'application dans Azure et suivi les étapes ci-dessus, vous aurez obtenu trois informations critiques :
-
-1. **ID client** (à partir de l'étape 3)
-2. **ID du locataire** (à partir de l'étape 4)
-3. **Valeur secrète du client** (à partir de l'étape 5)
-
-Vous devez envoyer ces trois valeurs à l'équipe Hiper AI pour terminer l'intégration SSO.
-
-### A. Accédez au panneau d'administration
-
-1. Connectez-vous à votre instance SecureAI en tant qu'administrateur
-2. Accédez à `https://{enterprise.name}.hiperai.ai/admin/home`
-3. Dans le coin supérieur droit, cliquez sur la photo de votre profil d'administrateur
-4. Cela ouvrira un menu déroulant avec diverses options
-
-### B. Soumettre la demande d'assistance
-
-1. Cliquez sur **"Obtenir de l'aide"** dans le menu déroulant.
+5. Copiez **immédiatement** la colonne **Valeur** (*Value*) (elle ressemble à `plm8Q~xxxxxxxx…`). Elle n'est affichée qu'une seule fois.
 
 <div class="mac-window">
-  ![Obtenir le menu d'assistance](/img/microsoft%20entraid%20sso%20images/10%20-%20azure.png)
+  ![Client secret value](/img/microsoft%20entraid%20sso%20images/7%20-%20azure.png)
 </div>
 
-2. Une fenêtre contextuelle apparaîtra avec un formulaire de ticket d'assistance
-3. Remplissez le formulaire avec les informations suivantes :
-   - **Catégorie** : Sélectionnez **"Intégrations et implémentations"**
+<Warning>
+Copiez la **Valeur** (*Value*), et non l'**ID du secret** (*Secret ID*, qui est un GUID). Si vous collez l'ID du secret, SecureAI le refuse à l'enregistrement.
+</Warning>
+
+Notez la date d'expiration : lorsque le secret expire, la connexion Microsoft cesse de fonctionner jusqu'à ce que vous en saisissiez un nouveau (voir [Renouveler le secret client](#renouveler-le-secret-client)).
+
+## Étape 4 : Vérifier les autorisations d'API
+
+SecureAI demande les autorisations Microsoft Graph déléguées `openid`, `profile`, `email` et `User.Read` (cette dernière pour lire la photo de profil de l'utilisateur). `User.Read` est ajoutée par défaut aux nouvelles inscriptions.
+
+1. Dans le menu de l'application, ouvrez **Autorisations de l'API** (*API permissions*).
+2. Vérifiez que **Microsoft Graph → Autorisations déléguées** incluent `User.Read` et, si vous souhaitez les lister explicitement, `openid`, `profile` et `email` (via **+ Ajouter une autorisation → Microsoft Graph → Autorisations déléguées**).
 
 <div class="mac-window">
-  ![Catégorie de formulaire de support](/img/microsoft%20entraid%20sso%20images/11%20-%20azure.png)
+  ![Add delegated permissions](/img/microsoft%20entraid%20sso%20images/8%20-%20azure.png)
 </div>
 
-   - **Objet** : Saisissez **"Intégration SSO Microsoft Entra ID"**
-   - **Description** : collez les trois valeurs que vous avez copiées lors du processus de configuration :
-     - ID client (ID d'application)
-     - ID du locataire (ID d'annuaire)
-     - Valeur secrète client
-4. Cliquez sur le bouton **"Soumettre la demande"**
+3. Cliquez sur **Accorder un consentement d'administrateur pour [votre organisation]** (*Grant admin consent for [your organization]*) et confirmez.
 
-### C. Attendez la confirmation
+<div class="mac-window">
+  ![Grant admin consent](/img/microsoft%20entraid%20sso%20images/9%20-%20azure.png)
+</div>
 
-- Vous recevrez un email de confirmation sous **24 à 72 heures** (selon disponibilité)
-- L'e-mail confirmera que votre SSO a été configuré avec succès
-- Une fois configuré, vous pourrez accéder à votre instance SecureAI à l'aide du bouton de connexion **"Continuer avec Azure EntraID"** sur la page de connexion.
+Si votre locataire ne permet pas aux utilisateurs de consentir eux-mêmes aux applications (un paramètre courant en entreprise), cette étape est obligatoire : sans elle, les utilisateurs voient « Approbation de l'administrateur nécessaire » (*Need admin approval*) lors de la connexion.
 
-**Important** : Conservez vos informations d'identification en sécurité jusqu'à ce que l'intégration soit terminée. Ne les partagez pas via des canaux non sécurisés.
+## Étape 5 : Saisir les informations dans SecureAI et tester
 
-## Configuration utilisateur
+Revenez dans **Admin → Intégrations → Microsoft Entra ID (SSO)** :
 
-### Utilisateurs existants
+1. Dans **2. Paste the app registration details**, renseignez :
+   - **Directory (tenant) ID** : le GUID de l'étape 2 (un domaine vérifié de votre locataire, tel que `contoso.onmicrosoft.com`, fonctionne également).
+   - **Application (client) ID** : le GUID de l'étape 2.
+   - **Client secret value** : la valeur de l'étape 3.
+   - **Allowed email domains** (domaines e-mail autorisés ; facultatif, recommandé) : les domaines e-mail de votre organisation, séparés par des virgules, par exemple `contoso.com, contoso.co.uk`. Seules ces adresses peuvent se connecter avec Microsoft. Si le champ est vide, tout compte de votre locataire qui existe dans SecureAI est accepté.
+2. Dans **3. Test the connection**, cliquez sur **Test connection**. SecureAI interroge Microsoft (sans connecter personne) et vérifie :
 
-Les utilisateurs qui possèdent déjà des comptes dans SecureAI (qu'ils utilisent ou non l'authentification de base) **n'ont pas besoin d'être recréés**. Ils peuvent continuer à utiliser leurs comptes existants et pourront également se connecter à l’aide de l’authentification unique Azure Entra ID une fois celle-ci configurée.
+   | Vérification | En cas d'échec |
+   |---|---|
+   | Directory (tenant) ID | Microsoft ne connaît pas ce locataire (`AADSTS90002`). Copiez l'ID de l'annuaire depuis la page Vue d'ensemble. |
+   | Application (client) ID | Aucune application de ce type n'existe dans le locataire (`AADSTS700016`). Vérifiez l'ID client et que l'application se trouve dans le même locataire. |
+   | Client secret | Le secret est invalide (`AADSTS7000215`) ou expiré (`AADSTS7000222`). Collez la **Valeur** ou créez-en un nouveau. |
+   | Redirect URI registered on the app | L'URI de l'étape 1 ne figure pas dans l'inscription d'application (l'erreur `AADSTS50011` qu'un utilisateur obtiendrait à la connexion). Dans l'application, ouvrez **Authentification → Ajouter une plateforme → Web** (*Authentication → Add a platform → Web*), collez-la à l'identique et enregistrez. |
 
-**Important** : L'e-mail de l'utilisateur dans Azure doit correspondre exactement à l'e-mail dans SecureAI pour que SSO fonctionne.
+   Le test utilise ce qui est saisi dans le formulaire : vous pouvez donc tester avant d'enregistrer. Si votre locataire dispose d'une stratégie d'accès conditionnel qui bloque les jetons d'application seule, le secret peut s'afficher comme « could not be verified automatically » (n'a pas pu être vérifié automatiquement) : ce n'est pas une erreur — confirmez avec une vraie connexion.
 
-### Création de nouveaux utilisateurs SSO
+   <Note>
+   Le test confirme que l'URI est enregistrée, mais pas si elle l'a été sous la plateforme **Web** ou sous **Application monopage (SPA)**. Enregistrée comme SPA, l'URI passe le test et la connexion échoue avec « Single sign-on could not be completed ». Vérifiez que, dans **Authentification**, l'URI apparaît sous **Web**.
+   </Note>
 
-Pour les nouveaux utilisateurs qui doivent accéder à SecureAI exclusivement via SSO :
+3. Vérifiez que **Show "Continue with Microsoft" on the login page** (afficher « Continue with Microsoft » sur la page de connexion) est activé (il l'est par défaut la première fois).
+4. Cliquez sur **Save**.
 
-1. Accédez à **Gestion des utilisateurs** dans le panneau d'administration SecureAI.
-2. Cliquez pour créer un nouvel utilisateur
-3. Lors de la création de l'utilisateur, sélectionnez l'option **"Compte professionnel / SSO"**
-4. Cette configuration garantit que :
-   - Le nouvel utilisateur **ne recevra pas d'e-mail** pour générer un mot de passe
-   - L'utilisateur pourra accéder à SecureAI **directement à l'aide du bouton de connexion Azure Entra ID SSO**
-   - L'e-mail de l'utilisateur dans Azure doit correspondre exactement à l'e-mail saisi dans SecureAI
+Dès lors, la carte affiche **Active on the login page**, et le bouton **Continue with Microsoft** apparaît sur la page de connexion de votre instance.
+
+## Étape 6 : Ajouter vos utilisateurs
+
+SecureAI **ne crée pas de comptes automatiquement** lors de la première connexion : toute personne qui se connectera avec Microsoft doit exister dans SecureAI et être active. L'adresse e-mail du compte SecureAI doit correspondre à celle de l'utilisateur dans Entra ID (l'attribut **Messagerie** (*Mail*) ; s'il est vide, le **nom d'utilisateur principal (UPN)** est utilisé). La casse n'a pas d'importance.
+
+- **Utilisateurs existants** : les personnes qui ont déjà un compte SecureAI (même avec un mot de passe) ne sont pas recréées. Elles peuvent continuer à se connecter avec leur mot de passe, et aussi avec Microsoft.
+- **Nouveaux utilisateurs SSO uniquement** : dans **Admin → Gestion IAM → Gestion des utilisateurs → Ajouter un utilisateur**, choisissez la méthode d'authentification **Compte professionnel / SSO**. L'utilisateur ne reçoit pas d'e-mail pour créer un mot de passe et se connecte directement avec **Continue with Microsoft**.
+- **Nombreux utilisateurs** : vous pouvez les provisionner et les déprovisionner automatiquement depuis Entra ID avec SCIM.
+
+Lorsqu'un utilisateur est désactivé dans SecureAI (manuellement ou via SCIM), il ne peut plus se connecter par SSO non plus.
+
+## Tester la connexion
+
+1. Ouvrez la page de connexion de votre instance dans une fenêtre de navigation privée.
+2. Cliquez sur **Continue with Microsoft**.
+3. Choisissez votre compte professionnel et effectuez l'authentification MFA si elle vous est demandée.
+4. Microsoft vous renvoie vers SecureAI, connecté.
+
+La connexion par mot de passe continue de fonctionner : activer le SSO ne la désactive pas.
+
+## Désactiver ou supprimer l'intégration
+
+- Pour masquer le bouton tout en conservant la configuration, désactivez l'interrupteur et enregistrez.
+- Pour la supprimer, utilisez **Remove configuration**. Si votre instance disposait auparavant d'un SSO configuré par Hiper AI, cette configuration s'applique de nouveau.
+
+## Renouveler le secret client
+
+Avant l'expiration du secret :
+
+1. Dans Entra ID, créez un nouveau secret client (étape 3) sans supprimer l'ancien.
+2. Dans SecureAI, ouvrez l'intégration, collez la nouvelle valeur dans **Client secret value**, cliquez sur **Test connection** puis sur **Save**. Si vous laissez le champ vide, le secret actuel est conservé.
+3. Une fois que vous avez confirmé que la connexion fonctionne, supprimez l'ancien secret dans Entra ID.
+
+La modification s'applique immédiatement, sans mettre fin aux sessions actives.
+
+## Si votre instance avait déjà un SSO configuré par Hiper AI
+
+Les instances pour lesquelles Hiper AI a configuré le SSO Microsoft sur demande affichent la carte avec le statut **Configured by Hiper AI**. Cette configuration continue de fonctionner. Si vous enregistrez la vôtre dans Intégrations, elle la remplace ; si vous supprimez la vôtre par la suite, la précédente s'applique de nouveau.
 
 ## Dépannage
 
-### Erreur : « la valeur redirect_uri doit être un URI absolu valide »
-- Vérifiez que l'URI de redirection dans Azure correspond exactement à ce qui est configuré sur le serveur
-- Assurez-vous d'inclure `https://` ou `http://` selon le cas
+Les erreurs de connexion s'affichent sur la page de connexion de SecureAI (en anglais) :
 
-### Erreur : "Utilisateur introuvable dans la base de données SecureAI"
-- L'utilisateur doit être préalablement enregistré dans SecureAI
-- Contacter l'administrateur SecureAI pour créer le compte utilisateur
+| Message dans SecureAI | Cause et solution |
+|---|---|
+| "User not found in SecureAI database." | Aucun compte SecureAI n'existe avec cette adresse e-mail. Créez-le (étape 6) ou vérifiez que l'adresse correspond au Mail/UPN dans Entra ID. |
+| "This account is not allowed to sign in here…" | Le domaine de l'adresse e-mail ne figure pas dans **Allowed email domains**, ou le jeton provient d'un autre locataire. |
+| "This sign-in method is not enabled for your organization." | L'intégration est désactivée ou incomplète. Vérifiez la carte dans Intégrations. |
+| "Your identity provider did not complete the sign-in…" | Microsoft a renvoyé une erreur : l'utilisateur a annulé, le consentement administrateur est manquant (étape 4), ou l'utilisateur n'est pas affecté à l'application. |
+| "Single sign-on could not be completed…" | L'échange de code a échoué : généralement un secret expiré ou remplacé (utilisez **Test connection**), ou l'URI de redirection enregistrée comme **Application monopage** au lieu de **Web** (déplacez-la vers **Web** dans **Authentification**). |
+| "Your account is inactive…" | Le compte est désactivé dans SecureAI. |
+| "The sign-in session expired or was not started from this browser…" | Plus de 10 minutes se sont écoulées, ou la connexion a été lancée dans un autre onglet/navigateur. Réessayez depuis la page de connexion. |
 
-### Erreur : « Secret client non valide »
-- Le secret a peut-être expiré
-- Créer un nouveau secret client et mettre à jour la configuration
+Erreurs affichées par Microsoft (avant le retour vers SecureAI) :
 
-## Renouvellement de la clé secrète client
+- **AADSTS50011 – L'URI de redirection ne correspond pas** : l'URI enregistrée dans Entra ID n'est pas exactement celle que SecureAI affiche à l'étape 1 (une barre oblique finale en trop suffit à empêcher la correspondance). **Test connection** le détecte avant la première connexion.
+- **AADSTS65001 / « Approbation de l'administrateur nécessaire »** (*Need admin approval*) : accordez le consentement administrateur (étape 4).
+- **AADSTS50105 – L'utilisateur connecté n'est affecté à aucun rôle pour l'application** : l'application d'entreprise a l'option **Affectation obligatoire ?** (*Assignment required?*) réglée sur **Oui**. Affectez l'utilisateur ou un groupe sous **Applications d'entreprise → SecureAI SSO → Utilisateurs et groupes** (*Enterprise applications → SecureAI SSO → Users and groups*).
+- **AADSTS7000215 / AADSTS7000222** : secret invalide ou expiré. Saisissez-en un nouveau.
 
-Le secret client a une date d’expiration. Avant son expiration :
-
-1. Créez un nouveau secret client après l'étape 5
-2. Offrez la nouvelle valeur à votre équipe de développement
-3. Ils mettront à jour la configuration sans interrompre le service
-
-## Assistance
-
-Si vous rencontrez des problèmes lors de la configuration :
-1. Vérifiez que vous disposez des autorisations d'administrateur dans Azure
-2. Contactez votre équipe de développement avec :
-   - Captures d'écran des erreurs
-   - Les identifiants que vous avez obtenus (sans le secret)
-   - Le message d'erreur complet
+Si vous avez besoin d'aide, contactez le support via **Obtenir de l'Aide** dans le menu de votre profil et indiquez l'ID d'application (client), l'ID de l'annuaire et le message d'erreur. **N'envoyez jamais le secret client.**
