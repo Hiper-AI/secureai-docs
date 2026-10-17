@@ -30,7 +30,7 @@ Familias de modelos soportadas: **OpenAI (GPT‑5 y serie o), gpt‑oss, DeepSee
 
 | Plan | Proveedores de inferencia habilitados al mismo tiempo |
 |------|-------------------------------------------------------|
-| **Scale** | 1 (Google Vertex AI **o** Azure AI Foundry) |
+| **Scale** | 1 (Google Vertex AI, Azure AI Foundry **o** Amazon Bedrock) |
 | **Enterprise** | Hasta 3, por ejemplo Vertex AI para Gemini y Foundry para GPT |
 
 Con más de un proveedor habilitado, cada uno atiende familias de modelos **distintas**: una familia solo puede enrutarse a un proveedor, y solo un proveedor puede usar **Remapear todo**. SecureAI rechaza una configuración que se superponga con otra e indica qué familia colisiona.
@@ -167,4 +167,5 @@ Errores que pueden ver los usuarios en el chat:
 
 - [Azure AI Foundry — Descubrimiento](/integrations/cloud/azure-ai-foundry)
 - [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference)
+- [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference)
 - [Descripción general de los proveedores de IA en la nube](/integrations/cloud/overview)

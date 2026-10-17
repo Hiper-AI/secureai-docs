@@ -7,7 +7,7 @@ description: "Conecte sus plataformas de IA OpenAI, Anthropic, Azure, AWS y GCP 
 
 # Proveedores de IA en la nube
 
-Los conectores de proveedor de IA en la nube permiten a SecureAI acceder a las plataformas de IA que su organización ya utiliza (**OpenAI Platform, Anthropic Console, Azure AI Foundry y Google Vertex AI**) e inventariar automáticamente todo lo que se ejecuta allí. No es necesario implementar ningún agente o SDK en el lado del proveedor; SecureAI sondea la API de administración de cada proveedor con las credenciales de lectura mayoritaria que usted proporciona.
+Los conectores de proveedor de IA en la nube permiten a SecureAI acceder a las plataformas de IA que su organización ya utiliza (**OpenAI Platform, Anthropic Console, Azure AI Foundry, Google Vertex AI y AWS Bedrock**) e inventariar automáticamente todo lo que se ejecuta allí. No es necesario implementar ningún agente o SDK en el lado del proveedor; SecureAI sondea la API de administración de cada proveedor con las credenciales de lectura mayoritaria que usted proporciona.
 
 Una vez conectado, un conector descubre y sincroniza continuamente:
 
@@ -45,10 +45,11 @@ Todos los secretos que ingresa (secretos de cliente, JSON de cuenta de servicio,
 | [Anthropic Console](/integrations/cloud/anthropic-console) | Clave API de administración (+ claves opcionales de espacio de trabajo/cumplimiento) |
 | [Azure AI Foundry](/integrations/cloud/azure-ai-foundry) | Principal de servicio de entrada (inquilino/cliente/secreto) |
 | [Google Cloud — Descubrimiento](/integrations/cloud/gcp-vertex-ai) | Clave JSON de cuenta de servicio, o suplantación sin clave |
+| [AWS — Descubrimiento](/integrations/cloud/aws-bedrock) | Rol IAM de solo lectura con External ID (stack de CloudFormation), o access key de usuario IAM |
 
 ## Inferencia en su propia cuenta
 
-Además de inventariar, SecureAI puede **ejecutar el tráfico de LLM en su propia cuenta de Google Cloud**, para que Google le facture directamente y aproveche su gasto comprometido (CUDs). Es una integración distinta, en **Integraciones → Proveedores de IA**: [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference). Lo mismo aplica a Azure: [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference) ejecuta el tráfico de LLM en su propio recurso de Foundry para que Microsoft le facture directamente y descuente de su compromiso de Azure (MACC).
+Además de inventariar, SecureAI puede **ejecutar el tráfico de LLM en su propia cuenta de Google Cloud**, para que Google le facture directamente y aproveche su gasto comprometido (CUDs). Es una integración distinta, en **Integraciones → Proveedores de IA**: [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference). Lo mismo aplica a Azure: [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference) ejecuta el tráfico de LLM en su propio recurso de Foundry para que Microsoft le facture directamente y descuente de su compromiso de Azure (MACC). Y en AWS, [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference) ejecuta el tráfico de LLM, Claude incluido, en su propia cuenta de AWS para que AWS le facture directamente y descuente de su compromiso con AWS (EDP).
 
 ## Relacionado
 

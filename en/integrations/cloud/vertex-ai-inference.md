@@ -252,7 +252,7 @@ Errors users may see in the chat:
 - **Claude and Mistral on Vertex** are not supported (they use a different API).
 - **Embeddings, re-ranking, OCR, the admin assistant, image generation, and realtime voice** stay on SecureAI-managed providers.
 - **One Vertex project and location** per organization.
-- The number of inference providers you can enable at the same time depends on your plan (Scale: 1, Enterprise: up to 3). See [Azure AI Foundry — Inference on your account](/en/integrations/cloud/azure-ai-foundry-inference).
+- The number of inference providers you can enable at the same time depends on your plan (Scale: 1, Enterprise: up to 3). See [Azure AI Foundry — Inference on your account](/en/integrations/cloud/azure-ai-foundry-inference) and [Amazon Bedrock — Inference on your account](/en/integrations/cloud/aws-bedrock-inference).
 - Authentication is **by service-account JSON key only**.
 - The **Claude Code** proxy uses Anthropic directly and does not go through Vertex.
 
@@ -260,5 +260,6 @@ Errors users may see in the chat:
 
 - [Google Cloud — Discovery](/en/integrations/cloud/gcp-vertex-ai) — inventory of the project's agents, models, identities, and costs.
 - [Azure AI Foundry — Inference on your account](/en/integrations/cloud/azure-ai-foundry-inference)
+- [Amazon Bedrock — Inference on your account](/en/integrations/cloud/aws-bedrock-inference)
 - [Cloud AI Providers Overview](/en/integrations/cloud/overview)
 - [Signed receipts](/en/api/receipts)
