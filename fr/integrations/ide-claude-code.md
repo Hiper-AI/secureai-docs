@@ -134,7 +134,7 @@ Cela confirme que tout le trafic est acheminé via SecureAI.
 
 SecureAI expose le même catalogue de modèles disponible dans l'interface de discussion. Utilisez n'importe quelle valeur `id` du tableau ci-dessous dans les variables d'environnement ci-dessus.
 
-### Anthropique (Claude)
+### Anthropic (Claude)
 | ID du modèle | Nom d'affichage |
 |---|---|
 | `anthropic/claude-sonnet-4.6` | Claude Sonnet 4.6 |

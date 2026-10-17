@@ -6,7 +6,7 @@ description: "连接您的 OpenAI、Anthropic、Azure、AWS 和 GCP AI 平台，
 ---
 # 云人工智能提供商
 
-云 AI 提供商连接器可让 SecureAI 访问您的组织已使用的 AI 平台 — **OpenAI Platform、Anthropic Console、Azure AI Foundry 和 Google Vertex AI** — 并自动清点其中运行的所有内容。提供商端无需部署Agent或SDK； SecureAI 使用您提供的主要读取凭据轮询每个提供商的管理 API。
+云 AI 提供商连接器可让 SecureAI 访问您的组织已使用的 AI 平台 — **OpenAI Platform、Anthropic Console、Azure AI Foundry 和 Google Vertex AI** — 并自动清点其中运行的所有内容。提供商端无需部署Agent或SDK； SecureAI 使用您提供的、以只读为主的凭据轮询每个提供商的管理 API。
 
 连接后，连接器会发现并持续同步：
 

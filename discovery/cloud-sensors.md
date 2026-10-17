@@ -25,7 +25,7 @@ Cada KPI lleva un minigráfico de 30 días creado a partir del historial de sinc
 | Columna | Descripción |
 |--------|-------------|
 | **Agente** | Nombre del agente/modelo descubierto. |
-| **Proveedor** | Azure / AWS / GCP / OpenAI / Antrópico. |
+| **Proveedor** | Azure / AWS / GCP / OpenAI / Anthropic. |
 | **Espacio de trabajo/Implementación** | Dónde vive en el proveedor. |
 | **Modelo** | Modelo subyacente. |
 | **Estado** | `observed`, `active` o `retired` (con un sufijo `· auto` cuando se retira automáticamente por descubrimiento). |

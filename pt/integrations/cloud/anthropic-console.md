@@ -5,7 +5,7 @@ sidebar_label: "Anthropic Console"
 description: "Conecte o Anthropic Console para que a SecureAI possa inventariar espaços de trabalho, chaves, uso, custo e atividades de auditoria"
 ---
 
-#Console Antrópico
+# Anthropic Console
 
 Conecte sua organização Anthropic para que a SecureAI possa inventariar espaços de trabalho, chaves de API, contas de serviço, limites de gastos e (no Enterprise) o log de auditoria e análises do Claude Code.
 
@@ -19,7 +19,7 @@ Conecte sua organização Anthropic para que a SecureAI possa inventariar espaç
 
 ## Pré-requisitos
 
-- **Administrador** no Console Antrópico.
+- **Administrador** no Anthropic Console.
 - Uma **chave de API de administrador** (`sk-ant-admin…`).
 - *(Opcional)* uma **chave de espaço de trabalho** para desbloquear dados da plataforma do agente e uma **chave de API de conformidade** (Enterprise) para desbloquear o log de auditoria.
 

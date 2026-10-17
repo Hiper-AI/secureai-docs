@@ -30,8 +30,8 @@ Tout ce que vous pouvez *faire* sur une identité dépend de la manière dont el
 
 | Type d'identité | Révocable à la source | Moniteur uniquement |
 |---------------|-----------|--------------|
-| **Clés API** | OpenAI, Anthropique, GCP, Azure, AWS | — |
-| **Comptes de service/clés BYOK** | Anthropique, GCP, Azure | OpenAI, AWS |
+| **Clés API** | OpenAI, Anthropic, GCP, Azure, AWS | — |
+| **Comptes de service/clés BYOK** | Anthropic, GCP, Azure | OpenAI, AWS |
 
 ## Actions
 

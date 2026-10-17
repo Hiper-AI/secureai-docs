@@ -13,13 +13,13 @@ description: "Use Claude Code com SecureAI — aplicação completa de SMLTP, DL
 
 ##Como funciona
 
-SecureAI expõe um endpoint compatível com API de mensagens antrópicas em:
+SecureAI expõe um endpoint compatível com a Messages API da Anthropic em:
 
 ```
 https://<your-host>/api/claude-code
 ```
 
-Claude Code suporta nativamente o redirecionamento de todo o tráfego para um URL base personalizado por meio da variável de ambiente `ANTHROPIC_BASE_URL`. Quando configurado, ele comunica seu protocolo Antrópico nativo diretamente ao SecureAI – sem necessidade de proxy local ou script wrapper.
+Claude Code suporta nativamente o redirecionamento de todo o tráfego para um URL base personalizado por meio da variável de ambiente `ANTHROPIC_BASE_URL`. Quando configurado, ele comunica seu protocolo nativo da Anthropic diretamente ao SecureAI – sem necessidade de proxy local ou script wrapper.
 
 ```
 Developer machine
@@ -135,7 +135,7 @@ Isso confirma que todo o tráfego está sendo roteado através do SecureAI.
 
 SecureAI expõe o mesmo catálogo de modelos disponível na interface de chat. Use qualquer valor `id` da tabela abaixo nos env vars acima.
 
-### Antrópico (Claude)
+### Anthropic (Claude)
 | ID do modelo | Nome de exibição |
 |---|---|
 | `anthropic/claude-sonnet-4.6` | Soneto de Claude 4.6 |

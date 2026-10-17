@@ -7,7 +7,7 @@ description: "Conecte sus plataformas de IA OpenAI, Anthropic, Azure, AWS y GCP 
 
 # Proveedores de IA en la nube
 
-Los conectores de proveedor de IA en la nube permiten a SecureAI acceder a las plataformas de IA que su organización ya utiliza (**OpenAI Platform, Anthropic Console, Azure AI Foundry, Google Vertex AI y AWS Bedrock**) e inventariar automáticamente todo lo que se ejecuta allí. No es necesario implementar ningún agente o SDK en el lado del proveedor; SecureAI sondea la API de administración de cada proveedor con las credenciales de lectura mayoritaria que usted proporciona.
+Los conectores de proveedor de IA en la nube permiten a SecureAI acceder a las plataformas de IA que su organización ya utiliza (**OpenAI Platform, Anthropic Console, Azure AI Foundry, Google Vertex AI y AWS Bedrock**) e inventariar automáticamente todo lo que se ejecuta allí. No es necesario implementar ningún agente o SDK en el lado del proveedor; SecureAI sondea la API de administración de cada proveedor con las credenciales, principalmente de lectura, que usted proporciona.
 
 Una vez conectado, un conector descubre y sincroniza continuamente:
 
