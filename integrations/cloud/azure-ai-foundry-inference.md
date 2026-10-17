@@ -12,7 +12,7 @@ Con esta integración, las llamadas a modelos de lenguaje (LLM) de SecureAI se e
 SecureAI sigue en el camino de cada solicitud: **DLP, políticas de modelos, residencia de datos y recibos firmados** se aplican igual que con cualquier otro proveedor.
 
 <Info>
-**No confundir con la otra tarjeta de Azure.** Esta página conecta Foundry como **proveedor de inferencia** (Admin → Integraciones → **Proveedores de IA**). La tarjeta **Azure AI Foundry — Descubrimiento** (categoría **Nube**) inventaría agentes, despliegues, identidades y costos en modo lectura y nunca envía un prompt; se describe en [Azure AI Foundry](/integrations/cloud/azure-ai-foundry). Pueden usarse con la misma suscripción, pero son independientes y piden permisos distintos.
+**No confundir con la otra tarjeta de Azure.** Esta página conecta Foundry como **proveedor de inferencia** (Admin → Integraciones → **Proveedores de IA**). La tarjeta **Azure — Descubrimiento** (categoría **Nube**) inventaría despliegues, agentes de Foundry, todas las identidades no humanas de Entra y costos en modo lectura y nunca envía un prompt; se describe en [Azure — Descubrimiento](/integrations/cloud/azure-ai-foundry). Pueden usarse con la misma suscripción, pero son independientes y piden permisos distintos.
 </Info>
 
 ## Qué corre en Foundry y qué no
@@ -91,7 +91,7 @@ Si la lista de despliegues muestra una advertencia, el principal no tiene **Read
 - **Solo estas familias de modelos** — las familias que marque corren en su Foundry; todo lo demás sigue corriendo donde estaba. Por defecto: **OpenAI**.
 - **Remapear todo a Foundry** — todas las llamadas a LLM corren en Foundry; los modelos sin despliegue los sirve un **despliegue por defecto**.
 
-**Despliegues por defecto** (elíjalos entre sus despliegues):
+**Despliegues por defecto** (elíjalos entre sus despliegues; los de embeddings no se ofrecen, porque no pueden responder un chat):
 
 | Nivel | Se usa para |
 |-------|-------------|
@@ -107,7 +107,7 @@ El fallback y las cuotas de usuario funcionan igual que en Vertex AI: con el **f
 ## Paso 4. Pruebe, revise y active
 
 1. **Probar conexión** envía una solicitud de un token a cada despliegue por defecto (o a sus primeros despliegues de chat si no eligió valores por defecto), por el mismo camino que usa el tráfico real. Se factura a su suscripción de Azure (centavos).
-2. **Vista previa del enrutamiento** muestra, para cada modelo del catálogo, si lo servirá **Foundry**, **Vertex AI** o **SecureAI**, y con qué despliegue.
+2. **Vista previa del enrutamiento** muestra, para cada modelo del catálogo, si lo servirá **Foundry**, **Vertex AI** o **SecureAI**, y con qué despliegue. Un modelo de una familia que usted envía a Foundry y que no tiene despliegue (ni un valor por defecto para su nivel) aparece como **Oculto para los usuarios**: con el fallback apagado, el chat no lo ofrece.
 3. Encienda **Enrutar tráfico a Azure AI Foundry** y haga clic en **Guardar**.
 
 Los modelos servidos por su Foundry muestran el **logo de Azure** en el selector de modelos del chat.
@@ -165,7 +165,7 @@ Errores que pueden ver los usuarios en el chat:
 
 ## Relacionado
 
-- [Azure AI Foundry — Descubrimiento](/integrations/cloud/azure-ai-foundry)
+- [Azure — Descubrimiento](/integrations/cloud/azure-ai-foundry)
 - [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference)
 - [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference)
 - [Descripción general de los proveedores de IA en la nube](/integrations/cloud/overview)
