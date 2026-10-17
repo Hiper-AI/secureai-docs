@@ -28,16 +28,32 @@ SecureAI stays in the path of every request: **DLP, model policies, data residen
 
 Models available today: **Gemini** and the open models served as MaaS on Vertex (**gpt-oss, DeepSeek, Llama, and Qwen**). **Claude and Mistral on Vertex are not supported yet**; those models are handled according to the fallback setting (see below).
 
+## How many cloud providers you can use
+
+| Plan | Inference providers enabled at the same time |
+|------|-----------------------------------------------|
+| **Scale** | 1 (Google Vertex AI, Azure AI Foundry, **or** Amazon Bedrock) |
+| **Enterprise** | Up to 3 — for example Vertex AI for Gemini, Foundry for GPT, and Bedrock for Claude |
+
+With more than one provider enabled, each one serves **different** model families: a family can be taken by only one enabled provider, and only one provider can be in **Remap everything**. When you save the integration turned on, SecureAI refuses it in two cases and explains why in the panel:
+
+| Case | Panel message |
+|------|---------------|
+| The routing overlaps another enabled provider (a family another one already takes, or a second **Remap everything**) | *This routing overlaps another enabled cloud provider: …*, followed by the family or mode that collides. |
+| Your plan does not allow another enabled provider | *Your plan's BYO-cloud provider limit is reached (… of … in use). Disable another provider or upgrade the plan.* |
+
 ## Prerequisites
 
 - A **Google Cloud project** with billing enabled.
-- The **Agent Platform API** enabled on that project (the `aiplatform.googleapis.com` service).
-- A **service account** in your project with the **Agent Platform User** role (`roles/aiplatform.user`) and a **JSON key** for that account.
+- The **Agent Platform API (Vertex AI API)** enabled on that project (the `aiplatform.googleapis.com` service).
+- A **service account** in your project with the **Agent Platform User** role (`roles/aiplatform.user`), and one of these two ways for SecureAI to act as it:
+  - **Option A — a JSON key** for that service account.
+  - **Option B — keyless (impersonation)**: you grant the SecureAI service account shown in the panel the **Service Account Token Creator** role (`roles/iam.serviceAccountTokenCreator`) on your service account, and no key is stored. This option is available only if your SecureAI deployment offers it; otherwise the panel shows it disabled with the notice *Keyless access is not enabled on this deployment.*
 - **Admin** permission on the Integrations section of SecureAI. With read permission you can view the configuration but not change it.
 
 ## Step 1. Prepare the project in Google Cloud
 
-You can do it from the command line (quick) or from the console (with screenshots).
+You can do it from the command line (quick) or from the console (with screenshots). Steps 1 to 3 are the same for both authentication options; step 4 (the JSON key) is for option A only.
 
 <Tabs>
 <Tab title="gcloud (Cloud Shell)">
@@ -47,7 +63,7 @@ From [Cloud Shell](https://shell.cloud.google.com/) or with `gcloud` installed. 
 ```bash
 gcloud config set project MY_PROJECT
 
-# 1. Enable the Agent Platform API
+# 1. Enable the Agent Platform API (Vertex AI API)
 gcloud services enable aiplatform.googleapis.com
 
 # 2. Create a dedicated service account for SecureAI
@@ -58,7 +74,7 @@ gcloud projects add-iam-policy-binding MY_PROJECT \
   --member="serviceAccount:secureai-vertex@MY_PROJECT.iam.gserviceaccount.com" \
   --role="roles/aiplatform.user"
 
-# 4. Generate the JSON key
+# 4. Option A only: generate the JSON key
 gcloud iam service-accounts keys create key.json \
   --iam-account=secureai-vertex@MY_PROJECT.iam.gserviceaccount.com
 ```
@@ -66,7 +82,7 @@ gcloud iam service-accounts keys create key.json \
 </Tab>
 <Tab title="Google Cloud console">
 
-1. In the [Google Cloud console](https://console.cloud.google.com/), select your project and open **APIs & Services → Library**. Search for **Agent Platform API** and click **Enable**. If it already shows **API Enabled**, there is nothing to do.
+1. In the [Google Cloud console](https://console.cloud.google.com/), select your project and open **APIs & Services → Library**. Search for **Agent Platform API** (formerly **Vertex AI API**) and click **Enable**. If it already shows **API Enabled**, there is nothing to do.
 
    <div class="mac-window">
    ![Agent Platform API enabled in Google Cloud](/img/cloud/vertex-ai-inference/1%20-%20Vertex%20AI%20Inference.png)
@@ -84,7 +100,7 @@ gcloud iam service-accounts keys create key.json \
    ![Grant the Agent Platform User role](/img/cloud/vertex-ai-inference/3%20-%20Vertex%20AI%20Inference.png)
    </div>
 
-4. Open the service account, go to the **Keys** tab → **Add key → Create new key**, choose the **JSON** key type, and click **Create**. The file is downloaded only once.
+4. **Option A only.** Open the service account, go to the **Keys** tab → **Add key → Create new key**, choose the **JSON** key type, and click **Create**. The file is downloaded only once.
 
    <div class="mac-window">
    ![Create the JSON key](/img/cloud/vertex-ai-inference/4%20-%20Vertex%20AI%20Inference.png)
@@ -98,8 +114,23 @@ Treat the JSON file like a password. SecureAI stores it **encrypted** and never 
 </Warning>
 
 <Warning>
-**If you cannot create the key.** If step 4 fails with `iam.disableServiceAccountKeyCreation`, your Google Cloud organization's policy forbids service-account keys (it is the default on new organizations). This integration needs the JSON key, so an organization policy administrator must allow key creation for that project (the `iam.disableServiceAccountKeyCreation` constraint) before you continue.
+**If you cannot create the key.** If step 4 fails with `iam.disableServiceAccountKeyCreation`, your Google Cloud organization's policy forbids service-account keys (it is the default on new organizations). Use **option B, keyless**, if your deployment offers it; otherwise, ask an organization policy administrator for an exception to the `iam.disableServiceAccountKeyCreation` constraint on that project.
 </Warning>
+
+### Option B: authorize SecureAI without a key
+
+With option B no key is created. Instead:
+
+1. In SecureAI, open the Vertex AI panel (see step 2), choose **Keyless (impersonation)**, and enter your service account's email in **Your service account to impersonate**.
+2. The panel shows the command to run, already filled in with your deployment's SecureAI service account. Copy it with **Copy** and run it in Cloud Shell. It looks like this:
+
+   ```bash
+   gcloud iam service-accounts add-iam-policy-binding secureai-vertex@MY_PROJECT.iam.gserviceaccount.com \
+     --member="serviceAccount:SECUREAI_ACCOUNT" \
+     --role="roles/iam.serviceAccountTokenCreator"
+   ```
+
+   The role is granted **on your service account**, not on the project: SecureAI can only act as that account, which in turn only holds `roles/aiplatform.user`.
 
 ### Open models (Llama, DeepSeek, Qwen, gpt-oss)
 
@@ -113,8 +144,8 @@ Treat the JSON file like a password. SecureAI stores it **encrypted** and never 
    | Field | What to enter |
    |-------|---------------|
    | **Google Cloud project ID** | The project ID (for example `my-project-123`), not its display name. |
-   | **Vertex AI location** | To start, leave `global`: that is where the Gemini 3 *preview* default models live. If you need **data residency**, enter a region (`us-central1`, `europe-west4`…): it pins **where prompts are processed**, whereas `global` lets Google choose and does not guarantee it. Open models need a region. |
-   | **Authentication** | Keep **Service-account key (JSON)** selected and paste the **full** contents of `key.json`. |
+   | **Vertex AI location** | To start, leave `global`: that is where the Gemini 3 *preview* default models live. If you need **data residency**, enter a region (`us-central1`, `europe-west4`…): SecureAI sends each request to the regional endpoint you chose, and where Google processes it depends on Google's data-residency commitments. With `global`, Google chooses the region. Open models need a region. |
+   | **Authentication** | **Option A:** keep **Service-account key (JSON)** selected and paste the **full** contents of `key.json` into **Service-account key JSON**. **Option B:** choose **Keyless (impersonation)**, enter your service account's email in **Your service account to impersonate**, and run the command the panel shows (see **Option B: authorize SecureAI without a key**, above). |
 
    <div class="mac-window">
    ![Connection section of the Vertex AI panel](/img/cloud/vertex-ai-inference/5%20-%20Vertex%20AI%20Inference.png)
@@ -123,11 +154,11 @@ Treat the JSON file like a password. SecureAI stores it **encrypted** and never 
 3. Click **Save**. No traffic is routed yet: the integration is saved turned off so you can test it first.
 
 <Info>
-**Recommendation for day one:** keep the **Only these model families** mode with **Gemini** only, the default models unchanged, and fallback and quotas off. It is the most predictable setup. Leave **Remap everything** for when this has been validated.
+**Recommendation for day one:** keep the **Only these model families** mode with **Gemini** only, the default models unchanged, and both fallback and the per-seat spend cap off. It is the most predictable setup. Leave **Remap everything** for when this has been validated.
 </Info>
 
 <Info>
-The pasted key is never shown again. To replace it, paste a new one; if you leave the field empty when saving, the current key is kept.
+With option A, the pasted key is never shown again. To replace it, paste a new one; if you leave the field empty when saving, the current key is kept.
 </Info>
 
 ## Step 3. Choose what runs on Vertex
@@ -151,7 +182,7 @@ There are also two options:
 | Option | Off (recommended) | On |
 |--------|-------------------|----|
 | **Allow fallback to SecureAI-managed models** | If Vertex fails or a model has no equivalent, the request is **refused** instead of being sent to another provider. | Those requests are retried **once** on SecureAI-managed providers. The retry is audited. |
-| **Apply user point quotas to Vertex usage** | Vertex usage does not consume users' points. | Per-user point limits also apply to Vertex. |
+| **Apply each seat's spend cap to turns served in your account** | Turns served on your Vertex do not count against each user's seat spend cap. | Those turns count against the seat's spend cap (both the monthly cap and the 4-hour burst limit), at list price, just like turns SecureAI serves. |
 
 <div class="mac-window">
 
@@ -181,7 +212,7 @@ The test sends a few one-token requests and **is billed to your Google account**
 ## Step 5. Review the routing and turn it on
 
 1. Open **Routing preview → Show which lane serves each model**. For every catalog model it shows whether **your Vertex** will serve it (and with which Vertex model) or **SecureAI** will, and which ones will be **hidden from users**. The preview simulates the integration being on, so you can review the effect before enabling it.
-2. When the test passes, turn on **Route traffic to Vertex AI** and click **Save** again. **If you do not save, the switch does not stay on.** To turn it on, a project and a credential must be configured.
+2. When the test passes, turn on **Route traffic to Vertex AI** and click **Save** again. **If you do not save, the switch does not stay on.** To turn it on, a project and a credential must be configured. If your plan does not allow another cloud provider or the routing overlaps another one, SecureAI refuses it and explains why (see **How many cloud providers you can use**, above).
 
    <div class="mac-window">
    ![Route traffic to Vertex AI switch turned on](/img/cloud/vertex-ai-inference/8%20-%20Vertex%20AI%20Inference.png)
@@ -206,13 +237,14 @@ In **Remap everything** mode without fallback, the selector **only offers** mode
 
 - **LLM usage is billed by Google to your account**, not by SecureAI. You will see the charge in your Google Cloud billing, with your discounts and CUDs applied.
 - SecureAI shows the cost of turns served on Vertex as a **list-price estimate** for analytics only. It is a reference: it **does not include** your discounts, so Google's actual figure may be lower.
-- Turns on Vertex **do not deduct points** from users, unless you turn on **Apply user point quotas**.
+- Turns served on your Vertex **do not count against each user's seat spend cap**, unless you turn on **Apply each seat's spend cap to turns served in your account**. The **seat level** still applies: a user can only use models of their level or below, even when your Vertex serves them.
+- A **Govern BYO** seat can only use models served on your organization's own infrastructure: the ones your Vertex (or another connected cloud provider) serves and the self-hosted models on your servers. Any other model is refused, and the selector does not offer it **Auto**.
 
 ## Security and compliance
 
-- **Encrypted credentials.** The service-account key is stored encrypted (AES-256-GCM) and is never returned to the browser, not even to an administrator. The screen only shows the account's email.
+- **Encrypted credentials, or none.** With option A, the service-account key is stored encrypted (AES-256-GCM) and is never returned to the browser, not even to an administrator; the screen only shows the account's email. With option B no key is stored: SecureAI asks Google for short-lived tokens that act as your service account.
 - **The path stays protected.** Every call goes through SecureAI's SMLTP gateway: DLP, a signed per-request authorization token, and a verifiable **signed receipt**.
-- **Data residency.** With a pinned region (for example `europe-west4`), prompts are processed in that region and your organization's residency policies apply.
+- **Data residency.** With a pinned region (for example `europe-west4`), SecureAI sends each request to that region's endpoint and applies your organization's residency policies. Where Google processes the request depends on Google's data-residency commitments.
 - **Fails closed.** If the configuration cannot be read or Google's token cannot be obtained, the request is refused; it is not sent to another provider unless you allowed fallback.
 - **Audit.** Saving, testing, or disconnecting the integration is recorded in the activity log, with the names of the fields changed and never the key.
 - **Minimal permissions.** `roles/aiplatform.user` is enough for inference; the integration does not need to read your IAM or billing.
@@ -221,7 +253,10 @@ In **Remap everything** mode without fallback, the selector **only offers** mode
 
 **Disconnect** (panel footer) deletes the configuration and the stored key. From that moment, **all traffic returns to SecureAI-managed providers**. You can also turn off only the **Route traffic to Vertex AI** switch to pause routing while keeping the connection.
 
-If you stop using the key, **also revoke it in Google Cloud** (Service Accounts → Keys).
+Then remove the access in Google Cloud too:
+
+- **Option A:** if you stop using the key, **revoke it** (Service Accounts → Keys).
+- **Option B:** remove the `roles/iam.serviceAccountTokenCreator` role you granted the SecureAI service account on your service account (Service Accounts → your account → **Permissions**).
 
 ## Troubleshooting
 
@@ -229,22 +264,24 @@ These are the reasons **Test connection** can show:
 
 | Reason | Likely cause | What to do |
 |--------|--------------|------------|
-| Credential rejected or unusable | Incomplete or invalid JSON, or a revoked key | Paste the full JSON again or create a new key. |
-| Unauthenticated | Google rejected the token | Check that the service account exists and is active. |
-| The Vertex AI API is not enabled on the project | Step 1.1 missing | Enable the **Agent Platform API** (`aiplatform.googleapis.com`) on the project. |
+| Credential rejected or not usable | Incomplete or invalid JSON, or a revoked key. Keyless: the SecureAI account lacks `roles/iam.serviceAccountTokenCreator` on your service account, or the email is mistyped | Paste the full JSON again or create a new key. Keyless: run the command the panel shows and check the email. |
+| Not authenticated | Google rejected the token | Check that the service account exists and is active. |
+| Vertex AI API is not enabled on the project | Step 1.1 missing | Enable the **Agent Platform API (Vertex AI API)** (`aiplatform.googleapis.com`) on the project. |
 | Missing roles/aiplatform.user | Insufficient permission | Grant the **Agent Platform User** role (`roles/aiplatform.user`) to the service account on that project. |
 | Model not available in this location | The model does not exist in the chosen region, or it is an open model whose terms were not accepted in Model Garden | Change the region or that default model; for open models, accept the terms in Model Garden. |
 | Quota exceeded | Vertex quota exhausted | Review the project's quotas or ask Google for an increase. |
 | Google returned an error | Failure on Google's side | Retry; if it persists, check Google Cloud status. |
 | Blocked by your SMLTP model policy | SecureAI's policy does not allow the model | Add the model to the allowed policy. |
-| Vertex SMLTP gateway unreachable / TLS error | SecureAI infrastructure issue | Contact support. It does not depend on your Google project. |
+| SMLTP Vertex gateway unreachable / TLS error | SecureAI infrastructure issue | Contact support. It does not depend on your Google project. |
+| Unexpected error | A failure SecureAI could not classify | Retry. If it persists, contact support with the message the panel shows. |
+| No default models configured | All four default models are empty, so there is nothing to test | Fill in at least one under **Default Vertex models**, save, and test again. |
 
 Errors users may see in the chat:
 
 | Code | Meaning |
 |------|---------|
 | `SAI-VERTEX-001` | The chosen model has no Vertex equivalent and fallback is off. Pick another model, or allow fallback. |
-| `SAI-VERTEX-002` | Google access could not be obtained (invalid or revoked key). Renew the credential. |
+| `SAI-VERTEX-002` | Google access could not be obtained (invalid or revoked key or, keyless, the impersonation permission was removed). Renew the credential. |
 | `SAI-VERTEX-005` | The configuration could not be read and the request was refused for safety. Retry in a few seconds. |
 
 ## Current limitations
@@ -253,7 +290,6 @@ Errors users may see in the chat:
 - **Embeddings, re-ranking, OCR, the admin assistant, image generation, and realtime voice** stay on SecureAI-managed providers.
 - **One Vertex project and location** per organization.
 - The number of inference providers you can enable at the same time depends on your plan (Scale: 1, Enterprise: up to 3). See [Azure AI Foundry — Inference on your account](/en/integrations/cloud/azure-ai-foundry-inference) and [Amazon Bedrock — Inference on your account](/en/integrations/cloud/aws-bedrock-inference).
-- Authentication is **by service-account JSON key only**.
 - The **Claude Code** proxy uses Anthropic directly and does not go through Vertex.
 
 ## Related
