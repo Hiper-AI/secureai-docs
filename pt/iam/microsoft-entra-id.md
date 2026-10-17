@@ -27,7 +27,7 @@ O SecureAI só aceita tokens emitidos pelo **seu** locatário: o login fica vinc
 
 1. Entre no SecureAI como administrador.
 2. Acesse **Admin → Integrações** e filtre pela categoria **IAM**.
-3. No cartão **Microsoft Entra ID (SSO)**, clique em **Conectar Integração**.
+3. No cartão **Microsoft Entra ID (SSO)**, clique em **Conectar Integração** (ou em **Reconfigurar**, se o cartão mostrar **Configured by Hiper AI** (Configurado pela Hiper AI)).
 4. Na seção **1. Register SecureAI in Microsoft Entra ID** (Registrar o SecureAI no Microsoft Entra ID), clique em **Copy** (Copiar) ao lado de **Redirect URI** (URI de redirecionamento).
 
 O URI tem este formato (com o domínio da sua instância):
@@ -137,10 +137,15 @@ Volte para **Admin → Integrações → Microsoft Entra ID (SSO)**:
    | Directory (tenant) ID | A Microsoft não conhece esse locatário (`AADSTS90002`). Copie o ID do diretório da página Visão geral. |
    | Application (client) ID | Não existe esse aplicativo no locatário (`AADSTS700016`). Verifique o ID do cliente e se o aplicativo está no mesmo locatário. |
    | Client secret | O segredo é inválido (`AADSTS7000215`) ou expirou (`AADSTS7000222`). Cole o **Valor** ou crie um novo. |
+   | Redirect URI registered on the app | O URI da etapa 1 não está no registro do aplicativo (é o erro `AADSTS50011` que o usuário veria ao fazer login). No aplicativo, abra **Autenticação → Adicionar uma plataforma → Web** (Authentication → Add a platform → Web), cole-o exatamente e salve. |
 
    O teste usa o que está digitado no formulário, então você pode testar antes de salvar. Se o seu locatário tiver uma política de Acesso Condicional que bloqueie tokens somente de aplicativo, o segredo pode aparecer como "Could not be verified automatically" (não foi possível verificar automaticamente): isso não é um erro — confirme com um login real.
 
-3. Ative **Show "Continue with Microsoft" on the login page** (Mostrar o botão da Microsoft na página de login).
+   <Note>
+   O teste confirma que o URI está registrado, mas não se ele foi registrado na plataforma **Web** ou em **Aplicativo de página única (SPA)**. Registrado como SPA, o teste passa e o login falha com "Single sign-on could not be completed". Verifique se, em **Autenticação**, o URI aparece em **Web**.
+   </Note>
+
+3. Verifique se **Show "Continue with Microsoft" on the login page** (Mostrar o botão da Microsoft na página de login) está ativado (ele já vem ativado na primeira vez).
 4. Clique em **Save** (Salvar).
 
 A partir daí, o cartão exibe **Active on the login page** (Ativo na página de login), e o botão **Continuar com Azure Entra** aparece na página de login da sua instância.
@@ -193,13 +198,13 @@ Os erros de login são exibidos na página de login do SecureAI (algumas mensage
 | "This account is not allowed to sign in here…" | O domínio do e-mail não está em **Allowed email domains**, ou o token veio de outro locatário. |
 | "This sign-in method is not enabled for your organization." | A integração está desativada ou incompleta. Verifique o cartão em Integrações. |
 | "Your identity provider did not complete the sign-in…" | A Microsoft retornou um erro: o usuário cancelou, falta o consentimento do administrador (etapa 4) ou o usuário não está atribuído ao aplicativo. |
-| "Single sign-on could not be completed…" | A troca do código falhou, normalmente porque o segredo expirou ou foi substituído. Use **Test connection**. |
+| "Single sign-on could not be completed…" | A troca do código falhou: normalmente um segredo expirado ou substituído (use **Test connection**), ou o URI de redirecionamento registrado como **Aplicativo de página única** em vez de **Web** (mova-o para **Web** em **Autenticação**). |
 | "Sua conta está inativa…" | A conta está desativada no SecureAI. |
 | "A sessão de login expirou ou não foi iniciada neste navegador…" | Passaram-se mais de 10 minutos, ou o login foi iniciado em outra guia ou navegador. Tente novamente a partir da página de login. |
 
 Erros exibidos pela Microsoft (antes de voltar ao SecureAI):
 
-- **AADSTS50011 – The redirect URI does not match**: o URI registrado no Entra ID não é exatamente o que o SecureAI mostra na etapa 1, ou foi registrado como "Aplicativo de página única" em vez de **Web**.
+- **AADSTS50011 – The redirect URI does not match**: o URI registrado no Entra ID não é exatamente o que o SecureAI mostra na etapa 1 (uma barra a mais no final já basta para não coincidir). O **Test connection** detecta isso antes do primeiro login.
 - **AADSTS65001 / "Need admin approval"**: conceda o consentimento do administrador (etapa 4).
 - **AADSTS50105 – The signed in user is not assigned to a role for the application**: o aplicativo empresarial está com **Atribuição necessária?** definido como **Sim**. Atribua o usuário ou um grupo em **Aplicativos empresariais → SecureAI SSO → Usuários e grupos**.
 - **AADSTS7000215 / AADSTS7000222**: segredo inválido ou expirado. Informe um novo.
