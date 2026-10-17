@@ -11,7 +11,7 @@ description: "连接 OpenAI 平台，以便 SecureAI 可以清点项目、模型
 ## SecureAI 导入什么
 
 - **项目、模型、成员、角色和组**
-- **NHIs** — API 密钥和服务帐户（可撤销 — 请参阅 [NHI 库存](/zh/discovery/nhi-inventory)）
+- **NHIs** — API 密钥和服务帐户（可撤销 — 请参阅 [NHI 清单](/zh/discovery/nhi-inventory)）
 - **支出警报、速率限制、证书和数据保留设置**
 - **审核日志**
 - **过去 30 天的使用情况和费用**，包括每位用户的支出
@@ -44,7 +44,7 @@ description: "连接 OpenAI 平台，以便 SecureAI 可以清点项目、模型
 
 ## 验证
 
-第一次同步后，打开 [云传感器](/zh/discovery/cloud-sensors) 查看发现的模型/助手，打开 [NHI 库存](/zh/discovery/nhi-inventory) 查看密钥和服务帐户。每个提供商**见解**显示使用情况、成本和每个用户的支出。
+第一次同步后，打开 [云传感器](/zh/discovery/cloud-sensors) 查看发现的模型/助手，打开 [NHI 清单](/zh/discovery/nhi-inventory) 查看密钥和服务帐户。每个提供商**见解**显示使用情况、成本和每个用户的支出。
 
 ## 撤销
 
@@ -53,4 +53,4 @@ OpenAI API 密钥可从 [NHI Inventory](/zh/discovery/nhi-inventory) **撤销**�
 ## 相关
 
 - [云人工智能提供商概述](/zh/integrations/cloud/overview)
-- [NHI 库存](/zh/discovery/nhi-inventory)
+- [NHI 清单](/zh/discovery/nhi-inventory)

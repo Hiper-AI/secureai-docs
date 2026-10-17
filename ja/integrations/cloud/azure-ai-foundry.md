@@ -62,4 +62,4 @@ Entra サービス プリンシパル、アプリのシークレット/証明書
 
 - [クラウド AI プロバイダーの概要](/ja/integrations/cloud/overview)
 - [Microsoft Entra ID SSO](/ja/iam/microsoft-entra-id)
-- [国民健康保険の目録](/ja/discovery/nhi-inventory)
+- [NHI インベントリ](/ja/discovery/nhi-inventory)

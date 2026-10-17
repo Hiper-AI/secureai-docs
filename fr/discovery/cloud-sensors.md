@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
-title: "Capteurs de nuage"
-sidebar_label: "Capteurs de nuage"
+title: "Cloud Sensors"
+sidebar_label: "Cloud Sensors"
 description: "L'inventaire en lecture seule des agents et des modèles découverts au sein de vos plateformes cloud d'IA connectées"
 ---
 # Capteurs cloud

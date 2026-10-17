@@ -1,10 +1,10 @@
 ---
 sidebar_position: 2
-title: "Wolkensensoren"
-sidebar_label: "Wolkensensoren"
+title: "Cloud Sensors"
+sidebar_label: "Cloud Sensors"
 description: "Der schreibgeschützte Bestand an Agenten und Modellen, die in Ihren verbundenen KI-Cloud-Plattformen entdeckt wurden"
 ---
-# Wolkensensoren
+# Cloud Sensors
 
 **Cloud Sensors** (Admin → Agent Registry → **Cloud**) ist das Inventar der Agenten, Modelle und Bereitstellungen, die in Ihren verbundenen Cloud-KI-Plattformen entdeckt wurden – **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform und Anthropic Console**. Es ist schreibgeschützt: Sie konfigurieren die Konnektoren in [Integrationen](/de/integrations/cloud/overview) und Cloud Sensors zeigt, was sie gefunden haben.
 

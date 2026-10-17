@@ -5,7 +5,7 @@ sidebar_label: "Sensores Cloud"
 description: "O inventário somente leitura de agentes e modelos descobertos em suas plataformas de nuvem de IA conectadas"
 ---
 
-# Sensores de nuvem
+# Sensores Cloud
 
 **Cloud Sensors** (Admin → Agent Registry → **Cloud**) é o inventário de agentes, modelos e implantações descobertos dentro de suas plataformas de IA em nuvem conectadas — **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform e Anthropic Console**. É somente leitura: você configura os conectores em [Integrações](/pt/integrations/cloud/overview) e o Cloud Sensors mostra o que encontrou.
 

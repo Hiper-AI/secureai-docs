@@ -62,4 +62,4 @@ Entra 服务主体、应用程序机密/证书和托管身份可通过 Microsoft
 
 - [云人工智能提供商概述](/zh/integrations/cloud/overview)
 - [Microsoft Entra ID SSO](/zh/iam/microsoft-entra-id)
-- [NHI 库存](/zh/discovery/nhi-inventory)
+- [NHI 清单](/zh/discovery/nhi-inventory)

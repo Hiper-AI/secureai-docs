@@ -11,7 +11,7 @@ description: "连接您的 OpenAI、Anthropic、Azure、AWS 和 GCP AI 平台，
 连接后，连接器会发现并持续同步：
 
 - 在平台上运行的 **代理、模型和部署** → 显示在 [云传感器](/zh/discovery/cloud-sensors) 中。
-- **非人类身份 (NHIs)** — API 密钥、服务帐户和（如果支持）BYOK 密钥 → 显示在 [NHI 库存](/zh/discovery/nhi-inventory) 中，具有阻止/撤销控件。
+- **非人类身份 (NHIs)** — API 密钥、服务帐户和（如果支持）BYOK 密钥 → 显示在 [NHI 清单](/zh/discovery/nhi-inventory) 中，具有阻止/撤销控件。
 - **过去 30 天的使用情况、代币和成本**。
 - **治理信号** — IAM/RBAC 绑定、支出限制和审计日志，显示在每个提供商的见解中。
 
