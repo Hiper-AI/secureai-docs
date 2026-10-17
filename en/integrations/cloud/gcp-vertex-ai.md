@@ -185,7 +185,7 @@ Whatever falls outside a cap shows up as a partial gap, with how much was read. 
 
 ## Connect
 
-1. **Admin → Integrations → Cloud → Google Cloud — Discovery → Connect.**
+1. **Admin → Integrations → Cloud → Google Cloud — Discovery → Connect Integration.**
 2. Enter the project ID, the location (or several in **More Vertex AI Locations**), and either the JSON key or the service account to impersonate. If you use them, add the service account for revocation, the organization or folder, and the billing fields.
 3. Click **Connect**. SecureAI checks the credentials with a real read of the project before saving — it takes a few seconds. If it cannot read the project, it shows why and saves nothing; what you entered stays in the form. The possible messages are in [Troubleshooting](#troubleshooting).
 4. If it saves but some roles are missing, a warning lists them. Grant them and sync again.

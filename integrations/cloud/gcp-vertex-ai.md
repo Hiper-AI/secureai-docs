@@ -185,7 +185,7 @@ Lo que queda fuera de un tope aparece como brecha parcial, con la cantidad leíd
 
 ## Conectar
 
-1. **Administrador → Integraciones → Nube → Google Cloud — Descubrimiento → Conectar.**
+1. **Administrador → Integraciones → Nube → Google Cloud — Descubrimiento → Conectar Integración.**
 2. Ingrese el ID del proyecto, la ubicación (o varias en **Más ubicaciones de Vertex AI**) y la clave JSON o la cuenta de servicio a suplantar. Agregue, si los usa, la cuenta de servicio para revocar, la organización o carpeta y los campos de facturación.
 3. Haga clic en **Conectar**. Antes de guardar, SecureAI verifica las credenciales con una lectura real del proyecto; demora unos segundos. Si no puede leer el proyecto, muestra el motivo y no guarda nada; lo que ingresó queda en el formulario. Los mensajes posibles están en [Solución de problemas](#solución-de-problemas).
 4. Si guarda pero faltan roles, un aviso los enumera. Otórguelos y vuelva a sincronizar.
