@@ -251,12 +251,15 @@ Errores que pueden ver los usuarios en el chat:
 
 - **Claude y Mistral en Vertex** no están soportados (usan una API distinta).
 - **Embeddings, re-ranking, OCR, asistente de administración, generación de imágenes y voz en tiempo real** siguen en proveedores administrados por SecureAI.
-- **Una sola conexión** por organización (un proyecto y una ubicación a la vez).
+- **Un solo proyecto y una sola ubicación de Vertex** por organización.
+- La cantidad de proveedores de inferencia que puede habilitar a la vez depende del plan (Scale: 1, Enterprise: hasta 3). Consulte [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference) y [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference).
 - La autenticación es **solo con clave JSON** de cuenta de servicio.
 - El proxy de **Claude Code** usa Anthropic de forma directa y no pasa por Vertex.
 
 ## Relacionado
 
 - [Google Cloud — Descubrimiento](/integrations/cloud/gcp-vertex-ai) — inventario de agentes, modelos, identidades y costos del proyecto.
+- [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference)
+- [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference)
 - [Descripción general de los proveedores de IA en la nube](/integrations/cloud/overview)
 - [Recibos firmados](/api/receipts)

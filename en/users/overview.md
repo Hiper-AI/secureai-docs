@@ -44,6 +44,6 @@ User accounts are provisioned under organizational license tiers:
 
 ## Common Administrative Tasks
 
-- **Create a User**: Go to **Admin ? Users ? Create User**. Set email, role, and license tier.
-- **Assign to Groups**: Navigate to **Admin ? Groups** to organize users into collaborative teams with shared group indexes.
-- **Configure SSO**: Connect your enterprise Identity Provider (Google Workspace or Microsoft Entra ID) under the **Authentication** settings.
+- **Create a User**: Go to **Admin → IAM Management → User Management → Add User**. Set email, role, and license tier.
+- **Assign to Groups**: Navigate to **Admin → IAM Management → Team Management** to organize users into collaborative teams with shared group indexes.
+- **Configure SSO**: Connect your enterprise identity provider in **Admin → Integrations → IAM**. It is self-serve: see [Google Workspace (SSO)](/en/iam/google-workspace) and [Microsoft Entra ID (SSO)](/en/iam/microsoft-entra-id).

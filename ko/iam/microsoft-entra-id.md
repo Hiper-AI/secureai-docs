@@ -1,214 +1,212 @@
 ---
 sidebar_position: 3
-title: "마이크로소프트 엔트라 ID(SSO)"
+title: "Microsoft Entra ID (SSO)"
+sidebar_label: "Microsoft Entra ID (SSO)"
 ---
-# 마이크로소프트 엔트라 ID(SSO) 통합
 
-이 가이드에서는 SecureAI를 사용한 SSO(Single Sign-On)를 위해 Microsoft Entra ID(이전의 Azure Active Directory)를 구성하는 과정을 안내합니다. Azure에서 필요한 자격 증명을 얻고 이를 제출하여 통합을 완료하는 방법을 알아봅니다.
+# Microsoft Entra ID (SSO) 통합
 
-## 전제 조건
+이 통합을 사용하면 조직의 사용자가 Microsoft 회사 계정으로 SecureAI에 로그인할 수 있습니다(**Continue with Microsoft** 버튼). 설정은 **셀프 서비스** 방식입니다. 조직의 관리자가 자체 Microsoft Entra ID 테넌트(이전 명칭: Azure Active Directory)에 SecureAI를 등록하고 **관리자 → 통합**에서 세부 정보를 입력합니다. 티켓을 열 필요도, Hiper AI의 처리를 기다릴 필요도 없습니다. 저장하는 즉시 로그인 페이지에 버튼이 표시됩니다.
 
-- Azure Portal에 대한 관리자 액세스
-- Azure AD(Azure Entra ID) 테넌트
-- SecureAI에 대한 관리자 액세스
+예상 소요 시간: 10분.
 
-## 1단계: Azure Portal에서 애플리케이션 만들기
+## 사전 요구 사항
 
-1. [Azure 포털](https://portal.azure.com)에 로그인합니다.
-2. **Azure Active Directory** 또는 **Microsoft Entra ID**를 검색하여 선택합니다.
+- 앱 등록을 만들 수 있는 Microsoft Entra 역할(예: **애플리케이션 개발자**(Application Developer) 또는 **애플리케이션 관리자**(Application Administrator)). 관리자 동의를 부여하려면(4단계) **클라우드 애플리케이션 관리자**(Cloud Application Administrator), **애플리케이션 관리자** 또는 **전역 관리자**(Global Administrator) 역할이 필요합니다.
+- SecureAI 관리자 액세스 권한 및 **통합** 섹션에 대한 **Admin** 권한.
 
-<div class="mac-window">
-  ![Azure 포털 검색](/img/microsoft%20entraid%20sso%20images/1%20-%20azure.png)
-</div>
+## 작동 방식
 
-3. 사이드 메뉴에서 **앱 등록**을 선택하세요.
+1. Entra ID 테넌트에 **앱 등록**을 만듭니다. SecureAI는 **클라이언트 비밀**을 사용하는 OpenID Connect(인증 코드 흐름)를 사용합니다.
+2. SecureAI에 **디렉터리(테넌트) ID**, **애플리케이션(클라이언트) ID** 및 **클라이언트 비밀 값**을 입력합니다. 비밀은 암호화되어 저장되며 다시 표시되지 않습니다.
+3. 사용자가 **Continue with Microsoft**를 클릭하면 Microsoft가 사용자를 인증하고(조직의 MFA 및 조건부 액세스 정책 적용), 이메일이 SecureAI의 **활성** 계정과 일치하면 SecureAI가 로그인을 허용합니다.
 
-<div class="mac-window">
-  ![앱 등록 메뉴](/img/microsoft%20entraid%20sso%20images/2%20-%20azure.png)
-</div>
+SecureAI는 **자사** 테넌트에서 발급한 토큰만 허용합니다. 로그인은 자사 디렉터리로 고정되며, 다중 테넌트 엔드포인트(`common` / `organizations`)는 절대 사용되지 않습니다.
 
-4. **+ 신규등록**을 클릭하세요.
+## 1단계: SecureAI에서 리디렉션 URI 복사
 
-<div class="mac-window">
-  ![신규 등록 버튼](/img/microsoft%20entraid%20sso%20images/3%20-%20azure.png)
-</div>
+1. 관리자로 SecureAI에 로그인합니다.
+2. **관리자 → 통합**으로 이동하여 **IAM** 카테고리로 필터링합니다.
+3. **Microsoft Entra ID (SSO)** 카드에서 **통합 연결**을 클릭합니다(카드에 **Configured by Hiper AI**(Hiper AI가 구성함)가 표시되어 있으면 **재구성**을 클릭합니다).
+4. **1. Register SecureAI in Microsoft Entra ID** 섹션에서 **Redirect URI** 옆의 **Copy**를 클릭합니다.
 
-## 2단계: 애플리케이션 구성
+URI는 다음과 같은 형식입니다(도메인은 사용 중인 인스턴스의 도메인).
 
-1. **이름**: 설명이 포함된 이름(예: "SecureAI SSO")을 입력합니다.
-2. **지원되는 계정 유형**:
-   - **이 조직 디렉터리에만 있는 계정**을 선택합니다.
-   - 또는 여러 조직을 지원해야 하는 경우 **모든 조직 디렉터리의 계정**
-3. **리디렉션 URI**:
-   - 플랫폼: **웹**
-   - URI: `https://your-backend-domain.com/api/auth/azure/callback`
-   - **참고**: 이 URL은 개발팀으로부터 얻을 수 있습니다.
-4. **등록**을 클릭하세요.
+```
+https://<your-company>.hiperai.ai/api/auth/azure/callback
+```
+
+항상 인스턴스에 표시되는 URI를 사용하세요. `https://`를 포함하여 한 글자도 빠짐없이 정확히 일치해야 합니다.
+
+이 창은 열어 두세요. 나중에 돌아와서 세부 정보를 붙여 넣습니다.
+
+## 2단계: Microsoft Entra ID에 애플리케이션 등록
+
+1. [Microsoft Entra 관리 센터](https://entra.microsoft.com)(또는 [Azure Portal](https://portal.azure.com) → **Microsoft Entra ID**)를 엽니다.
 
 <div class="mac-window">
-  ![등록 버튼](/img/microsoft%20entraid%20sso%20images/4%20-%20azure.png)
+  ![Searching for Microsoft Entra ID in the Azure portal](/img/microsoft%20entraid%20sso%20images/1%20-%20azure.png)
 </div>
 
-## 3단계: 애플리케이션(클라이언트) ID 가져오기
-
-1. 지원서 **개요** 페이지에서
-2. **애플리케이션(클라이언트) ID** 값을 복사합니다.
-   - GUID는 다음과 같습니다: `b96ee19f-5a15-4a85-b936-****-****`
-   - **이 값을 저장하세요** - 나중에 필요합니다.
-
-## 4단계: 디렉터리(테넌트) ID 가져오기
-
-1. 동일한 **개요** 페이지에서
-2. **디렉터리(테넌트) ID** 값을 복사합니다.
-   - GUID는 다음과 같습니다: `155812d2-1112-46c8-bf52-****-****`
-   - **이 값을 저장하세요** - 나중에 필요합니다.
-
-## 5단계: 클라이언트 비밀번호 생성
-
-1. 애플리케이션 사이드 메뉴에서 **인증서 및 비밀**을 선택합니다.
+2. **애플리케이션 → 앱 등록**(Applications → App registrations)으로 이동합니다.
 
 <div class="mac-window">
-  ![인증서 및 비밀 메뉴](/img/microsoft%20entraid%20sso%20images/5%20-%20azure.png)
+  ![App registrations menu](/img/microsoft%20entraid%20sso%20images/2%20-%20azure.png)
 </div>
 
-2. **클라이언트 비밀** 섹션에서 **+ 새 클라이언트 비밀**을 클릭합니다.
-3. **설명**: 설명을 입력합니다(예: "SecureAI SSO 비밀")
-4. **만료**:
-   - 유효기간을 선택하세요. (권장 : 24개월)
-   - **중요**: 비밀번호가 만료되기 전에 반드시 갱신하세요.
-5. **추가**를 클릭하세요.
+3. **+ 새 등록**(New registration)을 클릭합니다.
 
 <div class="mac-window">
-  ![클라이언트 비밀 추가 버튼](/img/microsoft%20entraid%20sso%20images/6%20-%20azure.png)
+  ![New registration button](/img/microsoft%20entraid%20sso%20images/3%20-%20azure.png)
 </div>
 
-6. **즉시** 비밀의 **값**을 복사합니다.
-   - 다음과 같습니다: `plm8Q~************************************`
+4. 양식을 작성합니다.
+   - **이름**: 알아보기 쉬운 이름(예: `SecureAI SSO`). 사용자에게 동의 화면에서 이 이름이 표시됩니다.
+   - **지원되는 계정 유형**: **이 조직 디렉터리의 계정만(단일 테넌트)**(Accounts in this organizational directory only).
+   - **리디렉션 URI**: 플랫폼으로 **웹**(Web)을 선택하고("단일 페이지 애플리케이션"이 아님) 1단계에서 복사한 URI를 붙여 넣습니다.
+5. **등록**(Register)을 클릭합니다.
 
 <div class="mac-window">
-  ![클라이언트 비밀 값](/img/microsoft%20entraid%20sso%20images/7%20-%20azure.png)
+  ![Application registration form](/img/microsoft%20entraid%20sso%20images/4%20-%20azure.png)
 </div>
-   - **경고**: 이 값은 한 번만 표시됩니다. 분실한 경우 새 비밀번호를 만들어야 합니다.
-   - **이 값을 안전하게 저장하세요**
 
-## 6단계: API 권한 구성
+6. 애플리케이션의 **개요**(Overview) 페이지에서 다음 값을 복사합니다.
+   - **애플리케이션(클라이언트) ID** — `b96ee19f-5a15-4a85-b936-xxxxxxxxxxxx`와 같은 GUID.
+   - **디렉터리(테넌트) ID** — `155812d2-1112-46c8-bf52-xxxxxxxxxxxx`와 같은 또 다른 GUID.
 
-1. 사이드 메뉴에서 **API 권한**을 선택하세요.
-2. **+ 권한 추가**를 클릭합니다.
-3. **Microsoft Graph**를 선택합니다.
-4. **위임된 권한**을 선택합니다.
-5. 다음 권한을 확인하세요.
-   - `openid` (자동으로 포함됨)
-   - `profile`
-   - `email`
-6. **권한 추가**를 클릭하세요.
+## 3단계: 클라이언트 비밀 만들기
+
+1. 애플리케이션 메뉴에서 **인증서 및 비밀**(Certificates & secrets)을 엽니다.
 
 <div class="mac-window">
-  ![권한 추가 버튼](/img/microsoft%20entraid%20sso%20images/8%20-%20azure.png)
+  ![Certificates & secrets menu](/img/microsoft%20entraid%20sso%20images/5%20-%20azure.png)
 </div>
 
-7. 조직에서 관리자 동의가 필요한 경우:
-   - **관리자 동의 부여**를 클릭합니다.
+2. **클라이언트 비밀**(Client secrets)에서 **+ 새 클라이언트 비밀**(New client secret)을 클릭합니다.
+3. 설명(예: `SecureAI SSO`)을 입력하고 만료 기간을 선택합니다(Microsoft는 12개월 미만을 권장하며, 최대 24개월입니다).
+4. **추가**(Add)를 클릭합니다.
 
 <div class="mac-window">
-  ![관리자 동의 부여 버튼](/img/microsoft%20entraid%20sso%20images/9%20-%20azure.png)
+  ![Add a client secret](/img/microsoft%20entraid%20sso%20images/6%20-%20azure.png)
 </div>
 
-## 7단계: Hiper AI 팀에 변수 보내기
-
-Azure에서 애플리케이션을 만들고 위의 단계를 수행하면 세 가지 중요한 정보를 얻게 됩니다.
-
-1. **클라이언트 ID**(3단계)
-2. **테넌트 ID**(4단계)
-3. **클라이언트 비밀번호 값**(5단계)
-
-SSO 통합을 완료하려면 이 세 가지 값을 Hiper AI 팀에 보내야 합니다.
-
-### A. 관리자 패널에 액세스합니다.
-
-1. SecureAI 인스턴스에 관리자로 로그인합니다.
-2. `https://{enterprise.name}.hiperai.ai/admin/home`로 이동합니다.
-3. 오른쪽 상단에서 관리자 프로필 사진을 클릭하세요.
-4. 다양한 옵션이 포함된 드롭다운 메뉴가 열립니다.
-
-### B. 지원 요청 제출
-
-1. 드롭다운 메뉴에서 **"지원 받기"**를 클릭하세요.
+5. **즉시** **값**(Value) 열을 복사합니다(`plm8Q~xxxxxxxx…`와 같은 형식). 이 값은 한 번만 표시됩니다.
 
 <div class="mac-window">
-  ![지원 받기 메뉴](/img/microsoft%20entraid%20sso%20images/10%20-%20azure.png)
+  ![Client secret value](/img/microsoft%20entraid%20sso%20images/7%20-%20azure.png)
 </div>
 
-2. 지원 티켓 양식이 포함된 팝업창이 나타납니다.
-3. 다음 정보로 양식을 작성하십시오.
-   - **범주**: **"통합 및 구현"**을 선택합니다.
+<Warning>
+**비밀 ID**(Secret ID, GUID 형식)가 아니라 **값**(Value)을 복사하세요. 비밀 ID를 붙여 넣으면 SecureAI가 저장 시 이를 거부합니다.
+</Warning>
+
+만료 날짜를 기록해 두세요. 비밀이 만료되면 새 비밀을 입력할 때까지 Microsoft 로그인이 작동하지 않습니다([클라이언트 비밀 교체](#클라이언트-비밀-교체) 참조).
+
+## 4단계: API 권한 검토
+
+SecureAI는 Microsoft Graph 위임된 권한 `openid`, `profile`, `email` 및 `User.Read`를 요청합니다(`User.Read`는 사용자의 프로필 사진을 읽는 데 사용). `User.Read`는 새 앱 등록에 기본적으로 추가되어 있습니다.
+
+1. 애플리케이션 메뉴에서 **API 권한**(API permissions)을 엽니다.
+2. **Microsoft Graph → 위임된 권한**(Delegated permissions)에 `User.Read`가 포함되어 있는지 확인합니다. 목록에 명시적으로 표시하려면 `openid`, `profile`, `email`도 추가합니다(**+ 권한 추가 → Microsoft Graph → 위임된 권한**).
 
 <div class="mac-window">
-  ![지원 양식 카테고리](/img/microsoft%20entraid%20sso%20images/11%20-%20azure.png)
+  ![Add delegated permissions](/img/microsoft%20entraid%20sso%20images/8%20-%20azure.png)
 </div>
 
-   - **제목**: **"Microsoft Entra ID SSO 통합"**을 입력하세요.
-   - **설명**: 설정 과정에서 복사한 세 가지 값을 붙여넣습니다.
-     - 클라이언트 ID(애플리케이션 ID)
-     - 테넌트 ID(디렉터리 ID)
-     - 클라이언트 비밀 값
-4. **"요청 제출"** 버튼을 클릭하세요
+3. **＜조직 이름＞에 대한 관리자 동의 허용**(Grant admin consent)을 클릭하고 확인합니다.
 
-### C. 확인을 기다립니다.
+<div class="mac-window">
+  ![Grant admin consent](/img/microsoft%20entraid%20sso%20images/9%20-%20azure.png)
+</div>
 
-- **24~72시간** 이내에 확인 이메일을 받게 됩니다(이용 가능 여부에 따라 다름).
-- SSO가 성공적으로 구성되었음을 확인하는 이메일이 전송됩니다.
-- 일단 구성되면 로그인 페이지에서 **"Azure EntraID로 계속하기"** 로그인 버튼을 사용하여 SecureAI 인스턴스에 액세스할 수 있습니다.
+테넌트에서 사용자가 애플리케이션에 동의하는 것을 허용하지 않는 경우(기업에서 흔한 설정) 이 단계는 필수입니다. 이 단계를 수행하지 않으면 사용자가 로그인할 때 "관리자 승인 필요"(Need admin approval)가 표시됩니다.
 
-**중요**: 통합이 완료될 때까지 자격 증명을 안전하게 유지하세요. 안전하지 않은 채널을 통해 공유하지 마세요.
+## 5단계: SecureAI에 세부 정보 입력 및 테스트
 
-## 사용자 구성
+**관리자 → 통합 → Microsoft Entra ID (SSO)**로 돌아갑니다.
 
-### 기존 사용자
+1. **2. Paste the app registration details**에서 다음 항목을 입력합니다.
+   - **Directory (tenant) ID**(디렉터리(테넌트) ID): 2단계의 GUID(`contoso.onmicrosoft.com`과 같은 테넌트의 확인된 도메인도 사용 가능).
+   - **Application (client) ID**(애플리케이션(클라이언트) ID): 2단계의 GUID.
+   - **Client secret value**(클라이언트 비밀 값): 3단계의 값.
+   - **Allowed email domains**(허용된 이메일 도메인, 선택 사항, 권장): 조직의 이메일 도메인을 쉼표로 구분하여 입력합니다(예: `contoso.com, contoso.co.uk`). 이 주소만 Microsoft로 로그인할 수 있습니다. 비워 두면 SecureAI에 존재하는 테넌트의 모든 계정이 허용됩니다.
+2. **3. Test the connection**에서 **Test connection**(연결 테스트)을 클릭합니다. SecureAI는 (누구도 로그인시키지 않고) Microsoft에 확인하여 다음 항목을 검사합니다.
 
-SecureAI에 이미 계정이 있는 사용자는 (기본 인증 사용 여부와 관계없이) **다시 생성할 필요가 없습니다**. 기존 계정을 계속 사용할 수 있으며, 구성된 Azure Entra ID SSO를 사용하여 로그인할 수도 있습니다.
+   | 검사 항목 | 실패한 경우 |
+   |---|---|
+   | 디렉터리(테넌트) ID | Microsoft가 해당 테넌트를 알지 못합니다(`AADSTS90002`). 개요 페이지에서 디렉터리 ID를 복사하세요. |
+   | 애플리케이션(클라이언트) ID | 테넌트에 해당 애플리케이션이 없습니다(`AADSTS700016`). 클라이언트 ID와 앱이 같은 테넌트에 있는지 확인하세요. |
+   | 클라이언트 비밀 | 비밀이 유효하지 않거나(`AADSTS7000215`) 만료되었습니다(`AADSTS7000222`). **값**(Value)을 붙여 넣거나 새 비밀을 만드세요. |
+   | 애플리케이션에 등록된 리디렉션 URI | 1단계의 URI가 앱 등록에 없습니다(사용자가 로그인할 때 받게 되는 `AADSTS50011` 오류). 애플리케이션에서 **인증 → 플랫폼 추가 → 웹**(Authentication → Add a platform → Web)을 열고 URI를 그대로 붙여 넣은 다음 저장하세요. |
 
-**중요**: SSO가 작동하려면 Azure의 사용자 이메일이 SecureAI의 이메일과 정확히 일치해야 합니다.
+   테스트는 양식에 입력된 내용을 사용하므로 저장하기 전에 테스트할 수 있습니다. 테넌트에 앱 전용 토큰을 차단하는 조건부 액세스 정책이 있는 경우 비밀이 "could not be verified automatically"(자동으로 확인할 수 없음)로 표시될 수 있습니다. 이는 오류가 아니므로 실제 로그인으로 확인하세요.
 
-### 새 SSO 사용자 만들기
+   <Note>
+   테스트는 URI가 등록되었는지는 확인하지만, **웹** 플랫폼에 등록되었는지 **단일 페이지 애플리케이션**(SPA)에 등록되었는지는 확인하지 않습니다. SPA로 등록된 경우 테스트는 통과하지만 로그인은 "Single sign-on could not be completed"로 실패합니다. **인증**에서 URI가 **웹** 아래에 나열되어 있는지 확인하세요.
+   </Note>
 
-SSO를 통해서만 SecureAI에 액세스해야 하는 신규 사용자의 경우:
+3. **Show "Continue with Microsoft" on the login page**(로그인 페이지에 "Continue with Microsoft" 표시)가 켜져 있는지 확인합니다(처음에는 기본적으로 켜져 있습니다).
+4. **Save**(저장)를 클릭합니다.
 
-1. SecureAI 관리자 패널에서 **사용자 관리**로 이동합니다.
-2. 새 사용자를 생성하려면 클릭하세요.
-3. 사용자 생성 시 **"비즈니스 계정 / SSO"** 옵션을 선택하세요.
-4. 이 구성은 다음을 보장합니다.
-   - 신규 사용자는 비밀번호를 생성하라는 이메일을 받지 않습니다**
-   - 사용자는 **Azure Entra ID SSO** 로그인 버튼을 사용하여 SecureAI에 직접 액세스할 수 있습니다.
-   - Azure의 사용자 이메일은 SecureAI에 입력한 이메일과 정확히 일치해야 합니다.
+이후 카드에 **Active on the login page**(로그인 페이지에서 활성)가 표시되고, 인스턴스의 로그인 페이지에 **Continue with Microsoft** 버튼이 나타납니다.
+
+## 6단계: 사용자 추가
+
+SecureAI는 처음 로그인할 때 **계정을 자동으로 만들지 않습니다**. Microsoft로 로그인할 모든 사용자가 SecureAI에 존재하고 활성 상태여야 합니다. SecureAI 계정의 이메일은 Entra ID의 사용자 이메일(**메일** 특성, 비어 있으면 **사용자 계정 이름(UPN)**)과 일치해야 합니다. 대소문자는 구분하지 않습니다.
+
+- **기존 사용자**: 이미 SecureAI 계정이 있는 사용자(비밀번호를 사용하는 경우 포함)는 다시 만들어지지 않습니다. 계속 비밀번호로 로그인할 수 있으며 Microsoft로도 로그인할 수 있습니다.
+- **SSO 전용 신규 사용자**: **관리자 → IAM 관리 → 사용자 관리 → 사용자 추가**에서 인증 방법으로 **비즈니스 계정 / SSO**를 선택합니다. 사용자는 비밀번호 생성 이메일을 받지 않으며 **Continue with Microsoft**로 바로 로그인합니다.
+- **다수의 사용자**: SCIM을 사용하여 Entra ID에서 사용자를 자동으로 프로비저닝 및 프로비저닝 해제할 수 있습니다.
+
+SecureAI에서 사용자가 비활성화되면(수동 또는 SCIM을 통해) 해당 사용자는 SSO로도 로그인할 수 없습니다.
+
+## 로그인 테스트
+
+1. 시크릿(비공개) 창에서 인스턴스의 로그인 페이지를 엽니다.
+2. **Continue with Microsoft**를 클릭합니다.
+3. 회사 계정을 선택하고 메시지가 표시되면 MFA를 완료합니다.
+4. Microsoft가 SecureAI로 다시 보내며 로그인된 상태가 됩니다.
+
+비밀번호 로그인은 계속 작동합니다. SSO를 활성화해도 비밀번호 로그인이 꺼지지 않습니다.
+
+## 통합 비활성화 또는 제거
+
+- 구성을 유지하면서 버튼을 숨기려면 스위치를 끄고 저장합니다.
+- 구성을 삭제하려면 **Remove configuration**(구성 제거)을 사용합니다. 이전에 Hiper AI가 SSO를 구성한 인스턴스에서는 해당 구성이 다시 적용됩니다.
+
+## 클라이언트 비밀 교체
+
+비밀이 만료되기 전에 다음을 수행합니다.
+
+1. Entra ID에서 이전 비밀을 삭제하지 않고 새 클라이언트 비밀을 만듭니다(3단계).
+2. SecureAI에서 통합을 열고 **Client secret value**에 새 값을 붙여 넣은 다음 **Test connection**을 클릭하고 **Save**를 클릭합니다. 필드를 비워 두면 현재 비밀이 유지됩니다.
+3. 로그인이 작동하는 것을 확인한 후 Entra ID에서 이전 비밀을 삭제합니다.
+
+변경 사항은 활성 세션을 종료하지 않고 즉시 적용됩니다.
+
+## 인스턴스에 Hiper AI가 구성한 SSO가 이미 있는 경우
+
+요청에 따라 Hiper AI가 Microsoft SSO를 구성한 인스턴스에서는 카드에 **Configured by Hiper AI**(Hiper AI가 구성함)가 표시됩니다. 해당 구성은 계속 작동합니다. 통합에서 자체 구성을 저장하면 기존 구성을 대체하며, 나중에 자체 구성을 제거하면 이전 구성이 다시 적용됩니다.
 
 ## 문제 해결
 
-### 오류: "redirect_uri 값은 유효한 절대 URI여야 합니다."
-- Azure의 리디렉션 URI가 서버에 구성된 것과 정확히 일치하는지 확인합니다.
-- `https://` 또는 `http://`를 적절하게 포함해야 합니다.
+로그인 오류는 SecureAI 로그인 페이지에 표시됩니다.
 
-### 오류: "SecureAI 데이터베이스에서 사용자를 찾을 수 없습니다."
-- 사용자는 SecureAI에 사전 등록되어 있어야 합니다.
-- 사용자 계정 생성은 SecureAI 관리자에게 문의하세요.
+| SecureAI 메시지 | 원인 및 해결 방법 |
+|---|---|
+| "User not found in SecureAI database." | 해당 이메일의 SecureAI 계정이 없습니다. 계정을 만들거나(6단계) 이메일이 Entra ID의 메일/UPN과 일치하는지 확인하세요. |
+| "This account is not allowed to sign in here…" | 이메일의 도메인이 **Allowed email domains**에 없거나, 토큰이 다른 테넌트에서 발급되었습니다. |
+| "This sign-in method is not enabled for your organization." | 통합이 비활성화되었거나 구성이 완료되지 않았습니다. 통합에서 카드를 확인하세요. |
+| "Your identity provider did not complete the sign-in…" | Microsoft가 오류를 반환했습니다. 사용자가 취소했거나, 관리자 동의가 없거나(4단계), 사용자가 애플리케이션에 할당되지 않았을 수 있습니다. |
+| "Single sign-on could not be completed…" | 코드 교환에 실패했습니다. 일반적으로 비밀이 만료되었거나 교체되었기 때문이거나(**Test connection**을 사용하세요), 리디렉션 URI가 **웹**이 아닌 **단일 페이지 애플리케이션**으로 등록되었기 때문입니다(**인증**에서 **웹**으로 옮기세요). |
+| "Your account is inactive…" | SecureAI에서 계정이 비활성화되었습니다. |
+| "The sign-in session expired or was not started from this browser…" | 10분 이상 지났거나 다른 탭/브라우저에서 로그인이 시작되었습니다. 로그인 페이지에서 다시 시도하세요. |
 
-### 오류: "잘못된 클라이언트 비밀번호"
-- 비밀이 만료되었을 수 있습니다.
-- 새 클라이언트 암호를 생성하고 구성을 업데이트합니다.
+Microsoft에서 표시하는 오류(SecureAI로 돌아오기 전):
 
-## 클라이언트 비밀 갱신
+- **AADSTS50011 – 리디렉션 URI가 일치하지 않음**: Entra ID에 등록된 URI가 1단계에서 SecureAI에 표시되는 URI와 정확히 일치하지 않습니다(끝에 슬래시가 하나 더 있기만 해도 일치하지 않습니다). **Test connection**으로 첫 로그인 전에 확인할 수 있습니다.
+- **AADSTS65001 / "관리자 승인 필요"**: 관리자 동의를 부여하세요(4단계).
+- **AADSTS50105 – 로그인한 사용자가 애플리케이션의 역할에 할당되지 않음**: 엔터프라이즈 애플리케이션의 **할당 필요?**(Assignment required?)가 **예**로 설정되어 있습니다. **엔터프라이즈 애플리케이션 → SecureAI SSO → 사용자 및 그룹**(Enterprise applications → SecureAI SSO → Users and groups)에서 사용자 또는 그룹을 할당하세요.
+- **AADSTS7000215 / AADSTS7000222**: 비밀이 유효하지 않거나 만료되었습니다. 새 비밀을 입력하세요.
 
-클라이언트 비밀번호에는 만료 날짜가 있습니다. 만료되기 전:
-
-1. 5단계에 따라 새 클라이언트 비밀번호를 생성하세요.
-2. 개발팀에 새로운 가치를 제공하세요
-3. 서비스를 중단하지 않고 구성을 업데이트합니다.
-
-## 지원
-
-구성 중에 문제가 발생하는 경우:
-1. Azure에서 관리자 권한이 있는지 확인
-2. 개발팀에 다음 정보를 문의하세요.
-   - 오류 스크린샷
-   - 귀하가 획득한 ID(비밀은 제외)
-   - 전체 오류 메시지
+도움이 필요하면 프로필 메뉴의 **지원 받기**에서 지원팀에 문의하고 애플리케이션(클라이언트) ID, 디렉터리 ID 및 오류 메시지를 포함하세요. **클라이언트 비밀은 절대 보내지 마세요.**

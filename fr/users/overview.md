@@ -41,6 +41,6 @@ Les comptes d'utilisateurs sont provisionnés selon les niveaux de licence de l'
 
 ## Tâches administratives courantes
 
-- **Créer un utilisateur** : Allez dans **Admin ? Utilisateurs ? Créer un utilisateur**. Définissez l'e-mail, le rôle et le niveau de licence.
-- **Attribuer à des groupes** : accédez à **Admin ? Groupes** pour organiser les utilisateurs en équipes collaboratives avec des index de groupe partagés.
-- **Configurer SSO** : connectez votre fournisseur d'identité d'entreprise (Google Workspace ou Microsoft Entra ID) dans les paramètres **Authentification**.
+- **Créer un utilisateur** : Allez dans **Admin → Gestion IAM → Gestion des utilisateurs → Ajouter un utilisateur**. Définissez l'e-mail, le rôle et le niveau de licence.
+- **Attribuer à des groupes** : accédez à **Admin → Gestion IAM → Gestion des groupes** pour organiser les utilisateurs en équipes collaboratives avec des index de groupe partagés.
+- **Configurer SSO** : connectez votre fournisseur d'identité d'entreprise dans **Admin → Intégrations → IAM**. La configuration est en libre-service : voir [Google Workspace (SSO)](/fr/iam/google-workspace) et [Microsoft Entra ID (SSO)](/fr/iam/microsoft-entra-id).
