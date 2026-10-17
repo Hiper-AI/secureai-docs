@@ -27,7 +27,7 @@ SecureAI는 **자사** 테넌트에서 발급한 토큰만 허용합니다. 로�
 
 1. 관리자로 SecureAI에 로그인합니다.
 2. **관리자 → 통합**으로 이동하여 **IAM** 카테고리로 필터링합니다.
-3. **Microsoft Entra ID (SSO)** 카드에서 **통합 연결**을 클릭합니다.
+3. **Microsoft Entra ID (SSO)** 카드에서 **통합 연결**을 클릭합니다(카드에 **Configured by Hiper AI**(Hiper AI가 구성함)가 표시되어 있으면 **재구성**을 클릭합니다).
 4. **1. Register SecureAI in Microsoft Entra ID** 섹션에서 **Redirect URI** 옆의 **Copy**를 클릭합니다.
 
 URI는 다음과 같은 형식입니다(도메인은 사용 중인 인스턴스의 도메인).
@@ -137,10 +137,15 @@ SecureAI는 Microsoft Graph 위임된 권한 `openid`, `profile`, `email` 및 `U
    | 디렉터리(테넌트) ID | Microsoft가 해당 테넌트를 알지 못합니다(`AADSTS90002`). 개요 페이지에서 디렉터리 ID를 복사하세요. |
    | 애플리케이션(클라이언트) ID | 테넌트에 해당 애플리케이션이 없습니다(`AADSTS700016`). 클라이언트 ID와 앱이 같은 테넌트에 있는지 확인하세요. |
    | 클라이언트 비밀 | 비밀이 유효하지 않거나(`AADSTS7000215`) 만료되었습니다(`AADSTS7000222`). **값**(Value)을 붙여 넣거나 새 비밀을 만드세요. |
+   | 애플리케이션에 등록된 리디렉션 URI | 1단계의 URI가 앱 등록에 없습니다(사용자가 로그인할 때 받게 되는 `AADSTS50011` 오류). 애플리케이션에서 **인증 → 플랫폼 추가 → 웹**(Authentication → Add a platform → Web)을 열고 URI를 그대로 붙여 넣은 다음 저장하세요. |
 
    테스트는 양식에 입력된 내용을 사용하므로 저장하기 전에 테스트할 수 있습니다. 테넌트에 앱 전용 토큰을 차단하는 조건부 액세스 정책이 있는 경우 비밀이 "could not be verified automatically"(자동으로 확인할 수 없음)로 표시될 수 있습니다. 이는 오류가 아니므로 실제 로그인으로 확인하세요.
 
-3. **Show "Continue with Microsoft" on the login page**(로그인 페이지에 "Continue with Microsoft" 표시)를 켭니다.
+   <Note>
+   테스트는 URI가 등록되었는지는 확인하지만, **웹** 플랫폼에 등록되었는지 **단일 페이지 애플리케이션**(SPA)에 등록되었는지는 확인하지 않습니다. SPA로 등록된 경우 테스트는 통과하지만 로그인은 "Single sign-on could not be completed"로 실패합니다. **인증**에서 URI가 **웹** 아래에 나열되어 있는지 확인하세요.
+   </Note>
+
+3. **Show "Continue with Microsoft" on the login page**(로그인 페이지에 "Continue with Microsoft" 표시)가 켜져 있는지 확인합니다(처음에는 기본적으로 켜져 있습니다).
 4. **Save**(저장)를 클릭합니다.
 
 이후 카드에 **Active on the login page**(로그인 페이지에서 활성)가 표시되고, 인스턴스의 로그인 페이지에 **Continue with Microsoft** 버튼이 나타납니다.
@@ -193,13 +198,13 @@ SecureAI에서 사용자가 비활성화되면(수동 또는 SCIM을 통해) 해
 | "This account is not allowed to sign in here…" | 이메일의 도메인이 **Allowed email domains**에 없거나, 토큰이 다른 테넌트에서 발급되었습니다. |
 | "This sign-in method is not enabled for your organization." | 통합이 비활성화되었거나 구성이 완료되지 않았습니다. 통합에서 카드를 확인하세요. |
 | "Your identity provider did not complete the sign-in…" | Microsoft가 오류를 반환했습니다. 사용자가 취소했거나, 관리자 동의가 없거나(4단계), 사용자가 애플리케이션에 할당되지 않았을 수 있습니다. |
-| "Single sign-on could not be completed…" | 코드 교환에 실패했습니다. 일반적으로 비밀이 만료되었거나 교체되었기 때문입니다. **Test connection**을 사용하세요. |
+| "Single sign-on could not be completed…" | 코드 교환에 실패했습니다. 일반적으로 비밀이 만료되었거나 교체되었기 때문이거나(**Test connection**을 사용하세요), 리디렉션 URI가 **웹**이 아닌 **단일 페이지 애플리케이션**으로 등록되었기 때문입니다(**인증**에서 **웹**으로 옮기세요). |
 | "Your account is inactive…" | SecureAI에서 계정이 비활성화되었습니다. |
 | "The sign-in session expired or was not started from this browser…" | 10분 이상 지났거나 다른 탭/브라우저에서 로그인이 시작되었습니다. 로그인 페이지에서 다시 시도하세요. |
 
 Microsoft에서 표시하는 오류(SecureAI로 돌아오기 전):
 
-- **AADSTS50011 – 리디렉션 URI가 일치하지 않음**: Entra ID에 등록된 URI가 1단계에서 SecureAI에 표시되는 URI와 정확히 일치하지 않거나, **웹**이 아닌 "단일 페이지 애플리케이션"으로 등록되었습니다.
+- **AADSTS50011 – 리디렉션 URI가 일치하지 않음**: Entra ID에 등록된 URI가 1단계에서 SecureAI에 표시되는 URI와 정확히 일치하지 않습니다(끝에 슬래시가 하나 더 있기만 해도 일치하지 않습니다). **Test connection**으로 첫 로그인 전에 확인할 수 있습니다.
 - **AADSTS65001 / "관리자 승인 필요"**: 관리자 동의를 부여하세요(4단계).
 - **AADSTS50105 – 로그인한 사용자가 애플리케이션의 역할에 할당되지 않음**: 엔터프라이즈 애플리케이션의 **할당 필요?**(Assignment required?)가 **예**로 설정되어 있습니다. **엔터프라이즈 애플리케이션 → SecureAI SSO → 사용자 및 그룹**(Enterprise applications → SecureAI SSO → Users and groups)에서 사용자 또는 그룹을 할당하세요.
 - **AADSTS7000215 / AADSTS7000222**: 비밀이 유효하지 않거나 만료되었습니다. 새 비밀을 입력하세요.
