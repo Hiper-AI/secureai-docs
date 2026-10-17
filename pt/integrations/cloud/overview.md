@@ -28,7 +28,7 @@ Cada provedor segue as mesmas quatro etapas:
 <Info>
 **Onde as coisas aparecem**
 
-A **configuração** do conector fica em **Administrador → Integrações**. O **inventário** que ele produz aparece em **Admin → Registro de Agente**: agentes/modelos descobertos em [Sensores de Nuvem](/pt/discovery/cloud-sensors) e identidades descobertas em [NHI Inventário](/pt/discovery/nhi-inventory). Você pode executar novamente uma sincronização em qualquer lugar.
+A **configuração** do conector fica em **Administrador → Integrações**. O **inventário** que ele produz aparece em **Admin → Registro de Agente**: agentes/modelos descobertos em [Sensores Cloud](/pt/discovery/cloud-sensors) e identidades descobertas em [NHI Inventário](/pt/discovery/nhi-inventory). Você pode executar novamente uma sincronização em qualquer lugar.
 </Info>
 
 ## Escolhendo credenciais
