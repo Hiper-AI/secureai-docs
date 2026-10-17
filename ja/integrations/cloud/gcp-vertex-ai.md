@@ -20,6 +20,7 @@ Google Cloud プロジェクト (または組織全体やフォルダ) に接続
 - 過去 30 日間の**モデルごとの使用状況**: リクエスト数 (およびそのうち失敗した数)、入力トークンと出力トークン、プロンプト キャッシュのトークン。
 - 過去 30 日間の**認証情報ごとの使用状況** (Cloud Monitoring): サービス アカウントと API キーごとの、リクエストの総数と AI API (Vertex AI、Gemini API、Agent Builder、Dialogflow) へのリクエスト数。OAuth クライアントのトラフィック (ユーザーや、コンソール、`gcloud` などのツール) は別途集計されます。これらのアカウントとキーの最終使用日時もここから得られます。
 - **モデルと ID ごとの使用状況** (任意): どのサービス アカウントまたはユーザーがどの Vertex AI モデルを呼び出したか。データアクセス監査ログを有効にしている場合に、そこから取得します。[モデルと ID ごとの使用状況](#モデルと-id-ごとの使用状況)を参照してください。
+- **SecureAI を経由しない Vertex AI の使用**: SecureAI の推論接続を経由せずに Vertex AI または Gemini を直接呼び出した ID。[SecureAI を経由しない Vertex AI の使用](#secureai-を経由しない-vertex-ai-の使用)を参照してください。
 - 過去 30 日間の**コスト**: BigQuery への請求データのエクスポートから得た、このプロジェクトの AI に関する実際の支出、または定価による見積もり。
 - **NHI**: サービス アカウント、ユーザー管理のサービス アカウント キー、API キー、Workload Identity Federation のプールとプロバイダ、OAuth クライアント — 最終使用日時 (Policy Analyzer と認証情報ごとの使用状況から取得) と[特権リスク](#特権リスク)も含みます。[NHI インベントリ](/ja/discovery/nhi-inventory)から、手動または[NHI の自動ポリシー](#nhi-の自動ポリシー)で取り消しと復元ができます。
 - プロジェクトの **IAM** ロール バインディング。
@@ -220,6 +221,16 @@ IAM ポリシーを読み取ったうえで、SecureAI は次のいずれかの�
 - `roles/iam.serviceAccountTokenCreator` または `roles/iam.serviceAccountUser` (保持者が他のサービス アカウントとして動作できるロール)
 
 特権のあるサービス アカウントのユーザー管理キーは、このフラグを引き継ぎます: キーを持つ者がその特権を持つことになるためです。**制限のない** API キー (API の制限もアプリケーションの制限もないもの) にもフラグが付きます。[NHI インベントリ](/ja/discovery/nhi-inventory)では、これらはリスク要因の中に **Privileged (admin role or impersonation)** および **API key without restrictions** として表示されます。IAM ポリシーを読み取れなかった場合、SecureAI はアカウントを特権なしとみなすのではなく、何にもフラグを付けません。
+
+## SecureAI を経由しない Vertex AI の使用
+
+GCP パネルの **Identity & Access** タブには **Vertex AI used outside SecureAI** が含まれます。過去 30 日間に、[Vertex AI での推論](/ja/integrations/cloud/vertex-ai-inference)の接続を経由せずに Vertex AI または Gemini を直接呼び出した ID の一覧です。これらのプロンプトは DLP、ポリシー、署名付きレシートのいずれも通過していません。
+
+- データアクセス (Data Access) 監査ログが有効な場合 ([モデルと ID ごとの使用状況](#モデルと-id-ごとの使用状況)を参照)、各行に呼び出されたモデルとその回数が表示され、推論の呼び出しのみがカウントされます。
+- 有効でない場合、件数は認証情報 (サービス アカウントまたは API キー) ごとの Cloud Monitoring の値で、推論だけでなく AI API (Vertex AI、Gemini API、Agent Builder、Dialogflow) へのすべての呼び出しが含まれます。
+- 推論接続のサービス アカウントとコネクタのサービス アカウントはカウントされません。個人は 1 人ずつ一覧表示されず、その呼び出しは 1 行に集計されます (**People (Google accounts)**、または **People and tools (OAuth)**: コンソール、gcloud、アプリ)。
+- その同期で SecureAI が推論接続を読み取れなかった場合は、何も分類せず、任意の不足項目として示し、前回の同期の結果を保持します。
+- Insights の検出結果 **Google Vertex AI / Gemini is being used outside SecureAI** が生成されます。重大度は中程度で、呼び出し元が API キー (長期間有効な認証情報) の場合は重大になります。OWASP LLM02、ISO/IEC 42001 A.4.2 および A.6.2.6、NIST AI RMF MAP-1.1 および GOVERN-6.1 に対応付けられます。
 
 ## コスト
 

@@ -20,6 +20,7 @@ description: "连接 Google Cloud，以便 SecureAI 可以清点 Vertex AI 的�
 - 过去 30 天**按模型统计的使用情况**：请求数（以及其中失败的数量）、输入和输出令牌，以及提示缓存令牌。
 - 过去 30 天**按凭证统计的使用情况**（Cloud Monitoring）：每个服务帐户和每个 API 密钥的请求总数，以及对 AI API（Vertex AI、Gemini API、Agent Builder、Dialogflow）的请求数。OAuth 客户端的流量（人员以及控制台或 `gcloud` 等工具）会单独汇总。它还提供这些帐户和密钥的上次使用时间。
 - **按模型和身份统计的使用情况**（可选）：哪个服务帐户或人员调用了哪个 Vertex AI 模型，数据来自数据访问审计日志（如果您已开启）。请参阅[按模型和身份统计的使用情况](#按模型和身份统计的使用情况)。
+- **在 SecureAI 之外使用的 Vertex AI**：未经过 SecureAI 推理连接、直接调用 Vertex AI 或 Gemini 的身份。请参阅[在 SecureAI 之外使用的 Vertex AI](#在-secureai-之外使用的-vertex-ai)。
 - 过去 30 天的**成本**：来自 BigQuery 账单导出的本项目实际 AI 支出，或按标价计算的估算值。
 - **NHI**：服务帐户、用户管理的服务帐户密钥、API 密钥、Workload Identity Federation 池和提供方，以及 OAuth 客户端 — 包括它们的上次使用时间（来自 Policy Analyzer 和按凭证统计的使用情况）以及它们的[特权风险](#特权风险)。可从 [NHI 清单](/zh/discovery/nhi-inventory) 撤销和恢复，可以手动操作，也可以通过[自动策略](#自动-nhi-策略)。
 - 项目的 **IAM** 角色绑定。
@@ -220,6 +221,16 @@ Cloud Monitoring 能说明每个凭证发出了多少请求，但无法说明请
 - `roles/iam.serviceAccountTokenCreator` 或 `roles/iam.serviceAccountUser`，它们允许持有者以其他服务帐户的身份行事。
 
 特权服务帐户的用户管理密钥会继承该标记：持有密钥的人就拥有该特权。**无限制**的 API 密钥（没有 API 目标，也没有应用限制）也会被标记。在 [NHI 清单](/zh/discovery/nhi-inventory) 中，它们会作为风险因素显示为 **Privileged (admin role or impersonation)** 和 **API key without restrictions**。如果无法读取 IAM 政策，SecureAI 不会标记任何内容，而不是将某个帐户视为非特权帐户。
+
+## 在 SecureAI 之外使用的 Vertex AI
+
+GCP 面板的 **Identity & Access** 标签页包含 **Vertex AI used outside SecureAI**：过去 30 天内未经过 [Vertex AI 推理](/zh/integrations/cloud/vertex-ai-inference)连接、直接调用 Vertex AI 或 Gemini 的身份。这些提示未经过 DLP、策略或签名回执。
+
+- 启用数据访问 (Data Access) 审计日志时（请参阅[按模型和身份统计的使用情况](#按模型和身份统计的使用情况)），每一行会列出调用了哪些模型以及调用次数，并且只统计推理调用。
+- 未启用时，数字来自 Cloud Monitoring 按凭证（服务帐户或 API 密钥）的统计，包括对 AI API（Vertex AI、Gemini API、Agent Builder、Dialogflow）的所有调用，而不仅是推理。
+- 推理连接的服务帐户和连接器的服务帐户永远不计入。人员不会逐一列出：他们的调用汇总为一行（**People (Google accounts)**，或 **People and tools (OAuth)**：控制台、gcloud、应用）。
+- 如果 SecureAI 在该次同步中无法读取推理连接，它不会进行任何分类，会将其标记为可选缺口，并保留上一次同步的结果。
+- 它会生成 Insights 发现 **Google Vertex AI / Gemini is being used outside SecureAI**：严重程度为中等；如果调用方是 API 密钥（长期有效的凭证），则为严重。它映射到 OWASP LLM02、ISO/IEC 42001 A.4.2 和 A.6.2.6，以及 NIST AI RMF MAP-1.1 和 GOVERN-6.1。
 
 ## 成本
 

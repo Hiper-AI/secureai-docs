@@ -20,6 +20,7 @@ Cette carte **lit uniquement** le projet et n'envoie jamais de prompt. Si vous s
 - **Utilisation par modèle** sur les 30 derniers jours : requêtes (et combien ont échoué), jetons d'entrée et de sortie, et jetons du cache de prompts.
 - **Utilisation par identifiant** sur les 30 derniers jours (Cloud Monitoring) : total des requêtes et requêtes vers les API d'IA (Vertex AI, Gemini API, Agent Builder, Dialogflow) pour chaque compte de service et chaque clé API. Le trafic des clients OAuth (personnes et outils comme la console ou `gcloud`) est totalisé à part. Elle fournit aussi la dernière utilisation de ces comptes et de ces clés.
 - **Utilisation par modèle et par identité** (facultatif) : quel compte de service ou quelle personne a appelé quel modèle Vertex AI, d'après les journaux d'audit d'accès aux données (Data Access) si vous les avez activés. Voir [Utilisation par modèle et par identité](#utilisation-par-modèle-et-par-identité).
+- **Vertex AI utilisé en dehors de SecureAI** : les identités qui ont appelé Vertex AI ou Gemini directement, sans passer par la connexion d'inférence de SecureAI. Voir [Vertex AI utilisé en dehors de SecureAI](#vertex-ai-utilisé-en-dehors-de-secureai).
 - **Coût** sur les 30 derniers jours : les dépenses réelles de ce projet en IA, issues de votre exportation de la facturation vers BigQuery, ou une estimation au prix catalogue.
 - **NHI** : comptes de service, clés de compte de service gérées par l'utilisateur, clés API, pools et fournisseurs de Workload Identity Federation, et clients OAuth — avec leur dernière utilisation (d'après Policy Analyzer et l'utilisation par identifiant) et leur [risque de privilège](#risque-de-privilège). Révocables et restaurables depuis l'[Inventaire des NHI](/fr/discovery/nhi-inventory), à la main ou avec des [politiques automatiques](#politiques-nhi-automatiques).
 - Liaisons de rôles **IAM** du projet.
@@ -220,6 +221,16 @@ Une fois la stratégie IAM lue, SecureAI signale un compte de service comme **pr
 - `roles/iam.serviceAccountTokenCreator` ou `roles/iam.serviceAccountUser`, qui permettent à leur détenteur d'agir en tant qu'autres comptes de service.
 
 Une clé gérée par l'utilisateur d'un compte de service privilégié hérite du signalement : qui détient la clé détient ce privilège. Les clés API **sans restriction** (aucune API cible et aucune restriction d'application) sont également signalées. Dans l'[Inventaire des NHI](/fr/discovery/nhi-inventory), elles apparaissent parmi les facteurs de risque sous **Privileged (admin role or impersonation)** et **API key without restrictions**. Si la stratégie IAM n'a pas pu être lue, SecureAI ne signale rien plutôt que de considérer un compte comme non privilégié.
+
+## Vertex AI utilisé en dehors de SecureAI
+
+Dans le panneau GCP, l'onglet **Identity & Access** comprend **Vertex AI used outside SecureAI** : les identités qui ont appelé Vertex AI ou Gemini directement au cours des 30 derniers jours, sans passer par la [connexion d'inférence Vertex AI](/fr/integrations/cloud/vertex-ai-inference). Ces prompts ne sont passés ni par le DLP, ni par les politiques, ni par les reçus signés.
+
+- Avec les journaux d'audit d'accès aux données (Data Access) activés (voir [Utilisation par modèle et par identité](#utilisation-par-modèle-et-par-identité)), chaque ligne indique quels modèles ont été appelés et combien de fois, et seuls les appels d'inférence sont comptés.
+- Sans eux, le nombre provient de Cloud Monitoring par identifiant (compte de service ou clé API) et inclut tout appel à une API d'IA (Vertex AI, Gemini API, Agent Builder, Dialogflow), pas seulement l'inférence.
+- Le compte de service de la connexion d'inférence et celui du connecteur ne sont jamais comptés. Les personnes ne sont pas listées une par une : leurs appels sont regroupés sur une seule ligne (**People (Google accounts)**, ou **People and tools (OAuth)** : console, gcloud, applications).
+- Si SecureAI n'a pas pu lire la connexion d'inférence lors de cette synchronisation, il ne classe rien, le signale comme lacune facultative et conserve le résultat de la synchronisation précédente.
+- Cela génère le constat Insights **Google Vertex AI / Gemini is being used outside SecureAI** : modéré, et critique si l'appelant est une clé API (un identifiant de longue durée). Il est associé à OWASP LLM02, ISO/IEC 42001 A.4.2 et A.6.2.6, et NIST AI RMF MAP-1.1 et GOVERN-6.1.
 
 ## Coût
 

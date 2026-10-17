@@ -20,6 +20,7 @@ Diese Karte **liest** das Projekt **nur** und sendet niemals einen Prompt. Wenn 
 - **Nutzung pro Modell** der letzten 30 Tage: Anfragen (und wie viele davon fehlgeschlagen sind), Eingabe- und Ausgabe-Token sowie Prompt-Cache-Token.
 - **Nutzung pro Anmeldeinformation** der letzten 30 Tage (Cloud Monitoring): Anfragen insgesamt und Anfragen an KI-APIs (Vertex AI, Gemini API, Agent Builder, Dialogflow) für jedes Dienstkonto und jeden API-Schlüssel. Der Verkehr von OAuth-Clients (Personen und Tools wie die Console oder `gcloud`) wird separat summiert. Außerdem liefert sie die letzte Nutzung dieser Konten und Schlüssel.
 - **Nutzung nach Modell und Identität** (optional): welches Dienstkonto oder welche Person welches Vertex AI-Modell aufgerufen hat, entnommen aus den Audit-Protokollen zum Datenzugriff (Data Access), sofern Sie diese aktiviert haben. Siehe [Nutzung nach Modell und Identität](#nutzung-nach-modell-und-identität).
+- **Vertex AI außerhalb von SecureAI genutzt**: Identitäten, die Vertex AI oder Gemini direkt aufgerufen haben, ohne die Inferenzverbindung von SecureAI. Siehe [Vertex AI außerhalb von SecureAI genutzt](#vertex-ai-außerhalb-von-secureai-genutzt).
 - **Kosten** der letzten 30 Tage: die tatsächlichen KI-Ausgaben dieses Projekts aus Ihrem BigQuery-Abrechnungsexport oder eine Schätzung zum Listenpreis.
 - **NHIs**: Dienstkonten, vom Nutzer verwaltete Dienstkontoschlüssel, API-Schlüssel, Pools und Anbieter der Workload Identity Federation sowie OAuth-Clients – mit ihrer letzten Nutzung (aus Policy Analyzer und aus der Nutzung pro Anmeldeinformation) und ihrem [Privilegienrisiko](#privilegienrisiko). Widerrufbar und wiederherstellbar über das [NHI-Inventar](/de/discovery/nhi-inventory), manuell oder mit [automatischen Richtlinien](#automatische-nhi-richtlinien).
 - **IAM**-Rollenbindungen des Projekts.
@@ -220,6 +221,16 @@ Anhand der gelesenen IAM-Richtlinie markiert SecureAI ein Dienstkonto als **priv
 - `roles/iam.serviceAccountTokenCreator` oder `roles/iam.serviceAccountUser`, mit denen der Inhaber als andere Dienstkonten handeln kann.
 
 Ein vom Nutzer verwalteter Schlüssel eines privilegierten Dienstkontos erbt die Markierung: Wer den Schlüssel besitzt, besitzt dieses Privileg. **Uneingeschränkte** API-Schlüssel (ohne API-Ziel und ohne Anwendungseinschränkung) werden ebenfalls markiert. Im [NHI-Inventar](/de/discovery/nhi-inventory) erscheinen sie unter den Risikofaktoren als **Privileged (admin role or impersonation)** und **API key without restrictions**. Konnte die IAM-Richtlinie nicht gelesen werden, markiert SecureAI nichts, statt ein Konto als nicht privilegiert zu behandeln.
+
+## Vertex AI außerhalb von SecureAI genutzt
+
+Im GCP-Panel enthält der Tab **Identity & Access** den Abschnitt **Vertex AI used outside SecureAI**: die Identitäten, die Vertex AI oder Gemini in den letzten 30 Tagen direkt aufgerufen haben, ohne die [Verbindung für Vertex AI-Inferenz](/de/integrations/cloud/vertex-ai-inference). Diese Prompts liefen weder durch DLP noch durch Richtlinien oder signierte Belege.
+
+- Mit aktivierten Audit-Protokollen zum Datenzugriff (Data Access) (siehe [Nutzung nach Modell und Identität](#nutzung-nach-modell-und-identität)) nennt jede Zeile, welche Modelle wie oft aufgerufen wurden, und es werden nur Inferenzaufrufe gezählt.
+- Ohne sie stammt die Zahl aus Cloud Monitoring pro Anmeldeinformation (Dienstkonto oder API-Schlüssel) und umfasst jeden Aufruf einer KI-API (Vertex AI, Gemini API, Agent Builder, Dialogflow), nicht nur Inferenz.
+- Das Dienstkonto der Inferenzverbindung und das des Konnektors werden nie gezählt. Personen werden nicht einzeln aufgeführt: Ihre Aufrufe stehen in einer einzigen zusammengefassten Zeile (**People (Google accounts)** oder **People and tools (OAuth)**: Console, gcloud, Apps).
+- Konnte SecureAI die Inferenzverbindung bei dieser Synchronisierung nicht lesen, klassifiziert es nichts, meldet dies als optionale Lücke und behält das Ergebnis der vorherigen Synchronisierung.
+- Daraus entsteht die Insights-Feststellung **Google Vertex AI / Gemini is being used outside SecureAI**: mittel, und kritisch, wenn der Aufrufer ein API-Schlüssel ist (eine langlebige Anmeldeinformation). Sie ist OWASP LLM02, ISO/IEC 42001 A.4.2 und A.6.2.6 sowie NIST AI RMF MAP-1.1 und GOVERN-6.1 zugeordnet.
 
 ## Kosten
 

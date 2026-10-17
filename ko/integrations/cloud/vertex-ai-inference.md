@@ -205,6 +205,17 @@ JSON 파일은 비밀번호처럼 다루세요. SecureAI는 이 파일을 **암�
 
 3. 모델이 실패하면 패널에 이유가 표시됩니다. 이 페이지 끝의 **문제 해결** 섹션을 참조하세요.
 
+### ID가 할 수 있는 다른 작업
+
+테스트는 연결의 ID가 프로젝트에서 그 밖에 무엇을 할 수 있는지도 `projects:testIamPermissions`와 추론 경로와 같은 토큰으로 확인합니다. 추가 역할이 필요 없으며 아무것도 변경하지 않습니다. 패널에는 다음 알림 중 하나가 표시됩니다.
+
+| 패널 알림 | 의미 |
+|-----------|------|
+| *Permissions: roles/aiplatform.user — it can call models and also deploy or delete Vertex AI resources, and none of the permissions outside AI that SecureAI checks.* | `roles/aiplatform.user`라면 예상된 결과입니다. |
+| *Least privilege: this identity can call models and nothing else that SecureAI checked.* | `roles/aiplatform.user`의 배포 권한조차 없습니다(예: 커스텀 역할). |
+| *This identity can do much more than call models: …* (경고, 권한 목록 포함) | IAM 정책 변경, 서비스 계정 키 생성, Storage·BigQuery·Secret Manager 데이터 읽기 등 AI 외부의 권한이 있습니다. 활동 로그에 테스트가 경고로 기록됩니다. 서비스 계정에는 `roles/aiplatform.user`만 부여하세요. |
+| *Could not check what else this identity can do in the project …* | Google이 응답하지 않았습니다. 예를 들어 Cloud Resource Manager API가 사용 중지되어 있습니다. |
+
 <Info>
 테스트는 1토큰짜리 요청을 몇 개 보내며, **Google 계정에 청구됩니다**(몇 센트).
 </Info>
@@ -247,6 +258,7 @@ JSON 파일은 비밀번호처럼 다루세요. SecureAI는 이 파일을 **암�
 - **데이터 상주.** 리전을 고정하면(예: `europe-west4`) SecureAI는 각 요청을 해당 리전의 엔드포인트로 보내고 조직의 상주 정책을 적용합니다. Google이 요청을 어디에서 처리하는지는 Google의 데이터 상주 약정에 따라 다릅니다.
 - **실패 시 차단.** 구성을 읽을 수 없거나 Google의 토큰을 얻을 수 없으면 요청이 거부됩니다. 폴백을 허용하지 않은 한 다른 공급자로 보내지 않습니다.
 - **감사.** 통합을 저장, 테스트 또는 연결 해제하면 변경된 필드 이름과 함께 활동 로그에 기록되며, 키는 절대 기록되지 않습니다.
+- **최소 권한 확인.** 연결 테스트는 연결의 ID가 프로젝트에서 그 밖에 무엇을 할 수 있는지 확인하고, AI 외부의 권한이 있으면 경고합니다(4단계의 **ID가 할 수 있는 다른 작업** 참조).
 - **최소 권한.** 추론에는 `roles/aiplatform.user`로 충분하며, 통합은 IAM이나 결제를 읽을 필요가 없습니다.
 
 ## 연결 해제

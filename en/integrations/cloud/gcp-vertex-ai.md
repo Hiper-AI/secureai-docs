@@ -20,6 +20,7 @@ This card **only reads** the project and never sends a prompt. If you want to ru
 - **Usage per model** over the last 30 days: requests (and how many failed), input and output tokens, and prompt-cache tokens.
 - **Usage per credential** over the last 30 days (Cloud Monitoring): total requests and requests to AI APIs (Vertex AI, Gemini API, Agent Builder, Dialogflow) for each service account and each API key. OAuth-client traffic (people and tools such as the console or `gcloud`) is added up separately. It also gives the last use of those accounts and keys.
 - **Usage by model and identity** (optional): which service account or person called which Vertex AI model, taken from the Data Access audit logs if you have them on. See [Usage by model and identity](#usage-by-model-and-identity).
+- **Vertex AI used outside SecureAI**: identities that called Vertex AI or Gemini directly, not through SecureAI's inference connection. See [Vertex AI used outside SecureAI](#vertex-ai-used-outside-secureai).
 - **Cost** over the last 30 days: this project's actual AI spend from your BigQuery billing export, or an estimate at list price.
 - **NHIs**: service accounts, user-managed service-account keys, API keys, Workload Identity Federation pools and providers, and OAuth clients — with their last use (from Policy Analyzer and from usage per credential) and their [privilege risk](#privilege-risk). Revocable and restorable from the [NHI Inventory](/en/discovery/nhi-inventory), by hand or with [automatic policies](#automatic-nhi-policies).
 - **IAM** role bindings on the project.
@@ -220,6 +221,16 @@ With the IAM policy read, SecureAI flags a service account as **privileged** whe
 - `roles/iam.serviceAccountTokenCreator` or `roles/iam.serviceAccountUser`, which let the holder act as other service accounts.
 
 A user-managed key of a privileged service account inherits the flag: whoever holds the key holds that privilege. **Unrestricted** API keys (no API target and no application restriction) are flagged too. In the [NHI Inventory](/en/discovery/nhi-inventory) they show up among the risk factors as **Privileged (admin role or impersonation)** and **API key without restrictions**. If the IAM policy could not be read, SecureAI flags nothing rather than treating an account as not privileged.
+
+## Vertex AI used outside SecureAI
+
+In the GCP panel, the **Identity & Access** tab includes **Vertex AI used outside SecureAI**: the identities that called Vertex AI or Gemini directly in the last 30 days, not through the [Vertex AI inference connection](/en/integrations/cloud/vertex-ai-inference). Those prompts passed no DLP, policy, or signed receipt.
+
+- With Data Access audit logs on (see [Usage by model and identity](#usage-by-model-and-identity)), each row names the models called and how many times, and only inference calls are counted.
+- Without them, the count comes from Cloud Monitoring per credential (service account or API key) and includes every call to an AI API (Vertex AI, Gemini API, Agent Builder, Dialogflow), not only inference.
+- The inference connection's service account and the connector's are never counted. People are not listed one by one: their calls go in a single aggregate row (**People (Google accounts)**, or **People and tools (OAuth)**: console, gcloud, apps).
+- If SecureAI could not read the inference connection in that sync, it classifies nothing, reports it as an optional gap, and keeps what the previous sync found.
+- It raises the Insights finding **Google Vertex AI / Gemini is being used outside SecureAI**: moderate, and critical when the caller is an API key (a long-lived credential). It maps to OWASP LLM02, ISO/IEC 42001 A.4.2 and A.6.2.6, and NIST AI RMF MAP-1.1 and GOVERN-6.1.
 
 ## Cost
 

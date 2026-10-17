@@ -205,6 +205,17 @@ Available models depend on the **location**. The default models (several of them
 
 3. If a model fails, the panel shows the reason. See the **Troubleshooting** section at the end of this page.
 
+### What else the identity can do
+
+The test also checks what else the connection's identity can do in the project, with `projects:testIamPermissions` and the lane's own token: no extra role is needed and nothing changes. The panel shows one of these notices:
+
+| Panel notice | What it means |
+|--------------|---------------|
+| *Permissions: roles/aiplatform.user — it can call models and also deploy or delete Vertex AI resources, and none of the permissions outside AI that SecureAI checks.* | This is expected with `roles/aiplatform.user`. |
+| *Least privilege: this identity can call models and nothing else that SecureAI checked.* | It does not even hold the deploy permissions of `roles/aiplatform.user` (for example, a custom role). |
+| *This identity can do much more than call models: …* (a warning, with the list of permissions) | It holds permissions outside AI, for example changing the IAM policy, creating service-account keys, or reading data from Storage, BigQuery, or Secret Manager. The activity log records the test as a warning. Give the service account only `roles/aiplatform.user`. |
+| *Could not check what else this identity can do in the project …* | Google did not answer; for example, the Cloud Resource Manager API is disabled. |
+
 <Info>
 The test sends a few one-token requests and **is billed to your Google account** (cents).
 </Info>
@@ -247,6 +258,7 @@ In **Remap everything** mode without fallback, the selector **only offers** mode
 - **Data residency.** With a pinned region (for example `europe-west4`), SecureAI sends each request to that region's endpoint and applies your organization's residency policies. Where Google processes the request depends on Google's data-residency commitments.
 - **Fails closed.** If the configuration cannot be read or Google's token cannot be obtained, the request is refused; it is not sent to another provider unless you allowed fallback.
 - **Audit.** Saving, testing, or disconnecting the integration is recorded in the activity log, with the names of the fields changed and never the key.
+- **Least privilege, visible.** The connection test checks what else the connection's identity can do in the project and warns if it holds permissions outside AI (see **What else the identity can do**, in step 4).
 - **Minimal permissions.** `roles/aiplatform.user` is enough for inference; the integration does not need to read your IAM or billing.
 
 ## Disconnect

@@ -205,6 +205,17 @@ Los modelos disponibles dependen de la **ubicación**. Los modelos por defecto (
 
 3. Si algún modelo falla, el panel indica el motivo. Consulte la sección **Solución de problemas** al final de esta página.
 
+### Qué más puede hacer la identidad
+
+La prueba también verifica qué más puede hacer la identidad de la conexión en el proyecto, con `projects:testIamPermissions` y el mismo token del carril: no hace falta ningún rol extra y no cambia nada. El panel muestra uno de estos avisos:
+
+| Aviso del panel | Qué significa |
+|-----------------|---------------|
+| *Permisos: roles/aiplatform.user — puede llamar a modelos y también desplegar o borrar recursos de Vertex AI, y ninguno de los permisos fuera de IA que SecureAI verifica.* | Es lo esperado con `roles/aiplatform.user`. |
+| *Mínimo privilegio: esta identidad puede llamar a modelos y nada más de lo que SecureAI verificó.* | Ni siquiera tiene los permisos de despliegue de `roles/aiplatform.user` (por ejemplo, un rol personalizado). |
+| *Esta identidad puede hacer mucho más que llamar a modelos: …* (advertencia, con la lista de permisos) | Tiene permisos fuera de IA, por ejemplo cambiar la política de IAM, crear claves de cuentas de servicio o leer datos de Storage, BigQuery o Secret Manager. El registro de actividad guarda la prueba como advertencia. Déle a la cuenta de servicio solo `roles/aiplatform.user`. |
+| *No se pudo verificar qué más puede hacer esta identidad en el proyecto …* | Google no respondió; por ejemplo, la API de Cloud Resource Manager está deshabilitada. |
+
 <Info>
 La prueba envía unas pocas solicitudes de un token y **se factura a su cuenta de Google** (centavos).
 </Info>
@@ -247,6 +258,7 @@ En el modo **Remapear todo** sin fallback, el selector **solo ofrece** los model
 - **Residencia de datos.** Con una región fija (por ejemplo `europe-west4`), SecureAI envía cada solicitud al endpoint regional de esa región y aplica las políticas de residencia de su organización. Dónde procesa Google la solicitud depende de sus compromisos de residencia de datos.
 - **Falla cerrado.** Si no se puede leer la configuración o obtener el token de Google, la solicitud se rechaza; no se envía a otro proveedor salvo que usted haya permitido el fallback.
 - **Auditoría.** Guardar, probar o desconectar la integración queda en el registro de actividad, con los nombres de los campos cambiados y nunca con la clave.
+- **Mínimo privilegio a la vista.** La prueba de conexión verifica qué más puede hacer la identidad de la conexión en el proyecto y advierte si tiene permisos fuera de IA (vea **Qué más puede hacer la identidad**, en el paso 4).
 - **Permisos mínimos.** Para inferencia basta `roles/aiplatform.user`; la integración no necesita leer su IAM ni su facturación.
 
 ## Desconectar

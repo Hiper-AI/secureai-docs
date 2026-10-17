@@ -205,6 +205,17 @@ gcloud iam service-accounts keys create key.json \
 
 3. 如果某个模型失败，面板会显示原因。请参阅本页末尾的**故障排除**部分。
 
+### 该身份还能做什么
+
+测试还会使用 `projects:testIamPermissions` 和与推理通道相同的令牌，检查连接的身份在项目中还能做什么：不需要任何额外角色，也不会更改任何内容。面板会显示以下提示之一：
+
+| 面板提示 | 含义 |
+|----------|------|
+| *Permissions: roles/aiplatform.user — it can call models and also deploy or delete Vertex AI resources, and none of the permissions outside AI that SecureAI checks.* | 使用 `roles/aiplatform.user` 时的预期结果。 |
+| *Least privilege: this identity can call models and nothing else that SecureAI checked.* | 它甚至没有 `roles/aiplatform.user` 的部署权限（例如使用自定义角色）。 |
+| *This identity can do much more than call models: …* （警告，附权限列表） | 它拥有 AI 之外的权限，例如更改 IAM 政策、创建服务帐户密钥，或读取 Storage、BigQuery 或 Secret Manager 中的数据。活动日志会将该测试记录为警告。请仅向该服务帐户授予 `roles/aiplatform.user`。 |
+| *Could not check what else this identity can do in the project …* | Google 未响应；例如 Cloud Resource Manager API 已停用。 |
+
 <Info>
 测试会发送几个单令牌请求，**费用计入您的 Google 帐户**（几美分）。
 </Info>
@@ -247,6 +258,7 @@ gcloud iam service-accounts keys create key.json \
 - **数据驻留。** 固定区域（例如 `europe-west4`）时，SecureAI 会将每个请求发送到该区域的端点，并应用您组织的驻留策略。Google 在何处处理请求取决于 Google 的数据驻留承诺。
 - **失败时关闭。** 如果无法读取配置或无法获取 Google 的令牌，请求会被拒绝；除非您允许回退，否则不会发送到其他提供商。
 - **审计。** 保存、测试或断开集成都会记录在活动日志中，包含所更改字段的名称，但从不包含密钥。
+- **最小权限可见。** 连接测试会检查连接的身份在项目中还能做什么，并在其拥有 AI 之外的权限时发出警告（请参阅第 4 步中的 **该身份还能做什么**）。
 - **最小权限。** `roles/aiplatform.user` 足以进行推理；该集成不需要读取您的 IAM 或账单。
 
 ## 断开连接

@@ -20,6 +20,7 @@ SecureAI가 Vertex AI 에이전트, 엔드포인트, 모델과 함께 이를 둘
 - 최근 30일간 **모델별 사용량**: 요청 수(및 실패한 요청 수), 입력 및 출력 토큰, 프롬프트 캐시 토큰.
 - 최근 30일간 **자격 증명별 사용량**(Cloud Monitoring): 각 서비스 계정과 각 API 키의 전체 요청 수 및 AI API(Vertex AI, Gemini API, Agent Builder, Dialogflow)에 대한 요청 수. OAuth 클라이언트 트래픽(사람, 그리고 콘솔이나 `gcloud` 같은 도구)은 별도로 합산됩니다. 이 데이터로 해당 계정과 키의 마지막 사용도 알 수 있습니다.
 - **모델 및 ID별 사용량**(선택 사항): 어떤 서비스 계정이나 사람이 어떤 Vertex AI 모델을 호출했는지로, 데이터 액세스 감사 로그를 사용 설정한 경우 이 로그에서 가져옵니다. [모델 및 ID별 사용량](#모델-및-id별-사용량)을 참조하세요.
+- **SecureAI 외부에서 사용된 Vertex AI**: SecureAI의 추론 연결을 거치지 않고 Vertex AI 또는 Gemini를 직접 호출한 ID. [SecureAI 외부에서 사용된 Vertex AI](#secureai-외부에서-사용된-vertex-ai)를 참조하세요.
 - 최근 30일간 **비용**: BigQuery 결제 내보내기에서 가져온 이 프로젝트의 실제 AI 지출, 또는 정가 기준 추정치.
 - **NHI**: 서비스 계정, 사용자 관리 서비스 계정 키, API 키, Workload Identity Federation 풀 및 공급자, OAuth 클라이언트 — 각각의 마지막 사용(Policy Analyzer 및 자격 증명별 사용량 기준)과 [권한 위험](#권한-위험) 포함. [NHI 인벤토리](/ko/discovery/nhi-inventory)에서 수동으로 또는 [자동 정책](#자동-nhi-정책)으로 취소하고 복원할 수 있습니다.
 - 프로젝트의 **IAM** 역할 바인딩.
@@ -220,6 +221,16 @@ IAM 정책을 읽은 후 SecureAI는 서비스 계정이 다음 역할 중 하�
 - 보유자가 다른 서비스 계정으로 작업할 수 있게 해 주는 `roles/iam.serviceAccountTokenCreator` 또는 `roles/iam.serviceAccountUser`
 
 권한 있는 서비스 계정의 사용자 관리 키는 이 표시를 상속합니다. 키를 가진 사람은 그 권한을 갖기 때문입니다. **제한 없는** API 키(API 대상 제한도, 애플리케이션 제한도 없는 키)도 표시됩니다. [NHI 인벤토리](/ko/discovery/nhi-inventory)에서는 위험 요소 중 **Privileged (admin role or impersonation)** 및 **API key without restrictions**로 나타납니다. IAM 정책을 읽을 수 없었다면 SecureAI는 계정을 권한 없음으로 취급하는 대신 아무것도 표시하지 않습니다.
+
+## SecureAI 외부에서 사용된 Vertex AI
+
+GCP 패널의 **Identity & Access** 탭에는 **Vertex AI used outside SecureAI**가 포함됩니다. 지난 30일 동안 [Vertex AI 추론](/ko/integrations/cloud/vertex-ai-inference) 연결을 거치지 않고 Vertex AI 또는 Gemini를 직접 호출한 ID 목록입니다. 이 프롬프트는 DLP, 정책, 서명된 영수증을 거치지 않았습니다.
+
+- 데이터 액세스(Data Access) 감사 로그가 켜져 있으면([모델 및 ID별 사용량](#모델-및-id별-사용량) 참조) 각 행에 호출한 모델과 횟수가 표시되며, 추론 호출만 집계됩니다.
+- 꺼져 있으면 숫자는 자격 증명(서비스 계정 또는 API 키)별 Cloud Monitoring 값이며, 추론뿐 아니라 AI API(Vertex AI, Gemini API, Agent Builder, Dialogflow)에 대한 모든 호출이 포함됩니다.
+- 추론 연결의 서비스 계정과 커넥터의 서비스 계정은 집계하지 않습니다. 사람은 한 명씩 나열하지 않으며, 그 호출은 하나의 집계 행에 들어갑니다(**People (Google accounts)** 또는 **People and tools (OAuth)**: 콘솔, gcloud, 앱).
+- 해당 동기화에서 SecureAI가 추론 연결을 읽지 못하면 아무것도 분류하지 않고, 이를 선택 사항 누락 항목으로 표시하며, 이전 동기화의 결과를 유지합니다.
+- Insights 발견 사항 **Google Vertex AI / Gemini is being used outside SecureAI**를 생성합니다. 심각도는 중간이며, 호출자가 API 키(수명이 긴 자격 증명)이면 심각입니다. OWASP LLM02, ISO/IEC 42001 A.4.2 및 A.6.2.6, NIST AI RMF MAP-1.1 및 GOVERN-6.1에 매핑됩니다.
 
 ## 비용
 

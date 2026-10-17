@@ -205,6 +205,17 @@ JSON ファイルはパスワードと同じように扱ってください。Sec
 
 3. モデルが失敗した場合は、パネルに理由が表示されます。このページの最後にある**トラブルシューティング**のセクションを参照してください。
 
+### ID がほかに実行できること
+
+このテストでは、接続の ID がプロジェクト内でほかに何を実行できるかも、`projects:testIamPermissions` と推論経路と同じトークンで確認します。追加のロールは不要で、何も変更されません。パネルには次のいずれかの通知が表示されます:
+
+| パネルの通知 | 意味 |
+|--------------|------|
+| *Permissions: roles/aiplatform.user — it can call models and also deploy or delete Vertex AI resources, and none of the permissions outside AI that SecureAI checks.* | `roles/aiplatform.user` であれば想定どおりの結果です。 |
+| *Least privilege: this identity can call models and nothing else that SecureAI checked.* | `roles/aiplatform.user` のデプロイ権限すら持っていません (カスタム ロールなど)。 |
+| *This identity can do much more than call models: …* (警告、権限の一覧付き) | IAM ポリシーの変更、サービス アカウント キーの作成、Storage・BigQuery・Secret Manager のデータの読み取りなど、AI 以外の権限を持っています。アクティビティ ログにはテストが警告として記録されます。サービス アカウントには `roles/aiplatform.user` のみを付与してください。 |
+| *Could not check what else this identity can do in the project …* | Google が応答しませんでした。たとえば Cloud Resource Manager API が無効になっています。 |
+
 <Info>
 このテストでは 1 トークンのリクエストをいくつか送信し、**お客様の Google アカウントに請求されます** (数セント程度)。
 </Info>
@@ -247,6 +258,7 @@ JSON ファイルはパスワードと同じように扱ってください。Sec
 - **データ所在地。** リージョンを固定した場合 (例: `europe-west4`)、SecureAI は各リクエストをそのリージョンのエンドポイントに送信し、組織のデータ所在地ポリシーを適用します。Google がリクエストをどこで処理するかは、Google のデータ所在地に関するコミットメントに従います。
 - **フェイルクローズ。** 設定を読み取れない場合や Google のトークンを取得できない場合、リクエストは拒否されます。フォールバックを許可していない限り、別のプロバイダーには送信されません。
 - **監査。** 統合の保存、テスト、切断はアクティビティ ログに記録されます。変更されたフィールドの名前は記録されますが、キーが記録されることはありません。
+- **最小権限の可視化。** 接続テストでは、接続の ID がプロジェクト内でほかに何を実行できるかを確認し、AI 以外の権限を持っている場合は警告します (ステップ 4 の **ID がほかに実行できること** を参照)。
 - **最小限の権限。** 推論には `roles/aiplatform.user` で十分です。この統合が IAM や請求を読み取る必要はありません。
 
 ## 切断

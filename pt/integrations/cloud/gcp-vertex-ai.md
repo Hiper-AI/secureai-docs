@@ -20,6 +20,7 @@ Este cartão **apenas lê** o projeto e nunca envia um prompt. Se você quer exe
 - **Uso por modelo** dos últimos 30 dias: solicitações (e quantas falharam), tokens de entrada e de saída, e tokens de cache de prompts.
 - **Uso por credencial** dos últimos 30 dias (Cloud Monitoring): total de solicitações e solicitações às APIs de IA (Vertex AI, Gemini API, Agent Builder, Dialogflow) de cada conta de serviço e de cada chave de API. O tráfego de clientes OAuth (pessoas e ferramentas como o console ou o `gcloud`) é somado à parte. Também fornece o último uso dessas contas e chaves.
 - **Uso por modelo e identidade** (opcional): qual conta de serviço ou pessoa chamou qual modelo da Vertex AI, obtido dos registros de auditoria de acesso a dados (Data Access) se você os tiver ativados. Consulte [Uso por modelo e identidade](#uso-por-modelo-e-identidade).
+- **Vertex AI usada fora da SecureAI**: as identidades que chamaram a Vertex AI ou o Gemini diretamente, sem passar pela conexão de inferência da SecureAI. Consulte [Vertex AI usada fora da SecureAI](#vertex-ai-usada-fora-da-secureai).
 - **Custo** dos últimos 30 dias: o gasto real deste projeto com IA, obtido da sua exportação de faturamento para o BigQuery, ou uma estimativa pelo preço de tabela.
 - **NHIs**: contas de serviço, chaves de conta de serviço gerenciadas pelo usuário, chaves de API, pools e provedores de Workload Identity Federation, e clientes OAuth — com seu último uso (do Policy Analyzer e do uso por credencial) e seu [risco de privilégio](#risco-de-privilégio). Revogáveis e restauráveis no [Inventário de NHIs](/pt/discovery/nhi-inventory), manualmente ou com [políticas automáticas](#políticas-automáticas-de-nhi).
 - Vinculações de papéis do **IAM** no projeto.
@@ -220,6 +221,16 @@ Com a política do IAM lida, a SecureAI marca uma conta de serviço como **privi
 - `roles/iam.serviceAccountTokenCreator` ou `roles/iam.serviceAccountUser`, que permitem a quem os tem atuar como outras contas de serviço.
 
 Uma chave gerenciada pelo usuário de uma conta de serviço privilegiada herda a marcação: quem tem a chave tem esse privilégio. Chaves de API **sem restrições** (sem destino de API e sem restrição de aplicativo) também são marcadas. No [Inventário de NHIs](/pt/discovery/nhi-inventory), elas aparecem entre os fatores de risco como **Privileged (admin role or impersonation)** e **API key without restrictions**. Se a política do IAM não puder ser lida, a SecureAI não marca nada, em vez de tratar uma conta como não privilegiada.
+
+## Vertex AI usada fora da SecureAI
+
+No painel do GCP, a guia **Identity & Access** inclui **Vertex AI used outside SecureAI**: as identidades que chamaram a Vertex AI ou o Gemini diretamente nos últimos 30 dias, sem passar pela [conexão de inferência da Vertex AI](/pt/integrations/cloud/vertex-ai-inference). Esses prompts não passaram por DLP, políticas nem recibos assinados.
+
+- Com os registros de auditoria de acesso a dados (Data Access) ativados (consulte [Uso por modelo e identidade](#uso-por-modelo-e-identidade)), cada linha diz quais modelos foram chamados e quantas vezes, e só são contadas chamadas de inferência.
+- Sem eles, o número vem do Cloud Monitoring por credencial (conta de serviço ou chave de API) e inclui toda chamada a uma API de IA (Vertex AI, Gemini API, Agent Builder, Dialogflow), não só inferência.
+- A conta de serviço da conexão de inferência e a do conector nunca são contadas. As pessoas não são listadas uma a uma: as chamadas delas ficam em uma única linha agregada (**People (Google accounts)**, ou **People and tools (OAuth)**: console, gcloud, apps).
+- Se a SecureAI não conseguiu ler a conexão de inferência nessa sincronização, ela não classifica nada, indica isso como lacuna opcional e mantém o resultado da sincronização anterior.
+- Gera a constatação do Insights **Google Vertex AI / Gemini is being used outside SecureAI**: moderada, e crítica se quem chama é uma chave de API (uma credencial de longa duração). É mapeada para OWASP LLM02, ISO/IEC 42001 A.4.2 e A.6.2.6, e NIST AI RMF MAP-1.1 e GOVERN-6.1.
 
 ## Custo
 

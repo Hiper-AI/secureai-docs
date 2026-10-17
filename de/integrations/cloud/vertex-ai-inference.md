@@ -205,6 +205,17 @@ Die verfügbaren Modelle hängen vom **Standort** ab. Die Standardmodelle (mehre
 
 3. Wenn ein Modell fehlschlägt, zeigt das Panel den Grund an. Siehe den Abschnitt **Fehlerbehebung** am Ende dieser Seite.
 
+### Was die Identität sonst noch kann
+
+Der Test prüft außerdem, was die Identität der Verbindung im Projekt sonst noch tun kann, mit `projects:testIamPermissions` und demselben Token wie der Inferenzpfad: Es ist keine zusätzliche Rolle nötig, und es wird nichts geändert. Das Panel zeigt einen dieser Hinweise:
+
+| Hinweis im Panel | Bedeutung |
+|------------------|-----------|
+| *Permissions: roles/aiplatform.user — it can call models and also deploy or delete Vertex AI resources, and none of the permissions outside AI that SecureAI checks.* | Das ist mit `roles/aiplatform.user` zu erwarten. |
+| *Least privilege: this identity can call models and nothing else that SecureAI checked.* | Sie hat nicht einmal die Bereitstellungsberechtigungen von `roles/aiplatform.user` (zum Beispiel bei einer benutzerdefinierten Rolle). |
+| *This identity can do much more than call models: …* (Warnung, mit der Liste der Berechtigungen) | Sie hat Berechtigungen außerhalb von KI, zum Beispiel die IAM-Richtlinie ändern, Dienstkontoschlüssel erstellen oder Daten aus Storage, BigQuery oder Secret Manager lesen. Das Aktivitätsprotokoll speichert den Test als Warnung. Geben Sie dem Dienstkonto nur `roles/aiplatform.user`. |
+| *Could not check what else this identity can do in the project …* | Google hat nicht geantwortet, zum Beispiel weil die Cloud Resource Manager API deaktiviert ist. |
+
 <Info>
 Der Test sendet einige Anfragen mit je einem Token und **wird Ihrem Google-Konto in Rechnung gestellt** (Cent-Beträge).
 </Info>
@@ -247,6 +258,7 @@ Im Modus **Remap everything** ohne Fallback bietet die Auswahl **nur** Modelle a
 - **Datenresidenz.** Mit einer festgelegten Region (zum Beispiel `europe-west4`) sendet SecureAI jede Anfrage an den Endpunkt dieser Region und wendet die Residenzrichtlinien Ihrer Organisation an. Wo Google die Anfrage verarbeitet, hängt von den Datenresidenz-Zusagen von Google ab.
 - **Schlägt geschlossen fehl.** Wenn die Konfiguration nicht gelesen oder das Token von Google nicht abgerufen werden kann, wird die Anfrage abgelehnt; sie wird nicht an einen anderen Anbieter gesendet, es sei denn, Sie haben den Fallback erlaubt.
 - **Audit.** Das Speichern, Testen oder Trennen der Integration wird im Aktivitätsprotokoll erfasst, mit den Namen der geänderten Felder und nie mit dem Schlüssel.
+- **Minimale Berechtigungen sichtbar.** Der Verbindungstest prüft, was die Identität der Verbindung im Projekt sonst noch tun kann, und warnt, wenn sie Berechtigungen außerhalb von KI hat (siehe **Was die Identität sonst noch kann** in Schritt 4).
 - **Minimale Berechtigungen.** `roles/aiplatform.user` genügt für die Inferenz; die Integration muss weder Ihr IAM noch Ihre Abrechnung lesen.
 
 ## Trennen

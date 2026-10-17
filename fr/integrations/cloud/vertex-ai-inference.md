@@ -205,6 +205,17 @@ Les modèles disponibles dépendent de l'**emplacement**. Les modèles par défa
 
 3. Si un modèle échoue, le panneau en affiche la raison. Consultez la section **Dépannage** à la fin de cette page.
 
+### Ce que l'identité peut faire d'autre
+
+Le test vérifie aussi ce que l'identité de la connexion peut faire d'autre dans le projet, avec `projects:testIamPermissions` et le même jeton que le flux d'inférence : aucun rôle supplémentaire n'est nécessaire et rien n'est modifié. Le panneau affiche l'un de ces avis :
+
+| Avis du panneau | Signification |
+|-----------------|---------------|
+| *Permissions: roles/aiplatform.user — it can call models and also deploy or delete Vertex AI resources, and none of the permissions outside AI that SecureAI checks.* | C'est le résultat attendu avec `roles/aiplatform.user`. |
+| *Least privilege: this identity can call models and nothing else that SecureAI checked.* | Elle ne détient même pas les autorisations de déploiement de `roles/aiplatform.user` (par exemple, un rôle personnalisé). |
+| *This identity can do much more than call models: …* (avertissement, avec la liste des autorisations) | Elle détient des autorisations en dehors de l'IA, par exemple modifier la stratégie IAM, créer des clés de compte de service ou lire des données dans Storage, BigQuery ou Secret Manager. Le journal d'activité enregistre le test comme un avertissement. N'accordez au compte de service que `roles/aiplatform.user`. |
+| *Could not check what else this identity can do in the project …* | Google n'a pas répondu ; par exemple, l'API Cloud Resource Manager est désactivée. |
+
 <Info>
 Le test envoie quelques requêtes d'un jeton et **est facturé sur votre compte Google** (quelques centimes).
 </Info>
@@ -247,6 +258,7 @@ En mode **Remap everything** sans repli, le sélecteur **ne propose que** les mo
 - **Résidence des données.** Avec une région fixée (par exemple `europe-west4`), SecureAI envoie chaque requête au point de terminaison de cette région et applique les politiques de résidence de votre organisation. Le lieu où Google traite la requête dépend des engagements de Google en matière de résidence des données.
 - **Échec en mode fermé.** Si la configuration ne peut pas être lue ou si le jeton de Google ne peut pas être obtenu, la requête est refusée ; elle n'est pas envoyée à un autre fournisseur, sauf si vous avez autorisé le repli.
 - **Audit.** L'enregistrement, le test ou la déconnexion de l'intégration est consigné dans le journal d'activité, avec le nom des champs modifiés et jamais la clé.
+- **Moindre privilège visible.** Le test de connexion vérifie ce que l'identité de la connexion peut faire d'autre dans le projet et avertit si elle détient des autorisations en dehors de l'IA (voir **Ce que l'identité peut faire d'autre**, à l'étape 4).
 - **Autorisations minimales.** `roles/aiplatform.user` suffit pour l'inférence ; l'intégration n'a pas besoin de lire votre IAM ni votre facturation.
 
 ## Déconnecter
