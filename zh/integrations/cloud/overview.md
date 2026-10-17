@@ -42,7 +42,7 @@ description: "连接您的 OpenAI、Anthropic、Azure、AWS 和 GCP AI 平台，
 |----------|-----------------|
 | [OpenAI Platform](/zh/integrations/cloud/openai-platform) |组织管理员 API 密钥 |
 | [Anthropic Console](/zh/integrations/cloud/anthropic-console) |管理 API 密钥（+ 可选工作区/合规性密钥）|
-| [Azure AI Foundry](/zh/integrations/cloud/azure-ai-foundry) | Entra 服务主体（租户/客户端/秘密）|
+| [Azure — 发现](/zh/integrations/cloud/azure-ai-foundry) | Entra 服务主体（租户/客户端/秘密）|
 | [Google Cloud — 发现](/zh/integrations/cloud/gcp-vertex-ai) | 服务帐户 JSON 密钥，或无密钥模拟 |
 
 ## 相关

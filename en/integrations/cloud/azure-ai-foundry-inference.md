@@ -12,7 +12,7 @@ With this integration, SecureAI's large language model (LLM) calls run on **your
 SecureAI stays in the path of every request: **DLP, model policies, data residency, and signed receipts** apply exactly as they do with any other provider.
 
 <Info>
-**Not to be confused with the other Azure card.** This page connects Foundry as an **inference provider** (Admin → Integrations → **AI providers**). The **Azure AI Foundry — Discovery** card (**Cloud** category) inventories agents, deployments, identities, and costs in read-only mode and never sends a prompt; it is described in [Azure AI Foundry](/en/integrations/cloud/azure-ai-foundry). You can use both on the same subscription, but they are independent and ask for different permissions.
+**Not to be confused with the other Azure card.** This page connects Foundry as an **inference provider** (Admin → Integrations → **AI providers**). The **Azure — Discovery** card (**Cloud** category) inventories deployments, Foundry agents, every Entra non-human identity, and costs in read-only mode and never sends a prompt; it is described in [Azure — Discovery](/en/integrations/cloud/azure-ai-foundry). You can use both on the same subscription, but they are independent and ask for different permissions.
 </Info>
 
 ## What runs on Foundry and what does not
@@ -91,7 +91,7 @@ If the deployment list shows a warning, the principal does not have **Reader** o
 - **Only these model families** — the families you tick run on your Foundry; everything else keeps running where it did. Default: **OpenAI**.
 - **Remap everything to Foundry** — all LLM calls run on Foundry; models with no deployment are served by a **default deployment**.
 
-**Default deployments** (pick from your deployments):
+**Default deployments** (pick from your deployments; embedding deployments are not offered, because they cannot answer a chat):
 
 | Tier | Used for |
 |------|----------|
@@ -107,7 +107,7 @@ Fallback and user quotas work as on Vertex AI: with **fallback off** (recommende
 ## Step 4. Test, review, and turn it on
 
 1. **Test connection** sends a one-token request to each default deployment (or to your first chat deployments if you have not chosen defaults), through the same path real traffic uses. It is billed to your Azure subscription (cents).
-2. **Routing preview** shows, for every catalog model, whether **Foundry**, **Vertex AI**, or **SecureAI** will serve it, and with which deployment.
+2. **Routing preview** shows, for every catalog model, whether **Foundry**, **Vertex AI**, or **SecureAI** will serve it, and with which deployment. A model of a family you route to Foundry that has no deployment (and no default for its tier) shows **Hidden from users**: with fallback off, the chat does not offer it.
 3. Turn on **Route traffic to Azure AI Foundry** and click **Save**.
 
 Models served by your Foundry show the **Azure logo** in the chat model selector.
@@ -165,7 +165,7 @@ Errors users may see in the chat:
 
 ## Related
 
-- [Azure AI Foundry — Discovery](/en/integrations/cloud/azure-ai-foundry)
+- [Azure — Discovery](/en/integrations/cloud/azure-ai-foundry)
 - [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference)
 - [Amazon Bedrock — Inference on your account](/en/integrations/cloud/aws-bedrock-inference)
 - [Cloud AI Providers Overview](/en/integrations/cloud/overview)

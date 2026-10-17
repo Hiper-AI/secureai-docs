@@ -30,7 +30,7 @@ A personal Google account (for example an @gmail.com account, or a personal acco
 
 1. Sign in to SecureAI as an administrator.
 2. Go to **Admin → Integrations** and filter by the **IAM** category.
-3. On the **Google Workspace (SSO)** card, click **Connect Integration**.
+3. On the **Google Workspace (SSO)** card, click **Connect Integration** (or **Reconfigure**, if the card says **Configured by Hiper AI**).
 4. In section **1. Create an OAuth client in Google Cloud**, click **Copy** next to the **Redirect URI**.
 
 The URI looks like this (with your instance's domain):
@@ -98,8 +98,9 @@ If you choose **External**, the app must be **In production** (not "Testing"); i
   ![Authorized redirect URIs](/img/google%20sso%20images/google%20-%208.png)
 </div>
 
-6. Click **Create**.
-7. In the dialog that appears, copy the **Client ID** (ends in `.apps.googleusercontent.com`) and the **Client secret** (starts with `GOCSPX-`). You can download the JSON as a backup.
+6. Leave **Use this client for an AI-powered agent** unchecked: it is for a different kind of client and SecureAI does not need it.
+7. Click **Create**.
+8. In the dialog that appears, copy the **Client ID** (ends in `.apps.googleusercontent.com`) and the **Client secret** (starts with `GOCSPX-`). You can download the JSON as a backup. Do not close the dialog until you have copied it.
 
 <div class="mac-window">
   ![OAuth client created](/img/google%20sso%20images/google%20-%209.png)
@@ -109,7 +110,7 @@ If you choose **External**, the app must be **In production** (not "Testing"); i
 Google shows the full secret only when it is created. Store it somewhere safe; if you lose it, add a new secret on the client.
 </Warning>
 
-Changes to the redirect URI can take a few minutes to propagate at Google.
+Google warns that a new client, or a change to its URIs, can take from 5 minutes to a few hours to take effect. If in step 5 **Test connection** flags a freshly created redirect URI or client ID, wait a few minutes and test again before changing anything.
 
 ## Step 5: Enter the details in SecureAI and test
 
@@ -128,7 +129,7 @@ Go back to **Admin → Integrations → Google Workspace (SSO)**:
    | Client secret | The secret does not belong to that client (`invalid_client`). Paste it again or add a new one. |
 
    The test uses what is typed in the form, so you can test before saving.
-3. Turn on **Show "Continue with Google" on the login page**.
+3. Check that **Show "Continue with Google" on the login page** is on (it starts on the first time). SecureAI will not save it on without at least one domain.
 4. Click **Save**.
 
 From then on the card shows **Active on the login page**, and the **Continue with Google** button appears on your instance's login page.

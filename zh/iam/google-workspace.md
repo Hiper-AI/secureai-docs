@@ -30,7 +30,7 @@ sidebar_label: "Google Workspace (SSO)"
 
 1. 以管理员身份登录 SecureAI。
 2. 转到 **管理 → 集成**，并按 **身份和访问管理** 类别筛选。
-3. 在 **Google Workspace (SSO)** 卡片上，点击 **连接集成**。
+3. 在 **Google Workspace (SSO)** 卡片上，点击 **连接集成**（如果卡片显示 **Configured by Hiper AI**（由 Hiper AI 配置），则点击 **重新配置**）。
 4. 在 **1. Create an OAuth client in Google Cloud**（在 Google Cloud 中创建 OAuth 客户端）部分，点击 **Redirect URI**（重定向 URI）旁边的 **Copy**（复制）。
 
 该 URI 的格式如下（使用您实例的域名）：
@@ -98,8 +98,9 @@ https://<your-company>.hiperai.ai/api/auth/google/callback
   ![已获授权的重定向 URI](/img/google%20sso%20images/google%20-%208.png)
 </div>
 
-6. 点击 **创建**。
-7. 在弹出的对话框中，复制 **客户端 ID**（以 `.apps.googleusercontent.com` 结尾）和 **客户端密钥**（以 `GOCSPX-` 开头）。您可以下载 JSON 作为备份。
+6. 不要勾选 **将此客户端用于 AI 驱动的代理**（Use this client for an AI-powered agent）：该选项适用于另一类客户端，SecureAI 不需要它。
+7. 点击 **创建**。
+8. 在弹出的对话框中，复制 **客户端 ID**（以 `.apps.googleusercontent.com` 结尾）和 **客户端密钥**（以 `GOCSPX-` 开头）。您可以下载 JSON 作为备份。复制完成之前，请不要关闭该对话框。
 
 <div class="mac-window">
   ![已创建 OAuth 客户端](/img/google%20sso%20images/google%20-%209.png)
@@ -109,7 +110,7 @@ https://<your-company>.hiperai.ai/api/auth/google/callback
 Google 只在创建时显示完整的密钥。请将其保存在安全的地方；如果丢失，请在该客户端上添加新的密钥。
 </Warning>
 
-重定向 URI 的更改可能需要几分钟才能在 Google 端生效。
+Google 提示，新客户端或对其 URI 的更改可能需要 5 分钟到几个小时才能生效。如果在步骤 5 中 **Test connection** 提示刚创建的重定向 URI 或客户端 ID 有问题，请等待几分钟后再测试一次，然后再考虑更改任何设置。
 
 ## 步骤 5：在 SecureAI 中填写信息并测试
 
@@ -128,7 +129,7 @@ Google 只在创建时显示完整的密钥。请将其保存在安全的地方�
    | Client secret | 该密钥不属于此客户端（`invalid_client`）。请重新粘贴，或添加新的密钥。 |
 
    测试使用的是表单中当前填写的内容，因此您可以在保存之前进行测试。
-3. 打开 **Show "Continue with Google" on the login page**（在登录页面上显示 Google 登录按钮）。
+3. 确认 **Show "Continue with Google" on the login page**（在登录页面上显示 Google 登录按钮）已打开（首次配置时默认已打开）。未填写网域时，SecureAI 不允许在打开状态下保存。
 4. 点击 **Save**（保存）。
 
 此后，卡片会显示 **Active on the login page**（已在登录页面启用），并且 **使用Google继续** 按钮会出现在您实例的登录页面上。

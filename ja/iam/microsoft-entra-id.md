@@ -27,7 +27,7 @@ SecureAI は**自社の**テナントが発行したトークンのみを受け�
 
 1. 管理者として SecureAI にサインインします。
 2. **管理画面 → 連携** に移動し、**IAM** カテゴリで絞り込みます。
-3. **Microsoft Entra ID (SSO)** カードで **統合を接続** をクリックします。
+3. **Microsoft Entra ID (SSO)** カードで **統合を接続** をクリックします (カードに **Configured by Hiper AI** (Hiper AI が構成済み) と表示されている場合は **再設定** をクリックします)。
 4. **1. Register SecureAI in Microsoft Entra ID** セクションで、**Redirect URI** の横にある **Copy** をクリックします。
 
 URI は次のような形式です (ドメインはお使いのインスタンスのものになります)。
@@ -137,10 +137,15 @@ SecureAI は、Microsoft Graph の委任されたアクセス許可 `openid`、`
    | ディレクトリ (テナント) ID | Microsoft がそのテナントを認識していません (`AADSTS90002`)。概要ページからディレクトリ ID をコピーしてください。 |
    | アプリケーション (クライアント) ID | そのアプリケーションがテナント内に存在しません (`AADSTS700016`)。クライアント ID と、アプリが同じテナントにあることを確認してください。 |
    | クライアント シークレット | シークレットが無効 (`AADSTS7000215`) または期限切れ (`AADSTS7000222`) です。**値** (Value) を貼り付けるか、新しいシークレットを作成してください。 |
+   | アプリケーションに登録されたリダイレクト URI | ステップ 1 の URI がアプリの登録に含まれていません (ユーザーがサインイン時に受け取る `AADSTS50011` エラーです)。アプリで **認証 → プラットフォームを追加 → Web** (Authentication → Add a platform → Web) を開き、URI を正確に貼り付けて保存してください。 |
 
    テストはフォームに入力されている内容を使用するため、保存前にテストできます。アプリ専用トークンをブロックする条件付きアクセス ポリシーがテナントにある場合、シークレットが「could not be verified automatically」(自動的に検証できませんでした) と表示されることがあります。これはエラーではありません。実際にサインインして確認してください。
 
-3. **Show "Continue with Microsoft" on the login page** (ログイン ページに「Continue with Microsoft」を表示) をオンにします。
+   <Note>
+   このテストでは URI が登録されていることは確認できますが、**Web** プラットフォームと **シングルページ アプリケーション (SPA)** のどちらに登録されたかは確認できません。SPA として登録されている場合、テストは成功しますが、サインインは「Single sign-on could not be completed」で失敗します。**認証** で URI が **Web** の下に表示されていることを確認してください。
+   </Note>
+
+3. **Show "Continue with Microsoft" on the login page** (ログイン ページに「Continue with Microsoft」を表示) がオンになっていることを確認します (初回は既定でオンになっています)。
 4. **Save** (保存) をクリックします。
 
 以降、カードには **Active on the login page** (ログイン ページで有効) と表示され、インスタンスのログイン ページに **Continue with Microsoft** ボタンが表示されます。
@@ -193,13 +198,13 @@ SecureAI でユーザーが無効化されると (手動または SCIM 経由)�
 | "This account is not allowed to sign in here…" | メール アドレスのドメインが **Allowed email domains** に含まれていないか、トークンが別のテナントから発行されています。 |
 | "This sign-in method is not enabled for your organization." | 統合が無効になっているか、構成が不完全です。連携のカードを確認してください。 |
 | "Your identity provider did not complete the sign-in…" | Microsoft がエラーを返しました。ユーザーがキャンセルした、管理者の同意がない (ステップ 4)、またはユーザーがアプリケーションに割り当てられていない可能性があります。 |
-| "Single sign-on could not be completed…" | コードの交換に失敗しました。通常、シークレットの有効期限が切れたか、置き換えられたことが原因です。**Test connection** を使用してください。 |
+| "Single sign-on could not be completed…" | コードの交換に失敗しました。通常、シークレットの有効期限切れまたは置き換え (**Test connection** を使用してください)、またはリダイレクト URI が **Web** ではなく **シングルページ アプリケーション** として登録されていることが原因です (**認証** で **Web** に移してください)。 |
 | "Your account is inactive…" | SecureAI でアカウントが無効化されています。 |
 | "The sign-in session expired or was not started from this browser…" | 10 分以上経過したか、別のタブ/ブラウザーでサインインが開始されました。ログイン ページからもう一度お試しください。 |
 
 Microsoft が表示するエラー (SecureAI に戻る前):
 
-- **AADSTS50011 – リダイレクト URI が一致しません**: Entra ID に登録された URI が、ステップ 1 で SecureAI に表示される URI と完全には一致していないか、**Web** ではなく「シングルページ アプリケーション」として登録されています。
+- **AADSTS50011 – リダイレクト URI が一致しません**: Entra ID に登録された URI が、ステップ 1 で SecureAI に表示される URI と完全には一致していません (末尾のスラッシュが 1 つ多いだけでも一致しなくなります)。**Test connection** を使うと、最初のサインインの前に検出できます。
 - **AADSTS65001 / 「管理者の承認が必要」**: 管理者の同意を与えてください (ステップ 4)。
 - **AADSTS50105 – サインインしたユーザーがアプリケーションのロールに割り当てられていません**: エンタープライズ アプリケーションの **割り当てが必要ですか?** (Assignment required?) が **はい** に設定されています。**エンタープライズ アプリケーション → SecureAI SSO → ユーザーとグループ** (Enterprise applications → SecureAI SSO → Users and groups) で、ユーザーまたはグループを割り当ててください。
 - **AADSTS7000215 / AADSTS7000222**: シークレットが無効または期限切れです。新しいシークレットを入力してください。

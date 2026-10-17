@@ -27,7 +27,7 @@ SecureAI acepta únicamente tokens emitidos por **su** tenant: el inicio de sesi
 
 1. Inicie sesión en SecureAI como administrador.
 2. Vaya a **Admin → Integraciones** y filtre por la categoría **IAM**.
-3. En la tarjeta **Microsoft Entra ID (SSO)** haga clic en **Conectar integración**.
+3. En la tarjeta **Microsoft Entra ID (SSO)** haga clic en **Conectar integración** (o en **Reconfigurar**, si la tarjeta dice **Configurado por Hiper AI**).
 4. En la sección **1. Registrá SecureAI en Microsoft Entra ID**, haga clic en **Copiar** junto a la **URI de redirección**.
 
 La URI tiene esta forma (con el dominio de su instancia):
@@ -137,10 +137,15 @@ Vuelva a **Admin → Integraciones → Microsoft Entra ID (SSO)**:
    | Id. de directorio (inquilino) | Microsoft no conoce ese tenant (`AADSTS90002`). Copie el Id. de directorio de la página Información general. |
    | Id. de aplicación (cliente) | No existe esa aplicación en el tenant (`AADSTS700016`). Revise el Id. de cliente y que la app esté en el mismo tenant. |
    | Secreto de cliente | El secreto es inválido (`AADSTS7000215`) o venció (`AADSTS7000222`). Pegue el **Valor** o cree uno nuevo. |
+   | URI de redirección registrada en la aplicación | La URI del paso 1 no está en el registro de aplicación (es el error `AADSTS50011` que vería el usuario al iniciar sesión). En la aplicación abra **Autenticación → Agregar una plataforma → Web**, péguela tal cual y guarde. |
 
    La prueba usa lo que está escrito en el formulario, así que puede probar antes de guardar. Si su tenant tiene una política de Acceso condicional que bloquea tokens de aplicación, el secreto puede aparecer como "no se pudo verificar automáticamente": no es un error, confirme haciendo un login real.
 
-3. Active **Mostrar "Continuar con Microsoft" en la página de login**.
+   <Note>
+   La prueba confirma que la URI está registrada, pero no si se registró en la plataforma **Web** o en **Aplicación de página única (SPA)**. Registrada como SPA, la prueba da bien y el login falla con "No se pudo completar el inicio de sesión único". Revise que en **Autenticación** la URI aparezca bajo **Web**.
+   </Note>
+
+3. Verifique que esté activado **Mostrar "Continuar con Microsoft" en la página de login** (viene activado la primera vez).
 4. Haga clic en **Guardar**.
 
 Desde ese momento la tarjeta muestra **Activo en la página de login** y el botón **Continuar con Microsoft** aparece en el login de su instancia.
@@ -193,13 +198,13 @@ Los errores del login se muestran en la página de inicio de sesión de SecureAI
 | "Esta cuenta no puede iniciar sesión acá…" | El dominio del email no está en **Dominios de email permitidos**, o el token vino de otro tenant. |
 | "Este método de inicio de sesión no está habilitado para tu organización." | La integración está desactivada o incompleta. Revise la tarjeta en Integraciones. |
 | "Tu proveedor de identidad no completó el inicio de sesión…" | Microsoft devolvió un error: el usuario canceló, falta el consentimiento de administrador (paso 4) o el usuario no está asignado a la aplicación. |
-| "No se pudo completar el inicio de sesión único…" | El intercambio de código falló, normalmente por un secreto vencido o reemplazado. Use **Probar conexión**. |
+| "No se pudo completar el inicio de sesión único…" | El intercambio de código falló: normalmente un secreto vencido o reemplazado (use **Probar conexión**), o la URI de redirección registrada como **Aplicación de página única** en vez de **Web** (muévala a **Web** en **Autenticación**). |
 | "Tu cuenta está inactiva…" | La cuenta está desactivada en SecureAI. |
 | "La sesión de inicio expiró o no se inició desde este navegador…" | Pasaron más de 10 minutos, o el login empezó en otra pestaña/navegador. Vuelva a intentar desde la página de login. |
 
 Errores que muestra Microsoft (antes de volver a SecureAI):
 
-- **AADSTS50011 – La URI de redirección no coincide**: la URI registrada en Entra ID no es exactamente la que muestra SecureAI en el paso 1, o se registró como "Aplicación de página única" en vez de **Web**.
+- **AADSTS50011 – La URI de redirección no coincide**: la URI registrada en Entra ID no es exactamente la que muestra SecureAI en el paso 1 (una barra final de más alcanza para que no coincida). **Probar conexión** lo detecta antes del primer login.
 - **AADSTS65001 / "Se necesita aprobación del administrador"**: otorgue el consentimiento de administrador (paso 4).
 - **AADSTS50105 – El usuario no está asignado a un rol de la aplicación**: la aplicación empresarial tiene **¿Asignación requerida?** en **Sí**. Asigne el usuario o un grupo en **Aplicaciones empresariales → SecureAI SSO → Usuarios y grupos**.
 - **AADSTS7000215 / AADSTS7000222**: secreto inválido o vencido. Cargue uno nuevo.

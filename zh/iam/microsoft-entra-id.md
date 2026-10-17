@@ -27,7 +27,7 @@ SecureAI 只接受由**您的**租户颁发的令牌：登录固定在您的目�
 
 1. 以管理员身份登录 SecureAI。
 2. 转到 **管理 → 集成**，并按 **身份和访问管理** 类别筛选。
-3. 在 **Microsoft Entra ID (SSO)** 卡片上，点击 **连接集成**。
+3. 在 **Microsoft Entra ID (SSO)** 卡片上，点击 **连接集成**（如果卡片显示 **Configured by Hiper AI**（由 Hiper AI 配置），则点击 **重新配置**）。
 4. 在 **1. Register SecureAI in Microsoft Entra ID**（在 Microsoft Entra ID 中注册 SecureAI）部分，点击 **Redirect URI**（重定向 URI）旁边的 **Copy**（复制）。
 
 该 URI 的格式如下（使用您实例的域名）：
@@ -137,10 +137,15 @@ SecureAI 请求 Microsoft Graph 委托的权限 `openid`、`profile`、`email` �
    | Directory (tenant) ID | Microsoft 不认识该租户（`AADSTS90002`）。请从“概述”页面复制目录 ID。 |
    | Application (client) ID | 该租户中不存在此应用程序（`AADSTS700016`）。请检查客户端 ID，并确认该应用位于同一租户中。 |
    | Client secret | 密码无效（`AADSTS7000215`）或已过期（`AADSTS7000222`）。请粘贴 **值**，或创建新的密码。 |
+   | Redirect URI registered on the app | 步骤 1 中的 URI 不在应用注册中（即用户登录时会遇到的 `AADSTS50011` 错误）。请在该应用中打开 **身份验证 → 添加平台 → Web**（Authentication → Add a platform → Web），完全按原样粘贴该 URI 并保存。 |
 
    测试使用的是表单中当前填写的内容，因此您可以在保存之前进行测试。如果您的租户有阻止仅应用令牌的条件访问策略，密码可能会显示为“Could not be verified automatically”（无法自动验证）：这不是错误——请通过实际登录进行确认。
 
-3. 打开 **Show "Continue with Microsoft" on the login page**（在登录页面上显示 Microsoft 登录按钮）。
+   <Note>
+   该测试会确认 URI 已注册，但不会确认它注册在 **Web** 平台下还是 **单页应用程序 (SPA)** 下。如果注册为 SPA，测试会通过，但登录会失败并显示“Single sign-on could not be completed”。请在 **身份验证** 中确认该 URI 列在 **Web** 下。
+   </Note>
+
+3. 确认 **Show "Continue with Microsoft" on the login page**（在登录页面上显示 Microsoft 登录按钮）已打开（首次配置时默认已打开）。
 4. 点击 **Save**（保存）。
 
 此后，卡片会显示 **Active on the login page**（已在登录页面启用），并且 **使用Azure Entra继续** 按钮会出现在您实例的登录页面上。
@@ -193,13 +198,13 @@ SecureAI 在首次登录时**不会自动创建帐户**：所有要使用 Micros
 | "This account is not allowed to sign in here…" | 该电子邮件的域不在 **Allowed email domains** 中，或令牌来自其他租户。 |
 | "This sign-in method is not enabled for your organization." | 集成已停用或配置不完整。请在“集成”中检查该卡片。 |
 | "Your identity provider did not complete the sign-in…" | Microsoft 返回了错误：用户取消了登录、缺少管理员同意（步骤 4），或用户未分配到该应用程序。 |
-| "Single sign-on could not be completed…" | 代码交换失败，通常是因为密码已过期或已被替换。请使用 **Test connection**。 |
+| "Single sign-on could not be completed…" | 代码交换失败：通常是因为密码已过期或已被替换（请使用 **Test connection**），或者重定向 URI 被注册为 **单页应用程序** 而不是 **Web**（请在 **身份验证** 中将其移到 **Web** 下）。 |
 | “您的账户已停用……” | 该帐户在 SecureAI 中已被停用。 |
 | “登录会话已过期或不是从此浏览器发起的……” | 已超过 10 分钟，或登录是在其他标签页/浏览器中发起的。请从登录页面重试。 |
 
 Microsoft 显示的错误（返回 SecureAI 之前）：
 
-- **AADSTS50011 – The redirect URI does not match**：在 Entra ID 中注册的 URI 与 SecureAI 在步骤 1 中显示的 URI 不完全一致，或者注册为了“单页应用程序”而不是 **Web**。
+- **AADSTS50011 – The redirect URI does not match**：在 Entra ID 中注册的 URI 与 SecureAI 在步骤 1 中显示的 URI 不完全一致（末尾多一个斜杠就足以导致不匹配）。**Test connection** 可以在首次登录之前检测出此问题。
 - **AADSTS65001 / “需要管理员批准”（Need admin approval）**：请授予管理员同意（步骤 4）。
 - **AADSTS50105 – The signed in user is not assigned to a role for the application**：企业应用程序的 **需要进行分配?** 设置为 **是**。请在 **企业应用程序 → SecureAI SSO → 用户和组** 中分配该用户或某个组。
 - **AADSTS7000215 / AADSTS7000222**：密码无效或已过期。请填写新的密码。

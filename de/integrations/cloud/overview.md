@@ -42,7 +42,7 @@ Alle von Ihnen eingegebenen Geheimnisse (Client-Geheimnisse, Dienstkonto-JSON, A
 |----------|---|
 | [OpenAI-Plattform](/de/integrations/cloud/openai-platform) | Organisationsadministrator-API-Schlüssel |
 | [Anthropic Console](/de/integrations/cloud/anthropic-console) | Admin-API-Schlüssel (+ optionale Arbeitsbereichs-/Compliance-Schlüssel) |
-| [Azure AI Foundry](/de/integrations/cloud/azure-ai-foundry) | Entra-Dienstprinzipal (Mandant/Client/Geheimnis) |
+| [Azure — Erkennung](/de/integrations/cloud/azure-ai-foundry) | Entra-Dienstprinzipal (Mandant/Client/Geheimnis) |
 | [Google Cloud — Discovery](/de/integrations/cloud/gcp-vertex-ai) | JSON-Schlüssel des Dienstkontos oder schlüsselloser Identitätswechsel |
 
 ## Verwandte

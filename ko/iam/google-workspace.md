@@ -30,7 +30,7 @@ sidebar_label: "Google Workspace (SSO)"
 
 1. 관리자로 SecureAI에 로그인합니다.
 2. **관리자 → 통합**으로 이동하여 **IAM** 카테고리로 필터링합니다.
-3. **Google Workspace (SSO)** 카드에서 **통합 연결**을 클릭합니다.
+3. **Google Workspace (SSO)** 카드에서 **통합 연결**을 클릭합니다(카드에 **Configured by Hiper AI**(Hiper AI가 구성함)가 표시되어 있으면 **재구성**을 클릭합니다).
 4. **1. Create an OAuth client in Google Cloud** 섹션에서 **Redirect URI** 옆의 **Copy**를 클릭합니다.
 
 URI는 다음과 같은 형식입니다(도메인은 사용 중인 인스턴스의 도메인).
@@ -98,8 +98,9 @@ https://<your-company>.hiperai.ai/api/auth/google/callback
   ![Authorized redirect URIs](/img/google%20sso%20images/google%20-%208.png)
 </div>
 
-6. **만들기**(Create)를 클릭합니다.
-7. 표시되는 대화상자에서 **클라이언트 ID**(`.apps.googleusercontent.com`으로 끝남)와 **클라이언트 보안 비밀번호**(`GOCSPX-`로 시작)를 복사합니다. 백업용으로 JSON을 다운로드할 수도 있습니다.
+6. **AI 기반 에이전트에 이 클라이언트 사용**(Use this client for an AI-powered agent)은 선택하지 않은 상태로 둡니다. 다른 유형의 클라이언트를 위한 옵션이며 SecureAI에는 필요하지 않습니다.
+7. **만들기**(Create)를 클릭합니다.
+8. 표시되는 대화상자에서 **클라이언트 ID**(`.apps.googleusercontent.com`으로 끝남)와 **클라이언트 보안 비밀번호**(`GOCSPX-`로 시작)를 복사합니다. 백업용으로 JSON을 다운로드할 수도 있습니다. 복사를 마칠 때까지 대화상자를 닫지 마세요.
 
 <div class="mac-window">
   ![OAuth client created](/img/google%20sso%20images/google%20-%209.png)
@@ -109,7 +110,7 @@ https://<your-company>.hiperai.ai/api/auth/google/callback
 Google은 보안 비밀번호 전체를 생성 시에만 표시합니다. 안전한 곳에 보관하세요. 분실한 경우 클라이언트에 새 보안 비밀번호를 추가하세요.
 </Warning>
 
-리디렉션 URI 변경 사항이 Google에 반영되기까지 몇 분 정도 걸릴 수 있습니다.
+Google은 새 클라이언트나 클라이언트의 URI 변경 사항이 적용되기까지 5분에서 몇 시간까지 걸릴 수 있다고 안내합니다. 5단계에서 **Test connection**이 방금 만든 리디렉션 URI나 클라이언트 ID를 문제로 표시하면, 아무것도 변경하지 말고 몇 분 기다린 후 다시 테스트하세요.
 
 ## 5단계: SecureAI에 세부 정보 입력 및 테스트
 
@@ -128,7 +129,7 @@ Google은 보안 비밀번호 전체를 생성 시에만 표시합니다. 안전
    | 클라이언트 보안 비밀번호 | 보안 비밀번호가 해당 클라이언트의 것이 아닙니다(`invalid_client`). 다시 붙여 넣거나 새 보안 비밀번호를 추가하세요. |
 
    테스트는 양식에 입력된 내용을 사용하므로 저장하기 전에 테스트할 수 있습니다.
-3. **Show "Continue with Google" on the login page**(로그인 페이지에 "Continue with Google" 표시)를 켭니다.
+3. **Show "Continue with Google" on the login page**(로그인 페이지에 "Continue with Google" 표시)가 켜져 있는지 확인합니다(처음에는 기본적으로 켜져 있습니다). 도메인을 입력하지 않으면 SecureAI에서 켜진 상태로 저장할 수 없습니다.
 4. **Save**(저장)를 클릭합니다.
 
 이후 카드에 **Active on the login page**(로그인 페이지에서 활성)가 표시되고, 인스턴스의 로그인 페이지에 **Continue with Google** 버튼이 나타납니다.
