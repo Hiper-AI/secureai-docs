@@ -6,7 +6,7 @@ description: "Verbinden Sie Ihre OpenAI-, Anthropic-, Azure-, AWS- und GCP-KI-Pl
 ---
 # Cloud-KI-Anbieter
 
-Mit Cloud AI Provider-Konnektoren kann SecureAI auf die KI-Plattformen zugreifen, die Ihr Unternehmen bereits nutzt – **OpenAI Platform, Anthropic Console, Azure AI Foundry und Google Vertex AI** – und alles, was dort läuft, automatisch inventarisieren. Auf der Anbieterseite muss kein Agent oder SDK bereitgestellt werden. SecureAI fragt die Verwaltungs-API jedes Anbieters mit den von Ihnen bereitgestellten, größtenteils lesbaren Anmeldeinformationen ab.
+Mit Cloud AI Provider-Konnektoren kann SecureAI auf die KI-Plattformen zugreifen, die Ihr Unternehmen bereits nutzt – **OpenAI Platform, Anthropic Console, Azure AI Foundry und Google Vertex AI** – und alles, was dort läuft, automatisch inventarisieren. Auf der Anbieterseite muss kein Agent oder SDK bereitgestellt werden. SecureAI fragt die Verwaltungs-API jedes Anbieters mit den von Ihnen bereitgestellten Anmeldeinformationen ab, die überwiegend nur lesen.
 
 Sobald die Verbindung hergestellt ist, erkennt ein Connector Folgendes und synchronisiert es kontinuierlich:
 

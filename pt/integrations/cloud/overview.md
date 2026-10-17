@@ -42,7 +42,7 @@ Todos os segredos inseridos (segredos do cliente, JSON da conta de serviço, cha
 | Provedor | Tipo de credencial |
 |----------|-----------------|
 | [Plataforma OpenAI](/pt/integrations/cloud/openai-platform) | Chave de API do administrador da organização |
-| [Console Antrópico](/pt/integrations/cloud/anthropic-console) | Chave de API Admin (+ espaço de trabalho opcional/chaves de conformidade) |
+| [Anthropic Console](/pt/integrations/cloud/anthropic-console) | Chave de API Admin (+ espaço de trabalho opcional/chaves de conformidade) |
 | [Azure — Descoberta](/pt/integrations/cloud/azure-ai-foundry) | Entrar entidade de serviço (locatário/cliente/segredo) |
 | [Google Cloud — Discovery](/pt/integrations/cloud/gcp-vertex-ai) | Chave JSON da conta de serviço ou personificação sem chave |
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: "人择控制台"
-sidebar_label: "人择控制台"
+title: "Anthropic Console"
+sidebar_label: "Anthropic Console"
 description: "连接 Anthropic 控制台，以便 SecureAI 可以清点工作空间、密钥、使用情况、成本和审核活动"
 ---
 # Anthropic Console

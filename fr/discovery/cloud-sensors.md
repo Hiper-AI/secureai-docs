@@ -24,7 +24,7 @@ Chaque KPI comporte une sparkline de 30 jours construite à partir de l'historiq
 | Colonne | Descriptif |
 |--------|-------------|
 | **Agent** | Nom de l'agent/du modèle découvert. |
-| **Fournisseur** | Azure / AWS / GCP / OpenAI / Anthropique. |
+| **Fournisseur** | Azure / AWS / GCP / OpenAI / Anthropic. |
 | **Espace de travail/Déploiement** | Où il réside chez le fournisseur. |
 | **Modèle** | Modèle sous-jacent. |
 | **Statut** | `observed`, `active` ou `retired` (avec un suffixe `· auto` en cas de retrait automatique par découverte). |

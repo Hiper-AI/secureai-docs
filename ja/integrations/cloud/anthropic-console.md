@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
-title: "人間のコンソール"
-sidebar_label: "人間のコンソール"
+title: "Anthropic Console"
+sidebar_label: "Anthropic Console"
 description: "Anthropic Console に接続すると、SecureAI はワークスペース、キー、使用状況、コスト、アクティビティの監査を行うことができます。"
 ---
-# 人間のコンソール
+# Anthropic Console
 
 Anthropic 組織を接続すると、SecureAI がワークスペース、API キー、サービス アカウント、支出制限、および (エンタープライズ上で) 監査ログとクロード コード分析をインベントリできるようになります。
 

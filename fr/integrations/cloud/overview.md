@@ -6,7 +6,7 @@ description: "Connectez vos plateformes d'IA OpenAI, Anthropic, Azure, AWS et GC
 ---
 # Fournisseurs d'IA cloud
 
-Les connecteurs Cloud AI Provider permettent à SecureAI d'accéder aux plates-formes d'IA que votre organisation utilise déjà (**OpenAI Platform, Anthropic Console, Azure AI Foundry et Google Vertex AI**) et d'inventorier automatiquement tout ce qui y est exécuté. Aucun agent ou SDK ne doit être déployé du côté du fournisseur ; SecureAI interroge l'API de gestion de chaque fournisseur avec les informations d'identification en lecture principalement que vous fournissez.
+Les connecteurs Cloud AI Provider permettent à SecureAI d'accéder aux plates-formes d'IA que votre organisation utilise déjà (**OpenAI Platform, Anthropic Console, Azure AI Foundry et Google Vertex AI**) et d'inventorier automatiquement tout ce qui y est exécuté. Aucun agent ou SDK ne doit être déployé du côté du fournisseur ; SecureAI interroge l'API de gestion de chaque fournisseur avec les informations d'identification, principalement en lecture seule, que vous fournissez.
 
 Une fois connecté, un connecteur découvre et synchronise en continu :
 
@@ -41,7 +41,7 @@ Tous les secrets que vous saisissez (secrets client, JSON du compte de service, 
 | Fournisseur | Type d'identifiant |
 |--------------|-----------------|
 | [Plateforme OpenAI](/fr/integrations/cloud/openai-platform) | Clé API d'administration de l'organisation |
-| [Console Anthropique](/fr/integrations/cloud/anthropic-console) | Clé API d'administration (+ espace de travail / clés de conformité facultatives) |
+| [Anthropic Console](/fr/integrations/cloud/anthropic-console) | Clé API d'administration (+ espace de travail / clés de conformité facultatives) |
 | [Azure — Découverte](/fr/integrations/cloud/azure-ai-foundry) | Principal du service Entra (locataire/client/secret) |
 | [Google Cloud — Discovery](/fr/integrations/cloud/gcp-vertex-ai) | Clé JSON de compte de service, ou emprunt d'identité sans clé |
 

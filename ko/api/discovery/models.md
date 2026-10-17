@@ -239,8 +239,8 @@ curl -X GET "https://{customer.name}.hiperai.ai/api/external/models?provider=ope
 
 ## 이용 가능한 제공업체
 
-- **오픈AI**
-- **인류학**
+- **OpenAI**
+- **Anthropic**
 - **구글**
 - **메타**
 - **미스트랄**

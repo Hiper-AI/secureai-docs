@@ -30,8 +30,8 @@ description: "AI 에이전트 및 워크로드 뒤에 있는 비인간 ID(API �
 
 | 신원 유형 | 소스에서 취소 가능 | 모니터 전용 |
 |---------------|---------|-------------|
-| **API 키** | OpenAI, 인류학, GCP, Azure, AWS | — |
-| **서비스 계정/BYOK 키** | 인류학, GCP, Azure | 오픈AI, AWS |
+| **API 키** | OpenAI, Anthropic, GCP, Azure, AWS | — |
+| **서비스 계정/BYOK 키** | Anthropic, GCP, Azure | OpenAI, AWS |
 
 ## 작업
 
