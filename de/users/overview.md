@@ -41,6 +41,6 @@ Benutzerkonten werden unter Organisationslizenzstufen bereitgestellt:
 
 ## Allgemeine Verwaltungsaufgaben
 
-- **Benutzer erstellen**: Gehen Sie zu **Admin? Benutzer? Benutzer erstellen**. Legen Sie E-Mail, Rolle und Lizenzstufe fest.
-- **Zu Gruppen zuweisen**: Navigieren Sie zu **Admin? Gruppen** zum Organisieren von Benutzern in kollaborativen Teams mit gemeinsamen Gruppenindizes.
-- **SSO konfigurieren**: Verbinden Sie Ihren Unternehmensidentitätsanbieter (Google Workspace oder Microsoft Entra ID) unter den **Authentifizierungseinstellungen**.
+- **Benutzer erstellen**: Gehen Sie zu **Admin → IAM Verwaltung → Benutzerverwaltung → Benutzer hinzufügen**. Legen Sie E-Mail, Rolle und Lizenzstufe fest.
+- **Zu Gruppen zuweisen**: Navigieren Sie zu **Admin → IAM Verwaltung → Gruppenverwaltung** zum Organisieren von Benutzern in kollaborativen Teams mit gemeinsamen Gruppenindizes.
+- **SSO konfigurieren**: Verbinden Sie Ihren Unternehmensidentitätsanbieter unter **Admin → Integrationen → IAM**. Die Einrichtung erfolgt in Eigenregie: siehe [Google Workspace (SSO)](/de/iam/google-workspace) und [Microsoft Entra ID (SSO)](/de/iam/microsoft-entra-id).

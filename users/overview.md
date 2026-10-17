@@ -43,6 +43,6 @@ Las cuentas de usuario se aprovisionan bajo niveles de licencia organizacional:
 
 ## Tareas administrativas comunes
 
-- **Crear un usuario**: Ir a **¿Administrador? ¿Usuarios? Crear usuario**. Establezca el correo electrónico, la función y el nivel de licencia.
-- **Asignar a grupos**: navegar a **¿Administrador? Grupos** para organizar a los usuarios en equipos colaborativos con índices de grupo compartidos.
-- **Configurar SSO**: conecte su proveedor de identidad empresarial (Google Workspace o Microsoft Entra ID) en la configuración de **Autenticación**.
+- **Crear un usuario**: Ir a **Admin → Gestión IAM → Gestión de Usuarios → Agregar Usuario**. Establezca el correo electrónico, la función y el nivel de licencia.
+- **Asignar a grupos**: navegar a **Admin → Gestion IAM → Gestión de Grupos** para organizar a los usuarios en equipos colaborativos con índices de grupo compartidos.
+- **Configurar SSO**: conecte su proveedor de identidad empresarial en **Admin → Integraciones → IAM**. Es self-serve: vea [Google Workspace (SSO)](/iam/google-workspace) y [Microsoft Entra ID (SSO)](/iam/microsoft-entra-id).

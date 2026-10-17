@@ -1,294 +1,198 @@
 ---
 sidebar_position: 2
-title: "Google Workspace(SSO)"
+title: "Google Workspace (SSO)"
+sidebar_label: "Google Workspace (SSO)"
 ---
-# Google Workspace(SSO) 통합
 
-이 가이드에서는 SecureAI를 사용하여 싱글 사인온(SSO)을 위해 Google Workspace를 구성하는 과정을 안내합니다. Google Cloud Console에서 필요한 사용자 인증 정보를 얻고 이를 제출하여 통합을 완료하는 방법을 알아봅니다.
+# Google Workspace (SSO) 통합
 
-## 전제 조건
+이 통합을 사용하면 조직의 사용자가 Google Workspace 계정으로 SecureAI에 로그인할 수 있습니다(**Continue with Google** 버튼). 설정은 **셀프 서비스** 방식입니다. 조직의 관리자가 자체 Google Cloud 프로젝트에 OAuth 클라이언트를 만들고 **관리자 → 통합**에서 세부 정보를 입력합니다. 티켓을 열 필요도, Hiper AI의 처리를 기다릴 필요도 없습니다. 저장하는 즉시 로그인 페이지에 버튼이 표시됩니다.
 
-- Google Cloud Console에 대한 관리자 액세스
-- 조직의 Google Workspace 계정
-- 조직의 Google Workspace 관리 콘솔에 액세스합니다(도메인 제한을 사용하는 경우)
-- SecureAI에 대한 관리자 액세스
+예상 소요 시간: 10분.
 
-## 1단계: Google Cloud Console에서 프로젝트 만들기
+## 사전 요구 사항
 
-1. [구글 클라우드 콘솔](https://console.cloud.google.com)에 로그인합니다.
-2. 페이지 상단의 프로젝트 드롭다운을 클릭하세요.
-3. **새 프로젝트**를 클릭합니다.
+- **Google Workspace 조직 내**의 Google Cloud 프로젝트와, 해당 프로젝트에서 Google 인증 플랫폼(Google Auth Platform)을 구성하고 OAuth 클라이언트를 만들 수 있는 권한(예: 프로젝트 **소유자**(Owner) 또는 **편집자**(Editor) 역할).
+- SecureAI 관리자 액세스 권한 및 **통합** 섹션에 대한 **Admin** 권한.
 
-<div class="mac-window">
-  ![새 프로젝트](/img/google%20sso%20images/google%20-%201.png)
-</div>
+## 작동 방식
 
-4. 프로젝트 이름을 입력하세요(예: "SecureAI SSO")
-5. **만들기**를 클릭하세요.
+1. Google Cloud에서 **유형이 "웹 애플리케이션"인 OAuth 2.0 클라이언트**를 만듭니다. SecureAI는 `openid`, `email`, `profile` 범위를 사용하는 OpenID Connect를 사용합니다.
+2. SecureAI에 **클라이언트 ID**, **클라이언트 보안 비밀번호** 및 **Google Workspace 도메인**을 입력합니다. 보안 비밀번호는 암호화되어 저장되며 다시 표시되지 않습니다.
+3. 사용자가 **Continue with Google**을 클릭하면 Google이 사용자를 인증하고, SecureAI는 다음 조건을 모두 충족하는 경우에만 로그인을 허용합니다.
+   - Google이 사용자의 이메일을 인증했을 것
+   - 계정이 **자사 Workspace 도메인 중 하나에서 관리**될 것(`hd` 클레임)
+   - 이메일이 SecureAI의 **활성** 계정과 일치할 것
 
-<div class="mac-window">
-  ![프로젝트 만들기](/img/google%20sso%20images/google%20-%202.png)
-</div>
+개인 Google 계정(예: @gmail.com 계정 또는 회사 이메일로 만든 개인 계정)은 SecureAI 사용자와 이메일이 같더라도 로그인할 수 **없습니다**.
 
-## 2단계: Google+ API 활성화(필요한 경우)
+## 1단계: SecureAI에서 리디렉션 URI 복사
 
-1. 프로젝트에서 **API 및 서비스** > **라이브러리**로 이동합니다.
-2. 'Google+ API' 또는 'Google ID'를 검색하세요.
-3. 해당 항목을 클릭하고 **활성화**를 클릭합니다(아직 활성화되지 않은 경우).
-4. **참고**: 최신 Google OAuth는 이를 요구하지 않을 수도 있지만 활성화하면 호환성이 보장됩니다.
+1. 관리자로 SecureAI에 로그인합니다.
+2. **관리자 → 통합**으로 이동하여 **IAM** 카테고리로 필터링합니다.
+3. **Google Workspace (SSO)** 카드에서 **통합 연결**을 클릭합니다.
+4. **1. Create an OAuth client in Google Cloud** 섹션에서 **Redirect URI** 옆의 **Copy**를 클릭합니다.
 
-## 3단계: OAuth 동의 화면 구성
+URI는 다음과 같은 형식입니다(도메인은 사용 중인 인스턴스의 도메인).
 
-1. **API 및 서비스** > **OAuth 동의 화면**으로 이동합니다.
+```
+https://<your-company>.hiperai.ai/api/auth/google/callback
+```
 
-<div class="mac-window">
-  ![OAuth 동의 화면](/img/google%20sso%20images/google%20-%203.png)
-</div>
+항상 인스턴스에 표시되는 URI를 사용하세요. `https://`를 포함하여 정확히 일치해야 합니다.
 
-2. 필수 정보를 입력하세요.
-   - **앱 이름**: 이름을 입력하세요(예: "SecureAI")
-   - **사용자 지원 이메일**: 지원 이메일 주소를 선택하세요.
-   - **연락처 정보**: 연락처 이메일 주소를 추가하세요.
+## 2단계: Google Cloud 프로젝트 선택 또는 만들기
 
-3. **사용자 유형**을 선택합니다.
-   - **내부**: Google Workspace 조직의 사용자에게만 해당(회사용으로 권장)
-   - **외부**: 조직 외부 사용자의 경우
-
-4. **만들기**를 클릭하세요.
+1. [Google Cloud 콘솔](https://console.cloud.google.com)을 엽니다.
+2. 상단 바의 프로젝트 선택기에서 조직의 프로젝트를 선택하거나 **새 프로젝트**(New Project)를 클릭합니다.
 
 <div class="mac-window">
-  ![OAuth 동의 생성](/img/google%20sso%20images/google%20-%204.png)
+  ![New project](/img/google%20sso%20images/google%20-%201.png)
 </div>
 
-5. **브랜딩**:
-   - 왼쪽 메뉴의 **브랜딩** 섹션으로 이동합니다.
-   - **승인된 도메인**을 찾아 회사 도메인을 추가하세요.
-   - 이를 통해 사용자는 회사 이메일 주소로 로그인할 수 있습니다.
-   - (추가로 원하는 경우 홈페이지 URL, 개인정보취급방침, 서비스 약관을 추가할 수 있습니다.)
+3. 새로 만드는 경우: 이름을 지정하고(예: `SecureAI SSO`), **조직**(Organization)이 자사 Google Workspace 조직인지 확인한 다음 **만들기**(Create)를 클릭합니다.
 
 <div class="mac-window">
-  ![승인된 도메인](/img/google%20sso%20images/google%20-%205.png)
+  ![Create project](/img/google%20sso%20images/google%20-%202.png)
 </div>
 
-6. **범위**:
-   - 왼쪽 메뉴에서 **데이터 액세스** 섹션을 클릭합니다.
-   - 데이터 액세스 섹션 내에서 **범위 추가 또는 제거**를 클릭합니다.
-   - 역할을 검색할 수 있는 창이 왼쪽에 열립니다.
-   - **"openid"** 역할을 검색하여 선택합니다.
-   - **업데이트**를 클릭하세요.
-   - 그런 다음 데이터 액세스 섹션에서 **저장**을 클릭합니다.
-   - **참고**: `openid` 범위에는 `profile` 및 `email` 액세스가 자동으로 포함되므로 별도로 추가할 필요가 없습니다.
-   - 다른 범위 옵션이 표시되면 SecureAI SSO용 **OpenID**만 필요합니다.
+로그인을 위해 API를 사용 설정할 필요는 없습니다.
+
+## 3단계: Google 인증 플랫폼(동의 화면) 구성
+
+1. 메뉴에서 **API 및 서비스 → OAuth 동의 화면**(APIs & Services → OAuth consent screen)으로 이동합니다(새 콘솔에서는 **Google 인증 플랫폼**(Google Auth Platform)이라고 합니다). 처음인 경우 **시작하기**(Get started)를 클릭합니다.
 
 <div class="mac-window">
-  ![OpenID 범위 선택](/img/google%20sso%20images/google%20-%206.png)
+  ![OAuth consent screen](/img/google%20sso%20images/google%20-%203.png)
 </div>
 
-   - **중요**: OpenID 범위는 다음에 대한 액세스를 제공합니다.
-     - 이용자의 이메일 주소
-     - 기본 프로필 정보
-     - SecureAI 인증에 필요한 전부입니다.
-
-7. **사용자 테스트**(외부를 사용하는 경우):
-   - 테스트 중에 필요한 경우 테스트 사용자를 추가하세요.
-   - **저장하고 계속하기**를 클릭하세요.
-
-8. **요약**:
-   - 구성을 검토하세요
-   - **대시보드로 돌아가기**를 클릭하세요.
-
-## 4단계: OAuth 2.0 자격 증명 만들기
-
-1. **API 및 서비스** > **자격 증명**으로 이동합니다.
-2. **+ 자격 증명 만들기** > **OAuth 클라이언트 ID**를 클릭합니다.
+2. **앱 정보**(App information): 앱 이름(예: `SecureAI`)과 사용자 지원 이메일.
+3. **대상**(Audience): **내부**(Internal)를 선택합니다. Google Workspace 조직의 계정만 앱을 사용할 수 있으며, Google의 앱 인증이 필요하지 않습니다.
+4. **연락처 정보**(Contact information): Google의 알림을 받을 이메일.
+5. 사용자 데이터 정책에 동의하고 **만들기**(Create)를 클릭합니다.
 
 <div class="mac-window">
-  ![OAuth 클라이언트 ID 생성](/img/google%20sso%20images/google%20-%207.png)
+  ![Create the OAuth configuration](/img/google%20sso%20images/google%20-%204.png)
 </div>
-3. **애플리케이션 유형**: **웹 애플리케이션**을 선택합니다.
-4. **이름**: 설명적인 이름을 입력합니다(예: "SecureAI SSO 클라이언트")
-5. **승인된 리디렉션 URI**: **+ URI 추가**를 클릭하고 다음을 입력합니다.
-   - `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-   - **중요**: URL은 정확히 일치해야 합니다(`https://` 및 `/api/auth/google/callback` 포함).
+
+`openid`, `email`, `profile` 범위는 민감한 범위가 아니므로 **데이터 액세스**(Data access)에 추가할 필요가 없습니다.
+
+<Note>
+**외부**(External)를 선택하는 경우 앱은 "테스트"가 아닌 **프로덕션 단계**(In production)여야 합니다. 테스트 모드에서는 등록한 테스트 사용자만 로그인할 수 있습니다. 외부를 선택하더라도 SecureAI는 5단계에서 구성한 Workspace 도메인의 계정만 허용합니다.
+</Note>
+
+## 4단계: OAuth 클라이언트 만들기
+
+1. Google 인증 플랫폼에서 **클라이언트**(Clients)로 이동합니다(또는 **API 및 서비스 → 사용자 인증 정보 → + 사용자 인증 정보 만들기 → OAuth 클라이언트 ID**).
 
 <div class="mac-window">
-  ![승인된 리디렉션 URI](/img/google%20sso%20images/google%20-%208.png)
+  ![Create OAuth client ID](/img/google%20sso%20images/google%20-%207.png)
 </div>
 
-6. **만들기**를 클릭하세요.
-
-## 5단계: 자격 증명 받기
-
-OAuth 클라이언트를 생성한 후:
-
-1. 자격 증명이 포함된 팝업이 나타납니다.
+2. **+ 클라이언트 만들기**(Create client)를 클릭합니다.
+3. **애플리케이션 유형**(Application type): **웹 애플리케이션**(Web application).
+4. **이름**(Name): 예: `SecureAI SSO`.
+5. **승인된 리디렉션 URI**(Authorized redirect URIs)에서 **+ URI 추가**(Add URI)를 클릭하고 1단계의 URI를 붙여 넣습니다(**승인된 JavaScript 원본**(Authorized JavaScript origins)은 필요하지 않습니다).
 
 <div class="mac-window">
-  ![OAuth 자격 증명 팝업](/img/google%20sso%20images/google%20-%209.png)
+  ![Authorized redirect URIs](/img/google%20sso%20images/google%20-%208.png)
 </div>
-2. **클라이언트 ID**:
-   - 다음과 같습니다: `123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com`
-   - **이 값을 복사하세요** - 나중에 필요합니다.
-3. **클라이언트 비밀번호**:
-   - 다음과 같습니다: `GOCSPX-abcdefghijklmnopqrstuvwxyz`
-   - **이 값을 즉시 복사하세요**
-   - **경고**: 이 비밀은 팝업에 한 번만 표시됩니다. 분실한 경우 새 OAuth 클라이언트를 만들어야 합니다.
 
-## 6단계: Hiper AI 팀에 변수 보내기
-
-Google Cloud Console에서 OAuth 클라이언트를 만들고 위 단계를 수행하면 다음과 같은 중요한 정보를 얻게 됩니다.
-
-1. **클라이언트 ID**(5단계)
-2. **클라이언트 비밀번호**(5단계에서)
-3. **리디렉션 URI**: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-
-SSO 통합을 완료하려면 이러한 값을 Hiper AI 팀에 보내야 합니다.
-
-### A. 관리자 패널에 액세스합니다.
-
-1. SecureAI 인스턴스에 관리자로 로그인합니다.
-2. `https://{enterprise.name}.hiperai.ai/admin/home`로 이동합니다.
-3. 오른쪽 상단에서 관리자 프로필 사진을 클릭하세요.
-4. 다양한 옵션이 포함된 드롭다운 메뉴가 열립니다.
-
-### B. 지원 요청 제출
-
-1. 드롭다운 메뉴에서 **"지원 받기"**를 클릭하세요.
+6. **만들기**(Create)를 클릭합니다.
+7. 표시되는 대화상자에서 **클라이언트 ID**(`.apps.googleusercontent.com`으로 끝남)와 **클라이언트 보안 비밀번호**(`GOCSPX-`로 시작)를 복사합니다. 백업용으로 JSON을 다운로드할 수도 있습니다.
 
 <div class="mac-window">
-  ![지원 받기 메뉴](/img/microsoft%20entraid%20sso%20images/10%20-%20azure.png)
+  ![OAuth client created](/img/google%20sso%20images/google%20-%209.png)
 </div>
 
-2. 지원 티켓 양식이 포함된 팝업창이 나타납니다.
-3. 다음 정보로 양식을 작성하십시오.
-   - **범주**: **"통합 및 구현"**을 선택합니다.
+<Warning>
+Google은 보안 비밀번호 전체를 생성 시에만 표시합니다. 안전한 곳에 보관하세요. 분실한 경우 클라이언트에 새 보안 비밀번호를 추가하세요.
+</Warning>
 
-<div class="mac-window">
-  ![지원 양식 카테고리](/img/microsoft%20entraid%20sso%20images/11%20-%20azure.png)
-</div>
+리디렉션 URI 변경 사항이 Google에 반영되기까지 몇 분 정도 걸릴 수 있습니다.
 
-   - **제목**: **'Google Workspace SSO 통합'**을 입력하세요.
-   - **설명**: 설정 과정에서 복사한 값을 붙여넣습니다.
-     - 클라이언트 ID
-     - 클라이언트 비밀
-     - 리디렉션 URI: `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`
-4. **"요청 제출"** 버튼을 클릭하세요
+## 5단계: SecureAI에 세부 정보 입력 및 테스트
 
-### C. 확인을 기다립니다.
+**관리자 → 통합 → Google Workspace (SSO)**로 돌아갑니다.
 
-- **24~72시간** 이내에 확인 이메일을 받게 됩니다(이용 가능 여부에 따라 다름).
-- SSO가 성공적으로 구성되었음을 확인하는 이메일이 전송됩니다.
-- 일단 구성되면 로그인 페이지의 **"Google로 계속하기"** 로그인 버튼을 사용하여 SecureAI 인스턴스에 액세스할 수 있습니다.
+1. **2. Paste the OAuth client details**에서 다음 항목을 입력합니다.
+   - **Client ID**(클라이언트 ID): 4단계에서 복사한 값.
+   - **Client secret**(클라이언트 보안 비밀번호): 4단계에서 복사한 값.
+   - **Allowed email domains**(허용된 이메일 도메인, 필수): Google Workspace 기본 도메인과, 사용하는 경우 보조 도메인을 쉼표로 구분하여 입력합니다. 예: `contoso.com, contoso.co.uk`.
+2. **3. Test the connection**에서 **Test connection**(연결 테스트)을 클릭합니다. SecureAI는 (누구도 로그인시키지 않고) Google에 확인하여 다음 항목을 검사합니다.
 
-**중요**: 통합이 완료될 때까지 자격 증명을 안전하게 유지하세요. 안전하지 않은 채널을 통해 공유하지 마세요.
+   | 검사 항목 | 실패한 경우 |
+   |---|---|
+   | 클라이언트 ID | Google이 해당 클라이언트를 알지 못합니다(`invalid_client`). ID 전체를 복사했는지, 클라이언트가 삭제되거나 사용 중지되지 않았는지 확인하세요. |
+   | 클라이언트에 등록된 리디렉션 URI | 1단계의 URI가 **승인된 리디렉션 URI**에 없습니다(`redirect_uri_mismatch`). 정확히 추가하고 몇 분 기다리세요. |
+   | 클라이언트 보안 비밀번호 | 보안 비밀번호가 해당 클라이언트의 것이 아닙니다(`invalid_client`). 다시 붙여 넣거나 새 보안 비밀번호를 추가하세요. |
 
-## 사용자 구성
+   테스트는 양식에 입력된 내용을 사용하므로 저장하기 전에 테스트할 수 있습니다.
+3. **Show "Continue with Google" on the login page**(로그인 페이지에 "Continue with Google" 표시)를 켭니다.
+4. **Save**(저장)를 클릭합니다.
 
-### 기존 사용자
+이후 카드에 **Active on the login page**(로그인 페이지에서 활성)가 표시되고, 인스턴스의 로그인 페이지에 **Continue with Google** 버튼이 나타납니다.
 
-SecureAI에 이미 계정이 있는 사용자는 (기본 인증 사용 여부와 관계없이) **다시 생성할 필요가 없습니다**. 기존 계정을 계속 사용할 수 있으며 Google Workspace SSO가 구성되면 이를 사용하여 로그인할 수도 있습니다.
+## 6단계: 사용자 추가
 
-**중요**: SSO가 작동하려면 Google Workspace의 사용자 이메일이 SecureAI의 이메일과 정확히 일치해야 합니다.
+SecureAI는 처음 로그인할 때 **계정을 자동으로 만들지 않습니다**. Google로 로그인할 모든 사용자가 SecureAI에 존재하고 활성 상태여야 하며, Google Workspace 계정과 **동일한 이메일**을 사용해야 합니다(대소문자는 구분하지 않으며, `+` 별칭은 허용되지 않습니다).
 
-### 새 SSO 사용자 만들기
+- **기존 사용자**: 이미 SecureAI 계정이 있는 사용자(비밀번호를 사용하는 경우 포함)는 다시 만들어지지 않습니다. 계속 비밀번호로 로그인할 수 있으며 Google로도 로그인할 수 있습니다.
+- **SSO 전용 신규 사용자**: **관리자 → IAM 관리 → 사용자 관리 → 사용자 추가**에서 인증 방법으로 **비즈니스 계정 / SSO**를 선택합니다. 사용자는 비밀번호 생성 이메일을 받지 않으며 **Continue with Google**로 바로 로그인합니다.
 
-SSO를 통해서만 SecureAI에 액세스해야 하는 신규 사용자의 경우:
+SecureAI에서 사용자가 비활성화되면 해당 사용자는 SSO로도 로그인할 수 없습니다.
 
-1. SecureAI 관리자 패널에서 **사용자 관리**로 이동합니다.
-2. 새 사용자를 생성하려면 클릭하세요.
-3. 사용자 생성 시 **"비즈니스 계정 / SSO"** 옵션을 선택하세요.
-4. 이 구성은 다음을 보장합니다.
-   - 신규 사용자는 비밀번호를 생성하라는 이메일을 받지 않습니다**
-   - 사용자는 **Google Workspace SSO** 로그인 버튼을 사용하여 SecureAI에 직접 액세스할 수 있습니다.
-   - Google Workspace의 사용자 이메일은 SecureAI에 입력한 이메일과 정확히 일치해야 합니다.
+## 로그인 테스트
+
+1. 시크릿(비공개) 창에서 인스턴스의 로그인 페이지를 엽니다.
+2. **Continue with Google**을 클릭합니다.
+3. Google Workspace 계정을 선택합니다.
+4. Google이 SecureAI로 다시 보내며 로그인된 상태가 됩니다.
+
+비밀번호 로그인은 계속 작동합니다. SSO를 활성화해도 비밀번호 로그인이 꺼지지 않습니다.
+
+## 통합 비활성화 또는 제거
+
+- 구성을 유지하면서 버튼을 숨기려면 스위치를 끄고 저장합니다.
+- 구성을 삭제하려면 **Remove configuration**(구성 제거)을 사용합니다. 이전에 Hiper AI가 SSO를 구성한 인스턴스에서는 해당 구성이 다시 적용됩니다.
+
+## 클라이언트 보안 비밀번호 교체
+
+1. Google Cloud에서 OAuth 클라이언트를 열고 **보안 비밀 추가**(Add secret)를 클릭합니다(이전 보안 비밀번호는 계속 작동합니다).
+2. SecureAI에서 **Client secret**에 새 값을 붙여 넣은 다음 **Test connection**을 클릭하고 **Save**를 클릭합니다. 필드를 비워 두면 현재 보안 비밀번호가 유지됩니다.
+3. 로그인이 작동하는 것을 확인한 후 Google Cloud에서 이전 보안 비밀번호를 사용 중지하고 삭제합니다.
+
+변경 사항은 활성 세션을 종료하지 않고 즉시 적용됩니다.
+
+## 인스턴스에 Hiper AI가 구성한 SSO가 이미 있는 경우
+
+요청에 따라 Hiper AI가 Google SSO를 구성한 인스턴스에서는 카드에 **Configured by Hiper AI**(Hiper AI가 구성함)가 표시됩니다. 해당 구성은 계속 작동합니다. 통합에서 자체 구성을 저장하면 기존 구성을 대체하며, 나중에 자체 구성을 제거하면 이전 구성이 다시 적용됩니다.
 
 ## 문제 해결
 
-### 오류: "redirect_uri_mismatch"
+로그인 오류는 SecureAI 로그인 페이지에 표시됩니다.
 
-- Google Cloud Console의 리디렉션 URI가 서버에 구성된 것과 정확히 일치하는지 확인하세요.
-- `https://`을 포함해야 합니다(프로덕션에는 `http://` 아님).
-- 리디렉션 URI는 정확히 `https://{enterprise.name}.hiperai.ai/api/auth/google/callback`이어야 합니다.
-- 후행 슬래시나 오타가 있는지 확인하세요.
+| SecureAI 메시지 | 원인 및 해결 방법 |
+|---|---|
+| "User not found in SecureAI database." | 해당 이메일의 SecureAI 계정이 없습니다. 계정을 만드세요(6단계). |
+| "This account is not allowed to sign in here…" | 계정이 **Allowed email domains** 중 어디에도 속하지 않거나, 개인 Google 계정(Workspace 아님)입니다. 도메인을 추가하거나 회사 계정을 사용하세요. |
+| "Your identity provider has not verified this email address." | Google이 이메일을 인증된 것으로 표시하지 않았거나, 이메일에 SecureAI가 허용하지 않는 문자(예: `+` 별칭)가 포함되어 있습니다. |
+| "This sign-in method is not enabled for your organization." | 통합이 비활성화되었거나 구성이 완료되지 않았습니다. 통합에서 카드를 확인하세요. |
+| "Your identity provider did not complete the sign-in…" | Google이 오류를 반환했습니다(예: 사용자가 취소한 경우). |
+| "Single sign-on could not be completed…" | 코드 교환에 실패했습니다. 일반적으로 보안 비밀번호가 교체되었거나 삭제되었기 때문입니다. **Test connection**을 사용하세요. |
+| "The sign-in session expired or was not started from this browser…" | 10분 이상 지났거나 다른 탭/브라우저에서 로그인이 시작되었습니다. 로그인 페이지에서 다시 시도하세요. |
 
-### 오류: "SecureAI 데이터베이스에서 사용자를 찾을 수 없습니다."
+Google에서 표시하는 오류(SecureAI로 돌아오기 전):
 
-- 사용자는 SecureAI에 사전 등록되어 있어야 합니다.
-- 사용자 계정 생성은 SecureAI 관리자에게 문의하세요.
-- Google Workspace의 이메일 주소가 SecureAI의 이메일과 정확히 일치하는지 확인하세요.
+- **Error 400: redirect_uri_mismatch**: 클라이언트의 리디렉션 URI가 1단계의 URI와 정확히 일치하지 않습니다. (JavaScript 원본이 아닌) **승인된 리디렉션 URI**에서 수정하세요.
+- **Error 403: org_internal**: 앱이 **내부**로 설정되어 있으며 계정이 프로젝트를 소유한 Google Cloud 조직에 속하지 않습니다. 회사에 Google 조직이 둘 이상 있고(예: `company.com`과 `company.ai`) OAuth 클라이언트가 다른 조직의 프로젝트에서 생성된 경우에도 발생합니다. 사용자가 속한 조직의 프로젝트에서 생성하세요(콘솔의 프로젝트 선택기에 각 프로젝트의 조직이 표시됩니다).
+- **Error 401: invalid_client / deleted_client**: OAuth 클라이언트가 없거나 삭제되었습니다. 새 클라이언트를 만들고 SecureAI를 업데이트하세요.
+- **"액세스 차단됨: 관리자가 이 앱을 신뢰하지 않음"**("Access blocked: your administrator has not trusted this app"): Workspace의 앱 액세스 제어가 서드 파티 앱을 차단하고 있습니다. Google 관리 콘솔(**보안 → 액세스 및 데이터 관리 → API 관리 → 서드 파티 앱 액세스 관리**)에서 클라이언트 ID를 **신뢰할 수 있음**(Trusted)으로 설정하세요.
 
-### 오류: 'Google Workspace 로그인에 이메일 도메인이 허용되지 않습니다.'
+도움이 필요하면 프로필 메뉴의 **지원 받기**에서 지원팀에 문의하고 클라이언트 ID와 오류 메시지를 포함하세요. **클라이언트 보안 비밀번호는 절대 보내지 마세요.**
 
-- 사용자의 이메일 도메인이 허용 도메인 목록에 없습니다.
-- 허용 목록에 도메인을 추가하려면 개발팀에 문의하세요.
-- 또는 도메인 제한 구성이 올바른지 확인하십시오.
+## 추가 자료
 
-### 오류: "access_denied" 또는 "unauthorized_client"
-
-- OAuth 동의 화면이 올바르게 구성되었는지 확인하세요.
-- 신청이 승인되었는지 확인하세요. (외부 사용자 유형을 사용하는 경우)
-- 클라이언트 ID와 클라이언트 비밀번호가 올바른지 확인하세요.
-
-### 오류: "invalid_client"
-
-- 클라이언트 비밀번호가 재설정되었거나 올바르지 않을 수 있습니다.
-- Google Cloud Console에서 클라이언트 비밀번호 확인
-- 필요한 경우 새 클라이언트 비밀번호를 생성하고 개발팀에 새로운 가치를 제공하세요.
-
-## 클라이언트 비밀 보안 모범 사례
-
-1. **코드 저장소에 비밀을 커밋하지 마세요**
-2. **비밀번호를 주기적으로 순환**(권장: 90일마다)
-3. Google Cloud Console 사용자 인증 정보 페이지에 대한 **액세스 제한**
-4. 개발팀과 비밀을 공유할 때 **보안 채널을 사용**하세요.
-5. 의심스러운 활동이 있는지 Google Cloud Console에서 **사용량 모니터링**
-
-## 클라이언트 비밀 갱신
-
-클라이언트 비밀번호를 교체하려면(90일마다 권장):
-
-1. **API 및 서비스** > **자격 증명**으로 이동합니다.
-2. OAuth 2.0 클라이언트 ID 찾기
-3. **연필 아이콘**(편집)을 클릭합니다.
-4. **클라이언트 비밀번호** 섹션에서 **비밀 재설정**을 클릭합니다.
-5. 새 비밀 값을 **즉시 복사**
-6. 관리자 패널 지원 요청을 통해 개발팀에 새로운 비밀을 제공하세요.
-7. 서비스를 중단하지 않고 구성을 업데이트합니다.
-8. 새 비밀이 작동하는지 확인한 후 선택적으로 이전 비밀을 삭제할 수 있습니다.
-
-**참고**: 순환 중에 두 보안 비밀이 모두 작동하는 짧은 중첩 기간이 있으므로 원활한 전환이 가능합니다.
-
-## SSO 로그인 테스트
-
-구성이 완료된 후:
-
-1. SecureAI 로그인 페이지로 이동합니다.
-2. **Google로 계속하기**를 클릭하세요.
-3. Google Workspace 계정을 선택하세요.
-4. 메시지가 표시되면 권한 부여
-5. SecureAI로 리디렉션되어 로그인되어야 합니다.
-
-문제가 발생하는 경우:
-- 브라우저 쿠키를 삭제하고 다시 시도해 보세요.
-- 올바른 Google Workspace 계정을 사용하고 있는지 확인하세요.
-- SecureAI에 이메일이 있는지 확인하세요.
-
-## 지원
-
-구성 중에 문제가 발생하는 경우:
-
-1. Google Cloud Console에서 관리자 권한이 있는지 확인하세요.
-2. Google Workspace 관리자 액세스 권한이 있는지 확인하세요(도메인 제한이 사용되는 경우).
-3. 관리자 패널 지원 요청을 통해 개발팀에 문의하세요.
-   - 오류 스크린샷
-   - 클라이언트 ID(공유 가능 - 민감하지 않음)
-   - 전체 오류 메시지
-   - 관련 브라우저 콘솔 오류
-
-**지원 요청 시 클라이언트 비밀번호를 절대 공유하지 마세요** - 신원 확인이 완료된 후 보안 채널을 통해서만 공유하세요.
-
-## 추가 리소스
-
-- [Google Cloud 콘솔 문서](https://cloud.google.com/docs)
-- [Google OAuth 2.0 문서](https://developers.google.com/identity/protocols/oauth2)
-- [Google Workspace 관리자 도움말](https://support.google.com/a)
+- [Google Cloud에서 OAuth 2.0 설정하기](https://support.google.com/cloud/answer/6158849)
+- [Google의 OpenID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
+- [Google Workspace 데이터에 액세스하는 서드 파티 앱 관리](https://support.google.com/a/answer/7281227)

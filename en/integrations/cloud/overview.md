@@ -9,7 +9,7 @@ description: "Connect your OpenAI, Anthropic, Azure, AWS, and GCP AI platforms s
 
 # Cloud AI Providers
 
-Cloud AI Provider connectors let SecureAI reach into the AI platforms your organization already uses — **OpenAI Platform, Anthropic Console, Azure AI Foundry, and Google Vertex AI** — and automatically inventory everything running there. No agent or SDK needs to be deployed on the provider side; SecureAI polls each provider's management API with read-mostly credentials you supply.
+Cloud AI Provider connectors let SecureAI reach into the AI platforms your organization already uses — **OpenAI Platform, Anthropic Console, Azure AI Foundry, Google Vertex AI, and AWS Bedrock** — and automatically inventory everything running there. No agent or SDK needs to be deployed on the provider side; SecureAI polls each provider's management API with read-mostly credentials you supply.
 
 Once connected, a connector discovers and continuously syncs:
 
@@ -45,12 +45,13 @@ All secrets you enter (client secrets, service-account JSON, admin API keys) are
 |----------|-----------------|
 | [OpenAI Platform](/en/integrations/cloud/openai-platform) | Organization admin API key |
 | [Anthropic Console](/en/integrations/cloud/anthropic-console) | Admin API key (+ optional workspace / compliance keys) |
-| [Azure AI Foundry](/en/integrations/cloud/azure-ai-foundry) | Entra service principal (tenant/client/secret) |
+| [Azure — Discovery](/en/integrations/cloud/azure-ai-foundry) | Entra service principal (tenant/client/secret) |
 | [Google Cloud — Discovery](/en/integrations/cloud/gcp-vertex-ai) | Service-account JSON key, or keyless impersonation |
+| [AWS — Discovery](/en/integrations/cloud/aws-bedrock) | Read-only IAM role with External ID (CloudFormation stack), or IAM user access key |
 
 ## Inference on your own account
 
-Besides inventorying, SecureAI can **run LLM traffic on your own Google Cloud account**, so Google bills you directly and you can use your committed spend (CUDs). It is a separate integration, under **Integrations → AI providers**: [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference).
+Besides inventorying, SecureAI can **run LLM traffic on your own Google Cloud account**, so Google bills you directly and you can use your committed spend (CUDs). It is a separate integration, under **Integrations → AI providers**: [Google Vertex AI — Inference on your account](/en/integrations/cloud/vertex-ai-inference). The same applies to Azure: [Azure AI Foundry — Inference on your account](/en/integrations/cloud/azure-ai-foundry-inference) runs LLM traffic on your own Foundry resource so Microsoft bills you and you draw down your Azure commitment (MACC). And on AWS, [Amazon Bedrock — Inference on your account](/en/integrations/cloud/aws-bedrock-inference) runs LLM traffic, Claude included, on your own AWS account so AWS bills you and you draw down your AWS commitment (EDP).
 
 ## Related
 
