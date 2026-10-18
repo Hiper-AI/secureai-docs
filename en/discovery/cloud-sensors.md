@@ -9,7 +9,7 @@ description: "The read-only inventory of agents and models discovered inside you
 
 # Cloud Sensors
 
-**Cloud Sensors** (Admin → Agent Registry → **Cloud**) is the inventory of agents, models, and deployments discovered inside your connected cloud AI platforms — **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform, and Anthropic Console**. It's read-only: you configure the connectors in [Integrations](/en/integrations/cloud/overview) and Cloud Sensors shows what they found.
+**Cloud Sensors** (Admin → Inventory → **Cloud Connectors**) is the inventory of agents, models, and deployments discovered inside your connected cloud AI platforms — **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform, and Anthropic Console**. It's read-only: you configure the connectors in [Integrations](/en/integrations/cloud/overview) and Cloud Sensors shows what they found.
 
 ## KPIs
 

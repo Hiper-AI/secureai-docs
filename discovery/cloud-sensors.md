@@ -7,7 +7,7 @@ description: "El inventario de solo lectura de agentes y modelos descubiertos de
 
 # Sensores Cloud
 
-**Sensores de nube** (Administrador → Registro de agentes → **Nube**) es el inventario de agentes, modelos e implementaciones descubiertos dentro de sus plataformas de IA en la nube conectadas: **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform y Anthropic Console**. Es de solo lectura: configura los conectores en [Integraciones](/integrations/cloud/overview) y Cloud Sensors muestra lo que encontraron.
+**Sensores de nube** (Administrador → Inventario → **Conectores Cloud**) es el inventario de agentes, modelos e implementaciones descubiertos dentro de sus plataformas de IA en la nube conectadas: **Azure AI Foundry, AWS Bedrock, GCP Vertex AI, OpenAI Platform y Anthropic Console**. Es de solo lectura: configura los conectores en [Integraciones](/integrations/cloud/overview) y Cloud Sensors muestra lo que encontraron.
 
 ## KPI
 
