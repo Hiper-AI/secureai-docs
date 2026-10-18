@@ -26,6 +26,7 @@ Durée estimée : 10 minutes.
 
 ## Prérequis
 
+- Un abonnement Microsoft 365 qui inclut **SharePoint Online** (par exemple Business Basic, Business Standard, E3 ou E5). Un annuaire Entra ID sans cette licence n'a ni sites SharePoint ni OneDrive : la connexion fonctionne, mais il n'y a aucun fichier à joindre.
 - Un rôle Entra ID qui permet d'inscrire des applications et d'**accorder le consentement administrateur** pour les autorisations Microsoft Graph (par exemple **Administrateur d'application cloud** ou **Administrateur général**).
 - Un accès administrateur à SecureAI, avec l'autorisation **Administrator** sur la section **Integrations**.
 - Une offre SecureAI qui inclut **Attach from Drive / SharePoint**. Sans elle, vous pouvez préparer la configuration, mais les utilisateurs ne verront pas l'option.
@@ -142,6 +143,8 @@ Un utilisateur non affecté reçoit l'erreur `AADSTS50105` lors de la connexion 
 | `AADSTS700016` — application introuvable | ID d'application ou d'annuaire incorrect | Copiez-les à nouveau depuis la **Vue d'ensemble** |
 | `AADSTS50105` | L'utilisateur n'est pas affecté à l'application | Affectez-le, ou désactivez **Affectation requise ?** |
 | **Try signing in** : « These delegated permissions are missing » (ces autorisations déléguées sont manquantes) | `Files.Read.All` ou `Sites.Read.All` est manquante, ou son consentement | Étapes 3 et 4 |
+| **Try signing in** : « this Microsoft 365 directory has no SharePoint Online license » (cet annuaire Microsoft 365 n'a pas de licence SharePoint Online) | L'annuaire n'a aucun abonnement incluant SharePoint Online | Utilisez l'annuaire Microsoft 365 de votre organisation, ou attribuez un abonnement qui inclut SharePoint Online |
+| L'explorateur indique que votre organisation n'a pas SharePoint Online | Même cas, vu par un utilisateur | Comme pour la ligne précédente |
 | L'utilisateur ne voit pas de sites, seulement « Shared » | L'utilisateur n'est membre d'aucun site | Comportement attendu : il ne voit que ce qu'il peut déjà ouvrir |
 | L'utilisateur ne voit pas **Add from SharePoint** | L'intégration est désactivée, non enregistrée, ou l'offre ne l'inclut pas | Vérifiez la carte dans **Admin → Integrations → Files** |
 

@@ -42,13 +42,17 @@ description: "SecureAI のチャットで、ユーザーが Google ドライブ�
 
 4. **1. Set up Google Cloud** セクションに、Google Cloud で必要な 2 つの値が表示されています。それぞれに **Copy** ボタンがあります。
    - **Authorized JavaScript origin**: インスタンスのアドレスです。例: `https://<貴社名>.hiperai.ai`
-   - **Website restriction for the API key**: 同じアドレスの末尾に `/*` を付けたものです。
+   - **Website restrictions for the API key**: 2 行です。インスタンスのアドレスの末尾に `/*` を付けたものと、`https://docs.google.com/*` です。
 
 <div class="mac-window">
   ![SecureAI のサイドパネルに表示されたオリジンと制限](/img/files/google-drive/2%20-%20Google%20Drive.png)
 </div>
 
 必ずご利用のインスタンスに表示される値を使用してください。`https://` を含め、完全に一致している必要があります。オリジンの末尾に `/` は付けません。
+
+<Note>
+`https://docs.google.com/*` は Google のピッカーそのものです。ピッカーは `docs.google.com` のフレームとして開き、そこから API キーを提示します。この行がないと、ピッカーは **"The API developer key is invalid"** というエラーで開きます。
+</Note>
 
 ## ステップ 2: プロジェクトを選択して API を有効にする
 
@@ -104,24 +108,26 @@ description: "SecureAI のチャットで、ユーザーが Google ドライブ�
 
 1. **API とサービス → 認証情報**（Credentials）に移動し、**認証情報を作成 → API キー**（Create credentials → API key）をクリックします。
 2. 作成したキーを開きます（**API キーを編集**、「Edit API key」）。
-   - **アプリケーションの制限**（Application restrictions）で **ウェブサイト**（Websites）を選択し、ステップ 1 でコピーした **Website restriction**（末尾が `/*` のアドレス）を追加します。
+   - **アプリケーションの制限**（Application restrictions）で **ウェブサイト**（Websites）を選択し、ステップ 1 でコピーした**両方**の制限を **追加**（Add）で追加します。インスタンスのアドレスの末尾に `/*` を付けたものと、`https://docs.google.com/*` です。
    - **API の制限**（API restrictions）で **キーを制限**（Restrict key）を選択し、**Google Picker API** のみにチェックを入れます。
-3. **保存**（Save）をクリックし、キー（`AIza` で始まります）をコピーします。
+3. **保存**（Save）をクリックし、キー（`AIza` で始まります）をコピーします。API キーの変更が反映されるまでに最大 5 分かかる場合があります。
 
 <div class="mac-window">
   ![ウェブサイトと Google Picker API に制限された API キー](/img/files/google-drive/8%20-%20Google%20Drive.jpg)
 </div>
 
 <Warning>
-API キーは**設計上、公開されるものです**。各ユーザーのブラウザがピッカーを開くためにこのキーを受け取ります。そのため、SecureAI のサイトと Google Picker API に制限することが必須です。SecureAI で **Test connection** を使用する**前に**制限してください。他の API ですでに使用実績のあるキーには、Google が制限の追加を許可しない場合があります。
+API キーは**設計上、公開されるものです**。各ユーザーのブラウザがピッカーを開くためにこのキーを受け取ります。そのため、SecureAI のサイト、`docs.google.com`、Google Picker API に制限することが必須です。
 </Warning>
+
+**Test connection** を使用した後にキーを編集すると、Google が **"Warning: Potential breakage due to active usage"** と表示し、`drive.googleapis.com` を一覧に示す場合があります。この使用実績は、キーを確認するために Google Drive API を呼び出す SecureAI のテストによるものです。`UPDATE` と入力して確定してください。
 
 ## ステップ 6: SecureAI に登録、テスト、有効化する
 
 1. SecureAI の **Google Drive** のサイドパネルに戻ります。
 2. **2. Paste the identifiers** で、**Client ID** と **API key** を貼り付けます。
 3. **3. Test it** で次を実行します。
-   - **Test connection** は、SecureAI のサーバーから、API キーが有効であること、インスタンスからのリクエストを受け付けること、OAuth クライアントと**同じプロジェクト**のものであることを確認します。
+   - **Test connection** は、SecureAI のサーバーから、API キーが有効であること、インスタンスと Google のピッカー（`docs.google.com`）からのリクエストを受け付けること、OAuth クライアントと**同じプロジェクト**のものであることを確認します。
    - **Try signing in** は、ユーザーに表示されるものと同じ Google のウィンドウを開きます。ご自身のアカウントでログインしてください。SecureAI は、オリジンが承認されていることと、Google Drive API が応答することを確認します。
 
 <div class="mac-window">
@@ -140,22 +146,26 @@ API キーは**設計上、公開されるものです**。各ユーザーのブ
   ![添付メニューの Add from Drive](/img/files/google-drive/10%20-%20Google%20Drive.png)
 </div>
 
-2. 初回は、Google からアカウントの選択と、選択したファイルの参照を SecureAI に許可するよう求められます。
+2. Google のウィンドウが開き、アカウントを選択して、選択したファイルの参照を SecureAI に許可します。ブラウザがポップアップをブロックする場合は、SecureAI のサイトに対してポップアップを許可する必要があります。
 3. Google ドライブのピッカーが開き、マイドライブ、共有ドライブ、画像のタブが表示されます。1 つ以上のファイルを選択して **Select** をクリックします。
 
 
-4. ファイルが Google ドライブのアイコン付きでメッセージに添付されます。
+4. ファイルが Google ドライブのアイコン付きでメッセージに添付されます。送信時には組織の DLP ポリシーが適用されます。ポリシーでブロックされるデータ（たとえばメールアドレス）がファイルに含まれている場合、ほかの添付ファイルと同様にメッセージはブロックされます。
 
 ## トラブルシューティング
 
 | 表示される内容 | 原因 | 対処方法 |
 |---|---|---|
 | **Test connection**: "The API key's website restrictions do not include this address"（API キーのウェブサイト制限にこのアドレスが含まれていません） | API キーに SecureAI のサイトが設定されていない | ステップ 1 の制限をそのまま（末尾 `/*`）追加する |
+| **Test connection**: "The API key's website restrictions do not include https://docs.google.com/*"（API キーのウェブサイト制限に https://docs.google.com/* が含まれていません） | ステップ 1 の 2 つ目の制限が設定されていない | 追加して（ステップ 5）、数分待つ |
 | **Test connection**: "The API key belongs to a different project than the OAuth client"（API キーが OAuth クライアントとは別のプロジェクトのものです） | 認証情報が別々のプロジェクトで作成された | OAuth クライアントと同じプロジェクトで API キーを作成する |
 | **Test connection**: "The Google Drive API is not enabled"（Google Drive API が有効になっていません） | API が有効化されていない | ステップ 2 |
 | Google のウィンドウに **Error 400: origin_mismatch** または **redirect_uri_mismatch** と表示される | JavaScript 生成元が OAuth クライアントに登録されていない | 追加する（ステップ 4）。反映に数分かかる場合があります |
 | Google のウィンドウに **Error 403: org_internal** と表示される | ユーザーが Workspace 外のアカウントを使用している | 組織のアカウントでログインする必要があります |
-| ピッカーに "The API developer key is invalid" と表示される | API キーのコピー間違い、または Google Picker API が含まれていない | ステップ 5 を確認する |
+| ピッカーに "The API developer key is invalid" と表示される | API キーのウェブサイトに `https://docs.google.com/*` が含まれていない、または Google Picker API が許可されていない | ステップ 5 を確認し、**Test connection** を使用する。キーの変更の反映には最大 5 分かかります |
+| API キーの保存時に、Google から `UPDATE` の入力を求められる（"Potential breakage due to active usage"） | SecureAI のテストがキーを使って Drive API を呼び出した | `UPDATE` と入力して確定する |
+| "Your browser blocked the Google sign-in window"（ブラウザが Google のログイン ウィンドウをブロックしました） | サイトでポップアップがブロックされている | SecureAI のアドレスに対してポップアップを許可する |
+| 添付ファイル付きで送信したメッセージがブロックされる | DLP ポリシーがファイル内のデータを検出した | 想定どおりの動作です。**Data Protection** でインシデントを確認する |
 | "SecureAI did not receive access to this file"（SecureAI はこのファイルへのアクセスを受け取っていません） | ピッカーでファイルが選択されていない | ドライブのウィンドウから選択する |
 | "Its owner does not allow downloading it"（所有者がダウンロードを許可していません） | 所有者がダウンロードを無効にしている | 所有者にダウンロードを有効にするよう依頼する |
 | ユーザーに **Add from Drive** が表示されない | 連携が無効、未保存、またはプランに含まれていない | **Admin → Integrations → Files** のカードを確認する |

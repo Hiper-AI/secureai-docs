@@ -26,6 +26,7 @@ Tempo estimado: 10 minutos.
 
 ## Pré-requisitos
 
+- Uma assinatura do Microsoft 365 que inclua o **SharePoint Online** (por exemplo, Business Basic, Business Standard, E3 ou E5). Um diretório do Entra ID sem essa licença não tem sites do SharePoint nem OneDrive: o login funciona, mas não há arquivos para anexar.
 - Uma função do Entra ID que permita registrar aplicativos e **conceder consentimento do administrador** para permissões do Microsoft Graph (por exemplo, **Administrador de Aplicativos na Nuvem** ou **Administrador Global**).
 - Acesso de administrador ao SecureAI, com permissão de **Administrator** na seção **Integrations**.
 - Um plano do SecureAI que inclua **Attach from Drive / SharePoint**. Sem ele, você pode deixar a configuração pronta, mas os usuários não verão a opção.
@@ -142,6 +143,8 @@ Um usuário não atribuído recebe o erro `AADSTS50105` ao fazer login e não po
 | `AADSTS700016` — aplicativo não encontrado | ID do aplicativo ou do diretório incorreto | Copie-os novamente da **Visão geral** |
 | `AADSTS50105` | O usuário não está atribuído ao aplicativo | Atribua-o ou desative **Atribuição obrigatória?** |
 | **Try signing in**: "These delegated permissions are missing" (faltam estas permissões delegadas) | Falta `Files.Read.All` ou `Sites.Read.All`, ou o consentimento delas | Etapas 3 e 4 |
+| **Try signing in**: "this Microsoft 365 directory has no SharePoint Online license" (este diretório do Microsoft 365 não tem licença do SharePoint Online) | O diretório não tem uma assinatura com o SharePoint Online | Use o diretório do Microsoft 365 da sua organização ou atribua uma assinatura que inclua o SharePoint Online |
+| O navegador de arquivos diz que sua organização não tem SharePoint Online | O mesmo caso, visto por um usuário | O mesmo da linha anterior |
 | O usuário não vê sites, apenas "Shared" | O usuário não é membro de nenhum site | Esperado: ele só vê o que já consegue abrir |
 | O usuário não vê **Add from SharePoint** | A integração está desativada, sem salvar, ou o plano não a inclui | Revise o cartão em **Admin → Integrations → Files** |
 

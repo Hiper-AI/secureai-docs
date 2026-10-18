@@ -26,6 +26,7 @@ Estimated time: 10 minutes.
 
 ## Prerequisites
 
+- A Microsoft 365 subscription that includes **SharePoint Online** (for example Business Basic, Business Standard, E3, or E5). An Entra ID directory without that license has no SharePoint sites and no OneDrive: sign-in works, but there are no files to attach.
 - An Entra ID role that allows registering applications and **granting admin consent** for Microsoft Graph permissions (for example **Cloud Application Administrator** or **Global Administrator**).
 - SecureAI administrator access, with **Administrator** permission on the **Integrations** section.
 - A SecureAI plan that includes **Attach from Drive / SharePoint**. Without it you can leave the configuration ready, but users will not see the option.
@@ -142,6 +143,8 @@ An unassigned user gets the error `AADSTS50105` when signing in and cannot attac
 | `AADSTS700016` — application not found | Wrong application ID or directory ID | Copy them again from **Overview** |
 | `AADSTS50105` | The user is not assigned to the application | Assign them, or turn off **Assignment required?** |
 | **Try signing in**: "These delegated permissions are missing" | `Files.Read.All` or `Sites.Read.All` is missing, or its consent is | Steps 3 and 4 |
+| **Try signing in**: "this Microsoft 365 directory has no SharePoint Online license" | The directory has no subscription with SharePoint Online | Use your organization's Microsoft 365 directory, or assign a subscription that includes it |
+| The picker says your organization has no SharePoint Online | Same case, seen by a user | Same as the previous row |
 | The user does not see sites, only "Shared" | The user is not a member of any site | Expected: they only see what they can already open |
 | The user does not see **Add from SharePoint** | The integration is turned off, not saved, or the plan does not include it | Check the card in **Admin → Integrations → Files** |
 
