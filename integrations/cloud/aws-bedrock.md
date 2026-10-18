@@ -57,19 +57,23 @@ Nada se omite en silencio: lo que SecureAI no puede leer aparece con la acción 
 
 ## Conectar
 
-1. Vaya a **Administrador → Registro de agentes → Sensores de nube** y haga clic en **Conectar AWS** (o, si ya está conectado, en **Conexión de AWS**). La misma conexión está en **Administrador → Integraciones → Nube → AWS Bedrock**.
-2. En la pestaña **Conexión**, deje seleccionado **Rol de SecureAI (recomendado)**. El panel muestra el **ARN del principal de SecureAI** y su **External ID (único de su tenant)**.
-3. **Despliegue el stack de SecureAI en su cuenta de AWS**: con **Lanzar el stack en AWS** (cuando se ofrece), o con **Descargar la plantilla** y el comando de la AWS CLI que muestra el panel (ya incluye sus parámetros). Si ya desplegó el stack para [inferencia](/integrations/cloud/aws-bedrock-inference) con el rol de descubrimiento incluido, no hace falta repetirlo. Si su organización no permite CloudFormation, cree el rol `SecureAI-Discovery` a mano con la misma política de confianza que se muestra en la [guía de inferencia](/integrations/cloud/aws-bedrock-inference) y las acciones de la tabla de arriba sobre `"Resource": "*"`.
+1. Vaya a **Administrador → Inventario → Conectores Cloud** y haga clic en **Conectar AWS** (o, si ya está conectado, en **Conexión de AWS**). Se abre **AWS Bedrock — Insights** en la pestaña **Conexión**.
+2. Deje seleccionado **Rol de SecureAI (recomendado)**. El panel muestra el **ARN del principal de SecureAI** y su **External ID (único de su tenant)**.
+3. **Despliegue el stack de SecureAI en su cuenta de AWS**: con **Lanzar el stack en AWS** (cuando se ofrece), o con **Descargar la plantilla** y el comando de la AWS CLI que muestra el panel (ya incluye sus parámetros). Si su organización no permite CloudFormation, cree el rol `SecureAI-Discovery` a mano con la misma política de confianza que se muestra en la [guía de inferencia](/integrations/cloud/aws-bedrock-inference) y las acciones de la tabla de arriba sobre `"Resource": "*"`.
 4. Pegue la salida **`DiscoveryRoleArn`** del stack en **ARN del rol de descubrimiento** (por ejemplo `arn:aws:iam::123456789012:role/SecureAI-Discovery`).
 5. En **Regiones**, escriba las regiones donde viven sus recursos de Bedrock y AgentCore, separadas por coma (por ejemplo `us-east-1, eu-west-1`). IAM y Cost Explorer son globales.
-6. Haga clic en **Probar y conectar**. SecureAI verifica la conexión con una lectura real antes de guardar.
-7. Sincronice ahora con el botón de actualizar. Después, SecureAI sincroniza solo cada 6 horas.
+6. Haga clic en **Probar y conectar**. SecureAI verifica la conexión con una lectura real antes de guardar, y lista lo que no pudo leer.
+7. Haga la primera sincronización: en **Administrador → Integraciones**, en la tarjeta **AWS Bedrock** (categoría **Nube**), haga clic en **Sincronizar ahora** (el ícono de actualizar). Después, SecureAI sincroniza solo cada 6 horas.
+
+<Warning>
+**Un solo stack por cuenta, para las dos conexiones.** Los roles de inferencia y de descubrimiento salen de la misma plantilla y del mismo nombre de stack (`SecureAI-Integration`). Si ya lo desplegó para [inferencia](/integrations/cloud/aws-bedrock-inference), **no** corra el comando de arriba tal cual: con `EnableInference=false`, CloudFormation borraría el rol `SecureAI-BedrockInference` y cortaría su tráfico de inferencia. Actualice el stack existente con `EnableInference=true EnableDiscovery=true`. Si el stack ya creó el rol de descubrimiento, saltee el paso 3.
+</Warning>
 
 ### Alternativa: access key de un usuario IAM
 
 En lugar del rol, puede usar el **ID de clave de acceso** y la **Clave de acceso secreta** de un usuario IAM (y un **Token de sesión** opcional si son credenciales temporales). Dele al usuario los mismos permisos de solo lectura que el rol. SecureAI guarda el secreto cifrado. Preferimos el rol: no guarda ningún secreto y se revoca borrando el stack.
 
-Al enviar el formulario de nuevo se reemplaza la configuración, y se descarta la credencial guardada del otro método.
+Al pasar de un método al otro se descarta la credencial guardada del método que deja.
 
 ## Modo AWS Organizations (opcional)
 
@@ -85,20 +89,26 @@ SecureAI lista las cuentas **ACTIVAS** de la organización y asume el rol direct
 |----------------|----------|
 | **Nombre del rol en las cuentas miembro** | Por defecto, el nombre del rol de la cuenta de administración. |
 | **Solo estas cuentas** | Lista de IDs de cuenta separados por coma, para leer solo un subconjunto. |
-| **Máximo de cuentas por sincronización** | Por defecto 50, máximo 200. |
+
+SecureAI lee hasta 50 cuentas por sincronización, primero la de administración. CloudTrail (eventos de auditoría y Bedrock usado por fuera de SecureAI) y el simulador de políticas cubren las primeras 10, y el uso de CloudWatch las primeras 15; si la organización es más grande, el panel lo indica como lectura parcial. Una conexión admite hasta 10 regiones.
 
 Una cuenta que SecureAI no puede leer queda como **brecha**, y no se retira ni se poda nada de ella. Si el rol que pegó está en una cuenta miembro, la conexión lo indica y nombra la cuenta de administración donde debe desplegarlo.
 
 ## Verificar
 
-- [Sensores de nube](/discovery/cloud-sensors) lista los agentes descubiertos. Haga clic en la tarjeta de AWS para abrir **AWS Bedrock — Insights**: uso y costo de Bedrock, agentes (Bedrock Agents y runtimes de AgentCore), lo que está conectado a ellos (alias, bases de conocimiento, guardrails, gateways y memorias, throughput, perfiles y endpoints de SageMaker), cuentas y regiones leídas con su registro de invocaciones, access keys, roles IAM, **Bedrock usado por fuera de SecureAI**, **Quién puede invocar Bedrock**, **Acceso efectivo** y la actividad de CloudTrail.
+- [Conectores Cloud](/discovery/cloud-sensors) lista los agentes descubiertos. Haga clic en **Conexión de AWS** para abrir **AWS Bedrock — Insights**, con estas pestañas:
+  - **Uso y costos**: tokens, solicitudes y errores por modelo (CloudWatch) y gasto en Bedrock (Cost Explorer).
+  - **Modelos y despliegues**: agentes (Bedrock Agents y runtimes de AgentCore), lo que está conectado a ellos (alias, bases de conocimiento, guardrails, gateways y memorias, throughput, perfiles de inferencia y endpoints de SageMaker), y las cuentas y regiones leídas con su registro de invocaciones.
+  - **Identidad y acceso**: **Bedrock usado por fuera de SecureAI**, **Quién puede invocar Bedrock**, **Acceso efectivo (simulador de políticas IAM)**, roles IAM y access keys.
+  - **Auditoría y logs**: eventos de CloudTrail de Bedrock y AgentCore.
+  - **Conexión**: la configuración de arriba.
 - El [Inventario de NHI](/discovery/nhi-inventory) muestra los usuarios, access keys y roles.
 
 Si una sincronización falla (por ejemplo, porque se borró el stack), la tarjeta muestra el error y SecureAI reintenta con espera progresiva, conservando el último inventario. Una lectura parcial nunca retira agentes ni elimina identidades.
 
 ## Bedrock usado por fuera de SecureAI
 
-Con los eventos de CloudTrail que ya lee (`InvokeModel`, `InvokeModelWithResponseStream`, `Converse`, `ConverseStream` y las API compatibles con OpenAI y Anthropic de `bedrock-runtime`), SecureAI separa las llamadas que hizo **su propia identidad de inferencia** —el rol o la access key de la conexión [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference)— de las que hizo **cualquier otra identidad**. Estas últimas no pasaron por DLP, políticas de modelos ni recibos firmados.
+Con los eventos de CloudTrail que ya lee (`InvokeModel`, `InvokeModelWithResponseStream`, `Converse`, `ConverseStream`, las API compatibles con OpenAI y Anthropic de `bedrock-runtime` y las invocaciones de agentes: `InvokeAgent`, `InvokeInlineAgent` e `InvokeAgentRuntime`), SecureAI separa las llamadas que hizo **su propia identidad de inferencia** —el rol o la access key de la conexión [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference)— de las que hizo **cualquier otra identidad**. Estas últimas no pasaron por DLP, políticas de modelos ni recibos firmados.
 
 En **Identidad y acceso → Bedrock usado por fuera de SecureAI** se ve, por identidad:
 
