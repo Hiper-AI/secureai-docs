@@ -73,7 +73,7 @@ With more than one provider enabled, each one serves **different** model familie
    | **SecureAI principal (trusted by the role)** | The ARN your role will trust. It is the only one that can assume it. |
    | **Your External ID** | Unique to your organization. The role refuses any caller that does not present it, so no other SecureAI customer can use your role (protection against the *confused deputy* problem). |
 
-3. If you will also use [AWS — Discovery](/en/integrations/cloud/aws-bedrock), tick **Also create the read-only discovery role (SecureAI-Discovery) for the AWS inventory**: the same stack creates both roles, and the CLI command changes to `EnableDiscovery=true`. It is unticked by default.
+3. If you will also use [AWS — Discovery](/en/integrations/cloud/aws-bedrock), tick **Also create the read-only discovery role (SecureAI-Discovery) for the AWS inventory**: the same stack creates both roles, and the CLI command changes to `EnableDiscovery=true`. It is unticked by default; when [AWS — Discovery](/en/integrations/cloud/aws-bedrock) already uses the stack's discovery role, it stays ticked and locked so the stack keeps that role.
 
 <Warning>
 Both connections share one stack name (`SecureAI-Integration`). Deploy it once with the roles you need. Running it again with `EnableInference=false` or `EnableDiscovery=false` makes CloudFormation **delete** that role.
@@ -354,7 +354,7 @@ Errors users may see in the chat:
 
 - **Llama, Amazon Nova, DeepSeek‑R1, Mistral 7B, and Mixtral** are not served through Bedrock (on Bedrock they only answer the Converse API).
 - With **In-Region only**, Claude and GPT‑5.x are unavailable.
-- **Not every Claude model answers through Bedrock.** SecureAI calls Claude through Bedrock's Anthropic Messages API, and Bedrock does not serve every Claude model there: in our October 2026 tests, Claude Sonnet 4.6 and Haiku 4.5 answered, while Opus 4.6, Opus 4.5 and Sonnet 4.5 returned *Model not available* even with access granted. Pick as default models Claude models that pass **Test connection**.
+- **Not every Claude model runs through Bedrock.** SecureAI calls Claude through Bedrock's Anthropic Messages API, and Bedrock serves Claude Opus 4.6, Opus 4.5 and Sonnet 4.5 only through InvokeModel. SecureAI does not route those three to Bedrock: they are not offered as default models or overrides, and **Routing preview** shows them as *Hidden from users*. With **Allow fallback** on, they run on SecureAI-managed providers. Claude Sonnet 4.6 and Haiku 4.5 do run on Bedrock. If another Claude answers that it does not support that API, **Test connection** says Bedrock serves it only through InvokeModel, and the chat shows `SAI-BEDROCK-001`.
 - **Claude on Bedrock:** every request gets its signed receipt, but the audit evidence does not yet bind the retained response to that receipt (the "response bound to receipt" flag is not available for these turns).
 - **Embeddings, re-ranking, OCR, the admin assistant, image generation, and realtime voice** stay on SecureAI-managed providers.
 

@@ -66,7 +66,7 @@ Nada se omite en silencio: lo que SecureAI no puede leer aparece con la acción 
 7. Haga la primera sincronización: en **Administrador → Integraciones**, en la tarjeta **AWS Bedrock** (categoría **Nube**), haga clic en **Sincronizar ahora** (el ícono de actualizar). Después, SecureAI sincroniza solo cada 6 horas.
 
 <Warning>
-**Un solo stack por cuenta, para las dos conexiones.** Los roles de inferencia y de descubrimiento salen de la misma plantilla y del mismo nombre de stack (`SecureAI-Integration`). Si ya lo desplegó para [inferencia](/integrations/cloud/aws-bedrock-inference), **no** corra el comando de arriba tal cual: con `EnableInference=false`, CloudFormation borraría el rol `SecureAI-BedrockInference` y cortaría su tráfico de inferencia. Actualice el stack existente con `EnableInference=true EnableDiscovery=true`. Si el stack ya creó el rol de descubrimiento, saltee el paso 3.
+**Un solo stack por cuenta, para las dos conexiones.** Los roles de inferencia y de descubrimiento salen de la misma plantilla y del mismo nombre de stack (`SecureAI-Integration`). Si su conexión de [inferencia de Amazon Bedrock](/integrations/cloud/aws-bedrock-inference) ya usa el rol `SecureAI-BedrockInference` del stack, el panel lo indica y el comando que muestra conserva `EnableInference=true`: córralo tal cual. Si arma el comando usted, deje `EnableInference=true` en esa cuenta; si no, CloudFormation borra el rol de inferencia y corta su tráfico. Si el stack ya creó el rol de descubrimiento, saltee el paso 3.
 </Warning>
 
 ### Alternativa: access key de un usuario IAM

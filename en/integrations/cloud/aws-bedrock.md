@@ -66,7 +66,7 @@ Nothing is skipped silently: whatever SecureAI cannot read is listed with the IA
 7. Run the first sync: in **Admin → Integrations**, on the **AWS Bedrock** card (**Cloud** category), click **Sync now** (the refresh icon). After that, SecureAI syncs automatically every 6 hours.
 
 <Warning>
-**One stack per account, for both connections.** The inference and discovery roles come from the same template and the same stack name (`SecureAI-Integration`). If you already deployed it for [inference](/en/integrations/cloud/aws-bedrock-inference), do **not** run the command above as shown: with `EnableInference=false`, CloudFormation would delete the `SecureAI-BedrockInference` role and stop your inference traffic. Update the existing stack with `EnableInference=true EnableDiscovery=true` instead. If the stack already created the discovery role, skip step 3.
+**One stack per account, for both connections.** The inference and discovery roles come from the same template and the same stack name (`SecureAI-Integration`). When your [Amazon Bedrock inference](/en/integrations/cloud/aws-bedrock-inference) connection already uses the stack's `SecureAI-BedrockInference` role, the panel says so and the command it shows keeps `EnableInference=true`: run that command as shown. If you build the command yourself, keep `EnableInference=true` in that account, or CloudFormation deletes the inference role and stops your inference traffic. If the stack already created the discovery role, skip step 3.
 </Warning>
 
 ### Alternative: IAM user access key
