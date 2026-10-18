@@ -299,7 +299,7 @@ Además hay dos opciones:
 3. Cuando la prueba pase, encienda **Enrutar tráfico a Amazon Bedrock** y haga clic en **Guardar**. **Si no guarda, el interruptor no queda activo.** Si su plan no admite otro proveedor de nube o el enrutamiento se superpone con otro, SecureAI lo rechaza y explica por qué.
 4. La tarjeta pasa a verde: **Enrutando a Amazon Bedrock**. Si está guardada pero apagada, muestra **Configurado · sin enrutar a Bedrock**.
 
-Los modelos servidos por su Bedrock muestran la insignia **Tu Bedrock** en el selector de modelos del chat; al pasar el mouse indica que los sirve el Amazon Bedrock de su organización.
+Los modelos servidos por su Bedrock muestran el logo de AWS junto a su nombre en el selector de modelos del chat; al pasar el mouse dice que los sirve el Amazon Bedrock de su organización.
 
 ## Qué se factura y a quién
 
@@ -354,6 +354,7 @@ Errores que pueden ver los usuarios en el chat:
 
 - **Llama, Amazon Nova, DeepSeek‑R1, Mistral 7B y Mixtral** no se sirven por Bedrock (en Bedrock solo responden a la API Converse).
 - Con **Solo dentro de la Región**, Claude y GPT‑5.x no están disponibles.
+- **No todos los modelos Claude responden por Bedrock.** SecureAI llama a Claude por la API Messages de Anthropic en Bedrock, y Bedrock no sirve ahí todos los modelos Claude: en nuestras pruebas de octubre de 2026 respondieron Claude Sonnet 4.6 y Haiku 4.5, y Opus 4.6, Opus 4.5 y Sonnet 4.5 devolvieron *Modelo no disponible* aun con el acceso otorgado. Elija como modelos por defecto modelos Claude que pasen **Probar conexión**.
 - **Claude en Bedrock:** cada solicitud tiene su recibo firmado, pero la evidencia de auditoría todavía no vincula la respuesta conservada con ese recibo (la marca "respuesta vinculada al recibo" no está disponible para estos turnos).
 - **Embeddings, re-ranking, OCR, asistente de administración, generación de imágenes y voz en tiempo real** siguen en proveedores administrados por SecureAI.
 

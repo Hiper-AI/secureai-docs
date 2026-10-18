@@ -299,7 +299,7 @@ There are also two options:
 3. When the test passes, turn on **Route traffic to Amazon Bedrock** and click **Save**. **If you do not save, the switch does not stay on.** If your plan allows no further cloud provider or the routing overlaps another one, SecureAI refuses it and says why.
 4. The card turns green: **Routing to Amazon Bedrock**. If it is saved but off, it shows **Configured · not routing to Bedrock**.
 
-Models served by your Bedrock show the **Your Bedrock** badge in the chat model selector; hovering it says they are served by your organization's Amazon Bedrock.
+Models served by your Bedrock show the AWS logo next to their name in the chat model selector; hovering it says *Served by your organization's Amazon Bedrock*.
 
 ## What is billed, and to whom
 
@@ -354,6 +354,7 @@ Errors users may see in the chat:
 
 - **Llama, Amazon Nova, DeepSeek‑R1, Mistral 7B, and Mixtral** are not served through Bedrock (on Bedrock they only answer the Converse API).
 - With **In-Region only**, Claude and GPT‑5.x are unavailable.
+- **Not every Claude model answers through Bedrock.** SecureAI calls Claude through Bedrock's Anthropic Messages API, and Bedrock does not serve every Claude model there: in our October 2026 tests, Claude Sonnet 4.6 and Haiku 4.5 answered, while Opus 4.6, Opus 4.5 and Sonnet 4.5 returned *Model not available* even with access granted. Pick as default models Claude models that pass **Test connection**.
 - **Claude on Bedrock:** every request gets its signed receipt, but the audit evidence does not yet bind the retained response to that receipt (the "response bound to receipt" flag is not available for these turns).
 - **Embeddings, re-ranking, OCR, the admin assistant, image generation, and realtime voice** stay on SecureAI-managed providers.
 
