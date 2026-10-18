@@ -26,7 +26,7 @@ SecureAI sigue en el camino de cada solicitud: **DLP, políticas de modelos, res
 | | Generación de imágenes y voz en tiempo real |
 | | Modelos autoalojados y el proxy de Claude Code |
 
-Modelos disponibles hoy: **Gemini** y los modelos abiertos servidos como MaaS en Vertex (**gpt-oss, DeepSeek, Llama y Qwen**). **Claude y Mistral en Vertex todavía no están soportados**; esos modelos se atienden según la configuración de fallback (ver más abajo).
+Modelos disponibles hoy: **Gemini**, los modelos abiertos servidos como MaaS en Vertex (**gpt-oss, DeepSeek, Llama y Qwen**) y los modelos de socios de Google **Claude** y **Mistral** (y también AI21), que SecureAI llama por el endpoint de modelos de socios de Vertex (`rawPredict` / `streamRawPredict`). Claude y Mistral corren en su Vertex solo si usted elige su familia; vea **Claude y Mistral**, más abajo.
 
 ## Cuántos proveedores de nube puede usar
 
@@ -136,6 +136,13 @@ Con la opción B no se crea ninguna clave. En su lugar:
 
 **Gemini no requiere nada más.** Para usar además Llama, DeepSeek, Qwen o gpt-oss, acepte primero los términos de cada modelo en **Vertex AI → Model Garden**. Estos modelos abiertos necesitan una **región** concreta (por ejemplo `us-central1`); con `global` pueden no estar disponibles.
 
+### Claude y Mistral
+
+Para usar Claude o Mistral, habilite cada modelo en **Vertex AI → Model Garden** y acepte los términos de Anthropic o de Mistral para ese modelo. Después, en el paso 3, marque la familia **Claude** o **Mistral**. SecureAI solo envía estos modelos a su Vertex cuando usted elige su familia, porque no puede saber si su proyecto los tiene habilitados: **Remapear todo** por sí solo nunca los envía ahí.
+
+- SecureAI usa el nombre que les da Vertex, con guiones: por ejemplo `anthropic/claude-sonnet-4-6`. Un modelo que necesita su versión con fecha (`claude-…@20250929`) se declara en **Modelos de su nube que SecureAI no lista**, más abajo.
+- Según la documentación de Google, Claude en Vertex está disponible en regiones específicas y en el endpoint `global`. Consulte las regiones en la [documentación de Google sobre Claude en Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-claude).
+
 ## Paso 2. Conecte el proyecto en SecureAI
 
 1. Vaya a **Administrador → Integraciones**, abra la categoría **Proveedores de IA** y haga clic en la tarjeta **Google Vertex AI — Inferencia en tu cuenta**.
@@ -165,8 +172,8 @@ Con la opción A, la clave pegada nunca vuelve a mostrarse. Para reemplazarla, p
 
 En **Qué corre en Vertex** hay dos modos:
 
-- **Solo estas familias de modelos** — las familias que marque (Gemini, gpt-oss, DeepSeek, Llama, Qwen) corren en su Vertex; el resto de los modelos sigue en los proveedores de SecureAI. Es el modo más conservador para empezar (por defecto: solo Gemini).
-- **Remapear todo a Vertex** — todas las llamadas a LLM corren en su Vertex. Los modelos sin equivalente en Vertex los sirve un **modelo por defecto**.
+- **Solo estas familias de modelos** — las familias que marque (Gemini, gpt-oss, DeepSeek, Llama, Qwen, Claude, Mistral) corren en su Vertex; el resto de los modelos sigue en los proveedores de SecureAI. Es el modo más conservador para empezar (por defecto: solo Gemini).
+- **Remapear todo a Vertex** — todas las llamadas a LLM corren en su Vertex. Los modelos sin equivalente en Vertex los sirve un **modelo por defecto**. Claude y Mistral van a Vertex solo si marca su familia (vea **Claude y Mistral**, en el paso 1).
 
 **Modelos de Vertex por defecto** (editables):
 
@@ -191,7 +198,7 @@ Además hay dos opciones:
 </div>
 
 <Info>
-Los modelos disponibles dependen de la **ubicación**. Los modelos por defecto (varios en versión *preview*) pueden no existir en todas las regiones. Si la prueba de conexión devuelve **Modelo no disponible en esta ubicación**, elija otra región o reemplace los modelos por defecto por unos que su región sirva. Los modelos abiertos (MaaS) requieren aceptar sus términos en Vertex AI Model Garden y una región concreta.
+Los modelos disponibles dependen de la **ubicación**. Los modelos por defecto (varios en versión *preview*) pueden no existir en todas las regiones. Si la prueba de conexión devuelve **Modelo no disponible en esta ubicación**, elija otra región o reemplace los modelos por defecto por unos que su región sirva. Los modelos abiertos (MaaS) requieren aceptar sus términos en Vertex AI Model Garden y una región concreta. Claude y Mistral requieren que el modelo esté habilitado en Model Garden.
 </Info>
 
 ## Paso 4. Pruebe la conexión
@@ -244,6 +251,19 @@ Cuando la integración está activa, los modelos que corren en su Vertex muestra
 
 En el modo **Remapear todo** sin fallback, el selector **solo ofrece** los modelos que atiende su Vertex. Un modelo sin equivalente quedaría respondido por otro modelo distinto al elegido, y por eso se oculta.
 
+## Modelos de su nube que SecureAI no lista
+
+Su proyecto puede tener habilitados en Model Garden modelos de chat que el catálogo de SecureAI no incluye (por ejemplo un Claude más nuevo o Codestral). Cuando su despliegue de SecureAI los habilita, el chat también puede ofrecerlos:
+
+- **De dónde salen.** Model Garden no informa qué modelos habilitó su proyecto, así que usted los nombra en el panel de Vertex AI como `publisher/modelo` (por ejemplo `anthropic/claude-opus-4-7` o `mistralai/codestral-2`), los agrega con **Agregar**, hace clic en **Guardar** y corre **Probar conexión** para verificar que cada uno responde. Un modelo al que ya llega un modelo del catálogo de SecureAI conserva su nombre del catálogo y no se repite acá.
+- **Dónde aparecen.** En el selector de modelos del chat, en su propia sección: **Tu Google Vertex AI**. Su id empieza con `byo/gcp-vertex/`.
+- **Dónde corren.** Solo en su Vertex. Nunca se envían a los proveedores administrados por SecureAI, aunque haya permitido el fallback.
+- **Qué cuestan.** SecureAI no los cobra (no tienen precio de lista en SecureAI), así que el tope de gasto por asiento no se aplica a ellos, y cualquier asiento puede usarlos. Google factura el consumo a su cuenta, como el resto.
+- **Misma gobernanza.** Pasan por la política de modelos, los bloqueos de proveedor y de fabricante, el DLP, los recibos firmados y la auditoría. Si su política de modelos enumera los modelos permitidos, agréguelos en el editor de la política, donde aparecen en la sección de su nube.
+- **Qué admite cada uno.** Las herramientas, las imágenes y el tamaño de contexto salen de los datos que el proveedor publica sobre el modelo. Si un modelo no admite herramientas o imágenes, el chat no se las ofrece, y las imágenes nunca se envían a otro proveedor para que las describa.
+
+Para apagar la lista entera o para ocultar modelos sueltos, use en el panel de Vertex AI el interruptor **Ofrecer los modelos de tu Google Vertex AI que SecureAI no lista** y las casillas de cada modelo, y haga clic en **Guardar**.
+
 ## Qué se factura y a quién
 
 - **El consumo de LLM lo factura Google a su cuenta**, no SecureAI. Verá el cargo en su facturación de Google Cloud, con sus descuentos y CUDs aplicados.
@@ -280,7 +300,7 @@ Estos son los motivos que muestra **Probar conexión**:
 | No autenticado | Google rechazó el token | Verifique que la cuenta de servicio exista y esté activa. |
 | La API de Vertex AI no está habilitada en el proyecto | Falta el paso 1.1 | Habilite la **Agent Platform API (Vertex AI API)** (`aiplatform.googleapis.com`) en el proyecto. |
 | Falta roles/aiplatform.user | Permiso insuficiente | Otorgue el rol **Agent Platform User** (`roles/aiplatform.user`) a la cuenta de servicio en ese proyecto. |
-| Modelo no disponible en esta ubicación | El modelo no existe en la región elegida, o es un modelo abierto cuyos términos no se aceptaron en Model Garden | Cambie la región o ese modelo por defecto; para modelos abiertos, acepte los términos en Model Garden. |
+| Modelo no disponible en esta ubicación | El modelo no existe en la región elegida, o es un modelo abierto, Claude o Mistral que no se habilitó en Model Garden | Cambie la región o ese modelo por defecto; para modelos abiertos, Claude y Mistral, acepte los términos en Model Garden. |
 | Cuota excedida | Cuota de Vertex agotada | Revise las cuotas del proyecto o pida un aumento a Google. |
 | Google devolvió un error | Falla del lado de Google | Reintente; si persiste, revise el estado de Google Cloud. |
 | Bloqueado por tu política de modelos SMLTP | La política de SecureAI no permite el modelo | Agregue el modelo a la política permitida. |
@@ -298,7 +318,6 @@ Errores que pueden ver los usuarios en el chat:
 
 ## Limitaciones actuales
 
-- **Claude y Mistral en Vertex** no están soportados (usan una API distinta).
 - **Embeddings, re-ranking, OCR, asistente de administración, generación de imágenes y voz en tiempo real** siguen en proveedores administrados por SecureAI.
 - **Un solo proyecto y una sola ubicación de Vertex** por organización.
 - La cantidad de proveedores de inferencia que puede habilitar a la vez depende del plan (Scale: 1, Enterprise: hasta 3). Consulte [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference) y [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference).

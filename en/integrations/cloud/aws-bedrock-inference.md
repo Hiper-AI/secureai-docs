@@ -19,7 +19,7 @@ SecureAI stays in the path of every request: **DLP, model policies, data residen
 
 1. You deploy an IAM role in your AWS account that **only** SecureAI's principal can assume, and **only** when it presents your organization's External ID.
 2. For each call, SecureAI assumes that role and gets **temporary credentials** (they last one hour and renew automatically). No access key is stored.
-3. SecureAI signs the request with **AWS Signature V4** and sends it, through its gateway, to **Amazon Bedrock Runtime** in the Region you chose: Chat Completions for OpenAI-compatible models, and Anthropic's Messages API for Claude.
+3. SecureAI signs the request with **AWS Signature V4** and sends it, through its gateway, to **Amazon Bedrock Runtime** in the Region you chose. Bedrock offers three surfaces and SecureAI uses the one each model needs: Anthropic's Messages API for Claude; Chat Completions (OpenAI-compatible) for gpt‑oss, GPT‑5.x, DeepSeek V3, Qwen, Mistral Large 3, and Ministral 3; and **Converse**, the Bedrock API every chat model answers, for everything else.
 4. The response comes back through the gateway, which applies DLP and issues the signed receipt.
 
 SecureAI **does not use Bedrock API keys** (bearer tokens). That is why the integration works even if your organization blocks Bedrock API keys with an SCP, a guardrail AWS commonly recommends.
@@ -37,14 +37,21 @@ Model families available on Bedrock:
 
 | Family | Models |
 |--------|--------|
-| **Claude (Anthropic)** | The Claude models Bedrock offers in your Region. **Bedrock is SecureAI's only bring-your-own-cloud lane that serves Claude**: the Vertex AI and Azure AI Foundry lanes do not. |
+| **Claude (Anthropic)** | The Claude models Bedrock offers in your Region. Claude Opus 4.6, Opus 4.5, and Sonnet 4.5, which Bedrock does not serve through the Messages API, run through Converse. Vertex AI and Azure AI Foundry can serve Claude too. |
 | **OpenAI** | GPT‑5.x on Bedrock |
 | **gpt‑oss** | For example `gpt-oss-120b` |
 | **DeepSeek** | DeepSeek V3.x |
 | **Qwen** | Bedrock's Qwen models |
 | **Mistral** | Mistral Large 3, Ministral 3 |
+| **Llama** | The Llama models Bedrock offers in your Region (through Converse) |
 
-**Not offered through Bedrock:** Llama, Amazon Nova, DeepSeek‑R1, Mistral 7B, and Mixtral. On Bedrock those models only answer the Converse API, not the OpenAI-compatible surface SecureAI uses, so they stay on SecureAI-managed providers. Gemini is not on Bedrock.
+**Llama, Amazon Nova, DeepSeek‑R1, Mistral 7B, Mixtral, Mistral Large 2, Pixtral, Cohere, AI21, and Writer** also run on your Bedrock, through Converse. Gemini is not on Bedrock.
+
+On Converse each model takes different things, and SecureAI never sends a model what it does not take:
+
+- Some models take no system prompt (Mistral 7B, Mixtral): SecureAI puts those instructions at the start of the first user message.
+- Some take no tools or no images: the chat does not offer them with that model.
+- Some take tools but not while streaming: SecureAI sends the call without streaming and streams the answer to the user itself.
 
 ## How many cloud providers you can use
 
@@ -236,7 +243,7 @@ To refuse every call whose region the cloud chooses (Vertex `global`, Global dep
 
 ## Your own Bedrock Guardrail (optional)
 
-If your organization already uses [Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html), you can have SecureAI apply one of your guardrails to **every call** it makes on this connection. It is a **second layer** on top of SecureAI's DLP: Bedrock evaluates the prompt and the reply with your own denied topics, content filters, word filters, sensitive-information filters and grounding checks. It applies to Claude and to the Chat Completions models alike (gpt-oss, DeepSeek, Mistral, Qwen, GPT‑5.x).
+If your organization already uses [Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html), you can have SecureAI apply one of your guardrails to **every call** it makes on this connection. It is a **second layer** on top of SecureAI's DLP: Bedrock evaluates the prompt and the reply with your own denied topics, content filters, word filters, sensitive-information filters and grounding checks. It applies alike to Claude, to the Chat Completions models (gpt-oss, DeepSeek, Mistral, Qwen, GPT‑5.x), and to the models that run through Converse.
 
 1. In the Bedrock console (**Guardrails**), create or choose the guardrail in the **same Region** you configured in SecureAI, and **publish a version** (**Create version**).
 2. In SecureAI's Amazon Bedrock panel, under **Your Bedrock Guardrail (optional)**, click **List my guardrails** and pick the guardrail and the version. If the role cannot list them, type the guardrail **id** (or its ARN) and the version number.
@@ -257,21 +264,21 @@ To remove it, choose **None** as the guardrail and save.
 <Info>
 **Permissions.** The role needs `bedrock:ApplyGuardrail` on your guardrails and, for the list, `bedrock:ListGuardrails`. SecureAI's CloudFormation template includes both from this version on: if you deployed the stack earlier, **update it** with the new template (or add the two statements of the manual role's policy). If the guardrail uses cross-Region inference, the template also covers its *guardrail profiles*.
 
-**How it is applied.** SecureAI sends the id and the version in the `X-Amzn-Bedrock-GuardrailIdentifier` and `X-Amzn-Bedrock-GuardrailVersion` headers, **inside the Signature V4 signature** of each request: nothing on the path can drop them without AWS refusing the call, and no user or integration can pick another guardrail. SecureAI does not turn on the guardrail *trace*, so the content that triggered it is not returned in the reply.
+**How it is applied.** On Messages API and Chat Completions calls, SecureAI sends the id and the version in the `X-Amzn-Bedrock-GuardrailIdentifier` and `X-Amzn-Bedrock-GuardrailVersion` headers, **inside the Signature V4 signature** of each request: nothing on the path can drop them without AWS refusing the call, and no user or integration can pick another guardrail. Converse takes no guardrail headers, so on those calls the id and the version travel **inside the request body**, which SecureAI's per-request authorization token covers; the lane refuses a request whose guardrail is not the connection's. Either way, when the guardrail blocks, the user gets the guardrail's blocked message. SecureAI does not turn on the guardrail *trace*, so the content that triggered it is not returned in the reply.
 
 **AWS logs.** If Bedrock model invocation logging is on, AWS stores the original content even when the guardrail masks it. Encrypt those logs with KMS and restrict access to them.
 </Info>
 
 ## Claude prompt caching
 
-On Claude models, SecureAI automatically uses [Bedrock prompt caching](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) so your account pays less and answers faster when a conversation reuses long context. There is nothing to configure.
+On the Claude models SecureAI calls through the Messages API, SecureAI automatically uses [Bedrock prompt caching](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) so your account pays less and answers faster when a conversation reuses long context. There is nothing to configure.
 
 - SecureAI marks up to two cache points per request: the **system prompt** and the **last long block** of the conversation (a pasted document, a search context, a long tool result).
 - It marks them only when the content before them reaches the **model's token minimum** (for example 1,024 on Claude Sonnet 4.6 and 4,096 on Claude Haiku 4.5). Short prompts are sent exactly as before.
 - The cache lasts **5 minutes** from its last use. Reading from cache costs about **10%** of an input token; writing it costs **25% more** than a regular token, and only on content that reaches the minimum. It pays off from **two calls** with the same context in that window, which is the usual case in a conversation.
 - Each turn's usage separates the tokens read from cache and the ones written, so you can see them in analytics and on your AWS bill.
 
-Models other than Claude are not affected.
+Models other than Claude, and the Claude models that run through Converse, are not affected.
 
 ## Step 4. Choose what runs on Bedrock
 
@@ -330,6 +337,19 @@ Models served by your Bedrock show the AWS logo next to their name in the chat m
 
 ![A chat turn served by Claude Sonnet 4.6 on your Bedrock](/img/cloud/aws-bedrock-inference/12-chat-turn.png)
 
+## Models from your cloud that SecureAI doesn't list
+
+Your Bedrock can serve chat models SecureAI's catalog does not include (for example Amazon Nova, Cohere, or Writer). Once your SecureAI deployment enables them, the chat offers them too:
+
+- **Where they come from.** Your Region's model list in Bedrock (`ListFoundationModels` and `ListInferenceProfiles`), the same one the drawer reads under **Models available to your account**. A model that a SecureAI catalog model already reaches keeps its catalog name and is not repeated here.
+- **Where they appear.** In the chat model selector, in their own section: **Your Amazon Bedrock**. Their ids look like `byo/aws-bedrock/amazon.nova-pro-v1~0` (the `:` of the Bedrock id is written `~`).
+- **Where they run.** Only on your Bedrock. They are never sent to SecureAI-managed providers, even if you allowed fallback.
+- **What they cost.** SecureAI does not charge for them (they have no SecureAI list price), so the per-seat spend cap does not apply to them, and any seat can use them. AWS bills the usage to your account, like the rest.
+- **Same governance.** They go through the model policy, provider and vendor blocks, DLP, signed receipts, and audit. If your model policy lists the allowed models, add them in the policy editor, where they show up under your cloud's section.
+- **What each one takes.** Tools, images, and context size come from the facts the provider publishes about the model. If a model takes no tools or no images, the chat does not offer them for it, and images are never sent to another provider to be described.
+
+To turn the whole list off or hide individual models, use the **Offer the models of your Amazon Bedrock that SecureAI does not list** switch and each model's checkbox in the Amazon Bedrock drawer, then click **Save**.
+
 ## What is billed, and to whom
 
 - **LLM usage is billed by AWS to your account**, with your EDP, discounts, and credits. Rate limits are **your Bedrock quotas**.
@@ -340,9 +360,9 @@ Models served by your Bedrock show the AWS logo next to their name in the chat m
 
 - **No stored secrets.** With the role, SecureAI stores no AWS credential: it gets one-hour temporary credentials and renews them automatically. If you use an access key, the secret is stored encrypted and never returned to the browser.
 - **Scoped trust.** The trust policy admits **only** SecureAI's principal, and **only** with `sts:ExternalId` equal to your organization's External ID.
-- **Least privilege.** The inference role can only invoke models (`bedrock:InvokeModel`, `bedrock:InvokeModelWithResponseStream`), read the model catalog, and list and apply your account's Bedrock Guardrails. It cannot read your data, your IAM, or your billing.
+- **Least privilege.** The inference role can only invoke models (`bedrock:InvokeModel`, `bedrock:InvokeModelWithResponseStream`, which also cover Converse), read the model catalog, and list and apply your account's Bedrock Guardrails. It cannot read your data, your IAM, or your billing.
 - **Compatible with your SCPs.** SecureAI signs with Signature V4 and temporary credentials; it does not need Bedrock API keys.
-- **The path stays protected.** Every call goes through SecureAI's SMLTP gateway: DLP on the prompt and on the response (streaming included), a per-request authorization token, and a verifiable **signed receipt**.
+- **The path stays protected.** Every call, Converse included, goes through SecureAI's SMLTP gateway: DLP on the prompt and on the response (streaming included), a per-request authorization token, and a verifiable **signed receipt**. On Converse streaming answers, the gateway reads Bedrock's binary event stream, checks its integrity, and stops the answer if a frame arrives damaged.
 - **Fails closed.** If the configuration cannot be read or the role cannot be assumed, the request is refused; it is not sent to another provider unless you allowed fallback.
 - **Audit.** Saving, testing, or disconnecting the integration is recorded in the activity log, never with the secret.
 
@@ -381,9 +401,7 @@ Errors users may see in the chat:
 
 ## Current limitations
 
-- **Llama, Amazon Nova, DeepSeek‑R1, Mistral 7B, and Mixtral** are not served through Bedrock (on Bedrock they only answer the Converse API).
 - With **In-Region only**, Claude and GPT‑5.x are unavailable.
-- **Not every Claude model runs through Bedrock.** SecureAI calls Claude through Bedrock's Anthropic Messages API, and Bedrock serves Claude Opus 4.6, Opus 4.5 and Sonnet 4.5 only through InvokeModel. SecureAI does not route those three to Bedrock: they are not offered as default models or overrides, and **Routing preview** shows them as *Hidden from users*. With **Allow fallback** on, they run on SecureAI-managed providers. Claude Sonnet 4.6 and Haiku 4.5 do run on Bedrock. If another Claude answers that it does not support that API, **Test connection** says Bedrock serves it only through InvokeModel, and the chat shows `SAI-BEDROCK-001`.
 - **Claude on Bedrock:** every request gets its signed receipt, but the audit evidence does not yet bind the retained response to that receipt (the "response bound to receipt" flag is not available for these turns).
 - **Embeddings, re-ranking, OCR, the admin assistant, image generation, and realtime voice** stay on SecureAI-managed providers.
 
