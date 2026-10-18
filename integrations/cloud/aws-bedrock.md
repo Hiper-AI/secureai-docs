@@ -58,15 +58,28 @@ Nada se omite en silencio: lo que SecureAI no puede leer aparece con la acción 
 ## Conectar
 
 1. Vaya a **Administrador → Inventario → Conectores Cloud** y haga clic en **Conectar AWS** (o, si ya está conectado, en **Conexión de AWS**). Se abre **AWS Bedrock — Insights** en la pestaña **Conexión**.
+
+   ![Administrador → Inventario → Conectores Cloud](/img/cloud/aws-bedrock/01-menu-inventory-cloud-connectors.png)
+
+   ![Conectores Cloud con el botón Conectar AWS](/img/cloud/aws-bedrock/02-cloud-connectors-connect-aws.png)
+
 2. Deje seleccionado **Rol de SecureAI (recomendado)**. El panel muestra el **ARN del principal de SecureAI** y su **External ID (único de su tenant)**.
+
+   ![Pestaña Conexión: principal de SecureAI, External ID y el comando de CloudFormation](/img/cloud/aws-bedrock/03-step1-stack-identity.png)
+
 3. **Despliegue el stack de SecureAI en su cuenta de AWS**: con **Lanzar el stack en AWS** (cuando se ofrece), o con **Descargar la plantilla** y el comando de la AWS CLI que muestra el panel (ya incluye sus parámetros). Si su organización no permite CloudFormation, cree el rol `SecureAI-Discovery` a mano con la misma política de confianza que se muestra en la [guía de inferencia](/integrations/cloud/aws-bedrock-inference) y las acciones de la tabla de arriba sobre `"Resource": "*"`.
 4. Pegue la salida **`DiscoveryRoleArn`** del stack en **ARN del rol de descubrimiento** (por ejemplo `arn:aws:iam::123456789012:role/SecureAI-Discovery`).
 5. En **Regiones**, escriba las regiones donde viven sus recursos de Bedrock y AgentCore, separadas por coma (por ejemplo `us-east-1, eu-west-1`). IAM y Cost Explorer son globales.
+
+   ![ARN del rol de descubrimiento y regiones](/img/cloud/aws-bedrock/04-step2-role-arn-regions.png)
+
 6. Haga clic en **Probar y conectar**. SecureAI verifica la conexión con una lectura real antes de guardar, y lista lo que no pudo leer.
 7. Haga la primera sincronización: en **Administrador → Integraciones**, en la tarjeta **AWS Bedrock** (categoría **Nube**), haga clic en **Sincronizar ahora** (el ícono de actualizar). Después, SecureAI sincroniza solo cada 6 horas.
 
+   ![Sincronizar ahora en la tarjeta AWS Bedrock de Integraciones](/img/cloud/aws-bedrock/07-first-sync-integrations-card.png)
+
 <Warning>
-**Un solo stack por cuenta, para las dos conexiones.** Los roles de inferencia y de descubrimiento salen de la misma plantilla y del mismo nombre de stack (`SecureAI-Integration`). Si ya lo desplegó para [inferencia](/integrations/cloud/aws-bedrock-inference), **no** corra el comando de arriba tal cual: con `EnableInference=false`, CloudFormation borraría el rol `SecureAI-BedrockInference` y cortaría su tráfico de inferencia. Actualice el stack existente con `EnableInference=true EnableDiscovery=true`. Si el stack ya creó el rol de descubrimiento, saltee el paso 3.
+**Un solo stack por cuenta, para las dos conexiones.** Los roles de inferencia y de descubrimiento salen de la misma plantilla y del mismo nombre de stack (`SecureAI-Integration`). Si su conexión de [inferencia de Amazon Bedrock](/integrations/cloud/aws-bedrock-inference) ya usa el rol `SecureAI-BedrockInference` del stack, el panel lo indica y el comando que muestra conserva `EnableInference=true`: córralo tal cual. Si arma el comando usted, deje `EnableInference=true` en esa cuenta; si no, CloudFormation borra el rol de inferencia y corta su tráfico. Si el stack ya creó el rol de descubrimiento, saltee el paso 3.
 </Warning>
 
 ### Alternativa: access key de un usuario IAM
@@ -83,6 +96,8 @@ Para leer todas las cuentas de su organización con una sola conexión:
 2. Despliegue la misma plantilla en las **cuentas miembro** con un **StackSet de CloudFormation**, con el **mismo External ID**. En las cuentas miembro solo hace falta el rol de descubrimiento: use `EnableInference=false`. El rol debe tener el mismo nombre en todas las cuentas miembro.
 3. Active **Modo AWS Organizations: leer todas las cuentas**.
 
+   ![Modo AWS Organizations y sus campos opcionales](/img/cloud/aws-bedrock/05-organizations-mode-fields.png)
+
 SecureAI lista las cuentas **ACTIVAS** de la organización y asume el rol directamente en cada cuenta miembro.
 
 | Campo opcional | Qué hace |
@@ -94,6 +109,8 @@ SecureAI lee hasta 50 cuentas por sincronización, primero la de administración
 
 Una cuenta que SecureAI no puede leer queda como **brecha**, y no se retira ni se poda nada de ella. Si el rol que pegó está en una cuenta miembro, la conexión lo indica y nombra la cuenta de administración donde debe desplegarlo.
 
+![Rol de una cuenta miembro con el modo Organizations: el error nombra la cuenta de administración](/img/cloud/aws-bedrock/06-organizations-member-account-error.png)
+
 ## Verificar
 
 - [Conectores Cloud](/discovery/cloud-sensors) lista los agentes descubiertos. Haga clic en **Conexión de AWS** para abrir **AWS Bedrock — Insights**, con estas pestañas:
@@ -103,6 +120,18 @@ Una cuenta que SecureAI no puede leer queda como **brecha**, y no se retira ni s
   - **Auditoría y logs**: eventos de CloudTrail de Bedrock y AgentCore.
   - **Conexión**: la configuración de arriba.
 - El [Inventario de NHI](/discovery/nhi-inventory) muestra los usuarios, access keys y roles.
+
+![Pestaña Uso y costos](/img/cloud/aws-bedrock/09-usage-costs.png)
+
+![Pestaña Modelos y despliegues](/img/cloud/aws-bedrock/10-models-deployments.png)
+
+![Acceso efectivo: simulador de políticas IAM](/img/cloud/aws-bedrock/12-effective-access.png)
+
+![Roles IAM y access keys](/img/cloud/aws-bedrock/13-iam-roles-access-keys.png)
+
+![Pestaña Auditoría y logs con eventos de CloudTrail de Bedrock](/img/cloud/aws-bedrock/14-audit-cloudtrail.png)
+
+![Identidades de AWS en el Inventario de NHI](/img/cloud/aws-bedrock/15-nhi-inventory.png)
 
 Si una sincronización falla (por ejemplo, porque se borró el stack), la tarjeta muestra el error y SecureAI reintenta con espera progresiva, conservando el último inventario. Una lectura parcial nunca retira agentes ni elimina identidades.
 
@@ -116,6 +145,8 @@ En **Identidad y acceso → Bedrock usado por fuera de SecureAI** se ve, por ide
 - los modelos que invocó y cuántas veces cada uno;
 - la cuenta y las regiones;
 - el total de llamadas y la última vez que se vio.
+
+![Bedrock usado por fuera de SecureAI y Quién puede invocar Bedrock](/img/cloud/aws-bedrock/11-bedrock-outside-secureai.png)
 
 También aparece como hallazgo en **Insights** (*Amazon Bedrock se está usando por fuera de SecureAI*), con severidad **crítica** cuando quien llama es una access key de usuario IAM o la cuenta root, y **moderada** cuando es un rol.
 
@@ -138,6 +169,8 @@ Si el panel dice **El descubrimiento no pudo leer todo**, cada línea indica la 
 | **Limitado por AWS** / **Parcial** | AWS limitó las solicitudes o la lectura quedó incompleta | Vuelva a sincronizar más tarde. |
 
 Cuando un listado está denegado pero las lecturas directas funcionan (por ejemplo, `bedrock:ListAgents` bloqueado y `GetAgent` permitido), SecureAI lo indica y lee los recursos que nombra CloudTrail.
+
+![El descubrimiento no pudo leer todo: acciones bloqueadas por una SCP](/img/cloud/aws-bedrock/08-coverage-gaps.png)
 
 ## Costo
 

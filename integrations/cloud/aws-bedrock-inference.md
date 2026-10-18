@@ -66,6 +66,9 @@ Con más de un proveedor habilitado, cada uno atiende familias de modelos **dist
 ## Paso 1. Copie la identidad de SecureAI
 
 1. Vaya a **Administrador → Integraciones → Proveedores de IA** y abra **Amazon Bedrock — Inferencia en tu cuenta**.
+
+   ![Tarjeta de Amazon Bedrock en Administrador → Integraciones → Proveedores de IA](/img/cloud/aws-bedrock-inference/01-integrations-ai-providers.png)
+
 2. En **Conexión**, deje seleccionado **Rol IAM entre cuentas** (recomendado). El panel muestra:
 
    | Dato | Para qué sirve |
@@ -73,11 +76,13 @@ Con más de un proveedor habilitado, cada uno atiende familias de modelos **dist
    | **Principal de SecureAI (en el que confía el rol)** | El ARN en el que confiará su rol. Es el único que podrá asumirlo. |
    | **Tu External ID** | Único de su organización. El rol rechaza a cualquier llamador que no lo presente, así ningún otro cliente de SecureAI puede usar su rol (protección contra el problema del *confused deputy*). |
 
-3. Si también va a usar [AWS — Descubrimiento](/integrations/cloud/aws-bedrock), marque **Crear también el rol de descubrimiento de solo lectura (SecureAI-Discovery) para el inventario de AWS**: el mismo stack crea los dos roles, y el comando de la CLI pasa a `EnableDiscovery=true`. Viene desmarcado.
+3. Si también va a usar [AWS — Descubrimiento](/integrations/cloud/aws-bedrock), marque **Crear también el rol de descubrimiento de solo lectura (SecureAI-Discovery) para el inventario de AWS**: el mismo stack crea los dos roles, y el comando de la CLI pasa a `EnableDiscovery=true`. Viene desmarcado; si [AWS — Descubrimiento](/integrations/cloud/aws-bedrock) ya usa el rol de descubrimiento del stack, queda marcado y bloqueado para que el stack conserve ese rol.
 
 <Warning>
 Las dos conexiones comparten un mismo nombre de stack (`SecureAI-Integration`). Despliéguelo una vez con los roles que necesite. Si lo vuelve a correr con `EnableInference=false` o `EnableDiscovery=false`, CloudFormation **borra** ese rol.
 </Warning>
+
+![Sección Conexión: principal de SecureAI, External ID y el comando de CloudFormation](/img/cloud/aws-bedrock-inference/02-step1-connection-identity.png)
 
 ## Paso 2. Cree el rol en su cuenta de AWS
 
@@ -205,7 +210,11 @@ Una access key de larga duración es **menos segura que el rol**: no vence, y qu
    | **Región de AWS** | Dónde recibe Bedrock sus llamadas y de dónde se lee la lista de modelos (por ejemplo `us-east-1`, `eu-central-1`). Elija **Otro** para escribir cualquier Región que Bedrock soporte. |
    | **Alcance de inferencia** | **Geografía** (por defecto), **Solo dentro de la Región** o **Global**. Vea [Residencia de datos](#residencia-de-datos-alcance-de-inferencia). |
 
+   ![ARN del rol, Región de AWS y alcance de inferencia](/img/cloud/aws-bedrock-inference/03-step3-role-arn-region-scope.png)
+
 2. Haga clic en **Guardar**. SecureAI asume el rol, muestra el **ID de su cuenta de AWS** y la Región, y lee el catálogo de la Región en **Modelos disponibles para tu cuenta**: los modelos fundacionales de esa Región y los perfiles de inferencia entre Regiones. Todavía **no** se enruta tráfico: la integración se guarda apagada para que pueda probarla antes, y la tarjeta muestra **Configurado · sin enrutar a Bedrock**.
+
+   ![Modelos disponibles para tu cuenta después de guardar](/img/cloud/aws-bedrock-inference/04-step3-models-available.png)
 
 Si la lista de modelos muestra un error, el rol no puede leer el catálogo (`bedrock:ListFoundationModels` / `bedrock:ListInferenceProfiles`) en esa Región. La inferencia funciona igual con los ids de modelo integrados de SecureAI (la prueba de conexión los verifica), pero el mapeo automático queda limitado. Si cambia de Región, guarde otra vez para volver a leer los modelos.
 
@@ -220,6 +229,10 @@ El **alcance de inferencia** decide dónde puede AWS procesar los prompts:
 | **Global** | Perfiles `global.` | En cualquier Región comercial de AWS. Máxima capacidad, pero **no fija residencia**: la política de residencia de SecureAI lo trata como sin residencia fijada. |
 
 SecureAI aplica la política de residencia de datos de su organización sobre la geografía resultante. Si necesita residencia, use **Geografía** o **Solo dentro de la Región**.
+
+Para rechazar toda llamada cuya región elige la nube (Vertex `global`, implementaciones Global, perfiles `global.`), active **Require a pinned region in your own cloud**, debajo de las tarjetas de proveedores en **Administrador → Integraciones → Proveedores de IA**.
+
+![Interruptor de residencia de datos de sus proveedores de nube](/img/cloud/aws-bedrock-inference/10-data-residency-panel.png)
 
 ## Su propio Bedrock Guardrail (opcional)
 
@@ -285,6 +298,8 @@ En **Qué corre en Amazon Bedrock** hay dos modos:
 
 En **Overrides modelo → id de Bedrock** puede enviar un modelo del catálogo a un destino exacto de Bedrock: un **id de modelo**, un **id de perfil de inferencia** o el **ARN de un perfil de inferencia de aplicación**. Los reemplazos tienen prioridad sobre el mapeo automático y se usan tal cual, aunque queden fuera del alcance elegido; la política de residencia se aplica igual sobre la geografía resultante. El ARN de un perfil de inferencia de aplicación no tiene una geografía que SecureAI pueda conocer, así que la política de residencia lo trata, igual que un perfil `global.`, como sin residencia fijada.
 
+![Qué corre en Amazon Bedrock: familias, modelos por defecto y mapeo automático](/img/cloud/aws-bedrock-inference/05-step4-what-runs-defaults.png)
+
 Además hay dos opciones:
 
 | Opción | Apagada (por defecto, recomendado) | Encendida |
@@ -292,14 +307,28 @@ Además hay dos opciones:
 | **Permitir fallback a modelos administrados por SecureAI** | Si Bedrock falla o un modelo no tiene id de Bedrock, la solicitud se **rechaza** (falla cerrado) en lugar de enviarse a otro proveedor. | Esas solicitudes se reintentan **una vez** en proveedores administrados por SecureAI. El reintento queda auditado. |
 | **Aplicar el tope de gasto de cada asiento a los turnos servidos en tu cuenta** | Los turnos que atiende su Bedrock no cuentan para el tope de gasto mensual de los asientos. | Cuentan para el tope de gasto mensual de cada asiento, a precio de lista. |
 
+![Opciones de fallback y tope de gasto](/img/cloud/aws-bedrock-inference/06-step4-fallback-spend-cap.png)
+
 ## Paso 5. Pruebe, revise y active
 
 1. **Probar conexión** envía una solicitud mínima a cada modelo por defecto, **por el mismo camino que usará el tráfico real** (gateway, políticas y recibos incluidos), y muestra el resultado de cada uno con su latencia. Elija los modelos por defecto antes de probar: sin ellos, prueba los ids integrados de SecureAI para `gpt-oss-120b`, DeepSeek V3.2 y Claude Haiku 4.5, que también tienen que estar permitidos por su política de modelos SMLTP. La prueba **se factura a su cuenta de AWS** (centavos).
+
+   ![Prueba de conexión aprobada y vista previa del enrutamiento](/img/cloud/aws-bedrock-inference/07-step5-test-and-preview.png)
+
 2. **Vista previa del enrutamiento** muestra, para cada modelo del catálogo, si lo servirá **Tu Amazon Bedrock** (y con qué id), otra nube conectada o **SecureAI**, y cuáles quedarán ocultos para los usuarios.
 3. Cuando la prueba pase, encienda **Enrutar tráfico a Amazon Bedrock** y haga clic en **Guardar**. **Si no guarda, el interruptor no queda activo.** Si su plan no admite otro proveedor de nube o el enrutamiento se superpone con otro, SecureAI lo rechaza y explica por qué.
+
+   ![Enrutar tráfico a Amazon Bedrock encendido](/img/cloud/aws-bedrock-inference/08-step5-route-traffic-on.png)
+
 4. La tarjeta pasa a verde: **Enrutando a Amazon Bedrock**. Si está guardada pero apagada, muestra **Configurado · sin enrutar a Bedrock**.
 
+   ![La tarjeta muestra Enrutando a Amazon Bedrock](/img/cloud/aws-bedrock-inference/09-card-routing.png)
+
 Los modelos servidos por su Bedrock muestran el logo de AWS junto a su nombre en el selector de modelos del chat; al pasar el mouse dice que los sirve el Amazon Bedrock de su organización.
+
+![Selector de modelos: el logo de AWS marca los modelos que sirve su Bedrock](/img/cloud/aws-bedrock-inference/11-chat-model-badge.png)
+
+![Un turno de chat atendido por Claude Sonnet 4.6 en su Bedrock](/img/cloud/aws-bedrock-inference/12-chat-turn.png)
 
 ## Qué se factura y a quién
 
@@ -354,7 +383,7 @@ Errores que pueden ver los usuarios en el chat:
 
 - **Llama, Amazon Nova, DeepSeek‑R1, Mistral 7B y Mixtral** no se sirven por Bedrock (en Bedrock solo responden a la API Converse).
 - Con **Solo dentro de la Región**, Claude y GPT‑5.x no están disponibles.
-- **No todos los modelos Claude responden por Bedrock.** SecureAI llama a Claude por la API Messages de Anthropic en Bedrock, y Bedrock no sirve ahí todos los modelos Claude: en nuestras pruebas de octubre de 2026 respondieron Claude Sonnet 4.6 y Haiku 4.5, y Opus 4.6, Opus 4.5 y Sonnet 4.5 devolvieron *Modelo no disponible* aun con el acceso otorgado. Elija como modelos por defecto modelos Claude que pasen **Probar conexión**.
+- **No todos los modelos Claude corren por Bedrock.** SecureAI llama a Claude por la API Messages de Anthropic en Bedrock, y Bedrock sirve Claude Opus 4.6, Opus 4.5 y Sonnet 4.5 sólo por InvokeModel. SecureAI no enruta esos tres a Bedrock: no se ofrecen como modelos por defecto ni como overrides, y la **Vista previa del enrutamiento** los muestra como *Oculto para los usuarios*. Con **Permitir fallback** encendido, corren en proveedores administrados por SecureAI. Claude Sonnet 4.6 y Haiku 4.5 sí corren en Bedrock. Si otro Claude responde que no admite la API, **Probar conexión** lo indica y el chat muestra `SAI-BEDROCK-001`.
 - **Claude en Bedrock:** cada solicitud tiene su recibo firmado, pero la evidencia de auditoría todavía no vincula la respuesta conservada con ese recibo (la marca "respuesta vinculada al recibo" no está disponible para estos turnos).
 - **Embeddings, re-ranking, OCR, asistente de administración, generación de imágenes y voz en tiempo real** siguen en proveedores administrados por SecureAI.
 
