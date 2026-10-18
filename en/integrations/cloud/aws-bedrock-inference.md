@@ -66,6 +66,9 @@ With more than one provider enabled, each one serves **different** model familie
 ## Step 1. Copy SecureAI's identity
 
 1. Go to **Admin → Integrations → AI providers** and open **Amazon Bedrock — Inference on your account**.
+
+   ![Amazon Bedrock card under Admin → Integrations → AI providers](/img/cloud/aws-bedrock-inference/01-integrations-ai-providers.png)
+
 2. Under **Connection**, leave **Cross-account IAM role** (recommended) selected. The drawer shows:
 
    | Item | What it is for |
@@ -78,6 +81,8 @@ With more than one provider enabled, each one serves **different** model familie
 <Warning>
 Both connections share one stack name (`SecureAI-Integration`). Deploy it once with the roles you need. Running it again with `EnableInference=false` or `EnableDiscovery=false` makes CloudFormation **delete** that role.
 </Warning>
+
+![Connection section: SecureAI principal, External ID and the CloudFormation command](/img/cloud/aws-bedrock-inference/02-step1-connection-identity.png)
 
 ## Step 2. Create the role in your AWS account
 
@@ -205,7 +210,11 @@ A long-lived access key is **less safe than the role**: it never expires, and an
    | **AWS Region** | Where Bedrock receives your calls and where the model list is read (for example `us-east-1`, `eu-central-1`). Pick **Other** to type any Region Bedrock supports. |
    | **Inference scope** | **Geography** (default), **In-Region only**, or **Global**. See [Data residency](#data-residency-inference-scope). |
 
+   ![Role ARN, AWS Region and inference scope](/img/cloud/aws-bedrock-inference/03-step3-role-arn-region-scope.png)
+
 2. Click **Save**. SecureAI assumes the role, shows your **AWS account ID** and Region, and reads the Region's catalog under **Models available to your account**: the Region's foundation models and the cross-Region inference profiles. Nothing is routed yet: the integration is saved turned off so you can test it first, and the card shows **Configured · not routing to Bedrock**.
+
+   ![Models available to your account after saving](/img/cloud/aws-bedrock-inference/04-step3-models-available.png)
 
 If the model list shows an error, the role cannot read the catalog (`bedrock:ListFoundationModels` / `bedrock:ListInferenceProfiles`) in that Region. Inference still works with SecureAI's built-in model ids (the connection test proves them), but automatic mapping is limited. If you change the Region, save again to re-read the models.
 
@@ -220,6 +229,10 @@ The **inference scope** decides where AWS may process prompts:
 | **Global** | `global.` profiles | In any commercial AWS Region. Highest capacity, but it **pins no residency**: SecureAI's residency policy treats it as unpinned. |
 
 SecureAI enforces your organization's data-residency policy on the resulting geography. If you need residency, use **Geography** or **In-Region only**.
+
+To refuse every call whose region the cloud chooses (Vertex `global`, Global deployments, `global.` inference profiles), turn on **Require a pinned region in your own cloud**, under the provider cards in **Admin → Integrations → AI providers**.
+
+![Data residency switch for your cloud providers](/img/cloud/aws-bedrock-inference/10-data-residency-panel.png)
 
 ## Your own Bedrock Guardrail (optional)
 
@@ -285,6 +298,8 @@ Under **What runs on Amazon Bedrock** there are two modes:
 
 Under **Model → Bedrock id overrides** you can send a catalog model to an exact Bedrock target: a **model id**, an **inference profile id**, or the **ARN of an application inference profile**. Overrides win over the automatic mapping and are used as-is, even outside the chosen scope; the residency policy is still enforced on the resulting geography. An application inference profile ARN has no geography SecureAI can know, so the residency policy treats it, like a `global.` profile, as unpinned.
 
+![What runs on Amazon Bedrock: families, default models and automatic mapping](/img/cloud/aws-bedrock-inference/05-step4-what-runs-defaults.png)
+
 There are also two options:
 
 | Option | Off (default, recommended) | On |
@@ -292,14 +307,28 @@ There are also two options:
 | **Allow fallback to SecureAI-managed models** | If Bedrock fails or a model has no Bedrock id, the request is **refused** (fails closed) instead of being sent to another provider. | Those requests are retried **once** on SecureAI-managed providers. The retry is audited. |
 | **Apply each seat's spend cap to turns served in your account** | Turns served by your Bedrock do not count against seats' monthly spend cap. | They count against each seat's monthly spend cap, at list price. |
 
+![Fallback and spend-cap options](/img/cloud/aws-bedrock-inference/06-step4-fallback-spend-cap.png)
+
 ## Step 5. Test, review, and turn it on
 
 1. **Test connection** sends a minimal request to each default model, **through the same path real traffic uses** (gateway, policies, and receipts included), and shows each result with its latency. Choose the default models before testing: without them, it probes SecureAI's built-in ids for `gpt-oss-120b`, DeepSeek V3.2, and Claude Haiku 4.5, which must also be allowed by your SMLTP model policy. The test **is billed to your AWS account** (cents).
+
+   ![Connection test passed and routing preview](/img/cloud/aws-bedrock-inference/07-step5-test-and-preview.png)
+
 2. **Routing preview** shows, for every catalog model, whether **Your Amazon Bedrock** (and with which id), another connected cloud, or **SecureAI** will serve it, and which models will be hidden from users.
 3. When the test passes, turn on **Route traffic to Amazon Bedrock** and click **Save**. **If you do not save, the switch does not stay on.** If your plan allows no further cloud provider or the routing overlaps another one, SecureAI refuses it and says why.
+
+   ![Route traffic to Amazon Bedrock turned on](/img/cloud/aws-bedrock-inference/08-step5-route-traffic-on.png)
+
 4. The card turns green: **Routing to Amazon Bedrock**. If it is saved but off, it shows **Configured · not routing to Bedrock**.
 
+   ![The card shows Routing to Amazon Bedrock](/img/cloud/aws-bedrock-inference/09-card-routing.png)
+
 Models served by your Bedrock show the AWS logo next to their name in the chat model selector; hovering it says *Served by your organization's Amazon Bedrock*.
+
+![Model selector: the AWS logo marks models served by your Bedrock](/img/cloud/aws-bedrock-inference/11-chat-model-badge.png)
+
+![A chat turn served by Claude Sonnet 4.6 on your Bedrock](/img/cloud/aws-bedrock-inference/12-chat-turn.png)
 
 ## What is billed, and to whom
 
