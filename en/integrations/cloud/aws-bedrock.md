@@ -1,6 +1,8 @@
 ---
 sidebar_position: 9
 title: "AWS — Discovery"
+sidebarTitle: "AWS"
+icon: "/img/icons/aws.svg"
 sidebar_label: "AWS — Discovery"
 description: "Connect AWS so SecureAI can inventory Bedrock Agents, AgentCore, SageMaker, knowledge bases, guardrails, models, IAM identities, CloudTrail activity, and Bedrock usage and cost, and detect Bedrock use outside SecureAI, in one account or across your AWS Organization"
 ---

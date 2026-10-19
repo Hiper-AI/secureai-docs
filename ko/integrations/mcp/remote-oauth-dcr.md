@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: "OAuth 및 DCR을 갖춘 원격 MCP"
+sidebarTitle: "OAuth + DCR"
 sidebar_label: "원격 OAuth 및 DCR"
 description: "SecureAI가 OAuth 2.1, PKCE 및 동적 클라이언트 등록을 사용하여 원격 MCP 서버에 연결하는 방법"
 ---

@@ -96,16 +96,21 @@
                 ]
               },
               {
-                "group": "Plataformas de IA en la nube",
+                "group": "Cloud, NHI y gestión",
                 "pages": [
                   "integrations/cloud/overview",
                   "integrations/cloud/openai-platform",
                   "integrations/cloud/anthropic-console",
                   "integrations/cloud/azure-ai-foundry",
                   "integrations/cloud/gcp-vertex-ai",
-                  "integrations/cloud/aws-bedrock",
-                  "integrations/cloud/vertex-ai-inference",
+                  "integrations/cloud/aws-bedrock"
+                ]
+              },
+              {
+                "group": "Proveedores de IA (BYO - LLM)",
+                "pages": [
                   "integrations/cloud/azure-ai-foundry-inference",
+                  "integrations/cloud/vertex-ai-inference",
                   "integrations/cloud/aws-bedrock-inference"
                 ]
               },
@@ -303,16 +308,21 @@
                 ]
               },
               {
-                "group": "Cloud AI Platforms",
+                "group": "Cloud, NHI & Management",
                 "pages": [
                   "en/integrations/cloud/overview",
                   "en/integrations/cloud/openai-platform",
                   "en/integrations/cloud/anthropic-console",
                   "en/integrations/cloud/azure-ai-foundry",
                   "en/integrations/cloud/gcp-vertex-ai",
-                  "en/integrations/cloud/aws-bedrock",
-                  "en/integrations/cloud/vertex-ai-inference",
+                  "en/integrations/cloud/aws-bedrock"
+                ]
+              },
+              {
+                "group": "AI Providers (BYO - LLM)",
+                "pages": [
                   "en/integrations/cloud/azure-ai-foundry-inference",
+                  "en/integrations/cloud/vertex-ai-inference",
                   "en/integrations/cloud/aws-bedrock-inference"
                 ]
               },
@@ -509,13 +519,18 @@
                 ]
               },
               {
-                "group": "云端 AI 平台",
+                "group": "云、NHI 与管理",
                 "pages": [
                   "zh/integrations/cloud/overview",
                   "zh/integrations/cloud/openai-platform",
                   "zh/integrations/cloud/anthropic-console",
                   "zh/integrations/cloud/azure-ai-foundry",
-                  "zh/integrations/cloud/gcp-vertex-ai",
+                  "zh/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "AI 提供商 (BYO - LLM)",
+                "pages": [
                   "zh/integrations/cloud/vertex-ai-inference"
                 ]
               },
@@ -712,13 +727,18 @@
                 ]
               },
               {
-                "group": "Plataformas de IA na nuvem",
+                "group": "Cloud, NHI e gestão",
                 "pages": [
                   "pt/integrations/cloud/overview",
                   "pt/integrations/cloud/openai-platform",
                   "pt/integrations/cloud/anthropic-console",
                   "pt/integrations/cloud/azure-ai-foundry",
-                  "pt/integrations/cloud/gcp-vertex-ai",
+                  "pt/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "Provedores de IA (BYO - LLM)",
+                "pages": [
                   "pt/integrations/cloud/vertex-ai-inference"
                 ]
               },
@@ -915,13 +935,18 @@
                 ]
               },
               {
-                "group": "クラウド AI プラットフォーム",
+                "group": "クラウド、NHI、管理",
                 "pages": [
                   "ja/integrations/cloud/overview",
                   "ja/integrations/cloud/openai-platform",
                   "ja/integrations/cloud/anthropic-console",
                   "ja/integrations/cloud/azure-ai-foundry",
-                  "ja/integrations/cloud/gcp-vertex-ai",
+                  "ja/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "AI プロバイダー (BYO - LLM)",
+                "pages": [
                   "ja/integrations/cloud/vertex-ai-inference"
                 ]
               },
@@ -1118,13 +1143,18 @@
                 ]
               },
               {
-                "group": "Plateformes d’IA cloud",
+                "group": "Cloud, NHI et gestion",
                 "pages": [
                   "fr/integrations/cloud/overview",
                   "fr/integrations/cloud/openai-platform",
                   "fr/integrations/cloud/anthropic-console",
                   "fr/integrations/cloud/azure-ai-foundry",
-                  "fr/integrations/cloud/gcp-vertex-ai",
+                  "fr/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "Fournisseurs d’IA (BYO - LLM)",
+                "pages": [
                   "fr/integrations/cloud/vertex-ai-inference"
                 ]
               },
@@ -1321,13 +1351,18 @@
                 ]
               },
               {
-                "group": "Cloud-KI-Plattformen",
+                "group": "Cloud, NHI & Verwaltung",
                 "pages": [
                   "de/integrations/cloud/overview",
                   "de/integrations/cloud/openai-platform",
                   "de/integrations/cloud/anthropic-console",
                   "de/integrations/cloud/azure-ai-foundry",
-                  "de/integrations/cloud/gcp-vertex-ai",
+                  "de/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "KI-Anbieter (BYO - LLM)",
+                "pages": [
                   "de/integrations/cloud/vertex-ai-inference"
                 ]
               },
@@ -1524,13 +1559,18 @@
                 ]
               },
               {
-                "group": "클라우드 AI 플랫폼",
+                "group": "클라우드, NHI 및 관리",
                 "pages": [
                   "ko/integrations/cloud/overview",
                   "ko/integrations/cloud/openai-platform",
                   "ko/integrations/cloud/anthropic-console",
                   "ko/integrations/cloud/azure-ai-foundry",
-                  "ko/integrations/cloud/gcp-vertex-ai",
+                  "ko/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "AI 공급자 (BYO - LLM)",
+                "pages": [
                   "ko/integrations/cloud/vertex-ai-inference"
                 ]
               },

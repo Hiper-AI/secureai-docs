@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint & OneDrive — Add from SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint & OneDrive"
 description: "SecureAI のチャットで、ユーザーが SharePoint サイトおよび OneDrive のファイルを添付できるようにします。独自の Microsoft Entra ID アプリ登録を使用したセルフサービスでの設定です。"
 ---

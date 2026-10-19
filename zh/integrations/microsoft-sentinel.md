@@ -1,6 +1,8 @@
 ---
 id: microsoft-sentinel
 title: "微软哨兵集成"
+sidebarTitle: "Microsoft Sentinel"
+icon: "/img/icons/microsoft-sentinel.svg"
 sidebar_label: "微软哨兵"
 description: "集成指南：通过 Azure 数据收集规则 (DCR) 连接 Microsoft Sentinel 与 HiperAI"
 ---

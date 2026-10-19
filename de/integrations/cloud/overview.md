@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Übersicht über Cloud-KI-Anbieter"
+sidebarTitle: "Übersicht"
 sidebar_label: "Überblick"
 description: "Verbinden Sie Ihre OpenAI-, Anthropic-, Azure-, AWS- und GCP-KI-Plattformen, damit SecureAI Agenten, Modelle, Identitäten, Nutzung und Kosten inventarisieren kann"
 ---

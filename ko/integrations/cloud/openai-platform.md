@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "오픈AI 플랫폼"
+sidebarTitle: "OpenAI"
+icon: "/img/icons/openai.svg"
 sidebar_label: "오픈AI 플랫폼"
 description: "SecureAI가 프로젝트, 모델, 키, 사용량 및 비용을 인벤토리화할 수 있도록 OpenAI 플랫폼을 연결하세요."
 ---

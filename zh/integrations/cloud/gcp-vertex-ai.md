@@ -1,6 +1,8 @@
 ---
 sidebar_position: 6
 title: "Google Cloud — 发现"
+sidebarTitle: "Google Cloud"
+icon: "/img/icons/google-cloud.svg"
 sidebar_label: "Google Cloud — 发现"
 description: "连接 Google Cloud，以便 SecureAI 可以清点 Vertex AI 的代理、模型、服务帐户、密钥、IAM、使用情况和成本 — 可以是单个项目，也可以是整个组织"
 ---

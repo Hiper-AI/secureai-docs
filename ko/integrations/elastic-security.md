@@ -1,6 +1,8 @@
 ---
 id: elastic-security
 title: "탄력적인 보안 통합"
+sidebarTitle: "Elastic"
+icon: "/img/icons/elastic.svg"
 sidebar_label: "탄력적 보안"
 description: "고급 위협 탐지 및 보안 분석을 위해 HiperAI를 Elastic Security와 통합"
 ---

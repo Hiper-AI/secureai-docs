@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "云人工智能提供商概述"
+sidebarTitle: "概览"
 sidebar_label: "概述"
 description: "连接您的 OpenAI、Anthropic、Azure、AWS 和 GCP AI 平台，以便 SecureAI 可以清点代理、模型、身份、使用情况和成本"
 ---

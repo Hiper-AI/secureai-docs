@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "Integración con Cisco Umbrella"
+sidebarTitle: "Cisco Umbrella"
+icon: "/img/icons/cisco.svg"
 sidebar_label: "Cisco Umbrella"
 description: "Configure Cisco Umbrella para detectar actividad de servicios de IA a través de la Reporting API v2"
 ---

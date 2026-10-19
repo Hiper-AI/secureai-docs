@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "思科保护伞"
+sidebarTitle: "Cisco Umbrella"
+icon: "/img/icons/cisco.svg"
 sidebar_label: "思科保护伞"
 description: "通过报告 API v2 从 Cisco Umbrella DNS 活动检测影子 AI"
 ---

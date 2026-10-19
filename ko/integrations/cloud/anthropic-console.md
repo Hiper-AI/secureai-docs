@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
 title: "Anthropic Console"
+sidebarTitle: "Anthropic"
+icon: "/img/icons/anthropic.svg"
 sidebar_label: "Anthropic Console"
 description: "SecureAI가 작업 공간, 키, 사용량, 비용 및 감사 활동을 인벤토리화할 수 있도록 Anthropic 콘솔을 연결하세요."
 ---

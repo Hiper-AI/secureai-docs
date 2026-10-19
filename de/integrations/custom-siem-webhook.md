@@ -1,6 +1,8 @@
 ---
 id: custom-siem-webhook
 title: "Benutzerdefinierte SIEM-/Webhook-Integration"
+sidebarTitle: "Benutzerdefinierter Webhook"
+icon: "/img/icons/webhook.svg"
 sidebar_label: "Benutzerdefiniertes SIEM/Webhook"
 description: "Generische SIEM-Integration (HTTP/Webhook) zum Senden von SecureAI-Sicherheitsprotokollen an jeden benutzerdefinierten HTTP-Endpunkt"
 ---

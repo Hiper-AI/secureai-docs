@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Google Drive — Add from Drive"
+sidebarTitle: "Google Drive"
+icon: "/img/icons/google-drive.svg"
 sidebar_label: "Google Drive"
 description: "允许用户在 SecureAI 聊天中附加 Google 云端硬盘和共享云端硬盘中的文件。使用您自己的 Google Cloud OAuth 客户端进行自助配置。"
 ---

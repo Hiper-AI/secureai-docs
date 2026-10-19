@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
 title: "Azure — 검색"
+sidebarTitle: "Azure"
+icon: "/img/icons/azure.svg"
 sidebar_label: "Azure — 검색"
 description: "Azure와 Microsoft Entra ID를 연결하면 SecureAI가 Azure OpenAI 및 Foundry 리소스, Foundry 프로젝트와 에이전트, AI Search, Bot Service, 그리고 모든 비인간 ID(서비스 주체, 에이전트 ID, 관리 ID, 비밀, 인증서, 페더레이션 자격 증명)를 각각의 권한, RBAC, 활동, 사용량, 비용과 함께 인벤토리로 만듭니다."
 ---

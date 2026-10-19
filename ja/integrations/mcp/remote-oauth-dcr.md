@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: "OAuth および DCR を使用したリモート MCP"
+sidebarTitle: "OAuth + DCR"
 sidebar_label: "リモートOAuthとDCR"
 description: "SecureAI が OAuth 2.1、PKCE、および動的クライアント登録を使用してリモート MCP サーバーに接続する方法"
 ---

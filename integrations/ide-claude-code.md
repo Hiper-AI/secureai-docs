@@ -1,6 +1,8 @@
 ---
 id: ide-claude-code
 title: "Integración con Claude Code"
+sidebarTitle: "Claude Code"
+icon: "/img/icons/claude.png"
 sidebar_label: "Claude Code"
 description: "Utilice Claude Code con SecureAI: aplicación completa de SMLTP, DLP y PII para el desarrollo asistido por IA"
 ---

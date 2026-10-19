@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "Cisco Umbrella"
+sidebarTitle: "Cisco Umbrella"
+icon: "/img/icons/cisco.svg"
 sidebar_label: "Cisco Umbrella"
 description: "Detect shadow AI from Cisco Umbrella DNS activity via the Reporting API v2"
 ---

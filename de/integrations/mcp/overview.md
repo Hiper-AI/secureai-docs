@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Übersicht über MCP-Steckverbinder"
+sidebarTitle: "MCP"
+icon: "/img/icons/mcp.svg"
 sidebar_label: "Überblick"
 description: "Verbinden Sie Model Context Protocol (MCP)-Server, um den Assistenten von SecureAI kontrollierten Zugriff auf Tools zu ermöglichen"
 ---

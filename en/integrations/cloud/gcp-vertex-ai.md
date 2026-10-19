@@ -1,6 +1,8 @@
 ---
 sidebar_position: 6
 title: "Google Cloud — Discovery"
+sidebarTitle: "Google Cloud"
+icon: "/img/icons/google-cloud.svg"
 sidebar_label: "Google Cloud — Discovery"
 description: "Connect Google Cloud so SecureAI can inventory Vertex AI agents, models, service accounts, keys, IAM, usage, and cost — in one project or across an organization"
 ---

@@ -1,6 +1,8 @@
 ---
 id: microsoft-sentinel
 title: "Integração com Microsoft Sentinel"
+sidebarTitle: "Microsoft Sentinel"
+icon: "/img/icons/microsoft-sentinel.svg"
 sidebar_label: "Microsoft Sentinel"
 description: "Guia de integração: conectando o Microsoft Sentinel ao HiperAI por meio das regras de coleta de dados do Azure (DCR)"
 ---

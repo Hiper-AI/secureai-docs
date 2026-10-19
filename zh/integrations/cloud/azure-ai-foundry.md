@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
 title: "Azure — 发现"
+sidebarTitle: "Azure"
+icon: "/img/icons/azure.svg"
 sidebar_label: "Azure — 发现"
 description: "连接 Azure 和 Microsoft Entra ID，让 SecureAI 盘点您的 Azure OpenAI 和 Foundry 资源、Foundry 项目与智能体、AI Search、Bot Service，以及每一个非人类身份（服务主体、智能体标识、托管标识、密码、证书和联合凭据）及其权限，同时盘点 RBAC、活动、使用情况和费用。"
 ---

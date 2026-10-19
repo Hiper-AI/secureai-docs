@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "OpenAI プラットフォーム"
+sidebarTitle: "OpenAI"
+icon: "/img/icons/openai.svg"
 sidebar_label: "OpenAI プラットフォーム"
 description: "OpenAI プラットフォームに接続すると、SecureAI がプロジェクト、モデル、キー、使用状況、コストをインベントリできるようになります"
 ---

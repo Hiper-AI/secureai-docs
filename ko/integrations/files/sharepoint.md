@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint & OneDrive — Add from SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint & OneDrive"
 description: "사용자가 SecureAI 채팅에서 SharePoint 사이트와 OneDrive의 파일을 첨부할 수 있도록 설정합니다. 귀사의 Microsoft Entra ID 앱 등록을 사용하는 셀프서비스 방식입니다."
 ---

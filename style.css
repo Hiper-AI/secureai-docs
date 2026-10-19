@@ -1,0 +1,5 @@
+
+/* Logos monocromáticos del sidebar: negros en light, blancos en dark */
+.dark img[src$="/img/icons/openai.svg"],
+.dark img[src$="/img/icons/anthropic.svg"],
+.dark img[src$="/img/icons/splunk.svg"] { filter: invert(1); }

@@ -1,6 +1,8 @@
 ---
 sidebar_position: 6
 title: "Google Cloud — 디스커버리"
+sidebarTitle: "Google Cloud"
+icon: "/img/icons/google-cloud.svg"
 sidebar_label: "Google Cloud — 디스커버리"
 description: "SecureAI가 Vertex AI 에이전트, 모델, 서비스 계정, 키, IAM, 사용량, 비용을 인벤토리화할 수 있도록 Google Cloud를 연결하세요 — 단일 프로젝트 또는 조직 전체에서."
 ---

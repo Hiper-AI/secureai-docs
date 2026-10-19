@@ -1,6 +1,8 @@
 ---
 sidebar_position: 8
 title: "Azure AI Foundry — Inferencia en tu cuenta"
+sidebarTitle: "Azure AI Foundry"
+icon: "/img/icons/azure.svg"
 sidebar_label: "Azure AI Foundry — Inferencia"
 description: "Ejecute el tráfico de LLM de SecureAI en su propio recurso de Azure AI Foundry: aproveche su compromiso de Azure y sus créditos mientras SecureAI sigue aplicando DLP, políticas y recibos firmados."
 ---

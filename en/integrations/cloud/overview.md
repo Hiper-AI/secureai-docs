@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Cloud AI Providers Overview"
+sidebarTitle: "Overview"
 sidebar_label: "Overview"
 description: "Connect your OpenAI, Anthropic, Azure, AWS, and GCP AI platforms so SecureAI can inventory agents, models, identities, usage, and cost"
 ---

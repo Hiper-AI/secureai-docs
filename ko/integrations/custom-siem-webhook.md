@@ -1,6 +1,8 @@
 ---
 id: custom-siem-webhook
 title: "맞춤형 SIEM/웹훅 통합"
+sidebarTitle: "커스텀 웹훅"
+icon: "/img/icons/webhook.svg"
 sidebar_label: "맞춤형 SIEM/웹훅"
 description: "SecureAI 보안 로그를 사용자 정의 HTTP 엔드포인트로 전송하기 위한 일반 SIEM(HTTP/Webhook) 통합"
 ---

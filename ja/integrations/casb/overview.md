@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "CASB とネットワーク (SWG) の概要"
+sidebarTitle: "CASB / SWG"
 sidebar_label: "概要"
 description: "CASB / SWG / DNS ログからシャドウ AI を検出します。エージェントは必要なく、企業ソースが LLM API を呼び出しています。"
 ---

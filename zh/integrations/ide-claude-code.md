@@ -1,6 +1,8 @@
 ---
 id: ide-claude-code
 title: "克劳德·科德"
+sidebarTitle: "Claude Code"
+icon: "/img/icons/claude.png"
 sidebar_label: "克劳德·科德"
 description: "将 Claude Code 与 SecureAI 结合使用 — 全面实施 SMLTP、DLP 和 PII，以实现 AI 辅助开发"
 ---

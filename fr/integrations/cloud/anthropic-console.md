@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
 title: "Anthropic Console"
+sidebarTitle: "Anthropic"
+icon: "/img/icons/anthropic.svg"
 sidebar_label: "Anthropic Console"
 description: "Connectez la console Anthropic pour que SecureAI puisse inventorier les espaces de travail, les clés, l'utilisation, les coûts et les activités d'audit."
 ---

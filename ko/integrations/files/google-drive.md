@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Google Drive — Add from Drive"
+sidebarTitle: "Google Drive"
+icon: "/img/icons/google-drive.svg"
 sidebar_label: "Google Drive"
 description: "사용자가 SecureAI 채팅에서 Google 드라이브와 공유 드라이브의 파일을 첨부할 수 있도록 설정합니다. 귀사의 Google Cloud OAuth 클라이언트를 사용하는 셀프서비스 방식입니다."
 ---

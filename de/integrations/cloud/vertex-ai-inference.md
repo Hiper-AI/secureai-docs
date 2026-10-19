@@ -1,6 +1,8 @@
 ---
 sidebar_position: 7
 title: "Google Vertex AI — Inferenz in Ihrem Konto"
+sidebarTitle: "Google Vertex AI"
+icon: "/img/icons/google-cloud.svg"
 sidebar_label: "Vertex AI — Inferenz"
 description: "Lassen Sie den LLM-Verkehr von SecureAI über Ihr eigenes Google Cloud-Konto laufen: Bezahlen Sie Google mit Ihren zugesicherten Ausgaben (CUDs), während SecureAI weiterhin DLP, Richtlinien und signierte Belege durchsetzt."
 ---

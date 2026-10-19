@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint y OneDrive — Añadir desde SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint y OneDrive"
 description: "Permita que sus usuarios adjunten archivos de sitios de SharePoint y de OneDrive en el chat de SecureAI. Configuración self-serve con su propio registro de aplicación de Microsoft Entra ID."
 ---
