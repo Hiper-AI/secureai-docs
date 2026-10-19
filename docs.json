@@ -73,11 +73,31 @@
                   "agent/quarantine-and-fleet-ops",
                   "agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "Integraciones",
+            "groups": [
+              {
+                "group": "Archivos y colaboración",
+                "pages": [
+                  "integrations/files/google-drive",
+                  "integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "Integraciones: Cloud AI e IDEs",
+                "group": "SIEM",
                 "pages": [
-                  "integrations/ide-claude-code",
+                  "integrations/splunk-security",
+                  "integrations/microsoft-sentinel",
+                  "integrations/elastic-security",
+                  "integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Plataformas de IA en la nube",
+                "pages": [
                   "integrations/cloud/overview",
                   "integrations/cloud/openai-platform",
                   "integrations/cloud/anthropic-console",
@@ -90,21 +110,21 @@
                 ]
               },
               {
-                "group": "Integraciones: Archivos (Drive y SharePoint)",
+                "group": "IDEs y asistentes de código",
                 "pages": [
-                  "integrations/files/google-drive",
-                  "integrations/files/sharepoint"
+                  "integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "Integraciones: SIEMs, Red y MCP",
+                "group": "Red y CASB",
                 "pages": [
-                  "integrations/splunk-security",
-                  "integrations/microsoft-sentinel",
-                  "integrations/elastic-security",
-                  "integrations/custom-siem-webhook",
                   "integrations/casb/overview",
-                  "integrations/casb/cisco-umbrella",
+                  "integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "integrations/mcp/overview",
                   "integrations/mcp/remote-oauth-dcr"
                 ]
@@ -260,11 +280,31 @@
                   "en/agent/quarantine-and-fleet-ops",
                   "en/agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "Integrations",
+            "groups": [
+              {
+                "group": "Files & Collaboration",
+                "pages": [
+                  "en/integrations/files/google-drive",
+                  "en/integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "Integrations: Cloud AI & IDEs",
+                "group": "SIEM",
                 "pages": [
-                  "en/integrations/ide-claude-code",
+                  "en/integrations/splunk-security",
+                  "en/integrations/microsoft-sentinel",
+                  "en/integrations/elastic-security",
+                  "en/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Cloud AI Platforms",
+                "pages": [
                   "en/integrations/cloud/overview",
                   "en/integrations/cloud/openai-platform",
                   "en/integrations/cloud/anthropic-console",
@@ -277,21 +317,21 @@
                 ]
               },
               {
-                "group": "Integrations: Files (Drive & SharePoint)",
+                "group": "IDEs & Coding Assistants",
                 "pages": [
-                  "en/integrations/files/google-drive",
-                  "en/integrations/files/sharepoint"
+                  "en/integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "Integrations: SIEMs, Network & MCP",
+                "group": "Network & CASB",
                 "pages": [
-                  "en/integrations/splunk-security",
-                  "en/integrations/microsoft-sentinel",
-                  "en/integrations/elastic-security",
-                  "en/integrations/custom-siem-webhook",
                   "en/integrations/casb/overview",
-                  "en/integrations/casb/cisco-umbrella",
+                  "en/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "en/integrations/mcp/overview",
                   "en/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -446,11 +486,31 @@
                   "zh/agent/quarantine-and-fleet-ops",
                   "zh/agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "集成",
+            "groups": [
+              {
+                "group": "文件与协作",
+                "pages": [
+                  "zh/integrations/files/google-drive",
+                  "zh/integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "集成：云端 AI 与 IDE",
+                "group": "SIEM",
                 "pages": [
-                  "zh/integrations/ide-claude-code",
+                  "zh/integrations/splunk-security",
+                  "zh/integrations/microsoft-sentinel",
+                  "zh/integrations/elastic-security",
+                  "zh/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "云端 AI 平台",
+                "pages": [
                   "zh/integrations/cloud/overview",
                   "zh/integrations/cloud/openai-platform",
                   "zh/integrations/cloud/anthropic-console",
@@ -460,21 +520,21 @@
                 ]
               },
               {
-                "group": "集成：文件（Drive 和 SharePoint）",
+                "group": "IDE 与编码助手",
                 "pages": [
-                  "zh/integrations/files/google-drive",
-                  "zh/integrations/files/sharepoint"
+                  "zh/integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "集成：SIEM、网络与 MCP",
+                "group": "网络与 CASB",
                 "pages": [
-                  "zh/integrations/splunk-security",
-                  "zh/integrations/microsoft-sentinel",
-                  "zh/integrations/elastic-security",
-                  "zh/integrations/custom-siem-webhook",
                   "zh/integrations/casb/overview",
-                  "zh/integrations/casb/cisco-umbrella",
+                  "zh/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "zh/integrations/mcp/overview",
                   "zh/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -629,11 +689,31 @@
                   "pt/agent/quarantine-and-fleet-ops",
                   "pt/agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "Integrações",
+            "groups": [
+              {
+                "group": "Arquivos e colaboração",
+                "pages": [
+                  "pt/integrations/files/google-drive",
+                  "pt/integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "Integrações: Cloud AI & IDEs",
+                "group": "SIEM",
                 "pages": [
-                  "pt/integrations/ide-claude-code",
+                  "pt/integrations/splunk-security",
+                  "pt/integrations/microsoft-sentinel",
+                  "pt/integrations/elastic-security",
+                  "pt/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Plataformas de IA na nuvem",
+                "pages": [
                   "pt/integrations/cloud/overview",
                   "pt/integrations/cloud/openai-platform",
                   "pt/integrations/cloud/anthropic-console",
@@ -643,21 +723,21 @@
                 ]
               },
               {
-                "group": "Integrações: Arquivos (Drive e SharePoint)",
+                "group": "IDEs e assistentes de código",
                 "pages": [
-                  "pt/integrations/files/google-drive",
-                  "pt/integrations/files/sharepoint"
+                  "pt/integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "Integrações: SIEMs, Rede & MCP",
+                "group": "Rede e CASB",
                 "pages": [
-                  "pt/integrations/splunk-security",
-                  "pt/integrations/microsoft-sentinel",
-                  "pt/integrations/elastic-security",
-                  "pt/integrations/custom-siem-webhook",
                   "pt/integrations/casb/overview",
-                  "pt/integrations/casb/cisco-umbrella",
+                  "pt/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "pt/integrations/mcp/overview",
                   "pt/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -812,11 +892,31 @@
                   "ja/agent/quarantine-and-fleet-ops",
                   "ja/agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "連携",
+            "groups": [
+              {
+                "group": "ファイルとコラボレーション",
+                "pages": [
+                  "ja/integrations/files/google-drive",
+                  "ja/integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "連携: クラウド AI & IDE",
+                "group": "SIEM",
                 "pages": [
-                  "ja/integrations/ide-claude-code",
+                  "ja/integrations/splunk-security",
+                  "ja/integrations/microsoft-sentinel",
+                  "ja/integrations/elastic-security",
+                  "ja/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "クラウド AI プラットフォーム",
+                "pages": [
                   "ja/integrations/cloud/overview",
                   "ja/integrations/cloud/openai-platform",
                   "ja/integrations/cloud/anthropic-console",
@@ -826,21 +926,21 @@
                 ]
               },
               {
-                "group": "統合: ファイル (Drive と SharePoint)",
+                "group": "IDE とコーディングアシスタント",
                 "pages": [
-                  "ja/integrations/files/google-drive",
-                  "ja/integrations/files/sharepoint"
+                  "ja/integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "連携: SIEM、ネットワーク & MCP",
+                "group": "ネットワークと CASB",
                 "pages": [
-                  "ja/integrations/splunk-security",
-                  "ja/integrations/microsoft-sentinel",
-                  "ja/integrations/elastic-security",
-                  "ja/integrations/custom-siem-webhook",
                   "ja/integrations/casb/overview",
-                  "ja/integrations/casb/cisco-umbrella",
+                  "ja/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "ja/integrations/mcp/overview",
                   "ja/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -995,11 +1095,31 @@
                   "fr/agent/quarantine-and-fleet-ops",
                   "fr/agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "Intégrations",
+            "groups": [
+              {
+                "group": "Fichiers et collaboration",
+                "pages": [
+                  "fr/integrations/files/google-drive",
+                  "fr/integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "Intégrations : Cloud AI & IDEs",
+                "group": "SIEM",
                 "pages": [
-                  "fr/integrations/ide-claude-code",
+                  "fr/integrations/splunk-security",
+                  "fr/integrations/microsoft-sentinel",
+                  "fr/integrations/elastic-security",
+                  "fr/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Plateformes d’IA cloud",
+                "pages": [
                   "fr/integrations/cloud/overview",
                   "fr/integrations/cloud/openai-platform",
                   "fr/integrations/cloud/anthropic-console",
@@ -1009,21 +1129,21 @@
                 ]
               },
               {
-                "group": "Intégrations : Fichiers (Drive et SharePoint)",
+                "group": "IDE et assistants de code",
                 "pages": [
-                  "fr/integrations/files/google-drive",
-                  "fr/integrations/files/sharepoint"
+                  "fr/integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "Intégrations : SIEM, Réseau & MCP",
+                "group": "Réseau et CASB",
                 "pages": [
-                  "fr/integrations/splunk-security",
-                  "fr/integrations/microsoft-sentinel",
-                  "fr/integrations/elastic-security",
-                  "fr/integrations/custom-siem-webhook",
                   "fr/integrations/casb/overview",
-                  "fr/integrations/casb/cisco-umbrella",
+                  "fr/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "fr/integrations/mcp/overview",
                   "fr/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -1178,11 +1298,31 @@
                   "de/agent/quarantine-and-fleet-ops",
                   "de/agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "Integrationen",
+            "groups": [
+              {
+                "group": "Dateien & Zusammenarbeit",
+                "pages": [
+                  "de/integrations/files/google-drive",
+                  "de/integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "Integrationen: Cloud AI & IDEs",
+                "group": "SIEM",
                 "pages": [
-                  "de/integrations/ide-claude-code",
+                  "de/integrations/splunk-security",
+                  "de/integrations/microsoft-sentinel",
+                  "de/integrations/elastic-security",
+                  "de/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Cloud-KI-Plattformen",
+                "pages": [
                   "de/integrations/cloud/overview",
                   "de/integrations/cloud/openai-platform",
                   "de/integrations/cloud/anthropic-console",
@@ -1192,21 +1332,21 @@
                 ]
               },
               {
-                "group": "Integrationen: Dateien (Drive & SharePoint)",
+                "group": "IDEs & Coding-Assistenten",
                 "pages": [
-                  "de/integrations/files/google-drive",
-                  "de/integrations/files/sharepoint"
+                  "de/integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "Integrationen: SIEMs, Netzwerk & MCP",
+                "group": "Netzwerk & CASB",
                 "pages": [
-                  "de/integrations/splunk-security",
-                  "de/integrations/microsoft-sentinel",
-                  "de/integrations/elastic-security",
-                  "de/integrations/custom-siem-webhook",
                   "de/integrations/casb/overview",
-                  "de/integrations/casb/cisco-umbrella",
+                  "de/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "de/integrations/mcp/overview",
                   "de/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -1361,11 +1501,31 @@
                   "ko/agent/quarantine-and-fleet-ops",
                   "ko/agent/transparent-proxy"
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "연동",
+            "groups": [
+              {
+                "group": "파일 및 협업",
+                "pages": [
+                  "ko/integrations/files/google-drive",
+                  "ko/integrations/files/sharepoint"
+                ]
               },
               {
-                "group": "연동: Cloud AI 및 IDE",
+                "group": "SIEM",
                 "pages": [
-                  "ko/integrations/ide-claude-code",
+                  "ko/integrations/splunk-security",
+                  "ko/integrations/microsoft-sentinel",
+                  "ko/integrations/elastic-security",
+                  "ko/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "클라우드 AI 플랫폼",
+                "pages": [
                   "ko/integrations/cloud/overview",
                   "ko/integrations/cloud/openai-platform",
                   "ko/integrations/cloud/anthropic-console",
@@ -1375,21 +1535,21 @@
                 ]
               },
               {
-                "group": "통합: 파일 (Drive 및 SharePoint)",
+                "group": "IDE 및 코딩 어시스턴트",
                 "pages": [
-                  "ko/integrations/files/google-drive",
-                  "ko/integrations/files/sharepoint"
+                  "ko/integrations/ide-claude-code"
                 ]
               },
               {
-                "group": "연동: SIEM, 네트워크 및 MCP",
+                "group": "네트워크 및 CASB",
                 "pages": [
-                  "ko/integrations/splunk-security",
-                  "ko/integrations/microsoft-sentinel",
-                  "ko/integrations/elastic-security",
-                  "ko/integrations/custom-siem-webhook",
                   "ko/integrations/casb/overview",
-                  "ko/integrations/casb/cisco-umbrella",
+                  "ko/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "ko/integrations/mcp/overview",
                   "ko/integrations/mcp/remote-oauth-dcr"
                 ]
