@@ -26,7 +26,7 @@ SecureAI stays in the path of every request: **DLP, model policies, data residen
 | | Image generation and realtime voice |
 | | Self-hosted models and the Claude Code proxy |
 
-Models available today: **Gemini** and the open models served as MaaS on Vertex (**gpt-oss, DeepSeek, Llama, and Qwen**). **Claude and Mistral on Vertex are not supported yet**; those models are handled according to the fallback setting (see below).
+Models available today: **Gemini**, the open models served as MaaS on Vertex (**gpt-oss, DeepSeek, Llama, and Qwen**), and Google's partner models **Claude** and **Mistral** (and AI21), which SecureAI calls through Vertex's partner-model endpoint (`rawPredict` / `streamRawPredict`). Claude and Mistral run on your Vertex only if you choose their family; see **Claude and Mistral**, below.
 
 ## How many cloud providers you can use
 
@@ -136,6 +136,13 @@ With option B no key is created. Instead:
 
 **Gemini needs nothing more.** To also use Llama, DeepSeek, Qwen, or gpt-oss, first accept each model's terms in **Vertex AI → Model Garden**. These open models need a specific **region** (for example `us-central1`); with `global` they may not be available.
 
+### Claude and Mistral
+
+To use Claude or Mistral, enable each model in **Vertex AI → Model Garden** and accept Anthropic's or Mistral's terms for that model. Then, in step 3, tick the **Claude** or **Mistral** family. SecureAI only sends these models to your Vertex when you choose their family, because it cannot know whether your project has them enabled: **Remap everything** alone never sends them there.
+
+- SecureAI uses the name Vertex gives them, with dashes: for example `anthropic/claude-sonnet-4-6`. A model that needs its dated version (`claude-…@20250929`) is declared under **Models from your cloud that SecureAI doesn't list**, below.
+- According to Google's documentation, Claude on Vertex is available in specific regions and on the `global` endpoint. Check the regions in [Google's documentation on Claude in Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-claude).
+
 ## Step 2. Connect the project in SecureAI
 
 1. Go to **Admin → Integrations**, open the **AI providers** category, and click the **Google Vertex AI — Inference on your account** card.
@@ -165,8 +172,8 @@ With option A, the pasted key is never shown again. To replace it, paste a new o
 
 Under **What runs on Vertex** there are two modes:
 
-- **Only these model families** — the families you tick (Gemini, gpt-oss, DeepSeek, Llama, Qwen) run on your Vertex; every other model keeps running on SecureAI's providers. This is the most conservative way to start (default: Gemini only).
-- **Remap everything to Vertex** — all LLM calls run on your Vertex. Models with no Vertex equivalent are served by a **default model**.
+- **Only these model families** — the families you tick (Gemini, gpt-oss, DeepSeek, Llama, Qwen, Claude, Mistral) run on your Vertex; every other model keeps running on SecureAI's providers. This is the most conservative way to start (default: Gemini only).
+- **Remap everything to Vertex** — all LLM calls run on your Vertex. Models with no Vertex equivalent are served by a **default model**. Claude and Mistral go to Vertex only if you tick their family (see **Claude and Mistral**, in step 1).
 
 **Default Vertex models** (editable):
 
@@ -191,7 +198,7 @@ There are also two options:
 </div>
 
 <Info>
-Available models depend on the **location**. The default models (several of them *preview*) may not exist in every region. If the connection test returns **Model not available in this location**, choose another region or replace the default models with ones your region serves. Open models (MaaS) require accepting their terms in Vertex AI Model Garden and a specific region.
+Available models depend on the **location**. The default models (several of them *preview*) may not exist in every region. If the connection test returns **Model not available in this location**, choose another region or replace the default models with ones your region serves. Open models (MaaS) require accepting their terms in Vertex AI Model Garden and a specific region. Claude and Mistral require the model to be enabled in Model Garden.
 </Info>
 
 ## Step 4. Test the connection
@@ -244,6 +251,19 @@ When the integration is active, models that run on your Vertex show the **Google
 
 In **Remap everything** mode without fallback, the selector **only offers** models your Vertex serves. A model with no equivalent would be answered by a different model than the one chosen, so it is hidden.
 
+## Models from your cloud that SecureAI doesn't list
+
+Your project may have chat models enabled in Model Garden that SecureAI's catalog does not include (for example a newer Claude, or Codestral). Once your SecureAI deployment enables them, the chat can offer them too:
+
+- **Where they come from.** Model Garden does not say which models your project enabled, so you name them in the Vertex AI panel as `publisher/model` (for example `anthropic/claude-opus-4-7` or `mistralai/codestral-2`), add them with **Add**, click **Save**, and run **Test connection** to check that each one answers. A model that a SecureAI catalog model already reaches keeps its catalog name and is not repeated here.
+- **Where they appear.** In the chat model selector, in their own section: **Your Google Vertex AI**. Their ids start with `byo/gcp-vertex/`.
+- **Where they run.** Only on your Vertex. They are never sent to SecureAI-managed providers, even if you allowed fallback.
+- **What they cost.** SecureAI does not charge for them (they have no SecureAI list price), so the per-seat spend cap does not apply to them, and any seat can use them. Google bills the usage to your account, like the rest.
+- **Same governance.** They go through the model policy, provider and vendor blocks, DLP, signed receipts, and audit. If your model policy lists the allowed models, add them in the policy editor, where they show up under your cloud's section.
+- **What each one takes.** Tools, images, and context size come from the facts the provider publishes about the model. If a model takes no tools or no images, the chat does not offer them for it, and images are never sent to another provider to be described.
+
+To turn the whole list off or hide individual models, use the **Offer the models of your Google Vertex AI that SecureAI does not list** switch and each model's checkbox in the Vertex AI panel, then click **Save**.
+
 ## What is billed, and to whom
 
 - **LLM usage is billed by Google to your account**, not by SecureAI. You will see the charge in your Google Cloud billing, with your discounts and CUDs applied.
@@ -280,7 +300,7 @@ These are the reasons **Test connection** can show:
 | Not authenticated | Google rejected the token | Check that the service account exists and is active. |
 | Vertex AI API is not enabled on the project | Step 1.1 missing | Enable the **Agent Platform API (Vertex AI API)** (`aiplatform.googleapis.com`) on the project. |
 | Missing roles/aiplatform.user | Insufficient permission | Grant the **Agent Platform User** role (`roles/aiplatform.user`) to the service account on that project. |
-| Model not available in this location | The model does not exist in the chosen region, or it is an open model whose terms were not accepted in Model Garden | Change the region or that default model; for open models, accept the terms in Model Garden. |
+| Model not available in this location | The model does not exist in the chosen region, or it is an open model, Claude, or Mistral that was not enabled in Model Garden | Change the region or that default model; for open models, Claude, and Mistral, accept the terms in Model Garden. |
 | Quota exceeded | Vertex quota exhausted | Review the project's quotas or ask Google for an increase. |
 | Google returned an error | Failure on Google's side | Retry; if it persists, check Google Cloud status. |
 | Blocked by your SMLTP model policy | SecureAI's policy does not allow the model | Add the model to the allowed policy. |
@@ -298,7 +318,6 @@ Errors users may see in the chat:
 
 ## Current limitations
 
-- **Claude and Mistral on Vertex** are not supported (they use a different API).
 - **Embeddings, re-ranking, OCR, the admin assistant, image generation, and realtime voice** stay on SecureAI-managed providers.
 - **One Vertex project and location** per organization.
 - The number of inference providers you can enable at the same time depends on your plan (Scale: 1, Enterprise: up to 3). See [Azure AI Foundry — Inference on your account](/en/integrations/cloud/azure-ai-foundry-inference) and [Amazon Bedrock — Inference on your account](/en/integrations/cloud/aws-bedrock-inference).

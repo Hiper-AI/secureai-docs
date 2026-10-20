@@ -24,7 +24,15 @@ SecureAI sigue en el camino de cada solicitud: **DLP, políticas de modelos, res
 | | Asistente de administración, generación de imágenes y voz en tiempo real |
 | | Modelos autoalojados y el proxy de Claude Code |
 
-Familias de modelos soportadas: **OpenAI (GPT‑5 y serie o), gpt‑oss, DeepSeek, Llama, Grok y Mistral**, cualquiera de ellas que usted haya **desplegado** en el recurso. **Claude en Foundry todavía no está soportado** (usa la API de Anthropic, no la de OpenAI).
+Familias de modelos soportadas: **OpenAI (GPT‑5 y serie o), gpt‑oss, DeepSeek, Llama, Grok, Mistral y Claude**, cualquiera de ellas que usted haya **desplegado** en el recurso. SecureAI elige la API según el formato de cada despliegue:
+
+| Despliegue | API que usa SecureAI |
+|------------|----------------------|
+| OpenAI, gpt‑oss, DeepSeek, Llama, Grok, Mistral | La API compatible con OpenAI de `<su-recurso>.openai.azure.com` |
+| Claude (despliegues con formato Anthropic) | La API Messages de Anthropic en Foundry: `https://<su-recurso>.services.ai.azure.com/anthropic/v1/messages` |
+| Otros modelos de socios que no son compatibles con OpenAI (Phi, Cohere, AI21, Core42…) | La Azure AI Model Inference API: `https://<su-recurso>.services.ai.azure.com/models/chat/completions` |
+
+Las tres usan el mismo principal de servicio. Para Claude, SecureAI pide a Entra ID un token para la audiencia `https://ai.azure.com/.default`, como indica Microsoft.
 
 ## Cuántos proveedores de nube puede usar
 
@@ -41,6 +49,8 @@ Con más de un proveedor habilitado, cada uno atiende familias de modelos **dist
 - Un **principal de servicio** (registro de aplicación en Microsoft Entra ID) con un **secreto de cliente** y, sobre ese recurso:
   - **Cognitive Services OpenAI User**: para invocar los modelos (obligatorio).
   - **Reader**: para que SecureAI pueda listar sus despliegues y mapear los modelos automáticamente (recomendado).
+  - **Cognitive Services User**: para Claude y los demás modelos de socios. Es el rol que Microsoft indica para llamar a Claude en Foundry con Entra ID.
+- Para **Claude**: según Microsoft, una suscripción de pago y una suscripción de Azure Marketplace a la oferta del modelo, que se crea al aceptar sus términos cuando lo despliega. Vea [Deploy and use Claude models in Microsoft Foundry](https://learn.microsoft.com/azure/ai-foundry/foundry-models/how-to/use-foundry-models-claude).
 - Permiso de **administrador** en la sección Integraciones de SecureAI.
 
 ## Paso 1. Prepare el principal de servicio en Azure
@@ -57,6 +67,9 @@ az ad sp create-for-rbac --name secureai-foundry \
 
 # 3. (Recommended) let SecureAI list the deployments
 az role assignment create --assignee <appId> --role "Reader" --scope "$RID"
+
+# 4. (Claude and other partner models) let SecureAI call them
+az role assignment create --assignee <appId> --role "Cognitive Services User" --scope "$RID"
 ```
 
 El paso 2 imprime `appId` (ID de cliente), `password` (secreto de cliente) y `tenant` (ID del directorio). Los pegará en SecureAI.
@@ -76,7 +89,7 @@ Los roles asignados en Azure pueden tardar **hasta 5 minutos** en aplicarse. Si 
 
    | Campo | Qué ingresar |
    |-------|--------------|
-   | **Nombre del recurso** | El nombre en `https://<nombre>.openai.azure.com`. Puede pegar la URL completa del endpoint; SecureAI conserva el nombre. |
+   | **Nombre del recurso** | El nombre en `https://<nombre>.openai.azure.com` (el mismo que en `https://<nombre>.services.ai.azure.com`). Puede pegar la URL completa del endpoint; SecureAI conserva el nombre. |
    | **ID del directorio (tenant)** | `tenant` del paso 1. |
    | **ID de la aplicación (cliente)** | `appId` del paso 1. |
    | **Secreto de cliente** | `password` del paso 1. |
@@ -124,6 +137,19 @@ La región en la que se procesan las solicitudes depende del **tipo de despliegu
 
 SecureAI aplica la política de residencia de su organización con esa región. Si necesita residencia, use despliegues **Data Zone** o regionales.
 
+## Modelos de su nube que SecureAI no lista
+
+Su recurso puede tener desplegados modelos de chat que el catálogo de SecureAI no incluye (por ejemplo Phi o Cohere). Cuando su despliegue de SecureAI los habilita, el chat también los ofrece:
+
+- **De dónde salen.** De los despliegues de chat de su recurso que ningún modelo del catálogo de SecureAI ya alcanza. Los despliegues de embeddings, de voz y de imágenes nunca se ofrecen. Un modelo al que ya llega un modelo del catálogo conserva su nombre del catálogo y no se repite acá.
+- **Dónde aparecen.** En el selector de modelos del chat, en su propia sección: **Tu Azure AI Foundry**. Su id es `byo/azure-foundry/` seguido del nombre del despliegue.
+- **Dónde corren.** Solo en su Foundry. Nunca se envían a los proveedores administrados por SecureAI, aunque haya permitido el fallback.
+- **Qué cuestan.** SecureAI no los cobra (no tienen precio de lista en SecureAI), así que el tope de gasto por asiento no se aplica a ellos, y cualquier asiento puede usarlos. Microsoft factura el consumo a su suscripción, como el resto.
+- **Misma gobernanza.** Pasan por la política de modelos, los bloqueos de proveedor y de fabricante, el DLP, los recibos firmados y la auditoría. Si su política de modelos enumera los modelos permitidos, agréguelos en el editor de la política, donde aparecen en la sección de su nube.
+- **Qué admite cada uno.** Las herramientas, las imágenes y el tamaño de contexto salen de los datos que el proveedor publica sobre el modelo. Si un modelo no admite herramientas o imágenes, el chat no se las ofrece, y las imágenes nunca se envían a otro proveedor para que las describa.
+
+Para apagar la lista entera o para ocultar modelos sueltos, use en el panel de Azure AI Foundry el interruptor **Ofrecer los modelos de tu Azure AI Foundry que SecureAI no lista** y las casillas de cada modelo, y haga clic en **Guardar**.
+
 ## Qué se factura y a quién
 
 - **El consumo de LLM lo factura Microsoft a su suscripción de Azure**, con los descuentos y créditos de su contrato.
@@ -133,8 +159,8 @@ SecureAI aplica la política de residencia de su organización con esa región. 
 ## Seguridad y cumplimiento
 
 - **Credencial cifrada.** El secreto de cliente se guarda cifrado (AES-256-GCM) y nunca se devuelve al navegador.
-- **Permisos mínimos.** *Cognitive Services OpenAI User* para invocar modelos y *Reader* para listar despliegues, ambos limitados al **recurso**, nunca a la suscripción.
-- **El camino sigue protegido.** Cada llamada pasa por el gateway SMLTP de SecureAI (DLP, token de autorización por solicitud, recibo firmado). El gateway solo se conecta a `<su-recurso>.openai.azure.com`.
+- **Permisos mínimos.** *Cognitive Services OpenAI User* para invocar modelos (y *Cognitive Services User* si usa Claude u otros modelos de socios) y *Reader* para listar despliegues, todos limitados al **recurso**, nunca a la suscripción.
+- **El camino sigue protegido.** Cada llamada pasa por el gateway SMLTP de SecureAI (DLP, token de autorización por solicitud, recibo firmado). El gateway solo se conecta a `<su-recurso>.openai.azure.com` y `<su-recurso>.services.ai.azure.com`.
 - **Falla cerrado.** Si no se puede leer la configuración o Entra ID no emite un token, la solicitud se rechaza.
 - **Auditoría.** Guardar, probar o desconectar queda en el registro de actividad (solo nombres de campos, nunca el secreto).
 
@@ -143,7 +169,7 @@ SecureAI aplica la política de residencia de su organización con esa región. 
 | Motivo en la prueba | Causa probable | Qué hacer |
 |---------------------|----------------|-----------|
 | Credencial rechazada | Secreto de cliente incorrecto o vencido, o tenant o ID de cliente erróneos | Cree un secreto nuevo (`az ad app credential reset --id <appId>`) y péguelo. |
-| Falta el rol | El principal no tiene **Cognitive Services OpenAI User** sobre el recurso, o el rol aún se está propagando | Asigne el rol sobre el recurso; espere hasta 5 minutos. |
+| Falta el rol | El principal no tiene **Cognitive Services OpenAI User** sobre el recurso (o **Cognitive Services User**, para Claude y los demás modelos de socios), o el rol aún se está propagando | Asigne el rol sobre el recurso; espere hasta 5 minutos. |
 | Modelo no disponible | El nombre del despliegue no existe en el recurso | Verifique los nombres de los despliegues (actualice la lista) y los valores por defecto de cada nivel. |
 | Cuota excedida | Se agotó la cuota de tokens por minuto del despliegue | Aumente la capacidad del despliegue en Foundry. |
 | Bloqueado por tu política de modelos SMLTP | La política de SecureAI no permite el modelo | Agregue el modelo a la política permitida. |
@@ -158,7 +184,6 @@ Errores que pueden ver los usuarios en el chat:
 
 ## Limitaciones actuales
 
-- **Claude en Foundry** no está soportado.
 - **Embeddings, re-ranking, OCR, asistente de administración, generación de imágenes y voz en tiempo real** siguen en proveedores administrados por SecureAI.
 - **Un solo recurso de Foundry** por organización.
 - La autenticación es **por principal de servicio con secreto de cliente** (todavía sin certificados ni identidad administrada).
