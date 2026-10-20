@@ -26,6 +26,7 @@ description: "SecureAI のチャットで、ユーザーが SharePoint サイト
 
 ## 前提条件
 
+- **SharePoint Online** を含む Microsoft 365 サブスクリプション（たとえば Business Basic、Business Standard、E3、E5）。このライセンスのない Entra ID ディレクトリには SharePoint サイトも OneDrive もありません。ログインはできますが、添付するファイルがありません。
 - アプリケーションを登録でき、Microsoft Graph のアクセス許可に対して**管理者の同意を付与**できる Entra ID のロール（たとえば**クラウド アプリケーション管理者**または**グローバル管理者**）。
 - SecureAI の管理者アクセス権（**Integrations** セクションに対する **Administrator** 権限）。
 - **Attach from Drive / SharePoint** を含む SecureAI のプラン。含まれていない場合でも設定を済ませておくことはできますが、ユーザーにはオプションが表示されません。
@@ -142,6 +143,8 @@ URI はインスタンスのアドレスです。例: `https://<貴社名>.hiper
 | `AADSTS700016` — アプリケーションが見つかりません | アプリケーション ID またはディレクトリ ID が正しくない | **概要**から再度コピーする |
 | `AADSTS50105` | ユーザーがアプリケーションに割り当てられていない | ユーザーを割り当てるか、**割り当てが必要ですか?** を無効にする |
 | **Try signing in**: "These delegated permissions are missing"（次の委任されたアクセス許可が不足しています） | `Files.Read.All` または `Sites.Read.All`、あるいはその同意が不足している | ステップ 3 と 4 |
+| **Try signing in**: "this Microsoft 365 directory has no SharePoint Online license"（この Microsoft 365 ディレクトリには SharePoint Online のライセンスがありません） | ディレクトリに SharePoint Online を含むサブスクリプションがない | 組織の Microsoft 365 ディレクトリを使用するか、SharePoint Online を含むサブスクリプションを割り当てる |
+| SecureAI のブラウザに、組織に SharePoint Online がないと表示される | 同じ状況をユーザー側で見たもの | 前の行と同じ |
 | ユーザーにサイトが表示されず、"Shared" のみ表示される | ユーザーがどのサイトのメンバーでもない | 想定どおりの動作です。ユーザーには、すでに開けるものだけが表示されます |
 | ユーザーに **Add from SharePoint** が表示されない | 連携が無効、未保存、またはプランに含まれていない | **Admin → Integrations → Files** のカードを確認する |
 

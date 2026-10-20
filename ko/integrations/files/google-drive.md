@@ -42,13 +42,17 @@ description: "사용자가 SecureAI 채팅에서 Google 드라이브와 공유 �
 
 4. **1. Set up Google Cloud** 섹션에 Google Cloud에서 필요한 두 가지 값이 있으며, 각각 **Copy** 버튼이 있습니다.
    - **Authorized JavaScript origin**: 귀사 인스턴스의 주소입니다. 예: `https://<회사명>.hiperai.ai`
-   - **Website restriction for the API key**: 같은 주소 끝에 `/*`를 붙인 값입니다.
+   - **Website restrictions for the API key**: 두 줄입니다. 귀사 인스턴스의 주소 끝에 `/*`를 붙인 값과 `https://docs.google.com/*`입니다.
 
 <div class="mac-window">
   ![SecureAI 사이드 패널의 출처와 제한 값](/img/files/google-drive/2%20-%20Google%20Drive.png)
 </div>
 
 항상 귀사의 인스턴스에 표시되는 값을 사용하십시오. `https://`를 포함하여 정확히 일치해야 하며, 출처 끝에는 `/`를 붙이지 않습니다.
+
+<Note>
+`https://docs.google.com/*`는 Google 선택기 자체입니다. 선택기는 `docs.google.com`의 프레임으로 열리며 그곳에서 API 키를 제시합니다. 이 줄이 없으면 선택기가 **"The API developer key is invalid"** 오류와 함께 열립니다.
+</Note>
 
 ## 2단계: 프로젝트 선택 및 API 사용 설정
 
@@ -104,24 +108,26 @@ description: "사용자가 SecureAI 채팅에서 Google 드라이브와 공유 �
 
 1. **API 및 서비스 → 사용자 인증 정보**(Credentials)로 이동하여 **사용자 인증 정보 만들기 → API 키**(Create credentials → API key)를 클릭합니다.
 2. 방금 만든 키를 엽니다(**API 키 수정**, "Edit API key").
-   - **애플리케이션 제한사항**(Application restrictions)에서 **웹사이트**(Websites)를 선택하고, 1단계에서 복사한 **Website restriction**(끝에 `/*`가 붙은 주소)을 추가합니다.
+   - **애플리케이션 제한사항**(Application restrictions)에서 **웹사이트**(Websites)를 선택하고, 1단계에서 복사한 제한 **두 가지**를 **추가**(Add)로 모두 추가합니다. 귀사 인스턴스의 주소 끝에 `/*`를 붙인 값과 `https://docs.google.com/*`입니다.
    - **API 제한사항**(API restrictions)에서 **키 제한**(Restrict key)을 선택하고 **Google Picker API**만 선택합니다.
-3. **저장**(Save)을 클릭하고 키(`AIza`로 시작)를 복사합니다.
+3. **저장**(Save)을 클릭하고 키(`AIza`로 시작)를 복사합니다. API 키 변경 사항이 적용되기까지 최대 5분이 걸릴 수 있습니다.
 
 <div class="mac-window">
   ![웹사이트와 Google Picker API로 제한된 API 키](/img/files/google-drive/8%20-%20Google%20Drive.jpg)
 </div>
 
 <Warning>
-API 키는 **설계상 공개되는 값입니다**. 각 사용자의 브라우저가 선택기를 열기 위해 이 키를 받습니다. 따라서 SecureAI 사이트와 Google Picker API로 제한하는 것이 필수입니다. SecureAI에서 **Test connection**을 사용하기 **전에** 제한하십시오. 이미 다른 API에서 사용 기록이 있는 키에는 Google이 제한 추가를 허용하지 않을 수 있습니다.
+API 키는 **설계상 공개되는 값입니다**. 각 사용자의 브라우저가 선택기를 열기 위해 이 키를 받습니다. 따라서 SecureAI 사이트, `docs.google.com`, Google Picker API로 제한하는 것이 필수입니다.
 </Warning>
+
+**Test connection**을 사용한 후 키를 수정하면 Google이 `drive.googleapis.com`을 나열하며 **"Warning: Potential breakage due to active usage"** 경고를 표시할 수 있습니다. 이 사용 기록은 키를 확인하기 위해 키로 Google Drive API를 호출하는 SecureAI의 테스트에서 발생한 것입니다. `UPDATE`를 입력하고 확인하십시오.
 
 ## 6단계: SecureAI에 입력, 테스트 및 활성화
 
 1. SecureAI의 **Google Drive** 사이드 패널로 돌아갑니다.
 2. **2. Paste the identifiers**에서 **Client ID**와 **API key**를 붙여넣습니다.
 3. **3. Test it**에서 다음을 수행합니다.
-   - **Test connection**은 SecureAI 서버에서 API 키가 유효한지, 귀사 인스턴스의 요청을 허용하는지, OAuth 클라이언트와 **같은 프로젝트**에 속하는지 확인합니다.
+   - **Test connection**은 SecureAI 서버에서 API 키가 유효한지, 귀사 인스턴스와 Google 선택기(`docs.google.com`)의 요청을 허용하는지, OAuth 클라이언트와 **같은 프로젝트**에 속하는지 확인합니다.
    - **Try signing in**은 사용자에게 표시되는 것과 동일한 Google 창을 엽니다. 본인 계정으로 로그인하십시오. SecureAI가 출처가 승인되었는지와 Google Drive API가 응답하는지 확인합니다.
 
 <div class="mac-window">
@@ -140,22 +146,26 @@ API 키는 **설계상 공개되는 값입니다**. 각 사용자의 브라우�
   ![첨부 메뉴의 Add from Drive](/img/files/google-drive/10%20-%20Google%20Drive.png)
 </div>
 
-2. 처음에는 Google이 계정을 선택하고, 선택한 파일을 SecureAI가 볼 수 있도록 승인하라고 요청합니다.
+2. 계정을 선택하고 선택한 파일을 SecureAI가 볼 수 있도록 승인하는 Google 창이 열립니다. 브라우저가 팝업을 차단하는 경우 SecureAI 사이트에 대해 팝업을 허용해야 합니다.
 3. Google 드라이브 선택기가 열리며 내 드라이브, 공유 드라이브, 이미지 탭이 표시됩니다. 파일을 하나 이상 선택하고 **Select**를 클릭합니다.
 
 
-4. 파일이 Google 드라이브 아이콘과 함께 메시지에 첨부됩니다.
+4. 파일이 Google 드라이브 아이콘과 함께 메시지에 첨부됩니다. 메시지를 보낼 때 파일은 조직의 DLP 정책을 거칩니다. 정책이 차단하는 데이터(예: 이메일 주소)가 파일에 포함되어 있으면 다른 첨부 파일과 마찬가지로 메시지가 차단됩니다.
 
 ## 문제 해결
 
 | 표시되는 내용 | 원인 | 조치 방법 |
 |---|---|---|
 | **Test connection**: "The API key's website restrictions do not include this address"(API 키의 웹사이트 제한에 이 주소가 포함되어 있지 않습니다) | API 키에 SecureAI 사이트가 설정되어 있지 않음 | 1단계의 제한 값을 그대로(끝에 `/*`) 추가합니다 |
+| **Test connection**: "The API key's website restrictions do not include https://docs.google.com/*"(API 키의 웹사이트 제한에 https://docs.google.com/*가 포함되어 있지 않습니다) | 1단계의 두 번째 제한이 누락됨 | 추가하고(5단계) 몇 분 기다립니다 |
 | **Test connection**: "The API key belongs to a different project than the OAuth client"(API 키가 OAuth 클라이언트와 다른 프로젝트의 것입니다) | 사용자 인증 정보가 서로 다른 프로젝트에서 생성됨 | OAuth 클라이언트와 같은 프로젝트에서 API 키를 만듭니다 |
 | **Test connection**: "The Google Drive API is not enabled"(Google Drive API가 사용 설정되어 있지 않습니다) | API가 사용 설정되지 않음 | 2단계 |
 | Google 창에 **Error 400: origin_mismatch** 또는 **redirect_uri_mismatch**가 표시됨 | JavaScript 원본이 OAuth 클라이언트에 없음 | 추가합니다(4단계). 반영에 몇 분이 걸릴 수 있습니다 |
 | Google 창에 **Error 403: org_internal**이 표시됨 | 사용자가 Workspace 외부의 계정을 사용함 | 조직 계정으로 로그인해야 합니다 |
-| 선택기에 "The API developer key is invalid"가 표시됨 | API 키를 잘못 복사했거나 Google Picker API가 포함되지 않음 | 5단계를 확인합니다 |
+| 선택기에 "The API developer key is invalid"가 표시됨 | API 키의 웹사이트에 `https://docs.google.com/*`가 없거나 Google Picker API를 허용하지 않음 | 5단계를 확인하고 **Test connection**을 사용합니다. 키 변경 사항은 적용되기까지 최대 5분이 걸립니다 |
+| API 키를 저장할 때 Google이 `UPDATE` 입력을 요구함("Potential breakage due to active usage") | SecureAI의 테스트가 키로 Drive API를 호출함 | `UPDATE`를 입력하고 확인합니다 |
+| "Your browser blocked the Google sign-in window"(브라우저가 Google 로그인 창을 차단했습니다) | 사이트에서 팝업이 차단됨 | SecureAI 주소에 대해 팝업을 허용합니다 |
+| 파일을 첨부하여 보낸 메시지가 차단됨 | DLP 정책이 파일에서 데이터를 감지함 | 정상 동작입니다. **Data Protection**에서 인시던트를 확인합니다 |
 | "SecureAI did not receive access to this file"(SecureAI가 이 파일에 대한 액세스 권한을 받지 못했습니다) | 선택기에서 파일을 선택하지 않음 | 드라이브 창에서 파일을 선택합니다 |
 | "Its owner does not allow downloading it"(소유자가 다운로드를 허용하지 않습니다) | 소유자가 다운로드를 비활성화함 | 소유자에게 다운로드를 활성화하도록 요청합니다 |
 | 사용자에게 **Add from Drive**가 표시되지 않음 | 연동이 꺼져 있거나, 저장되지 않았거나, 요금제에 포함되어 있지 않음 | **Admin → Integrations → Files**의 카드를 확인합니다 |

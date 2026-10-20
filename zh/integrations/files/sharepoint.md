@@ -26,6 +26,7 @@ description: "允许用户在 SecureAI 聊天中附加 SharePoint 站点和 OneD
 
 ## 前提条件
 
+- 包含 **SharePoint Online** 的 Microsoft 365 订阅（例如 Business Basic、Business Standard、E3 或 E5）。没有该许可证的 Entra ID 目录既没有 SharePoint 站点，也没有 OneDrive：可以登录，但没有可附加的文件。
 - 一个允许注册应用程序并为 Microsoft Graph 权限**授予管理员同意**的 Entra ID 角色（例如**云应用程序管理员**或**全局管理员**）。
 - SecureAI 管理员访问权限，并在 **Integrations** 部分具有 **Administrator** 权限。
 - 包含 **Attach from Drive / SharePoint** 的 SecureAI 套餐。没有该套餐时，您仍可以先完成配置，但用户将看不到该选项。
@@ -142,6 +143,8 @@ description: "允许用户在 SecureAI 聊天中附加 SharePoint 站点和 OneD
 | `AADSTS700016` — 找不到应用程序 | 应用程序 ID 或目录 ID 有误 | 从**概述**中重新复制 |
 | `AADSTS50105` | 用户未被分配到该应用程序 | 为其分配，或关闭**需要分配?** |
 | **Try signing in**："These delegated permissions are missing"（缺少以下委托权限） | 缺少 `Files.Read.All` 或 `Sites.Read.All`，或缺少其同意 | 步骤 3 和 4 |
+| **Try signing in**："this Microsoft 365 directory has no SharePoint Online license"（此 Microsoft 365 目录没有 SharePoint Online 许可证） | 该目录没有包含 SharePoint Online 的订阅 | 使用贵组织的 Microsoft 365 目录，或分配包含 SharePoint Online 的订阅 |
+| SecureAI 浏览器提示贵组织没有 SharePoint Online | 同一情况，从用户侧看到 | 与上一行相同 |
 | 用户看不到站点，只有 "Shared" | 用户不是任何站点的成员 | 属预期行为：用户只能看到自己本来就能打开的内容 |
 | 用户看不到 **Add from SharePoint** | 集成已关闭、未保存，或套餐不包含该功能 | 检查 **Admin → Integrations → Files** 中的卡片 |
 
