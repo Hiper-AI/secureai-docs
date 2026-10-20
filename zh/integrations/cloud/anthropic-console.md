@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
 title: "Anthropic Console"
+sidebarTitle: "Anthropic"
+icon: "/img/icons/anthropic.svg"
 sidebar_label: "Anthropic Console"
 description: "连接 Anthropic 控制台，以便 SecureAI 可以清点工作空间、密钥、使用情况、成本和审核活动"
 ---

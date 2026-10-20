@@ -1,6 +1,8 @@
 ---
 sidebar_position: 7
 title: "Google Vertex AI — お客様のアカウントでの推論"
+sidebarTitle: "Google Vertex AI"
+icon: "/img/icons/google-cloud.svg"
 sidebar_label: "Vertex AI — 推論"
 description: "SecureAI の LLM トラフィックをご自身の Google Cloud アカウントで実行します: 確約利用 (CUD) を使って Google に支払いつつ、SecureAI が DLP、ポリシー、署名付き受領書を引き続き適用します。"
 ---

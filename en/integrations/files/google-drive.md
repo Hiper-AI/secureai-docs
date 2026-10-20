@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Google Drive — Add from Drive"
+sidebarTitle: "Google Drive"
+icon: "/img/icons/google-drive.svg"
 sidebar_label: "Google Drive"
 description: "Let your users attach files from Google Drive and shared drives in the SecureAI chat. Self-serve setup with your own Google Cloud OAuth client."
 ---
@@ -42,13 +44,17 @@ Estimated time: 10 minutes.
 
 4. In the **1. Set up Google Cloud** section you will find the two values you need in Google Cloud, each with its own **Copy** button:
    - **Authorized JavaScript origin**: the address of your instance, for example `https://<your-company>.hiperai.ai`.
-   - **Website restriction for the API key**: the same address ending in `/*`.
+   - **Website restrictions for the API key**: two lines, your instance's address ending in `/*` and `https://docs.google.com/*`.
 
 <div class="mac-window">
   ![Origin and restriction in the SecureAI drawer](/img/files/google-drive/2%20-%20Google%20Drive.png)
 </div>
 
 Always use the values shown by your instance: they must match exactly, including `https://` and with no trailing `/` on the origin.
+
+<Note>
+`https://docs.google.com/*` is the Google picker itself: it opens as a frame on `docs.google.com` and presents the API key from there. Without that line, the picker opens with the error **"The API developer key is invalid"**.
+</Note>
 
 ## Step 2: Choose the project and enable the APIs
 
@@ -104,24 +110,26 @@ If your organization already uses a Google web client for [Google Workspace sign
 
 1. Go to **APIs & Services → Credentials** and click **Create credentials → API key**.
 2. Open the newly created key (**Edit API key**):
-   - Under **Application restrictions**, choose **Websites** and add the **Website restriction** you copied in step 1 (the address ending in `/*`).
+   - Under **Application restrictions**, choose **Websites** and use **Add** to add **both** restrictions you copied in step 1: your instance's address ending in `/*` and `https://docs.google.com/*`.
    - Under **API restrictions**, choose **Restrict key** and select only **Google Picker API**.
-3. Click **Save** and copy the key (it starts with `AIza`).
+3. Click **Save** and copy the key (it starts with `AIza`). Changes to an API key can take up to 5 minutes to apply.
 
 <div class="mac-window">
   ![API key restricted to Websites and the Google Picker API](/img/files/google-drive/8%20-%20Google%20Drive.jpg)
 </div>
 
 <Warning>
-The API key **is public by design**: each user's browser receives it to open the picker. That is why it is mandatory to restrict it to the SecureAI site and to the Google Picker API. Restrict it **before** using **Test connection** in SecureAI: Google may prevent you from adding restrictions to a key that has already recorded usage with other APIs.
+The API key **is public by design**: each user's browser receives it to open the picker. That is why it is mandatory to restrict it to the SecureAI site, to `docs.google.com`, and to the Google Picker API.
 </Warning>
+
+If you edit the key after using **Test connection**, Google may show **"Warning: Potential breakage due to active usage"** listing `drive.googleapis.com`. That usage came from SecureAI's test, which calls the Google Drive API with the key to check it: type `UPDATE` and confirm.
 
 ## Step 6: Enter, test, and enable in SecureAI
 
 1. Go back to the **Google Drive** drawer in SecureAI.
 2. Under **2. Paste the identifiers**, paste the **Client ID** and the **API key**.
 3. Under **3. Test it**:
-   - **Test connection** verifies from SecureAI's servers that the API key is valid, that it accepts requests from your instance, and that it belongs to the **same project** as the OAuth client.
+   - **Test connection** verifies from SecureAI's servers that the API key is valid, that it accepts requests from your instance and from the Google picker (`docs.google.com`), and that it belongs to the **same project** as the OAuth client.
    - **Try signing in** opens the same Google window your users will see: sign in with your account. SecureAI confirms that the origin is authorized and that the Google Drive API responds.
 
 <div class="mac-window">
@@ -140,22 +148,26 @@ The card changes to **Available in the chat**.
   ![Add from Drive in the attach menu](/img/files/google-drive/10%20-%20Google%20Drive.png)
 </div>
 
-2. The first time, Google asks them to choose their account and to authorize SecureAI to see the files they select.
+2. A Google window opens to choose the account and authorize SecureAI to see the files they select. If the browser blocks pop-ups, they must be allowed for the SecureAI site.
 3. The Google Drive picker opens, with tabs for My Drive, shared drives, and images. They select one or more files and click **Select**.
 
 
-4. The files appear attached to the message, with the Google Drive icon.
+4. The files appear attached to the message, with the Google Drive icon. When it is sent, they go through your organization's DLP policies: if a file contains data a policy blocks (for example, email addresses), the message is blocked as with any attachment.
 
 ## Troubleshooting
 
 | What you see | Cause | What to do |
 |---|---|---|
 | **Test connection**: "The API key's website restrictions do not include this address" | The API key does not have the SecureAI site | Add the exact restriction from step 1, ending in `/*` |
+| **Test connection**: "The API key's website restrictions do not include https://docs.google.com/*" | The second restriction from step 1 is missing | Add it (step 5) and wait a few minutes |
 | **Test connection**: "The API key belongs to a different project than the OAuth client" | The credentials were created in different projects | Create the API key in the same project as the OAuth client |
 | **Test connection**: "The Google Drive API is not enabled" | The API has not been enabled | Step 2 |
 | The Google window shows **Error 400: origin_mismatch** or **redirect_uri_mismatch** | The JavaScript origin is not in the OAuth client | Add it (step 4). Changes may take a few minutes |
 | The Google window shows **Error 403: org_internal** | The user is using an account outside your Workspace | They must sign in with their organization account |
-| The picker shows "The API developer key is invalid" | API key copied incorrectly or without the Google Picker API | Review step 5 |
+| The picker shows "The API developer key is invalid" | The API key does not list `https://docs.google.com/*` among its websites, or does not allow the Google Picker API | Review step 5 and use **Test connection**; key changes take up to 5 minutes |
+| Google asks you to type `UPDATE` when saving the API key ("Potential breakage due to active usage") | SecureAI's test called the Drive API with the key | Type `UPDATE` and confirm |
+| "Your browser blocked the Google sign-in window" | Pop-ups are blocked for the site | Allow them for the SecureAI address |
+| The message is blocked when sent with the attached file | A DLP policy detected data in the file | This is expected; review the incident in **Data Protection** |
 | "SecureAI did not receive access to this file" | The file was not selected in the picker | Select it from the Drive window |
 | "Its owner does not allow downloading it" | The owner disabled downloading | Ask the owner to enable it |
 | The user does not see **Add from Drive** | The integration is turned off, not saved, or the plan does not include it | Check the card in **Admin → Integrations → Files** |

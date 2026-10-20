@@ -1,6 +1,8 @@
 ---
 sidebar_position: 7
 title: "Google Vertex AI — 在您的帐户上推理"
+sidebarTitle: "Google Vertex AI"
+icon: "/img/icons/google-cloud.svg"
 sidebar_label: "Vertex AI — 推理"
 description: "在您自己的 Google Cloud 帐户上运行 SecureAI 的 LLM 流量：用您的承诺支出（CUD）向 Google 付费，同时 SecureAI 继续执行 DLP、策略和签名收据。"
 ---

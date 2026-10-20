@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Conectores MCP (Model Context Protocol)"
+sidebarTitle: "MCP"
+icon: "/img/icons/mcp.svg"
 sidebar_label: "Conectores MCP"
 description: "Conecte servidores Model Context Protocol (MCP) para brindar a los asistentes de SecureAI acceso gobernado a las herramientas"
 ---

@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "Parapluie Cisco"
+sidebarTitle: "Cisco Umbrella"
+icon: "/img/icons/cisco.svg"
 sidebar_label: "Parapluie Cisco"
 description: "Détecter l'IA fantôme de l'activité DNS de Cisco Umbrella via l'API Reporting v2"
 ---

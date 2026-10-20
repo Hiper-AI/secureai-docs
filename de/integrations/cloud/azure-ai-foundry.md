@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
 title: "Azure — Erkennung"
+sidebarTitle: "Azure"
+icon: "/img/icons/azure.svg"
 sidebar_label: "Azure — Erkennung"
 description: "Verbinden Sie Azure und Microsoft Entra ID, damit SecureAI Ihre Azure-OpenAI- und Foundry-Ressourcen, Foundry-Projekte und -Agenten, AI Search, Bot Service und jede nicht-menschliche Identität (Dienstprinzipale, Agentidentitäten, verwaltete Identitäten, Geheimnisse, Zertifikate und föderierte Anmeldeinformationen) mit ihren Berechtigungen sowie RBAC, Aktivität, Nutzung und Kosten inventarisieren kann."
 ---

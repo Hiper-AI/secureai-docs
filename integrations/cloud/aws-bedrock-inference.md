@@ -1,6 +1,8 @@
 ---
 sidebar_position: 10
 title: "Amazon Bedrock — Inferencia en tu cuenta"
+sidebarTitle: "AWS Bedrock"
+icon: "/img/icons/aws.svg"
 sidebar_label: "Amazon Bedrock — Inferencia"
 description: "Ejecute el tráfico de LLM de SecureAI, Claude incluido, en su propia cuenta de AWS con Amazon Bedrock: aproveche su compromiso con AWS (EDP), sus créditos y sus cuotas mientras SecureAI sigue aplicando DLP, políticas, residencia de datos y recibos firmados."
 ---

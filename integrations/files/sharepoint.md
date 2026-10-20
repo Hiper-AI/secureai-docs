@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint y OneDrive — Añadir desde SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint y OneDrive"
 description: "Permita que sus usuarios adjunten archivos de sitios de SharePoint y de OneDrive en el chat de SecureAI. Configuración self-serve con su propio registro de aplicación de Microsoft Entra ID."
 ---
@@ -26,6 +28,7 @@ Tiempo estimado: 10 minutos.
 
 ## Requisitos previos
 
+- Una suscripción de Microsoft 365 que incluya **SharePoint Online** (por ejemplo Business Basic, Business Standard, E3 o E5). Un directorio de Entra ID sin esa licencia no tiene sitios de SharePoint ni OneDrive: el inicio de sesión funciona, pero no hay archivos para adjuntar.
 - Un rol de Entra ID que permita registrar aplicaciones y **conceder consentimiento de administrador** para permisos de Microsoft Graph (por ejemplo **Administrador de aplicaciones en la nube** o **Administrador global**).
 - Acceso de administrador a SecureAI, con permiso de **Administrador** sobre la sección **Integraciones**.
 - Un plan de SecureAI que incluya **Adjuntar desde Drive / SharePoint**. Sin él puede dejar la configuración lista, pero los usuarios no verán la opción.
@@ -142,6 +145,8 @@ Un usuario no asignado recibe el error `AADSTS50105` al iniciar sesión y no pue
 | `AADSTS700016` — aplicación no encontrada | ID de aplicación o de directorio equivocados | Cópielos de nuevo desde **Información general** |
 | `AADSTS50105` | El usuario no está asignado a la aplicación | Asígnelo, o desactive **¿Se requiere asignación?** |
 | **Probar inicio de sesión**: "Faltan estos permisos delegados" | Falta `Files.Read.All` o `Sites.Read.All`, o su consentimiento | Pasos 3 y 4 |
+| **Probar inicio de sesión**: "este directorio de Microsoft 365 no tiene licencia de SharePoint Online" | El directorio no tiene una suscripción con SharePoint Online | Use el directorio de Microsoft 365 de su organización, o asigne una suscripción que lo incluya |
+| El selector dice que su organización no tiene SharePoint Online | Mismo caso, visto por un usuario | Igual que la fila anterior |
 | El usuario no ve sitios, solo "Compartidos" | El usuario no es miembro de ningún sitio | Es esperado: solo ve lo que ya puede abrir |
 | El usuario no ve **Añadir desde SharePoint** | La integración está desactivada, sin guardar, o el plan no la incluye | Revise la tarjeta en **Admin → Integraciones → Archivos** |
 

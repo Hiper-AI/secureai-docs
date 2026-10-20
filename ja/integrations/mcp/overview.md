@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "MCP コネクタの概要"
+sidebarTitle: "MCP"
+icon: "/img/icons/mcp.svg"
 sidebar_label: "概要"
 description: "Model Context Protocol (MCP) サーバーに接続して、SecureAI のアシスタントにツールへの管理されたアクセスを提供します"
 ---

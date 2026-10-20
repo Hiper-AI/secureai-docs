@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "クラウド AI プロバイダーの概要"
+sidebarTitle: "概要"
 sidebar_label: "概要"
 description: "OpenAI、Anthropic、Azure、AWS、GCP AI プラットフォームを接続して、SecureAI がエージェント、モデル、ID、使用状況、コストをインベントリできるようにします"
 ---

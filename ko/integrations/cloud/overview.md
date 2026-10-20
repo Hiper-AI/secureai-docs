@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "클라우드 AI 제공업체 개요"
+sidebarTitle: "개요"
 sidebar_label: "개요"
 description: "OpenAI, Anthropic, Azure, AWS 및 GCP AI 플랫폼을 연결하면 SecureAI가 에이전트, 모델, ID, 사용량 및 비용을 인벤토리화할 수 있습니다."
 ---

@@ -1,6 +1,8 @@
 ---
 sidebar_position: 10
 title: "Amazon Bedrock — Inference on your account"
+sidebarTitle: "AWS Bedrock"
+icon: "/img/icons/aws.svg"
 sidebar_label: "Amazon Bedrock — Inference"
 description: "Run SecureAI's LLM traffic, Claude included, on your own AWS account with Amazon Bedrock: use your AWS commitment (EDP), credits, and quotas while SecureAI keeps enforcing DLP, policies, data residency, and signed receipts."
 ---

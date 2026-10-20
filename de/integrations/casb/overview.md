@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Übersicht über CASB und Netzwerk (SWG)."
+sidebarTitle: "CASB / SWG"
 sidebar_label: "Überblick"
 description: "Entdecken Sie Schatten-KI aus Ihren CASB-/SWG-/DNS-Protokollen – welche Unternehmensquellen LLM-APIs aufrufen, ohne dass ein Agent erforderlich ist"
 ---

@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "MCP Connectors Overview"
+sidebarTitle: "MCP"
+icon: "/img/icons/mcp.svg"
 sidebar_label: "Overview"
 description: "Connect Model Context Protocol (MCP) servers to give SecureAI's assistants governed access to tools"
 ---

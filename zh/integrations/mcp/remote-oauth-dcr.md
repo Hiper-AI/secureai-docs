@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: "具有 OAuth 和 DCR 的远程 MCP"
+sidebarTitle: "OAuth + DCR"
 sidebar_label: "远程 OAuth 和 DCR"
 description: "SecureAI 如何使用 OAuth 2.1、PKCE 和动态客户端注册连接到远程 MCP 服务器"
 ---

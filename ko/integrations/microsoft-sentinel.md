@@ -1,6 +1,8 @@
 ---
 id: microsoft-sentinel
 title: "마이크로소프트 센티넬 통합"
+sidebarTitle: "Microsoft Sentinel"
+icon: "/img/icons/microsoft-sentinel.svg"
 sidebar_label: "마이크로소프트 센티넬"
 description: "통합 가이드: Azure DCR(데이터 수집 규칙)을 통해 Microsoft Sentinel을 HiperAI와 연결"
 ---

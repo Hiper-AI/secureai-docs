@@ -1,6 +1,8 @@
 ---
 id: custom-siem-webhook
 title: "Intégration SIEM / Webhook personnalisée"
+sidebarTitle: "Webhook personnalisé"
+icon: "/img/icons/webhook.svg"
 sidebar_label: "SIEM/Webhook personnalisé"
 description: "Intégration SIEM générique (HTTP/Webhook) pour l'envoi de journaux de sécurité SecureAI à n'importe quel point de terminaison HTTP personnalisé"
 ---

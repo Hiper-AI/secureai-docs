@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "Cisco-Regenschirm"
+sidebarTitle: "Cisco Umbrella"
+icon: "/img/icons/cisco.svg"
 sidebar_label: "Cisco-Regenschirm"
 description: "Erkennen Sie Schatten-KI anhand der DNS-Aktivität von Cisco Umbrella über die Reporting API v2"
 ---

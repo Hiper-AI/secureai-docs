@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Google Drive — Add from Drive"
+sidebarTitle: "Google Drive"
+icon: "/img/icons/google-drive.svg"
 sidebar_label: "Google Drive"
 description: "允许用户在 SecureAI 聊天中附加 Google 云端硬盘和共享云端硬盘中的文件。使用您自己的 Google Cloud OAuth 客户端进行自助配置。"
 ---
@@ -42,13 +44,17 @@ description: "允许用户在 SecureAI 聊天中附加 Google 云端硬盘和共
 
 4. 在 **1. Set up Google Cloud** 部分，您会看到在 Google Cloud 中需要的两个值，每个值都有各自的 **Copy** 按钮：
    - **Authorized JavaScript origin**：您的实例地址，例如 `https://<您的公司>.hiperai.ai`。
-   - **Website restriction for the API key**：同一地址，末尾加上 `/*`。
+   - **Website restrictions for the API key**：两行，即您的实例地址末尾加上 `/*`，以及 `https://docs.google.com/*`。
 
 <div class="mac-window">
   ![SecureAI 侧边面板中的来源和限制](/img/files/google-drive/2%20-%20Google%20Drive.png)
 </div>
 
 请始终使用您的实例所显示的值：它们必须完全一致，包括 `https://`，且来源末尾不带 `/`。
+
+<Note>
+`https://docs.google.com/*` 就是 Google 选择器本身：它以 `docs.google.com` 框架的形式打开，并从那里提交 API 密钥。缺少这一行时，选择器打开后会显示错误 **"The API developer key is invalid"**。
+</Note>
 
 ## 步骤 2：选择项目并启用 API
 
@@ -104,24 +110,26 @@ description: "允许用户在 SecureAI 聊天中附加 Google 云端硬盘和共
 
 1. 前往 **API 和服务 → 凭据**（Credentials），点击**创建凭据 → API 密钥**（Create credentials → API key）。
 2. 打开刚创建的密钥（**修改 API 密钥**，"Edit API key"）：
-   - 在**应用限制**（Application restrictions）中选择**网站**（Websites），并添加您在步骤 1 中复制的 **Website restriction**（末尾带 `/*` 的地址）。
+   - 在**应用限制**（Application restrictions）中选择**网站**（Websites），并通过**添加**（Add）添加您在步骤 1 中复制的**两项**限制：末尾带 `/*` 的实例地址，以及 `https://docs.google.com/*`。
    - 在 **API 限制**（API restrictions）中选择**限制密钥**（Restrict key），并仅勾选 **Google Picker API**。
-3. 点击**保存**（Save），并复制密钥（以 `AIza` 开头）。
+3. 点击**保存**（Save），并复制密钥（以 `AIza` 开头）。对 API 密钥的更改最多可能需要 5 分钟才能生效。
 
 <div class="mac-window">
   ![限制为网站和 Google Picker API 的 API 密钥](/img/files/google-drive/8%20-%20Google%20Drive.jpg)
 </div>
 
 <Warning>
-API 密钥**在设计上是公开的**：每位用户的浏览器都会收到它，以便打开选择器。因此必须将其限制为仅可用于 SecureAI 网站和 Google Picker API。请在 SecureAI 中使用 **Test connection** **之前**完成限制：对于已记录过其他 API 使用情况的密钥，Google 可能不允许您再添加限制。
+API 密钥**在设计上是公开的**：每位用户的浏览器都会收到它，以便打开选择器。因此必须将其限制为仅可用于 SecureAI 网站、`docs.google.com` 和 Google Picker API。
 </Warning>
+
+如果您在使用 **Test connection** 之后编辑该密钥，Google 可能会显示 **"Warning: Potential breakage due to active usage"**，并列出 `drive.googleapis.com`。该使用记录来自 SecureAI 的测试，它会使用该密钥调用 Google Drive API 进行验证：请输入 `UPDATE` 并确认。
 
 ## 步骤 6：在 SecureAI 中填写、测试并启用
 
 1. 返回 SecureAI 中的 **Google Drive** 侧边面板。
 2. 在 **2. Paste the identifiers** 下，粘贴 **Client ID** 和 **API key**。
 3. 在 **3. Test it** 下：
-   - **Test connection** 会从 SecureAI 服务器验证 API 密钥是否有效、是否接受来自您实例的请求，以及是否与 OAuth 客户端属于**同一项目**。
+   - **Test connection** 会从 SecureAI 服务器验证 API 密钥是否有效、是否接受来自您实例和 Google 选择器（`docs.google.com`）的请求，以及是否与 OAuth 客户端属于**同一项目**。
    - **Try signing in** 会打开用户将看到的同一个 Google 窗口：请使用您的账号登录。SecureAI 会确认来源已获授权，并确认 Google Drive API 有响应。
 
 <div class="mac-window">
@@ -140,22 +148,26 @@ API 密钥**在设计上是公开的**：每位用户的浏览器都会收到它
   ![附件菜单中的 Add from Drive](/img/files/google-drive/10%20-%20Google%20Drive.png)
 </div>
 
-2. 首次使用时，Google 会要求用户选择账号，并授权 SecureAI 查看其所选的文件。
+2. 系统会打开一个 Google 窗口，供用户选择账号并授权 SecureAI 查看其所选的文件。如果浏览器拦截弹出窗口，必须为 SecureAI 网站允许弹出窗口。
 3. 打开 Google 云端硬盘选择器，其中包含“我的云端硬盘”、共享云端硬盘和图片标签页。用户选择一个或多个文件，然后点击 **Select**。
 
 
-4. 文件会带着 Google 云端硬盘图标附加到消息中。
+4. 文件会带着 Google 云端硬盘图标附加到消息中。发送时，这些文件会经过您组织的 DLP 策略检查：如果文件包含策略所拦截的数据（例如电子邮件地址），该消息会像任何附件一样被拦截。
 
 ## 故障排除
 
 | 您看到的现象 | 原因 | 处理方法 |
 |---|---|---|
 | **Test connection**："The API key's website restrictions do not include this address"（API 密钥的网站限制不包含此地址） | API 密钥未包含 SecureAI 站点 | 添加步骤 1 中的精确限制值（末尾带 `/*`） |
+| **Test connection**："The API key's website restrictions do not include https://docs.google.com/*"（API 密钥的网站限制不包含 https://docs.google.com/*） | 缺少步骤 1 中的第二项限制 | 添加该限制（步骤 5），并等待几分钟 |
 | **Test connection**："The API key belongs to a different project than the OAuth client"（API 密钥与 OAuth 客户端不属于同一项目） | 凭据是在不同项目中创建的 | 在与 OAuth 客户端相同的项目中创建 API 密钥 |
 | **Test connection**："The Google Drive API is not enabled"（未启用 Google Drive API） | 尚未启用该 API | 步骤 2 |
 | Google 窗口显示 **Error 400: origin_mismatch** 或 **redirect_uri_mismatch** | JavaScript 来源不在 OAuth 客户端中 | 添加该来源（步骤 4）。更改可能需要几分钟才能生效 |
 | Google 窗口显示 **Error 403: org_internal** | 用户使用了 Workspace 之外的账号 | 必须使用组织账号登录 |
-| 选择器显示 "The API developer key is invalid" | API 密钥复制有误，或未包含 Google Picker API | 检查步骤 5 |
+| 选择器显示 "The API developer key is invalid" | API 密钥的网站中未包含 `https://docs.google.com/*`，或未允许 Google Picker API | 检查步骤 5 并使用 **Test connection**；密钥更改最多需要 5 分钟才能生效 |
+| 保存 API 密钥时，Google 要求输入 `UPDATE`（"Potential breakage due to active usage"） | SecureAI 的测试使用该密钥调用了 Drive API | 输入 `UPDATE` 并确认 |
+| "Your browser blocked the Google sign-in window"（您的浏览器拦截了 Google 登录窗口） | 该站点的弹出窗口被拦截 | 为 SecureAI 地址允许弹出窗口 |
+| 带附件发送的消息被拦截 | DLP 策略在文件中检测到数据 | 属预期行为；请在 **Data Protection** 中查看该事件 |
 | "SecureAI did not receive access to this file"（SecureAI 未获得对此文件的访问权限） | 文件未在选择器中选择 | 通过云端硬盘窗口选择该文件 |
 | "Its owner does not allow downloading it"（所有者不允许下载） | 所有者已禁用下载 | 请所有者启用下载 |
 | 用户看不到 **Add from Drive** | 集成已关闭、未保存，或套餐不包含该功能 | 检查 **Admin → Integrations → Files** 中的卡片 |

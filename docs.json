@@ -73,38 +73,63 @@
                   "agent/quarantine-and-fleet-ops",
                   "agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "Integraciones",
+            "groups": [
               {
-                "group": "Integraciones: Cloud AI e IDEs",
-                "pages": [
-                  "integrations/ide-claude-code",
-                  "integrations/cloud/overview",
-                  "integrations/cloud/openai-platform",
-                  "integrations/cloud/anthropic-console",
-                  "integrations/cloud/azure-ai-foundry",
-                  "integrations/cloud/gcp-vertex-ai",
-                  "integrations/cloud/aws-bedrock",
-                  "integrations/cloud/vertex-ai-inference",
-                  "integrations/cloud/azure-ai-foundry-inference",
-                  "integrations/cloud/aws-bedrock-inference"
-                ]
-              },
-              {
-                "group": "Integraciones: Archivos (Drive y SharePoint)",
+                "group": "Archivos y colaboración",
                 "pages": [
                   "integrations/files/google-drive",
                   "integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "Integraciones: SIEMs, Red y MCP",
+                "group": "SIEM",
                 "pages": [
                   "integrations/splunk-security",
                   "integrations/microsoft-sentinel",
                   "integrations/elastic-security",
-                  "integrations/custom-siem-webhook",
+                  "integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Cloud, NHI y gestión",
+                "pages": [
+                  "integrations/cloud/overview",
+                  "integrations/cloud/openai-platform",
+                  "integrations/cloud/anthropic-console",
+                  "integrations/cloud/azure-ai-foundry",
+                  "integrations/cloud/gcp-vertex-ai",
+                  "integrations/cloud/aws-bedrock"
+                ]
+              },
+              {
+                "group": "Proveedores de IA (BYO - LLM)",
+                "pages": [
+                  "integrations/cloud/azure-ai-foundry-inference",
+                  "integrations/cloud/vertex-ai-inference",
+                  "integrations/cloud/aws-bedrock-inference"
+                ]
+              },
+              {
+                "group": "IDEs y asistentes de código",
+                "pages": [
+                  "integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "Red y CASB",
+                "pages": [
                   "integrations/casb/overview",
-                  "integrations/casb/cisco-umbrella",
+                  "integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "integrations/mcp/overview",
                   "integrations/mcp/remote-oauth-dcr"
                 ]
@@ -260,38 +285,63 @@
                   "en/agent/quarantine-and-fleet-ops",
                   "en/agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "Integrations",
+            "groups": [
               {
-                "group": "Integrations: Cloud AI & IDEs",
-                "pages": [
-                  "en/integrations/ide-claude-code",
-                  "en/integrations/cloud/overview",
-                  "en/integrations/cloud/openai-platform",
-                  "en/integrations/cloud/anthropic-console",
-                  "en/integrations/cloud/azure-ai-foundry",
-                  "en/integrations/cloud/gcp-vertex-ai",
-                  "en/integrations/cloud/aws-bedrock",
-                  "en/integrations/cloud/vertex-ai-inference",
-                  "en/integrations/cloud/azure-ai-foundry-inference",
-                  "en/integrations/cloud/aws-bedrock-inference"
-                ]
-              },
-              {
-                "group": "Integrations: Files (Drive & SharePoint)",
+                "group": "Files & Collaboration",
                 "pages": [
                   "en/integrations/files/google-drive",
                   "en/integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "Integrations: SIEMs, Network & MCP",
+                "group": "SIEM",
                 "pages": [
                   "en/integrations/splunk-security",
                   "en/integrations/microsoft-sentinel",
                   "en/integrations/elastic-security",
-                  "en/integrations/custom-siem-webhook",
+                  "en/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Cloud, NHI & Management",
+                "pages": [
+                  "en/integrations/cloud/overview",
+                  "en/integrations/cloud/openai-platform",
+                  "en/integrations/cloud/anthropic-console",
+                  "en/integrations/cloud/azure-ai-foundry",
+                  "en/integrations/cloud/gcp-vertex-ai",
+                  "en/integrations/cloud/aws-bedrock"
+                ]
+              },
+              {
+                "group": "AI Providers (BYO - LLM)",
+                "pages": [
+                  "en/integrations/cloud/azure-ai-foundry-inference",
+                  "en/integrations/cloud/vertex-ai-inference",
+                  "en/integrations/cloud/aws-bedrock-inference"
+                ]
+              },
+              {
+                "group": "IDEs & Coding Assistants",
+                "pages": [
+                  "en/integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "Network & CASB",
+                "pages": [
                   "en/integrations/casb/overview",
-                  "en/integrations/casb/cisco-umbrella",
+                  "en/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "en/integrations/mcp/overview",
                   "en/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -446,35 +496,60 @@
                   "zh/agent/quarantine-and-fleet-ops",
                   "zh/agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "集成",
+            "groups": [
               {
-                "group": "集成：云端 AI 与 IDE",
-                "pages": [
-                  "zh/integrations/ide-claude-code",
-                  "zh/integrations/cloud/overview",
-                  "zh/integrations/cloud/openai-platform",
-                  "zh/integrations/cloud/anthropic-console",
-                  "zh/integrations/cloud/azure-ai-foundry",
-                  "zh/integrations/cloud/gcp-vertex-ai",
-                  "zh/integrations/cloud/vertex-ai-inference"
-                ]
-              },
-              {
-                "group": "集成：文件（Drive 和 SharePoint）",
+                "group": "文件与协作",
                 "pages": [
                   "zh/integrations/files/google-drive",
                   "zh/integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "集成：SIEM、网络与 MCP",
+                "group": "SIEM",
                 "pages": [
                   "zh/integrations/splunk-security",
                   "zh/integrations/microsoft-sentinel",
                   "zh/integrations/elastic-security",
-                  "zh/integrations/custom-siem-webhook",
+                  "zh/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "云、NHI 与管理",
+                "pages": [
+                  "zh/integrations/cloud/overview",
+                  "zh/integrations/cloud/openai-platform",
+                  "zh/integrations/cloud/anthropic-console",
+                  "zh/integrations/cloud/azure-ai-foundry",
+                  "zh/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "AI 提供商 (BYO - LLM)",
+                "pages": [
+                  "zh/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "IDE 与编码助手",
+                "pages": [
+                  "zh/integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "网络与 CASB",
+                "pages": [
                   "zh/integrations/casb/overview",
-                  "zh/integrations/casb/cisco-umbrella",
+                  "zh/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "zh/integrations/mcp/overview",
                   "zh/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -629,35 +704,60 @@
                   "pt/agent/quarantine-and-fleet-ops",
                   "pt/agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "Integrações",
+            "groups": [
               {
-                "group": "Integrações: Cloud AI & IDEs",
-                "pages": [
-                  "pt/integrations/ide-claude-code",
-                  "pt/integrations/cloud/overview",
-                  "pt/integrations/cloud/openai-platform",
-                  "pt/integrations/cloud/anthropic-console",
-                  "pt/integrations/cloud/azure-ai-foundry",
-                  "pt/integrations/cloud/gcp-vertex-ai",
-                  "pt/integrations/cloud/vertex-ai-inference"
-                ]
-              },
-              {
-                "group": "Integrações: Arquivos (Drive e SharePoint)",
+                "group": "Arquivos e colaboração",
                 "pages": [
                   "pt/integrations/files/google-drive",
                   "pt/integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "Integrações: SIEMs, Rede & MCP",
+                "group": "SIEM",
                 "pages": [
                   "pt/integrations/splunk-security",
                   "pt/integrations/microsoft-sentinel",
                   "pt/integrations/elastic-security",
-                  "pt/integrations/custom-siem-webhook",
+                  "pt/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Cloud, NHI e gestão",
+                "pages": [
+                  "pt/integrations/cloud/overview",
+                  "pt/integrations/cloud/openai-platform",
+                  "pt/integrations/cloud/anthropic-console",
+                  "pt/integrations/cloud/azure-ai-foundry",
+                  "pt/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "Provedores de IA (BYO - LLM)",
+                "pages": [
+                  "pt/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "IDEs e assistentes de código",
+                "pages": [
+                  "pt/integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "Rede e CASB",
+                "pages": [
                   "pt/integrations/casb/overview",
-                  "pt/integrations/casb/cisco-umbrella",
+                  "pt/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "pt/integrations/mcp/overview",
                   "pt/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -812,35 +912,60 @@
                   "ja/agent/quarantine-and-fleet-ops",
                   "ja/agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "連携",
+            "groups": [
               {
-                "group": "連携: クラウド AI & IDE",
-                "pages": [
-                  "ja/integrations/ide-claude-code",
-                  "ja/integrations/cloud/overview",
-                  "ja/integrations/cloud/openai-platform",
-                  "ja/integrations/cloud/anthropic-console",
-                  "ja/integrations/cloud/azure-ai-foundry",
-                  "ja/integrations/cloud/gcp-vertex-ai",
-                  "ja/integrations/cloud/vertex-ai-inference"
-                ]
-              },
-              {
-                "group": "統合: ファイル (Drive と SharePoint)",
+                "group": "ファイルとコラボレーション",
                 "pages": [
                   "ja/integrations/files/google-drive",
                   "ja/integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "連携: SIEM、ネットワーク & MCP",
+                "group": "SIEM",
                 "pages": [
                   "ja/integrations/splunk-security",
                   "ja/integrations/microsoft-sentinel",
                   "ja/integrations/elastic-security",
-                  "ja/integrations/custom-siem-webhook",
+                  "ja/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "クラウド、NHI、管理",
+                "pages": [
+                  "ja/integrations/cloud/overview",
+                  "ja/integrations/cloud/openai-platform",
+                  "ja/integrations/cloud/anthropic-console",
+                  "ja/integrations/cloud/azure-ai-foundry",
+                  "ja/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "AI プロバイダー (BYO - LLM)",
+                "pages": [
+                  "ja/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "IDE とコーディングアシスタント",
+                "pages": [
+                  "ja/integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "ネットワークと CASB",
+                "pages": [
                   "ja/integrations/casb/overview",
-                  "ja/integrations/casb/cisco-umbrella",
+                  "ja/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "ja/integrations/mcp/overview",
                   "ja/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -995,35 +1120,60 @@
                   "fr/agent/quarantine-and-fleet-ops",
                   "fr/agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "Intégrations",
+            "groups": [
               {
-                "group": "Intégrations : Cloud AI & IDEs",
-                "pages": [
-                  "fr/integrations/ide-claude-code",
-                  "fr/integrations/cloud/overview",
-                  "fr/integrations/cloud/openai-platform",
-                  "fr/integrations/cloud/anthropic-console",
-                  "fr/integrations/cloud/azure-ai-foundry",
-                  "fr/integrations/cloud/gcp-vertex-ai",
-                  "fr/integrations/cloud/vertex-ai-inference"
-                ]
-              },
-              {
-                "group": "Intégrations : Fichiers (Drive et SharePoint)",
+                "group": "Fichiers et collaboration",
                 "pages": [
                   "fr/integrations/files/google-drive",
                   "fr/integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "Intégrations : SIEM, Réseau & MCP",
+                "group": "SIEM",
                 "pages": [
                   "fr/integrations/splunk-security",
                   "fr/integrations/microsoft-sentinel",
                   "fr/integrations/elastic-security",
-                  "fr/integrations/custom-siem-webhook",
+                  "fr/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Cloud, NHI et gestion",
+                "pages": [
+                  "fr/integrations/cloud/overview",
+                  "fr/integrations/cloud/openai-platform",
+                  "fr/integrations/cloud/anthropic-console",
+                  "fr/integrations/cloud/azure-ai-foundry",
+                  "fr/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "Fournisseurs d’IA (BYO - LLM)",
+                "pages": [
+                  "fr/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "IDE et assistants de code",
+                "pages": [
+                  "fr/integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "Réseau et CASB",
+                "pages": [
                   "fr/integrations/casb/overview",
-                  "fr/integrations/casb/cisco-umbrella",
+                  "fr/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "fr/integrations/mcp/overview",
                   "fr/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -1178,35 +1328,60 @@
                   "de/agent/quarantine-and-fleet-ops",
                   "de/agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "Integrationen",
+            "groups": [
               {
-                "group": "Integrationen: Cloud AI & IDEs",
-                "pages": [
-                  "de/integrations/ide-claude-code",
-                  "de/integrations/cloud/overview",
-                  "de/integrations/cloud/openai-platform",
-                  "de/integrations/cloud/anthropic-console",
-                  "de/integrations/cloud/azure-ai-foundry",
-                  "de/integrations/cloud/gcp-vertex-ai",
-                  "de/integrations/cloud/vertex-ai-inference"
-                ]
-              },
-              {
-                "group": "Integrationen: Dateien (Drive & SharePoint)",
+                "group": "Dateien & Zusammenarbeit",
                 "pages": [
                   "de/integrations/files/google-drive",
                   "de/integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "Integrationen: SIEMs, Netzwerk & MCP",
+                "group": "SIEM",
                 "pages": [
                   "de/integrations/splunk-security",
                   "de/integrations/microsoft-sentinel",
                   "de/integrations/elastic-security",
-                  "de/integrations/custom-siem-webhook",
+                  "de/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "Cloud, NHI & Verwaltung",
+                "pages": [
+                  "de/integrations/cloud/overview",
+                  "de/integrations/cloud/openai-platform",
+                  "de/integrations/cloud/anthropic-console",
+                  "de/integrations/cloud/azure-ai-foundry",
+                  "de/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "KI-Anbieter (BYO - LLM)",
+                "pages": [
+                  "de/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "IDEs & Coding-Assistenten",
+                "pages": [
+                  "de/integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "Netzwerk & CASB",
+                "pages": [
                   "de/integrations/casb/overview",
-                  "de/integrations/casb/cisco-umbrella",
+                  "de/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "de/integrations/mcp/overview",
                   "de/integrations/mcp/remote-oauth-dcr"
                 ]
@@ -1361,35 +1536,60 @@
                   "ko/agent/quarantine-and-fleet-ops",
                   "ko/agent/transparent-proxy"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "연동",
+            "groups": [
               {
-                "group": "연동: Cloud AI 및 IDE",
-                "pages": [
-                  "ko/integrations/ide-claude-code",
-                  "ko/integrations/cloud/overview",
-                  "ko/integrations/cloud/openai-platform",
-                  "ko/integrations/cloud/anthropic-console",
-                  "ko/integrations/cloud/azure-ai-foundry",
-                  "ko/integrations/cloud/gcp-vertex-ai",
-                  "ko/integrations/cloud/vertex-ai-inference"
-                ]
-              },
-              {
-                "group": "통합: 파일 (Drive 및 SharePoint)",
+                "group": "파일 및 협업",
                 "pages": [
                   "ko/integrations/files/google-drive",
                   "ko/integrations/files/sharepoint"
                 ]
               },
               {
-                "group": "연동: SIEM, 네트워크 및 MCP",
+                "group": "SIEM",
                 "pages": [
                   "ko/integrations/splunk-security",
                   "ko/integrations/microsoft-sentinel",
                   "ko/integrations/elastic-security",
-                  "ko/integrations/custom-siem-webhook",
+                  "ko/integrations/custom-siem-webhook"
+                ]
+              },
+              {
+                "group": "클라우드, NHI 및 관리",
+                "pages": [
+                  "ko/integrations/cloud/overview",
+                  "ko/integrations/cloud/openai-platform",
+                  "ko/integrations/cloud/anthropic-console",
+                  "ko/integrations/cloud/azure-ai-foundry",
+                  "ko/integrations/cloud/gcp-vertex-ai"
+                ]
+              },
+              {
+                "group": "AI 공급자 (BYO - LLM)",
+                "pages": [
+                  "ko/integrations/cloud/vertex-ai-inference"
+                ]
+              },
+              {
+                "group": "IDE 및 코딩 어시스턴트",
+                "pages": [
+                  "ko/integrations/ide-claude-code"
+                ]
+              },
+              {
+                "group": "네트워크 및 CASB",
+                "pages": [
                   "ko/integrations/casb/overview",
-                  "ko/integrations/casb/cisco-umbrella",
+                  "ko/integrations/casb/cisco-umbrella"
+                ]
+              },
+              {
+                "group": "MCP",
+                "pages": [
                   "ko/integrations/mcp/overview",
                   "ko/integrations/mcp/remote-oauth-dcr"
                 ]

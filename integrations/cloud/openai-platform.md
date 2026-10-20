@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "Integración con OpenAI Platform"
+sidebarTitle: "OpenAI"
+icon: "/img/icons/openai.svg"
 sidebar_label: "OpenAI Platform"
 description: "Conecte la plataforma OpenAI para que SecureAI pueda inventariar proyectos, modelos, claves, uso y costos."
 ---

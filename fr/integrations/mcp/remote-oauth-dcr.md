@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: "MCP à distance avec OAuth et DCR"
+sidebarTitle: "OAuth + DCR"
 sidebar_label: "OAuth et DCR à distance"
 description: "Comment SecureAI se connecte aux serveurs MCP distants à l'aide d'OAuth 2.1, PKCE et Dynamic Client Registration"
 ---

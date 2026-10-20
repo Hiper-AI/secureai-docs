@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
 title: "Azure — Descoberta"
+sidebarTitle: "Azure"
+icon: "/img/icons/azure.svg"
 sidebar_label: "Azure — Descoberta"
 description: "Conecte o Azure e o Microsoft Entra ID para que o SecureAI faça o inventário dos seus recursos Azure OpenAI e Foundry, projetos e agentes do Foundry, AI Search, Bot Service e de cada identidade não humana (entidades de serviço, identidades de agente, identidades gerenciadas, segredos, certificados e credenciais federadas) com suas permissões, além de RBAC, atividade, uso e custo."
 ---

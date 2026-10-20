@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
 title: "Azure — 検出"
+sidebarTitle: "Azure"
+icon: "/img/icons/azure.svg"
 sidebar_label: "Azure — 検出"
 description: "Azure と Microsoft Entra ID を接続すると、SecureAI が Azure OpenAI と Foundry のリソース、Foundry のプロジェクトとエージェント、AI Search、Bot Service、およびすべての非人間 ID (サービス プリンシパル、エージェント ID、マネージド ID、シークレット、証明書、フェデレーション資格情報) を、それぞれの権限、RBAC、アクティビティ、使用状況、コストとともにインベントリ化します。"
 ---

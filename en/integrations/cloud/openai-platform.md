@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "OpenAI Platform"
+sidebarTitle: "OpenAI"
+icon: "/img/icons/openai.svg"
 sidebar_label: "OpenAI Platform"
 description: "Connect the OpenAI Platform so SecureAI can inventory projects, models, keys, usage, and cost"
 ---

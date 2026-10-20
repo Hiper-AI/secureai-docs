@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint & OneDrive — Add from SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint & OneDrive"
 description: "Ermöglichen Sie Ihren Benutzern, Dateien aus SharePoint-Websites und OneDrive im SecureAI-Chat anzuhängen. Self-Service-Einrichtung mit Ihrer eigenen App-Registrierung in Microsoft Entra ID."
 ---
@@ -26,6 +28,7 @@ Geschätzte Dauer: 10 Minuten.
 
 ## Voraussetzungen
 
+- Ein Microsoft-365-Abonnement, das **SharePoint Online** enthält (zum Beispiel Business Basic, Business Standard, E3 oder E5). Ein Entra-ID-Verzeichnis ohne diese Lizenz hat keine SharePoint-Websites und kein OneDrive: Die Anmeldung funktioniert, aber es gibt keine Dateien zum Anhängen.
 - Eine Entra-ID-Rolle, die das Registrieren von Anwendungen und das **Erteilen der Administratorzustimmung** für Microsoft-Graph-Berechtigungen erlaubt (zum Beispiel **Cloudanwendungsadministrator** oder **Globaler Administrator**).
 - Administratorzugriff auf SecureAI mit der Berechtigung **Administrator** für den Bereich **Integrations**.
 - Ein SecureAI-Tarif, der **Attach from Drive / SharePoint** enthält. Ohne ihn können Sie die Konfiguration vorbereiten, aber die Benutzer sehen die Option nicht.
@@ -142,6 +145,8 @@ Ein nicht zugewiesener Benutzer erhält bei der Anmeldung den Fehler `AADSTS5010
 | `AADSTS700016` — Anwendung nicht gefunden | Falsche Anwendungs-ID oder Verzeichnis-ID | Kopieren Sie sie erneut aus der **Übersicht** |
 | `AADSTS50105` | Der Benutzer ist der Anwendung nicht zugewiesen | Weisen Sie ihn zu, oder deaktivieren Sie **Zuweisung erforderlich?** |
 | **Try signing in**: „These delegated permissions are missing" (Diese delegierten Berechtigungen fehlen) | `Files.Read.All` oder `Sites.Read.All` fehlt, oder deren Zustimmung | Schritte 3 und 4 |
+| **Try signing in**: „this Microsoft 365 directory has no SharePoint Online license" (dieses Microsoft-365-Verzeichnis hat keine SharePoint-Online-Lizenz) | Das Verzeichnis hat kein Abonnement mit SharePoint Online | Verwenden Sie das Microsoft-365-Verzeichnis Ihrer Organisation, oder weisen Sie ein Abonnement zu, das SharePoint Online enthält |
+| Der Explorer meldet, dass Ihre Organisation kein SharePoint Online hat | Derselbe Fall, aus Sicht eines Benutzers | Wie in der vorherigen Zeile |
 | Der Benutzer sieht keine Websites, nur „Shared" | Der Benutzer ist in keiner Website Mitglied | Erwartetes Verhalten: Er sieht nur, was er bereits öffnen kann |
 | Der Benutzer sieht **Add from SharePoint** nicht | Die Integration ist deaktiviert, nicht gespeichert, oder der Tarif enthält sie nicht | Prüfen Sie die Karte unter **Admin → Integrations → Files** |
 

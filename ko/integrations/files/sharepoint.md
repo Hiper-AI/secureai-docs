@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint & OneDrive — Add from SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint & OneDrive"
 description: "사용자가 SecureAI 채팅에서 SharePoint 사이트와 OneDrive의 파일을 첨부할 수 있도록 설정합니다. 귀사의 Microsoft Entra ID 앱 등록을 사용하는 셀프서비스 방식입니다."
 ---
@@ -26,6 +28,7 @@ description: "사용자가 SecureAI 채팅에서 SharePoint 사이트와 OneDriv
 
 ## 사전 요구 사항
 
+- **SharePoint Online**이 포함된 Microsoft 365 구독(예: Business Basic, Business Standard, E3 또는 E5). 이 라이선스가 없는 Entra ID 디렉터리에는 SharePoint 사이트도 OneDrive도 없습니다. 로그인은 되지만 첨부할 파일이 없습니다.
 - 애플리케이션을 등록하고 Microsoft Graph 권한에 대해 **관리자 동의를 부여**할 수 있는 Entra ID 역할(예: **클라우드 애플리케이션 관리자** 또는 **전역 관리자**).
 - SecureAI 관리자 액세스 권한(**Integrations** 섹션에 대한 **Administrator** 권한).
 - **Attach from Drive / SharePoint**가 포함된 SecureAI 요금제. 포함되어 있지 않아도 설정은 미리 해 둘 수 있지만, 사용자에게는 옵션이 표시되지 않습니다.
@@ -142,6 +145,8 @@ URI는 귀사 인스턴스의 주소입니다. 예: `https://<회사명>.hiperai
 | `AADSTS700016` — 애플리케이션을 찾을 수 없음 | 애플리케이션 ID 또는 디렉터리 ID가 잘못됨 | **개요**에서 다시 복사합니다 |
 | `AADSTS50105` | 사용자가 애플리케이션에 할당되어 있지 않음 | 사용자를 할당하거나 **할당 필요?**를 끕니다 |
 | **Try signing in**: "These delegated permissions are missing"(다음 위임된 권한이 누락되었습니다) | `Files.Read.All` 또는 `Sites.Read.All`, 또는 해당 동의가 누락됨 | 3단계 및 4단계 |
+| **Try signing in**: "this Microsoft 365 directory has no SharePoint Online license"(이 Microsoft 365 디렉터리에 SharePoint Online 라이선스가 없습니다) | 디렉터리에 SharePoint Online이 포함된 구독이 없음 | 조직의 Microsoft 365 디렉터리를 사용하거나 SharePoint Online이 포함된 구독을 할당합니다 |
+| 탐색기에 조직에 SharePoint Online이 없다고 표시됨 | 같은 상황을 사용자 쪽에서 본 경우 | 이전 행과 같습니다 |
 | 사용자에게 사이트가 보이지 않고 "Shared"만 보임 | 사용자가 어떤 사이트의 구성원도 아님 | 정상 동작입니다. 사용자는 이미 열 수 있는 항목만 봅니다 |
 | 사용자에게 **Add from SharePoint**가 표시되지 않음 | 연동이 꺼져 있거나, 저장되지 않았거나, 요금제에 포함되어 있지 않음 | **Admin → Integrations → Files**의 카드를 확인합니다 |
 

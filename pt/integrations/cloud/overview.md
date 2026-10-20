@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Provedores Cloud de IA — Visão Geral"
+sidebarTitle: "Visão geral"
 sidebar_label: "Visão Geral Cloud"
 description: "Conecte suas plataformas OpenAI, Anthropic, Azure, AWS e GCP AI para que a SecureAI possa inventariar agentes, modelos, identidades, uso e custos"
 ---
