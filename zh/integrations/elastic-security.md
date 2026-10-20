@@ -1,6 +1,8 @@
 ---
 id: elastic-security
 title: "弹性安全集成"
+sidebarTitle: "Elastic"
+icon: "/img/icons/elastic.svg"
 sidebar_label: "弹性安全"
 description: "将 HiperAI 与 Elastic Security 集成以进行高级威胁检测和安全分析"
 ---

@@ -1,6 +1,8 @@
 ---
 id: ide-claude-code
 title: "クロード・コード"
+sidebarTitle: "Claude Code"
+icon: "/img/icons/claude.png"
 sidebar_label: "クロード・コード"
 description: "SecureAI で Claude Code を使用する — AI 支援開発のための完全な SMLTP、DLP、および PII の強制"
 ---

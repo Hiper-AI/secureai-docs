@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Google Drive — Add from Drive"
+sidebarTitle: "Google Drive"
+icon: "/img/icons/google-drive.svg"
 sidebar_label: "Google Drive"
 description: "Let your users attach files from Google Drive and shared drives in the SecureAI chat. Self-serve setup with your own Google Cloud OAuth client."
 ---

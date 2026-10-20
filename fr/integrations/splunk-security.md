@@ -1,6 +1,8 @@
 ---
 id: splunk-security
 title: "Intégration de la sécurité Splunk"
+sidebarTitle: "Splunk"
+icon: "/img/icons/splunk.svg"
 sidebar_label: "Sécurité Splunk"
 description: "Guide d'intégration : Connexion de Splunk SIEM à HiperAI via HTTP Event Collector (HEC)"
 ---

@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint & OneDrive — Add from SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint & OneDrive"
 description: "允许用户在 SecureAI 聊天中附加 SharePoint 站点和 OneDrive 中的文件。使用您自己的 Microsoft Entra ID 应用注册进行自助配置。"
 ---

@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "シスコのアンブレラ"
+sidebarTitle: "Cisco Umbrella"
+icon: "/img/icons/cisco.svg"
 sidebar_label: "シスコのアンブレラ"
 description: "Reporting API v2 を介して Cisco Umbrella DNS アクティビティからシャドウ AI を検出"
 ---

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Présentation de CASB & Réseau (SWG)"
+sidebarTitle: "CASB / SWG"
 sidebar_label: "Aperçu"
 description: "Découvrez l'IA fantôme à partir de vos journaux CASB / SWG / DNS - quelles sources d'entreprise appellent les API LLM, sans aucun agent requis"
 ---

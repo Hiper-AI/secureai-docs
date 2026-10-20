@@ -1,6 +1,8 @@
 ---
 id: elastic-security
 title: "柔軟なセキュリティの統合"
+sidebarTitle: "Elastic"
+icon: "/img/icons/elastic.svg"
 sidebar_label: "柔軟なセキュリティ"
 description: "HiperAI と Elastic Security を統合して、高度な脅威検出とセキュリティ分析を実現"
 ---

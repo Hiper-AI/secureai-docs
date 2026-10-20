@@ -1,6 +1,8 @@
 ---
 id: microsoft-sentinel
 title: "Microsoft Sentinelの統合"
+sidebarTitle: "Microsoft Sentinel"
+icon: "/img/icons/microsoft-sentinel.svg"
 sidebar_label: "マイクロソフトセンチネル"
 description: "統合ガイド: Azure Data Collection Rules (DCR) を介した Microsoft Sentinel と HiperAI の接続"
 ---

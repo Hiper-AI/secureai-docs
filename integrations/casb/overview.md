@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Seguridad de Red y CASB (SWG)"
+sidebarTitle: "CASB / SWG"
 sidebar_label: "Visión General CASB"
 description: "Descubra la IA oculta a partir de sus registros CASB/SWG/DNS: qué fuentes corporativas llaman API de LLM, sin necesidad de agente"
 ---

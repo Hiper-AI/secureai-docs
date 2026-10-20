@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Présentation des fournisseurs d'IA cloud"
+sidebarTitle: "Vue d’ensemble"
 sidebar_label: "Aperçu"
 description: "Connectez vos plateformes d'IA OpenAI, Anthropic, Azure, AWS et GCP afin que SecureAI puisse inventorier les agents, les modèles, les identités, l'utilisation et les coûts."
 ---

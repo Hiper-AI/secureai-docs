@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "시스코 우산"
+sidebarTitle: "Cisco Umbrella"
+icon: "/img/icons/cisco.svg"
 sidebar_label: "시스코 우산"
 description: "Reporting API v2를 통해 Cisco Umbrella DNS 활동에서 섀도우 AI를 감지합니다."
 ---

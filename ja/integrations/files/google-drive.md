@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "Google Drive — Add from Drive"
+sidebarTitle: "Google Drive"
+icon: "/img/icons/google-drive.svg"
 sidebar_label: "Google Drive"
 description: "SecureAI のチャットで、ユーザーが Google ドライブおよび共有ドライブのファイルを添付できるようにします。独自の Google Cloud OAuth クライアントを使用したセルフサービスでの設定です。"
 ---

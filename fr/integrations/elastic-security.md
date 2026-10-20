@@ -1,6 +1,8 @@
 ---
 id: elastic-security
 title: "Intégration de la sécurité élastique"
+sidebarTitle: "Elastic"
+icon: "/img/icons/elastic.svg"
 sidebar_label: "Sécurité élastique"
 description: "Intégrez HiperAI à Elastic Security pour une détection avancée des menaces et des analyses de sécurité"
 ---

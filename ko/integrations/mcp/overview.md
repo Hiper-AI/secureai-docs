@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "MCP 커넥터 개요"
+sidebarTitle: "MCP"
+icon: "/img/icons/mcp.svg"
 sidebar_label: "개요"
 description: "MCP(모델 컨텍스트 프로토콜) 서버를 연결하여 SecureAI의 보조자에게 도구에 대한 통제된 액세스 권한을 부여합니다."
 ---

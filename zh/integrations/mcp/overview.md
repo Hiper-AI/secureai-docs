@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: "MCP 连接器概述"
+sidebarTitle: "MCP"
+icon: "/img/icons/mcp.svg"
 sidebar_label: "概述"
 description: "连接模型上下文协议 (MCP) 服务器，为 SecureAI 的助手提供对工具的受控访问"
 ---

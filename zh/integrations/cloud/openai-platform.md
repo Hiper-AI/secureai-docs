@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "开放人工智能平台"
+sidebarTitle: "OpenAI"
+icon: "/img/icons/openai.svg"
 sidebar_label: "开放人工智能平台"
 description: "连接 OpenAI 平台，以便 SecureAI 可以清点项目、模型、密钥、使用情况和成本"
 ---

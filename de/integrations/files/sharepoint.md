@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: "SharePoint & OneDrive — Add from SharePoint"
+sidebarTitle: "SharePoint"
+icon: "/img/icons/sharepoint.svg"
 sidebar_label: "SharePoint & OneDrive"
 description: "Ermöglichen Sie Ihren Benutzern, Dateien aus SharePoint-Websites und OneDrive im SecureAI-Chat anzuhängen. Self-Service-Einrichtung mit Ihrer eigenen App-Registrierung in Microsoft Entra ID."
 ---

@@ -1,6 +1,8 @@
 ---
 id: custom-siem-webhook
 title: "自定义 SIEM/Webhook 集成"
+sidebarTitle: "自定义 Webhook"
+icon: "/img/icons/webhook.svg"
 sidebar_label: "自定义 SIEM/Webhook"
 description: "通用 SIEM（HTTP/Webhook）集成，用于将 SecureAI 安全日志发送到任何自定义 HTTP 端点"
 ---

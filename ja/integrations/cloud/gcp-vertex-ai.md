@@ -1,6 +1,8 @@
 ---
 sidebar_position: 6
 title: "Google Cloud — ディスカバリー"
+sidebarTitle: "Google Cloud"
+icon: "/img/icons/google-cloud.svg"
 sidebar_label: "Google Cloud — ディスカバリー"
 description: "Google Cloud に接続すると、SecureAI が Vertex AI のエージェント、モデル、サービス アカウント、キー、IAM、使用状況、コストを、1 つのプロジェクトまたは組織全体でインベントリできるようになります"
 ---

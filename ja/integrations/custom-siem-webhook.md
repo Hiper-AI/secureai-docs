@@ -1,6 +1,8 @@
 ---
 id: custom-siem-webhook
 title: "カスタム SIEM / Webhook の統合"
+sidebarTitle: "カスタム Webhook"
+icon: "/img/icons/webhook.svg"
 sidebar_label: "カスタム SIEM / Webhook"
 description: "SecureAI セキュリティ ログを任意のカスタム HTTP エンドポイントに送信するための汎用 SIEM (HTTP/Webhook) 統合"
 ---

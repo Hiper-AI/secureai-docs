@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
 title: "Anthropic Console"
+sidebarTitle: "Anthropic"
+icon: "/img/icons/anthropic.svg"
 sidebar_label: "Anthropic Console"
 description: "Anthropic Console に接続すると、SecureAI はワークスペース、キー、使用状況、コスト、アクティビティの監査を行うことができます。"
 ---

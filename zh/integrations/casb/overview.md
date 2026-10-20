@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "CASB & Network (SWG) Overview"
+sidebarTitle: "CASB / SWG"
 sidebar_label: "Overview"
 description: "Discover shadow AI from your CASB / SWG / DNS logs — which corporate sources are calling LLM APIs, with no agent required"
 ---

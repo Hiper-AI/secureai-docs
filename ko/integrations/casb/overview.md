@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "CASB 및 네트워크(SWG) 개요"
+sidebarTitle: "CASB / SWG"
 sidebar_label: "개요"
 description: "에이전트가 필요 없이 LLM API를 호출하는 기업 소스인 CASB/SWG/DNS 로그에서 섀도우 AI를 검색하세요."
 ---

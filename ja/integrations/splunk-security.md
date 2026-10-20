@@ -1,6 +1,8 @@
 ---
 id: splunk-security
 title: "Splunk セキュリティの統合"
+sidebarTitle: "Splunk"
+icon: "/img/icons/splunk.svg"
 sidebar_label: "Splunk セキュリティ"
 description: "統合ガイド: HTTP Event Collector (HEC) を介した Splunk SIEM と HiperAI の接続"
 ---
