@@ -34,7 +34,7 @@ Models available today: **Gemini** and the open models served as MaaS on Vertex 
 
 | Plan | Inference providers enabled at the same time |
 |------|-----------------------------------------------|
-| **Scale** | 1 (Google Vertex AI, Azure AI Foundry, **or** Amazon Bedrock) |
+| **Scale** | 1 (Google Vertex AI, Azure AI Foundry, Amazon Bedrock, the Anthropic API **or** the OpenAI API) |
 | **Enterprise** | Up to 3 — for example Vertex AI for Gemini, Foundry for GPT, and Bedrock for Claude |
 
 With more than one provider enabled, each one serves **different** model families: a family can be taken by only one enabled provider, and only one provider can be in **Remap everything**. When you save the integration turned on, SecureAI refuses it in two cases and explains why in the panel:

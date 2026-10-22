@@ -52,6 +52,8 @@ Todos los secretos que ingresa (secretos de cliente, JSON de cuenta de servicio,
 
 Además de inventariar, SecureAI puede **ejecutar el tráfico de LLM en su propia cuenta de Google Cloud**, para que Google le facture directamente y aproveche su gasto comprometido (CUDs). Es una integración distinta, en **Integraciones → Proveedores de IA**: [Google Vertex AI — Inferencia en tu cuenta](/integrations/cloud/vertex-ai-inference). Lo mismo aplica a Azure: [Azure AI Foundry — Inferencia en tu cuenta](/integrations/cloud/azure-ai-foundry-inference) ejecuta el tráfico de LLM en su propio recurso de Foundry para que Microsoft le facture directamente y descuente de su compromiso de Azure (MACC). Y en AWS, [Amazon Bedrock — Inferencia en tu cuenta](/integrations/cloud/aws-bedrock-inference) ejecuta el tráfico de LLM, Claude incluido, en su propia cuenta de AWS para que AWS le facture directamente y descuente de su compromiso con AWS (EDP).
 
+También puede usar la **clave de API de su organización** directamente con el proveedor del modelo: [API de Anthropic — Inferencia con la clave de su organización](/integrations/cloud/anthropic-api-inference) para Claude y [API de OpenAI — Inferencia con la clave de su organización](/integrations/cloud/openai-api-inference) para GPT. Anthropic u OpenAI le facturan directamente, y SecureAI sigue aplicando DLP, políticas de modelos y auditoría. No confundir con las tarjetas Anthropic Console y OpenAI Platform de arriba, que solo inventarían.
+
 ## Relacionado
 
 - [Sensores de nube](/discovery/cloud-sensors): el inventario de agente/modelo descubierto.

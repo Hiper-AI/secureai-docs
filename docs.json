@@ -111,7 +111,9 @@
                 "pages": [
                   "integrations/cloud/azure-ai-foundry-inference",
                   "integrations/cloud/vertex-ai-inference",
-                  "integrations/cloud/aws-bedrock-inference"
+                  "integrations/cloud/aws-bedrock-inference",
+                  "integrations/cloud/anthropic-api-inference",
+                  "integrations/cloud/openai-api-inference"
                 ]
               },
               {
@@ -323,7 +325,9 @@
                 "pages": [
                   "en/integrations/cloud/azure-ai-foundry-inference",
                   "en/integrations/cloud/vertex-ai-inference",
-                  "en/integrations/cloud/aws-bedrock-inference"
+                  "en/integrations/cloud/aws-bedrock-inference",
+                  "en/integrations/cloud/anthropic-api-inference",
+                  "en/integrations/cloud/openai-api-inference"
                 ]
               },
               {

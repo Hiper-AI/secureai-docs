@@ -32,7 +32,7 @@ Supported model families: **OpenAI (GPT‑5 and o‑series), gpt‑oss, DeepSeek
 
 | Plan | Inference providers enabled at the same time |
 |------|-----------------------------------------------|
-| **Scale** | 1 (Google Vertex AI, Azure AI Foundry **or** Amazon Bedrock) |
+| **Scale** | 1 (Google Vertex AI, Azure AI Foundry, Amazon Bedrock, the Anthropic API **or** the OpenAI API) |
 | **Enterprise** | Up to 3 — for example Vertex AI for Gemini and Foundry for GPT |
 
 With more than one provider enabled, each one serves **different** model families: a family can be routed to only one provider, and only one provider can use **Remap everything**. SecureAI refuses a configuration that overlaps another one and tells you which family collides.
