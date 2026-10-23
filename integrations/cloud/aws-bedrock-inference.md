@@ -52,7 +52,7 @@ Familias de modelos disponibles en Bedrock:
 
 | Plan | Proveedores de inferencia habilitados al mismo tiempo |
 |------|-------------------------------------------------------|
-| **Scale** | 1 (Google Vertex AI, Azure AI Foundry **o** Amazon Bedrock) |
+| **Scale** | 1 (Google Vertex AI, Azure AI Foundry, Amazon Bedrock, la API de Anthropic **o** la API de OpenAI) |
 | **Enterprise** | Hasta 3, por ejemplo Vertex AI para Gemini, Foundry para GPT y Bedrock para Claude |
 
 Con más de un proveedor habilitado, cada uno atiende familias de modelos **distintas**: una familia solo puede enrutarse a un proveedor, y solo un proveedor puede usar **Remapear todo**. SecureAI rechaza una configuración que se superponga con otra e indica qué familia colisiona.
