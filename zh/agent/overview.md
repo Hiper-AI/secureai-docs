@@ -6,7 +6,7 @@ description: "SecureAI OS 代理 — 笔记本电脑和服务器的端点 AI 治
 ---
 # 端点代理
 
-SecureAI **OS Agent** 在您的端点（Windows 笔记本电脑、Linux 服务器、macOS 计算机）上运行，并在实际工作发生的地方实施 AI 治理。它发现设备上的 AI/MCP 活动，应用数据丢失和行为保护，并可以根据策略控制或阻止 AI 提供商的出口。
+SecureAI **OS Agent** 在您的 Windows 端点上运行，并在实际工作发生的地方实施 AI 治理。它发现设备上的 AI/MCP 活动，应用数据丢失和行为保护，并可以根据策略控制或阻止 AI 提供商的出口。macOS 版本正在开发中。
 
 代理队列在 **管理 → 代理注册表 → 操作系统代理** 下进行管理。
 
@@ -32,7 +32,7 @@ SecureAI **OS Agent** 在您的端点（Windows 笔记本电脑、Linux 服务�
 
 ## 如何开始
 
-1. **[安装代理](/zh/agent/installation)** 在端点上（Windows 上签名的 MSI；Linux/macOS 上脚本）。
+1. **[安装代理](/zh/agent/installation)** 在端点上（Windows 版签名 MSI）。
 2. 了解**[注册和安装程序包](/zh/agent/enrollment-and-packages)** — 设备如何加入并获取其配置。
 3. 配置**[策略和组](/zh/agent/policies-and-groups)**来决定每个设备强制执行的内容。
 4. 调整 **[出口强制执行](/zh/agent/egress-enforcement)** 和 **[隔离和队列操作](/zh/agent/quarantine-and-fleet-ops)** 以进行响应。

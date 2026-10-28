@@ -2,14 +2,14 @@
 sidebar_position: 2
 title: "Installing the Agent"
 sidebar_label: "Installation"
-description: "Install the SecureAI OS Agent on Windows, Linux, and macOS endpoints"
+description: "Install the SecureAI OS Agent on Windows endpoints"
 ---
 
 
 
 # Installing the Agent
 
-The SecureAI OS Agent is installed from an **installer package** you build in **Admin → Agent Registry → OS Agents**. The package produces a ready-to-run command (Windows) or script (Linux/macOS) that carries two values: the **backend URL** and a scoped **enrollment key**. For the full package builder and enrollment mechanics, see [Enrollment & Installer Packages](/en/agent/enrollment-and-packages).
+The SecureAI OS Agent is installed from an **installer package** you build in **Admin → Agent Registry → OS Agents**. The package produces a ready-to-run command that carries two values: the **backend URL** and a scoped **enrollment key**. For the full package builder and enrollment mechanics, see [Enrollment & Installer Packages](/en/agent/enrollment-and-packages).
 
 ## Windows (MSI)
 
@@ -32,15 +32,9 @@ The installer panel shows the exact command with your values pre-filled — copy
 Push the same `msiexec` command through your existing MDM/RMM (Intune, GPO, SCCM, etc.). Because the URL and key are command-line properties, one signed MSI works for every tenant and group.
 </Tip>
 
-## Linux / macOS (script)
+## macOS (coming soon)
 
-Download the self-contained shell script from the installer package and run it. The script pulls the appropriate `.deb`/`.pkg` and writes the agent configuration (e.g. `/etc/secureai-agent.toml` on Linux, a LaunchAgent plist on macOS).
-
-```bash
-sudo ./secureai-agent-install.sh
-```
-
-The backend URL and enrollment key are already embedded in the script generated for your package.
+For now the agent installs on Windows only. The macOS version is in development and has no installer yet, so the package builder offers Windows only.
 
 ## What happens on first run
 
