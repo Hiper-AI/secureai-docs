@@ -2,12 +2,12 @@
 sidebar_position: 2
 title: "Instalação do Endpoint Agent"
 sidebar_label: "Instalação"
-description: "Instale o SecureAI OS Agent em endpoints Windows, Linux e macOS"
+description: "Instale o SecureAI OS Agent em endpoints Windows"
 ---
 
 # Instalando o Agente
 
-O SecureAI OS Agent é instalado a partir de um **pacote de instalação** que você cria em **Admin → Agent Registry → OS Agents**. O pacote produz um comando pronto para execução (Windows) ou script (Linux/macOS) que carrega dois valores: o **URL de back-end** e uma **chave de inscrição** com escopo definido. Para o construtor completo de pacotes e a mecânica de inscrição, consulte [Pacotes de inscrição e instalação](/pt/agent/enrollment-and-packages).
+O SecureAI OS Agent é instalado a partir de um **pacote de instalação** que você cria em **Admin → Agent Registry → OS Agents**. O pacote produz um comando pronto para execução que carrega dois valores: o **URL de back-end** e uma **chave de inscrição** com escopo definido. Para o construtor completo de pacotes e a mecânica de inscrição, consulte [Pacotes de inscrição e instalação](/pt/agent/enrollment-and-packages).
 
 ## Windows (MSI)
 
@@ -30,15 +30,9 @@ O painel do instalador mostra o comando exato com seus valores pré-preenchidos 
 Envie o mesmo comando `msiexec` por meio de seu MDM/RMM existente (Intune, GPO, SCCM, etc.). Como a URL e a chave são propriedades de linha de comando, um MSI assinado funciona para cada locatário e grupo.
 </Tip>
 
-##Linux/macOS (script)
+## macOS (em breve)
 
-Baixe o script de shell independente do pacote do instalador e execute-o. O script extrai o `.deb`/`.pkg` apropriado e grava a configuração do agente (por exemplo, `/etc/secureai-agent.toml` no Linux, um plist do LaunchAgent no macOS).
-
-```bash
-sudo ./secureai-agent-install.sh
-```
-
-A URL de back-end e a chave de inscrição já estão incorporadas no script gerado para o seu pacote.
+Por enquanto, o agente só pode ser instalado no Windows. A versão para macOS está em desenvolvimento e ainda não tem instalador, por isso o construtor de pacotes oferece apenas Windows.
 
 ## O que acontece na primeira execução
 

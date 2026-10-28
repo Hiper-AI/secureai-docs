@@ -9,7 +9,7 @@ description: "The SecureAI OS Agent — endpoint AI governance, DLP, and egress 
 
 # Endpoint Agent
 
-The SecureAI **OS Agent** runs on your endpoints — Windows laptops, Linux servers, macOS machines — and enforces AI governance where the work actually happens. It discovers AI/MCP activity on the device, applies data-loss and behavioral protections, and can control or block egress to AI providers according to policy.
+The SecureAI **OS Agent** runs on your Windows endpoints and enforces AI governance where the work actually happens. It discovers AI/MCP activity on the device, applies data-loss and behavioral protections, and can control or block egress to AI providers according to policy. A macOS version is in development.
 
 The agent fleet is managed under **Admin → Agent Registry → OS Agents**.
 
@@ -35,7 +35,7 @@ The **OS Agents** tab lists every device with its status, posture, risk, OS/vers
 
 ## How to get started
 
-1. **[Install the agent](/en/agent/installation)** on endpoints (signed MSI on Windows; script on Linux/macOS).
+1. **[Install the agent](/en/agent/installation)** on endpoints (signed MSI for Windows).
 2. Understand **[enrollment & installer packages](/en/agent/enrollment-and-packages)** — how devices join and get their configuration.
 3. Configure **[policies & groups](/en/agent/policies-and-groups)** to decide what each device enforces.
 4. Tune **[egress enforcement](/en/agent/egress-enforcement)** and **[quarantine & fleet ops](/en/agent/quarantine-and-fleet-ops)** for response.
