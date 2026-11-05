@@ -1,12 +1,12 @@
 ---
 title: "Welcome to SecureAI"
-description: "Secure Artificial Intelligence business platform, compliant with regulations and with full governance control."
+description: "Secure AI business platform with governance controls, signed evidence and data loss prevention."
 ---
 
 
 
 
-SecureAI is a business platform designed to deploy and consume Artificial Intelligence models with the maximum guarantees of security, privacy and observability.
+SecureAI is a business platform to deploy and use AI models with security, privacy and observability controls.
 
 It combines advanced **RAG (Retrieval-Augmented Generation)** capabilities, transparent proxying for corporate fleets, compliance using the **SMLTP** cryptographic protocol, and a **unified API with automatic redundancy** between multiple AI providers.
 
@@ -31,7 +31,7 @@ Explore getting started resources to get your environment up and running or inte
 
 <CardGroup cols={3}>
   <Card title="Security & SMLTP" icon="shield-halved" href="/en/security/overview">
-    End-to-End Encryption, Data Leak Prevention (DLP), Prompt Shields, and Immutable Compliance Receipts.
+    Field-level encryption with per-tenant keys, Data Leak Prevention (DLP), Prompt Shields, and signed compliance receipts.
   </Card>
   <Card title="Knowledge Bases (RAG)" icon="database" href="/en/indexes/overview">
     Vector semantic search, real-time document ingestion, and personal, team, and global indexes.

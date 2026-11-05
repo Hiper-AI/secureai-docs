@@ -32,11 +32,10 @@ Grandes Modelos de Linguagem (LLMs) governados, contidos e demonstráveis. Ele f
 
 ### Proteção de Dados
 
-- **Postura de conhecimento zero**: chaves gerenciadas pelo cliente (BYOK), processamento efêmero na memória e
-  o registro local de implantação mantém os dados confidenciais sob seu controle
-- **Criptografia em repouso**: todos os dados armazenados são criptografados usando algoritmos padrão do setor
-- **Criptografia em trânsito**: criptografia TLS 1.3 para todas as comunicações API
-- **Chaves gerenciadas pelo cliente**: você controla suas chaves de criptografia
+- **Chaves por organização**: o SecureAI criptografa as conversas e as credenciais de conectores armazenadas no nível do campo com AES-256-GCM, com chaves exclusivas da sua organização protegidas por um serviço de gerenciamento de chaves na nuvem.
+- **Criptografia em repouso**: os bancos de dados e os backups ficam em discos do Google Cloud, que o Google criptografa em repouso.
+- **Criptografia em trânsito**: as conexões usam TLS 1.2 ou TLS 1.3 com suítes de cifra AEAD com sigilo direto.
+- **Sua própria chave para a evidência**: se você ativar a retenção de evidência (desligada por padrão), pode criptografá-la com uma chave do seu próprio serviço de gerenciamento de chaves na AWS, Azure ou Google Cloud.
 
 ### Controle de acesso
 
@@ -52,16 +51,15 @@ SMLTP oferece suporte a vários modelos de política integrados:
 - **Interno**: política padrão para dados internos da empresa
 - **Estrito Interno**: Maior segurança para dados internos confidenciais
 - **Público**: política menos restritiva para dados públicos não confidenciais
-- **HIPAA**: Em conformidade com os regulamentos de dados de saúde
-- **GDPR**: Em conformidade com os regulamentos europeus de proteção de dados
-**PCI-DSS**: compatível com os padrões da indústria de cartões de pagamento
+- **HIPAA, GDPR e PCI-DSS**: nomes do catálogo que aplicam os mesmos controles que Estrito Interno. Escolher um não torna o seu uso conforme a essa regulamentação. Para aplicar regras próprias de uma regulamentação, defina uma política personalizada com o mesmo nome: ela substitui a integrada na sua organização.
 
-### Conformidade e Certificações
+### Suporte à conformidade
 
-**Enterprise Ready**: projetado para requisitos de segurança empresarial
-- **Trilha de auditoria**: registro completo para auditorias de conformidade e segurança
-- **Aplicação de políticas**: aplicação automatizada de políticas de segurança
-- **Monitoramento em tempo real**: monitoramento contínuo de eventos de segurança
+- **Mapeamento de estruturas**: o SecureAI mapeia suas verificações a controles de estruturas como NIST AI RMF, ISO/IEC 42001 e a Lei de IA da UE. O mapeamento é parcial e ajuda a reunir evidências. Não é uma certificação.
+- **Certificações**: a Hiper AI não tem hoje um relatório SOC 2 nem um certificado ISO/IEC 27001.
+- **Trilha de auditoria**: registros encadeados por hash das interações com IA e das ações administrativas, para suas revisões de conformidade e segurança.
+- **Aplicação de políticas**: o SecureAI aplica suas políticas de segurança a cada solicitação que passa pelo gateway.
+- **Monitoramento em tempo real**: os eventos de segurança aparecem no console à medida que acontecem.
 
 ## Como SMLTP funciona
 
@@ -78,8 +76,8 @@ SMLTP oferece suporte a vários modelos de política integrados:
 ## Benefícios
 
 - **Provável, não apenas registrado**: recibos assinados permitem que os auditores verifiquem as interações de forma independente
-- **Compliance Ready**: suporte integrado para as principais estruturas de conformidade
-- **Contenção**: mesmo um agente comprometido não pode exceder suas permissões assinadas criptograficamente
+- **Evidência para auditorias**: os recibos assinados e o mapeamento de estruturas dão aos seus auditores material que eles podem verificar por conta própria.
+- **Contenção**: um agente que passa pelo gateway não pode exceder as permissões do seu token assinado, mesmo que esteja comprometido.
 - **Revogação Determinística**: o corte de um usuário, chave ou agente entra em vigor no gateway em
   segundos – sem esperar por nenhum provedor de IA
 - **Políticas**: aplicação automatizada de suas políticas de segurança

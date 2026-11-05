@@ -13,7 +13,7 @@ Das **KI-Gateway** ist die zentrale Kontrollebene zur Steuerung, Sicherung, Weit
 ### 1. Sicherheitsrichtlinien
 Definieren Sie organisationsweite Durchsetzungsregeln:
 - **Modell-Zulassungslisten**: Beschränken Sie, mit welchen Modellen und Anbietern Mitarbeiter und Anwendungen interagieren können.
-- **Data Residency Geofencing**: Stellen Sie sicher, dass Eingabeaufforderungen und Antworten innerhalb der festgelegten Zuständigkeiten bleiben.
+- **Datenresidenz**: SecureAI lehnt Modellaufrufe ab, die ein Anbieter nicht auf eine von Ihrer Richtlinie erlaubte Region festlegen kann, und lehnt Vektorindizes in einer Zone ab, die Ihre Richtlinie ausschließt. Die Richtlinie steuert, wohin der Modellverkehr geht. SecureAI selbst läuft in Google Cloud in den USA.
 - **Erzwingungsmodi**: Ausführung im **Überwachungsmodus** (Protokollierung und Bescheinigung ohne Blockierung) oder **Erzwingungsmodus** (Fail-Closed, Blockierung von nicht konformem Datenverkehr mit kryptografischen Belegen).
 
 ### 2. Dashboard und Beobachtbarkeit

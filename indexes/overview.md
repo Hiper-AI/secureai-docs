@@ -27,12 +27,12 @@ Los índices son bases de conocimiento estructuradas categorizadas por accesibil
 
 | Tipo de índice | Alcance | Acceso y Privacidad | Mejor para |
 |---|---|---|---|
-| **Índices personales** | Usuario individual | Cifrado de extremo a extremo; almacenamiento sin conocimiento (ni siquiera los administradores pueden leer los contenidos) | Notas personales, investigaciones privadas, documentos de proyectos individuales |
+| **Índices personales** | Usuario individual | Privado del usuario. SecureAI procesa el contenido en sus servidores para indexarlo y buscarlo, así que no tiene cifrado de extremo a extremo | Notas personales, investigaciones privadas, documentos de proyectos individuales |
 | **Índices de grupo** | Equipos / Departamentos | Acceso basado en roles controlado por pertenencia al grupo | Wikis de departamento, documentación de proyectos de equipo, SOP compartidos |
 | **Índices globales** | En toda la organización | Acceso de lectura para todos los usuarios de la empresa | Políticas de empresa, directrices de recursos humanos, manuales para toda la empresa |
 
 ### 1. Índices personales
-- **Privacidad de conocimiento cero**: sus archivos y conversaciones se cifran con claves de inquilino/usuario.
+- **Conversaciones cifradas**: SecureAI cifra sus conversaciones con claves propias de su organización.
 - **Creación**: 
   - **Usuarios**: abra la interfaz de chat, haga clic en el selector de índice junto al selector de modelo, cambie a la pestaña *Personal* y haga clic en **+**.
   - **Administradores**: ¿Ir a **Administrador? ¿Gestión de índices? Cree un índice** y asígnelo a un usuario específico.

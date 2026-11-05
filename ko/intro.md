@@ -1,8 +1,8 @@
 ---
 title: "SecureAI에 오신 것을 환영합니다"
-description: "규정을 준수하고 완전한 거버넌스를 제어하는 ​​안전한 인공지능 비즈니스 플랫폼입니다."
+description: "거버넌스 통제, 서명된 증거, 데이터 유출 방지를 갖춘 기업용 보안 AI 플랫폼입니다."
 ---
-SecureAI는 보안, 개인 정보 보호 및 관찰 가능성을 최대한 보장하면서 인공 지능 모델을 배포하고 사용하도록 설계된 비즈니스 플랫폼입니다.
+SecureAI는 보안, 개인정보 보호, 관찰 가능성 통제 아래에서 AI 모델을 배포하고 사용하기 위한 기업용 플랫폼입니다.
 
 고급 **RAG(Retrieval-Augmented Generation)** 기능, 기업 차량을 위한 투명한 프록시, **SMLTP** 암호화 프로토콜을 사용한 규정 준수, 여러 AI 제공업체 간의 **자동 중복성을 갖춘 통합 API**를 결합합니다.
 
@@ -27,7 +27,7 @@ SecureAI는 보안, 개인 정보 보호 및 관찰 가능성을 최대한 보�
 
 <CardGroup cols={3}>
   <Card title="보안 및 SMLTP" icon="shield-halved" href="/ko/security/overview">
-    엔드투엔드 암호화, 데이터 유출 방지(DLP), 프롬프트 쉴드 및 불변 규정 준수 영수증.
+    테넌트별 키를 사용한 필드 단위 암호화, 데이터 유출 방지(DLP), 프롬프트 쉴드, 서명된 규정 준수 영수증.
   </Card>
   <Card title="기술 자료(RAG)" icon="database" href="/ko/indexes/overview">
     벡터 의미 검색, 실시간 문서 수집, 개인, 팀, 글로벌 인덱스.

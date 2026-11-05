@@ -15,7 +15,7 @@ sidebar_label: "AI Gateway"
 ### 1. Políticas de seguridad
 Defina reglas de cumplimiento para toda la organización:
 - **Listas de modelos permitidos**: restringe con qué modelos y proveedores pueden interactuar los empleados y las aplicaciones.
-- **Geofencing de residencia de datos**: asegúrese de que las indicaciones y respuestas permanezcan dentro de las jurisdicciones designadas.
+- **Residencia de datos**: SecureAI rechaza las llamadas a modelos que el proveedor no puede fijar en una región permitida por su política, y rechaza índices vectoriales en una zona que su política excluye. La política rige adónde va el tráfico hacia los modelos. SecureAI corre en Google Cloud, en Estados Unidos.
 - **Modos de cumplimiento**: se ejecuta en **Modo de supervisión** (registrar y dar fe sin bloquear) o en **Modo de cumplimiento** (cerrado contra fallas, bloqueando el tráfico no conforme con recibos criptográficos).
 
 ### 2. Panel de control y observabilidad
