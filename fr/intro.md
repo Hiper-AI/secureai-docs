@@ -1,8 +1,8 @@
 ---
 title: "Bienvenue sur SecureAI"
-description: "Plateforme métier d'Intelligence Artificielle sécurisée, conforme à la réglementation et avec un contrôle total de la gouvernance."
+description: "Plateforme d'IA sécurisée pour l'entreprise, avec contrôles de gouvernance, preuves signées et prévention des fuites de données."
 ---
-SecureAI est une plateforme commerciale conçue pour déployer et utiliser des modèles d'intelligence artificielle avec les garanties maximales de sécurité, de confidentialité et d'observabilité.
+SecureAI est une plateforme d'entreprise pour déployer et utiliser des modèles d'IA avec des contrôles de sécurité, de confidentialité et d'observabilité.
 
 Il combine des fonctionnalités avancées **RAG (Retrieval-Augmented Generation)**, un proxy transparent pour les flottes d'entreprise, la conformité à l'aide du protocole cryptographique **SMLTP** et une **API unifiée avec redondance automatique** entre plusieurs fournisseurs d'IA.
 
@@ -27,7 +27,7 @@ Découvrez les ressources de démarrage pour rendre votre environnement opérati
 
 <CardGroup cols={3}>
   <Card title="Sécurité et SMLTP" icon="shield-halved" href="/fr/security/overview">
-    Chiffrement de bout en bout, prévention des fuites de données (DLP), boucliers d'invite et reçus de conformité immuables.
+    Chiffrement au niveau du champ avec des clés par locataire, prévention des fuites de données (DLP), boucliers d'invite et reçus de conformité signés.
   </Card>
   <Card title="Bases de connaissances (RAG)" icon="database" href="/fr/indexes/overview">
     Recherche sémantique vectorielle, ingestion de documents en temps réel et index personnels, d'équipe et globaux.

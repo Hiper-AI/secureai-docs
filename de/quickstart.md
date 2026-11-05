@@ -47,7 +47,7 @@ Dieser Leitfaden führt Sie Schritt für Schritt durch den Zugriff auf die Secur
     Während der Erstkonfiguration können Sie Ihren eigenen **RAG-Index (Retrieval-Augmented Generation)** anzeigen:
 
     - **Multi-Cloud-Bereitstellung: Wählen Sie die Region und den Cloud-Anbieter Ihrer Wahl aus.**
-    - **Ende-zu-Ende-Verschlüsselung: Alle vektorisierten Informationen und Dokumente werden mit exklusiven Schlüsseln verschlüsselt.**
+    - **Verschlüsselung: SecureAI speichert Ihre Daten im Ruhezustand verschlüsselt und verschlüsselt Unterhaltungen mit Schlüsseln, die nur Ihrer Organisation gehören.**
     - **Persönliche oder Team-Wissensdatenbank: Ermöglicht das Hochladen von Dokumenten (PDFs, Dokumente, Code), damit die Modelle genau auf den Kontext Ihres Unternehmens reagieren.**
 
   </Step>

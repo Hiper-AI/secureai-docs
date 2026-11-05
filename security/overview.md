@@ -32,11 +32,10 @@ Modelos de lenguajes grandes (LLM) gobernados, contenidos y demostrables. Propor
 
 ### Protección de datos
 
-- **Postura de conocimiento cero**: claves administradas por el cliente (BYOK), procesamiento efímero en memoria y
-  El registro local de implementación mantiene los datos confidenciales bajo su control.
-- **Cifrado en reposo**: todos los datos almacenados se cifran utilizando algoritmos estándar de la industria
-- **Cifrado en tránsito**: cifrado TLS 1.3 para todas las comunicaciones API
-- **Claves administradas por el cliente**: usted controla sus claves de cifrado
+- **Claves por organización**: SecureAI cifra las conversaciones y las credenciales de conectores guardadas a nivel de campo con AES-256-GCM, con claves propias de su organización protegidas por un servicio de gestión de claves en la nube.
+- **Cifrado en reposo**: las bases de datos y los backups están en discos de Google Cloud, que Google cifra en reposo.
+- **Cifrado en tránsito**: las conexiones usan TLS 1.2 o TLS 1.3 con suites de cifrado AEAD con secreto perfecto hacia adelante.
+- **Su propia clave para la evidencia**: si activa la retención de evidencia (apagada por defecto), puede cifrarla con una clave de su propio servicio de gestión de claves en AWS, Azure o Google Cloud.
 
 ### Control de acceso
 
@@ -52,16 +51,15 @@ SMLTP admite varias plantillas de políticas integradas:
 - **Interno**: Política predeterminada para datos internos de la empresa
 - **Estricto interno**: mayor seguridad para datos internos confidenciales
 - **Público**: política menos restrictiva para datos públicos no confidenciales
-- **HIPAA**: Cumple con las regulaciones de datos de atención médica
-- **GDPR**: Cumple con la normativa europea de protección de datos
-- **PCI-DSS**: Cumple con los estándares de la industria de tarjetas de pago
+- **HIPAA, GDPR y PCI-DSS**: nombres del catálogo que aplican los mismos controles que Estricto interno. Elegir uno no hace que su uso cumpla con esa regulación. Para aplicar reglas propias de una regulación, defina una política personalizada con el mismo nombre: reemplaza a la integrada en su organización.
 
-### Cumplimiento y certificaciones
+### Soporte para cumplimiento
 
-- **Enterprise Ready**: Diseñado para los requisitos de seguridad empresarial
-- **Audit Trail**: registro completo para auditorías de cumplimiento y seguridad
-- **Aplicación de políticas**: aplicación automatizada de políticas de seguridad
-- **Monitoreo en tiempo real**: Monitoreo continuo de eventos de seguridad
+- **Mapeo a marcos**: SecureAI mapea sus verificaciones a controles de marcos como NIST AI RMF, ISO/IEC 42001 y la Ley de IA de la UE. El mapeo es parcial y sirve para reunir evidencia. No es una certificación.
+- **Certificaciones**: Hiper AI no tiene hoy un informe SOC 2 ni un certificado ISO/IEC 27001.
+- **Pista de auditoría**: registros encadenados por hash de las interacciones con IA y de las acciones administrativas, para sus revisiones de cumplimiento y seguridad.
+- **Aplicación de políticas**: SecureAI aplica sus políticas de seguridad a cada solicitud que pasa por el gateway.
+- **Monitoreo en tiempo real**: los eventos de seguridad aparecen en la consola a medida que ocurren.
 
 ## Cómo funciona SMLTP
 
@@ -78,8 +76,8 @@ SMLTP admite varias plantillas de políticas integradas:
 ## Beneficios
 
 - **Demostrable, no sólo registrado**: los recibos firmados permiten a los auditores verificar las interacciones de forma independiente
-- **Compliance Ready**: soporte integrado para los principales marcos de cumplimiento
-- **Contención**: ni siquiera un agente comprometido puede exceder sus permisos firmados criptográficamente
+- **Evidencia para auditorías**: los recibos firmados y el mapeo a marcos les dan a sus auditores material que pueden verificar por su cuenta.
+- **Contención**: un agente que pasa por el gateway no puede exceder los permisos de su token firmado, aunque esté comprometido.
 - **Revocación determinista**: el corte de un usuario, clave o agente tiene efecto en la puerta de enlace en
   segundos, sin esperar a ningún proveedor de IA
 - **Policy Driven**: aplicación automatizada de sus políticas de seguridad
