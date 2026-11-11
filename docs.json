@@ -126,7 +126,8 @@
                 "group": "Red y CASB",
                 "pages": [
                   "integrations/casb/overview",
-                  "integrations/casb/cisco-umbrella"
+                  "integrations/casb/cisco-umbrella",
+                  "integrations/firewalls/cloudflare"
                 ]
               },
               {
@@ -340,7 +341,8 @@
                 "group": "Network & CASB",
                 "pages": [
                   "en/integrations/casb/overview",
-                  "en/integrations/casb/cisco-umbrella"
+                  "en/integrations/casb/cisco-umbrella",
+                  "en/integrations/firewalls/cloudflare"
                 ]
               },
               {
