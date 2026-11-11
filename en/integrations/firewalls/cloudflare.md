@@ -63,9 +63,11 @@ Under **Account Resources**, pick only your account. Also copy the **Account ID*
 
 ## 2. Connect in SecureAI
 
-In **Integrations**, filter **Network / SWG**, open **Cloudflare Zero Trust** and paste the Account ID and the
-token. **Test connection** checks that the token can read Zero Trust and analytics before saving. From then on
-SecureAI queries Gateway every 30 minutes, and what it finds shows up in **Network Sources**.
+In **Integrations**, filter **Network / SWG**, open **Cloudflare Zero Trust**, paste the Account ID and the token
+and save. On save, SecureAI tests the token: if it can't read Zero Trust or the analytics, nothing is saved and you
+see which permission is missing. If it can read but can't write Zero Trust, the connection is saved with a warning
+that it will only discover: blocking can't be turned on until the token has Zero Trust Edit. From then on SecureAI
+queries Gateway every 30 minutes, and what it finds shows up in **Network Sources**.
 
 ## 3. Turn on blocking
 
@@ -180,9 +182,10 @@ Blocking still comes from the **Cloudflare Zero Trust** connection in step 2. Lo
 
 | Symptom | Likely cause |
 |---|---|
-| Test connection fails with `NO_ANALYTICS_SCOPE` | The token is missing Account Analytics Read |
-| Test connection fails with `NO_ZT_READ` or `CF_AUTH` | The token is missing Zero Trust Read, or belongs to another account |
-| Blocking shows the error `CF_FORBIDDEN` | The token is missing Zero Trust Edit |
+| Saving fails with `NO_ANALYTICS_SCOPE` | The token is missing Account Analytics Read |
+| Saving fails with `NO_ZT_READ` or `CF_AUTH` | The token is missing Zero Trust Read, or belongs to another account |
+| "Discovery only" warning on save, or turning blocking on returns `NO_ZT_WRITE` | The token is missing Zero Trust Edit |
+| Blocking shows the error `CF_FORBIDDEN` | Zero Trust Edit was removed from the token after blocking was turned on |
 | `CF_LIMIT` error | No free lists left in the account (100 max) |
 | `cf-location:…` sources with no user | It's DNS by location: the user only comes with WARP |
 | Nothing in Network Sources after an hour | The traffic doesn't go through Gateway, or didn't go to AI domains |

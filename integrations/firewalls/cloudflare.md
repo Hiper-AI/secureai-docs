@@ -65,9 +65,11 @@ menú de la cuenta → *Copy account ID*).
 
 ## 2. Conectar en SecureAI
 
-En **Integraciones**, filtro **Network / SWG**, abra **Cloudflare Zero Trust** y pegue el Account ID y el token.
-**Probar conexión** verifica que el token lee Zero Trust y las analíticas antes de guardar. Desde ahí SecureAI
-consulta Gateway cada 30 minutos, y lo que encuentra aparece en **Fuentes de red**.
+En **Integraciones**, filtro **Network / SWG**, abra **Cloudflare Zero Trust**, pegue el Account ID y el token y
+guarde. Al guardar, SecureAI prueba el token: si no lee Zero Trust o las analíticas, no guarda y le dice qué permiso
+falta. Si lee pero no puede escribir en Zero Trust, guarda y le avisa que solo va a descubrir: el bloqueo no se puede
+prender hasta que el token tenga Zero Trust Edit. Desde ahí SecureAI consulta Gateway cada 30 minutos, y lo que
+encuentra aparece en **Fuentes de red**.
 
 ## 3. Prender el bloqueo
 
@@ -186,9 +188,10 @@ El bloqueo sigue saliendo de la conexión **Cloudflare Zero Trust** del paso 2. 
 
 | Síntoma | Causa probable |
 |---|---|
-| Probar conexión falla con `NO_ANALYTICS_SCOPE` | Al token le falta Account Analytics Read |
-| Probar conexión falla con `NO_ZT_READ` o `CF_AUTH` | Al token le falta Zero Trust Read, o es de otra cuenta |
-| El bloqueo queda con error `CF_FORBIDDEN` | Al token le falta Zero Trust Edit |
+| Guardar falla con `NO_ANALYTICS_SCOPE` | Al token le falta Account Analytics Read |
+| Guardar falla con `NO_ZT_READ` o `CF_AUTH` | Al token le falta Zero Trust Read, o es de otra cuenta |
+| Aviso "Solo descubrimiento" al guardar, o prender el bloqueo da `NO_ZT_WRITE` | Al token le falta Zero Trust Edit |
+| El bloqueo queda con error `CF_FORBIDDEN` | Le quitaron Zero Trust Edit al token después de prenderlo |
 | Error `CF_LIMIT` | No quedan listas libres en la cuenta (máximo 100) |
 | Fuentes `cf-location:…` sin usuario | Es DNS por ubicación: el usuario solo llega con WARP |
 | Nada en Fuentes de red después de una hora | El tráfico no pasa por Gateway, o no fue a dominios de IA |
