@@ -114,6 +114,7 @@ enrichment_tables:
   ai_patterns:
     type: memory
     ttl: 604800
+    # Required: without flush_interval, Vector 0.46.1 on Linux exits at startup ("overflow when adding duration to instant").
     flush_interval: 5
     inputs: [ai_list_rows]
 
