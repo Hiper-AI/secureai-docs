@@ -52,13 +52,13 @@ La integración está en **beta**. La probamos en laboratorio con FortiGate-VM y
 
 4. Haga clic en **Crear y mostrar la configuración**. SecureAI le pide el segundo factor y crea tres cosas: la
    fuente de logs del colector, el feed de bloqueo del FortiGate y el feed con la lista de dominios de IA que usa
-   el colector para filtrar. Después muestra dos bloques para copiar: `collector.env`, con los datos del colector,
-   y la CLI de FortiOS, con la URL y el token del feed.
+   el colector para filtrar. Después ofrece **Descargar el colector (.zip)** y muestra dos bloques para copiar:
+   `collector.env`, con los datos del colector, y la CLI de FortiOS, con la URL y el token del feed.
 
 ![Panel con collector.env y la CLI de FortiOS](/img/fortinet/console-config.png)
 
-Los tokens se ven solo en ese momento. Copie los dos bloques antes de cerrar el panel y guárdelos en su gestor de
-secretos. Si los pierde, **Tokens nuevos** en la fila del equipo genera otros y los anteriores dejan de funcionar.
+Los tokens se ven solo en ese momento. Descargue el colector y copie la CLI antes de cerrar el panel, y guarde los
+tokens en su gestor de secretos. Si los pierde, **Tokens nuevos** en la fila del equipo genera otros y los anteriores dejan de funcionar.
 
 En **Equipos conectados** ve, por cada FortiGate, si llegan sus logs y cuándo descargó la lista de bloqueo por
 última vez. Si un equipo deja de descargarla por más de 30 minutos, el panel lo avisa.
@@ -67,8 +67,237 @@ En **Equipos conectados** ve, por cada FortiGate, si llegan sus logs y cuándo d
 
 ## 2. Instalar el colector
 
-En la máquina Linux, guarde el bloque `collector.env` del paso 1 junto al colector de SecureAI y levántelo con
-`docker compose up -d`. Escucha syslog en el puerto 514, UDP y TCP.
+El colector es [Vector](https://vector.dev) 0.46.1 con la imagen oficial `timberio/vector:0.46.1-debian`. SecureAI
+no publica una imagen propia. **Descargar el colector (.zip)**, en el panel del paso 1, baja tres archivos:
+
+| Archivo | Qué es |
+|---|---|
+| `docker-compose.yml` | Corre la imagen oficial con `vector.yaml` montado. El puerto 514 de la máquina va al 5514 del contenedor |
+| `vector.yaml` | Recibe el syslog, se queda con las líneas que van a un servicio de IA y las manda a su tenant |
+| `collector.env` | La URL de su tenant y los ids y tokens de este equipo. No lo comparta ni lo suba a un repositorio |
+
+1. Copie el `.zip` a una máquina Linux con Docker en la red del FortiGate y descomprímalo.
+2. En la carpeta `secureai-collector`, ejecute `docker compose up -d`.
+3. Con `docker compose logs -f` ve que Vector arranca y escucha en el puerto 5514 del contenedor.
+
+El colector escucha syslog en el puerto 514 de la máquina, UDP y TCP. Cada hora descarga de su tenant la lista de
+dominios de IA y solo manda las líneas cuyo destino está en esa lista. El resto de la navegación no sale de su red.
+Hasta que llega la primera lista no manda nada, y si su tenant deja de contestar, conserva la última lista 7 días.
+
+### Sin Docker
+
+Instale Vector 0.46.1 en la máquina, exporte las variables de `collector.env` y ejecute
+`vector --config vector.yaml`. Así escucha en el puerto 5514; apunte ahí el syslog del FortiGate o redirija el 514.
+Este es el `vector.yaml` del paquete:
+
+<Accordion title="vector.yaml">
+
+```yaml
+# SecureAI firewall log collector (Vector 0.46.1). Runs at the customer, next to the firewall, with the
+# official image timberio/vector:0.46.1-debian and nothing else: no image of ours, no extra tools.
+#
+#   firewall --syslog--> [syslog_udp / syslog_tcp] --> extract_host --> ai_candidates --> ai_only --> secureai_ingest --HTTPS--> SecureAI
+#                                                                                           ^
+#   SecureAI AI domain list (feed list=ai-catalog) --> [ai_list] --> ai_list_rows --> ai_patterns (memory table)
+#
+# Lines whose destination is not an AI service never leave the customer network. Until the first list
+# arrives nothing is sent; if SecureAI stops answering, the last list stays for 7 days.
+#
+# Settings come from collector.env (the console's "Connect" panel writes it): SECUREAI_URL, SECUREAI_FEED_ID,
+# SECUREAI_FEED_TOKEN, SECUREAI_INGEST_ID, SECUREAI_INGEST_TOKEN and, optional, SECUREAI_FEED_REFRESH_SECONDS.
+
+data_dir: /var/lib/vector
+
+enrichment_tables:
+  # One entry per AI domain pattern (chatgpt.com, *.openai.azure.com, bedrock.*.amazonaws.com, ...).
+  # Every download rewrites the entries; one the list drops expires after the TTL.
+  ai_patterns:
+    type: memory
+    ttl: 604800
+    flush_interval: 5
+    inputs: [ai_list_rows]
+
+sources:
+  syslog_udp:
+    type: socket
+    mode: udp
+    address: 0.0.0.0:5514
+    decoding:
+      codec: bytes
+  syslog_tcp:
+    type: socket
+    mode: tcp
+    address: 0.0.0.0:5514
+    framing:
+      method: newline_delimited
+    decoding:
+      codec: bytes
+  # The AI domain list, one pattern per line. A failed download (401, 5xx, timeout) emits nothing:
+  # the table keeps the patterns it has.
+  ai_list:
+    type: http_client
+    endpoint: "${SECUREAI_URL}/api/network-feeds/${SECUREAI_FEED_ID}"
+    scrape_interval_secs: ${SECUREAI_FEED_REFRESH_SECONDS:-3600}
+    scrape_timeout_secs: 60
+    auth:
+      strategy: bearer
+      token: "${SECUREAI_FEED_TOKEN}"
+    decoding:
+      codec: bytes
+    framing:
+      method: newline_delimited
+
+transforms:
+  ai_list_rows:
+    type: remap
+    inputs: [ai_list]
+    source: |
+      p = downcase(strip_whitespace(to_string(.message) ?? ""))
+      if !match(p, r'^[a-z0-9*._-]+$') { abort }
+      . = set!(value: {}, path: [p], data: true)
+
+  # Find the destination host in the line: CEF first (dhost / destinationHostName /
+  # request URL), then the MikroTik RouterOS DNS query log, then key=value logs (FortiOS native:
+  # hostname="...", or qname="..." in DNS logs), then a url=.
+  # Also drops the query string of the request URL: the host is all SecureAI needs.
+  extract_host:
+    type: remap
+    inputs: [syslog_udp, syslog_tcp]
+    source: |
+      msg = to_string(.message) ?? ""
+      msg = replace(msg, r'(request=[^ ?]*)\?[^ ]*', "$$1")
+      .message = msg
+      host = ""
+      at = find(msg, "CEF:")
+      if at >= 0 {
+        cef, err = parse_cef(slice!(msg, at))
+        if err == null {
+          host = to_string(cef.dhost)
+          if host == "" { host = to_string(cef.destinationHostName) }
+          if host == "" {
+            u, uerr = parse_url(to_string(cef.request))
+            if uerr == null { host = to_string(u.host) }
+          }
+        }
+      }
+      # MikroTik RouterOS DNS log (topics=dns): "query from 10.0.0.5: #12 chatgpt.com. A".
+      if host == "" {
+        q, qerr = parse_regex(msg, r'(?:^|[\s>])(?:query )?from [0-9A-Fa-f:.]+: #\d+ (?P<name>\S+?)\.? [A-Z]')
+        if qerr == null { host = to_string(q.name) }
+      }
+      if host == "" {
+        kv, kerr = parse_key_value(msg)
+        if kerr == null {
+          host = to_string(kv.hostname) ?? ""
+          # FortiOS DNS Filter logs (subtype=dns) name the destination in qname.
+          if host == "" { host = to_string(kv.qname) ?? "" }
+          if host == "" { host = to_string(kv.dhost) ?? "" }
+          if host == "" { host = to_string(kv.host) ?? "" }
+          if host == "" {
+            u, uerr = parse_url(to_string(kv.url) ?? "")
+            if uerr == null { host = to_string(u.host) }
+          }
+        }
+      }
+      .secureai_host = downcase(replace(host, r'\.$', ""))
+
+  # Every list pattern that could match the host, under the list's rule: a pattern matches the host or a
+  # parent domain, and "*" stands for any run of characters inside one label. For x.api.openai.com:
+  # x.api.openai.com, api.openai.com, openai.com, com, each of them with one label as "*"
+  # (*.openai.com, api.*.com, ...) and with the first label's start as "*" (*i.openai.com, *pi.openai.com, ...).
+  ai_candidates:
+    type: remap
+    inputs: [extract_host]
+    source: |
+      labels = split(to_string(.secureai_host) ?? "", ".")
+      candidates = []
+      if length(labels) > 1 || (length(labels) == 1 && labels[0] != "") {
+        for_each(labels) -> |s, _label| {
+          suffix = slice!(labels, s)
+          candidates = push(candidates, join!(suffix, "."))
+          for_each(suffix) -> |j, _l| {
+            candidates = push(candidates, join!(set!(suffix, [j], "*"), "."))
+          }
+          first = string!(suffix[0])
+          for_each(split(first, "")) -> |k, _c| {
+            if k > 0 && k < length(first) {
+              candidates = push(candidates, join!(set!(suffix, [0], "*" + slice!(first, k)), "."))
+            }
+          }
+        }
+      }
+      .secureai_candidates = unique(candidates)
+
+  # Keeps the line only when one of its candidates is in the AI domain list; drops the helper field.
+  ai_only:
+    type: remap
+    inputs: [ai_candidates]
+    drop_on_abort: true
+    source: |
+      found = false
+      for_each(array(.secureai_candidates) ?? []) -> |_i, key| {
+        if !found {
+          _row, err = get_enrichment_table_record("ai_patterns", { "key": key })
+          if err == null { found = true }
+        }
+      }
+      del(.secureai_candidates)
+      if !found { abort }
+
+sinks:
+  secureai_ingest:
+    type: http
+    inputs: [ai_only]
+    uri: "${SECUREAI_URL}/api/network-ingest/${SECUREAI_INGEST_ID}"
+    method: post
+    auth:
+      strategy: bearer
+      token: "${SECUREAI_INGEST_TOKEN}"
+    encoding:
+      codec: text
+    framing:
+      method: newline_delimited
+    request:
+      headers:
+        Content-Type: text/plain
+    batch:
+      max_events: 1000
+      timeout_secs: 5
+    # SecureAI answers 503 when it cannot write: the batch waits here on disk and is retried.
+    buffer:
+      type: disk
+      max_size: 268435488
+      when_full: drop_newest
+```
+
+</Accordion>
+
+<Accordion title="docker-compose.yml">
+
+```yaml
+# SecureAI firewall log collector. Put this file, vector.yaml and collector.env in one folder on a Linux host
+# the firewall can reach, and run: docker compose up -d
+# The console's "Connect" panel (Integrations > Network / SWG) downloads the three files ready to use.
+services:
+  secureai-collector:
+    image: timberio/vector:0.46.1-debian
+    restart: unless-stopped
+    env_file: collector.env
+    command: ["--config", "/etc/vector/vector.yaml"]
+    ports:
+      # Point the firewall's syslog at this host, port 514 (UDP or TCP).
+      - "514:5514/udp"
+      - "514:5514/tcp"
+    volumes:
+      - ./vector.yaml:/etc/vector/vector.yaml:ro
+      # Vector's disk buffer: batches wait here while SecureAI is unreachable.
+      - collector-data:/var/lib/vector
+
+volumes:
+  collector-data:
+```
+
+</Accordion>
 
 ## 3. Mandar los logs del FortiGate al colector
 
@@ -201,6 +430,9 @@ los saca al vencer. Guardar estos ajustes pide el segundo factor.
 - **El connector usa `https://`.** Con `http://` el token del feed viaja en claro.
 - **Deshabilitar o borrar el feed no desbloquea nada.** El FortiGate se queda con la última lista que descargó.
   Para desbloquear, use **Liberar** o saque la categoría del perfil de DNS Filter.
+- **Un dominio que el FortiGate ya resolvió puede tardar en bloquearse o liberarse.** Además del refresco del
+  connector (5 minutos), el FortiGate guarda las respuestas DNS un tiempo. En el laboratorio, entre el bloqueo y la
+  respuesta del portal pasaron de 1 a 8 minutos.
 - **El bloqueo alcanza a toda la red detrás del FortiGate**, no a un usuario ni a una IP: el feed es una lista de
   dominios.
 - **Si su tenant tiene además Cisco Umbrella o el bloqueo de Cloudflare Gateway, los bloqueos van ahí y no al
@@ -214,7 +446,7 @@ los saca al vencer. Guardar estos ajustes pide el segundo factor.
 
 | FortiOS | Equipo | Resultado |
 |---|---|---|
-| 7.6.8 | FortiGate-VM, en laboratorio | Alta desde la consola, descubrimiento por DNS Filter y Application Control, bloqueo manual y automático por el feed, bloqueo confirmado y liberación |
+| 7.6.8 | FortiGate-VM, en laboratorio | Alta desde la consola, colector instalado desde el `.zip` del panel en una máquina Linux con Docker, descubrimiento por DNS Filter y Application Control, bloqueo manual y automático por el feed, bloqueo confirmado y liberación |
 
 Todavía no la probamos en FortiOS 7.2 ni 7.4, ni en equipos físicos. Los pasos usan objetos que existen en las tres
 versiones; los nombres de los menús de la GUI pueden cambiar.
