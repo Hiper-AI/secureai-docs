@@ -19,6 +19,7 @@ The result is a live inventory of **which source IPs and users are calling which
 | Connector | Data source | Status |
 |-----------|-------------|--------|
 | [Cisco Umbrella](/en/integrations/casb/cisco-umbrella) | DNS-layer Reporting API v2 | Available |
+| [Fortinet FortiGate](/en/integrations/firewalls/fortinet-fortigate) | FortiGate syslog (through the SecureAI collector) and feed blocking | Beta |
 
 ## The setup loop
 
