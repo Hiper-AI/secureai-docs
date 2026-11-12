@@ -114,7 +114,8 @@ Gateway answers `0.0.0.0`. In SecureAI, the source shows those queries as blocke
 - SecureAI syncs every 5 minutes, and right away when you create or release a temporary block.
 - If nothing changed, it doesn't write to Cloudflare, but every run checks its rules. If someone deleted, turned off
   or edited a `SecureAI —` rule, SecureAI puts it back within 5 minutes and notifies the administrator.
-- Once a day it also compares the entries of its lists and puts back the ones removed by hand.
+- List entries are not checked on every run: a domain someone removes by hand from a `SecureAI —` list comes back
+  with the daily pass, so it can be missing for up to 24 hours.
 - If the list goes past your plan's entry limit, SecureAI splits it into several lists covered by the same rules.
 - Cloudflare allows 100 lists per account. When the account uses 80 or more (counting yours), SecureAI warns the
   administrator.
@@ -223,7 +224,7 @@ Blocking still comes from the **Cloudflare Zero Trust** connection in step 2. Lo
 | Saving fails with `NO_ANALYTICS_SCOPE` | The token is missing Account Analytics Read |
 | Saving fails with `NO_ZT_READ` or `CF_AUTH` | The token is missing Zero Trust Read, or belongs to another account |
 | "Discovery only" warning on save, or turning blocking on returns `NO_ZT_WRITE` | The token is missing Zero Trust Edit |
-| Blocking shows the error `CF_FORBIDDEN` | Zero Trust Edit was removed from the token after blocking was turned on |
+| With blocking on, the Blocking tab says the token can no longer write (`NO_ZT_WRITE`) | Zero Trust Edit was removed from the token, or a token without it was saved. SecureAI changes nothing in Cloudflare: lists and rules stay as they are, but new blocks, releases and repairs don't reach the account. Give the token Zero Trust Edit back |
 | `CF_LIMIT` error | No free lists left in the account (100 max) |
 | `cf-location:…` sources with no user | It's DNS by location: the user only comes with WARP |
 | Nothing in Network Sources after an hour | The traffic doesn't go through Gateway, or didn't go to AI domains |

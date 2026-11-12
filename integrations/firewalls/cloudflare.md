@@ -118,7 +118,8 @@ siguiente sync.
 - SecureAI sincroniza cada 5 minutos, y en el momento en que usted crea o libera un bloqueo temporal.
 - Si nada cambió, no escribe en Cloudflare, pero en cada corrida revisa sus reglas. Si alguien borró, apagó o
   editó una regla `SecureAI —`, la vuelve a poner en menos de 5 minutos y le avisa al administrador.
-- Una vez por día compara además las entradas de sus listas y vuelve a poner las que se hayan sacado a mano.
+- Las entradas de las listas no se revisan en cada corrida: un dominio que alguien saca a mano de una lista
+  `SecureAI —` vuelve con la pasada diaria, así que puede faltar hasta 24 horas.
 - Si la lista pasa el tope de entradas de su plan, SecureAI la parte en varias listas que cubren las mismas
   reglas.
 - Cloudflare admite 100 listas por cuenta. Cuando la cuenta usa 80 o más (contando las suyas), SecureAI avisa al
@@ -228,7 +229,7 @@ El bloqueo sigue saliendo de la conexión **Cloudflare Zero Trust** del paso 2. 
 | Guardar falla con `NO_ANALYTICS_SCOPE` | Al token le falta Account Analytics Read |
 | Guardar falla con `NO_ZT_READ` o `CF_AUTH` | Al token le falta Zero Trust Read, o es de otra cuenta |
 | Aviso "Solo descubrimiento" al guardar, o prender el bloqueo da `NO_ZT_WRITE` | Al token le falta Zero Trust Edit |
-| El bloqueo queda con error `CF_FORBIDDEN` | Le quitaron Zero Trust Edit al token después de prenderlo |
+| Con el bloqueo prendido, la pestaña Bloqueo dice que el token ya no puede escribir (`NO_ZT_WRITE`) | Le quitaron Zero Trust Edit al token, o se guardó otro token sin ese permiso. SecureAI no cambia nada en Cloudflare: las listas y reglas quedan como están, pero los bloqueos nuevos, las liberaciones y las reparaciones no llegan. Devuélvale Zero Trust Edit al token |
 | Error `CF_LIMIT` | No quedan listas libres en la cuenta (máximo 100) |
 | Fuentes `cf-location:…` sin usuario | Es DNS por ubicación: el usuario solo llega con WARP |
 | Nada en Fuentes de red después de una hora | El tráfico no pasa por Gateway, o no fue a dominios de IA |
