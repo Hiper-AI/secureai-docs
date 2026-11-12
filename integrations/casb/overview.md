@@ -17,6 +17,7 @@ El resultado es un inventario en vivo de **qué IP de origen y qué usuarios lla
 | Conector | Fuente de datos | Estado |
 |-----------|-------------|--------|
 | [Cisco Umbrella](/integrations/casb/cisco-umbrella) | API de informes de capa DNS v2 | Disponible |
+| [Fortinet FortiGate](/integrations/firewalls/fortinet-fortigate) | Syslog del FortiGate (vía el colector de SecureAI) y bloqueo por feed | Beta |
 
 ## El bucle de configuración
 
