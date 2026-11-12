@@ -10,8 +10,8 @@ servicios de IA usa su gente y los bloquea en Gateway cuando usted los prohíbe 
 no hace falta volver al dashboard de Cloudflare: SecureAI crea y mantiene sus propias listas y reglas.
 
 <Note>
-El descubrimiento y el bloqueo por API están **disponibles**. La lectura por Logpush (planes Enterprise) está en
-**beta**.
+La integración está en **beta**. La lectura por Logpush requiere Cloudflare Zero Trust Enterprise y todavía no
+se validó contra una cuenta real.
 </Note>
 
 ## Qué ve SecureAI según su plan de Cloudflare
@@ -160,7 +160,12 @@ toda la organización hasta que vence.
 
 ## Logpush
 
-Para planes Enterprise, en beta. Con Logpush, Cloudflare le manda a SecureAI cada registro en lugar de las analíticas: llega también el usuario en
+<Warning>
+Logpush requiere Cloudflare Zero Trust **Enterprise**. Está en beta y **sin validar**: SecureAI lo probó con
+registros de ejemplo en el formato que publica Cloudflare, no contra una cuenta Enterprise real.
+</Warning>
+
+Con Logpush, Cloudflare le manda a SecureAI cada registro en lugar de las analíticas: llega también el usuario en
 DNS, y llega en minutos.
 
 En beta, el equipo de SecureAI acompaña la configuración.
