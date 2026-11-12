@@ -207,8 +207,12 @@ set external-list secureai-ia-dominios type domain expand-domain yes
 
    ![Detalle de la fuente](/img/paloalto/console-source-detail.png)
 
-2. Prohíba OpenAI, o bloquee dominios desde la fuente con **Actions > Bloquear**.
-3. En el firewall:
+2. En la fila del equipo, **Actions > Bloquear**: marque los dominios, la duración y el motivo. **Aplicado vía** tiene
+   que decir **Feed de bloqueo para firewalls**.
+
+   ![Bloqueo temporal desde Fuentes de red](/img/paloalto/console-block.png)
+
+3. Para no esperar el refresco, en el firewall:
 
    ```
    request system external-list refresh type url name secureai-ia-url
@@ -216,6 +220,19 @@ set external-list secureai-ia-dominios type domain expand-domain yes
    ```
 
 4. El equipo ya no abre chatgpt.com, y el bloqueo vuelve a SecureAI como una llamada bloqueada.
+5. **Liberar** en la misma fila saca los dominios de la lista, y el firewall los deja pasar en su refresco siguiente.
+
+Con la EDL en **Five Minute**, el firewall aplica un bloqueo o una liberación en hasta cinco minutos. En nuestras
+pruebas, el bloqueo hecho desde la consola llegó al equipo en poco más de un minuto.
+
+### Bloqueo automático
+
+En **Respuesta y auto-bloqueo**, arriba de la lista de Fuentes de red, prenda **Auto-bloquear fuentes que superen
+el umbral** y elija el umbral de llamadas (por día o por 7 días), cuánto dura el bloqueo y cuántos bloqueos
+automáticos puede haber a la vez. Cuando un equipo pasa el umbral, SecureAI bloquea los dominios de IA que más usa
+y los libera al vencer, sin que nadie toque la consola.
+
+![Respuesta y auto-bloqueo con el umbral prendido](/img/paloalto/console-auto-block.png)
 
 ## Cuando el feed falla
 
@@ -226,6 +243,10 @@ vacía por un error.
 Con el token equivocado, la documentación de Palo Alto dice que el firewall deja de aplicar la EDL; en nuestras
 pruebas no pasó durante el minuto que lo medimos. Si rota el token de un feed, actualice la EDL en el mismo cambio.
 
+Cuando no queda nada bloqueado, la EDL trae una sola entrada, `secureai-empty.invalid`. PAN-OS no acepta una EDL
+vacía (se queda con la anterior y no desbloquearía), y `.invalid` es un dominio reservado que no coincide con ningún
+sitio real.
+
 Deshabilitar o borrar un feed no desbloquea nada: para desbloquear, libere el bloqueo en SecureAI o saque la EDL de
 la política.
 
@@ -234,6 +255,8 @@ la política.
 - **El bloqueo alcanza a toda la red detrás del firewall**: las EDL son listas de dominios, no de usuarios.
 - **Los contadores son aproximados.** SecureAI cuenta una vez cada sesión por firewall en cada tipo de log, con
   memoria de 10 minutos.
+- **Las IP no se bloquean.** Las EDL de SecureAI son listas de dominios. Una IP que llegó por el log de Traffic
+  aparece en la consola pero no entra a la lista.
 - **Tope de entradas por modelo**: de 50.000 URLs en VM-50 y PA-220 a 250.000 en PA-5200 y PA-5400
   ([External Dynamic List](https://docs.paloaltonetworks.com/pan-os/11-1/pan-os-admin/policy/use-an-external-dynamic-list-in-policy/external-dynamic-list)).
   La lista de SecureAI tiene decenas o cientos de entradas.
@@ -246,6 +269,7 @@ la política.
 |---|---|---|
 | 12.2.3 | VM-Series en Google Cloud, licencia Bundle2 | Descubrimiento por syslog y por HTTP log forwarding, bloqueo con las EDL de URL y de dominio (perfil de URL Filtering, regla de seguridad y sinkhole DNS), y la última lista conservada cuando el feed falla |
 | 11.2.15 | VM-Series en Google Cloud, licencia Bundle2 | La misma prueba |
+| 12.2.3 | El mismo, configurado como un cliente | Syslog al colector de SecureAI, EDL por HTTPS, y desde la consola: bloquear, liberar y bloqueo automático por umbral |
 
 Los formatos CEF y LEEF se probaron con logs reales de PAN-OS 12.2.3. No probamos todavía PAN-OS 11.1, equipos
 físicos ni Panorama; los menús de la GUI pueden cambiar de nombre entre versiones.
