@@ -53,9 +53,16 @@ In your tenant you create:
 - a **block feed** in the `plain` format, which the router reads. You can restrict it to the router's public IP:
   SecureAI then refuses anyone else who asks for the list, even with the token.
 
-Each one has a token that SecureAI shows only once. Keep them in your secrets manager. Then the collector is
-installed on the Linux machine with those values. It listens for syslog on 514 (UDP and TCP) and, for MikroTik over
-TCP, on 5517.
+Each one has a token that SecureAI shows only once. Keep them in your secrets manager.
+
+The collector is a package with its configuration and those values, which runs on the official Vector image. In beta,
+the SecureAI team delivers the package. On the Linux machine, inside the package folder:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.mikrotik.yml up -d
+```
+
+It listens for syslog on 514 (UDP and TCP) and, for MikroTik over TCP, on 5517.
 
 ## 2. Send the router's DNS log to the collector
 
