@@ -10,7 +10,8 @@ services your people use, and blocks them in Gateway when you prohibit them in S
 need to go back to the Cloudflare dashboard: SecureAI creates and maintains its own lists and rules.
 
 <Note>
-Discovery and API blocking are **available**. Reading through Logpush (Enterprise plans) is in **beta**.
+The integration is in **beta**. Reading through Logpush requires Cloudflare Zero Trust Enterprise and hasn't been
+validated against a real account yet.
 </Note>
 
 ## What SecureAI sees on each Cloudflare plan
@@ -153,8 +154,13 @@ whole organization until it expires.
 
 ## Logpush
 
-For Enterprise plans, in beta. With Logpush, Cloudflare sends SecureAI every record instead of the analytics: DNS
-records carry the user too, and they arrive within minutes.
+<Warning>
+Logpush requires Cloudflare Zero Trust **Enterprise**. It's in beta and **unvalidated**: SecureAI tested it with
+sample records in the format Cloudflare publishes, not against a real Enterprise account.
+</Warning>
+
+With Logpush, Cloudflare sends SecureAI every record instead of the analytics: DNS records carry the user too, and
+they arrive within minutes.
 
 In beta, the SecureAI team assists with the setup.
 
