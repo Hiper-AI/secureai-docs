@@ -112,9 +112,9 @@ Gateway answers `0.0.0.0`. In SecureAI, the source shows those queries as blocke
 ### How it stays in sync
 
 - SecureAI syncs every 5 minutes, and right away when you create or release a temporary block.
-- If nothing changed, it doesn't write to Cloudflare.
-- Once a day it compares what's in the account and repairs hand edits: it puts back missing entries in its lists
-  and recreates a deleted `SecureAI —` rule. There can be up to 24 hours between two passes.
+- If nothing changed, it doesn't write to Cloudflare, but every run checks its rules. If someone deleted, turned off
+  or edited a `SecureAI —` rule, SecureAI puts it back within 5 minutes and notifies the administrator.
+- Once a day it also compares the entries of its lists and puts back the ones removed by hand.
 - If the list goes past your plan's entry limit, SecureAI splits it into several lists covered by the same rules.
 - Cloudflare allows 100 lists per account. When the account uses 80 or more (counting yours), SecureAI warns the
   administrator.

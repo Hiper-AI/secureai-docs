@@ -116,10 +116,9 @@ siguiente sync.
 ### Cómo se mantiene
 
 - SecureAI sincroniza cada 5 minutos, y en el momento en que usted crea o libera un bloqueo temporal.
-- Si nada cambió, no escribe en Cloudflare.
-- Una vez por día compara lo que hay en la cuenta y repara lo que se haya tocado a mano: vuelve a poner las
-  entradas que faltan en sus listas y vuelve a crear una regla `SecureAI —` borrada. Entre dos pasadas puede haber
-  hasta 24 horas.
+- Si nada cambió, no escribe en Cloudflare, pero en cada corrida revisa sus reglas. Si alguien borró, apagó o
+  editó una regla `SecureAI —`, la vuelve a poner en menos de 5 minutos y le avisa al administrador.
+- Una vez por día compara además las entradas de sus listas y vuelve a poner las que se hayan sacado a mano.
 - Si la lista pasa el tope de entradas de su plan, SecureAI la parte en varias listas que cubren las mismas
   reglas.
 - Cloudflare admite 100 listas por cuenta. Cuando la cuenta usa 80 o más (contando las suyas), SecureAI avisa al
