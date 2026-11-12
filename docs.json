@@ -129,6 +129,7 @@
                   "integrations/casb/cisco-umbrella",
                   "integrations/firewalls/cloudflare",
                   "integrations/firewalls/fortinet-fortigate",
+                  "integrations/firewalls/mikrotik-routeros",
                   "integrations/firewalls/paloalto-panos"
                 ]
               },
@@ -346,6 +347,7 @@
                   "en/integrations/casb/cisco-umbrella",
                   "en/integrations/firewalls/cloudflare",
                   "en/integrations/firewalls/fortinet-fortigate",
+                  "en/integrations/firewalls/mikrotik-routeros",
                   "en/integrations/firewalls/paloalto-panos"
                 ]
               },
