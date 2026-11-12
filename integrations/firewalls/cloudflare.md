@@ -150,15 +150,53 @@ tanto llega a Cloudflare cuando vuelve a prender el interruptor.
 confirmación y MFA reciente, y queda en el Activity Log. Las listas quedan en la cuenta: volver a prenderlo es un
 solo sync.
 
-Para sacar a SecureAI de la cuenta por completo: apague el bloqueo, borre las tres reglas `SecureAI — block AI`,
-después las listas `SecureAI — AI block` (Cloudflare no deja borrar una lista que una regla usa) y revoque el
-token.
+Para sacar a SecureAI de la cuenta por completo: apague el bloqueo, borre las reglas `SecureAI — block AI` y
+`SecureAI — exception`, después las listas `SecureAI — AI block` y `SecureAI — exception` (Cloudflare no deja borrar
+una lista que una regla usa) y revoque el token.
+
+## 4. Ajustes del bloqueo
+
+En la misma tarjeta, **Cómo bloquea SecureAI en Cloudflare** tiene tres ajustes. Guardarlos pide MFA reciente y
+queda en el Activity Log.
+
+### Bloqueo por aplicación
+
+Prendido por defecto. Las reglas también bloquean la aplicación de Cloudflare de cada proveedor prohibido.
+Cloudflare conoce todos los hosts de aplicaciones como ChatGPT o Claude, también los que SecureAI no tiene en su
+catálogo; en ChatGPT, por ejemplo, los dominios de donde carga sus scripts y archivos.
+
+- Si Cloudflare renombra o quita una aplicación, la consola lo avisa y ese proveedor queda bloqueado solo por
+  dominio.
+- Si aprobó un sitio de un proveedor en la extensión, ese proveedor no se bloquea por aplicación, para no volver a
+  bloquear el sitio aprobado.
+
+### Página de bloqueo
+
+- **La página de Cloudflare** (por defecto).
+- **Mandar a la persona al chat de SecureAI**: Gateway redirige al chat de su tenant, o a la URL de redirección de la
+  extensión si configuró una. El link no lleva el mail de la persona ni la dirección bloqueada.
+
+La página solo se ve en equipos que confían en el certificado raíz de Cloudflare; sin él, el navegador muestra un
+error de certificado. Un bloqueo por SNI (la regla de red) corta la conexión y no muestra página.
+
+### Excepciones por persona o grupo
+
+Una excepción deja que una persona o un grupo de su directorio (aprovisionado por SCIM) use proveedores
+prohibidos, y los sigue bloqueando para el resto. Hasta 10 excepciones. Por cada una, SecureAI crea en su cuenta una
+lista de mails `SecureAI — exception <id>` y tres reglas de allow delante de las de bloqueo.
+
+- **Solo aplica a quien entra al cliente Cloudflare One (WARP) con su proveedor de identidad.** El tráfico de una
+  ubicación DNS o de un equipo sin usuario sigue bloqueado.
+- **No abre los sitios bloqueados ni los bloqueos temporales.**
+- **Sigue al directorio:** si alguien deja el grupo, sale de la lista de Cloudflare en los 5 minutos siguientes.
+- **Falla cerrado:** si SecureAI no puede leer los miembros, apaga las reglas de excepción y bloquea a todos.
+- La excepción es solo de Cloudflare: la extensión y el agente de endpoint siguen con sus propias reglas.
 
 ## A quién alcanza un bloqueo
 
-A todo lo que pasa por Gateway: los dispositivos con WARP y las redes que usan sus ubicaciones DNS. Las reglas no
-distinguen usuarios ni IPs. Un bloqueo temporal que un analista crea desde una fuente bloquea esos dominios para
-toda la organización hasta que vence.
+A todo lo que pasa por Gateway: los dispositivos con WARP y las redes que usan sus ubicaciones DNS, salvo las
+personas de una excepción. Un bloqueo temporal que un analista crea desde una fuente bloquea esos dominios para
+toda la organización hasta que vence, también para las excepciones.
 
 ## Logpush
 

@@ -144,14 +144,52 @@ Cloudflare when you turn the switch back on.
 asks for confirmation and a recent MFA, and is recorded in the Activity Log. The lists stay in the account:
 turning it back on is a single sync.
 
-To remove SecureAI from the account completely: turn blocking off, delete the three `SecureAI — block AI` rules,
-then the `SecureAI — AI block` lists (Cloudflare won't delete a list a rule still uses), and revoke the token.
+To remove SecureAI from the account completely: turn blocking off, delete the `SecureAI — block AI` and
+`SecureAI — exception` rules, then the `SecureAI — AI block` and `SecureAI — exception` lists (Cloudflare won't
+delete a list a rule still uses), and revoke the token.
+
+## 4. Blocking settings
+
+On the same card, **How SecureAI blocks in Cloudflare** has three settings. Saving them asks for a recent MFA and
+is recorded in the Activity Log.
+
+### Blocking by application
+
+On by default. The rules also block the Cloudflare application of each prohibited provider. Cloudflare knows every
+hostname of apps like ChatGPT or Claude, including the ones the SecureAI catalog doesn't list; for ChatGPT, for
+example, the domains it loads its scripts and files from.
+
+- If Cloudflare renames or drops an application, the console tells you and that provider is blocked by domain only.
+- If you approved a site of a provider in the extension, that provider isn't blocked by application, so the
+  approved site stays reachable.
+
+### Block page
+
+- **Cloudflare's page** (default).
+- **Send people to the SecureAI chat**: Gateway redirects to your tenant's chat, or to the extension's redirect URL
+  if you set one. The link carries neither the person's email nor the blocked address.
+
+People see the page only on devices that trust the Cloudflare root certificate; without it, the browser shows a
+certificate error. A block by SNI (the network rule) cuts the connection and shows no page.
+
+### Exceptions for a person or a group
+
+An exception lets a person or a directory group (provisioned by SCIM) use prohibited providers, and keeps blocking
+them for everyone else. Up to 10 exceptions. For each one, SecureAI creates an email list `SecureAI — exception
+<id>` and three allow rules in front of the block rules in your account.
+
+- **It only applies to people signed in to the Cloudflare One client (WARP) with your identity provider.** Traffic
+  from a DNS location or a device without a user stays blocked.
+- **It never opens blocked sites or temporary blocks.**
+- **It follows the directory:** when someone leaves the group, they leave the Cloudflare list within 5 minutes.
+- **It fails closed:** if SecureAI can't read the members, it turns the exception rules off and blocks everyone.
+- The exception is Cloudflare's only: the extension and the endpoint agent keep their own rules.
 
 ## Who a block reaches
 
-Everything that goes through Gateway: devices with WARP and the networks that use your DNS locations. The rules
-don't distinguish users or IPs. A temporary block an analyst creates from a source blocks those domains for the
-whole organization until it expires.
+Everything that goes through Gateway: devices with WARP and the networks that use your DNS locations, except the
+people in an exception. A temporary block an analyst creates from a source blocks those domains for the whole
+organization until it expires, for the exceptions too.
 
 ## Logpush
 
