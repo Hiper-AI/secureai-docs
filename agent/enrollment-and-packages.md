@@ -16,7 +16,7 @@ En **Admin → Registro de agentes → Agentes del sistema operativo**, cree un 
 | Campo | Descripción |
 |-------|-------------|
 | **Nombre / descripción** | Identifique el paquete (por ejemplo, "Portátiles de ingeniería"). |
-| **Plataforma** | Windows/Linux/macOS. |
+| **Plataforma** | Windows. La versión para macOS está en desarrollo. |
 | **Tipo de paquete** | `standalone`. |
 | **Etiquetas de endpoint** | Etiquetas aplicadas a los dispositivos inscritos en este paquete. |
 | **Grupo de inscripción** | El [grupo](/agent/policies-and-groups) al que está anclado un dispositivo en el primer registro. |

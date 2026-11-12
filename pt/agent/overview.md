@@ -7,7 +7,7 @@ description: "O SecureAI OS Agent — governança de IA de endpoint, DLP e contr
 
 # Agente de terminal
 
-O SecureAI **OS Agent** é executado em seus endpoints (laptops Windows, servidores Linux, máquinas macOS) e impõe governança de IA onde o trabalho realmente acontece. Ele descobre atividades de IA/MCP no dispositivo, aplica proteções comportamentais e contra perda de dados e pode controlar ou bloquear a saída para provedores de IA de acordo com a política.
+O SecureAI **OS Agent** é executado em seus endpoints Windows e impõe governança de IA onde o trabalho realmente acontece. Ele descobre atividades de IA/MCP no dispositivo, aplica proteções comportamentais e contra perda de dados e pode controlar ou bloquear a saída para provedores de IA de acordo com a política. A versão para macOS está em desenvolvimento.
 
 A frota de agentes é gerenciada em **Admin → Registro de Agente → Agentes de SO**.
 
@@ -33,7 +33,7 @@ A guia **Agentes de SO** lista cada dispositivo com seu status, postura, risco, 
 
 ## Como começar
 
-1. **[Instalar o agente](/pt/agent/installation)** em endpoints (MSI assinado no Windows; script no Linux/macOS).
+1. **[Instalar o agente](/pt/agent/installation)** em endpoints (MSI assinado para Windows).
 2. Entenda **[pacotes de inscrição e instalação](/pt/agent/enrollment-and-packages)** — como os dispositivos se juntam e obtêm sua configuração.
 3. Configure **[políticas e grupos](/pt/agent/policies-and-groups)** para decidir o que cada dispositivo impõe.
 4. Ajuste **[aplicação de saída](/pt/agent/egress-enforcement)** e **[operações de quarentena e frota](/pt/agent/quarantine-and-fleet-ops)** para resposta.

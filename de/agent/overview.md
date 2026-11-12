@@ -6,7 +6,7 @@ description: "Der SecureAI OS Agent – ​​Endpunkt-KI-Governance, DLP und Au
 ---
 # Endpunkt-Agent
 
-Der SecureAI **OS Agent** läuft auf Ihren Endpunkten – Windows-Laptops, Linux-Servern, macOS-Maschinen – und erzwingt die KI-Governance dort, wo die Arbeit tatsächlich stattfindet. Es erkennt KI/MCP-Aktivitäten auf dem Gerät, wendet Datenverlust- und Verhaltensschutzmaßnahmen an und kann den ausgehenden Datenverkehr zu KI-Anbietern gemäß den Richtlinien steuern oder blockieren.
+Der SecureAI **OS Agent** läuft auf Ihren Windows-Endpunkten und erzwingt die KI-Governance dort, wo die Arbeit tatsächlich stattfindet. Es erkennt KI/MCP-Aktivitäten auf dem Gerät, wendet Datenverlust- und Verhaltensschutzmaßnahmen an und kann den ausgehenden Datenverkehr zu KI-Anbietern gemäß den Richtlinien steuern oder blockieren. Eine macOS-Version ist in Entwicklung.
 
 Die Agentenflotte wird unter **Admin → Agent Registry → OS Agents** verwaltet.
 
@@ -32,7 +32,7 @@ Auf der Registerkarte **OS-Agents** werden alle Geräte mit Status, Status, Risi
 
 ## So fangen Sie an
 
-1. **[Agent installieren](/de/agent/installation)** auf Endpunkten (signiertes MSI unter Windows; Skript unter Linux/macOS).
+1. **[Agent installieren](/de/agent/installation)** auf Endpunkten (signiertes MSI für Windows).
 2. Verstehen Sie **[Registrierungs- und Installationspakete](/de/agent/enrollment-and-packages)** – wie Geräte beitreten und ihre Konfiguration erhalten.
 3. Konfigurieren Sie **[Richtlinien & Gruppen](/de/agent/policies-and-groups)**, um zu entscheiden, was jedes Gerät durchsetzt.
 4. Optimieren Sie **[Egress Enforcement](/de/agent/egress-enforcement)** und **[Quarantäne & Flottenoperationen](/de/agent/quarantine-and-fleet-ops)** für die Reaktion.
