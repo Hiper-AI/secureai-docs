@@ -49,12 +49,19 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
 
 1. Abra **Administrador → Integraciones** y elija la categoría **Red / SWG**.
 2. En la tarjeta **MikroTik RouterOS**, haga clic en **Conectar**.
+
+   ![Tarjeta de MikroTik RouterOS en Integraciones, categoría Red / SWG](/img/mikrotik/console-card.png)
+
 3. Complete el nombre, la IP del colector (la máquina Linux) y, si quiere, la IP pública del router: SecureAI rechaza a
    cualquier otro que pida la lista de bloqueo, aunque tenga el token.
 4. **Crear y mostrar la configuración** pide el segundo factor y crea la fuente de logs del conector
    `mikrotik-routeros` y el feed de bloqueo en formato `plain`.
 
+![Formulario para agregar un MikroTik](/img/mikrotik/console-form.png)
+
 Los tokens se ven una sola vez, en ese panel. Si los pierde, **Tokens nuevos** en la fila del equipo los rota.
+
+![Panel con el paquete del colector, collector.env y las líneas de RouterOS](/img/mikrotik/console-config.png)
 
 ### Instalar el colector
 
@@ -66,11 +73,15 @@ Linux, dentro de la carpeta del paquete:
 docker compose -f docker-compose.yml -f docker-compose.mikrotik.yml up -d
 ```
 
+El colector escucha syslog en el 514 (UDP y TCP) y, para MikroTik por TCP, en el 5517.
+
 El panel también muestra, en **Terminal de RouterOS**, las líneas para el router con la IP del colector y el token del
 feed ya puestos. Suba a **Files** del router los dos archivos de `router/` y pegue esas líneas en la terminal. Los
 pasos que siguen explican qué hace cada una.
 
-Escucha syslog en el 514 (UDP y TCP) y, para MikroTik por TCP, en el 5517.
+Cuando el router manda su log y bajó la lista, la fila del equipo muestra los dos estados en verde:
+
+![Equipo conectado: recibe logs y leyó la lista de bloqueo](/img/mikrotik/console-devices.png)
 
 ## 2. Mandar el log DNS del router al colector
 
@@ -450,6 +461,9 @@ Cómo decide el colector, porque atribuirle un acceso a la persona equivocada es
 - Un usuario del Hotspot cuya MAC no es la que tiene el lease de esa IP no se usa.
 - Sin una entrada vigente, o si el colector se reinició y el script todavía no volvió a correr, la consulta llega igual,
   sin usuario ni equipo. Nunca se le pone una identidad vieja.
+- Si dos routers mandan al mismo colector, cada uno usa solo las entradas que él mismo informó, aunque las dos
+  redes usen el mismo rango. Dos routers detrás del mismo NAT le llegan al colector desde la misma dirección: en ese
+  caso, use un colector por router.
 
 Si la misma IP pasó por dos personas en el día, en **Fuentes de red** ve una fila por cada una.
 
