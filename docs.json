@@ -128,7 +128,8 @@
                   "integrations/casb/overview",
                   "integrations/casb/cisco-umbrella",
                   "integrations/firewalls/cloudflare",
-                  "integrations/firewalls/fortinet-fortigate"
+                  "integrations/firewalls/fortinet-fortigate",
+                  "integrations/firewalls/paloalto-panos"
                 ]
               },
               {
@@ -344,7 +345,8 @@
                   "en/integrations/casb/overview",
                   "en/integrations/casb/cisco-umbrella",
                   "en/integrations/firewalls/cloudflare",
-                  "en/integrations/firewalls/fortinet-fortigate"
+                  "en/integrations/firewalls/fortinet-fortigate",
+                  "en/integrations/firewalls/paloalto-panos"
                 ]
               },
               {
