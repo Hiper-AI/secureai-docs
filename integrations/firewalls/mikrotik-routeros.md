@@ -36,7 +36,7 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
 
 ## Requisitos
 
-- Un MikroTik con **RouterOS 7.15 o posterior** (ver [Versiones](#versiones)).
+- Un MikroTik con **RouterOS 7.18 o posterior** (ver [Versiones](#versiones)).
 - Un usuario del router con las policies `read`, `write`, `test` y `ftp`.
 - Que los clientes reciban el router como DNS (por DHCP, que es lo habitual) y que el router acepte consultas de la
   LAN: `/ip dns set allow-remote-requests=yes`. La configuración de fábrica descarta las consultas que llegan por la
@@ -100,8 +100,9 @@ Por TCP, las líneas llegan en el orden en que el router las escribió y no se p
 `script` son para el usuario y el equipo ([sección 7](#7-usuario-y-equipo)). `!packet` deja afuera el volcado de cada
 paquete DNS, que ocupa varias líneas por consulta.
 
-Si su RouterOS no tiene `remote-log-format`, mande por UDP al 514 (`remote-port=514 remote-protocol=udp`). Cada
-mensaje viaja en su propio paquete, pero un paquete perdido no se reenvía.
+RouterOS agrega `remote-protocol` y `remote-log-format` en 7.18. En 7.15 a 7.17 la acción va sin los dos y con
+`remote-port=514`: el router manda por UDP, cada mensaje en su propio paquete, y un paquete perdido no se reenvía.
+Ese camino no está probado.
 
 ![Acción de log remota hacia el colector en WebFig](/img/mikrotik/logging-action.png)
 
@@ -461,6 +462,8 @@ Cómo decide el colector, porque atribuirle un acceso a la persona equivocada es
 - Un usuario del Hotspot cuya MAC no es la que tiene el lease de esa IP no se usa.
 - Sin una entrada vigente, o si el colector se reinició y el script todavía no volvió a correr, la consulta llega igual,
   sin usuario ni equipo. Nunca se le pone una identidad vieja.
+- Justo después de un login en el Hotspot, el usuario puede tardar hasta un minuto en aparecer: hasta entonces las
+  consultas de esa persona llegan con el equipo y sin usuario, nunca con el usuario de otro.
 - Si dos routers mandan al mismo colector, cada uno usa solo las entradas que él mismo informó, aunque las dos
   redes usen el mismo rango. Dos routers detrás del mismo NAT le llegan al colector desde la misma dirección: en ese
   caso, use un colector por router.
@@ -511,11 +514,14 @@ escribe la URL completa en el log DNS.
 
 ## Versiones
 
-RouterOS 7.15 es la primera versión con todo lo que usa la integración, según los changelogs de MikroTik: `/file add`
-con contenido (7.15), `:onerror` (7.13) y `match-subdomain` (7.5). La probamos de punta a punta en RouterOS 7.25.1
-(CHR): descubrimiento por IPv4 e IPv6, usuario y equipo por Hotspot y DHCP con una IP que pasa de una persona a
-otra, bloqueo con subdominios, redirección del 53, corte de DoH por nombre y por IP,
-modo address-list, y el comportamiento ante 401 y 403. La validación TLS se probó aparte: el router acepta un
+RouterOS 7.18 es la primera versión con el log por TCP del paso 2 (`remote-protocol` y `remote-log-format`), según
+los changelogs de MikroTik. Los scripts usan `/file add` con contenido (7.15), `:onerror` (7.13) y `match-subdomain`
+(7.5). En RouterOS 7.15.3 la configuración del log no entra (`unknown parameter remote-log-format`).
+
+La probamos de punta a punta en RouterOS 7.25.1 (CHR): descubrimiento por IPv4 e IPv6, usuario y equipo por Hotspot
+y DHCP con una IP que pasa de una persona a otra, dos routers con el mismo rango en un colector, bloqueo con
+subdominios, redirección del 53, corte de DoH por nombre y por IP, modo address-list, el comportamiento ante 401 y
+403, y un corte de luz del router. La validación TLS se probó aparte: el router acepta un
 servidor válido y rechaza uno vencido, uno con otro nombre y uno autofirmado.
 
 ## Problemas comunes

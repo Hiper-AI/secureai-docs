@@ -36,7 +36,7 @@ Both halves depend on clients resolving through the router. Sections 4 and 5 cov
 
 ## Requirements
 
-- A MikroTik with **RouterOS 7.15 or later** (see [Versions](#versions)).
+- A MikroTik with **RouterOS 7.18 or later** (see [Versions](#versions)).
 - A router user with the `read`, `write`, `test` and `ftp` policies.
 - Clients that get the router as their DNS server (through DHCP, the usual setup), and a router that answers LAN
   queries: `/ip dns set allow-remote-requests=yes`. The default configuration drops queries that arrive on the WAN;
@@ -100,8 +100,9 @@ Over TCP, lines arrive in the order the router wrote them and are not lost on th
 are for the user and the device ([section 7](#7-user-and-device)). `!packet` leaves out the dump of each DNS packet,
 which takes several lines per query.
 
-If your RouterOS has no `remote-log-format`, send over UDP to 514 (`remote-port=514 remote-protocol=udp`). Each
-message travels in its own packet, but a lost packet is not sent again.
+RouterOS adds `remote-protocol` and `remote-log-format` in 7.18. On 7.15 to 7.17 the action goes without both and
+with `remote-port=514`: the router sends over UDP, each message in its own packet, and a lost packet is not sent
+again. That path is not tested.
 
 ![Remote log action to the collector in WebFig](/img/mikrotik/logging-action.png)
 
@@ -461,6 +462,8 @@ How the collector decides, because putting the wrong person on an access is wors
 - A Hotspot user whose MAC is not the one holding the lease of that IP is not used.
 - With no live entry, or when the collector has restarted and the script has not run again yet, the query still
   arrives, without user and device. It never gets an old identity.
+- Right after a Hotspot login, the user can take up to a minute to show up: until then that person's queries
+  arrive with the device and without a user, never with somebody else's.
 - When two routers send to the same collector, each one only uses the entries it logged itself, even if both
   networks use the same range. Two routers behind the same NAT reach the collector from the same address: in that
   case, use one collector per router.
@@ -511,11 +514,14 @@ subdomains, and it writes the full URL to the DNS log.
 
 ## Versions
 
-RouterOS 7.15 is the first version with everything the integration uses, according to MikroTik's changelogs:
-`/file add` with contents (7.15), `:onerror` (7.13) and `match-subdomain` (7.5). We tested it end to end on RouterOS
-7.25.1 (CHR): discovery over IPv4 and IPv6, user and device from the Hotspot and DHCP with an IP that goes from one person
-to another, blocking with subdomains, the port 53 redirect, DoH blocking by name and by
-IP, address-list mode, and the behavior on 401 and 403. TLS validation was tested separately: the router accepts a valid
+RouterOS 7.18 is the first version with the TCP log of step 2 (`remote-protocol` and `remote-log-format`), according
+to MikroTik's changelogs. The scripts use `/file add` with contents (7.15), `:onerror` (7.13) and `match-subdomain`
+(7.5). On RouterOS 7.15.3 the log configuration fails (`unknown parameter remote-log-format`).
+
+We tested it end to end on RouterOS 7.25.1 (CHR): discovery over IPv4 and IPv6, user and device from the Hotspot and
+DHCP with an IP that goes from one person to another, two routers with the same range on one collector, blocking with
+subdomains, the port 53 redirect, DoH blocking by name and by IP, address-list mode, the behavior on 401 and 403, and
+a power cut on the router. TLS validation was tested separately: the router accepts a valid
 server and rejects an expired one, one for another name and a self-signed one.
 
 ## Troubleshooting
