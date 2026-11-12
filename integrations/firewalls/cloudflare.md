@@ -73,7 +73,7 @@ encuentra aparece en **Fuentes de red**.
 
 ## 3. Prender el bloqueo
 
-En **Fuentes de red → Respuesta y auto-bloqueo → Bloqueo por Cloudflare Gateway**. Antes de prenderlo, la consola
+En **Integraciones → Cloudflare Zero Trust → pestaña Bloqueo**. Antes de prenderlo, la consola
 le pide confirmar esto:
 
 <Warning>
@@ -130,7 +130,7 @@ siguiente sync.
 - Si SecureAI no puede armar la lista de bloqueo, no escribe nada y Cloudflare sigue con la lista anterior.
 - Si Cloudflare rechaza un cambio a mitad del sync, SecureAI corta ahí y reintenta en el siguiente. Primero agrega
   lo nuevo y al final saca lo que sobra, así que nunca deja una lista vacía en el medio.
-- El último error queda a la vista en la tarjeta de bloqueo.
+- El último error queda a la vista en la pestaña Bloqueo.
 
 ### El orden de las reglas
 
@@ -156,7 +156,7 @@ una lista que una regla usa) y revoque el token.
 
 ## 4. Ajustes del bloqueo
 
-En la misma tarjeta, **Cómo bloquea SecureAI en Cloudflare** tiene tres ajustes. Guardarlos pide MFA reciente y
+En la misma pestaña, **Cómo bloquea SecureAI en Cloudflare** tiene tres ajustes. Guardarlos pide MFA reciente y
 queda en el Activity Log.
 
 ### Bloqueo por aplicación

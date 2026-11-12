@@ -71,7 +71,7 @@ queries Gateway every 30 minutes, and what it finds shows up in **Network Source
 
 ## 3. Turn on blocking
 
-In **Network Sources → Response & auto-block → Blocking through Cloudflare Gateway**. Before you turn it on, the
+In **Integrations → Cloudflare Zero Trust → Blocking tab**. Before you turn it on, the
 console asks you to confirm this:
 
 <Warning>
@@ -124,7 +124,7 @@ Gateway answers `0.0.0.0`. In SecureAI, the source shows those queries as blocke
 - If SecureAI can't build the block list, it writes nothing and Cloudflare keeps the previous list.
 - If Cloudflare rejects a change mid-sync, SecureAI stops there and retries on the next one. It adds new entries
   first and removes old ones last, so a list is never left empty in between.
-- The last error is shown on the blocking card.
+- The last error is shown on the Blocking tab.
 
 ### Rule order
 
@@ -150,7 +150,7 @@ delete a list a rule still uses), and revoke the token.
 
 ## 4. Blocking settings
 
-On the same card, **How SecureAI blocks in Cloudflare** has three settings. Saving them asks for a recent MFA and
+On the same tab, **How SecureAI blocks in Cloudflare** has three settings. Saving them asks for a recent MFA and
 is recorded in the Activity Log.
 
 ### Blocking by application
