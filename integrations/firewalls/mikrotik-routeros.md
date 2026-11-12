@@ -28,7 +28,9 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
 ## Qué ve SecureAI y qué no
 
 - El **dominio** consultado y la **IP del cliente**, IPv4 o IPv6. No hay URLs, rutas ni contenido.
-- No hay **usuario**: una consulta DNS no dice quién la hizo.
+- El **usuario** y el **equipo**, si el router tiene Hotspot o reparte IPs por DHCP: el colector le suma a cada consulta
+  quién tenía esa IP en ese momento ([sección 7](#7-usuario-y-equipo)). Sin Hotspot ni DHCP, la consulta llega sin
+  usuario.
 - Una consulta no es una conexión. El navegador consulta nombres que después puede no usar, y la caché del equipo
   evita consultas que sí usa. El conteo es aproximado.
 
@@ -52,25 +54,32 @@ En su tenant se crean:
   rechaza a cualquier otro que pida la lista, aunque tenga el token.
 
 Cada una tiene un token que SecureAI muestra una sola vez. Guárdelos en su gestor de secretos. Después se instala el
-colector en la máquina Linux con esos datos. Escucha syslog en el puerto 514, UDP y TCP.
+colector en la máquina Linux con esos datos. Escucha syslog en el 514 (UDP y TCP) y, para MikroTik por TCP, en el
+5517.
 
 ## 2. Mandar el log DNS del router al colector
 
 En la terminal del router (WebFig o Winbox: **New Terminal**):
 
 ```text
-/system logging action add name=secureai target=remote remote=<IP del colector> remote-port=514 \
-  src-address=<IP LAN del router>
+/system logging action add name=secureai target=remote remote=<IP del colector> remote-port=5517 \
+  remote-protocol=tcp remote-log-format=syslog src-address=<IP LAN del router>
 /system logging add topics=dns,!packet action=secureai
+/system logging add topics=dhcp action=secureai
+/system logging add topics=hotspot action=secureai
+/system logging add topics=script action=secureai
 ```
 
-El formato queda en el de fábrica, BSD syslog. Desde RouterOS 7.18 la acción tiene `remote-log-format`: si la suya lo
-muestra, déjelo en `syslog`, no en `cef`. `!packet` deja afuera el volcado de cada paquete DNS, que ocupa varias
-líneas por consulta.
+Por TCP, las líneas llegan en el orden en que el router las escribió y no se pierden en el camino. `dhcp`, `hotspot` y
+`script` son para el usuario y el equipo ([sección 7](#7-usuario-y-equipo)). `!packet` deja afuera el volcado de cada
+paquete DNS, que ocupa varias líneas por consulta.
+
+Si su RouterOS no tiene `remote-log-format`, mande por UDP al 514 (`remote-port=514 remote-protocol=udp`). Cada
+mensaje viaja en su propio paquete, pero un paquete perdido no se reenvía.
 
 ![Acción de log remota hacia el colector en WebFig](/img/mikrotik/logging-action.png)
 
-La captura es de nuestro laboratorio, donde el colector escucha en el 5514.
+La captura es de nuestro laboratorio, con la acción por UDP hacia el 5514.
 
 ## 3. Bloquear con el script de SecureAI
 
@@ -343,6 +352,92 @@ sitios: en nuestro laboratorio, bloquear `chatgpt.com` y `openai.com` también c
 resuelve solo el nombre exacto, sin subdominios. Al cambiar de modo, la próxima corrida borra las entradas del modo
 anterior.
 
+## 7. Usuario y equipo
+
+Una consulta DNS trae la IP del equipo, no quién es. El colector la completa con lo que sabe el router:
+
+- **Equipo**, del servidor DHCP: el nombre que mandó el equipo y su MAC, por ejemplo `laptop-ana (02:00:5A:00:00:0A)`.
+- **Usuario**, del Hotspot: el usuario que inició sesión con esa IP.
+
+La identidad sale solo del Hotspot y del DHCP del router. Un equipo con IP fija, o que no pasa por esos servicios,
+aparece sin usuario y sin equipo. Lo mismo un equipo con IPv6.
+
+Para eso, el router corre cada minuto el script `secureai-identity`, que escribe en el log una línea por lease vigente
+y otra por sesión de Hotspot, con lo que le queda a cada una. Créelo como el de bloqueo (policies `read`, `write`,
+`test`) y prográmelo:
+
+```text
+/system scheduler add name=secureai-identity interval=1m policy=read,write,test \
+  on-event="/system script run secureai-identity"
+```
+
+<Accordion title="Script secureai-identity">
+
+```text
+# SecureAI identity snapshot for MikroTik RouterOS 7.15+ (docs/integrations/mikrotik.md).
+#
+# Logs one line per bound DHCP lease and per active Hotspot session, so the
+# SecureAI collector can tell which device and which Hotspot user had each IP:
+#
+#   secureai-identity dhcp ip=10.0.0.10 mac=02:00:5A:00:00:0A name="laptop-ana" ttl=578
+#   secureai-identity hotspot ip=10.0.0.10 mac=02:00:5A:00:00:0A user="ana" ttl=3540
+#
+# ttl is what is left of the lease or the session, in seconds (0 when it does
+# not expire). The collector keeps each entry for that long at most, and never
+# more than 3 minutes without seeing it again, so this runs every minute from
+# the scheduler. The router's own log lines (dhcp: assigned / deassigned,
+# hotspot: logged in / logged out) add and remove entries in between.
+#
+# A name or a user with a double quote or a backslash is skipped: the collector
+# could not read it back without ambiguity. The collector also drops values with
+# control characters.
+
+:local ok do={
+  :if ([:typeof $1] != "str") do={ :return false }
+  :if ([:typeof [:find $1 "\""]] != "nil") do={ :return false }
+  :if ([:typeof [:find $1 "\\"]] != "nil") do={ :return false }
+  :return true
+}
+:local secs do={
+  :if ([:typeof $1] != "time") do={ :return 0 }
+  :return [:tonum $1]
+}
+
+# Over TCP the collector only cuts a message when the next one starts: this line, every run, pushes out the
+# last query the router logged.
+:log info "secureai-identity tick"
+
+:foreach id in=[/ip dhcp-server lease find where status="bound"] do={
+  :local l [/ip dhcp-server lease get $id]
+  :local name ($l->"host-name")
+  :if ([:typeof $name] != "str") do={ :set name "" }
+  :if ([$ok $name]) do={
+    :log info ("secureai-identity dhcp ip=" . ($l->"active-address") . " mac=" . ($l->"active-mac-address") . " name=\"" . $name . "\" ttl=" . [$secs ($l->"expires-after")])
+  }
+}
+
+:foreach id in=[/ip hotspot active find] do={
+  :local s [/ip hotspot active get $id]
+  :local user ($s->"user")
+  :if ([:len $user] > 0 && [$ok $user]) do={
+    :log info ("secureai-identity hotspot ip=" . ($s->"address") . " mac=" . ($s->"mac-address") . " user=\"" . $user . "\" ttl=" . [$secs ($s->"session-time-left")])
+  }
+}
+```
+
+</Accordion>
+
+Cómo decide el colector, porque atribuirle un acceso a la persona equivocada es peor que no atribuirlo:
+
+- Una entrada dura lo que le queda al lease o a la sesión, y nunca más de 3 minutos sin que el script la confirme.
+- Cuando el router libera un lease (`deassigned`) o se cierra una sesión (`logged out`), la entrada se borra en el
+  momento.
+- Un usuario del Hotspot cuya MAC no es la que tiene el lease de esa IP no se usa.
+- Sin una entrada vigente, o si el colector se reinició y el script todavía no volvió a correr, la consulta llega igual,
+  sin usuario ni equipo. Nunca se le pone una identidad vieja.
+
+Si la misma IP pasó por dos personas en el día, en **Fuentes de red** ve una fila por cada una.
+
 ## Comprobar
 
 Desde un equipo de la LAN que use el router como DNS, antes de prohibir nada, `dig chatgpt.com` devuelve una IP. En
@@ -382,13 +477,15 @@ escribe la URL completa en el log DNS.
 - Un resolver DoH que no está en la lista del script saltea el router.
 - Los patrones del catálogo con `*` en el medio (`bedrock.*.amazonaws.com`) no se pueden escribir como entrada DNS: el
   script los saltea.
-- No hay usuario. Las observaciones tienen la IP del equipo y el dominio.
+- El usuario y el equipo salen solo del Hotspot y del DHCP del router: un equipo con IP fija, fuera de esos servicios o
+  con IPv6 aparece sin usuario.
 
 ## Versiones
 
 RouterOS 7.15 es la primera versión con todo lo que usa la integración, según los changelogs de MikroTik: `/file add`
 con contenido (7.15), `:onerror` (7.13) y `match-subdomain` (7.5). La probamos de punta a punta en RouterOS 7.25.1
-(CHR): descubrimiento por IPv4 e IPv6, bloqueo con subdominios, redirección del 53, corte de DoH por nombre y por IP,
+(CHR): descubrimiento por IPv4 e IPv6, usuario y equipo por Hotspot y DHCP con una IP que pasa de una persona a
+otra, bloqueo con subdominios, redirección del 53, corte de DoH por nombre y por IP,
 modo address-list, y el comportamiento ante 401 y 403. La validación TLS se probó aparte: el router acepta un
 servidor válido y rechaza uno vencido, uno con otro nombre y uno autofirmado.
 
