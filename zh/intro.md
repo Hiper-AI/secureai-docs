@@ -1,8 +1,8 @@
 ---
 title: "欢迎来到安全人工智能"
-description: "安全的人工智能业务平台，符合法规并具有全面的治理控制。"
+description: "面向企业的安全 AI 平台，具备治理控制、签名证据和数据泄露防护。"
 ---
-SecureAI 是一个商业平台，旨在部署和使用人工智能模型，最大限度地保证安全性、隐私性和可观察性。
+SecureAI 是一个企业平台，用于在安全、隐私和可观察性控制下部署和使用 AI 模型。
 
 它结合了先进的 **RAG（检索增强生成）** 功能、企业车队的透明代理、使用 **SMLTP** 加密协议的合规性，以及多个 AI 提供商之间具有自动冗余功能的**统一 API。
 
@@ -27,7 +27,7 @@ SecureAI 是一个商业平台，旨在部署和使用人工智能模型，最�
 
 <CardGroup cols={3}>
   <Card title="安全和 SMLTP" icon="shield-halved" href="/zh/security/overview">
-    端到端加密、数据泄露防护 (DLP)、提示盾和不可变的合规收据。
+    使用按租户划分的密钥进行字段级加密、数据泄露防护 (DLP)、提示盾和签名的合规回执。
   </Card>
   <Card title="知识库（RAG）" icon="database" href="/zh/indexes/overview">
     矢量语义搜索、实时文档摄取以及个人、团队和全局索引。

@@ -15,7 +15,7 @@ O **AI Gateway** é o plano de controle centralizado para governar, proteger, ro
 ### 1. Políticas de segurança
 Defina regras de aplicação para toda a organização:
 - **Listas de permissões de modelos**: restrinja quais modelos e provedores com os quais os funcionários e aplicativos podem interagir.
-- **Geofencing de residência de dados**: garanta que os prompts e respostas permaneçam nas jurisdições designadas.
+- **Residência de dados**: o SecureAI recusa chamadas a modelos que o provedor não consegue fixar em uma região permitida pela sua política, e recusa índices vetoriais em uma zona que a sua política exclui. A política rege para onde vai o tráfego aos modelos. O SecureAI roda no Google Cloud, nos Estados Unidos.
 - **Modos de aplicação**: executado em **Modo de monitoramento** (registrar e atestar sem bloqueio) ou **Modo de aplicação** (fechamento com falha, bloqueando tráfego não compatível com recibos criptográficos).
 
 ### 2. Painel e observabilidade

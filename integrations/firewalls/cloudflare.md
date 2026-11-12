@@ -163,8 +163,10 @@ toda la organización hasta que vence.
 Para planes Enterprise, en beta. Con Logpush, Cloudflare le manda a SecureAI cada registro en lugar de las analíticas: llega también el usuario en
 DNS, y llega en minutos.
 
-1. En SecureAI, en **Fuentes de red**, cree una fuente de ingesta con el conector **Cloudflare Zero Trust
-   (Logpush)**. Copie la URL y el token, que se muestra una sola vez.
+En beta, el equipo de SecureAI acompaña la configuración.
+
+1. En su tenant se crea una fuente de ingesta con el conector **Cloudflare Zero Trust (Logpush)**. Guarde la URL
+   y el token, que SecureAI muestra una sola vez.
 2. En Cloudflare, cree un job de Logpush por dataset (`gateway_dns`, `gateway_http`, `gateway_network`) con
    destino HTTP:
 

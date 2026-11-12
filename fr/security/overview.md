@@ -30,11 +30,10 @@ Grands modèles linguistiques (LLM) régis, contenus et prouvables. Il fournit :
 
 ### Protection des données
 
-- **Zero-Knowledge Posture** : clés gérées par le client (BYOK), traitement éphémère en mémoire et
-  la journalisation locale du déploiement garde les données sensibles sous votre contrôle
-- **Chiffrement au repos** : toutes les données stockées sont chiffrées à l'aide d'algorithmes conformes aux normes de l'industrie.
-- **Chiffrement en transit** : chiffrement TLS 1.3 pour toutes les communications API
-- **Clés gérées par le client** : vous contrôlez vos clés de chiffrement
+- **Clés par locataire** : SecureAI chiffre les conversations et les identifiants de connecteurs stockés au niveau du champ avec AES-256-GCM, avec des clés propres à votre locataire, protégées par un service de gestion de clés dans le cloud.
+- **Chiffrement au repos** : les bases de données et les sauvegardes sont sur des disques Google Cloud, que Google chiffre au repos.
+- **Chiffrement en transit** : les connexions utilisent TLS 1.2 ou TLS 1.3 avec des suites de chiffrement AEAD à confidentialité persistante.
+- **Votre propre clé pour les preuves** : si vous activez la conservation des preuves (désactivée par défaut), vous pouvez les chiffrer avec une clé de votre propre service de gestion de clés sur AWS, Azure ou Google Cloud.
 
 ### Contrôle d'accès
 
@@ -50,16 +49,15 @@ SMLTP prend en charge plusieurs modèles de stratégie intégrés :
 - **Interne** : politique par défaut pour les données internes de l'entreprise
 - **Internal Strict** : sécurité accrue pour les données internes sensibles
 - **Public** : politique moins restrictive pour les données publiques non sensibles
-- **HIPAA** : Conforme à la réglementation sur les données de santé
-- **RGPD** : Conforme à la réglementation européenne sur la protection des données
-- **PCI-DSS** : Conforme aux normes de l'industrie des cartes de paiement
+- **HIPAA, RGPD et PCI-DSS** : noms du catalogue qui appliquent les mêmes contrôles qu'Internal Strict. En choisir un ne rend pas votre usage conforme à cette réglementation. Pour appliquer des règles propres à une réglementation, définissez une politique personnalisée du même nom : elle remplace la politique intégrée pour votre organisation.
 
-### Conformité et certifications
+### Aide à la conformité
 
-- **Enterprise Ready** : conçu pour répondre aux exigences de sécurité des entreprises
-- **Piste d'audit** : journalisation complète des audits de conformité et de sécurité
-- **Application des politiques** : application automatisée des politiques de sécurité
-- **Surveillance en temps réel** : Surveillance continue des événements de sécurité
+- **Correspondance avec les référentiels** : SecureAI fait correspondre ses vérifications aux contrôles de référentiels comme le NIST AI RMF, l'ISO/IEC 42001 et l'AI Act de l'UE. La correspondance est partielle et sert à réunir des preuves. Ce n'est pas une certification.
+- **Certifications** : Hiper AI ne détient aujourd'hui ni rapport SOC 2 ni certificat ISO/IEC 27001.
+- **Piste d'audit** : journaux chaînés par hachage des interactions avec l'IA et des actions d'administration, pour vos revues de conformité et de sécurité.
+- **Application des politiques** : SecureAI applique vos politiques de sécurité à chaque requête qui passe par la passerelle.
+- **Surveillance en temps réel** : les événements de sécurité apparaissent dans la console au moment où ils se produisent.
 
 ## Comment fonctionne SMLTP
 
@@ -76,8 +74,8 @@ SMLTP prend en charge plusieurs modèles de stratégie intégrés :
 ## Avantages
 
 - **Prouvable, pas seulement enregistré** : les reçus signés permettent aux auditeurs de vérifier les interactions de manière indépendante
-- **Compliance Ready** : prise en charge intégrée des principaux cadres de conformité
-- **Confinement** : même un agent compromis ne peut pas dépasser ses autorisations signées cryptographiquement
+- **Preuves pour l'audit** : les reçus signés et la correspondance avec les référentiels donnent à vos auditeurs des éléments qu'ils peuvent vérifier eux-mêmes.
+- **Confinement** : un agent qui passe par la passerelle ne peut pas dépasser les autorisations de son jeton signé, même s'il est compromis.
 - **Révocation déterministe** : la coupure d'un utilisateur, d'une clé ou d'un agent prend effet au niveau de la passerelle dans
   secondes - sans attendre aucun fournisseur d'IA
 - **Policy Driven** : application automatisée de vos politiques de sécurité

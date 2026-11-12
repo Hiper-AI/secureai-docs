@@ -15,7 +15,7 @@ Dans **Admin → Agent Registry → OS Agents**, créez un package avec :
 | Champ | Descriptif |
 |-------|-------------|
 | **Nom/description** | Identifiez le package (par exemple « Ordinateurs portables d'ingénierie »). |
-| **Plateforme** | Windows/Linux/MacOS. |
+| **Plateforme** | Windows. Une version macOS est en cours de développement. |
 | **Type de forfait** | `standalone`. |
 | **Balises de point de terminaison** | Étiquettes appliquées aux appareils inscrits avec ce package. |
 | **Groupe d'inscription** | Le [groupe](/fr/agent/policies-and-groups) auquel un appareil est épinglé lors de la première inscription. |

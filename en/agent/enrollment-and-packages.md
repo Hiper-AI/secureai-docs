@@ -18,7 +18,7 @@ In **Admin → Agent Registry → OS Agents**, create a package with:
 | Field | Description |
 |-------|-------------|
 | **Name / description** | Identify the package (e.g. "Engineering laptops"). |
-| **Platform** | Windows / Linux / macOS. |
+| **Platform** | Windows. A macOS version is in development. |
 | **Package type** | `standalone`. |
 | **Endpoint tags** | Labels applied to devices enrolled with this package. |
 | **Enrollment group** | The [group](/en/agent/policies-and-groups) a device is pinned to on first enroll. |

@@ -156,9 +156,10 @@ whole organization until it expires.
 For Enterprise plans, in beta. With Logpush, Cloudflare sends SecureAI every record instead of the analytics: DNS
 records carry the user too, and they arrive within minutes.
 
-1. In SecureAI, in **Network Sources**, create an ingest source with the **Cloudflare Zero Trust (Logpush)**
-   connector. Copy
-   the URL and the token, which is shown only once.
+In beta, the SecureAI team assists with the setup.
+
+1. In your tenant you create an ingest source with the **Cloudflare Zero Trust (Logpush)** connector. Keep the
+   URL and the token, which SecureAI shows only once.
 2. In Cloudflare, create one Logpush job per dataset (`gateway_dns`, `gateway_http`, `gateway_network`) with an
    HTTP destination:
 

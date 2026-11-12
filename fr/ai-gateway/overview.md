@@ -13,7 +13,7 @@ title: "Présentation de la passerelle AI"
 ### 1. Politiques de sécurité
 Définir des règles d'application à l'échelle de l'organisation :
 - **Listes autorisées de modèles** : limitez les modèles et les fournisseurs avec lesquels les employés et les applications peuvent interagir.
-- **Géofencing de résidence des données** : assurez-vous que les invites et les réponses restent dans les juridictions désignées.
+- **Résidence des données** : SecureAI refuse les appels aux modèles qu'un fournisseur ne peut pas fixer dans une région autorisée par votre politique, et refuse les index vectoriels dans une zone que votre politique exclut. La politique régit la destination du trafic vers les modèles. SecureAI tourne sur Google Cloud, aux États-Unis.
 - **Modes d'application** : exécution en **Mode moniteur** (enregistrer et attester sans blocage) ou en **Mode d'application** (fermé sur échec, bloquant le trafic non conforme avec des reçus cryptographiques).
 
 ### 2. Tableau de bord et observabilité

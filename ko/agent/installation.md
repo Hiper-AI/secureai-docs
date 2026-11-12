@@ -2,11 +2,11 @@
 sidebar_position: 2
 title: "에이전트 설치"
 sidebar_label: "설치"
-description: "Windows, Linux 및 macOS 엔드포인트에 SecureAI OS 에이전트 설치"
+description: "Windows 엔드포인트에 SecureAI OS 에이전트 설치"
 ---
 # 에이전트 설치
 
-SecureAI OS 에이전트는 **관리자 → 에이전트 레지스트리 → OS 에이전트**에서 빌드한 **설치 프로그램 패키지**에서 설치됩니다. 패키지는 **백엔드 URL** 및 범위가 지정된 **등록 키**라는 두 가지 값을 전달하는 즉시 실행 가능한 명령(Windows) 또는 스크립트(Linux/macOS)를 생성합니다. 전체 패키지 빌더 및 등록 메커니즘은 [등록 및 설치 프로그램 패키지](/ko/agent/enrollment-and-packages)를 참조하세요.
+SecureAI OS 에이전트는 **관리자 → 에이전트 레지스트리 → OS 에이전트**에서 빌드한 **설치 프로그램 패키지**에서 설치됩니다. 패키지는 **백엔드 URL** 및 범위가 지정된 **등록 키**라는 두 가지 값을 전달하는 즉시 실행 가능한 명령을 생성합니다. 전체 패키지 빌더 및 등록 메커니즘은 [등록 및 설치 프로그램 패키지](/ko/agent/enrollment-and-packages)를 참조하세요.
 
 ## 윈도우(MSI)
 
@@ -29,15 +29,9 @@ msiexec /i "secureai-agent.msi" /qb BACKEND_URL=https://{customer.name}.hiperai.
 기존 MDM/RMM(Intune, GPO, SCCM 등)을 통해 동일한 `msiexec` 명령을 푸시합니다. URL과 키는 명령줄 속성이므로 하나의 서명된 MSI가 모든 테넌트와 그룹에 대해 작동합니다.
 </Tip>
 
-## Linux / macOS(스크립트)
+## macOS(곧 제공 예정)
 
-설치 프로그램 패키지에서 자체 포함된 셸 스크립트를 다운로드하고 실행합니다. 스크립트는 적절한 `.deb`/`.pkg`를 가져와 에이전트 구성(예: Linux의 `/etc/secureai-agent.toml`, macOS의 LaunchAgent plist)을 작성합니다.
-
-```bash
-sudo ./secureai-agent-install.sh
-```
-
-백엔드 URL과 등록 키는 패키지에 대해 생성된 스크립트에 이미 포함되어 있습니다.
+현재 에이전트는 Windows에만 설치할 수 있습니다. macOS 버전은 개발 중이며 아직 설치 프로그램이 없으므로 패키지 빌더에서는 Windows만 선택할 수 있습니다.
 
 ## 처음 실행하면 어떻게 되나요?
 
