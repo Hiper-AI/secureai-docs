@@ -34,7 +34,9 @@ SecureAI team sets them up with you and gives you the IDs and tokens.
   what they wrote.
 - **The URL Filtering log carries the domain** (`chatgpt.com/`). The Traffic log carries the destination IP and the
   App-ID: when that is all that arrives, SecureAI shows the IP and names the provider from the App-ID.
-- **The user shows up when the firewall has User-ID.** Without User-ID, SecureAI groups by the device IP.
+- **The user shows up when the firewall has User-ID** (agent, Cloud Identity Engine or the User-ID API) and the
+  source zone has **Enable User Identification**. SecureAI shows it without the domain (`ACME\ana.perez` shows as
+  `ana.perez`) and does not take machine accounts as people. Without User-ID, SecureAI groups by the device IP.
 
 ## Which license each piece needs
 
@@ -251,6 +253,17 @@ site.
 Disabling or deleting a feed unblocks nothing: to unblock, release the block in SecureAI or remove the EDL from the
 policy.
 
+## Panorama
+
+The integration runs on each firewall, so with Panorama it is the same: the EDLs, the URL Filtering profile, the log
+forwarding profile and the blocking rule go in a device group (and the server profile in a template), and Panorama
+pushes them to the firewalls. Logs can leave from each firewall or be forwarded from Panorama to a syslog server
+profile.
+
+We have not tested it with Panorama: a Panorama without the device management license does not let you add
+firewalls, and our lab does not have that license. If your Panorama forwards the logs, the SecureAI team checks the
+format with you.
+
 ## Limits
 
 - **A block reaches the whole network behind the firewall**: the EDLs are lists of domains, not of users.
@@ -270,7 +283,8 @@ policy.
 |---|---|---|
 | 12.2.3 | VM-Series on Google Cloud, Bundle2 license | Discovery by syslog and by HTTP log forwarding, blocking with the URL and domain EDLs (URL Filtering profile, Security policy rule and DNS sinkhole), and the last list kept when the feed fails |
 | 11.2.15 | VM-Series on Google Cloud, Bundle2 license | The same test |
+| 11.1.6-h7 | VM-Series on Google Cloud, Bundle2 license | The same test, with User-ID |
 | 12.2.3 | The same, set up as a customer would | Syslog to the SecureAI collector, EDLs over HTTPS, and from the console: block, release and automatic block by threshold |
 
-The CEF and LEEF formats were tested with real PAN-OS 12.2.3 logs. We have not tested PAN-OS 11.1, hardware
-firewalls or Panorama yet; GUI menu names can change between versions.
+The CEF and LEEF formats were tested with real PAN-OS 12.2.3 logs. We have not tested hardware firewalls or
+Panorama yet; GUI menu names can change between versions.
