@@ -127,7 +127,8 @@
                 "pages": [
                   "integrations/casb/overview",
                   "integrations/casb/cisco-umbrella",
-                  "integrations/firewalls/cloudflare"
+                  "integrations/firewalls/cloudflare",
+                  "integrations/firewalls/mikrotik-routeros"
                 ]
               },
               {
@@ -342,7 +343,8 @@
                 "pages": [
                   "en/integrations/casb/overview",
                   "en/integrations/casb/cisco-umbrella",
-                  "en/integrations/firewalls/cloudflare"
+                  "en/integrations/firewalls/cloudflare",
+                  "en/integrations/firewalls/mikrotik-routeros"
                 ]
               },
               {
