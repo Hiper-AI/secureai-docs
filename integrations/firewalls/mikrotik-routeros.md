@@ -10,8 +10,7 @@ hace que el router deje de resolver los proveedores que usted prohíbe en Secure
 sale de los nombres que los clientes le preguntan al DNS del router.
 
 <Note>
-El conector `mikrotik-routeros` está en **beta**. Mientras tanto, la fuente de logs, el feed de bloqueo y el
-colector los configura el equipo de SecureAI con usted.
+El conector `mikrotik-routeros` está en **beta**. En beta, el equipo de SecureAI acompaña la configuración.
 </Note>
 
 ## Cómo funciona
@@ -46,7 +45,7 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
 
 ## 1. Fuente de logs, feed y colector
 
-El equipo de SecureAI crea con usted en su tenant:
+En su tenant se crean:
 
 - una **fuente de logs** con el conector `mikrotik-routeros`, que recibe lo que manda el colector;
 - un **feed de bloqueo** en formato `plain`, que lee el router. Puede limitarlo a la IP pública del router: SecureAI

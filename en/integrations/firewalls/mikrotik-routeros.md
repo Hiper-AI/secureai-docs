@@ -10,8 +10,7 @@ and makes the router stop resolving the providers you prohibit in SecureAI. Rout
 from the names clients ask the router's DNS for.
 
 <Note>
-The `mikrotik-routeros` connector is in **beta**. Until it leaves beta, the SecureAI team sets up the log source,
-the block feed and the collector with you.
+The `mikrotik-routeros` connector is in **beta**. In beta, the SecureAI team assists with the setup.
 </Note>
 
 ## How it works
@@ -46,7 +45,7 @@ Both halves depend on clients resolving through the router. Sections 4 and 5 cov
 
 ## 1. Log source, feed and collector
 
-The SecureAI team creates with you, in your tenant:
+In your tenant you create:
 
 - a **log source** with the `mikrotik-routeros` connector, which receives what the collector sends;
 - a **block feed** in the `plain` format, which the router reads. You can restrict it to the router's public IP:
