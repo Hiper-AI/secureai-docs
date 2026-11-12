@@ -45,22 +45,30 @@ Both halves depend on clients resolving through the router. Sections 4 and 5 cov
   reach your tenant over HTTPS.
 - A router that reaches your SecureAI tenant over HTTPS to read the block list.
 
-## 1. Log source, feed and collector
+## 1. Connect the router and install the collector
 
-In your tenant you create:
+1. Open **Admin → Integrations** and pick the **Network / SWG** category.
+2. On the **MikroTik RouterOS** card, click **Connect**.
+3. Fill in the name, the collector IP (the Linux machine) and, if you want, the router's public IP: SecureAI then
+   refuses anyone else who asks for the block list, even with the token.
+4. **Create and show the configuration** asks for your second factor and creates the log source for the
+   `mikrotik-routeros` connector and the block feed in the `plain` format.
 
-- a **log source** with the `mikrotik-routeros` connector, which receives what the collector sends;
-- a **block feed** in the `plain` format, which the router reads. You can restrict it to the router's public IP:
-  SecureAI then refuses anyone else who asks for the list, even with the token.
+The tokens show only once, in that panel. If you lose them, **New tokens** on the device row rotates them.
 
-Each one has a token that SecureAI shows only once. Keep them in your secrets manager.
+### Install the collector
 
-The collector is a package with its configuration and those values, which runs on the official Vector image. In beta,
-the SecureAI team delivers the package. On the Linux machine, inside the package folder:
+In the same panel, **Download the collector (.zip)**. The package holds the collector configuration with this
+device's values and, in `router/`, the two scripts for the router. It runs on the official Vector image. On the Linux
+machine, inside the package folder:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.mikrotik.yml up -d
 ```
+
+The panel also shows, under **RouterOS terminal**, the router lines with the collector IP and the feed token filled
+in. Upload the two files in `router/` to the router's **Files** and paste those lines into the terminal. The next steps
+explain what each one does.
 
 It listens for syslog on 514 (UDP and TCP) and, for MikroTik over TCP, on 5517.
 

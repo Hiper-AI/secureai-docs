@@ -45,22 +45,30 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
   salir por HTTPS a su tenant.
 - Que el router salga por HTTPS a su tenant de SecureAI para leer la lista de bloqueo.
 
-## 1. Fuente de logs, feed y colector
+## 1. Conectar el router e instalar el colector
 
-En su tenant se crean:
+1. Abra **Administrador → Integraciones** y elija la categoría **Red / SWG**.
+2. En la tarjeta **MikroTik RouterOS**, haga clic en **Conectar**.
+3. Complete el nombre, la IP del colector (la máquina Linux) y, si quiere, la IP pública del router: SecureAI rechaza a
+   cualquier otro que pida la lista de bloqueo, aunque tenga el token.
+4. **Crear y mostrar la configuración** pide el segundo factor y crea la fuente de logs del conector
+   `mikrotik-routeros` y el feed de bloqueo en formato `plain`.
 
-- una **fuente de logs** con el conector `mikrotik-routeros`, que recibe lo que manda el colector;
-- un **feed de bloqueo** en formato `plain`, que lee el router. Puede limitarlo a la IP pública del router: SecureAI
-  rechaza a cualquier otro que pida la lista, aunque tenga el token.
+Los tokens se ven una sola vez, en ese panel. Si los pierde, **Tokens nuevos** en la fila del equipo los rota.
 
-Cada una tiene un token que SecureAI muestra una sola vez. Guárdelos en su gestor de secretos.
+### Instalar el colector
 
-El colector es un paquete con su configuración y esos datos, que corre con la imagen oficial de Vector. En beta, el
-equipo de SecureAI le entrega el paquete. En la máquina Linux, dentro de la carpeta del paquete:
+En el mismo panel, **Descargar el colector (.zip)**. El paquete trae la configuración del colector con los datos de
+este equipo y, en `router/`, los dos scripts para el router. Corre con la imagen oficial de Vector. En la máquina
+Linux, dentro de la carpeta del paquete:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.mikrotik.yml up -d
 ```
+
+El panel también muestra, en **Terminal de RouterOS**, las líneas para el router con la IP del colector y el token del
+feed ya puestos. Suba a **Files** del router los dos archivos de `router/` y pegue esas líneas en la terminal. Los
+pasos que siguen explican qué hace cada una.
 
 Escucha syslog en el 514 (UDP y TCP) y, para MikroTik por TCP, en el 5517.
 
