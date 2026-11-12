@@ -49,12 +49,19 @@ Both halves depend on clients resolving through the router. Sections 4 and 5 cov
 
 1. Open **Admin → Integrations** and pick the **Network / SWG** category.
 2. On the **MikroTik RouterOS** card, click **Connect**.
+
+   ![MikroTik RouterOS card in Integrations, Network / SWG category](/img/mikrotik/console-card.png)
+
 3. Fill in the name, the collector IP (the Linux machine) and, if you want, the router's public IP: SecureAI then
    refuses anyone else who asks for the block list, even with the token.
 4. **Create and show the configuration** asks for your second factor and creates the log source for the
    `mikrotik-routeros` connector and the block feed in the `plain` format.
 
+![Form to add a MikroTik](/img/mikrotik/console-form.png)
+
 The tokens show only once, in that panel. If you lose them, **New tokens** on the device row rotates them.
+
+![Panel with the collector package, collector.env and the RouterOS lines](/img/mikrotik/console-config.png)
 
 ### Install the collector
 
@@ -66,11 +73,15 @@ machine, inside the package folder:
 docker compose -f docker-compose.yml -f docker-compose.mikrotik.yml up -d
 ```
 
+The collector listens for syslog on 514 (UDP and TCP) and, for MikroTik over TCP, on 5517.
+
 The panel also shows, under **RouterOS terminal**, the router lines with the collector IP and the feed token filled
 in. Upload the two files in `router/` to the router's **Files** and paste those lines into the terminal. The next steps
 explain what each one does.
 
-It listens for syslog on 514 (UDP and TCP) and, for MikroTik over TCP, on 5517.
+Once the router sends its log and has read the list, the device row shows both states in green:
+
+![Connected device: receiving logs and read the block list](/img/mikrotik/console-devices.png)
 
 ## 2. Send the router's DNS log to the collector
 
@@ -450,6 +461,9 @@ How the collector decides, because putting the wrong person on an access is wors
 - A Hotspot user whose MAC is not the one holding the lease of that IP is not used.
 - With no live entry, or when the collector has restarted and the script has not run again yet, the query still
   arrives, without user and device. It never gets an old identity.
+- When two routers send to the same collector, each one only uses the entries it logged itself, even if both
+  networks use the same range. Two routers behind the same NAT reach the collector from the same address: in that
+  case, use one collector per router.
 
 If the same IP went through two people in a day, **Network Sources** shows one row for each.
 
