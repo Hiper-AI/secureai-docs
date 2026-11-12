@@ -49,7 +49,7 @@ Este guia orientará você passo a passo para acessar a instância SecureAI da s
     Durante a configuração inicial, você poderá exibir seu próprio índice **RAG (Retrieval-Augmented Generation)**:
 
     - **Implantação multinuvem: selecione a região e o provedor de nuvem de sua preferência.**
-    - **Criptografia ponta a ponta: todas as informações e documentos vetorizados são criptografados com chaves exclusivas.**
+    - **Criptografia**: o SecureAI armazena seus dados criptografados em repouso e criptografa as conversas com chaves exclusivas da sua organização.
     - **Base de Conhecimento Pessoal ou de Equipe: Permite fazer upload de documentos (PDFs, docs, código) para que os modelos respondam com o contexto exato do seu negócio.**
 
   </Step>
