@@ -20,6 +20,7 @@ The result is a live inventory of **which source IPs and users are calling which
 |-----------|-------------|--------|
 | [Cisco Umbrella](/en/integrations/casb/cisco-umbrella) | DNS-layer Reporting API v2 | Available |
 | [Fortinet FortiGate](/en/integrations/firewalls/fortinet-fortigate) | FortiGate syslog (through the SecureAI collector) and feed blocking | Beta |
+| [Palo Alto Networks PAN-OS](/en/integrations/firewalls/paloalto-panos) | URL Filtering and Traffic logs (syslog through the SecureAI collector or HTTP log forwarding) and External Dynamic List blocking | Available |
 
 ## The setup loop
 

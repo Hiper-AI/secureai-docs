@@ -18,6 +18,7 @@ El resultado es un inventario en vivo de **qué IP de origen y qué usuarios lla
 |-----------|-------------|--------|
 | [Cisco Umbrella](/integrations/casb/cisco-umbrella) | API de informes de capa DNS v2 | Disponible |
 | [Fortinet FortiGate](/integrations/firewalls/fortinet-fortigate) | Syslog del FortiGate (vía el colector de SecureAI) y bloqueo por feed | Beta |
+| [Palo Alto Networks PAN-OS](/integrations/firewalls/paloalto-panos) | Logs de URL Filtering y de Traffic (syslog por el colector de SecureAI o HTTP log forwarding) y bloqueo por External Dynamic List | Disponible |
 
 ## El bucle de configuración
 
