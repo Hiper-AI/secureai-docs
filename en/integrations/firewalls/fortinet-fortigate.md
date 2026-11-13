@@ -334,6 +334,16 @@ The policies that carry traffic to the internet need:
 
 ![Policy with DNS Filter, Application Control, SSL Inspection and Log Allowed Traffic](/img/fortinet/fortigate-policy-profiles.png)
 
+### User instead of IP
+
+SecureAI shows the person when the FortiGate log carries the user. FortiOS writes it on sessions of a policy that
+identifies users: a policy with a user group (**Source → User**) whose logon comes from FSSO, RSSO (RADIUS
+accounting from a NAC, a VPN or a Wi-Fi controller) or the FortiGate's own authentication.
+
+Before you add the group to a policy that is already in production, check what happens to devices that do not
+identify themselves: that policy no longer covers them, and depending on your other policies they may lose
+access. SecureAI doesn't change any of this; it only reads the user the FortiGate already writes.
+
 ## 4. Block with the SecureAI feed
 
 The panel's CLI creates the `secureai-ia-prohibida` External Connector with the feed URL and token, and sets it to
@@ -501,6 +511,7 @@ takes them out when the block expires. Saving these settings asks for your secon
 | FortiOS | Device | Result |
 |---|---|---|
 | 7.6.8 | FortiGate-VM, in a lab | Setup from the console, collector installed from the panel's `.zip` on a Linux machine with Docker, discovery through DNS Filter and Application Control, manual and automatic blocking through the feed, enforcement confirmed and release |
+| 7.6.8 | FortiGate-VM, in a lab | User through RSSO: the FortiGate wrote the user in its logs and SecureAI showed it on the observation |
 | 7.6.8 | FortiGate-VM, in a lab | Web Filter block of a device that resolved DNS without going through the FortiGate, with the log back in SecureAI. With SecureAI answering an error, the FortiGate kept its list and kept blocking |
 
 We haven't tested it yet on FortiOS 7.2 or 7.4, or on physical devices. The steps use objects that exist in all
