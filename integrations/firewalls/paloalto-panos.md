@@ -10,8 +10,7 @@ su gente y publica las External Dynamic Lists (EDL) con lo que usted prohíbe. E
 con sus propios perfiles y reglas. No hace falta la suscripción de AI Access Security.
 
 <Note>
-La integración está en **beta**. La consola todavía no tiene una pantalla para crear las fuentes de logs y los
-feeds: el equipo de SecureAI lo hace con usted y le entrega los identificadores y los tokens.
+La consola todavía no tiene una pantalla para crear las fuentes de logs y los feeds: el equipo de SecureAI lo hace con usted y le entrega los identificadores y los tokens.
 </Note>
 
 ## Cómo funciona

@@ -10,8 +10,7 @@ people use, and publishes External Dynamic Lists (EDLs) with what you prohibit. 
 enforces them with its own profiles and rules. You do not need the AI Access Security subscription.
 
 <Note>
-The integration is in **beta**. The console does not have a screen yet to create log sources and feeds: the
-SecureAI team sets them up with you and gives you the IDs and tokens.
+The console does not have a screen yet to create log sources and feeds: the SecureAI team sets them up with you and gives you the IDs and tokens.
 </Note>
 
 ## How it works
