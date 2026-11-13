@@ -521,7 +521,10 @@ los changelogs de MikroTik. Los scripts usan `/file add` con contenido (7.15), `
 La probamos de punta a punta en RouterOS 7.25.1 (CHR): descubrimiento por IPv4 e IPv6, usuario y equipo por Hotspot
 y DHCP con una IP que pasa de una persona a otra, dos routers con el mismo rango en un colector, bloqueo con
 subdominios, redirección del 53, corte de DoH por nombre y por IP, modo address-list, el comportamiento ante 401 y
-403, y un corte de luz del router. La validación TLS se probó aparte: el router acepta un
+403, y un corte de luz del router.
+
+En RouterOS 7.18.2 pasa todo eso salvo un caso del Hotspot: si otra persona toma la misma IP apenas la primera la
+libera, su equipo no alcanza el router durante la prueba. La identidad de cada persona por separado llega bien. La validación TLS se probó aparte: el router acepta un
 servidor válido y rechaza uno vencido, uno con otro nombre y uno autofirmado.
 
 ## Problemas comunes

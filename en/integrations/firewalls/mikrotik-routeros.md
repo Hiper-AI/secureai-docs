@@ -521,7 +521,11 @@ to MikroTik's changelogs. The scripts use `/file add` with contents (7.15), `:on
 We tested it end to end on RouterOS 7.25.1 (CHR): discovery over IPv4 and IPv6, user and device from the Hotspot and
 DHCP with an IP that goes from one person to another, two routers with the same range on one collector, blocking with
 subdomains, the port 53 redirect, DoH blocking by name and by IP, address-list mode, the behavior on 401 and 403, and
-a power cut on the router. TLS validation was tested separately: the router accepts a valid
+a power cut on the router.
+
+On RouterOS 7.18.2 all of that passes except one Hotspot case: when another person takes the same IP right after the
+first one releases it, their device does not reach the router during the test. Each person's identity on its own
+arrives fine. TLS validation was tested separately: the router accepts a valid
 server and rejects an expired one, one for another name and a self-signed one.
 
 ## Troubleshooting
