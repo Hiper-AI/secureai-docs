@@ -10,8 +10,7 @@ su gente y publica las External Dynamic Lists (EDL) con lo que usted prohíbe. E
 con sus propios perfiles y reglas. No hace falta la suscripción de AI Access Security.
 
 <Note>
-La integración está en **beta**. La consola todavía no tiene una pantalla para crear las fuentes de logs y los
-feeds: el equipo de SecureAI lo hace con usted y le entrega los identificadores y los tokens.
+La consola todavía no tiene una pantalla para crear las fuentes de logs y los feeds: el equipo de SecureAI lo hace con usted y le entrega los identificadores y los tokens.
 </Note>
 
 ## Cómo funciona
@@ -33,7 +32,9 @@ feeds: el equipo de SecureAI lo hace con usted y le entrega los identificadores 
   DNS. SecureAI sabe que alguien usó ChatGPT, desde qué equipo y cuántas veces; no qué escribió.
 - **El log de URL Filtering trae el dominio** (`chatgpt.com/`). El log de Traffic trae la IP de destino y el App-ID:
   cuando es lo único que llega, SecureAI muestra la IP y nombra el proveedor por el App-ID.
-- **El usuario aparece si el firewall tiene User-ID.** Sin User-ID, SecureAI agrupa por la IP del equipo.
+- **El usuario aparece si el firewall tiene User-ID** (agente, Cloud Identity Engine o la API de User-ID) y la zona de
+  origen tiene **Enable User Identification**. SecureAI lo muestra sin el dominio (`ACME\ana.perez` aparece como
+  `ana.perez`) y no toma las cuentas de máquina como personas. Sin User-ID, SecureAI agrupa por la IP del equipo.
 
 ## Qué licencia pide cada pieza
 
@@ -250,6 +251,17 @@ sitio real.
 Deshabilitar o borrar un feed no desbloquea nada: para desbloquear, libere el bloqueo en SecureAI o saque la EDL de
 la política.
 
+## Panorama
+
+La integración corre en cada firewall, así que con Panorama es la misma: las EDL, el perfil de URL Filtering, el log
+forwarding profile y la regla de bloqueo se cargan en un device group (y el server profile en un template) y Panorama
+los empuja a los firewalls. Los logs pueden salir de cada firewall o reenviarse desde Panorama a un server profile de
+syslog.
+
+No la probamos con Panorama: un Panorama sin la licencia de administración de dispositivos no deja dar de alta
+firewalls, y en el laboratorio no tenemos esa licencia. Si su Panorama reenvía los logs, el equipo de SecureAI
+verifica el formato con usted.
+
 ## Límites
 
 - **El bloqueo alcanza a toda la red detrás del firewall**: las EDL son listas de dominios, no de usuarios.
@@ -269,7 +281,8 @@ la política.
 |---|---|---|
 | 12.2.3 | VM-Series en Google Cloud, licencia Bundle2 | Descubrimiento por syslog y por HTTP log forwarding, bloqueo con las EDL de URL y de dominio (perfil de URL Filtering, regla de seguridad y sinkhole DNS), y la última lista conservada cuando el feed falla |
 | 11.2.15 | VM-Series en Google Cloud, licencia Bundle2 | La misma prueba |
+| 11.1.6-h7 | VM-Series en Google Cloud, licencia Bundle2 | La misma prueba, con User-ID |
 | 12.2.3 | El mismo, configurado como un cliente | Syslog al colector de SecureAI, EDL por HTTPS, y desde la consola: bloquear, liberar y bloqueo automático por umbral |
 
-Los formatos CEF y LEEF se probaron con logs reales de PAN-OS 12.2.3. No probamos todavía PAN-OS 11.1, equipos
-físicos ni Panorama; los menús de la GUI pueden cambiar de nombre entre versiones.
+Los formatos CEF y LEEF se probaron con logs reales de PAN-OS 12.2.3. No probamos todavía equipos físicos ni
+Panorama; los menús de la GUI pueden cambiar de nombre entre versiones.
