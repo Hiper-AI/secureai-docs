@@ -9,6 +9,10 @@ description: "Google Cloud に接続すると、SecureAI が Vertex AI のエー
 
 # Google Cloud — ディスカバリー
 
+<Note>
+このページは機械翻訳されています。わかりにくい点があれば、[英語版](/en/integrations/cloud/gcp-vertex-ai)をご確認ください。
+</Note>
+
 Google Cloud プロジェクト (または組織全体やフォルダ) に接続すると、SecureAI は Vertex AI のエージェント、エンドポイント、モデルに加えて、それらに関連するサービス アカウント、キー、IAM バインディング、監査ログ、使用状況、コストをインベントリできるようになります。
 
 <Info>
