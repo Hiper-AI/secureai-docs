@@ -9,10 +9,6 @@ SecureAI lee los logs de URL Filtering y de Traffic de sus firewalls Palo Alto, 
 su gente y publica las External Dynamic Lists (EDL) con lo que usted prohíbe. El firewall las descarga y las aplica
 con sus propios perfiles y reglas. No hace falta la suscripción de AI Access Security.
 
-<Note>
-La consola todavía no tiene una pantalla para crear las fuentes de logs y los feeds: el equipo de SecureAI lo hace con usted y le entrega los identificadores y los tokens.
-</Note>
-
 ## Cómo funciona
 
 1. El firewall manda a SecureAI sus logs de URL Filtering y de Traffic, por syslog a través del colector de
@@ -60,10 +56,45 @@ SecureAI necesita Advanced URL Filtering o Threat Prevention.
   o desde la que fije en **Device > Setup > Services > Service Route Configuration**.
 - Para syslog, una máquina Linux con Docker en la red del firewall, donde corre el colector de SecureAI. Con HTTP
   log forwarding no hace falta.
-- Del equipo de SecureAI: el id y el token de la fuente de logs, y el id y el token de los dos feeds (`panos-url` y
-  `panos-domain`). Guarde los tokens en su gestor de secretos.
 
-## 1. Mandar los logs a SecureAI
+## 1. Conectar el Palo Alto en SecureAI
+
+1. Abra **Administrador → Integraciones** y elija la categoría **Red / SWG**.
+2. En la tarjeta **Palo Alto Networks**, haga clic en **Conectar**.
+
+![Tarjeta de Palo Alto Networks en Integraciones, categoría Red / SWG](/img/paloalto/console-card.png)
+
+3. En **Agregar un Palo Alto Networks**, escriba un nombre que le permita reconocer el firewall. Los otros dos campos
+   son opcionales:
+   - **IP del colector**: SecureAI la pone como servidor de syslog en los valores para el PAN-OS.
+   - **IP pública del firewall**: si la carga, SecureAI solo le entrega la EDL a esa dirección, aunque otro tenga el
+     token.
+
+![Formulario para agregar un Palo Alto](/img/paloalto/console-form.png)
+
+4. Haga clic en **Crear y mostrar la configuración**. SecureAI crea la fuente de logs, las dos EDL (la de URL,
+   formato `panos-url`, y la de dominio, formato `panos-domain`) y el feed con la lista de dominios de IA que usa el
+   colector para filtrar. Después ofrece
+   **Descargar el colector (.zip)** y muestra dos bloques para copiar: `collector.env`, con el id y el token de la
+   fuente (`SECUREAI_INGEST_ID` y `SECUREAI_INGEST_TOKEN`), y los valores para cargar en la GUI del PAN-OS: el
+   server profile de syslog, el log forwarding profile y las EDL `secureai-ia-url` y `secureai-ia-dominios`, cada una
+   con su URL y su token.
+
+![Panel con los valores para el PAN-OS](/img/paloalto/console-config.png)
+
+Los tokens se ven solo en ese momento. Descargue el colector y copie los valores antes de cerrar el panel, y guarde
+los tokens en su gestor de secretos. Si los pierde, **Tokens nuevos** en la fila del equipo genera otros y los
+anteriores dejan de funcionar.
+
+En **Estado** ve, por cada firewall, si llegan sus logs y cuándo descargó cada EDL por última vez. Si un equipo deja
+de descargar una por más de 30 minutos, el panel lo avisa.
+
+![Firewall conectado: recibe logs y descargó las dos EDL](/img/paloalto/console-devices.png)
+
+Los pasos siguientes explican cada valor y lo que se configura en el firewall: HTTP log forwarding sin colector, el
+perfil de URL Filtering y dónde se usa cada EDL.
+
+## 2. Mandar los logs a SecureAI
 
 Elija una de las dos vías.
 
@@ -83,8 +114,8 @@ En **Payload Format**, configure un formato para **Traffic** y otro para **URL**
 
 | Campo | Valor |
 |---|---|
-| URI Format | `/api/network-ingest/<id de la fuente>` |
-| Headers | `Content-Type: text/plain` y `Authorization: Bearer <token de la fuente>` |
+| URI Format | `/api/network-ingest/<SECUREAI_INGEST_ID>` |
+| Headers | `Content-Type: text/plain` y `Authorization: Bearer <SECUREAI_INGEST_TOKEN>` |
 
 Payload de **Traffic**:
 
@@ -105,8 +136,8 @@ Certificates > Default Trusted Certificate Authorities**). El certificado de su 
 
 ### Opción B: syslog al colector
 
-1. Instale el colector de SecureAI con el id y el token de la fuente de logs. El equipo de SecureAI le pasa el
-   paquete y lo acompaña.
+1. Descomprima el colector del paso 1 en la máquina Linux con Docker y corra `docker compose up -d` en esa carpeta.
+   Escucha syslog en el puerto 514.
 2. **Device > Server Profiles > Syslog > Add**: la IP del colector, UDP o TCP 514, formato **BSD**. Con el formato por
    defecto (CSV) no hay nada más que configurar. Si su SIEM ya espera CEF o LEEF, cargue en **Custom Log Format**,
    para **Traffic** y **URL**:
@@ -136,7 +167,7 @@ server profile de la opción A o B. Con HTTP log forwarding puede filtrar en el 
 En cada regla de seguridad que lleva tráfico a internet (**Policies > Security**), en **Actions**, elija el perfil en
 **Log Forwarding** y marque **Log at Session End**.
 
-## 2. Registrar la IA en el log de URL Filtering
+## 3. Registrar la IA en el log de URL Filtering
 
 **Objects > Security Profiles > URL Filtering**: en su perfil, ponga en **Alert** la categoría
 `artificial-intelligence` y las `AI-*` (`AI-conversational-assistant`, `AI-code-assistant` y las demás). Las
@@ -144,7 +175,7 @@ categorías en **Allow** no generan log. Asigne el perfil a las reglas de salida
 
 ![Perfil de URL Filtering](/img/paloalto/url-filtering.png)
 
-## 3. Bloquear con las EDL de SecureAI
+## 4. Bloquear con las EDL de SecureAI
 
 ### Las dos EDL
 
@@ -153,7 +184,7 @@ categorías en **Allow** no generan log. Asigne el perfil a las reglas de salida
 | Campo | EDL de URL | EDL de dominio |
 |---|---|---|
 | Type | URL List | Domain List |
-| Source | `https://<tenant>.hiperai.com/api/network-feeds/<id del feed panos-url>` | `https://<tenant>.hiperai.com/api/network-feeds/<id del feed panos-domain>` |
+| Source | La URL que muestra el panel, `https://<tenant>.hiperai.com/api/network-feeds/<id del feed panos-url>` | La URL que muestra el panel, `https://<tenant>.hiperai.com/api/network-feeds/<id del feed panos-domain>` |
 | Server Authentication | Un certificate profile con la CA raíz del certificado de su tenant | El mismo |
 | Client Authentication | Usuario: cualquiera, por ejemplo `feed`. Contraseña: el token del feed | Usuario `feed` y el token del otro feed |
 | Automatically expand to include subdomains | | Activado |
@@ -187,7 +218,7 @@ set external-list secureai-ia-dominios type domain expand-domain yes
 
 ### Dónde se usan
 
-- **Perfil de URL Filtering**: en el perfil del paso 2, la EDL de URL aparece entre las categorías. Póngala en
+- **Perfil de URL Filtering**: en el perfil del paso 3, la EDL de URL aparece entre las categorías. Póngala en
   **Block**.
 - **Regla de seguridad**: una regla arriba de las de salida a internet, con la EDL de URL en **Service/URL
   Category** y acción **Reset both** o **Deny**. Bloquea aunque la regla de abajo no tenga perfil de URL Filtering.
@@ -197,7 +228,7 @@ set external-list secureai-ia-dominios type domain expand-domain yes
 - **Anti-Spyware**: en **Objects > Security Profiles > Anti-Spyware > DNS Policies**, agregue la EDL de dominio con
   acción **Sinkhole**. Asigne el perfil a las reglas por las que pasa el DNS de los equipos.
 
-## 4. Comprobar
+## 5. Comprobar
 
 1. Desde un equipo detrás del firewall, abra chatgpt.com. En uno o dos minutos el equipo aparece en **Inventario >
    Fuentes de red** de SecureAI.
