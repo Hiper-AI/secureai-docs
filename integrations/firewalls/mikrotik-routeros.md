@@ -36,7 +36,7 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
 
 ## Requisitos
 
-- Un MikroTik con **RouterOS 7.15 o posterior** (ver [Versiones](#versiones)).
+- Un MikroTik con **RouterOS 7.18 o posterior** (ver [Versiones](#versiones)).
 - Un usuario del router con las policies `read`, `write`, `test` y `ftp`.
 - Que los clientes reciban el router como DNS (por DHCP, que es lo habitual) y que el router acepte consultas de la
   LAN: `/ip dns set allow-remote-requests=yes`. La configuración de fábrica descarta las consultas que llegan por la
@@ -49,12 +49,19 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
 
 1. Abra **Administrador → Integraciones** y elija la categoría **Red / SWG**.
 2. En la tarjeta **MikroTik RouterOS**, haga clic en **Conectar**.
+
+   ![Tarjeta de MikroTik RouterOS en Integraciones, categoría Red / SWG](/img/mikrotik/console-card.png)
+
 3. Complete el nombre, la IP del colector (la máquina Linux) y, si quiere, la IP pública del router: SecureAI rechaza a
    cualquier otro que pida la lista de bloqueo, aunque tenga el token.
 4. **Crear y mostrar la configuración** pide el segundo factor y crea la fuente de logs del conector
    `mikrotik-routeros` y el feed de bloqueo en formato `plain`.
 
+![Formulario para agregar un MikroTik](/img/mikrotik/console-form.png)
+
 Los tokens se ven una sola vez, en ese panel. Si los pierde, **Tokens nuevos** en la fila del equipo los rota.
+
+![Panel con el paquete del colector, collector.env y las líneas de RouterOS](/img/mikrotik/console-config.png)
 
 ### Instalar el colector
 
@@ -66,11 +73,15 @@ Linux, dentro de la carpeta del paquete:
 docker compose -f docker-compose.yml -f docker-compose.mikrotik.yml up -d
 ```
 
+El colector escucha syslog en el 514 (UDP y TCP) y, para MikroTik por TCP, en el 5517.
+
 El panel también muestra, en **Terminal de RouterOS**, las líneas para el router con la IP del colector y el token del
 feed ya puestos. Suba a **Files** del router los dos archivos de `router/` y pegue esas líneas en la terminal. Los
 pasos que siguen explican qué hace cada una.
 
-Escucha syslog en el 514 (UDP y TCP) y, para MikroTik por TCP, en el 5517.
+Cuando el router manda su log y bajó la lista, la fila del equipo muestra los dos estados en verde:
+
+![Equipo conectado: recibe logs y leyó la lista de bloqueo](/img/mikrotik/console-devices.png)
 
 ## 2. Mandar el log DNS del router al colector
 
@@ -89,8 +100,9 @@ Por TCP, las líneas llegan en el orden en que el router las escribió y no se p
 `script` son para el usuario y el equipo ([sección 7](#7-usuario-y-equipo)). `!packet` deja afuera el volcado de cada
 paquete DNS, que ocupa varias líneas por consulta.
 
-Si su RouterOS no tiene `remote-log-format`, mande por UDP al 514 (`remote-port=514 remote-protocol=udp`). Cada
-mensaje viaja en su propio paquete, pero un paquete perdido no se reenvía.
+RouterOS agrega `remote-protocol` y `remote-log-format` en 7.18. En 7.15 a 7.17 la acción va sin los dos y con
+`remote-port=514`: el router manda por UDP, cada mensaje en su propio paquete, y un paquete perdido no se reenvía.
+Ese camino no está probado.
 
 ![Acción de log remota hacia el colector en WebFig](/img/mikrotik/logging-action.png)
 
@@ -450,6 +462,11 @@ Cómo decide el colector, porque atribuirle un acceso a la persona equivocada es
 - Un usuario del Hotspot cuya MAC no es la que tiene el lease de esa IP no se usa.
 - Sin una entrada vigente, o si el colector se reinició y el script todavía no volvió a correr, la consulta llega igual,
   sin usuario ni equipo. Nunca se le pone una identidad vieja.
+- Justo después de un login en el Hotspot, el usuario puede tardar hasta un minuto en aparecer: hasta entonces las
+  consultas de esa persona llegan con el equipo y sin usuario, nunca con el usuario de otro.
+- Si dos routers mandan al mismo colector, cada uno usa solo las entradas que él mismo informó, aunque las dos
+  redes usen el mismo rango. Dos routers detrás del mismo NAT le llegan al colector desde la misma dirección: en ese
+  caso, use un colector por router.
 
 Si la misma IP pasó por dos personas en el día, en **Fuentes de red** ve una fila por cada una.
 
@@ -497,11 +514,17 @@ escribe la URL completa en el log DNS.
 
 ## Versiones
 
-RouterOS 7.15 es la primera versión con todo lo que usa la integración, según los changelogs de MikroTik: `/file add`
-con contenido (7.15), `:onerror` (7.13) y `match-subdomain` (7.5). La probamos de punta a punta en RouterOS 7.25.1
-(CHR): descubrimiento por IPv4 e IPv6, usuario y equipo por Hotspot y DHCP con una IP que pasa de una persona a
-otra, bloqueo con subdominios, redirección del 53, corte de DoH por nombre y por IP,
-modo address-list, y el comportamiento ante 401 y 403. La validación TLS se probó aparte: el router acepta un
+RouterOS 7.18 es la primera versión con el log por TCP del paso 2 (`remote-protocol` y `remote-log-format`), según
+los changelogs de MikroTik. Los scripts usan `/file add` con contenido (7.15), `:onerror` (7.13) y `match-subdomain`
+(7.5). En RouterOS 7.15.3 la configuración del log no entra (`unknown parameter remote-log-format`).
+
+La probamos de punta a punta en RouterOS 7.25.1 (CHR): descubrimiento por IPv4 e IPv6, usuario y equipo por Hotspot
+y DHCP con una IP que pasa de una persona a otra, dos routers con el mismo rango en un colector, bloqueo con
+subdominios, redirección del 53, corte de DoH por nombre y por IP, modo address-list, el comportamiento ante 401 y
+403, y un corte de luz del router.
+
+En RouterOS 7.18.2 pasa todo eso salvo un caso del Hotspot: si otra persona toma la misma IP apenas la primera la
+libera, su equipo no alcanza el router durante la prueba. La identidad de cada persona por separado llega bien. La validación TLS se probó aparte: el router acepta un
 servidor válido y rechaza uno vencido, uno con otro nombre y uno autofirmado.
 
 ## Problemas comunes
