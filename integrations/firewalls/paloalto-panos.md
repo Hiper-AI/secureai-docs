@@ -1,7 +1,7 @@
 ---
 title: "Palo Alto Networks (PAN-OS)"
 sidebarTitle: "Palo Alto PAN-OS"
-icon: "shield-halved"
+icon: "/img/icons/paloalto.svg"
 description: "Descubra la IA que pasa por sus firewalls Palo Alto y bloquéela con una External Dynamic List de SecureAI"
 ---
 
