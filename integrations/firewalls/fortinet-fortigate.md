@@ -30,8 +30,8 @@ La integración está en **beta**. La probamos en laboratorio con FortiGate-VM y
 
 - Un FortiGate con FortiOS 7.2 o posterior, y un administrador con permiso de escritura en Log & Report, Security
   Profiles, Security Fabric y Policy & Objects.
-- Una máquina Linux con Docker en la red del FortiGate para el colector (1 vCPU y 1 GB alcanzan para miles de
-  eventos por segundo). El FortiGate tiene que llegarle por syslog, y ella tiene que salir por HTTPS a su tenant.
+- Una máquina Linux con Docker en la red del FortiGate para el colector. Con 1 vCPU y 1 GB procesa unos 3.000
+  eventos de syslog por segundo; si su FortiGate manda más, sume vCPU. El FortiGate tiene que llegarle por syslog, y ella tiene que salir por HTTPS a su tenant.
 - Que el FortiGate salga por HTTPS a su tenant (`https://<tenant>.hiperai.com`) para descargar el feed.
 - Un administrador de SecureAI con segundo factor configurado: crear y rotar los tokens lo pide.
 
@@ -332,6 +332,17 @@ Las políticas que llevan tráfico a internet necesitan:
 
 ![Política con DNS Filter, Application Control, SSL Inspection y Log Allowed Traffic](/img/fortinet/fortigate-policy-profiles.png)
 
+### Usuario en vez de IP
+
+SecureAI muestra la persona cuando el log del FortiGate trae el usuario. FortiOS lo escribe en las sesiones de una
+política que identifica usuarios: una política con un grupo de usuarios (**Source → User**) cuyo login sale de
+FSSO, de RSSO (RADIUS accounting de una NAC, una VPN o un controlador Wi-Fi) o de la autenticación del propio
+FortiGate.
+
+Antes de agregar el grupo a una política que ya está en producción, pruebe qué pasa con los equipos que no se
+identifican: esa política ya no los cubre, y según el resto de sus políticas pueden quedar sin salida. SecureAI no
+cambia nada de esto; solo lee el usuario que el FortiGate ya escribe.
+
 ## 4. Bloquear con el feed de SecureAI
 
 La CLI del panel crea el External Connector `secureai-ia-prohibida` con la URL y el token del feed, y lo pone en
@@ -371,12 +382,60 @@ solo los del feed.
 </Warning>
 
 Por CLI y por la REST API, FortiOS deja la categoría del connector en 0, que DNS Filter no puede usar. Por eso la
-CLI del panel le asigna la 221; si ya la usa otro connector, elija otra libre entre 192 y 221 y use la misma en el
-perfil.
+CLI del panel le asigna la 221. Antes de pegarla, revise con `show system external-resource` si otro connector ya
+la usa; si la usa, cambie los dos `221` por una libre entre 192 y 220. FortiOS acepta dos connectors en la misma
+categoría, pero el DNS Filter bloquea con la lista de uno solo y no avisa.
 
 DNS Filter actúa sobre las consultas DNS que pasan por el FortiGate: las de los equipos que lo usan como servidor DNS
 o las que atraviesan una política con el perfil. Un equipo que resuelve por otro camino (DNS sobre HTTPS del
-navegador, un resolver que no pasa por el FortiGate) no se bloquea así.
+navegador, un resolver que no pasa por el FortiGate) no se bloquea así. Para esos equipos, sume el bloqueo por Web
+Filter.
+
+### Bloquear también por HTTPS (Web Filter)
+
+Web Filter mira el nombre del sitio en la conexión HTTPS (SNI), así que alcanza a los equipos que resuelven DNS por
+otro camino. Usa el mismo feed con un segundo connector:
+
+1. **Security Fabric → External Connectors → Create New → Threat Feeds → FortiGuard Category**, con la misma URI,
+   el mismo usuario y el mismo token que el connector de dominios. Su categoría tiene que ser otra, libre.
+2. En el perfil de Web Filter de sus políticas (**Security Profiles → Web Filter**), la categoría del connector
+   aparece en **Remote Categories**: póngala en **Block**. Sin la suscripción de Web Filter de FortiGuard, active
+   también **Allow websites when a rating error occurs**, por la misma razón que en DNS Filter.
+3. La política necesita el perfil de Web Filter y SSL Inspection, aunque sea `certificate-inspection`.
+
+Por CLI, con la categoría 220 si está libre:
+
+```
+config system external-resource
+    edit "secureai-ia-prohibida-web"
+        set type category
+        set resource "https://<tenant>.hiperai.com/api/network-feeds/<id>"
+        set username "feed"
+        set password <token del feed>
+        set refresh-rate 5
+        set category 220
+    next
+end
+config webfilter profile
+    edit "default"
+        set log-all-url enable
+        config ftgd-wf
+            set options error-allow
+            config filters
+                edit 0
+                    set category 220
+                    set action block
+                    set log enable
+                next
+            end
+        end
+    next
+end
+```
+
+Con `certificate-inspection` el FortiGate no ve adentro del TLS: corta la conexión con su propio certificado y el
+navegador muestra un error de certificado en lugar de la página de bloqueo. Con inspección profunda muestra la
+página. El log de Web Filter vuelve a SecureAI y suma al bloqueo confirmado.
 
 ## 5. Comprobar
 
@@ -434,6 +493,10 @@ los saca al vencer. Guardar estos ajustes pide el segundo factor.
 - **Un dominio que el FortiGate ya resolvió puede tardar en bloquearse o liberarse.** Además del refresco del
   connector (5 minutos), el FortiGate guarda las respuestas DNS un tiempo. En el laboratorio, entre el bloqueo y la
   respuesta del portal pasaron de 1 a 8 minutos.
+- **El colector procesa unos 3.000 eventos por segundo por vCPU.** Por encima, el syslog por UDP se pierde sin
+  aviso.
+- **Cada connector necesita su propia categoría remota.** Con dos connectors en la misma categoría, el FortiGate
+  descarga las dos listas pero bloquea con una sola, sin avisar.
 - **El bloqueo alcanza a toda la red detrás del FortiGate**, no a un usuario ni a una IP: el feed es una lista de
   dominios.
 - **Si su tenant tiene además Cisco Umbrella o el bloqueo de Cloudflare Gateway, los bloqueos van ahí y no al
@@ -448,6 +511,8 @@ los saca al vencer. Guardar estos ajustes pide el segundo factor.
 | FortiOS | Equipo | Resultado |
 |---|---|---|
 | 7.6.8 | FortiGate-VM, en laboratorio | Alta desde la consola, colector instalado desde el `.zip` del panel en una máquina Linux con Docker, descubrimiento por DNS Filter y Application Control, bloqueo manual y automático por el feed, bloqueo confirmado y liberación |
+| 7.6.8 | FortiGate-VM, en laboratorio | Usuario por RSSO: el FortiGate escribió el usuario en sus logs y SecureAI lo mostró en la observación |
+| 7.6.8 | FortiGate-VM, en laboratorio | Bloqueo por Web Filter de un equipo que resolvía DNS sin pasar por el FortiGate, con el log de vuelta en SecureAI. Con SecureAI respondiendo error, el FortiGate conservó la lista y siguió bloqueando |
 
 Todavía no la probamos en FortiOS 7.2 ni 7.4, ni en equipos físicos. Los pasos usan objetos que existen en las tres
 versiones; los nombres de los menús de la GUI pueden cambiar.
