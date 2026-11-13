@@ -30,8 +30,8 @@ The integration is in **beta**. We tested it in a lab with FortiGate-VM and Fort
 
 - A FortiGate running FortiOS 7.2 or later, and an administrator with write access to Log & Report, Security
   Profiles, Security Fabric and Policy & Objects.
-- A Linux machine with Docker on the FortiGate's network for the collector (1 vCPU and 1 GB handle thousands of
-  events per second). The FortiGate must reach it over syslog, and it must reach your tenant over HTTPS.
+- A Linux machine with Docker on the FortiGate's network for the collector. With 1 vCPU and 1 GB it processes about
+  3,000 syslog events per second; if your FortiGate sends more, add vCPUs. The FortiGate must reach it over syslog, and it must reach your tenant over HTTPS.
 - The FortiGate must reach your tenant (`https://<tenant>.hiperai.com`) over HTTPS to download the feed.
 - A SecureAI administrator with a second factor set up: creating and rotating the tokens asks for it.
 
@@ -373,12 +373,60 @@ not just the ones in the feed.
 </Warning>
 
 Through the CLI and the REST API, FortiOS leaves the connector's category at 0, which DNS Filter can't use. That's
-why the panel's CLI assigns it 221; if another connector already uses it, pick a free one between 192 and 221 and
-use the same one in the profile.
+why the panel's CLI assigns it 221. Before you paste it, check with `show system external-resource` whether another
+connector already uses it; if one does, change both `221`s to a free one between 192 and 220. FortiOS accepts two
+connectors on the same category, but DNS Filter blocks with only one of their lists and doesn't warn you.
 
 DNS Filter acts on the DNS queries that go through the FortiGate: those from devices that use it as their DNS
 server, or those that cross a policy with the profile. A device that resolves another way (the browser's DNS over
-HTTPS, a resolver that doesn't go through the FortiGate) isn't blocked this way.
+HTTPS, a resolver that doesn't go through the FortiGate) isn't blocked this way. For those devices, add the Web
+Filter block.
+
+### Block over HTTPS too (Web Filter)
+
+Web Filter looks at the site name in the HTTPS connection (SNI), so it reaches devices that resolve DNS another
+way. It uses the same feed with a second connector:
+
+1. **Security Fabric → External Connectors → Create New → Threat Feeds → FortiGuard Category**, with the same URI,
+   user and token as the domain connector. Its category has to be a different, free one.
+2. In the Web Filter profile of your policies (**Security Profiles → Web Filter**), the connector's category
+   shows up under **Remote Categories**: set it to **Block**. Without FortiGuard's Web Filter subscription, also turn
+   on **Allow websites when a rating error occurs**, for the same reason as in DNS Filter.
+3. The policy needs the Web Filter profile and SSL Inspection, even if it's `certificate-inspection`.
+
+Through the CLI, with category 220 if it is free:
+
+```
+config system external-resource
+    edit "secureai-ia-prohibida-web"
+        set type category
+        set resource "https://<tenant>.hiperai.com/api/network-feeds/<id>"
+        set username "feed"
+        set password <feed token>
+        set refresh-rate 5
+        set category 220
+    next
+end
+config webfilter profile
+    edit "default"
+        set log-all-url enable
+        config ftgd-wf
+            set options error-allow
+            config filters
+                edit 0
+                    set category 220
+                    set action block
+                    set log enable
+                next
+            end
+        end
+    next
+end
+```
+
+With `certificate-inspection` the FortiGate can't see inside TLS: it cuts the connection with its own certificate,
+and the browser shows a certificate error instead of the block page. With deep inspection it shows the page. The
+Web Filter log comes back to SecureAI and adds to the confirmed block.
 
 ## 5. Check
 
@@ -436,6 +484,10 @@ takes them out when the block expires. Saving these settings asks for your secon
 - **A domain the FortiGate already resolved can take a while to be blocked or released.** Besides the connector's
   refresh (5 minutes), the FortiGate keeps DNS answers for a while. In our lab, the block portal answered between 1
   and 8 minutes after the block.
+- **The collector processes about 3,000 events per second per vCPU.** Above that, UDP syslog is dropped without
+  warning.
+- **Each connector needs its own remote category.** With two connectors on the same category, the FortiGate
+  downloads both lists but blocks with only one, and doesn't warn you.
 - **A block reaches the whole network behind the FortiGate**, not a user or an IP: the feed is a list of domains.
 - **If your tenant also has Cisco Umbrella or Cloudflare Gateway blocking, blocks go there and not to the feed.** To
   send them to the FortiGate, ask support to set the block destination to the feed.
@@ -449,6 +501,7 @@ takes them out when the block expires. Saving these settings asks for your secon
 | FortiOS | Device | Result |
 |---|---|---|
 | 7.6.8 | FortiGate-VM, in a lab | Setup from the console, collector installed from the panel's `.zip` on a Linux machine with Docker, discovery through DNS Filter and Application Control, manual and automatic blocking through the feed, enforcement confirmed and release |
+| 7.6.8 | FortiGate-VM, in a lab | Web Filter block of a device that resolved DNS without going through the FortiGate, with the log back in SecureAI. With SecureAI answering an error, the FortiGate kept its list and kept blocking |
 
 We haven't tested it yet on FortiOS 7.2 or 7.4, or on physical devices. The steps use objects that exist in all
 three versions; GUI menu names may change.
