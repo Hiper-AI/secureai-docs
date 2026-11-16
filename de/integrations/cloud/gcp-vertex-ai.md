@@ -9,6 +9,10 @@ description: "Verbinden Sie Google Cloud, damit SecureAI Vertex AI-Agenten, Mode
 
 # Google Cloud — Discovery
 
+<Note>
+Diese Seite wurde maschinell übersetzt. Wenn etwas unklar ist, lesen Sie die [englische Version](/en/integrations/cloud/gcp-vertex-ai).
+</Note>
+
 Verbinden Sie Ihr Google Cloud-Projekt (oder eine ganze Organisation bzw. einen Ordner), damit SecureAI Vertex AI-Agenten, -Endpunkte und -Modelle inventarisieren kann – zusammen mit den Dienstkonten, Schlüsseln, IAM-Bindungen, Audit-Protokollen, der Nutzung und den Kosten, die sie umgeben.
 
 <Info>

@@ -9,6 +9,10 @@ description: "Connectez Google Cloud pour que SecureAI puisse inventorier les ag
 
 # Google Cloud — Discovery
 
+<Note>
+Cette page a été traduite automatiquement. Si quelque chose n'est pas clair, consultez la [version anglaise](/en/integrations/cloud/gcp-vertex-ai).
+</Note>
+
 Connectez votre projet Google Cloud (ou toute une organisation ou un dossier) afin que SecureAI puisse inventorier les agents, les points de terminaison et les modèles Vertex AI, ainsi que les comptes de service, les clés, les liaisons IAM, les journaux d'audit, l'utilisation et les coûts qui les entourent.
 
 <Info>
