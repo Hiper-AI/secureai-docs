@@ -10,8 +10,8 @@ servicios de IA usa su gente y los bloquea en Gateway cuando usted los prohíbe 
 no hace falta volver al dashboard de Cloudflare: SecureAI crea y mantiene sus propias listas y reglas.
 
 <Note>
-La integración está en **beta**. La lectura por Logpush requiere Cloudflare Zero Trust Enterprise y todavía no
-se validó contra una cuenta real.
+La lectura por Logpush requiere Cloudflare Zero Trust Enterprise y está en beta: todavía no se validó contra una
+cuenta real.
 </Note>
 
 ## Qué ve SecureAI según su plan de Cloudflare
@@ -66,8 +66,10 @@ menú de la cuenta → *Copy account ID*).
 ## 2. Conectar en SecureAI
 
 En **Integraciones**, filtro **Network / SWG**, abra **Cloudflare Zero Trust** y pegue el Account ID y el token.
-**Probar conexión** verifica que el token lee Zero Trust y las analíticas antes de guardar. Desde ahí SecureAI
-consulta Gateway cada 30 minutos, y lo que encuentra aparece en **Fuentes de red**.
+Al tocar **Connect**, SecureAI prueba que el token lee Zero Trust y las analíticas; si falla, no guarda nada y le
+dice qué falta. Desde ahí SecureAI consulta Gateway cada 30 minutos, y lo que encuentra aparece en **Fuentes de
+red**. Para no esperar la primera vuelta, toque **Sync now** en Fuentes de red: lee los últimos 30 días en segundo
+plano.
 
 ## 3. Prender el bloqueo
 
@@ -100,8 +102,8 @@ el tipo Domain como "Hostnames"):
 Una entrada de una lista Domain cubre el dominio y sus subdominios: `openai.com` bloquea también
 `api.openai.com`.
 
-La lista sale de los proveedores que usted marca como **prohibidos**, los sitios bloqueados de la extensión y los
-bloqueos temporales activos, menos los sitios aprobados.
+La lista sale de los proveedores que usted marca como **prohibidos** (Fuentes de red → **AI governance**), los
+sitios bloqueados de la extensión y los bloqueos temporales activos, menos los sitios aprobados.
 
 ### Comprobar que bloquea
 
@@ -113,11 +115,11 @@ siguiente sync.
 
 ### Cómo se mantiene
 
-- SecureAI sincroniza cada 5 minutos, y en el momento en que usted crea o libera un bloqueo temporal.
-- Si nada cambió, no escribe en Cloudflare.
-- Una vez por día compara lo que hay en la cuenta y repara lo que se haya tocado a mano: vuelve a poner las
-  entradas que faltan en sus listas y vuelve a crear una regla `SecureAI —` borrada. Entre dos pasadas puede haber
-  hasta 24 horas.
+- SecureAI sincroniza cada 5 minutos, y en el momento en que usted prohíbe o permite un proveedor, o crea o libera
+  un bloqueo temporal.
+- Si nada cambió, no escribe en Cloudflare. En cada vuelta igual lee sus listas y sus reglas, y repara en esa vuelta
+  una regla `SecureAI —` deshabilitada o borrada, o una entrada que alguien sacó a mano. Una vez por día compara
+  además entrada por entrada.
 - Si la lista pasa el tope de entradas de su plan, SecureAI la parte en varias listas que cubren las mismas
   reglas.
 - Cloudflare admite 100 listas por cuenta. Cuando la cuenta usa 80 o más (contando las suyas), SecureAI avisa al
@@ -148,8 +150,11 @@ tanto llega a Cloudflare cuando vuelve a prender el interruptor.
 confirmación y MFA reciente, y queda en el Activity Log. Las listas quedan en la cuenta: volver a prenderlo es un
 solo sync.
 
-Para sacar a SecureAI de la cuenta por completo: apague el bloqueo, borre las tres reglas `SecureAI — block AI`,
-después las listas `SecureAI — AI block` (Cloudflare no deja borrar una lista que una regla usa) y revoque el
+SecureAI no deja desconectar la integración con el bloqueo prendido: las reglas seguirían bloqueando sin nadie que
+las mantenga.
+
+Para sacar a SecureAI de la cuenta por completo: apague el bloqueo, desconecte la integración, borre las tres
+reglas `SecureAI — block AI`, después las listas `SecureAI — AI block` (Cloudflare no deja borrar una lista que una regla usa) y revoque el
 token.
 
 ## A quién alcanza un bloqueo
@@ -193,8 +198,10 @@ El bloqueo sigue saliendo de la conexión **Cloudflare Zero Trust** del paso 2. 
 
 | Síntoma | Causa probable |
 |---|---|
-| Probar conexión falla con `NO_ANALYTICS_SCOPE` | Al token le falta Account Analytics Read |
-| Probar conexión falla con `NO_ZT_READ` o `CF_AUTH` | Al token le falta Zero Trust Read, o es de otra cuenta |
+| Connect falla con `CF_AUTH` | Cloudflare rechazó el token: está mal copiado, venció o lo revocaron |
+| Connect falla con `NO_ANALYTICS_SCOPE` | Al token le falta Account Analytics Read |
+| Connect falla con `NO_ZT_READ` | Al token le falta Zero Trust Read, o el Account ID es de otra cuenta |
+| Desconectar falla con `ENFORCEMENT_ON` | El bloqueo está prendido: apáguelo primero |
 | El bloqueo queda con error `CF_FORBIDDEN` | Al token le falta Zero Trust Edit |
 | Error `CF_LIMIT` | No quedan listas libres en la cuenta (máximo 100) |
 | Fuentes `cf-location:…` sin usuario | Es DNS por ubicación: el usuario solo llega con WARP |
