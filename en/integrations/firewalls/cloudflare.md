@@ -10,7 +10,7 @@ services your people use, and blocks them in Gateway when you prohibit them in S
 need to go back to the Cloudflare dashboard: SecureAI creates and maintains its own lists and rules.
 
 <Note>
-The integration is in **beta**. Reading through Logpush requires Cloudflare Zero Trust Enterprise and hasn't been
+Reading through Logpush requires Cloudflare Zero Trust Enterprise and is in beta: it hasn't been
 validated against a real account yet.
 </Note>
 
@@ -65,8 +65,10 @@ Under **Account Resources**, pick only your account. Also copy the **Account ID*
 ## 2. Connect in SecureAI
 
 In **Integrations**, filter **Network / SWG**, open **Cloudflare Zero Trust** and paste the Account ID and the
-token. **Test connection** checks that the token can read Zero Trust and analytics before saving. From then on
-SecureAI queries Gateway every 30 minutes, and what it finds shows up in **Network Sources**.
+token, then click **Connect**. SecureAI first checks that the token can read Zero Trust and analytics; if it can't,
+nothing is saved and you see what's missing. From then on SecureAI queries Gateway every 30 minutes, and what it
+finds shows up in **Network Sources**. To skip the wait, click **Sync now** in Network Sources: it reads the last 30
+days in the background.
 
 ## 3. Turn on blocking
 
@@ -98,8 +100,8 @@ shows the Domain type as "Hostnames"):
 
 An entry in a Domain list covers the domain and its subdomains: `openai.com` also blocks `api.openai.com`.
 
-The list comes from the providers you mark as **prohibited**, the extension's blocked sites and the active
-temporary blocks, minus the approved sites.
+The list comes from the providers you mark as **prohibited** (Network Sources → **AI governance**), the
+extension's blocked sites and the active temporary blocks, minus the approved sites.
 
 ### Check that it blocks
 
@@ -110,10 +112,11 @@ Gateway answers `0.0.0.0`. In SecureAI, the source shows those queries as blocke
 
 ### How it stays in sync
 
-- SecureAI syncs every 5 minutes, and right away when you create or release a temporary block.
-- If nothing changed, it doesn't write to Cloudflare.
-- Once a day it compares what's in the account and repairs hand edits: it puts back missing entries in its lists
-  and recreates a deleted `SecureAI —` rule. There can be up to 24 hours between two passes.
+- SecureAI syncs every 5 minutes, and right away when you prohibit or allow a provider, or create or release a
+  temporary block.
+- If nothing changed, it doesn't write to Cloudflare. Each pass still reads its lists and rules, and repairs in that
+  same pass a `SecureAI —` rule someone disabled or deleted, or an entry someone removed by hand. Once a day it also
+  compares entry by entry.
 - If the list goes past your plan's entry limit, SecureAI splits it into several lists covered by the same rules.
 - Cloudflare allows 100 lists per account. When the account uses 80 or more (counting yours), SecureAI warns the
   administrator.
@@ -143,8 +146,11 @@ Cloudflare when you turn the switch back on.
 asks for confirmation and a recent MFA, and is recorded in the Activity Log. The lists stay in the account:
 turning it back on is a single sync.
 
-To remove SecureAI from the account completely: turn blocking off, delete the three `SecureAI — block AI` rules,
-then the `SecureAI — AI block` lists (Cloudflare won't delete a list a rule still uses), and revoke the token.
+SecureAI won't let you disconnect the integration while blocking is on: the rules would keep blocking with nothing
+maintaining them.
+
+To remove SecureAI from the account completely: turn blocking off, disconnect the integration, delete the three
+`SecureAI — block AI` rules, then the `SecureAI — AI block` lists (Cloudflare won't delete a list a rule still uses), and revoke the token.
 
 ## Who a block reaches
 
@@ -187,8 +193,10 @@ Blocking still comes from the **Cloudflare Zero Trust** connection in step 2. Lo
 
 | Symptom | Likely cause |
 |---|---|
-| Test connection fails with `NO_ANALYTICS_SCOPE` | The token is missing Account Analytics Read |
-| Test connection fails with `NO_ZT_READ` or `CF_AUTH` | The token is missing Zero Trust Read, or belongs to another account |
+| Connect fails with `CF_AUTH` | Cloudflare rejected the token: it was mistyped, expired or revoked |
+| Connect fails with `NO_ANALYTICS_SCOPE` | The token is missing Account Analytics Read |
+| Connect fails with `NO_ZT_READ` | The token is missing Zero Trust Read, or the Account ID is another account's |
+| Disconnecting fails with `ENFORCEMENT_ON` | Blocking is on: turn it off first |
 | Blocking shows the error `CF_FORBIDDEN` | The token is missing Zero Trust Edit |
 | `CF_LIMIT` error | No free lists left in the account (100 max) |
 | `cf-location:…` sources with no user | It's DNS by location: the user only comes with WARP |
