@@ -9,10 +9,6 @@ SecureAI lee el log de consultas DNS de su router MikroTik, le muestra qué equi
 hace que el router deje de resolver los proveedores que usted prohíbe en SecureAI. RouterOS no registra URLs: todo
 sale de los nombres que los clientes le preguntan al DNS del router.
 
-<Note>
-El conector `mikrotik-routeros` está en **beta**. En beta, el equipo de SecureAI acompaña la configuración.
-</Note>
-
 ## Cómo funciona
 
 1. El router manda por syslog una línea por cada consulta DNS que recibe de un cliente, IPv4 o IPv6
@@ -33,6 +29,9 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
   usuario.
 - Una consulta no es una conexión. El navegador consulta nombres que después puede no usar, y la caché del equipo
   evita consultas que sí usa. El conteo es aproximado.
+- Si el router respondió la consulta con NXDOMAIN (un dominio de la lista de bloqueo), SecureAI la cuenta como
+  bloqueada. Un nombre de IA que no existe también cuenta como bloqueado. En modo address-list el router resuelve el
+  nombre y corta la conexión después: esas consultas no aparecen como bloqueadas.
 
 ## Requisitos
 
@@ -127,11 +126,18 @@ RouterOS escribe en su log cada comando de configuración con sus valores. Este 
 `info` y `system`, crea el archivo del token y las vuelve a prender, en una sola línea:
 
 ```text
-:local off [/system logging find where topics~"info|system" disabled=no]; /system logging disable $off; /file add name=secureai-feed-token.txt contents="<token del feed>"; /system logging enable $off
+:local off [/system logging find where topics~"info|system" disabled=no]; /system logging disable $off; :do { /file remove [find name="secureai-feed-token.txt"]; /file add name=secureai-feed-token.txt contents="<token del feed>" } on-error={ :put "secureai: could not write secureai-feed-token.txt" }; /system logging enable $off
 ```
 
-Después borre el historial de la terminal, que también guarda el comando: `/console clear-history`. Para cambiar el
-token, repita la línea con `/file remove secureai-feed-token.txt` antes del `/file add`.
+La línea borra el archivo si ya existe, así que sirve para instalar y para cambiar el token. Si escribir el archivo
+falla, igual vuelve a prender las reglas de log.
+
+Después borre el historial de la terminal, que también guarda el comando: `/console clear-history`. Ese comando pide
+un usuario administrador: con las policies `read`, `write`, `test` y `ftp` solas falla por permisos.
+
+Con **Tokens nuevos**, en la fila del equipo, el panel muestra el `collector.env` nuevo y, para el router, solo esta
+línea y `/console clear-history`. Reemplace `collector.env` y vuelva a correr el `docker compose` del colector: el
+router se reconecta solo en unos 3 minutos, y las consultas que registra en ese rato se pierden.
 
 ### 3.2 Crear el script y el scheduler
 
@@ -521,7 +527,9 @@ los changelogs de MikroTik. Los scripts usan `/file add` con contenido (7.15), `
 La probamos de punta a punta en RouterOS 7.25.1 (CHR): descubrimiento por IPv4 e IPv6, usuario y equipo por Hotspot
 y DHCP con una IP que pasa de una persona a otra, dos routers con el mismo rango en un colector, bloqueo con
 subdominios, redirección del 53, corte de DoH por nombre y por IP, modo address-list, el comportamiento ante 401 y
-403, y un corte de luz del router.
+403, y un corte de luz del router. El 17 de noviembre de 2026 la probamos también contra un tenant de SecureAI, con
+la consola: alta, colector, configuración del panel, descubrimiento, bloqueo y liberación (unos 4 minutos hasta el
+cliente), tokens nuevos y desconexión.
 
 En RouterOS 7.18.2 pasa todo eso salvo un caso del Hotspot: si otra persona toma la misma IP apenas la primera la
 libera, su equipo no alcanza el router durante la prueba. La identidad de cada persona por separado llega bien. La validación TLS se probó aparte: el router acepta un
