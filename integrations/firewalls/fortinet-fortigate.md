@@ -514,6 +514,7 @@ los saca al vencer. Guardar estos ajustes pide el segundo factor.
 | 7.6.8 | FortiGate-VM, en laboratorio | Usuario por RSSO: el FortiGate escribió el usuario en sus logs y SecureAI lo mostró en la observación |
 | 7.6.8 | FortiGate-VM, en laboratorio | Bloqueo por Web Filter de un equipo que resolvía DNS sin pasar por el FortiGate, con el log de vuelta en SecureAI. Con SecureAI respondiendo error, el FortiGate conservó la lista y siguió bloqueando |
 | 7.6.8 | FortiGate-VM, contra un tenant de SecureAI | El recorrido de esta guía desde la consola: alta, colector del panel, CLI del panel, bloqueo y liberación desde Fuentes de red, bloqueo confirmado, Web Filter, restricción del feed por IP y **Tokens nuevos** |
+| 7.6.8 | FortiGate-VM, contra un tenant de SecureAI | Usuario por RSSO en la observación y en Usuarios, proveedor prohibido en el feed y en el cliente en menos de 2 minutos, y bloqueo automático por umbral, aplicado en el cliente en 84 segundos y liberado solo al vencer |
 
 Todavía no la probamos en FortiOS 7.2 ni 7.4, ni en equipos físicos. Los pasos usan objetos que existen en las tres
 versiones; los nombres de los menús de la GUI pueden cambiar.
