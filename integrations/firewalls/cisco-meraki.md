@@ -10,10 +10,9 @@ el MX los proveedores que usted prohíbe. El MX manda sus logs por syslog a un c
 su lista de bloqueo en el content filtering de las redes que usted elige, por la API del Dashboard de Meraki.
 
 <Note>
-El conector `cisco-meraki` está en **beta**. Probamos el descubrimiento contra un tenant de SecureAI con líneas de
-syslog en el formato que publica Cisco, sin un MX real. La escritura de la lista de bloqueo la probamos contra el
-Dashboard de Meraki, en una red sin equipo; todavía no la repetimos desde un tenant. Vea
-[Versiones probadas](#versiones-probadas). En beta, el equipo de SecureAI acompaña la configuración.
+Probamos el bloqueo de punta a punta desde un tenant de SecureAI contra el Dashboard de Meraki, en redes sin equipo,
+y el descubrimiento con líneas de syslog en el formato que publica Cisco, sin un MX real. Vea
+[Versiones probadas](#versiones-probadas).
 </Note>
 
 ## Cómo funciona
@@ -158,7 +157,7 @@ El panel muestra el código de la última falla.
 | 2026-11-12 | Sandbox de Cisco DevNet, red con un MX100 virtual, rol Observer | La API devolvió el content filtering con la forma que lee SecureAI |
 | 2026-11-12 | Red de prueba sin equipo, en una organización de Meraki propia | SecureAI agregó sus dominios a un patrón cargado a mano, sacó un proveedor que dejó de estar prohibido y, al apagar el bloqueo, dejó solo el patrón cargado a mano. Las categorías bloqueadas y los patrones permitidos no cambiaron. El Dashboard aceptó 20.000 patrones |
 | 2026-11-17 | Contra un tenant de SecureAI, sin MX | Alta desde la consola y descubrimiento en Fuentes de red, con líneas de syslog en el formato de la documentación de Cisco enviadas al colector |
+| 2026-11-17 | Contra un tenant de SecureAI, organización de Meraki propia con dos redes sin equipo | Prender el bloqueo escribió los dominios de SecureAI después de un patrón propio, sin tocarlo. Bloquear un dominio desde Fuentes de red llegó al Dashboard en 7 s y liberarlo, en 4 s; un proveedor prohibido, en 4 s. Cambiar de red sacó los patrones de SecureAI de la red que salió y los escribió en la nueva. Apagar el bloqueo sacó los de SecureAI y dejó el propio |
 
 Todavía no probamos con un MX real el formato de los logs ni que el MX bloquee los subdominios: los dos salen de la
-documentación pública de Cisco ("Syslog Event Types and Log Samples" y la guía de content filtering). Tampoco
-repetimos el bloqueo por la API del Dashboard desde un tenant. Por eso el conector está en beta.
+documentación pública de Cisco ("Syslog Event Types and Log Samples" y la guía de content filtering).

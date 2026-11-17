@@ -11,10 +11,8 @@ network, and SecureAI writes its block list into the content filtering of the ne
 Dashboard API.
 
 <Note>
-The `cisco-meraki` connector is in **beta**. We tested discovery against a SecureAI tenant with syslog lines in the
-format Cisco publishes, without a real MX. We tested writing the block list against the Meraki Dashboard, on a
-network with no device; we haven't repeated it from a tenant yet. See [Tested versions](#tested-versions). During
-the beta, the SecureAI team helps you with the setup.
+We tested blocking end to end from a SecureAI tenant against the Meraki Dashboard, on networks with no device, and
+discovery with syslog lines in the format Cisco publishes, without a real MX. See [Tested versions](#tested-versions).
 </Note>
 
 ## How it works
@@ -160,7 +158,7 @@ The panel shows the code of the last failure.
 | 2026-11-12 | Cisco DevNet sandbox, network with a virtual MX100, Observer role | The API returned the content filtering in the shape SecureAI reads |
 | 2026-11-12 | Test network with no device, in our own Meraki organization | SecureAI added its domains next to a pattern entered by hand, removed a provider that was no longer prohibited and, when blocking was turned off, left only the hand-entered pattern. Blocked categories and allowed patterns didn't change. The Dashboard accepted 20,000 patterns |
 | 2026-11-17 | Against a SecureAI tenant, without an MX | Setup from the console and discovery in Network Sources, with syslog lines in the format of Cisco's documentation sent to the collector |
+| 2026-11-17 | Against a SecureAI tenant, our own Meraki organization with two networks with no device | Turning blocking on wrote SecureAI's domains after a pattern of our own, without touching it. Blocking a domain from Network Sources reached the Dashboard in 7 s and releasing it, in 4 s; a prohibited provider, in 4 s. Changing networks removed SecureAI's patterns from the network that left and wrote them into the new one. Turning blocking off removed SecureAI's and kept our own |
 
 We haven't tested with a real MX the log format or that the MX blocks subdomains: both come from Cisco's public
-documentation ("Syslog Event Types and Log Samples" and the content filtering guide). We also haven't repeated the
-block through the Dashboard API from a tenant. That's why the connector is in beta.
+documentation ("Syslog Event Types and Log Samples" and the content filtering guide).
