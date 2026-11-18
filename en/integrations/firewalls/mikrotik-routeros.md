@@ -60,6 +60,8 @@ Both halves depend on clients resolving through the router. Sections 4 and 5 cov
 
 The tokens show only once, in that panel. If you lose them, **New tokens** on the device row rotates them.
 
+To change later which address can download the block list, open **Actions → Allowed IP** on the device row. It takes IPv4 and IPv6. If you leave it empty, anyone with the token can download the list. **New tokens** keeps the allowed IP.
+
 ![Panel with the collector package, collector.env and the RouterOS lines](/img/mikrotik/console-config.png)
 
 ### Install the collector
