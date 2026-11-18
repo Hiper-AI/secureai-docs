@@ -9,7 +9,7 @@ description: "Shadow-AI discovery — which corporate source IPs and users are c
 
 # Network Sources
 
-**Network Sources** (Admin → Agent Registry → **Network**) surfaces the shadow AI found in your CASB/SWG logs: which corporate **source IPs and users are calling LLM APIs**, even where no SDK or [endpoint agent](/en/agent/overview) is deployed. It's fed by the [CASB & Network connectors](/en/integrations/casb/overview) — Cisco Umbrella, Zscaler, and others.
+**Network Sources** (Admin → Agent Registry → **Network**) surfaces the shadow AI found in your CASB/SWG logs: which corporate **source IPs and users are calling LLM APIs**, even where no SDK or [endpoint agent](/en/agent/overview) is deployed. It's fed by the [CASB & Network connectors](/en/integrations/casb/overview) — Cisco Umbrella, Cloudflare Zero Trust, and firewalls such as Fortinet FortiGate, Palo Alto Networks PAN-OS, Cisco Secure Firewall, Cisco Meraki MX, and MikroTik RouterOS.
 
 ## The discovery window
 

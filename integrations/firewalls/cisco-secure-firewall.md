@@ -56,6 +56,8 @@ Los tokens se ven solo en ese momento. Descargue el colector y copie los valores
 los tokens en su gestor de secretos. Si los pierde, **Tokens nuevos** en la fila del equipo genera otros y los
 anteriores dejan de funcionar.
 
+Para cambiar después qué dirección puede descargar la lista de bloqueo, abra **Acciones → IP permitida** en la fila del equipo. Acepta IPv4 e IPv6. Si deja el campo vacío, la descarga cualquiera que tenga el token. **Tokens nuevos** no cambia la IP permitida.
+
 En **Equipos conectados** ve si llegan los logs y cuándo descargó el FMC la lista de bloqueo por última vez. Si
 SecureAI rechaza una descarga con el token correcto, el panel muestra desde qué IP llegó y por qué: una IP que no
 está entre las permitidas o el feed deshabilitado.

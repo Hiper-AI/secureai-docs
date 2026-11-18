@@ -56,6 +56,8 @@ The tokens are shown only at that moment. Download the collector and copy the va
 store the tokens in your secrets manager. If you lose them, **New tokens** on the device row generates new ones, and
 the old ones stop working.
 
+To change later which address can download the block list, open **Actions → Allowed IP** on the device row. It takes IPv4 and IPv6. If you leave it empty, anyone with the token can download the list. **New tokens** keeps the allowed IP.
+
 Under **Connected devices** you see whether logs are arriving and when the FMC last downloaded the block list. If
 SecureAI refuses a download that had the right token, the panel shows which IP it came from and why: an IP that isn't
 on the allowed list, or a disabled feed.

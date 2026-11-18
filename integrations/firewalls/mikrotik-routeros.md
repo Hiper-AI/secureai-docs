@@ -60,6 +60,8 @@ Las dos mitades dependen de que los clientes resuelvan por el router. Las seccio
 
 Los tokens se ven una sola vez, en ese panel. Si los pierde, **Tokens nuevos** en la fila del equipo los rota.
 
+Para cambiar después qué dirección puede descargar la lista de bloqueo, abra **Acciones → IP permitida** en la fila del equipo. Acepta IPv4 e IPv6. Si deja el campo vacío, la descarga cualquiera que tenga el token. **Tokens nuevos** no cambia la IP permitida.
+
 ![Panel con el paquete del colector, collector.env y las líneas de RouterOS](/img/mikrotik/console-config.png)
 
 ### Instalar el colector

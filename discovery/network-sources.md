@@ -7,7 +7,7 @@ description: "Descubrimiento de Shadow-AI: qué IP de origen corporativo y qué 
 
 # Fuentes de red
 
-**Fuentes de red** (Administrador → Registro de agentes → **Red**) muestra la IA oculta que se encuentra en sus registros CASB/SWG: qué **IP de origen corporativas y usuarios llaman a las API de LLM**, incluso cuando no se implementa ningún SDK o [agente de endpoint](/agent/overview). Se alimenta de [CASB y conectores de red](/integrations/casb/overview): Cisco Umbrella, Zscaler y otros.
+**Fuentes de red** (Administrador → Registro de agentes → **Red**) muestra la IA oculta que se encuentra en sus registros CASB/SWG: qué **IP de origen corporativas y usuarios llaman a las API de LLM**, incluso cuando no se implementa ningún SDK o [agente de endpoint](/agent/overview). Se alimenta de [CASB y conectores de red](/integrations/casb/overview): Cisco Umbrella, Cloudflare Zero Trust y firewalls como Fortinet FortiGate, Palo Alto Networks PAN-OS, Cisco Secure Firewall, Cisco Meraki MX y MikroTik RouterOS.
 
 ## La ventana de descubrimiento
 

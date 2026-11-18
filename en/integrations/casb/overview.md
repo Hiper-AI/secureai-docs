@@ -19,6 +19,9 @@ The result is a live inventory of **which source IPs and users are calling which
 | Connector | Data source | Status |
 |-----------|-------------|--------|
 | [Cisco Umbrella](/en/integrations/casb/cisco-umbrella) | DNS-layer Reporting API v2 | Available |
+| [Cisco Secure Firewall](/en/integrations/firewalls/cisco-secure-firewall) | FTD connection events over syslog (through the SecureAI collector) and blocking with a Security Intelligence feed in the FMC | Available |
+| [Cisco Meraki MX](/en/integrations/firewalls/cisco-meraki) | MX syslog (through the SecureAI collector) and content filtering blocking through the Dashboard API | Available |
+| [Cloudflare Zero Trust](/en/integrations/firewalls/cloudflare) | Cloudflare Gateway analytics and blocking in Gateway. Logpush, in beta | Available |
 | [Fortinet FortiGate](/en/integrations/firewalls/fortinet-fortigate) | FortiGate syslog (through the SecureAI collector) and feed blocking | Available |
 | [MikroTik RouterOS](/en/integrations/firewalls/mikrotik-routeros) | Router DNS query log (through the SecureAI collector) and feed blocking with a router script | Available |
 | [Palo Alto Networks PAN-OS](/en/integrations/firewalls/paloalto-panos) | URL Filtering and Traffic logs (syslog through the SecureAI collector or HTTP log forwarding) and External Dynamic List blocking | Available |
