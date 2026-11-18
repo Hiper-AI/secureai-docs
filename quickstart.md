@@ -49,7 +49,7 @@ Esta guía te acompañará paso a paso para acceder a la instancia de SecureAI d
     Durante la configuración inicial, podrás desplegar tu propio **índice RAG (Retrieval-Augmented Generation)**:
 
     - **Despliegue Multi-Nube**: Selecciona la región y el proveedor de nube de tu preferencia.
-    - **Cifrado Extremo a Extremo**: Toda la información y documentos vectorizados se cifran con claves exclusivas.
+    - **Cifrado**: SecureAI guarda sus datos cifrados en reposo y cifra las conversaciones con claves propias de su organización.
     - **Base de Conocimiento Personal o de Equipo**: Permite subir documentos (PDFs, docs, código) para que los modelos respondan con el contexto exacto de tu negocio.
 
   </Step>

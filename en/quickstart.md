@@ -47,7 +47,7 @@ This guide will walk you step by step to access your organization's SecureAI ins
     During the initial configuration, you will be able to display your own **RAG (Retrieval-Augmented Generation) index**:
 
     - **Multi-Cloud Deployment: Select the region and cloud provider of your preference.**
-    - **End-to-End Encryption: All vectorized information and documents are encrypted with exclusive keys.**
+    - **Encryption: SecureAI stores your data encrypted at rest and encrypts conversations with keys unique to your organization.**
     - **Personal or Team Knowledge Base: Allows you to upload documents (PDFs, docs, code) so that the models respond with the exact context of your business.**
 
   </Step>

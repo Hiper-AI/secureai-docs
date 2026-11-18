@@ -25,12 +25,12 @@ Les index sont des bases de connaissances structurées classées par accessibili
 
 | Type d'index | Portée | Accès et confidentialité | Idéal pour |
 |---|---|---|---|
-| **Index personnels** | Utilisateur individuel | Chiffré de bout en bout ; stockage sans connaissance (même les administrateurs ne peuvent pas lire le contenu) | Notes personnelles, recherches privées, documents de projets individuels |
+| **Index personnels** | Utilisateur individuel | Privé pour l'utilisateur. SecureAI traite le contenu sur ses serveurs pour l'indexer et le rechercher : il n'est donc pas chiffré de bout en bout | Notes personnelles, recherches privées, documents de projets individuels |
 | **Indices de groupe** | Équipes / Départements | Accès basé sur les rôles contrôlé par l'appartenance au groupe | Wikis du département, documentation du projet d'équipe, SOP partagées |
 | **Indices mondiaux** | À l’échelle de l’organisation | Accès en lecture pour tous les utilisateurs de l'entreprise | Politiques de l'entreprise, directives RH, manuels à l'échelle de l'entreprise |
 
 ### 1. Index personnels
-- **Zero-Knowledge Privacy** : Vos fichiers et conversations sont cryptés avec des clés de locataire/utilisateur.
+- **Conversations chiffrées** : SecureAI chiffre vos conversations avec des clés propres à votre organisation.
 - **Création** : 
   - **Utilisateurs** : ouvrez l'interface de discussion, cliquez sur le sélecteur d'index à côté du sélecteur de modèle, passez à l'onglet *Personnel* et cliquez sur **+**.
   - **Administrateurs** : Allez dans **Admin ? Gestion des indices ? Créez un index** et attribuez-le à un utilisateur spécifique.

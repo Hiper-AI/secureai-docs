@@ -30,11 +30,10 @@ Große Sprachmodelle (LLMs), geregelt, enthalten und beweisbar. Es bietet:
 
 ### Datenschutz
 
-- **Zero-Knowledge-Haltung**: Vom Kunden verwaltete Schlüssel (BYOK), kurzlebige In-Memory-Verarbeitung und
-  Durch die einsatzlokale Protokollierung bleiben vertrauliche Daten unter Ihrer Kontrolle
-- **Verschlüsselung im Ruhezustand**: Alle gespeicherten Daten werden mit branchenüblichen Algorithmen verschlüsselt
-- **Verschlüsselung während der Übertragung**: TLS 1.3-Verschlüsselung für die gesamte API-Kommunikation
-- **Vom Kunden verwaltete Schlüssel**: Sie kontrollieren Ihre Verschlüsselungsschlüssel
+- **Schlüssel pro Mandant**: SecureAI verschlüsselt Unterhaltungen und gespeicherte Connector-Zugangsdaten auf Feldebene mit AES-256-GCM, mit Schlüsseln, die nur Ihrem Mandanten gehören und von einem Cloud-Schlüsselverwaltungsdienst geschützt werden.
+- **Verschlüsselung im Ruhezustand**: Datenbanken und Backups liegen auf Google-Cloud-Datenträgern, die Google im Ruhezustand verschlüsselt.
+- **Verschlüsselung während der Übertragung**: Verbindungen nutzen TLS 1.2 oder TLS 1.3 mit AEAD-Cipher-Suites mit Forward Secrecy.
+- **Eigener Schlüssel für Nachweise**: Wenn Sie die Aufbewahrung von Nachweisen aktivieren (standardmäßig aus), können Sie diese mit einem Schlüssel aus Ihrem eigenen Schlüsselverwaltungsdienst in AWS, Azure oder Google Cloud verschlüsseln.
 
 ### Zugangskontrolle
 
@@ -50,16 +49,15 @@ SMLTP unterstützt mehrere integrierte Richtlinienvorlagen:
 - **Intern**: Standardrichtlinie für interne Unternehmensdaten
 - **Intern streng**: Höhere Sicherheit für sensible interne Daten
 - **Öffentlich**: Weniger restriktive Richtlinie für nicht sensible, öffentliche Daten
-- **HIPAA**: Entspricht den Gesundheitsdatenvorschriften
-- **DSGVO**: Konform mit den europäischen Datenschutzbestimmungen
-- **PCI-DSS**: Entspricht den Branchenstandards für Zahlungskarten
+- **HIPAA, DSGVO und PCI-DSS**: Katalognamen, die dieselben Kontrollen wie Intern streng anwenden. Die Auswahl macht Ihre Nutzung nicht konform mit der jeweiligen Vorschrift. Für Regeln, die eine Vorschrift verlangt, legen Sie eine eigene Richtlinie mit demselben Namen an: Sie ersetzt die integrierte in Ihrer Organisation.
 
-### Compliance und Zertifizierungen
+### Unterstützung bei der Compliance
 
-- **Enterprise Ready**: Entwickelt für die Sicherheitsanforderungen von Unternehmen
-- **Audit Trail**: Vollständige Protokollierung für Compliance- und Sicherheitsaudits
-- **Richtliniendurchsetzung**: Automatisierte Durchsetzung von Sicherheitsrichtlinien
-- **Echtzeitüberwachung**: Kontinuierliche Überwachung von Sicherheitsereignissen
+- **Zuordnung zu Rahmenwerken**: SecureAI ordnet seine Prüfungen Kontrollen aus Rahmenwerken wie NIST AI RMF, ISO/IEC 42001 und dem EU AI Act zu. Die Zuordnung ist unvollständig und hilft beim Sammeln von Nachweisen. Sie ist keine Zertifizierung.
+- **Zertifizierungen**: Hiper AI hat heute keinen SOC-2-Bericht und kein ISO/IEC-27001-Zertifikat.
+- **Audit Trail**: hash-verkettete Protokolle der KI-Interaktionen und der administrativen Aktionen, für Ihre Compliance- und Sicherheitsprüfungen.
+- **Richtliniendurchsetzung**: SecureAI wendet Ihre Sicherheitsrichtlinien auf jede Anfrage an, die über das Gateway läuft.
+- **Echtzeitüberwachung**: Sicherheitsereignisse erscheinen in der Konsole, sobald sie auftreten.
 
 ## So funktioniert SMLTP
 
@@ -76,8 +74,8 @@ SMLTP unterstützt mehrere integrierte Richtlinienvorlagen:
 ## Vorteile
 
 - **Nachweisbar, nicht nur protokolliert**: Mit signierten Belegen können Prüfer Interaktionen unabhängig überprüfen
-- **Compliance Ready**: integrierte Unterstützung für wichtige Compliance-Frameworks
-- **Eindämmung**: Selbst ein kompromittierter Agent kann seine kryptografisch signierten Berechtigungen nicht überschreiten
+- **Nachweise für Audits**: Signierte Belege und die Zuordnung zu Rahmenwerken geben Ihren Prüfern Material, das sie selbst überprüfen können.
+- **Eindämmung**: Ein Agent, der über das Gateway läuft, kann die Berechtigungen seines signierten Tokens nicht überschreiten, auch wenn er kompromittiert ist.
 - **Deterministischer Widerruf**: Das Abschneiden eines Benutzers, Schlüssels oder Agenten wird am Gateway wirksam
   Sekunden – ohne auf einen KI-Anbieter warten zu müssen
 - **Richtliniengesteuert**: Automatisierte Durchsetzung Ihrer Sicherheitsrichtlinien

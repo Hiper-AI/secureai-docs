@@ -6,7 +6,7 @@ description: "SecureAI OS エージェント — ラップトップとサーバ�
 ---
 # エンドポイントエージェント
 
-SecureAI **OS エージェント** は、Windows ラップトップ、Linux サーバー、macOS マシンなどのエンドポイントで実行され、実際に作業が行われる場所で AI ガバナンスを強制します。デバイス上の AI/MCP アクティビティを検出し、データ損失と動作保護を適用し、ポリシーに従って AI プロバイダーへの送信を制御またはブロックできます。
+SecureAI **OS エージェント** は、Windows エンドポイントで実行され、実際に作業が行われる場所で AI ガバナンスを強制します。デバイス上の AI/MCP アクティビティを検出し、データ損失と動作保護を適用し、ポリシーに従って AI プロバイダーへの送信を制御またはブロックできます。macOS 版は開発中です。
 
 エージェント フリートは、**管理 → エージェント レジストリ → OS エージェント** で管理されます。
 
@@ -32,7 +32,7 @@ SecureAI **OS エージェント** は、Windows ラップトップ、Linux サ�
 
 ## 始める方法
 
-1. エンドポイントに **[エージェントをインストール](/ja/agent/installation)** (Windows では署名付き MSI、Linux/macOS ではスクリプト)。
+1. エンドポイントに **[エージェントをインストール](/ja/agent/installation)** (Windows 用の署名付き MSI)。
 2. **[登録およびインストーラー パッケージ](/ja/agent/enrollment-and-packages)** - デバイスがどのように参加して構成を取得するかを理解します。
 3. **[ポリシーとグループ](/ja/agent/policies-and-groups)** を設定して、各デバイスが適用する内容を決定します。
 4. **[出力強制](/ja/agent/egress-enforcement)** および **[検疫とフリート運用](/ja/agent/quarantine-and-fleet-ops)** を応答用に調整します。

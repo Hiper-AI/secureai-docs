@@ -25,12 +25,12 @@ Indizes sind strukturierte Wissensdatenbanken, die nach Zugänglichkeit kategori
 
 | Indextyp | Geltungsbereich | Zugriff und Datenschutz | Am besten für |
 |---|---|---|---|
-| **Persönliche Indizes** | Einzelner Benutzer | Ende-zu-Ende-verschlüsselt; Zero-Knowledge-Speicher (selbst Administratoren können Inhalte nicht lesen) | Persönliche Notizen, private Recherchen, individuelle Projektdokumente |
+| **Persönliche Indizes** | Einzelner Benutzer | Privat für den Benutzer. SecureAI verarbeitet den Inhalt auf seinen Servern, um ihn zu indizieren und zu durchsuchen, daher ist er nicht Ende-zu-Ende-verschlüsselt | Persönliche Notizen, private Recherchen, individuelle Projektdokumente |
 | **Gruppenindizes** | Teams / Abteilungen | Rollenbasierter Zugriff, gesteuert durch Gruppenmitgliedschaft | Abteilungswikis, Teamprojektdokumentation, gemeinsame SOPs |
 | **Globale Indizes** | Organisationsweit | Lesezugriff für alle Firmenbenutzer | Unternehmensrichtlinien, HR-Richtlinien, unternehmensweite Handbücher |
 
 ### 1. Persönliche Indexe
-- **Zero-Knowledge-Datenschutz**: Ihre Dateien und Gespräche werden mit Mieter-/Benutzerschlüsseln verschlüsselt.
+- **Verschlüsselte Unterhaltungen**: SecureAI verschlüsselt Ihre Unterhaltungen mit Schlüsseln, die nur Ihrer Organisation gehören.
 - **Erstellung**: 
   - **Benutzer**: Öffnen Sie die Chat-Oberfläche, klicken Sie auf die Indexauswahl neben der Modellauswahl, wechseln Sie zur Registerkarte *Persönlich* und klicken Sie auf **+**.
   - **Admins**: Gehen Sie zu **Admin? Indexverwaltung? Erstellen Sie einen Index** und weisen Sie ihn einem bestimmten Benutzer zu.

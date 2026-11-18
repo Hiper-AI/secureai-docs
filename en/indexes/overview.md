@@ -28,12 +28,12 @@ Indexes are structured knowledge bases categorized by accessibility:
 
 | Index Type | Scope | Access & Privacy | Best For |
 |---|---|---|---|
-| **Personal Indexes** | Individual user | End-to-end encrypted; zero-knowledge storage (even admins cannot read contents) | Personal notes, private research, individual project documents |
+| **Personal Indexes** | Individual user | Private to the user. SecureAI processes the content on its servers to index and search it, so it is not end-to-end encrypted | Personal notes, private research, individual project documents |
 | **Group Indexes** | Teams / Departments | Role-based access controlled by group membership | Department wikis, team project documentation, shared SOPs |
 | **Global Indexes** | Organization-wide | Read access for all company users | Company policies, HR guidelines, company-wide manuals |
 
 ### 1. Personal Indexes
-- **Zero-Knowledge Privacy**: Your files and conversations are encrypted with tenant/user keys.
+- **Encrypted conversations**: SecureAI encrypts your conversations with keys unique to your organization.
 - **Creation**: 
   - **Users**: Open the chat interface, click the index selector next to the model picker, switch to the *Personal* tab, and click **+**.
   - **Admins**: Go to **Admin ? Index Management ? Create Index** and assign it to a specific user.

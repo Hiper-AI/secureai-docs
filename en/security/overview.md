@@ -33,11 +33,10 @@ Large Language Models (LLMs) governed, contained, and provable. It provides:
 
 ### Data Protection
 
-- **Zero-Knowledge Posture**: customer-managed keys (BYOK), ephemeral in-memory processing, and
-  deployment-local logging keep sensitive data under your control
-- **Encryption at Rest**: All stored data is encrypted using industry-standard algorithms
-- **Encryption in Transit**: TLS 1.3 encryption for all API communications
-- **Customer-Managed Keys**: You control your encryption keys
+- **Per-tenant keys**: SecureAI encrypts conversations and stored connector credentials at the field level with AES-256-GCM, under keys unique to your tenant and wrapped by a cloud key management service.
+- **Encryption at rest**: databases and backups sit on Google Cloud disks, which Google encrypts at rest.
+- **Encryption in transit**: connections use TLS 1.2 or TLS 1.3 with forward-secret AEAD cipher suites.
+- **Your own key for evidence**: if you turn on evidence retention (off by default), you can encrypt that evidence with a key in your own AWS, Azure or Google Cloud key management service.
 
 ### Access Control
 
@@ -53,16 +52,15 @@ SMLTP supports several built-in policy templates:
 - **Internal**: Default policy for internal company data
 - **Internal Strict**: Higher security for sensitive internal data
 - **Public**: Less restrictive policy for non-sensitive, public data
-- **HIPAA**: Compliant with healthcare data regulations
-- **GDPR**: Compliant with European data protection regulations
-- **PCI-DSS**: Compliant with payment card industry standards
+- **HIPAA, GDPR and PCI-DSS**: catalog names that apply the same controls as Internal Strict. Choosing one does not make your use compliant with that regulation. To enforce rules specific to a regulation, define a custom policy with the same name: it replaces the built-in one for your organization.
 
-### Compliance & Certifications
+### Compliance support
 
-- **Enterprise Ready**: Designed for enterprise security requirements
-- **Audit Trail**: Complete logging for compliance and security audits
-- **Policy Enforcement**: Automated enforcement of security policies
-- **Real-time Monitoring**: Continuous monitoring of security events
+- **Framework mapping**: SecureAI maps its checks to controls in frameworks such as the NIST AI RMF, ISO/IEC 42001 and the EU AI Act. The mapping is partial and helps you gather evidence. It is not a certification.
+- **Certifications**: Hiper AI holds no SOC 2 report and no ISO/IEC 27001 certificate today.
+- **Audit trail**: hash-chained logs of AI interactions and administrative actions, for your compliance and security reviews.
+- **Policy enforcement**: SecureAI applies your security policies to every request that goes through the gateway.
+- **Real-time monitoring**: security events show up in the console as they happen.
 
 ## How SMLTP Works
 
@@ -79,8 +77,8 @@ SMLTP supports several built-in policy templates:
 ## Benefits
 
 - **Provable, not just logged**: signed receipts let auditors verify interactions independently
-- **Compliance Ready**: built-in support for major compliance frameworks
-- **Containment**: even a compromised agent cannot exceed its cryptographically signed permissions
+- **Audit evidence**: signed receipts and the framework mapping give your auditors material they can check on their own.
+- **Containment**: an agent that goes through the gateway cannot exceed the permissions in its signed token, even if it is compromised.
 - **Deterministic Revocation**: cutting off a user, key, or agent takes effect at the gateway in
   seconds — without waiting on any AI provider
 - **Policy Driven**: automated enforcement of your security policies

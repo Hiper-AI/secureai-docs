@@ -6,7 +6,7 @@ description: "L'agent SecureAI OS – gouvernance de l'IA des points de termin
 ---
 # Agent de point de terminaison
 
-L'agent SecureAI **OS Agent** s'exécute sur vos points de terminaison (ordinateurs portables Windows, serveurs Linux, machines macOS) et applique la gouvernance de l'IA là où le travail se déroule réellement. Il découvre l'activité AI/MCP sur l'appareil, applique des protections contre la perte de données et comportementales, et peut contrôler ou bloquer la sortie vers les fournisseurs d'IA conformément à la politique.
+L'agent SecureAI **OS Agent** s'exécute sur vos points de terminaison Windows et applique la gouvernance de l'IA là où le travail se déroule réellement. Il découvre l'activité AI/MCP sur l'appareil, applique des protections contre la perte de données et comportementales, et peut contrôler ou bloquer la sortie vers les fournisseurs d'IA conformément à la politique. Une version macOS est en cours de développement.
 
 La flotte d'agents est gérée sous **Admin → Agent Registry → OS Agents**.
 
@@ -32,7 +32,7 @@ L'onglet **OS Agents** répertorie chaque appareil avec son état, sa posture, s
 
 ## Comment commencer
 
-1. **[Installer l'agent](/fr/agent/installation)** sur les endpoints (MSI signé sous Windows ; script sous Linux/macOS).
+1. **[Installer l'agent](/fr/agent/installation)** sur les endpoints (MSI signé pour Windows).
 2. Comprendre **[packages d'inscription et d'installation](/fr/agent/enrollment-and-packages)** — comment les appareils rejoignent et obtiennent leur configuration.
 3. Configurez **[policies & groups](/fr/agent/policies-and-groups)** pour décider de ce que chaque appareil applique.
 4. Réglez **[egressforcement](/fr/agent/egress-enforcement)** et **[quarantine & Fleet Ops](/fr/agent/quarantine-and-fleet-ops)** pour la réponse.

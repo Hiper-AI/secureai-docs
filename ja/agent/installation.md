@@ -2,11 +2,11 @@
 sidebar_position: 2
 title: "エージェントのインストール"
 sidebar_label: "インストール"
-description: "Windows、Linux、macOS エンドポイントに SecureAI OS エージェントをインストールする"
+description: "Windows エンドポイントに SecureAI OS エージェントをインストールする"
 ---
 # エージェントのインストール
 
-SecureAI OS エージェントは、**[管理] → [エージェント レジストリ] → [OS エージェント]** で構築した **インストーラー パッケージ**からインストールされます。このパッケージは、**バックエンド URL** とスコープ付き **登録キー**という 2 つの値を含む、すぐに実行できるコマンド (Windows) またはスクリプト (Linux/macOS) を生成します。完全なパッケージ ビルダーと登録の仕組みについては、[登録とインストーラー パッケージ](/ja/agent/enrollment-and-packages) を参照してください。
+SecureAI OS エージェントは、**[管理] → [エージェント レジストリ] → [OS エージェント]** で構築した **インストーラー パッケージ**からインストールされます。このパッケージは、**バックエンド URL** とスコープ付き **登録キー**という 2 つの値を含む、すぐに実行できるコマンドを生成します。完全なパッケージ ビルダーと登録の仕組みについては、[登録とインストーラー パッケージ](/ja/agent/enrollment-and-packages) を参照してください。
 
 ## Windows (MSI)
 
@@ -29,15 +29,9 @@ msiexec /i "secureai-agent.msi" /qb BACKEND_URL=https://{customer.name}.hiperai.
 既存の MDM/RMM (Intune、GPO、SCCM など) を介して同じ `msiexec` コマンドをプッシュします。 URL とキーはコマンド ライン プロパティであるため、1 つの署名付き MSI がすべてのテナントとグループに対して機能します。
 </Tip>
 
-## Linux / macOS (スクリプト)
+## macOS（近日公開）
 
-インストーラー パッケージから自己完結型のシェル スクリプトをダウンロードして実行します。スクリプトは適切な `.deb`/`.pkg` を取得し、エージェント構成 (例: Linux の `/etc/secureai-agent.toml`、macOS の LaunchAgent plist) を書き込みます。
-
-```bash
-sudo ./secureai-agent-install.sh
-```
-
-バックエンド URL と登録キーは、パッケージ用に生成されたスクリプトにすでに埋め込まれています。
+現在、エージェントは Windows にのみインストールできます。macOS 版は開発中でまだインストーラーがないため、パッケージ ビルダーで選択できるのは Windows だけです。
 
 ## 最初の実行時に何が起こるか
 

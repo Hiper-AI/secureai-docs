@@ -47,7 +47,7 @@ Ce guide vous guidera étape par étape pour accéder à l'instance SecureAI de 
     Lors de la configuration initiale, vous pourrez afficher votre propre **index RAG (Retrieval-Augmented Generation)** :
 
     - **Déploiement multi-cloud : sélectionnez la région et le fournisseur de cloud de votre préférence.**
-    - **Cryptage de bout en bout : toutes les informations et documents vectorisés sont cryptés avec des clés exclusives.**
+    - **Chiffrement : SecureAI stocke vos données chiffrées au repos et chiffre les conversations avec des clés propres à votre organisation.**
     - **Base de connaissances personnelle ou d'équipe : permet de télécharger des documents (PDF, docs, code) afin que les modèles répondent au contexte exact de votre entreprise.**
 
   </Step>

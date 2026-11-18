@@ -1,8 +1,8 @@
 ---
 title: "Willkommen bei SecureAI"
-description: "Sichere Geschäftsplattform für künstliche Intelligenz, konform mit Vorschriften und mit vollständiger Governance-Kontrolle."
+description: "Sichere KI-Geschäftsplattform mit Governance-Kontrollen, signierten Nachweisen und Data Loss Prevention."
 ---
-SecureAI ist eine Geschäftsplattform, die für die Bereitstellung und Nutzung von Modellen der künstlichen Intelligenz mit maximalen Garantien für Sicherheit, Datenschutz und Beobachtbarkeit entwickelt wurde.
+SecureAI ist eine Geschäftsplattform, mit der Sie KI-Modelle mit Kontrollen für Sicherheit, Datenschutz und Beobachtbarkeit bereitstellen und nutzen.
 
 Es kombiniert erweiterte **RAG-Funktionen (Retrieval-Augmented Generation)**, transparentes Proxying für Unternehmensflotten, Compliance mithilfe des kryptografischen Protokolls **SMLTP** und eine **einheitliche API mit automatischer Redundanz** zwischen mehreren KI-Anbietern.
 
@@ -27,7 +27,7 @@ Entdecken Sie Ressourcen für den Einstieg, um Ihre Umgebung zum Laufen zu bring
 
 <CardGroup cols={3}>
   <Card title="Sicherheit und SMLTP" icon="shield-halved" href="/de/security/overview">
-    End-to-End-Verschlüsselung, Data Leak Prevention (DLP), Prompt Shields und unveränderliche Compliance-Belege.
+    Verschlüsselung auf Feldebene mit Schlüsseln pro Mandant, Data Leak Prevention (DLP), Prompt Shields und signierte Compliance-Belege.
   </Card>
   <Card title="Wissensdatenbanken (RAG)" icon="database" href="/de/indexes/overview">
     Semantische Vektorsuche, Dokumentenerfassung in Echtzeit sowie persönliche, Team- und globale Indizes.

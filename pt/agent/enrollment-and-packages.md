@@ -16,7 +16,7 @@ Em **Admin → Agent Registry → OS Agents**, crie um pacote com:
 | Campo | Descrição |
 |-------|------------|
 | **Nome/descrição** | Identifique o pacote (por exemplo, "Laptops de engenharia"). |
-| **Plataforma** | Windows/Linux/macOS. |
+| **Plataforma** | Windows. A versão para macOS está em desenvolvimento. |
 | **Tipo de pacote** | `standalone`. |
 | **Tags de endpoint** | Etiquetas aplicadas a dispositivos inscritos neste pacote. |
 | **Grupo de inscrição** | O [grupo](/pt/agent/policies-and-groups) ao qual um dispositivo é fixado na primeira inscrição. |

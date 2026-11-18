@@ -16,7 +16,7 @@ The **AI Gateway** is the centralized control plane for governing, securing, rou
 ### 1. Security Policies
 Define organization-wide enforcement rules:
 - **Model Allowlists**: Restrict which models and providers employees and applications can interact with.
-- **Data Residency Geofencing**: Ensure prompts and responses remain within designated jurisdictions.
+- **Data residency**: SecureAI refuses model calls that a provider cannot pin to a region your policy allows, and refuses vector indexes in a zone your policy excludes. The policy governs where model traffic goes. SecureAI itself runs on Google Cloud in the United States.
 - **Enforcement Modes**: Run in **Monitor Mode** (log and attest without blocking) or **Enforce Mode** (fail-closed, blocking non-compliant traffic with cryptographic receipts).
 
 ### 2. Dashboard & Observability

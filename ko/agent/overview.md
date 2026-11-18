@@ -6,7 +6,7 @@ description: "SecureAI OS 에이전트 — 엔드포인트 AI 거버넌스, DLP 
 ---
 # 엔드포인트 에이전트
 
-SecureAI **OS 에이전트**는 Windows 노트북, Linux 서버, macOS 시스템 등 엔드포인트에서 실행되며 작업이 실제로 발생하는 곳에 AI 거버넌스를 적용합니다. 장치에서 AI/MCP 활동을 검색하고 데이터 손실 및 행동 보호를 적용하며 정책에 따라 AI 공급자에 대한 송신을 제어하거나 차단할 수 있습니다.
+SecureAI **OS 에이전트**는 Windows 엔드포인트에서 실행되며 작업이 실제로 발생하는 곳에 AI 거버넌스를 적용합니다. 장치에서 AI/MCP 활동을 검색하고 데이터 손실 및 행동 보호를 적용하며 정책에 따라 AI 공급자에 대한 송신을 제어하거나 차단할 수 있습니다. macOS 버전은 개발 중입니다.
 
 에이전트 플릿은 **관리 → 에이전트 레지스트리 → OS 에이전트**에서 관리됩니다.
 
@@ -32,7 +32,7 @@ SecureAI **OS 에이전트**는 Windows 노트북, Linux 서버, macOS 시스템
 
 ## 시작하는 방법
 
-1. 엔드포인트(Windows에서는 서명된 MSI, Linux/macOS에서는 스크립트)에 **[에이전트를 설치](/ko/agent/installation)**합니다.
+1. 엔드포인트(Windows용 서명된 MSI)에 **[에이전트를 설치](/ko/agent/installation)**합니다.
 2. **[등록 및 설치 프로그램 패키지](/ko/agent/enrollment-and-packages)** — 장치가 가입하고 구성을 가져오는 방법을 이해합니다.
 3. **[정책 및 그룹](/ko/agent/policies-and-groups)**을 구성하여 각 장치에서 시행할 사항을 결정합니다.
 4. 대응을 위해 **[송신 시행](/ko/agent/egress-enforcement)** 및 **[격리 및 함대 작전](/ko/agent/quarantine-and-fleet-ops)**을 조정합니다.

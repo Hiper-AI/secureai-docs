@@ -15,7 +15,7 @@ Erstellen Sie unter **Admin → Agent Registry → OS Agents** ein Paket mit:
 | Feld | Beschreibung |
 |-------|-------------|
 | **Name / Beschreibung** | Identifizieren Sie das Paket (z. B. „Engineering-Laptops“). |
-| **Plattform** | Windows / Linux / macOS. |
+| **Plattform** | Windows. Eine macOS-Version ist in Entwicklung. |
 | **Pakettyp** | `standalone`. |
 | **Endpunkt-Tags** | Etiketten, die auf Geräte angewendet werden, die bei diesem Paket registriert sind. |
 | **Anmeldegruppe** | Die [Gruppe](/de/agent/policies-and-groups), an die ein Gerät bei der ersten Registrierung angeheftet wird. |

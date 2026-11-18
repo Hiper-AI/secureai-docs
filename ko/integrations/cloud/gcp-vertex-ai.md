@@ -9,6 +9,10 @@ description: "SecureAI가 Vertex AI 에이전트, 모델, 서비스 계정, 키,
 
 # Google Cloud — 디스커버리
 
+<Note>
+이 페이지는 자동 번역되었습니다. 이해하기 어려운 부분이 있으면 [영어 버전](/en/integrations/cloud/gcp-vertex-ai)을 참고하세요.
+</Note>
+
 SecureAI가 Vertex AI 에이전트, 엔드포인트, 모델과 함께 이를 둘러싼 서비스 계정, 키, IAM 바인딩, 감사 로그, 사용량, 비용을 인벤토리화할 수 있도록 Google Cloud 프로젝트(또는 조직이나 폴더 전체)를 연결하세요.
 
 <Info>

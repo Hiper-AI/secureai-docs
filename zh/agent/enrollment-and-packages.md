@@ -15,7 +15,7 @@ description: "SecureAI OS Agent 安装程序包、注册密钥和设备令牌的
 |领域 |描述 |
 |--------|-------------|
 | **名称/描述** |识别包裹（例如“工程笔记本电脑”）。 |
-| **平台** | Windows/Linux/macOS。 |
+| **平台** | Windows。macOS 版本正在开发中。 |
 | **封装类型** | `standalone`。 |
 | **端点标签** |应用于通过此包注册的设备的标签。 |
 | **报名组** |设备在首次注册时固定到的[组](/zh/agent/policies-and-groups)。 |

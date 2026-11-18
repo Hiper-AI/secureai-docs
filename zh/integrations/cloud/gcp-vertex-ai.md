@@ -9,6 +9,10 @@ description: "连接 Google Cloud，以便 SecureAI 可以清点 Vertex AI 的�
 
 # Google Cloud — 发现
 
+<Note>
+本页面为机器翻译。如有不清楚之处，请参阅[英文版](/en/integrations/cloud/gcp-vertex-ai)。
+</Note>
+
 连接您的 Google Cloud 项目（或整个组织或文件夹），以便 SecureAI 可以清点 Vertex AI 代理、端点和模型，以及围绕它们的服务帐户、密钥、IAM 绑定、审计日志、使用情况和成本。
 
 <Info>

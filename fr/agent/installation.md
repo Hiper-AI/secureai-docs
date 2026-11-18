@@ -2,11 +2,11 @@
 sidebar_position: 2
 title: "Installation de l'agent"
 sidebar_label: "Installation"
-description: "Installez l'agent SecureAI OS sur les points de terminaison Windows, Linux et macOS"
+description: "Installez l'agent SecureAI OS sur les points de terminaison Windows"
 ---
 # Installation de l'agent
 
-L'agent du système d'exploitation SecureAI est installé à partir d'un **package d'installation** que vous créez dans **Admin → Registre des agents → Agents du système d'exploitation**. Le package produit une commande (Windows) ou un script (Linux/macOS) prêt à l'emploi qui contient deux valeurs : l'**URL backend** et une **clé d'inscription** de portée. Pour le générateur de packages complet et les mécanismes d'inscription, voir [Packages d'inscription et d'installation](/fr/agent/enrollment-and-packages).
+L'agent du système d'exploitation SecureAI est installé à partir d'un **package d'installation** que vous créez dans **Admin → Registre des agents → Agents du système d'exploitation**. Le package produit une commande prête à l'emploi qui contient deux valeurs : l'**URL backend** et une **clé d'inscription** de portée. Pour le générateur de packages complet et les mécanismes d'inscription, voir [Packages d'inscription et d'installation](/fr/agent/enrollment-and-packages).
 
 ## Windows (MSI)
 
@@ -29,15 +29,9 @@ Le panneau d'installation affiche la commande exacte avec vos valeurs pré-rempl
 Envoyez la même commande `msiexec` via votre MDM/RMM existant (Intune, GPO, SCCM, etc.). Étant donné que l’URL et la clé sont des propriétés de ligne de commande, un MSI signé fonctionne pour chaque locataire et groupe.
 </Tip>
 
-## Linux/MacOS (script)
+## macOS (bientôt disponible)
 
-Téléchargez le script shell autonome à partir du package d'installation et exécutez-le. Le script extrait le `.deb`/`.pkg` approprié et écrit la configuration de l'agent (par exemple `/etc/secureai-agent.toml` sous Linux, une liste LaunchAgent sur macOS).
-
-```bash
-sudo ./secureai-agent-install.sh
-```
-
-L'URL du backend et la clé d'inscription sont déjà intégrées dans le script généré pour votre package.
+Pour l'instant, l'agent s'installe uniquement sous Windows. La version macOS est en cours de développement et n'a pas encore de programme d'installation : le générateur de packages ne propose donc que Windows.
 
 ## Que se passe-t-il lors de la première exécution
 

@@ -2,11 +2,11 @@
 sidebar_position: 2
 title: "Installieren des Agenten"
 sidebar_label: "Installation"
-description: "Installieren Sie den SecureAI OS Agent auf Windows-, Linux- und macOS-Endpunkten"
+description: "Installieren Sie den SecureAI OS Agent auf Windows-Endpunkten"
 ---
 # Installation des Agenten
 
-Der SecureAI OS Agent wird aus einem **Installationspaket** installiert, das Sie unter **Admin → Agent Registry → OS Agents** erstellen. Das Paket erzeugt einen betriebsbereiten Befehl (Windows) oder ein Skript (Linux/macOS), das zwei Werte enthält: die **Backend-URL** und einen gültigen **Registrierungsschlüssel**. Den vollständigen Paket-Builder und die Registrierungsmechanismen finden Sie unter [Registrierungs- und Installationspakete](/de/agent/enrollment-and-packages).
+Der SecureAI OS Agent wird aus einem **Installationspaket** installiert, das Sie unter **Admin → Agent Registry → OS Agents** erstellen. Das Paket erzeugt einen betriebsbereiten Befehl, der zwei Werte enthält: die **Backend-URL** und einen gültigen **Registrierungsschlüssel**. Den vollständigen Paket-Builder und die Registrierungsmechanismen finden Sie unter [Registrierungs- und Installationspakete](/de/agent/enrollment-and-packages).
 
 ## Windows (MSI)
 
@@ -29,19 +29,13 @@ Das Installationsfenster zeigt den genauen Befehl mit vorab ausgefüllten Werten
 Senden Sie denselben `msiexec`-Befehl über Ihr vorhandenes MDM/RMM (Intune, GPO, SCCM usw.). Da es sich bei der URL und dem Schlüssel um Befehlszeileneigenschaften handelt, funktioniert eine signierte MSI für jeden Mandanten und jede Gruppe.
 </Tip>
 
-## Linux / macOS (Skript)
+## macOS (demnächst verfügbar)
 
-Laden Sie das eigenständige Shell-Skript aus dem Installationspaket herunter und führen Sie es aus. Das Skript ruft das entsprechende `.deb`/`.pkg` ab und schreibt die Agentenkonfiguration (z. B. `/etc/secureai-agent.toml` unter Linux, eine LaunchAgent-Plist unter macOS).
-
-```bash
-sudo ./secureai-agent-install.sh
-```
-
-Die Backend-URL und der Registrierungsschlüssel sind bereits in das für Ihr Paket generierte Skript eingebettet.
+Derzeit lässt sich der Agent nur unter Windows installieren. Die macOS-Version ist in Entwicklung und hat noch kein Installationsprogramm, deshalb bietet der Paket-Builder nur Windows an.
 
 ## Was passiert beim ersten Durchlauf?
 
-Beim ersten Start führt der Agent eine **Registrierung** durch: Er präsentiert den Registrierungsschlüssel, registriert das Gerät und empfängt ein gerätespezifisches Token und seine Laufzeitkonfiguration. Anschließend beginnt es mit dem Heartbeating und der Anwendung seiner gelösten [Richtlinie](/de/agent/policies-and-groups). Weitere Informationen finden Sie unter [Registrierungs- und Installationspakete] (/en/agent/enrollment-and-packages), einschließlich der Auflösung der Backend-URL und der Rotation der Geräte-Tokens.
+Beim ersten Start führt der Agent eine **Registrierung** durch: Er präsentiert den Registrierungsschlüssel, registriert das Gerät und empfängt ein gerätespezifisches Token und seine Laufzeitkonfiguration. Anschließend beginnt es mit dem Heartbeating und der Anwendung seiner gelösten [Richtlinie](/de/agent/policies-and-groups). Weitere Informationen finden Sie unter [Registrierungs- und Installationspakete](/de/agent/enrollment-and-packages), einschließlich der Auflösung der Backend-URL und der Rotation der Geräte-Tokens.
 
 ## Verwandte
 
