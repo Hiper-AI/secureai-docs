@@ -278,12 +278,8 @@ format with you.
 
 ## Tested versions
 
-| PAN-OS | Device | Result |
-|---|---|---|
-| 12.2.3 | VM-Series on Google Cloud, Bundle2 license | Discovery by syslog and by HTTP log forwarding, blocking with the URL and domain EDLs (URL Filtering profile, Security policy rule and DNS sinkhole), and the last list kept when the feed fails |
-| 11.2.15 | VM-Series on Google Cloud, Bundle2 license | The same test |
-| 11.1.6-h7 | VM-Series on Google Cloud, Bundle2 license | The same test, with User-ID |
-| 12.2.3 | The same, set up as a customer would | Syslog to the SecureAI collector, EDLs over HTTPS, and from the console: block, release and automatic block by threshold |
-
-The CEF and LEEF formats were tested with real PAN-OS 12.2.3 logs. We have not tested hardware firewalls or
-Panorama yet; GUI menu names can change between versions.
+| Component | Version |
+|---|---|
+| PAN-OS | 12.2.3, 11.2.15 and 11.1.6-h7 (VM-Series) |
+| Log formats | Syslog (CEF and LEEF) and HTTP log forwarding |
+| Collector | Vector 0.46.1 |

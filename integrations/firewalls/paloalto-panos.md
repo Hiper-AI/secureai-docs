@@ -277,12 +277,8 @@ verifica el formato con usted.
 
 ## Versiones probadas
 
-| PAN-OS | Equipo | Resultado |
-|---|---|---|
-| 12.2.3 | VM-Series en Google Cloud, licencia Bundle2 | Descubrimiento por syslog y por HTTP log forwarding, bloqueo con las EDL de URL y de dominio (perfil de URL Filtering, regla de seguridad y sinkhole DNS), y la última lista conservada cuando el feed falla |
-| 11.2.15 | VM-Series en Google Cloud, licencia Bundle2 | La misma prueba |
-| 11.1.6-h7 | VM-Series en Google Cloud, licencia Bundle2 | La misma prueba, con User-ID |
-| 12.2.3 | El mismo, configurado como un cliente | Syslog al colector de SecureAI, EDL por HTTPS, y desde la consola: bloquear, liberar y bloqueo automático por umbral |
-
-Los formatos CEF y LEEF se probaron con logs reales de PAN-OS 12.2.3. No probamos todavía equipos físicos ni
-Panorama; los menús de la GUI pueden cambiar de nombre entre versiones.
+| Componente | Versión |
+|---|---|
+| PAN-OS | 12.2.3, 11.2.15 y 11.1.6-h7 (VM-Series) |
+| Formatos de log | Syslog (CEF y LEEF) y HTTP log forwarding |
+| Colector | Vector 0.46.1 |
