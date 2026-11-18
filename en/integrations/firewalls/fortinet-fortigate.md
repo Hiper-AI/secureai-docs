@@ -514,6 +514,7 @@ takes them out when the block expires. Saving these settings asks for your secon
 | 7.6.8 | FortiGate-VM, in a lab | User through RSSO: the FortiGate wrote the user in its logs and SecureAI showed it on the observation |
 | 7.6.8 | FortiGate-VM, in a lab | Web Filter block of a device that resolved DNS without going through the FortiGate, with the log back in SecureAI. With SecureAI answering an error, the FortiGate kept its list and kept blocking |
 | 7.6.8 | FortiGate-VM, against a SecureAI tenant | This guide's walkthrough from the console: setup, the panel's collector, the panel's CLI, block and release from Network Sources, enforcement confirmed, Web Filter, feed restricted by IP and **New tokens** |
+| 7.6.8 | FortiGate-VM, against a SecureAI tenant | User through RSSO on the observation and in Users, a prohibited provider in the feed and on the client in under 2 minutes, and a threshold auto-block, applied on the client in 84 seconds and released on its own when it expired |
 
 We haven't tested it yet on FortiOS 7.2 or 7.4, or on physical devices. The steps use objects that exist in all
 three versions; GUI menu names may change.

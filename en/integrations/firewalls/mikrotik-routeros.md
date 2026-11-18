@@ -9,10 +9,6 @@ SecureAI reads the DNS query log of your MikroTik router, shows you which device
 and makes the router stop resolving the providers you prohibit in SecureAI. RouterOS logs no URLs: everything comes
 from the names clients ask the router's DNS for.
 
-<Note>
-The `mikrotik-routeros` connector is in **beta**. In beta, the SecureAI team assists with the setup.
-</Note>
-
 ## How it works
 
 1. The router sends one syslog line for every DNS query it gets from a client, IPv4 or IPv6
@@ -33,6 +29,9 @@ Both halves depend on clients resolving through the router. Sections 4 and 5 cov
   without a user.
 - A query is not a connection. Browsers look up names they may not use, and the device's cache skips queries for
   names they do use. The count is approximate.
+- If the router answered the query with NXDOMAIN (a domain on the block list), SecureAI counts it as blocked. An AI
+  name that does not exist counts as blocked too. In address-list mode the router resolves the name and drops the
+  connection afterwards: those queries do not show as blocked.
 
 ## Requirements
 
@@ -127,11 +126,18 @@ RouterOS logs every configuration command with its values. This command turns of
 creates the token file and turns them back on, in a single line:
 
 ```text
-:local off [/system logging find where topics~"info|system" disabled=no]; /system logging disable $off; /file add name=secureai-feed-token.txt contents="<feed token>"; /system logging enable $off
+:local off [/system logging find where topics~"info|system" disabled=no]; /system logging disable $off; :do { /file remove [find name="secureai-feed-token.txt"]; /file add name=secureai-feed-token.txt contents="<feed token>" } on-error={ :put "secureai: could not write secureai-feed-token.txt" }; /system logging enable $off
 ```
 
-Then clear the terminal history, which also keeps the command: `/console clear-history`. To change the token, repeat
-the line with `/file remove secureai-feed-token.txt` before the `/file add`.
+The line removes the file if it is there, so it works for the install and for a token change. If writing the file
+fails, it still turns the log rules back on.
+
+Then clear the terminal history, which also keeps the command: `/console clear-history`. That command needs an
+administrator: a user with only the `read`, `write`, `test` and `ftp` policies gets a permissions error.
+
+With **New tokens**, on the device row, the panel shows the new `collector.env` and, for the router, only this line
+and `/console clear-history`. Replace `collector.env` and run the collector's `docker compose` again: the router
+reconnects on its own in about 3 minutes, and the queries it logs in between are lost.
 
 ### 3.2 Create the script and the scheduler
 
@@ -521,7 +527,9 @@ to MikroTik's changelogs. The scripts use `/file add` with contents (7.15), `:on
 We tested it end to end on RouterOS 7.25.1 (CHR): discovery over IPv4 and IPv6, user and device from the Hotspot and
 DHCP with an IP that goes from one person to another, two routers with the same range on one collector, blocking with
 subdomains, the port 53 redirect, DoH blocking by name and by IP, address-list mode, the behavior on 401 and 403, and
-a power cut on the router.
+a power cut on the router. On November 17, 2026 we also tested it against a SecureAI tenant, from the console:
+setup, collector, the panel's configuration, discovery, block and release (about 4 minutes to the client), new
+tokens and disconnect.
 
 On RouterOS 7.18.2 all of that passes except one Hotspot case: when another person takes the same IP right after the
 first one releases it, their device does not reach the router during the test. Each person's identity on its own
