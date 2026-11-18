@@ -60,6 +60,8 @@ La probamos con FortiGate-VM y FortiOS 7.6.8, en laboratorio y contra un tenant 
 Los tokens se ven solo en ese momento. Descargue el colector y copie la CLI antes de cerrar el panel, y guarde los
 tokens en su gestor de secretos. Si los pierde, **Tokens nuevos** en la fila del equipo genera otros y los anteriores dejan de funcionar.
 
+Para cambiar después qué dirección puede descargar la lista de bloqueo, abra **Acciones → IP permitida** en la fila del equipo. Acepta IPv4 e IPv6. Si deja el campo vacío, la descarga cualquiera que tenga el token. **Tokens nuevos** no cambia la IP permitida.
+
 En **Equipos conectados** ve, por cada FortiGate, si llegan sus logs y cuándo descargó la lista de bloqueo por
 última vez. Si un equipo deja de descargarla por más de 30 minutos, el panel lo avisa.
 

@@ -60,6 +60,8 @@ We tested it with FortiGate-VM and FortiOS 7.6.8, in a lab and against a SecureA
 The tokens are shown only at that moment. Download the collector and copy the CLI before closing the panel, and
 store the tokens in your secrets manager. If you lose them, **New tokens** on the device row generates new ones, and the old ones stop working.
 
+To change later which address can download the block list, open **Actions → Allowed IP** on the device row. It takes IPv4 and IPv6. If you leave it empty, anyone with the token can download the list. **New tokens** keeps the allowed IP.
+
 Under **Connected devices** you see, for each FortiGate, whether its logs are arriving and when it last downloaded
 the block list. If a device stops downloading it for more than 30 minutes, the panel warns you.
 
