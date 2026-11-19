@@ -106,8 +106,9 @@ Certificates > Default Trusted Certificate Authorities**). Your tenant's certifi
 
 ### Option B: syslog to the collector
 
-1. Install the SecureAI collector with the log source ID and token. The SecureAI team gives you the package and
-   walks you through it.
+1. Install the SecureAI collector: in the console, **Integrations > Network / SWG > Palo Alto Networks > Connect**
+   downloads the `.zip` with the log source ID and token. Unzip it on a Linux machine with Docker and run
+   `docker compose up -d`.
 2. **Device > Server Profiles > Syslog > Add**: the collector IP, UDP or TCP 514, **BSD** format. With the default
    format (CSV) there is nothing else to set. If your SIEM already expects CEF or LEEF, enter in **Custom Log
    Format**, for **Traffic** and **URL**:
@@ -124,6 +125,10 @@ Certificates > Default Trusted Certificate Authorities**). Your tenant's certifi
    LEEF:1.0|Palo Alto Networks|PAN-OS Syslog Integration|$sender_sw_version|$subtype|cat=$type|devTime=$cef-formatted-receive_time|SerialNumber=$serial|src=$src|dst=$dst|srcPostNAT=$natsrc|usrName=$srcuser|Application=$app|SessionID=$sessionid|RepeatCount=$repeatcnt|action=$action|URLCategory=$category|sequence=$seqno
    ```
 
+PAN-OS sends syslog from its management interface. If the collector is not reachable from that network, add a
+service route: **Device > Setup > Services > Service Route Configuration > Customize**, **Syslog** through an inside
+interface with a static IP.
+
 The collector sends SecureAI only the URL Filtering logs with an AI destination, and the rest of the browsing stays
 in your network. The Traffic log has no domain and the collector drops it: over syslog, SecureAI sees AI through the
 URL Filtering log.
@@ -139,9 +144,14 @@ the profile under **Log Forwarding** and check **Log at Session End**.
 
 ## 2. Log AI in the URL Filtering log
 
-**Objects > Security Profiles > URL Filtering**: in your profile, set the `artificial-intelligence` category and
-the `AI-*` ones (`AI-conversational-assistant`, `AI-code-assistant` and the rest) to **Alert**. Categories on
-**Allow** do not log. Assign the profile to the rules that go to the internet.
+**Objects > Security Profiles > URL Filtering**: in your profile, set the `artificial-intelligence` category, the
+`AI-*` ones (`AI-conversational-assistant`, `AI-code-assistant` and the rest) and `computer-and-internet-info` to
+**Alert**. Categories on **Allow** do not log. Assign the profile to the rules that go to the internet.
+
+You need `computer-and-internet-info` for the APIs: PAN-DB puts most inference endpoints there, such as
+`api.anthropic.com`, `generativelanguage.googleapis.com` (Gemini) and Azure OpenAI. Without Alert on that category,
+calling a model from a script or a developer tool leaves no log. The collector forwards only AI domains: the rest of
+those logs stays in your network.
 
 ![URL Filtering profile](/img/paloalto/url-filtering.png)
 
@@ -155,7 +165,7 @@ the `AI-*` ones (`AI-conversational-assistant`, `AI-code-assistant` and the rest
 |---|---|---|
 | Type | URL List | Domain List |
 | Source | `https://<tenant>.hiperai.com/api/network-feeds/<panos-url feed ID>` | `https://<tenant>.hiperai.com/api/network-feeds/<panos-domain feed ID>` |
-| Server Authentication | A certificate profile with the root CA of your tenant's certificate | The same |
+| Server Authentication | The `secureai` certificate profile (see below) | The same |
 | Client Authentication | Username: anything, for example `feed`. Password: the feed token | Username `feed` and the other feed's token |
 | Automatically expand to include subdomains | | On |
 | Check for updates | Five Minute | Five Minute |
@@ -164,6 +174,16 @@ the `AI-*` ones (`AI-conversational-assistant`, `AI-code-assistant` and the rest
 
 PAN-OS accepts a username and password on an EDL only with a certificate profile, that is, with an HTTPS source.
 The token travels as the HTTP Basic password, never in the URL.
+
+Google Trust Services or Let's Encrypt issues your tenant's certificate, and the CA can change on renewal. Import the
+four roots (**Device > Certificate Management > Certificates > Import**, PEM, no private key) and put them together in
+the `secureai` certificate profile: **GTS Root R1**, **GTS Root R4**, **ISRG Root X1** and **ISRG Root X2**. With a
+single root, the day the CA changes the EDLs stop updating and the firewall stays on the old list. If SecureAI runs on
+your own domain, use the root CA of that certificate.
+
+PAN-OS downloads the EDLs from its management interface. For **Actions → Allowed IP**, use the public address that
+interface goes out with, which can differ from the data interfaces. It takes IPv4 and IPv6; if you leave it empty,
+anyone with the token can download the list. **New tokens** keeps the allowed IP.
 
 **List Entries And Exceptions** shows what the firewall downloaded. SecureAI writes each domain twice in the URL EDL
 (`chatgpt.com/` and `*.chatgpt.com/`) and once in the domain EDL (`chatgpt.com`; the subdomain option covers the
@@ -174,7 +194,7 @@ rest). While nothing is prohibited, the lists are empty.
 From the CLI:
 
 ```
-set profiles certificate-profile secureai CA <imported root CA>
+set profiles certificate-profile secureai CA [ gts-root-r1 gts-root-r4 isrg-root-x1 isrg-root-x2 ]
 set external-list secureai-ai-url type url url https://<tenant>.hiperai.com/api/network-feeds/<id>
 set external-list secureai-ai-url type url certificate-profile secureai
 set external-list secureai-ai-url type url auth username feed password <panos-url feed token>
@@ -243,13 +263,15 @@ In our lab tests, with the feed disabled, with a SecureAI server error and with 
 last list it downloaded and kept blocking. SecureAI never answers an empty list because of an error.
 
 For a wrong token, the Palo Alto documentation says the firewall stops enforcing the EDL; in our tests that did not
-happen during the minute we measured. If you rotate a feed token, update the EDL in the same change.
+happen during the minute we measured. If you rotate a feed token, update the EDL in the same change. After **New
+tokens**, the panel warns on each EDL and on the log source until the firewall and the collector use the new tokens.
 
 When nothing is blocked, the EDL carries a single entry, `secureai-empty.invalid`. PAN-OS does not accept an empty
 EDL (it keeps the previous one and would never unblock), and `.invalid` is a reserved domain that matches no real
 site.
 
-Disabling or deleting a feed unblocks nothing: to unblock, release the block in SecureAI or remove the EDL from the
+Disabling or deleting a feed unblocks nothing, and neither does **Disconnect**: the firewall keeps blocking with the
+last list it downloaded. To unblock, release the block in SecureAI before you disconnect, or remove the EDLs from the
 policy.
 
 ## Panorama
@@ -258,10 +280,6 @@ The integration runs on each firewall, so with Panorama it is the same: the EDLs
 forwarding profile and the blocking rule go in a device group (and the server profile in a template), and Panorama
 pushes them to the firewalls. Logs can leave from each firewall or be forwarded from Panorama to a syslog server
 profile.
-
-We have not tested it with Panorama: a Panorama without the device management license does not let you add
-firewalls, and our lab does not have that license. If your Panorama forwards the logs, the SecureAI team checks the
-format with you.
 
 ## Limits
 
