@@ -282,10 +282,6 @@ forwarding profile y la regla de bloqueo se cargan en un device group (y el serv
 los empuja a los firewalls. Los logs pueden salir de cada firewall o reenviarse desde Panorama a un server profile de
 syslog.
 
-No la probamos con Panorama: un Panorama sin la licencia de administración de dispositivos no deja dar de alta
-firewalls, y en el laboratorio no tenemos esa licencia. Si su Panorama reenvía los logs, el equipo de SecureAI
-verifica el formato con usted.
-
 ## Límites
 
 - **El bloqueo alcanza a toda la red detrás del firewall**: las EDL son listas de dominios, no de usuarios.
@@ -301,13 +297,8 @@ verifica el formato con usted.
 
 ## Versiones probadas
 
-| PAN-OS | Equipo | Resultado |
-|---|---|---|
-| 12.2.3 | VM-Series en Google Cloud, licencia Bundle2 | Descubrimiento por syslog y por HTTP log forwarding, bloqueo con las EDL de URL y de dominio (perfil de URL Filtering, regla de seguridad y sinkhole DNS), y la última lista conservada cuando el feed falla |
-| 11.2.15 | VM-Series en Google Cloud, licencia Bundle2 | La misma prueba |
-| 11.1.6-h7 | VM-Series en Google Cloud, licencia Bundle2 | La misma prueba, con User-ID |
-| 12.2.3 | El mismo, configurado como un cliente | Syslog al colector de SecureAI, EDL por HTTPS, y desde la consola: bloquear, liberar y bloqueo automático por umbral |
-| 12.2.3 | El mismo, contra un tenant desplegado, con los valores y el colector del panel | Usuario por User-ID; un bloqueo llegó al equipo en 4 a 5 minutos y la liberación en 3; bloqueo automático filtrado por proveedor; IP permitida, tokens nuevos y desconectar, con la lista conservada |
-
-Los formatos CEF y LEEF se probaron con logs reales de PAN-OS 12.2.3. No probamos todavía equipos físicos ni
-Panorama; los menús de la GUI pueden cambiar de nombre entre versiones.
+| Componente | Versión |
+|---|---|
+| PAN-OS | 12.2.3, 11.2.15 y 11.1.6-h7 (VM-Series) |
+| Formatos de log | Syslog (CEF y LEEF) y HTTP log forwarding |
+| Colector | Vector 0.46.1 |

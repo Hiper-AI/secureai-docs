@@ -9,11 +9,6 @@ Con esta integración ve en SecureAI qué servicios de IA usa la gente detrás d
 qué frecuencia, y los bloquea desde SecureAI. No necesita el módulo de control de GenAI de Fortinet: el FortiGate
 manda sus logs a SecureAI y descarga de SecureAI la lista de dominios que tiene que bloquear.
 
-<Note>
-La probamos con FortiGate-VM y FortiOS 7.6.8, en laboratorio y contra un tenant de SecureAI; vea
-[Versiones probadas](#versiones-probadas).
-</Note>
-
 ## Cómo funciona
 
 1. El FortiGate manda por syslog sus logs de tráfico (`type=traffic`) y de los perfiles de seguridad (`type=utm`,
@@ -510,13 +505,7 @@ los saca al vencer. Guardar estos ajustes pide el segundo factor.
 
 ## Versiones probadas
 
-| FortiOS | Equipo | Resultado |
-|---|---|---|
-| 7.6.8 | FortiGate-VM, en laboratorio | Alta desde la consola, colector instalado desde el `.zip` del panel en una máquina Linux con Docker, descubrimiento por DNS Filter y Application Control, bloqueo manual y automático por el feed, bloqueo confirmado y liberación |
-| 7.6.8 | FortiGate-VM, en laboratorio | Usuario por RSSO: el FortiGate escribió el usuario en sus logs y SecureAI lo mostró en la observación |
-| 7.6.8 | FortiGate-VM, en laboratorio | Bloqueo por Web Filter de un equipo que resolvía DNS sin pasar por el FortiGate, con el log de vuelta en SecureAI. Con SecureAI respondiendo error, el FortiGate conservó la lista y siguió bloqueando |
-| 7.6.8 | FortiGate-VM, contra un tenant de SecureAI | El recorrido de esta guía desde la consola: alta, colector del panel, CLI del panel, bloqueo y liberación desde Fuentes de red, bloqueo confirmado, Web Filter, restricción del feed por IP y **Tokens nuevos** |
-| 7.6.8 | FortiGate-VM, contra un tenant de SecureAI | Usuario por RSSO en la observación y en Usuarios, proveedor prohibido en el feed y en el cliente en menos de 2 minutos, y bloqueo automático por umbral, aplicado en el cliente en 84 segundos y liberado solo al vencer |
-
-Todavía no la probamos en FortiOS 7.2 ni 7.4, ni en equipos físicos. Los pasos usan objetos que existen en las tres
-versiones; los nombres de los menús de la GUI pueden cambiar.
+| Componente | Versión |
+|---|---|
+| FortiOS | 7.6.8 (FortiGate-VM) |
+| Colector | Vector 0.46.1 |
