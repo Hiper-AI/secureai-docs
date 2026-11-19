@@ -282,10 +282,6 @@ forwarding profile y la regla de bloqueo se cargan en un device group (y el serv
 los empuja a los firewalls. Los logs pueden salir de cada firewall o reenviarse desde Panorama a un server profile de
 syslog.
 
-No la probamos con Panorama: un Panorama sin la licencia de administración de dispositivos no deja dar de alta
-firewalls, y en el laboratorio no tenemos esa licencia. Si su Panorama reenvía los logs, el equipo de SecureAI
-verifica el formato con usted.
-
 ## Límites
 
 - **El bloqueo alcanza a toda la red detrás del firewall**: las EDL son listas de dominios, no de usuarios.

@@ -281,10 +281,6 @@ forwarding profile and the blocking rule go in a device group (and the server pr
 pushes them to the firewalls. Logs can leave from each firewall or be forwarded from Panorama to a syslog server
 profile.
 
-We have not tested it with Panorama: a Panorama without the device management license does not let you add
-firewalls, and our lab does not have that license. If your Panorama forwards the logs, the SecureAI team checks the
-format with you.
-
 ## Limits
 
 - **A block reaches the whole network behind the firewall**: the EDLs are lists of domains, not of users.
