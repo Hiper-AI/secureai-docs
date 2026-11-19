@@ -9,11 +9,6 @@ With this integration, SecureAI shows which AI services the people behind your F
 how often, and you block them from SecureAI. You don't need Fortinet's GenAI control module: the FortiGate sends its
 logs to SecureAI and downloads from SecureAI the list of domains it has to block.
 
-<Note>
-We tested it with FortiGate-VM and FortiOS 7.6.8, in a lab and against a SecureAI tenant; see
-[Tested versions](#tested-versions).
-</Note>
-
 ## How it works
 
 1. The FortiGate sends its traffic logs (`type=traffic`) and security profile logs (`type=utm`, subtypes
@@ -510,13 +505,7 @@ takes them out when the block expires. Saving these settings asks for your secon
 
 ## Tested versions
 
-| FortiOS | Device | Result |
-|---|---|---|
-| 7.6.8 | FortiGate-VM, in a lab | Setup from the console, collector installed from the panel's `.zip` on a Linux machine with Docker, discovery through DNS Filter and Application Control, manual and automatic blocking through the feed, enforcement confirmed and release |
-| 7.6.8 | FortiGate-VM, in a lab | User through RSSO: the FortiGate wrote the user in its logs and SecureAI showed it on the observation |
-| 7.6.8 | FortiGate-VM, in a lab | Web Filter block of a device that resolved DNS without going through the FortiGate, with the log back in SecureAI. With SecureAI answering an error, the FortiGate kept its list and kept blocking |
-| 7.6.8 | FortiGate-VM, against a SecureAI tenant | This guide's walkthrough from the console: setup, the panel's collector, the panel's CLI, block and release from Network Sources, enforcement confirmed, Web Filter, feed restricted by IP and **New tokens** |
-| 7.6.8 | FortiGate-VM, against a SecureAI tenant | User through RSSO on the observation and in Users, a prohibited provider in the feed and on the client in under 2 minutes, and a threshold auto-block, applied on the client in 84 seconds and released on its own when it expired |
-
-We haven't tested it yet on FortiOS 7.2 or 7.4, or on physical devices. The steps use objects that exist in all
-three versions; GUI menu names may change.
+| Component | Version |
+|---|---|
+| FortiOS | 7.6.8 (FortiGate-VM) |
+| Collector | Vector 0.46.1 |

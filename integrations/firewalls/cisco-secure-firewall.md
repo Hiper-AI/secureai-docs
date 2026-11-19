@@ -10,11 +10,6 @@ Defense (FTD) administrados por un Management Center (FMC), desde qué equipo y 
 SecureAI. No necesita Cisco AI Defense: el FTD manda sus eventos de conexión a SecureAI y el FMC descarga de SecureAI
 la lista de dominios que tiene que bloquear.
 
-<Note>
-La probamos con FMCv y FTDv 7.4.2, en laboratorio y contra un tenant de SecureAI; vea
-[Versiones probadas](#versiones-probadas).
-</Note>
-
 ## Cómo funciona
 
 1. El FTD manda por syslog un evento por conexión (mensajes `430002` y `430003`) al colector de SecureAI, un
@@ -192,11 +187,8 @@ estos ajustes pide el segundo factor.
 
 ## Versiones probadas
 
-| Versión | Equipo | Resultado |
-|---|---|---|
-| FMC 7.7 | Sandbox de Cisco DevNet, solo lectura | Lectura de la API: qué objetos de Security Intelligence existen y cuáles se pueden escribir |
-| FMCv y FTDv 7.4.2 | En laboratorio | Descubrimiento por syslog de chatgpt.com, claude.ai y consultas DNS. Descarga del feed con el token como HTTP Basic. Bloqueo por URL y por DNS de chatgpt.com, api.openai.com (subdominio) y api.anthropic.com (comodín); claude.ai, fuera del feed, siguió andando. Los bloqueos por URL y por DNS volvieron a SecureAI por syslog. Con el feed deshabilitado, el FMC recibió 403 y el FTD siguió bloqueando |
-| FMCv y FTDv 7.4.2 | Contra un tenant de SecureAI | El recorrido de esta guía desde la consola: alta, colector del panel, descubrimiento en Fuentes de red, bloqueo y liberación, proveedor prohibido con el refresco normal del FMC, bloqueo automático por umbral, restricción del feed por IP y **Tokens nuevos**. El feed de DNS no lo repetimos contra el tenant: se configura en la GUI del FMC y lo probamos en laboratorio |
-
-Todavía no la probamos en FMC 7.2 ni 7.7 con FTD, ni en equipos físicos. Los nombres de los menús de la GUI pueden
-cambiar entre versiones.
+| Componente | Versión |
+|---|---|
+| FMC | 7.4.2 (FMCv) y 7.7 (sandbox de Cisco DevNet) |
+| FTD | 7.4.2 (FTDv) |
+| Colector | Vector 0.46.1 |
