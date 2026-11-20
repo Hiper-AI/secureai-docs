@@ -1,7 +1,7 @@
 ---
 title: "MikroTik RouterOS"
 sidebarTitle: "MikroTik RouterOS"
-icon: "router"
+icon: "/img/icons/mikrotik.svg"
 description: "Descubra la IA que usa la gente detrás de su MikroTik y bloquéela desde SecureAI"
 ---
 
