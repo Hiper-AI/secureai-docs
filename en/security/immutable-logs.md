@@ -72,28 +72,32 @@ Once `log_index` exists in Rekor, **no one can delete it** — the Rekor log is 
 
 ---
 
-## Transparency Portal (admin)
+## Verify from the console (admin)
 
-### Access
+### Where it is
 
-**Admin → AI Gateway → Transparency Portal**
+Verification lives in the activity logs, not on a separate page:
+
+**Settings → Activity Logs**, with the **AI Gateway** source.
+
+Every call that went through the gateway shows its `bundle_id`. To find a specific one, paste the `bundle_id` into the list's search box.
 
 ### Verify a bundle
 
-1. Type or paste `bundle_id` into the search field.
-2. Click **"Verify Proof"**.
-3. You will see the three layers with status badges:
-   - ✅ **Green** = verified successfully
-   - ⚠️ **Yellow** = sealing/anchor pending (normal for interactions less than 2 minutes ago)
-   - ❌ **Red** = verification failure (warning signal)
+1. On the call's row, click **Verify**. The detail panel opens.
+2. In the detail panel, click **Verify** again if the proof did not load on its own.
+3. You will see the three layers with their status:
+   - ✅ **Green**: verified.
+   - ⚠️ **Yellow**: sealing or anchoring pending. Normal for a call from a few minutes ago.
+   - ❌ **Red**: verification failed. Treat it as an alert.
 
-### Copy public verification link
+### Copy the public verification link
 
-When the result is visible, a bar appears with the **"Copy public verification URL"** button. That link is public — you can send it to an external auditor without requiring a login.
+With the result on screen, the **Copy public verification URL** button copies the link to `/verify/<bundle_id>`. It is public: you can send it to an external auditor, who needs no account.
 
 ---
 
-##Public verification page
+## Public verification page
 
 Anyone with a `bundle_id` can verify the test without access to SecureAI:
 

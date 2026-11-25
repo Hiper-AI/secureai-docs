@@ -29,7 +29,7 @@ Gérez les clés de signature Ed25519 et les clés de chiffrement AES-256 :
 
 ### 4. Portail de transparence et audit
 Validez l’intégrité des interactions à l’aide de preuves cryptographiques :
-- Recherchez n'importe quelle interaction par undle_id pour inspecter sa chaîne de hachage L1, son arbre Merkle L2 et son ancre de transparence L3 Sigstore Rekor.
+- Recherchez n'importe quelle interaction par `bundle_id` pour inspecter sa chaîne de hachage L1, son arbre Merkle L2 et son ancre de transparence L3 Sigstore Rekor.
 - Générez des liens de vérification publics partageables pour les auditeurs de conformité tiers.
 
 ### 5. Gestion des extensions

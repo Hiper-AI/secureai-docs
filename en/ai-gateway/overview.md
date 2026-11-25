@@ -28,11 +28,11 @@ Monitor real-time metrics across your enterprise:
 ### 3. Cryptographic Key Management
 Manage Ed25519 signing keys and AES-256 encryption keys:
 - **Zero-Downtime Rotation**: Rotate signing keys periodically while preserving offline verification for receipts signed under previous keys.
-- **Config**: Go to **Admin ? AI Gateway ? Keys**.
+- **Config**: **AI Gateway → Encryption keys**.
 
-### 4. Transparency Portal & Audit
+### 4. Verification & Audit
 Validate interaction integrity using cryptographic proofs:
-- Search any interaction by undle_id to inspect its L1 hash chain, L2 Merkle tree, and L3 Sigstore Rekor transparency anchor.
+- In **Settings → Activity Logs**, with the **AI Gateway** source, find any interaction by `bundle_id` and use **Verify** to inspect its L1 hash chain, L2 Merkle tree, and L3 Sigstore Rekor transparency anchor.
 - Generate shareable public verification links for third-party compliance auditors.
 
 ### 5. Extension Management

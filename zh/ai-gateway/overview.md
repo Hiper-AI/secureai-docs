@@ -29,7 +29,7 @@ title: "AI网关概述"
 
 ### 4. 透明度门户和审计
 使用加密证明验证交互完整性：
-- 通过 undle_id 搜索任何交互，以检查其 L1 哈希链、L2 Merkle 树和 L3 Sigstore Rekor 透明度锚点。
+- 通过 `bundle_id` 搜索任何交互，以检查其 L1 哈希链、L2 Merkle 树和 L3 Sigstore Rekor 透明度锚点。
 - 为第三方合规审核员生成可共享的公共验证链接。
 
 ### 5. 扩展管理
