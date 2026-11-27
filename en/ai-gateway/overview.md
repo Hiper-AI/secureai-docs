@@ -36,4 +36,4 @@ Validate interaction integrity using cryptographic proofs:
 - Generate shareable public verification links for third-party compliance auditors.
 
 ### 5. Extension Management
-Manage and enforce security policies across the SecureAI browser extension fleet to prevent shadow AI usage on client browsers.
+Configure the SecureAI Extension that runs in your employees' browsers: DLP on AI sites, AI inside SaaS apps, and corporate accounts only. See [SecureAI Extension](/en/extension/overview).

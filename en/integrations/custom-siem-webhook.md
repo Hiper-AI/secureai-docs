@@ -73,6 +73,8 @@ Select which types of events to forward:
 - System & Infrastructure
 - Configuration Changes
 
+SecureAI Agent events also have their own types (`endpoint_shadow_ai`, `endpoint_ai_input` and others). See [Endpoint alerts and SIEM](/en/agent/alerts-and-siem#endpoint-events-in-your-siem).
+
 ### 4. Test the Connection
 
 1. Click **"Test Connection"** to verify connectivity

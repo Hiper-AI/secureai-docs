@@ -69,9 +69,21 @@
                   "agent/installation",
                   "agent/enrollment-and-packages",
                   "agent/policies-and-groups",
+                  "agent/ai-input-boxes",
+                  "agent/coding-agents",
+                  "agent/ai-apps",
                   "agent/egress-enforcement",
                   "agent/quarantine-and-fleet-ops",
-                  "agent/transparent-proxy"
+                  "agent/transparent-proxy",
+                  "agent/alerts-and-siem"
+                ]
+              },
+              {
+                "group": "SecureAI Extension",
+                "pages": [
+                  "extension/overview",
+                  "extension/saas-ai",
+                  "extension/corporate-accounts"
                 ]
               }
             ]
@@ -289,9 +301,21 @@
                   "en/agent/installation",
                   "en/agent/enrollment-and-packages",
                   "en/agent/policies-and-groups",
+                  "en/agent/ai-input-boxes",
+                  "en/agent/coding-agents",
+                  "en/agent/ai-apps",
                   "en/agent/egress-enforcement",
                   "en/agent/quarantine-and-fleet-ops",
-                  "en/agent/transparent-proxy"
+                  "en/agent/transparent-proxy",
+                  "en/agent/alerts-and-siem"
+                ]
+              },
+              {
+                "group": "SecureAI Extension",
+                "pages": [
+                  "en/extension/overview",
+                  "en/extension/saas-ai",
+                  "en/extension/corporate-accounts"
                 ]
               }
             ]

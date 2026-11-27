@@ -22,6 +22,8 @@ A policy (`AgentPolicy`) contains:
 | **Threat feed** | Whether the device consumes the org threat feed. |
 | **Egress enforcement** | `off` / `kill` / `block` / `lockdown` (+ allow list, block-remote-MCP). See [Egress Enforcement](/en/agent/egress-enforcement). |
 | **Behavior guard** | Behavioral AI-oversight: enabled, sensitivity, and default action (`alert`, `quarantine`, `kill`, `block`, `require_approval`), for endpoint and/or gateway. |
+| **Data guards** | Includes **AI input boxes**: the agent's DLP on what people type into AI apps and panels (`off`, `monitor`, `warn`, `block`). See [AI input boxes](/en/agent/ai-input-boxes). |
+| **Local MCP proxy** | Runs every MCP tool call through the policy, with optional checks on arguments and results. See [Coding agents](/en/agent/coding-agents#local-mcp-proxy). |
 | **Claude Code routing** | Transparent-proxy settings. See [Transparent Proxy](/en/agent/transparent-proxy). |
 | **Tamper protection** | Uninstall-key requirement (see below). |
 | **Rollout** | Staged rollout configuration (see [Safe rollouts](#safe-rollouts)). |
