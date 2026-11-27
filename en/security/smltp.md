@@ -55,6 +55,12 @@ SMLTP deliberately separates two kinds of controls:
 - Merkle roots can be anchored to an external transparency log (Sigstore Rekor), so the record's
   integrity does not depend on trusting the SecureAI operator — see
   [Immutable Logs](./immutable-logs.md)
+- Each sealed block is copied to a bucket with locked retention, and once a day SecureAI walks the stored chain looking
+  for gaps and forks; see [Audit Record Integrity](./audit-integrity.md)
+- **AI Gateway → Status** shows whether signing, sealing, anchoring and archiving work right now; see
+  [Audit Record Status](../ai-gateway/status.md)
+- You can publish the anchors and keys so a third party verifies them without an account; see
+  [Public Transparency Page](./public-transparency.md)
 
 ### Policy Enforcement
 - Model allowlists, data-residency (geofence) checks, and egress controls evaluated at the gateway
