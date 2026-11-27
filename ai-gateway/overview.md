@@ -27,11 +27,11 @@ Supervise las métricas en tiempo real en toda su empresa:
 ### 3. Gestión de claves criptográficas
 Administre claves de firma Ed25519 y claves de cifrado AES-256:
 - **Rotación sin tiempo de inactividad**: rote las claves de firma periódicamente mientras conserva la verificación fuera de línea para los recibos firmados con claves anteriores.
-- **Configuración**: ¿Ir a **Administrador? ¿Puerta de entrada de IA? Llaves**.
+- **Configuración**: **Gateway de IA → Claves de cifrado**.
 
-### 4. Portal de Transparencia y Auditoría
+### 4. Verificación y auditoría
 Validar la integridad de la interacción mediante pruebas criptográficas:
-- Busque cualquier interacción por undle_id para inspeccionar su cadena hash L1, su árbol Merkle L2 y su ancla de transparencia Sigstore Rekor L3.
+- En **Configuración → Registros de Actividad**, con el origen **AI Gateway**, busque cualquier interacción por `bundle_id` y use **Verificar** para inspeccionar su cadena hash L1, su árbol Merkle L2 y su ancla de transparencia Sigstore Rekor L3.
 - Genere enlaces de verificación pública compartibles para auditores de cumplimiento externos.
 
 ### 5. Gestión de extensiones

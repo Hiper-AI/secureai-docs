@@ -29,7 +29,7 @@ Verwalten Sie Ed25519-Signaturschlüssel und AES-256-Verschlüsselungsschlüssel
 
 ### 4. Transparenzportal und Audit
 Validieren Sie die Interaktionsintegrität mithilfe kryptografischer Beweise:
-- Durchsuchen Sie jede Interaktion nach undle_id, um deren L1-Hash-Kette, L2-Merkle-Baum und L3-Sigstore-Rekor-Transparenzanker zu überprüfen.
+- Durchsuchen Sie jede Interaktion nach `bundle_id`, um deren L1-Hash-Kette, L2-Merkle-Baum und L3-Sigstore-Rekor-Transparenzanker zu überprüfen.
 - Generieren Sie gemeinsam nutzbare öffentliche Verifizierungslinks für Compliance-Prüfer von Drittanbietern.
 
 ### 5. Erweiterungsmanagement

@@ -31,7 +31,7 @@ Gerencie chaves de assinatura Ed25519 e chaves de criptografia AES-256:
 
 ### 4. Portal de Transparência e Auditoria
 Valide a integridade da interação usando provas criptográficas:
-- Pesquise qualquer interação por undle_id para inspecionar sua cadeia de hash L1, árvore Merkle L2 e âncora de transparência L3 Sigstore Rekor.
+- Pesquise qualquer interação por `bundle_id` para inspecionar sua cadeia de hash L1, árvore Merkle L2 e âncora de transparência L3 Sigstore Rekor.
 - Gere links de verificação pública compartilháveis ​​para auditores de conformidade terceirizados.
 
 ### 5. Gerenciamento de extensões

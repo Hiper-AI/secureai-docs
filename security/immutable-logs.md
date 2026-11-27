@@ -71,24 +71,28 @@ Una vez que el `log_index` existe en Rekor, **nadie puede eliminarlo** — el lo
 
 ---
 
-## Portal de Transparencia (admin)
+## Verificar desde la consola (admin)
 
-### Acceder
+### Dónde está
 
-**Admin → AI Gateway → Transparency Portal**
+La verificación vive en los registros de actividad, no en una página aparte:
+
+**Configuración → Registros de Actividad**, con el origen **AI Gateway**.
+
+Cada llamada que pasó por el gateway muestra su `bundle_id`. Para buscar una en particular, pegá el `bundle_id` en el buscador de la lista.
 
 ### Verificar un bundle
 
-1. Escribe o pega el `bundle_id` en el campo de búsqueda.
-2. Haz clic en **"Verify Proof"**.
-3. Verás las tres capas con badges de estado:
-   - ✅ **Verde** = verificado correctamente
-   - ⚠️ **Amarillo** = pendiente de sellado/ancla (normal para interacciones de hace menos de 2 minutos)
-   - ❌ **Rojo** = fallo de verificación (señal de alerta)
+1. En la fila de la llamada, hacé clic en **Verificar**. Se abre el detalle.
+2. En el detalle, hacé clic en **Verificar** otra vez si la prueba no se cargó sola.
+3. Vas a ver las tres capas con su estado:
+   - ✅ **Verde**: verificada.
+   - ⚠️ **Amarillo**: pendiente de sellado o de ancla. Es normal en una llamada de hace pocos minutos.
+   - ❌ **Rojo**: la verificación falló. Tratalo como una alerta.
 
-### Copiar enlace público de verificación
+### Copiar el enlace público de verificación
 
-Cuando el resultado está visible, aparece una barra con el botón **"Copy public verification URL"**. Ese enlace es público — puedes enviárselo a un auditor externo sin que necesite login.
+Con el resultado a la vista, el botón **Copiar URL publica de verificacion** copia el enlace a `/verify/<bundle_id>`. Es público: se lo podés mandar a un auditor externo, que no necesita cuenta.
 
 ---
 
