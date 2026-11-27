@@ -55,6 +55,34 @@ The page reads `GET /api/public/transparency`, which needs no authentication and
 
 The response has the format `smltp-public-transparency/1`: `rekor.origin`, `keys`, `totals`, `heartbeat` and `anchors`.
 
+## Where an auditor finds everything
+
+An auditor who only knows your domain finds, at `https://<your-domain>/.well-known/smltp`, where your organization
+publishes what verification needs: the gateway's key manifest, the keys that sign the anchors, the check for one
+receipt and the Rekor log it anchors in. No authentication is needed.
+
+```bash
+curl -s https://your-domain.com/.well-known/smltp
+```
+
+```json
+{
+  "format": "smltp-discovery/1",
+  "key_manifest": "/api/public/keys/manifest",
+  "anchor_signing_keys": "/api/public/export-signing-keys",
+  "receipt_verify": "/api/public/verify/{bundle_id}",
+  "receipt_verify_page": "/verify/{bundle_id}",
+  "rekor": { "origin": "https://rekor.sigstore.dev" },
+  "transparency": null
+}
+```
+
+- It always answers, with the public page on or off: it only names routes that are already public.
+- `transparency` holds this page's address while it is on, and `null` while it is off.
+- Paths are relative to the domain the document was requested from.
+- The document only says where to look. Trust still comes from the keys and their Rekor anchors, as the steps below
+  explain.
+
 ## How a third party verifies an anchor
 
 The page's commands use only `curl`, `sha256sum`, `base64` and `openssl`, and do not trust the SecureAI website. For the
