@@ -1,0 +1,66 @@
+name: Automerge — features-qa
+
+# Desde 2026-11-27 un PR contra features-qa se mergea apenas no tiene conflictos, sin CI: nadie mergea a mano.
+# Qué no entra solo:
+#   - draft o label `no-automerge` (para frenarlo: dejarlo en draft o ponerle el label)
+#   - un PR que toca `.github/` (workflows y releases): lo mergea Juan, para que un PR no cambie la regla que lo juzga
+#   - un PR de un fork
+# --match-head-commit mergea solo el SHA que disparó la corrida: si llega un push, la corrida nueva vuelve a decidir.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, unlabeled]
+    branches:
+      - features-qa
+
+concurrency:
+  group: automerge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  automerge:
+    name: automerge (features-qa)
+    if: >-
+      ${{ !github.event.pull_request.draft
+          && github.event.pull_request.head.repo.full_name == github.repository
+          && !contains(github.event.pull_request.labels.*.name, 'no-automerge') }}
+    runs-on: hiperai-ci  # self-hosted (GCP hiperai-ci-linux): GitHub-hosted runners are blocked by billing
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number }}
+      SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Merge the pull request
+        run: |
+          MOTIVO=""
+          gh pr view "$PR" --repo "$REPO" --json isDraft,labels --jq '.isDraft, ([.labels[].name] | index("no-automerge") != null)' > "$RUNNER_TEMP/pr.txt"
+          [ "$(sed -n 1p "$RUNNER_TEMP/pr.txt")" = true ] && MOTIVO="está en draft"
+          [ "$(sed -n 2p "$RUNNER_TEMP/pr.txt")" = true ] && MOTIVO="tiene el label no-automerge"
+          CRITICOS=$(gh api --paginate "repos/$REPO/pulls/$PR/files" --jq '.[].filename' | { grep '^\.github/' || true; } | head -3 | paste -sd, -)
+          [ -n "$CRITICOS" ] && MOTIVO="toca .github/ ($CRITICOS)"
+          if [ -n "$MOTIVO" ]; then
+            echo "PR #$PR no se mergea solo: $MOTIVO." | tee -a "$GITHUB_STEP_SUMMARY"
+            AVISO="El automerge no lo mergea: $MOTIVO. Lo mergea una persona."
+            gh pr view "$PR" --repo "$REPO" --json comments --jq '.comments[].body' | grep -qxF "$AVISO" \
+              || gh pr comment "$PR" --repo "$REPO" --body "$AVISO"
+            exit 0
+          fi
+          # Recién abierto, GitHub puede no haber calculado la mergeabilidad: se reintenta unos segundos.
+          for i in 1 2 3 4 5 6; do
+            ESTADO=$(gh pr view "$PR" --repo "$REPO" --json mergeable --jq .mergeable)
+            [ "$ESTADO" != UNKNOWN ] && break
+            sleep 5
+          done
+          if [ "$ESTADO" = MERGEABLE ] && gh pr merge "$PR" --repo "$REPO" --merge --match-head-commit "$SHA"; then
+            echo "PR #$PR mergeado en features-qa (\`${SHA::8}\`)." >> "$GITHUB_STEP_SUMMARY"
+          else
+            gh pr comment "$PR" --repo "$REPO" --body "El automerge no pudo mergear \`${SHA::8}\` ($ESTADO: conflicto con \`features-qa\` o un push nuevo). Traé \`origin/features-qa\` a la rama y pusheá: la corrida nueva lo vuelve a intentar."
+            exit 1
+          fi
