@@ -33,14 +33,17 @@
                   "security/smltp",
                   "threat-defense/overview",
                   "data-protection/overview",
-                  "security/immutable-logs"
+                  "security/immutable-logs",
+                  "security/audit-integrity",
+                  "security/public-transparency"
                 ]
               },
               {
                 "group": "AI Gateway",
                 "pages": [
                   "ai-gateway/overview",
-                  "ai-gateway/remote-endpoints"
+                  "ai-gateway/remote-endpoints",
+                  "ai-gateway/status"
                 ]
               },
               {
@@ -253,14 +256,17 @@
                   "en/security/smltp",
                   "en/threat-defense/overview",
                   "en/data-protection/overview",
-                  "en/security/immutable-logs"
+                  "en/security/immutable-logs",
+                  "en/security/audit-integrity",
+                  "en/security/public-transparency"
                 ]
               },
               {
                 "group": "AI Gateway",
                 "pages": [
                   "en/ai-gateway/overview",
-                  "en/ai-gateway/remote-endpoints"
+                  "en/ai-gateway/remote-endpoints",
+                  "en/ai-gateway/status"
                 ]
               },
               {

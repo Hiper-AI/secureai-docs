@@ -54,6 +54,12 @@ SMLTP separa deliberadamente dos tipos de controles:
 - Las raíces de Merkle se pueden anclar a un registro de transparencia externo (Sigstore Rekor), por lo que el registro
   la integridad no depende de confiar en el operador de SecureAI; consulte
   [Registros inmutables](./immutable-logs.md)
+- Cada bloque sellado se copia a un bucket con retención bloqueada, y una vez por día SecureAI recorre la cadena
+  guardada en busca de huecos y bifurcaciones; consulte [Integridad del registro de auditoría](./audit-integrity.md)
+- **Gateway de IA → Estado** muestra si la firma, el sellado, el anclaje y el archivo funcionan ahora; consulte
+  [Estado del registro de auditoría](../ai-gateway/status.md)
+- Puede publicar los anclajes y las claves para que un tercero los verifique sin cuenta; consulte
+  [Página pública de transparencia](./public-transparency.md)
 
 ### Aplicación de políticas
 - Modelo de listas permitidas, verificaciones de residencia de datos (geocerca) y controles de salida evaluados en la puerta de enlace
