@@ -20,6 +20,8 @@ Una política (`AgentPolicy`) contiene:
 | **Amenazas** | Si el dispositivo consume la fuente de amenazas de la organización. |
 | **Control de Salida (Egress Enforcement)** | `off` / `kill` / `block` / `lockdown` (+ lista de permitidos, bloque-remoto-MCP). Consulte [Cumplimiento de salida](/agent/egress-enforcement). |
 | **Guardia de comportamiento** | Supervisión de comportamiento de IA: habilitada, sensibilidad y acción predeterminada (`alert`, `quarantine`, `kill`, `block`, `require_approval`), para endpoint y/o gateway. |
+| **Guardas de datos** | Incluye **Cuadros de IA**: el DLP del agente sobre lo que se escribe en apps y paneles de IA (`off`, `monitor`, `warn`, `block`). Consulte [Cuadros de IA](/agent/ai-input-boxes). |
+| **Proxy MCP local** | Pasa cada llamada a una herramienta MCP por la política, con revisión opcional de argumentos y resultados. Consulte [Agentes de código](/agent/coding-agents#proxy-mcp-local). |
 | **Enrutamiento del Claude Code** | Configuración de proxy transparente. Consulte [Proxy transparente](/agent/transparent-proxy). |
 | **Protección contra manipulaciones** | Requisito de clave de desinstalación (ver más abajo). |
 | **Lanzamiento** | Configuración de implementación por etapas (consulte [Implementaciones seguras](#safe-rollouts)). |
@@ -57,4 +59,4 @@ Una política puede requerir una **clave de desinstalación** (`tamperProtection
 
 - [Aplicación de salida](/agent/egress-enforcement)
 - [Operaciones de cuarentena y flota](/agent/quarantine-and-fleet-ops)
-- [Proxy transparente](/agent/proxy-transparente)
+- [Proxy transparente](/agent/transparent-proxy)

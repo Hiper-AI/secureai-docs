@@ -19,6 +19,8 @@ The agent fleet is managed under **Admin → Agent Registry → OS Agents**.
 - **Enforces policy** — monitor or block AI providers/models/apps/MCPs, apply behavioral AI-oversight, and enforce egress control (see [Egress Enforcement](/en/agent/egress-enforcement)).
 - **Protects data** — endpoint DLP/PII inspection.
 - **Responds to threats** — quarantines malicious files and can isolate a compromised endpoint (see [Quarantine & Fleet Ops](/en/agent/quarantine-and-fleet-ops)).
+- **Checks what people type into AI apps and panels** against your DLP rules (see [AI input boxes](/en/agent/ai-input-boxes)).
+- **Governs coding agents**: inventory of rules, skills and plugins, restored hooks, and a local MCP proxy (see [Coding agents](/en/agent/coding-agents)).
 - **Optionally routes developer AI traffic** through SecureAI's gateway (see [Transparent Proxy](/en/agent/transparent-proxy)).
 
 ## Device health & posture

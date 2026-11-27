@@ -71,6 +71,8 @@ Seleccione qué tipos de eventos reenviar:
 - Sistema e infraestructura
 - Cambios de configuración
 
+Los eventos del SecureAI Agent también tienen tipos propios (`endpoint_shadow_ai`, `endpoint_ai_input` y otros). Consulte [Alertas y SIEM del endpoint](/agent/alerts-and-siem#eventos-de-endpoint-en-el-siem).
+
 ### 4. Pruebe la conexión
 
 1. Haga clic en **"Probar conexión"** para verificar la conectividad.

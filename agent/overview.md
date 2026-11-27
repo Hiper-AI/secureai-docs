@@ -17,6 +17,8 @@ La flota de agentes se administra en **Admin → Registro de agentes → Agentes
 - **Hace cumplir la política**: monitoree o bloquee proveedores/modelos/aplicaciones/MCP de IA, aplique supervisión de comportamiento de IA y aplique el control de salida (consulte [Cumplimiento de salida](/agent/egress-enforcement)).
 - **Protege los datos**: inspección DLP/PII del endpoint.
 - **Responde a amenazas**: pone en cuarentena archivos maliciosos y puede aislar un endpoint comprometido (consulte [Cuarentena y operaciones de flota](/agent/quarantine-and-fleet-ops)).
+- **Revisa lo que se escribe en apps y paneles de IA** con el DLP de su organización (consulte [Cuadros de IA](/agent/ai-input-boxes)).
+- **Gobierna los agentes de código**: inventario de reglas, skills y plugins, hooks repuestos y proxy MCP local (consulte [Agentes de código](/agent/coding-agents)).
 - **Opcionalmente enruta el tráfico de IA del desarrollador** a través de la puerta de enlace de SecureAI (consulte [Proxy transparente](/agent/transparent-proxy)).
 
 ## Salud y postura del dispositivo

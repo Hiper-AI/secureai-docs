@@ -35,4 +35,4 @@ Validar la integridad de la interacción mediante pruebas criptográficas:
 - Genere enlaces de verificación pública compartibles para auditores de cumplimiento externos.
 
 ### 5. Gestión de extensiones
-Administre y aplique políticas de seguridad en toda la flota de extensiones de navegador SecureAI para evitar el uso de IA en la sombra en los navegadores de los clientes.
+Configure la SecureAI Extension que corre en el navegador de sus colaboradores: DLP en los sitios de IA, IA dentro de SaaS y solo cuentas corporativas. Consulte [SecureAI Extension](/extension/overview).
